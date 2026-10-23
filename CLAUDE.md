@@ -3,8 +3,9 @@
 모바일 가로 전용 2D 액션 RPG 웹게임. 빌드 없는 순수 ES 모듈이고 `dist/`를 정적 호스팅한다. 원래 OpenAI Codex "Sites" 환경에서 개발되어 Codex 전용 경로·환경변수 흔적이 많다.
 답변·문서·커밋 메시지는 한국어로 쓴다.
 
-## 저장소 성격 (2026-10-23 분석, 커밋 43d1196)
+## 저장소 성격 (2026-10-23 분석, 커밋 43d1196 기준)
 - Sites 저장 버전 166, 원본 커밋 90a0324의 **전체 내보내기**(Windows에서 추출). 원본 1,362개 파일, 약 643MB. 체크아웃 약 617MB.
+- `.openai/`는 .gitignore로 일부러 제외되어 있다(호스팅 설정 2줄). 커밋하지 않는다.
 - `SOURCE_MANIFEST.json`의 SHA-256과 대조하면 1,361개가 내용 일치. 빠진 것은 `.openai/hosting.json` 하나(정적 디렉터리를 dist로 지정하는 2줄 설정). 텍스트 602개는 줄바꿈(CRLF/LF)만 다르다.
 - 코드·테스트·도구·문서는 자매 저장소 `Ashegyu/beast-hunter-motion`과 바이트 단위로 같다. 그쪽은 바이너리 어셋 업로드가 중단되어 실행 불가 상태이므로 **실제 작업은 이 저장소에서 한다.**
 - 내보내기 때 추가된 파일: `serve-local.mjs`(127.0.0.1 전용 정적 서버, dist만 제공, Range 지원), `RUN_GAME.cmd`, `README_LOCAL.md`, `SOURCE_MANIFEST.json`, `LOCAL_VERIFICATION.json`, `LOCAL_TEST_RESULTS.txt`.
@@ -12,18 +13,15 @@
 ## 실행
 - 게임: `PORT=8090 node serve-local.mjs` 후 `http://127.0.0.1:8090/` (기본 포트 8080). file:// 로는 안 된다.
 - 헤드리스 확인: 전역 playwright(`/opt/node22/lib/node_modules/playwright`)를 createRequire로 불러 Chromium 실행. 844×390에서 거점 → 사냥터 → 전투 준비 → 전투까지 콘솔 오류·404 없이 동작 확인함.
-- 테스트: `npm test` = `node --experimental-vm-modules --test tests/*.test.mjs` (약 55초). **776개 중 744 통과 / 32 실패** (원작자 기록과 동일).
+- 테스트: `npm test` = `node --experimental-vm-modules --test tests/*.test.mjs` (약 55초). **776/776 통과** (Alpha 0.103.2에서 오래된 기대값 32건을 현재 규칙에 맞춤).
 
-## 실패 테스트 32건 (원인 확인됨)
-1. **로직 변경 후 기대값 미갱신 9건**
-   - 고대 드롭이 0으로 바뀜: ancient-boundaries:10, codex-replay:24
-   - 고대 도감 60→75종: codex-replay:10
-   - 신규 고대 15종 원화 프레임 없음: rarity-visuals:7
-   - 9스테이지가 special(전원 skitter)로 바뀜: monsters065:15
-   - strict 스테이지 이탈 시 totalKills 롤백: horde072:36
-   - 카메라 세로 기준 .5→.6 (world.js:11): world.test:25/37/53
-2. **lab 테스트 링커 13건** (ui.test.mjs:131~286): `lab.js:1`이 `./chapters.js?v=0.97.0`을 import하는데 링커(ui.test.mjs:96-100)가 쿼리 없는 경로만 허용.
-3. **game-ui 그리기 크기 10건** (game-ui.test.mjs:724, 929, 969, 1032~1096, 1149): 캐릭터가 기대치의 약 2/3 크기로 그려짐(84≠126, 58.96≠88 등). 가로 화면 논리 폭을 1800으로 넓힌 변경(view-controls.js `viewportFor`, 기존 1200)이 원인으로 보이며 테스트는 예전 배율을 기대.
+## 테스트 작성 시 주의 (0.103.2에서 정리한 내용)
+- 고대 장비는 0.97부터 레이드 전용 → 스테이지 보스는 고대를 떨어뜨리지 않음. 고대 카탈로그는 75종(신규 부위 15종은 고대 전용 원화 없음).
+- 9스테이지는 밀집 공세(전원 skitter), strict 스테이지(4·8·9·10)는 이탈 시 처치 수·전리품까지 롤백. 3장 보스는 70%·35%에서 호위대 소환.
+- 카메라는 플레이어를 화면 높이 60%에 둠(world.js). 가로 화면 논리 폭은 1800(view-controls.js `viewportFor`)이고 캔버스에 축소해 그림.
+- 서 있는 캐릭터는 화면 세로 위치에 따라 0.86~1.1배(app.js `sceneDepthScale`, 플레이어 위치에서 1.0).
+- tests/game-ui.test.mjs 앞부분의 `appView/appScale/appCamera/appDepth/clientAt` 도우미가 app.js의 화면 변환을 그대로 재현한다. 화면 좌표 테스트는 이것을 쓴다.
+- lab 테스트 링커는 `?v=` 쿼리를 잘라 처리한다.
 
 ## 구조
 - `dist/index.html` (389KB, 정적 DOM 3704 id, CSS 45개 순차 로드) → `menu-pages.js`, `app.js`.
@@ -33,11 +31,11 @@
 - `engine.js` + `lab.html/lab.js`: 구형 모션 검사 도구(MOTION LAB). 실게임과 무관.
 - `sound.js`: 오디오 파일 없이 WebAudio로 효과음 합성 (동시 10음).
 - 어셋 로딩: `dist/assets/manifest.json`(클립 415개, png→webp `delivery` 매핑). 거점 3장 → 공유 전투 18장 → 지역별 4장(한 번에 한 지역만 상주). 폰트는 `dist/assets/fonts/`.
-- CSS: 버전별로 파일을 뒤에 덧붙여 덮어쓰는 레이어 구조 → **로드 순서 = 우선순위**. `#game-shell` 접두 + `data-panel`/`data-camp-view`/`data-phase` 속성 선택자. `!important` 약 900개 + index.html 인라인 474개(tools/apply-common-ui-v2.py가 주입). 세로용 규칙 다수는 가로 전용 전환 뒤 사실상 죽은 코드.
+- CSS: 버전별로 파일을 뒤에 덧붙여 덮어쓰는 레이어 구조 → **로드 순서 = 우선순위**. 맨 마지막은 `layout-fit.css`(0.103.2, 한 화면 맞춤 규칙 모음). 새 화면 맞춤 수정은 여기에 화면별 주석과 함께 추가한다. `#game-shell` 접두 + `data-panel`/`data-camp-view`/`data-phase` 속성 선택자. `!important` 약 900개 + index.html 인라인 474개(tools/apply-common-ui-v2.py가 주입). 세로용 규칙 다수는 가로 전용 전환 뒤 사실상 죽은 코드.
 - `art/`: 원화 원본, 생성 프롬프트, 검수 자료. `tools/reports/`: 버전별 측정·검수 결과(394개).
 
 ## 버전 표기
-- README 0.97.0, `index.html`은 `app.js?v=0.103.1`, 모듈 import 쿼리는 0.70~0.99 혼재, `PROFILE_VERSION=13`(README는 v11이라 적음). 코드가 문서보다 앞서 있다. README_LOCAL은 폴더 이름 때문에 "Alpha 0.45"라고 부른다.
+- README는 0.103.2부터 다시 최신(그 사이 0.98~0.103.1 기록은 없음), `index.html`은 `app.js?v=0.103.1`, 모듈 import 쿼리는 0.70~0.99 혼재, `PROFILE_VERSION=13`(README는 v11이라 적음). 코드가 문서보다 앞서 있다. README_LOCAL은 폴더 이름 때문에 "Alpha 0.45"라고 부른다.
 - 파일명 버전: 점 제거(063=0.63, 0844=0.84.4, v0970=0.97.0, v01002=0.100.2). 단 alpha09/alpha091은 0.9/0.9.1.
 
 ## 게임 규칙 요약
@@ -48,16 +46,23 @@
 - 저장: localStorage `beast-hunter:profile:v1` (+ `:recovery`, `:before-restore`, `:sound`). 엔진은 v1~13 수용, 범위 밖이면 새 프로필(앱이 원본을 :recovery에 보관). 백업 형식 `beast-hunter-backup` v1, FNV-1a, 256KB. 저장은 호스트·포트별이라 포트를 바꾸면 진행이 안 보인다.
 - strict(normal이 아닌) 스테이지는 체크포인트 → 실패/이탈 시 롤백, 클리어 시 `confirmSettlement`로 2단계 정산.
 
+## UI 레이아웃 원칙과 함정
+- 메뉴는 스크롤 없이 한 화면에 들어가야 한다(사용자 요청). 목록이 넘치면 페이지 넘김(가방·스킬·도감 방식)이나 격자 재배치로 해결한다.
+- 검수 해상도: 844×390, 915×412, 667×375, 568×320, 900×405. 높이 360px 이하는 `@media(max-height:360px)` 블록에서 보조 문구를 숨기고 행 높이를 줄인다.
+- `common-ui-v2.css`가 `[data-common-skin][data-common-skin]`에 `position:relative`를 강제한다. 스킨 붙은 요소를 덮개(absolute)로 띄우려면 같은 이중 속성 선택자로 덮어써야 한다.
+- 스킨 붙은 버튼의 `:before` 장식은 절대 위치라서, 버튼을 `position:static`으로 바꾸면 장식이 부모 전체를 덮는다. 위치를 풀 때는 `relative`+`left/bottom:auto`를 쓴다.
+- 홈 왼쪽 메뉴 아이콘은 `lobby-reference-v0920.webp` 시안 전체에서 잘라 쓰며 원본에 글자가 박혀 있어 clip-path로 아래를 잘라야 한다.
+- 장비 화면 귀걸이 2 칸 옆 검은 모루는 배경 원화의 일부다(버그 아님).
+- 자동 레이아웃 점검: 저장 프로필을 만들어 localStorage에 넣고 Playwright로 각 화면을 돌며 화면 밖 버튼·가림·글자 잘림·스크롤 영역을 측정했다. 접힌 `<details>` 내용과 2px로 접어 둔 예전 버튼(#codex-back, #inventory-note)은 오탐이다.
+
 ## 알려진 문제 (코드에서 확인)
 - `makeItem`(game-engine.js:471)이 등급·출처·보스 인자를 무시하고 항상 일반 등급 생성 → DROP_TABLES, BOSS_DROP_TABLES, 고대 드롭, minimumRarity, legendaryPity가 사실상 죽은 코드. (README 0.97의 "스테이지는 일반만 드롭" 의도와는 일치)
 - 제작 재료 `origin`(무명의 기원)이 보스 처치당 0.001%뿐 → README의 "현재 제작 가능"과 달리 제작이 사실상 불가능 (crafting.js:12).
-- game-engine.js:774 `q.ancientSpec.ancient.signature`는 제작 장비에서 null 접근 위험(현재 미발생).
 - `s.encounters/caches/nodes`를 채우는 코드 없음 → interact·상자·그룹 어그로 로직이 죽어 있음. `flow==='break'` 설정처 없음.
 - 챕터 수 3이 여러 곳 하드코딩 (game-engine.js:117,123,579, battle-plans.js:30, terrain.js:18, profile-backup.js:12).
-- world.js가 `?v=` 유무 차이로 두 번 로드됨 (app.js:8 vs 나머지). 테스트에선 game-engine.js도 이중 로드.
-- app.js:1380 스킬 아이콘 `img.src`를 매 프레임 재대입. `updateHud`가 매 프레임 getElementById 수백 회.
-- app.js:139 로드 실패 메시지가 실제 요청(.webp)이 아닌 원래 .png 이름을 표시.
 - 궁극기 영상(mp4)·컷인은 테스트에서만 쓰이고 런타임에는 연결되지 않음. 신규 고대 15종 원화 없음.
+- `updateHud`가 매 프레임 getElementById를 수백 회 호출(성능 여지). 테스트에선 profile-backup.js 경유로 game-engine.js가 이중 로드됨.
+- 0.103.2에서 고친 것: 스킬 아이콘 매 프레임 src 재대입, 로드 실패 문구 파일명, 제작 장비 투사체 null 접근, world.js 이중 로드, 가방 버튼 클릭 인자.
 
 ## tools/
 - 63개 스크립트: benchmark-*, measure-*.mjs/.py, render-*, review-*, pack-*.py, optimize-*.py, create-*-report.py, simulate-*.

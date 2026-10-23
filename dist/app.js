@@ -2,7 +2,7 @@ let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
 import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.84.0';
 import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js';
 import { createCombatAudio } from './sound.js?v=0.76.0';
-import * as game from './game-engine.js?v=0.99.0';
+import * as game from './game-engine.js?v=0.103.2';
 import {FrameMetrics} from './frame-metrics.js?v=0.98.1';
 import { frameIndex, frameRect, validateClip } from './engine.js';
 import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
@@ -10,7 +10,7 @@ import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLand
 import { visibleTiles, createDecorations } from './terrain.js';
 import { MONSTERS, equipmentArt } from './chapters.js?v=0.97.0';
 import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.99.0';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.99.0';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.103.2';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -69,7 +69,7 @@ let craftSlot='all',trackRecipeId=null,trackReturnCraft=false,trackOrigin='craft
 let craftOpen=false,craftSelected=game.CRAFTED_CATALOG[1].id,craftFeedback='',craftRenderKey='';
 let equipmentSceneKey='';
 let previewAppearance=null,codexOpen=false,codexSelection=profile.targetAncientId??game.ANCIENT_CATALOG[0].id,codexChapter='0',codexSlot='all',codexFound='all',codexSearch='',codexRenderKey='',selectedDifficulty=0;
-let codexDetailOpen=false,codexFiltersOpen=false,codexLayout='grid',codexSort='catalog',codexOrigin='codex-search';
+let codexDetailOpen=false,codexFiltersOpen=false,codexLayout='grid',codexSort='catalog',codexOrigin='codex-search',codexPage=0,codexPageFilter='';
 const clockMs=()=>typeof performance==='object'?performance.now():Date.now();
 const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
 const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
@@ -1135,6 +1135,8 @@ $('codex-filter-toggle').addEventListener('click',()=>{if(!codexOpen)return;code
 for(const [id,set]of [['codex-chapter',v=>codexChapter=v],['codex-slot',v=>codexSlot=v],['codex-found',v=>codexFound=v],['codex-sort',v=>codexSort=v]])$(id).addEventListener('change',e=>{set(e.target.value);codexDetailOpen=false;updateHud();});
 for(const slot of ['all','weapon','armor','charm','special'])$('codex-tab-'+slot).addEventListener('click',()=>{codexSlot=slot;codexDetailOpen=false;updateHud();});
 for(const layout of ['grid','list'])$('codex-view-'+layout).addEventListener('click',()=>{codexLayout=layout;updateHud();});
+$('codex-page-prev').addEventListener('click',()=>{if(codexPage>0){codexPage--;updateHud();}});
+$('codex-page-next').addEventListener('click',()=>{codexPage++;updateHud();});
 $('codex-filter-reset').addEventListener('click',()=>{codexChapter='0';codexSlot='all';codexFound='all';codexSort='catalog';codexSearch='';$('codex-search').value='';updateHud();});
 $('codex-search').addEventListener('input',e=>{codexSearch=e.target.value.trim().slice(0,80).toLowerCase();codexDetailOpen=false;updateHud();});
 function selectHuntMode(id){
@@ -1167,8 +1169,20 @@ function refreshFarmCamp(){
  $('replay-info').textContent=mode.name+' · 보스 체력 '+mode.hp+'배 / 피해 '+mode.damage+'배 · 보스 보너스 골드 '+mode.reward+'배 · 추가 장비당 고대 '+mode.ancientChance.toFixed(2)+'%'+(mode.shots?' · 탄막 +'+mode.shots+'발 · 패턴 순환 변경':'');
  $('replay-unlock').textContent=game.bossModeAvailable(profile,selectedStage,2)?'악몽 해금 완료 · 원하는 난이도로 재도전할 수 있어.':'일반 보스 처치 → 정예 해금 · 정예 처치 → 악몽 해금.';
 }
+// Fit whole cards to the gallery instead of scrolling: columns come from the CSS grid, rows from the free height.
+function codexPageSize(){
+ const grid=$('codex-grid'),width=grid.clientWidth,height=grid.clientHeight;
+ if(codexDetailOpen||typeof window.getComputedStyle!=='function'||!(width>0)||!(height>0))return game.ANCIENT_CATALOG.length;
+ const style=window.getComputedStyle(grid),gap=parseFloat(style.rowGap)||6,list=codexLayout==='list';
+ const columns=Math.max(1,String(style.gridTemplateColumns||'').trim().split(/\s+/).filter(Boolean).length);
+ const row=parseFloat(style.getPropertyValue?.(list?'--codex-list-row':'--codex-card-row'))||(list?64:96);
+ const rows=Math.max(1,Math.floor((height+gap)/(row+gap)));
+ if(grid.style.getPropertyValue?.('--codex-rows')!==String(rows))grid.style.setProperty?.('--codex-rows',String(rows));
+ return columns*rows;
+}
 function refreshCodex(){
- const key=[profile.discoveredAncients.join(','),profile.targetAncientId,codexSelection,codexChapter,codexSlot,codexFound,codexSearch,codexDetailOpen,codexFiltersOpen,codexLayout,codexSort].join('|');if(key===codexRenderKey)return;codexRenderKey=key;
+ const pageSize=codexPageSize(),pageFilter=[codexChapter,codexSlot,codexFound,codexSearch,codexSort,codexLayout].join('|');if(pageFilter!==codexPageFilter){codexPageFilter=pageFilter;codexPage=0;}
+ const key=[profile.discoveredAncients.join(','),profile.targetAncientId,codexSelection,codexChapter,codexSlot,codexFound,codexSearch,codexDetailOpen,codexFiltersOpen,codexLayout,codexSort,codexPage,pageSize].join('|');if(key===codexRenderKey)return;codexRenderKey=key;
  const found=new Set(profile.discoveredAncients),catalog=game.ANCIENT_CATALOG;let visible=0;
  $('codex-content').setAttribute('data-detail',String(codexDetailOpen));$('codex-browser').hidden=codexDetailOpen;$('codex-detail').hidden=!codexDetailOpen;
  $('codex-filters').hidden=!codexFiltersOpen;$('codex-filter-toggle').setAttribute('aria-expanded',String(codexFiltersOpen));
@@ -1182,9 +1196,13 @@ function refreshCodex(){
  if(codexSort==='name')ordered.sort((a,b)=>a.row.name.localeCompare(b.row.name,'ko'));
  else if(codexSort==='found')ordered.sort((a,b)=>Number(found.has(b.row.id))-Number(found.has(a.row.id))||a.i-b.i);
  $('codex-grid').replaceChildren(...ordered.map(({i})=>$('codex-card-'+i)));
+ const codexMatch=(row,discovered)=>(codexChapter==='0'||row.tier===Number(codexChapter))&&(codexSlot==='all'||game.matchesEquipmentCategory(row,codexSlot))&&(codexFound==='all'||discovered===(codexFound==='found'))&&(!codexSearch||(row.name+' '+row.signature.name+' '+row.signature.description).toLowerCase().includes(codexSearch));
+ const matches=ordered.filter(({row})=>codexMatch(row,found.has(row.id))),pages=Math.max(1,Math.ceil(matches.length/pageSize));codexPage=Math.max(0,Math.min(codexPage,pages-1));
+ const shown=new Set(matches.slice(codexPage*pageSize,(codexPage+1)*pageSize).map(({i})=>i));
+ $('codex-paging').hidden=pages<=1;$('codex-page-label').textContent=(codexPage+1)+' / '+pages;$('codex-page-prev').disabled=codexPage<=0;$('codex-page-next').disabled=codexPage>=pages-1;
  for(const [i,row]of catalog.entries()){
-  const discovered=found.has(row.id),match=(codexChapter==='0'||row.tier===Number(codexChapter))&&(codexSlot==='all'||game.matchesEquipmentCategory(row,codexSlot))&&(codexFound==='all'||discovered===(codexFound==='found'))&&(!codexSearch||(row.name+' '+row.signature.name+' '+row.signature.description).toLowerCase().includes(codexSearch));
-  const node=$('codex-card-'+i);node.hidden=!match;if(match)visible++;node.setAttribute('data-discovered',String(discovered));node.setAttribute('data-goal',String(profile.targetAncientId===row.id));node.setAttribute('aria-pressed',String(codexDetailOpen&&row.id===codexSelection));$('codex-name-'+i).textContent=row.name;$('codex-state-'+i).textContent=(profile.targetAncientId===row.id?'목표 · ':'')+(discovered?'발견':'미발견')+' · '+game.SLOTS[row.slot];gearThumbnail($('codex-art-'+i),{...row,catalogId:row.id,rarity:5},144);if(!discovered)$('codex-art-'+i).setAttribute('aria-label','미발견 유물 이미지');
+  const discovered=found.has(row.id),match=codexMatch(row,discovered);
+  const node=$('codex-card-'+i);node.hidden=!shown.has(i);if(match)visible++;node.setAttribute('data-discovered',String(discovered));node.setAttribute('data-goal',String(profile.targetAncientId===row.id));node.setAttribute('aria-pressed',String(codexDetailOpen&&row.id===codexSelection));$('codex-name-'+i).textContent=row.name;$('codex-state-'+i).textContent=(profile.targetAncientId===row.id?'목표 · ':'')+(discovered?'발견':'미발견')+' · '+game.SLOTS[row.slot];gearThumbnail($('codex-art-'+i),{...row,catalogId:row.id,rarity:5},144);if(!discovered)$('codex-art-'+i).setAttribute('aria-label','미발견 유물 이미지');
  }
  const percent=Number((found.size/catalog.length*100).toFixed(1));
  $('codex-count').textContent=found.size+' / '+catalog.length+' 발견';$('codex-percent').textContent=percent+'%';$('codex-progress').setAttribute('aria-valuenow',String(found.size));$('codex-progress-fill').style.width=percent+'%';$('codex-results').textContent=visible?visible+'종 표시':'검색 조건에 맞는 유물이 없어.';$('codex-empty').hidden=visible>0;
