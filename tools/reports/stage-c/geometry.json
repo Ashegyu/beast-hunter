@@ -1,0 +1,714 @@
+[
+  {
+    "screen": "success",
+    "size": "667x375",
+    "check": {
+      "buttons": [
+        {
+          "id": "dungeon-result-exit",
+          "rect": {
+            "bottom": 217.578125,
+            "height": 30,
+            "left": 67,
+            "right": 156.921875,
+            "top": 187.578125,
+            "width": 89.921875,
+            "x": 67,
+            "y": 187.578125
+          }
+        },
+        {
+          "id": "result-build",
+          "rect": {
+            "bottom": 164.390625,
+            "height": 40,
+            "left": 424,
+            "right": 612.984375,
+            "top": 124.390625,
+            "width": 188.984375,
+            "x": 424,
+            "y": 124.390625
+          }
+        },
+        {
+          "id": "result-prepare-gear",
+          "rect": {
+            "bottom": 208.390625,
+            "height": 40,
+            "left": 424,
+            "right": 484.328125,
+            "top": 168.390625,
+            "width": 60.328125,
+            "x": 424,
+            "y": 168.390625
+          }
+        },
+        {
+          "id": "result-prepare-growth",
+          "rect": {
+            "bottom": 208.390625,
+            "height": 40,
+            "left": 488.328125,
+            "right": 548.65625,
+            "top": 168.390625,
+            "width": 60.328125,
+            "x": 488.328125,
+            "y": 168.390625
+          }
+        },
+        {
+          "id": "result-skills",
+          "rect": {
+            "bottom": 208.390625,
+            "height": 40,
+            "left": 552.65625,
+            "right": 612.984375,
+            "top": 168.390625,
+            "width": 60.328125,
+            "x": 552.65625,
+            "y": 168.390625
+          }
+        },
+        {
+          "id": "next-stage",
+          "rect": {
+            "bottom": 255.390625,
+            "height": 40,
+            "left": 424,
+            "right": 613,
+            "top": 215.390625,
+            "width": 189,
+            "x": 424,
+            "y": 215.390625
+          }
+        },
+        {
+          "id": "result-camp",
+          "rect": {
+            "bottom": 302.390625,
+            "height": 40,
+            "left": 424,
+            "right": 613,
+            "top": 262.390625,
+            "width": 189,
+            "x": 424,
+            "y": 262.390625
+          }
+        }
+      ],
+      "h": 203,
+      "sh": 203,
+      "sw": 559,
+      "w": 559
+    }
+  },
+  {
+    "screen": "success",
+    "size": "740x360",
+    "check": {
+      "buttons": [
+        {
+          "id": "dungeon-result-exit",
+          "rect": {
+            "bottom": 217.578125,
+            "height": 30,
+            "left": 67,
+            "right": 156.921875,
+            "top": 187.578125,
+            "width": 89.921875,
+            "x": 67,
+            "y": 187.578125
+          }
+        },
+        {
+          "id": "result-build",
+          "rect": {
+            "bottom": 164.390625,
+            "height": 40,
+            "left": 497,
+            "right": 685.984375,
+            "top": 124.390625,
+            "width": 188.984375,
+            "x": 497,
+            "y": 124.390625
+          }
+        },
+        {
+          "id": "result-prepare-gear",
+          "rect": {
+            "bottom": 208.390625,
+            "height": 40,
+            "left": 497,
+            "right": 557.328125,
+            "top": 168.390625,
+            "width": 60.328125,
+            "x": 497,
+            "y": 168.390625
+          }
+        },
+        {
+          "id": "result-prepare-growth",
+          "rect": {
+            "bottom": 208.390625,
+            "height": 40,
+            "left": 561.328125,
+            "right": 621.65625,
+            "top": 168.390625,
+            "width": 60.328125,
+            "x": 561.328125,
+            "y": 168.390625
+          }
+        },
+        {
+          "id": "result-skills",
+          "rect": {
+            "bottom": 208.390625,
+            "height": 40,
+            "left": 625.65625,
+            "right": 685.984375,
+            "top": 168.390625,
+            "width": 60.328125,
+            "x": 625.65625,
+            "y": 168.390625
+          }
+        },
+        {
+          "id": "next-stage",
+          "rect": {
+            "bottom": 255.390625,
+            "height": 40,
+            "left": 497,
+            "right": 686,
+            "top": 215.390625,
+            "width": 189,
+            "x": 497,
+            "y": 215.390625
+          }
+        },
+        {
+          "id": "result-camp",
+          "rect": {
+            "bottom": 302.390625,
+            "height": 40,
+            "left": 497,
+            "right": 686,
+            "top": 262.390625,
+            "width": 189,
+            "x": 497,
+            "y": 262.390625
+          }
+        }
+      ],
+      "h": 188,
+      "sh": 188,
+      "sw": 632,
+      "w": 632
+    }
+  },
+  {
+    "screen": "success",
+    "size": "844x390",
+    "check": {
+      "buttons": [
+        {
+          "id": "dungeon-result-exit",
+          "rect": {
+            "bottom": 217.578125,
+            "height": 30,
+            "left": 67,
+            "right": 156.921875,
+            "top": 187.578125,
+            "width": 89.921875,
+            "x": 67,
+            "y": 187.578125
+          }
+        },
+        {
+          "id": "result-build",
+          "rect": {
+            "bottom": 164.390625,
+            "height": 40,
+            "left": 601,
+            "right": 789.984375,
+            "top": 124.390625,
+            "width": 188.984375,
+            "x": 601,
+            "y": 124.390625
+          }
+        },
+        {
+          "id": "result-prepare-gear",
+          "rect": {
+            "bottom": 208.390625,
+            "height": 40,
+            "left": 601,
+            "right": 661.328125,
+            "top": 168.390625,
+            "width": 60.328125,
+            "x": 601,
+            "y": 168.390625
+          }
+        },
+        {
+          "id": "result-prepare-growth",
+          "rect": {
+            "bottom": 208.390625,
+            "height": 40,
+            "left": 665.328125,
+            "right": 725.65625,
+            "top": 168.390625,
+            "width": 60.328125,
+            "x": 665.328125,
+            "y": 168.390625
+          }
+        },
+        {
+          "id": "result-skills",
+          "rect": {
+            "bottom": 208.390625,
+            "height": 40,
+            "left": 729.65625,
+            "right": 789.984375,
+            "top": 168.390625,
+            "width": 60.328125,
+            "x": 729.65625,
+            "y": 168.390625
+          }
+        },
+        {
+          "id": "next-stage",
+          "rect": {
+            "bottom": 255.390625,
+            "height": 40,
+            "left": 601,
+            "right": 790,
+            "top": 215.390625,
+            "width": 189,
+            "x": 601,
+            "y": 215.390625
+          }
+        },
+        {
+          "id": "result-camp",
+          "rect": {
+            "bottom": 302.390625,
+            "height": 40,
+            "left": 601,
+            "right": 790,
+            "top": 262.390625,
+            "width": 189,
+            "x": 601,
+            "y": 262.390625
+          }
+        }
+      ],
+      "h": 218,
+      "sh": 218,
+      "sw": 736,
+      "w": 736
+    }
+  },
+  {
+    "screen": "success",
+    "size": "932x430",
+    "check": {
+      "buttons": [
+        {
+          "id": "dungeon-result-exit",
+          "rect": {
+            "bottom": 217.578125,
+            "height": 30,
+            "left": 67,
+            "right": 156.921875,
+            "top": 187.578125,
+            "width": 89.921875,
+            "x": 67,
+            "y": 187.578125
+          }
+        },
+        {
+          "id": "result-build",
+          "rect": {
+            "bottom": 164.390625,
+            "height": 40,
+            "left": 689,
+            "right": 877.984375,
+            "top": 124.390625,
+            "width": 188.984375,
+            "x": 689,
+            "y": 124.390625
+          }
+        },
+        {
+          "id": "result-prepare-gear",
+          "rect": {
+            "bottom": 208.390625,
+            "height": 40,
+            "left": 689,
+            "right": 749.328125,
+            "top": 168.390625,
+            "width": 60.328125,
+            "x": 689,
+            "y": 168.390625
+          }
+        },
+        {
+          "id": "result-prepare-growth",
+          "rect": {
+            "bottom": 208.390625,
+            "height": 40,
+            "left": 753.328125,
+            "right": 813.65625,
+            "top": 168.390625,
+            "width": 60.328125,
+            "x": 753.328125,
+            "y": 168.390625
+          }
+        },
+        {
+          "id": "result-skills",
+          "rect": {
+            "bottom": 208.390625,
+            "height": 40,
+            "left": 817.65625,
+            "right": 877.984375,
+            "top": 168.390625,
+            "width": 60.328125,
+            "x": 817.65625,
+            "y": 168.390625
+          }
+        },
+        {
+          "id": "next-stage",
+          "rect": {
+            "bottom": 255.390625,
+            "height": 40,
+            "left": 689,
+            "right": 878,
+            "top": 215.390625,
+            "width": 189,
+            "x": 689,
+            "y": 215.390625
+          }
+        },
+        {
+          "id": "result-camp",
+          "rect": {
+            "bottom": 302.390625,
+            "height": 40,
+            "left": 689,
+            "right": 878,
+            "top": 262.390625,
+            "width": 189,
+            "x": 689,
+            "y": 262.390625
+          }
+        }
+      ],
+      "h": 258,
+      "sh": 258,
+      "sw": 824,
+      "w": 824
+    }
+  },
+  {
+    "screen": "failure",
+    "size": "667x375",
+    "check": {
+      "h": 203,
+      "sh": 203,
+      "sw": 559,
+      "w": 559
+    }
+  },
+  {
+    "screen": "failure",
+    "size": "740x360",
+    "check": {
+      "h": 188,
+      "sh": 188,
+      "sw": 632,
+      "w": 632
+    }
+  },
+  {
+    "screen": "failure",
+    "size": "844x390",
+    "check": {
+      "h": 218,
+      "sh": 218,
+      "sw": 736,
+      "w": 736
+    }
+  },
+  {
+    "screen": "failure",
+    "size": "932x430",
+    "check": {
+      "h": 258,
+      "sh": 258,
+      "sw": 824,
+      "w": 824
+    }
+  },
+  {
+    "screen": "skills",
+    "size": "667x375",
+    "check": {
+      "h": 336,
+      "sh": 336,
+      "study": {
+        "bottom": 186.390625,
+        "height": 32,
+        "left": 15,
+        "right": 115,
+        "top": 154.390625,
+        "width": 100,
+        "x": 15,
+        "y": 154.390625
+      },
+      "sw": 667,
+      "w": 667
+    }
+  },
+  {
+    "screen": "skills",
+    "size": "740x360",
+    "check": {
+      "h": 323,
+      "sh": 323,
+      "study": {
+        "bottom": 184.828125,
+        "height": 32,
+        "left": 15,
+        "right": 115,
+        "top": 152.828125,
+        "width": 100,
+        "x": 15,
+        "y": 152.828125
+      },
+      "sw": 740,
+      "w": 740
+    }
+  },
+  {
+    "screen": "skills",
+    "size": "844x390",
+    "check": {
+      "h": 349,
+      "sh": 349,
+      "study": {
+        "bottom": 191.9375,
+        "height": 32,
+        "left": 23,
+        "right": 165,
+        "top": 159.9375,
+        "width": 142,
+        "x": 23,
+        "y": 159.9375
+      },
+      "sw": 844,
+      "w": 844
+    }
+  },
+  {
+    "screen": "skills",
+    "size": "932x430",
+    "check": {
+      "h": 386,
+      "sh": 386,
+      "study": {
+        "bottom": 195.390625,
+        "height": 32,
+        "left": 23,
+        "right": 165,
+        "top": 163.390625,
+        "width": 142,
+        "x": 23,
+        "y": 163.390625
+      },
+      "sw": 932,
+      "w": 932
+    }
+  },
+  {
+    "screen": "hall",
+    "size": "667x375",
+    "check": {
+      "detailH": 318,
+      "detailScroll": 318,
+      "h": 336,
+      "sh": 336,
+      "sw": 667,
+      "w": 667
+    }
+  },
+  {
+    "screen": "hall",
+    "size": "740x360",
+    "check": {
+      "detailH": 305,
+      "detailScroll": 305,
+      "h": 323,
+      "sh": 323,
+      "sw": 740,
+      "w": 740
+    }
+  },
+  {
+    "screen": "hall",
+    "size": "844x390",
+    "check": {
+      "detailH": 323,
+      "detailScroll": 323,
+      "h": 349,
+      "sh": 349,
+      "sw": 844,
+      "w": 844
+    }
+  },
+  {
+    "screen": "hall",
+    "size": "932x430",
+    "check": {
+      "detailH": 360,
+      "detailScroll": 360,
+      "h": 386,
+      "sh": 386,
+      "sw": 932,
+      "w": 932
+    }
+  },
+  {
+    "screen": "combat",
+    "size": "667x375",
+    "check": {
+      "rect": {
+        "bottom": 33,
+        "height": 14,
+        "left": 246.65625,
+        "right": 396.65625,
+        "top": 19,
+        "width": 150,
+        "x": 246.65625,
+        "y": 19
+      },
+      "text": "스킬 던전 · 1단계",
+      "view": {
+        "h": 375,
+        "w": 667
+      }
+    }
+  },
+  {
+    "screen": "combat",
+    "size": "740x360",
+    "check": {
+      "rect": {
+        "bottom": 33,
+        "height": 14,
+        "left": 271,
+        "right": 421,
+        "top": 19,
+        "width": 150,
+        "x": 271,
+        "y": 19
+      },
+      "text": "스킬 던전 · 1단계",
+      "view": {
+        "h": 360,
+        "w": 740
+      }
+    }
+  },
+  {
+    "screen": "combat",
+    "size": "844x390",
+    "check": {
+      "rect": {
+        "bottom": 33,
+        "height": 14,
+        "left": 291.25,
+        "right": 441.25,
+        "top": 19,
+        "width": 150,
+        "x": 291.25,
+        "y": 19
+      },
+      "text": "스킬 던전 · 1단계",
+      "view": {
+        "h": 390,
+        "w": 844
+      }
+    }
+  },
+  {
+    "screen": "combat",
+    "size": "932x430",
+    "check": {
+      "rect": {
+        "bottom": 33,
+        "height": 14,
+        "left": 318.75,
+        "right": 468.75,
+        "top": 19,
+        "width": 150,
+        "x": 318.75,
+        "y": 19
+      },
+      "text": "스킬 던전 · 1단계",
+      "view": {
+        "h": 430,
+        "w": 932
+      }
+    }
+  },
+  {
+    "screen": "materials",
+    "size": "667x375",
+    "check": {
+      "h": 199,
+      "page": "10",
+      "sh": 199,
+      "source": "스킬 던전",
+      "sw": 400,
+      "w": 400
+    }
+  },
+  {
+    "screen": "materials",
+    "size": "740x360",
+    "check": {
+      "h": 186,
+      "page": "10",
+      "sh": 186,
+      "source": "스킬 던전",
+      "sw": 448,
+      "w": 448
+    }
+  },
+  {
+    "screen": "materials",
+    "size": "844x390",
+    "check": {
+      "h": 212,
+      "page": "10",
+      "sh": 212,
+      "source": "스킬 던전",
+      "sw": 518,
+      "w": 518
+    }
+  },
+  {
+    "screen": "materials",
+    "size": "932x430",
+    "check": {
+      "h": 249,
+      "page": "10",
+      "sh": 249,
+      "source": "스킬 던전",
+      "sw": 576,
+      "w": 576
+    }
+  }
+]

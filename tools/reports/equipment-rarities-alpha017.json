@@ -1,0 +1,281 @@
+{
+  "atlasSize": [
+    960,
+    1280
+  ],
+  "rgbaBytes": 4915200,
+  "pngBytes": 998503,
+  "webpBytes": 771734,
+  "rgbaEqual": true,
+  "sprites": [
+    {
+      "grade": "legend",
+      "slot": "weapon",
+      "sourceRect": [
+        0,
+        12,
+        759,
+        777
+      ],
+      "sourceRGBAsha256": "96700d35aa44c5f92b8165a6b9e26d1e9ebb31a638f47d02d7eda208c847b0e1",
+      "frame": {
+        "x": 17,
+        "y": 16,
+        "w": 286,
+        "h": 288,
+        "pivotX": 143.0,
+        "pivotY": 288,
+        "duration": 1,
+        "gripX": 80.6376811594203,
+        "gripY": 231.52941176470588,
+        "tipX": 272.4347826086956,
+        "tipY": 3.011764705882353
+      },
+      "opaqueGripChecked": true
+    },
+    {
+      "grade": "legend",
+      "slot": "armor",
+      "sourceRect": [
+        757,
+        52,
+        1479,
+        781
+      ],
+      "sourceRGBAsha256": "79b85a4102710e8dd44b9a848ebbc0ff788dfa439a1851ef0a890fe40c4c400d",
+      "frame": {
+        "x": 337,
+        "y": 16,
+        "w": 285,
+        "h": 288,
+        "pivotX": 142.5,
+        "pivotY": 288,
+        "duration": 1
+      },
+      "opaqueGripChecked": false
+    },
+    {
+      "grade": "legend",
+      "slot": "charm",
+      "sourceRect": [
+        1484,
+        15,
+        1982,
+        793
+      ],
+      "sourceRGBAsha256": "021372a2d87924b29744390ebfa3251c4acb5df12303b4b6b5d8da248a5959ad",
+      "frame": {
+        "x": 708,
+        "y": 16,
+        "w": 184,
+        "h": 288,
+        "pivotX": 92.0,
+        "pivotY": 288,
+        "duration": 1
+      },
+      "opaqueGripChecked": false
+    },
+    {
+      "grade": "myth",
+      "slot": "weapon",
+      "sourceRect": [
+        47,
+        0,
+        754,
+        704
+      ],
+      "sourceRGBAsha256": "18045cf3100ae41cce5a450936ccbb4ded5a2fcfbd07af32d25b11ce40133bbd",
+      "frame": {
+        "x": 16,
+        "y": 336,
+        "w": 288,
+        "h": 287,
+        "pivotX": 144.0,
+        "pivotY": 287,
+        "duration": 1,
+        "gripX": 47.25318246110325,
+        "gripY": 230.74147727272728,
+        "tipX": 261.52192362093353,
+        "tipY": 2.8536931818181817
+      },
+      "opaqueGripChecked": true
+    },
+    {
+      "grade": "myth",
+      "slot": "armor",
+      "sourceRect": [
+        797,
+        20,
+        1651,
+        724
+      ],
+      "sourceRGBAsha256": "26e16603c3c1470104c1a19872d65b6a2befab43d45dad4c2bd2c6c4f885a2e2",
+      "frame": {
+        "x": 336,
+        "y": 361,
+        "w": 288,
+        "h": 237,
+        "pivotX": 144.0,
+        "pivotY": 237,
+        "duration": 1
+      },
+      "opaqueGripChecked": false
+    },
+    {
+      "grade": "myth",
+      "slot": "charm",
+      "sourceRect": [
+        1642,
+        27,
+        2154,
+        694
+      ],
+      "sourceRGBAsha256": "977a69d771130bd16b00956a29dec7be75a1285fd91c4633f63e93f753c42885",
+      "frame": {
+        "x": 689,
+        "y": 336,
+        "w": 221,
+        "h": 288,
+        "pivotX": 110.5,
+        "pivotY": 288,
+        "duration": 1
+      },
+      "opaqueGripChecked": false
+    },
+    {
+      "grade": "ultra",
+      "slot": "weapon",
+      "sourceRect": [
+        55,
+        22,
+        766,
+        704
+      ],
+      "sourceRGBAsha256": "d02871a17df54e74d2418013550354c1fc428307b834e2ab710ca356f7194ecc",
+      "frame": {
+        "x": 16,
+        "y": 662,
+        "w": 288,
+        "h": 276,
+        "pivotX": 144.0,
+        "pivotY": 276,
+        "duration": 1,
+        "gripX": 64.81012658227849,
+        "gripY": 216.9149560117302,
+        "tipX": 261.26582278481015,
+        "tipY": 2.0234604105571847
+      },
+      "opaqueGripChecked": true
+    },
+    {
+      "grade": "ultra",
+      "slot": "armor",
+      "sourceRect": [
+        827,
+        61,
+        1591,
+        724
+      ],
+      "sourceRGBAsha256": "a8dfc9f80ca0c1d1e14637d2832ea89f4720ed2caaa1125504188237f2a8dac4",
+      "frame": {
+        "x": 336,
+        "y": 675,
+        "w": 288,
+        "h": 250,
+        "pivotX": 144.0,
+        "pivotY": 250,
+        "duration": 1
+      },
+      "opaqueGripChecked": false
+    },
+    {
+      "grade": "ultra",
+      "slot": "charm",
+      "sourceRect": [
+        1622,
+        17,
+        2152,
+        708
+      ],
+      "sourceRGBAsha256": "90ba5a2e47bdc2dd9728198ee335db70de141745b8cb46d80d9f88304f5ceda1",
+      "frame": {
+        "x": 689,
+        "y": 656,
+        "w": 221,
+        "h": 288,
+        "pivotX": 110.5,
+        "pivotY": 288,
+        "duration": 1
+      },
+      "opaqueGripChecked": false
+    },
+    {
+      "grade": "extreme",
+      "slot": "weapon",
+      "sourceRect": [
+        0,
+        17,
+        839,
+        724
+      ],
+      "sourceRGBAsha256": "6801547eabdc6610d332139797294d7dd6f4f487d4e6e68daef54ca585fb9fc5",
+      "frame": {
+        "x": 16,
+        "y": 998,
+        "w": 288,
+        "h": 243,
+        "pivotX": 144.0,
+        "pivotY": 243,
+        "duration": 1,
+        "gripX": 84.10011918951132,
+        "gripY": 193.5063649222065,
+        "tipX": 284.22407628128724,
+        "tipY": 2.405940594059406
+      },
+      "opaqueGripChecked": true
+    },
+    {
+      "grade": "extreme",
+      "slot": "armor",
+      "sourceRect": [
+        807,
+        15,
+        1627,
+        724
+      ],
+      "sourceRGBAsha256": "849c26363f4fe4bcbd4e94b08d436b7e408be701a76de2c307daa02658d309d2",
+      "frame": {
+        "x": 336,
+        "y": 995,
+        "w": 288,
+        "h": 249,
+        "pivotX": 144.0,
+        "pivotY": 249,
+        "duration": 1
+      },
+      "opaqueGripChecked": false
+    },
+    {
+      "grade": "extreme",
+      "slot": "charm",
+      "sourceRect": [
+        1636,
+        17,
+        2158,
+        724
+      ],
+      "sourceRGBAsha256": "ba04a8afb8422e7e419806d72aeb3fab11ce5ae53167b60005f272e08c9623cb",
+      "frame": {
+        "x": 693,
+        "y": 976,
+        "w": 213,
+        "h": 288,
+        "pivotX": 106.5,
+        "pivotY": 288,
+        "duration": 1
+      },
+      "opaqueGripChecked": false
+    }
+  ],
+  "scope": "12 new silhouettes, 4 grades x 3 slots; original source retained; technical alpha-component packing and nearest-neighbor scale only"
+}

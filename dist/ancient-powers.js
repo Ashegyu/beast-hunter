@@ -1,0 +1,77 @@
+// Authored recipes, never loaded from save fields. Numbers are fractions of attack/max HP.
+const regions=[
+ [
+  {id:'ancient-1-weapon-1',index:0,name:'세계수의 뿌리',trigger:'finisher',cooldown:4,damage:.45,chill:2.2,push:18,radius:190,cone:true},
+  {id:'ancient-1-weapon-2',index:1,name:'가시 폭우',trigger:'heavy',cooldown:5,shots:3,damage:.4,bleed:3,cost:8,radius:270},
+  {id:'ancient-1-weapon-3',index:2,name:'수호령의 반월',trigger:'normal',cooldown:6,damage:.2,heal:.04,radius:120},
+  {id:'ancient-1-weapon-4',index:3,name:'핏빛 종자',trigger:'heavy',cooldown:6,ticks:3,damage:.18,heal:.025,radius:140,center:'target'},
+  {id:'ancient-1-weapon-5',index:4,name:'수액의 약속',trigger:'finisher',cooldown:5,stamina:18,shield:.06},
+  {id:'ancient-1-weapon-6',index:5,name:'숲의 속삭임',trigger:'normal',cooldown:4,shots:2,damage:.28,chill:1.3,radius:250},
+  {id:'ancient-1-weapon-8',index:6,name:'균사의 장막',trigger:'counter',cooldown:5,ticks:4,damage:.2,chill:.5,radius:160,center:'target'},
+  {id:'ancient-1-weapon-9',index:7,name:'줄기의 회전',trigger:'finisher',cooldown:5,damage:.5,push:65,dashRefund:.7,radius:210},
+  {id:'ancient-1-armor-1',index:8,name:'회피의 떡갈나무',trigger:'dash',cooldown:8,shield:.12,heal:.02},
+  {id:'ancient-1-armor-2',index:9,name:'뿔의 역습',trigger:'hurt',cooldown:4,damage:.4,push:55,radius:170},
+  {id:'ancient-1-armor-3',index:10,name:'균류의 숨결',trigger:'idle',cooldown:2,heal:.04,stamina:9,shield:.02},
+  {id:'ancient-1-armor-4',index:11,name:'가시덤불 방패',trigger:'perfect',cooldown:5,ticks:3,damage:.2,bleed:3,radius:170},
+  {id:'ancient-1-armor-5',index:12,name:'낙엽의 안식',trigger:'lowHp',cooldown:12,heal:.1,push:70,chill:1,radius:150},
+  {id:'ancient-1-armor-6',index:13,name:'뿌리의 덫',trigger:'dash',cooldown:6,ticks:3,chill:1,damage:.1,radius:135},
+  {id:'ancient-1-charm-1',index:14,name:'생명의 씨앗',trigger:'pickup',cooldown:4,heal:.06,shield:.04},
+  {id:'ancient-1-charm-2',index:15,name:'달빛의 잎',trigger:'finisher',cooldown:4,shots:2,damage:.32,stamina:12,radius:230},
+  {id:'ancient-1-charm-3',index:16,name:'추격의 새싹',trigger:'heavy',cooldown:4,thunderRefund:.6,heal:.025},
+  {id:'ancient-1-charm-4',index:17,name:'바람의 고리',trigger:'dash',cooldown:5,stamina:14,push:45,damage:.15,radius:120},
+  {id:'ancient-1-charm-5',index:18,name:'숲의 새벽',trigger:'periodic',cooldown:9,heal:.02,ticks:3,damage:.12,radius:150},
+  {id:'ancient-1-charm-6',index:19,name:'심록의 심장',trigger:'normal',cooldown:5,bleed:4,shield:.03,radius:105},
+ ],
+ [
+  {id:'ancient-2-weapon-1',index:20,name:'망자의 행렬',trigger:'finisher',cooldown:5,shots:4,damage:.3,push:20,radius:290},
+  {id:'ancient-2-weapon-2',index:21,name:'무덤의 종소리',trigger:'heavy',cooldown:6,damage:.55,chill:1.1,stamina:7,radius:240},
+  {id:'ancient-2-weapon-3',index:22,name:'관의 봉인',trigger:'normal',cooldown:5,ticks:2,damage:.23,chill:1.5,radius:110,center:'target'},
+  {id:'ancient-2-weapon-4',index:23,name:'장례의 맹세',trigger:'heavy',cooldown:5,damage:.65,heal:.06,hpCost:.035,radius:160,cone:true},
+  {id:'ancient-2-weapon-5',index:24,name:'검은 깃의 잔향',trigger:'counter',cooldown:5,shots:3,damage:.5,bleed:2,radius:310},
+  {id:'ancient-2-weapon-6',index:25,name:'왕좌의 낙인',trigger:'finisher',cooldown:6,ticks:4,damage:.17,push:25,radius:175,center:'target'},
+  {id:'ancient-2-weapon-8',index:26,name:'은빛 초승달',trigger:'normal',cooldown:4,shots:1,damage:.5,heal:.025,radius:300},
+  {id:'ancient-2-weapon-9',index:27,name:'사슬의 선고',trigger:'heavy',cooldown:5,damage:.45,bleed:5,thunderRefund:.5,radius:180},
+  {id:'ancient-2-armor-1',index:28,name:'성당의 안식',trigger:'idle',cooldown:3,shield:.1,heal:.025,stamina:5},
+  {id:'ancient-2-armor-2',index:29,name:'귀환의 쇠사슬',trigger:'dash',cooldown:6,damage:.25,stamina:16,radius:160,center:'target'},
+  {id:'ancient-2-armor-3',index:30,name:'왕의 반격',trigger:'hurt',cooldown:5,shots:3,damage:.3,shield:.05,radius:240},
+  {id:'ancient-2-armor-4',index:31,name:'까마귀의 장막',trigger:'perfect',cooldown:6,ticks:4,damage:.15,chill:.8,radius:185},
+  {id:'ancient-2-armor-5',index:32,name:'유언의 등불',trigger:'lowHp',cooldown:14,heal:.12,shield:.08,hpCost:.02},
+  {id:'ancient-2-armor-6',index:33,name:'장례의 바람',trigger:'dash',cooldown:7,push:90,chill:1.5,radius:200},
+  {id:'ancient-2-charm-1',index:34,name:'영혼의 서약',trigger:'pickup',cooldown:4,stamina:20,thunderRefund:1.2},
+  {id:'ancient-2-charm-2',index:35,name:'귀향의 종',trigger:'heavy',cooldown:5,shield:.08,dashRefund:1.2},
+  {id:'ancient-2-charm-3',index:36,name:'깃털의 역류',trigger:'finisher',cooldown:5,shots:3,damage:.2,heal:.03,radius:230},
+  {id:'ancient-2-charm-4',index:37,name:'모래시계의 거래',trigger:'periodic',cooldown:8,stamina:22,thunderRefund:.8,hpCost:.025},
+  {id:'ancient-2-charm-5',index:38,name:'묘비의 봉헌',trigger:'normal',cooldown:6,bleed:2,heal:.035,radius:140},
+  {id:'ancient-2-charm-6',index:39,name:'달의 장송곡',trigger:'perfect',cooldown:6,damage:.35,stamina:18,push:40,radius:230},
+ ],
+ [
+  {id:'ancient-3-weapon-1',index:40,name:'삼중 빙창',trigger:'heavy',cooldown:5,shots:3,damage:.45,chill:2,radius:320},
+  {id:'ancient-3-weapon-2',index:41,name:'왕좌의 눈꽃',trigger:'finisher',cooldown:5,damage:.5,chill:2.5,push:30,radius:240},
+  {id:'ancient-3-weapon-3',index:42,name:'얼음의 굴절',trigger:'normal',cooldown:4,shots:2,damage:.35,push:15,radius:270},
+  {id:'ancient-3-weapon-4',index:43,name:'결빙의 대가',trigger:'heavy',cooldown:4,ticks:3,damage:.25,chill:1.2,cost:12,radius:200,center:'target'},
+  {id:'ancient-3-weapon-5',index:44,name:'극광의 절단',trigger:'counter',cooldown:5,damage:.75,bleed:3,stamina:15,radius:220,cone:true},
+  {id:'ancient-3-weapon-6',index:45,name:'혜성의 궤도',trigger:'finisher',cooldown:6,shots:4,damage:.25,chill:1.2,thunderRefund:.7,radius:320},
+  {id:'ancient-3-weapon-8',index:46,name:'빙룡의 숨결',trigger:'normal',cooldown:5,damage:.3,chill:2.8,shield:.04,radius:180,cone:true},
+  {id:'ancient-3-weapon-9',index:47,name:'눈보라의 나선',trigger:'heavy',cooldown:7,ticks:5,damage:.12,push:35,radius:210},
+  {id:'ancient-3-armor-1',index:48,name:'빙하의 거울',trigger:'hurt',cooldown:5,damage:.25,chill:2,shield:.09,radius:170},
+  {id:'ancient-3-armor-2',index:49,name:'눈꽃의 재생',trigger:'idle',cooldown:3,heal:.05,chill:1,radius:145},
+  {id:'ancient-3-armor-3',index:50,name:'고드름의 응징',trigger:'perfect',cooldown:5,shots:4,damage:.3,chill:1.8,radius:285},
+  {id:'ancient-3-armor-4',index:51,name:'극광의 잔상',trigger:'dash',cooldown:6,ticks:3,damage:.18,heal:.015,radius:155},
+  {id:'ancient-3-armor-5',index:52,name:'용린의 각성',trigger:'lowHp',cooldown:15,shield:.18,chill:2.2,stamina:15,radius:185},
+  {id:'ancient-3-armor-6',index:53,name:'별핵의 수호',trigger:'dash',cooldown:7,shield:.1,thunderRefund:.9,push:40,radius:140},
+  {id:'ancient-3-charm-1',index:54,name:'눈꽃의 공명',trigger:'finisher',cooldown:5,chill:1.3,stamina:16,heal:.025,radius:165},
+  {id:'ancient-3-charm-2',index:55,name:'쌍정의 축전',trigger:'heavy',cooldown:5,ticks:2,damage:.2,shield:.06,radius:120},
+  {id:'ancient-3-charm-3',index:56,name:'극광의 순환',trigger:'periodic',cooldown:10,shots:2,damage:.2,heal:.04,radius:300},
+  {id:'ancient-3-charm-4',index:57,name:'빙룡의 이빨',trigger:'normal',cooldown:6,bleed:3,chill:1.5,stamina:8,radius:115},
+  {id:'ancient-3-charm-5',index:58,name:'별자리의 길',trigger:'perfect',cooldown:6,dashRefund:1.5,thunderRefund:1.3,shield:.07},
+  {id:'ancient-3-charm-6',index:59,name:'설풍의 등불',trigger:'pickup',cooldown:4,chill:1.6,heal:.04,push:50,radius:180},
+ ],
+];
+const triggers={normal:'일반 연격 적중',heavy:'파쇄 적중',finisher:'3연격 마무리 적중',counter:'완벽 반격 적중',dash:'회피 사용',perfect:'완벽 회피',hurt:'피격 생존',lowHp:'체력 35% 이하에서 피격 생존',idle:'1.5초 정지',periodic:'전투 중 주기적 발동',pickup:'장비 또는 핵 회수'};
+export const ANCIENT_POWERS=Object.freeze(regions.flat().map(r=>{
+ const actions=[];if(r.damage)actions.push((r.shots?'주변 '+r.shots+'마리에 각각 ':r.cone?'전방 ':r.center==='target'?'적중 지점 주변 ':'주변 ')+Math.round(r.damage*100)+'% 피해'+(r.ticks?' · 0.6초 간격 '+r.ticks+'회':''));
+ if(r.chill)actions.push(r.chill+'초 빙결');if(r.bleed)actions.push('출혈 '+r.bleed+'회');if(r.push)actions.push('밀쳐내기 '+r.push);if(r.heal)actions.push('최대 체력 '+Number((r.heal*100).toFixed(1))+'% 회복'+(r.ticks?' · 각 맥동':''));if(r.shield)actions.push('최대 체력 '+Number((r.shield*100).toFixed(1))+'% 보호막 3초');if(r.stamina)actions.push('기력 '+r.stamina+' 회복');if(r.dashRefund)actions.push('회피 대기 '+r.dashRefund+'초 감소');if(r.thunderRefund)actions.push('파쇄 대기 '+r.thunderRefund+'초 감소');if(r.cost)actions.push('기력 '+r.cost+' 소모');if(r.hpCost)actions.push('최대 체력 '+(r.hpCost*100).toFixed(1)+'% 소모 · 치명적 소모 불가');
+ return Object.freeze({...r,radius:r.radius??0,color:['#b8e894','#ceb7ff','#96ecfa'][Number(r.id.split('-')[1])-1],description:triggers[r.trigger]+': '+actions.join(' · ')+'. 재사용 '+r.cooldown+'초.'});
+}));
+
+export const ANCIENT_POWER_BY_ID=Object.freeze(Object.fromEntries(ANCIENT_POWERS.map(r=>[r.id,r])));

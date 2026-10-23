@@ -1,0 +1,154 @@
+/* Alpha 0.83: shared painted surfaces and size-independent atlas thumbnails. */
+#game-shell{--ui-panel:url('assets/ui-panel-v080.webp');--ui-slot:url('assets/ui-slot-v080.webp');--ui-crest:url('assets/ui-crest-v080.webp')}
+
+/* Image borders use fixed-size corners so long panels do not stretch the ornament. */
+#game-shell :is(.skill-detail,.skill-presets,.growth-progress,.result-growth),#game-shell #inventory-content .build-card{border:10px solid transparent;border-image:var(--ui-panel) 18% fill / 10px / 0 stretch;border-radius:0;background:#0d1519;box-shadow:none}
+#game-shell .skill-detail{padding:12px;margin:0}
+#game-shell .skill-presets{padding:4px 8px 9px;margin:14px 0 0}
+#game-shell .skill-presets>summary{display:list-item;min-height:var(--ui-touch-size);padding:11px 0;line-height:1.7;color:#e5cfa5}
+#game-shell :is(.growth-progress,.result-growth),#game-shell #inventory-content .build-card{padding:9px 10px}
+
+/* Category tabs share the existing painted button set, with symmetric label space. */
+#game-shell :is(.inventory-tabs,.armory-categories,.craft-categories,.archive-categories,.skill-tabs,.stage-tabs){height:auto;min-height:var(--ui-touch-size);align-items:stretch;border:0;gap:6px}
+#game-shell :is(.inventory-tabs,.armory-categories,.craft-categories,.archive-categories,.skill-tabs,.stage-tabs)>button{display:flex;align-items:center;justify-content:center;min-width:0;min-height:var(--ui-touch-size);height:auto;margin:0;padding:9px 7px;border:1px solid transparent;border-radius:0;background:#11191d url('assets/button-secondary-v043.webp') 50% 43% / 100% 138% no-repeat;box-shadow:none;font-size:12px;line-height:1.6;text-align:center;white-space:normal;overflow-wrap:anywhere;word-break:keep-all;color:#bdb9ab;text-shadow:0 1px 3px #000}
+#game-shell :is(.inventory-tabs,.armory-categories,.craft-categories,.archive-categories,.skill-tabs,.stage-tabs)>button:is([aria-pressed=true],.selected){background-image:url('assets/button-primary-v043.webp');background-size:100% 160%;color:#ffe9c5;border-color:#d7b97b80}
+#game-shell :is(.inventory-tabs,.armory-categories,.craft-categories,.archive-categories,.skill-tabs,.stage-tabs)>button:disabled{filter:grayscale(.8);color:#858d86}
+#game-shell :is(.inventory-tabs,.armory-categories,.craft-categories,.archive-categories,.skill-tabs,.stage-tabs)>button:focus-visible{outline:2px solid #e6c98b;outline-offset:2px}
+#game-shell #inventory-content .inventory-tabs>button{background:#11191d url('assets/button-secondary-v043.webp') 50% 43% / 100% 138% no-repeat!important}
+#game-shell #inventory-content .inventory-tabs>button[aria-pressed=true]{background-image:url('assets/button-primary-v043.webp')!important;background-size:100% 160%!important}
+
+/* Empty socket art sits behind item art; equipped/rarity indicators stay on top. */
+#game-shell #inventory-content .bag-tile,#game-shell #inventory-content .equipped-slot,#game-shell #craft-content .craft-recipes button{background-color:#11191d!important;background-image:var(--ui-slot)!important;background-size:100% 100%!important;background-position:center!important;background-repeat:no-repeat!important;border-radius:0}
+#game-shell #inventory-content .bag-tile[aria-pressed=true]{outline-color:#f2cf8d}
+
+/* Only the thumbnail's viewport has a layout size. Atlas pixels scale inside it. */
+#game-shell .atlas-thumbnail{position:relative;overflow:hidden;padding:0;border:0;image-rendering:auto}
+#game-shell .atlas-thumbnail>img{position:absolute;display:block;max-width:none;max-height:none;min-width:0;min-height:0;margin:0;padding:0;border:0;border-radius:0;object-fit:fill;transform:none;image-rendering:auto;pointer-events:none;user-select:none}
+#game-shell .atlas-thumbnail>img[hidden]{display:none}
+#game-shell #craft-content #craft-detail #craft-art{right:8px;top:10px;width:200px;height:200px;transform:none}
+#game-shell #track-content #track-art{right:8px;top:8px;width:184px;height:184px;transform:none}
+#game-shell #codex-content #codex-feature-art{right:8px;width:148px;height:148px;margin-top:-74px;transform:none}
+
+/* Equipped skills become compact, recognisable image slots above the library. */
+#game-shell .skill-equipped{gap:7px;margin:12px 0}
+#game-shell .skill-equipped>button{display:grid;grid-template-columns:34px minmax(0,1fr);grid-template-rows:auto auto;align-content:center;align-items:center;gap:3px 6px;min-width:0;min-height:70px;padding:7px 5px;border-radius:0;background:#121e23;border-color:#ad93604d;text-align:left}
+#game-shell .skill-equipped .skill-slot-art{display:grid;place-items:center;grid-column:1;grid-row:1/3;width:34px;height:34px;padding:4px;background:var(--ui-slot) center / 100% 100% no-repeat}
+#game-shell .skill-slot-art img{display:block;width:26px;height:26px;object-fit:cover}
+#game-shell .skill-slot-art img[hidden]{display:none}
+#game-shell .skill-equipped>button>small{grid-column:2;font-size:9px;line-height:1.4;color:#b8b9a9}
+#game-shell .skill-equipped>button>strong{grid-column:2;min-width:0;font-size:11px;line-height:1.5;color:#ecdfc4}
+#game-shell .skill-equipped>button[data-empty=true] .skill-slot-art{opacity:.55}
+#game-shell .skill-equipped>button:disabled{color:#8e978d;background:#11191c}
+#game-shell .skill-workspace{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start;margin-top:10px}
+#game-shell :is(.skill-library,.skill-editor){min-width:0}
+#game-shell .skill-library{scroll-margin-top:12px}
+#game-shell .skill-tabs{margin:0 0 10px}
+#game-shell .skill-card{padding:6px 5px 8px;border-radius:0;background:#111d22;border-color:#a88d5b47;min-height:var(--ui-touch-size)}
+#game-shell .skill-card[aria-pressed=true]{border-color:#eed18c;box-shadow:inset 0 -2px #cda35b;background:#302527}
+#game-shell .skill-card img{border-radius:2px}
+#game-shell #skill-list-back{display:flex;align-items:center;justify-content:center;min-height:var(--ui-touch-size);min-width:116px;margin:0 0 10px;padding:8px 12px;border:0;border-radius:0;background:#11191d url('assets/button-secondary-v043.webp') 50% 43% / 100% 138% no-repeat;font:12px/1.6 var(--body);color:#e4d3ae}
+#game-shell .skill-detail header{align-items:center;gap:10px}
+#game-shell .skill-detail img{width:64px;height:64px}
+#game-shell .skill-detail h3{font-size:21px;line-height:1.5}
+#game-shell .skill-levels table{table-layout:fixed}
+#game-shell .skill-levels th:first-child{width:44px}
+#game-shell .skill-levels th:last-child{width:60px}
+#game-shell .skill-levels :is(th,td){overflow-wrap:anywhere;word-break:keep-all;vertical-align:top}
+
+/* Shared crescent ornament and framed pause/result dialogs. All content can scroll. */
+#game-shell #overlay:is([data-panel=pause],[data-panel=result]) .modal{border:12px solid transparent;border-image:var(--ui-panel) 18% fill / 12px / 0 stretch;border-radius:0;background:#0b1419;padding:15px;scrollbar-width:thin}
+#game-shell #overlay:is([data-panel=pause],[data-panel=result]) .panel-heading{padding:0 0 12px;margin-bottom:12px}
+#game-shell #overlay:is([data-panel=pause],[data-panel=result]) .dialog-emblem{display:block;width:190px;max-width:75%;height:48px;margin:0 auto 4px;background:var(--ui-crest) center / contain no-repeat}
+#game-shell #overlay:is([data-panel=pause],[data-panel=result]) #modal-eyebrow{font-size:9px;line-height:1.5;letter-spacing:2.5px;margin-bottom:4px}
+#game-shell #overlay:is([data-panel=pause],[data-panel=result]) #modal-title{font-size:27px;line-height:1.5;margin:4px 0 0;overflow-wrap:anywhere;word-break:keep-all}
+#game-shell #pause-stage{margin:0 0 3px;font:12px/1.7 var(--body);color:#c7a76b}
+#game-shell #pause-progress{margin:0 0 12px;font:13px/1.9 var(--body);overflow-wrap:anywhere;word-break:keep-all}
+#game-shell #pause-vitals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:0;padding:0;background:none;border:0}
+#game-shell #pause-vitals>span{display:flex;flex-direction:column;justify-content:center;gap:4px;min-width:0;min-height:60px;padding:8px 3px;background:#151e20;border-block:1px solid #a38c604d}
+#game-shell #pause-vitals small{font:10px/1.5 var(--body);color:#9fae9f}
+#game-shell #pause-vitals b{font:500 13px/1.6 var(--body);color:#e6d8b9;overflow-wrap:anywhere}
+#game-shell #pause-growth{margin:9px 0;font:11px/1.8 var(--body);color:#b4bfa9}
+#game-shell .pause-description{font-size:11px}
+#game-shell #overlay[data-panel=result] .result-stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-bottom:12px}
+#game-shell #overlay[data-panel=result] .result-stats>span{order:0;min-width:0;min-height:76px;gap:7px;padding:10px 4px;background:#131d20;border-block:1px solid #a38c604d;font-size:11px;line-height:1.5;overflow-wrap:anywhere}
+#game-shell #overlay[data-panel=result] .result-stats>span b,#game-shell #overlay[data-panel=result] .result-stats>span:is(:nth-child(2),:nth-child(6)) b{font:500 clamp(19px,5vw,26px)/1.25 var(--body);color:#e6d1a7;max-width:100%;overflow-wrap:anywhere}
+#game-shell #overlay[data-panel=result] .result-loot-gallery{padding:10px 0;border-inline:0;background:none}
+#game-shell #overlay:is([data-panel=pause],[data-panel=result]) :is(.pause-actions,.result-actions){position:static;flex-shrink:0}
+
+/* Six menu symbols share a single transparent 3 x 2 painted atlas. */
+#game-shell .ui-nav-icon{display:block;flex:none;width:32px;height:32px;background-image:url('assets/ui-nav-v080.webp');background-repeat:no-repeat;background-size:300% 200%;pointer-events:none}
+#game-shell .ui-nav-icon[data-ui-icon=home]{background-position:0 0}
+#game-shell .ui-nav-icon[data-ui-icon=hunt]{background-position:50% 0}
+#game-shell .ui-nav-icon[data-ui-icon=equipment]{background-position:100% 0}
+#game-shell .ui-nav-icon[data-ui-icon=craft]{background-position:0 100%}
+#game-shell .ui-nav-icon[data-ui-icon=more]{background-position:50% 100%}
+#game-shell .ui-nav-icon[data-ui-icon=skills]{background-position:100% 100%}
+#game-shell .app-nav button>svg{display:none}
+#game-shell .app-nav button{min-height:64px;padding:5px 3px;gap:2px}
+#game-shell .app-nav button>.ui-nav-icon{width:30px;height:30px;margin:0 auto}
+#game-shell .app-nav button[aria-pressed=true]>.ui-nav-icon{filter:brightness(1.2) drop-shadow(0 0 4px #bd864755)}
+
+/* Archive, growth, tracking, currencies and filters use the matching utility atlas. */
+#game-shell .ui-utility-icon{display:block;flex:none;width:32px;height:32px;background-image:url('assets/ui-utility-v080.webp');background-repeat:no-repeat;background-size:300% 200%;pointer-events:none}
+#game-shell .ui-utility-icon[data-ui-icon=codex]{background-position:0 0}
+#game-shell .ui-utility-icon[data-ui-icon=growth]{background-position:50% 0}
+#game-shell .ui-utility-icon[data-ui-icon=tracking]{background-position:100% 0}
+#game-shell .ui-utility-icon[data-ui-icon=gold]{background-position:0 100%}
+#game-shell .ui-utility-icon[data-ui-icon=core]{background-position:50% 100%}
+#game-shell .ui-utility-icon[data-ui-icon=filter]{background-position:100% 100%}
+#game-shell .wallet i.ui-utility-icon{width:18px;height:18px;min-width:18px;font-size:0;line-height:0}
+#game-shell #bag-filter-toggle>.ui-utility-icon{width:25px;height:25px;margin:auto}
+#game-shell #camp-more-panel .more-menu>button{border:9px solid transparent;border-image:var(--ui-panel) 18% fill / 9px / 0 stretch;border-radius:0;background:#11191d;padding:10px 12px;gap:12px}
+#game-shell #camp-more-panel .more-menu>button>.ui-utility-icon{width:46px;height:46px}
+#game-shell #camp-more-panel .more-menu>button>span:last-child{min-width:0;overflow-wrap:anywhere;word-break:keep-all}
+
+/* Save failures stay reachable above menus and combat, outside the hidden footer. */
+#game-shell .save-banner{position:absolute;z-index:90;top:calc(env(safe-area-inset-top,0px) + 8px);left:10px;right:10px;padding:10px 12px;border:1px solid #d5a16c;background:#241b19f5;box-shadow:0 4px 20px #0007;color:#f1dfbe;font:12px/1.7 var(--body)}
+#game-shell .save-banner p{margin:0 0 6px;overflow-wrap:anywhere;word-break:keep-all}
+#game-shell .save-banner>div{display:flex;gap:8px;flex-wrap:wrap}
+#game-shell .save-banner button{flex:1;min-width:100px;min-height:var(--ui-touch-size);padding:8px;border:1px solid #b99a6855;background:#10191d;color:#ead5ac;font-size:12px}
+#game-shell .backup-panel{margin:20px 0 0;padding:12px;border:1px solid #a38c604d;background:#0d171d;min-width:0}
+#game-shell .backup-panel h3{margin:0 0 7px;font-size:20px;line-height:1.5;color:#e9d9b9}
+#game-shell .backup-panel p{font-size:12px;line-height:1.8;color:#b9c3b5;overflow-wrap:anywhere;word-break:keep-all;margin:8px 0}
+#game-shell #backup-storage-status{color:#dcc696}
+#game-shell .backup-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;min-width:0;margin:10px 0}
+#game-shell .backup-actions button{min-width:0;min-height:var(--ui-action-size);white-space:normal}
+#game-shell #backup-previous{width:100%;min-height:var(--ui-touch-size);padding:8px;background:none;border:1px solid #a38c604d;color:#dac7a3;font-size:12px}
+#game-shell #backup-previous:disabled{opacity:.45}
+#game-shell #backup-feedback{color:#e8c995}
+#game-shell .backup-review{padding:10px;border:1px solid #d1b27788;background:#1e2524}
+#game-shell #backup-summary{white-space:pre-line;color:#eee1c3}
+
+@media(max-width:360px){
+ #game-shell :is(.inventory-tabs,.armory-categories,.craft-categories,.archive-categories,.skill-tabs,.stage-tabs)>button{padding-inline:4px;font-size:11px}
+ #game-shell .skill-equipped{gap:5px}
+ #game-shell .skill-equipped>button{grid-template-columns:28px minmax(0,1fr);gap:3px 4px;padding:6px 3px}
+ #game-shell .skill-equipped .skill-slot-art{width:28px;height:28px;padding:3px}
+ #game-shell .skill-slot-art img{width:22px;height:22px}
+ #game-shell .skill-equipped>button>strong{font-size:10px}
+ #game-shell .skill-detail{padding:8px}
+ #game-shell #overlay:is([data-panel=pause],[data-panel=result]) .modal{border-width:10px;border-image-width:10px;padding:10px}
+ #game-shell #overlay:is([data-panel=pause],[data-panel=result]) #modal-title{font-size:24px}
+ #game-shell #overlay:is([data-panel=pause],[data-panel=result]) .dialog-emblem{height:40px}
+ #game-shell #pause-vitals b{font-size:11px}
+ #game-shell #overlay[data-panel=result] .result-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(orientation:landscape) and (max-height:500px){
+ #game-shell #overlay:is([data-panel=pause],[data-panel=result]) .modal{padding:10px 15px}
+ #game-shell #overlay:is([data-panel=pause],[data-panel=result]) .dialog-emblem{display:none}
+ #game-shell #overlay:is([data-panel=pause],[data-panel=result]) #modal-title{font-size:23px}
+ #game-shell .app-nav button{min-height:50px}
+ #game-shell .app-nav button>.ui-nav-icon{width:24px;height:24px}
+}
+
+/* Compact camp/result preparation; native text wraps inside each action. */
+#game-shell .preparation-guide{min-width:0;padding:12px;margin:12px 0;border:1px solid #a38c604d;background:#0d171de8}
+#game-shell .preparation-guide h3{font:500 17px/1.6 var(--body);margin:0;color:#e7d4af}
+#game-shell .preparation-guide p,#game-shell #bag-storage-note,#game-shell #result-storage-note{font:12px/1.8 var(--body);color:#b8c3b5;white-space:normal;overflow-wrap:anywhere;word-break:keep-all}
+#game-shell .preparation-guide>div{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+#game-shell .preparation-guide button{min-width:0;min-height:var(--ui-action-size);padding:9px 5px;border:1px solid #a38c604d;background:#142026;color:#e4d5b8;font:12px/1.6 var(--body);white-space:normal;overflow-wrap:anywhere;word-break:keep-all}
+#game-shell .preparation-guide small{display:block;font-size:10px;line-height:1.8;color:#aab7ac}
+#game-shell #map-prepare-title{margin:0}
+#game-shell .preparation-guide button{display:flex;flex-direction:column;align-items:center;justify-content:center}
+#game-shell .bag-pages{display:flex;justify-content:center;align-items:center;gap:14px;margin:10px 0;color:#cfbf9d;font:12px var(--body)}
+#game-shell .bag-pages button{min-width:var(--ui-touch-size);min-height:var(--ui-touch-size);border:1px solid #a38c604d;background:#142026;color:#e4d5b8}

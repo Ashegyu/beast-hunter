@@ -1,0 +1,40 @@
+{
+  "scope": "Node CPU only: average query time within 1000-call batches. Not per-call tail latency, browser/GPU/device timing or whole-frame performance.",
+  "node": "v24.19.0",
+  "checksum": 240004146480000,
+  "rows": [
+    {
+      "level": 5,
+      "xp": 0,
+      "base": 9,
+      "calls": 240000,
+      "batchSize": 1000,
+      "measuredBatches": 200,
+      "meanMs": 0.000057468714999999683,
+      "p95BatchAverageMs": 0.00007887900000000058,
+      "maxBatchAverageMs": 0.00019056700000000148
+    },
+    {
+      "level": 19,
+      "xp": 668,
+      "base": 240,
+      "calls": 240000,
+      "batchSize": 1000,
+      "measuredBatches": 200,
+      "meanMs": 0.00007758103000000088,
+      "p95BatchAverageMs": 0.00011279000000000394,
+      "maxBatchAverageMs": 0.00019562400000000933
+    },
+    {
+      "level": 1,
+      "xp": 0,
+      "base": 1000000000,
+      "calls": 240000,
+      "batchSize": 1000,
+      "measuredBatches": 200,
+      "meanMs": 0.00009008298500000033,
+      "p95BatchAverageMs": 0.00012174400000000674,
+      "maxBatchAverageMs": 0.00043791000000000224
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "scope": "Static HTML ID and local HTML/CSS asset references. Does not compute browser layout.",
+  "ids": 1493,
+  "duplicateIds": [],
+  "htmlReferences": 62,
+  "cssFiles": 22,
+  "cssUrlReferences": 63,
+  "missing": [],
+  "saveStatusOutsideFooter": true,
+  "backupDownloadConnected": true,
+  "distBytes": 243862857
+}

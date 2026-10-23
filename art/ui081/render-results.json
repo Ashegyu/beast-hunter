@@ -1,0 +1,259 @@
+{
+  "scope": "Offline native Canvas render of actual app thumbnail placement and clip styles at specified square sizes. Not browser/CSS layout or device QA.",
+  "cases": 36,
+  "stateUnchanged": true,
+  "report": [
+    {
+      "catalogId": "1-weapon-1",
+      "slot": "weapon",
+      "edge": 32,
+      "beforeAlphaRatio": 0,
+      "afterAlphaRatio": 1
+    },
+    {
+      "catalogId": "1-weapon-1",
+      "slot": "weapon",
+      "edge": 44,
+      "beforeAlphaRatio": 0.05989058450906997,
+      "afterAlphaRatio": 0.9997120644975526
+    },
+    {
+      "catalogId": "1-weapon-1",
+      "slot": "weapon",
+      "edge": 56,
+      "beforeAlphaRatio": 0.6735528913559758,
+      "afterAlphaRatio": 0.9999942773756044
+    },
+    {
+      "catalogId": "1-weapon-1",
+      "slot": "weapon",
+      "edge": 80,
+      "beforeAlphaRatio": 1.0001505297812021,
+      "afterAlphaRatio": 1.0001505297812021
+    },
+    {
+      "catalogId": "ancient-1-weapon-1",
+      "slot": "weapon",
+      "edge": 32,
+      "beforeAlphaRatio": 0,
+      "afterAlphaRatio": 1
+    },
+    {
+      "catalogId": "ancient-1-weapon-1",
+      "slot": "weapon",
+      "edge": 44,
+      "beforeAlphaRatio": 0.05285533449568893,
+      "afterAlphaRatio": 1
+    },
+    {
+      "catalogId": "ancient-1-weapon-1",
+      "slot": "weapon",
+      "edge": 56,
+      "beforeAlphaRatio": 0.9433452060769063,
+      "afterAlphaRatio": 1
+    },
+    {
+      "catalogId": "ancient-1-weapon-1",
+      "slot": "weapon",
+      "edge": 80,
+      "beforeAlphaRatio": 1,
+      "afterAlphaRatio": 1
+    },
+    {
+      "catalogId": "crafted-frost-blade",
+      "slot": "weapon",
+      "edge": 32,
+      "beforeAlphaRatio": 0.00039120098703018265,
+      "afterAlphaRatio": 1.0000300923836176
+    },
+    {
+      "catalogId": "crafted-frost-blade",
+      "slot": "weapon",
+      "edge": 44,
+      "beforeAlphaRatio": 0.06576679606333456,
+      "afterAlphaRatio": 0.9999838925309666
+    },
+    {
+      "catalogId": "crafted-frost-blade",
+      "slot": "weapon",
+      "edge": 56,
+      "beforeAlphaRatio": 0.9164900675367887,
+      "afterAlphaRatio": 1
+    },
+    {
+      "catalogId": "crafted-frost-blade",
+      "slot": "weapon",
+      "edge": 80,
+      "beforeAlphaRatio": 1,
+      "afterAlphaRatio": 1
+    },
+    {
+      "catalogId": "1-armor-1",
+      "slot": "armor",
+      "edge": 32,
+      "beforeAlphaRatio": 0.6176701148188567,
+      "afterAlphaRatio": 1.0000076853317759
+    },
+    {
+      "catalogId": "1-armor-1",
+      "slot": "armor",
+      "edge": 44,
+      "beforeAlphaRatio": 0.9998175456237304,
+      "afterAlphaRatio": 0.9998905273742382
+    },
+    {
+      "catalogId": "1-armor-1",
+      "slot": "armor",
+      "edge": 56,
+      "beforeAlphaRatio": 1.1223832890649619,
+      "afterAlphaRatio": 0.9999974989620692
+    },
+    {
+      "catalogId": "1-armor-1",
+      "slot": "armor",
+      "edge": 80,
+      "beforeAlphaRatio": 1,
+      "afterAlphaRatio": 1
+    },
+    {
+      "catalogId": "ancient-1-armor-1",
+      "slot": "armor",
+      "edge": 32,
+      "beforeAlphaRatio": 0.4069679674775216,
+      "afterAlphaRatio": 1
+    },
+    {
+      "catalogId": "ancient-1-armor-1",
+      "slot": "armor",
+      "edge": 44,
+      "beforeAlphaRatio": 0.9322045885315002,
+      "afterAlphaRatio": 1.0000070723358512
+    },
+    {
+      "catalogId": "ancient-1-armor-1",
+      "slot": "armor",
+      "edge": 56,
+      "beforeAlphaRatio": 1.2362527590448689,
+      "afterAlphaRatio": 1
+    },
+    {
+      "catalogId": "ancient-1-armor-1",
+      "slot": "armor",
+      "edge": 80,
+      "beforeAlphaRatio": 0.9999978689488803,
+      "afterAlphaRatio": 0.9999978689488803
+    },
+    {
+      "catalogId": "crafted-frost-armor",
+      "slot": "armor",
+      "edge": 32,
+      "beforeAlphaRatio": 0.32464706723598996,
+      "afterAlphaRatio": 1
+    },
+    {
+      "catalogId": "crafted-frost-armor",
+      "slot": "armor",
+      "edge": 44,
+      "beforeAlphaRatio": 0.8734588106928532,
+      "afterAlphaRatio": 1
+    },
+    {
+      "catalogId": "crafted-frost-armor",
+      "slot": "armor",
+      "edge": 56,
+      "beforeAlphaRatio": 1.1488009858785027,
+      "afterAlphaRatio": 1.0000033670713886
+    },
+    {
+      "catalogId": "crafted-frost-armor",
+      "slot": "armor",
+      "edge": 80,
+      "beforeAlphaRatio": 1,
+      "afterAlphaRatio": 1
+    },
+    {
+      "catalogId": "1-charm-1",
+      "slot": "charm",
+      "edge": 32,
+      "beforeAlphaRatio": 0.06998423839096873,
+      "afterAlphaRatio": 1
+    },
+    {
+      "catalogId": "1-charm-1",
+      "slot": "charm",
+      "edge": 44,
+      "beforeAlphaRatio": 0.4579553829582176,
+      "afterAlphaRatio": 0.9999716537218664
+    },
+    {
+      "catalogId": "1-charm-1",
+      "slot": "charm",
+      "edge": 56,
+      "beforeAlphaRatio": 0.9600560371245951,
+      "afterAlphaRatio": 1
+    },
+    {
+      "catalogId": "1-charm-1",
+      "slot": "charm",
+      "edge": 80,
+      "beforeAlphaRatio": 1,
+      "afterAlphaRatio": 1
+    },
+    {
+      "catalogId": "ancient-1-charm-1",
+      "slot": "charm",
+      "edge": 32,
+      "beforeAlphaRatio": 0,
+      "afterAlphaRatio": 1
+    },
+    {
+      "catalogId": "ancient-1-charm-1",
+      "slot": "charm",
+      "edge": 44,
+      "beforeAlphaRatio": 0.1620493588192596,
+      "afterAlphaRatio": 1
+    },
+    {
+      "catalogId": "ancient-1-charm-1",
+      "slot": "charm",
+      "edge": 56,
+      "beforeAlphaRatio": 1.1430904494507708,
+      "afterAlphaRatio": 1
+    },
+    {
+      "catalogId": "ancient-1-charm-1",
+      "slot": "charm",
+      "edge": 80,
+      "beforeAlphaRatio": 1,
+      "afterAlphaRatio": 1
+    },
+    {
+      "catalogId": "crafted-frost-charm",
+      "slot": "charm",
+      "edge": 32,
+      "beforeAlphaRatio": 0.0042836945282660535,
+      "afterAlphaRatio": 1
+    },
+    {
+      "catalogId": "crafted-frost-charm",
+      "slot": "charm",
+      "edge": 44,
+      "beforeAlphaRatio": 0.775997268779806,
+      "afterAlphaRatio": 0.9999893311711173
+    },
+    {
+      "catalogId": "crafted-frost-charm",
+      "slot": "charm",
+      "edge": 56,
+      "beforeAlphaRatio": 1.4530672335481145,
+      "afterAlphaRatio": 1
+    },
+    {
+      "catalogId": "crafted-frost-charm",
+      "slot": "charm",
+      "edge": 80,
+      "beforeAlphaRatio": 1,
+      "afterAlphaRatio": 1
+    }
+  ]
+}

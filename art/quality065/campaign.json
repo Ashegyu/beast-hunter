@@ -1,0 +1,981 @@
+{
+  "scope": "Nine deterministic engine-driven automatic campaigns, real earned gear and camp budgets only. Not browser rendering, device FPS, player playtime, or a statistical balance survey.",
+  "encounters": [
+    {
+      "stage": 1,
+      "name": "추격전",
+      "formation": "hunt",
+      "waves": [
+        8,
+        9,
+        10
+      ],
+      "interval": 0.18,
+      "boss": false
+    },
+    {
+      "stage": 2,
+      "name": "교차 사격",
+      "formation": "crossfire",
+      "waves": [
+        9,
+        10,
+        10
+      ],
+      "interval": 0.16,
+      "boss": false
+    },
+    {
+      "stage": 3,
+      "name": "갑각 돌파",
+      "formation": "front",
+      "waves": [
+        10,
+        11,
+        12
+      ],
+      "interval": 0.18,
+      "boss": false
+    },
+    {
+      "stage": 4,
+      "name": "포위 생존",
+      "formation": "ring",
+      "waves": [
+        11,
+        12,
+        12
+      ],
+      "interval": 0.14,
+      "boss": false
+    },
+    {
+      "stage": 5,
+      "name": "양면 협공",
+      "formation": "pincer",
+      "waves": [
+        12,
+        12,
+        13
+      ],
+      "interval": 0.14,
+      "boss": false
+    },
+    {
+      "stage": 6,
+      "name": "탄막 돌파",
+      "formation": "barrage",
+      "waves": [
+        12,
+        13,
+        14
+      ],
+      "interval": 0.13,
+      "boss": false
+    },
+    {
+      "stage": 7,
+      "name": "정예 사냥",
+      "formation": "front",
+      "waves": [
+        13,
+        14,
+        15
+      ],
+      "interval": 0.14,
+      "boss": false
+    },
+    {
+      "stage": 8,
+      "name": "혼돈의 포위망",
+      "formation": "ring",
+      "waves": [
+        14,
+        15,
+        16
+      ],
+      "interval": 0.12,
+      "boss": false
+    },
+    {
+      "stage": 9,
+      "name": "최후의 공세",
+      "formation": "surge",
+      "waves": [
+        16,
+        17,
+        18
+      ],
+      "interval": 0.1,
+      "boss": false
+    },
+    {
+      "stage": 10,
+      "name": "수문장 결전",
+      "formation": "boss",
+      "waves": [
+        1
+      ],
+      "interval": 0,
+      "boss": true
+    }
+  ],
+  "expectedKills": 339,
+  "runs": [
+    {
+      "route": "balanced",
+      "seed": 0,
+      "unlock": {
+        "chapter": 1,
+        "stage": 5,
+        "time": 209.93
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "stage": 10,
+          "level": 25,
+          "time": 498.17,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 256,
+          "maxHp": 294,
+          "species": [
+            "forest_devourer",
+            "forest_goblin",
+            "forest_guardian",
+            "forest_mushroom",
+            "forest_orc",
+            "forest_spider",
+            "forest_wolf"
+          ],
+          "peak": {
+            "live": 16,
+            "actors": 19,
+            "shots": 18,
+            "effects": 32,
+            "pickups": 17,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "stage": 10,
+          "level": 33,
+          "time": 271.55,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 535,
+          "maxHp": 535,
+          "species": [
+            "ruins_bat",
+            "ruins_king",
+            "ruins_knight",
+            "ruins_mage",
+            "ruins_mimic",
+            "ruins_skeleton",
+            "ruins_wraith"
+          ],
+          "peak": {
+            "live": 15,
+            "actors": 20,
+            "shots": 13,
+            "effects": 46,
+            "pickups": 11,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "stage": 10,
+          "level": 39,
+          "time": 274.17,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 627,
+          "maxHp": 627,
+          "species": [
+            "frost_golem",
+            "frost_king",
+            "frost_leopard",
+            "frost_mage",
+            "frost_wisp",
+            "frost_wolf",
+            "frost_yeti"
+          ],
+          "peak": {
+            "live": 14,
+            "actors": 21,
+            "shots": 21,
+            "effects": 38,
+            "pickups": 10,
+            "pending": 18
+          }
+        }
+      ]
+    },
+    {
+      "route": "balanced",
+      "seed": 4,
+      "unlock": {
+        "chapter": 1,
+        "stage": 5,
+        "time": 195.89
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "stage": 10,
+          "level": 25,
+          "time": 479.31,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 256,
+          "maxHp": 294,
+          "species": [
+            "forest_devourer",
+            "forest_goblin",
+            "forest_guardian",
+            "forest_mushroom",
+            "forest_orc",
+            "forest_spider",
+            "forest_wolf"
+          ],
+          "peak": {
+            "live": 17,
+            "actors": 19,
+            "shots": 17,
+            "effects": 36,
+            "pickups": 11,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "stage": 10,
+          "level": 33,
+          "time": 271.26,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 554,
+          "maxHp": 554,
+          "species": [
+            "ruins_bat",
+            "ruins_king",
+            "ruins_knight",
+            "ruins_mage",
+            "ruins_mimic",
+            "ruins_skeleton",
+            "ruins_wraith"
+          ],
+          "peak": {
+            "live": 14,
+            "actors": 19,
+            "shots": 12,
+            "effects": 44,
+            "pickups": 8,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "stage": 10,
+          "level": 39,
+          "time": 307.06,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 611,
+          "maxHp": 611,
+          "species": [
+            "frost_golem",
+            "frost_king",
+            "frost_leopard",
+            "frost_mage",
+            "frost_wisp",
+            "frost_wolf",
+            "frost_yeti"
+          ],
+          "peak": {
+            "live": 18,
+            "actors": 27,
+            "shots": 21,
+            "effects": 45,
+            "pickups": 14,
+            "pending": 18
+          }
+        }
+      ]
+    },
+    {
+      "route": "balanced",
+      "seed": 9,
+      "unlock": {
+        "chapter": 1,
+        "stage": 5,
+        "time": 182.65
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "stage": 10,
+          "level": 25,
+          "time": 468.8,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 256,
+          "maxHp": 294,
+          "species": [
+            "forest_devourer",
+            "forest_goblin",
+            "forest_guardian",
+            "forest_mushroom",
+            "forest_orc",
+            "forest_spider",
+            "forest_wolf"
+          ],
+          "peak": {
+            "live": 17,
+            "actors": 20,
+            "shots": 12,
+            "effects": 38,
+            "pickups": 14,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "stage": 10,
+          "level": 33,
+          "time": 278.26,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 520,
+          "maxHp": 520,
+          "species": [
+            "ruins_bat",
+            "ruins_king",
+            "ruins_knight",
+            "ruins_mage",
+            "ruins_mimic",
+            "ruins_skeleton",
+            "ruins_wraith"
+          ],
+          "peak": {
+            "live": 14,
+            "actors": 19,
+            "shots": 15,
+            "effects": 34,
+            "pickups": 11,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "stage": 10,
+          "level": 39,
+          "time": 293.78,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 626,
+          "maxHp": 638,
+          "species": [
+            "frost_golem",
+            "frost_king",
+            "frost_leopard",
+            "frost_mage",
+            "frost_wisp",
+            "frost_wolf",
+            "frost_yeti"
+          ],
+          "peak": {
+            "live": 17,
+            "actors": 20,
+            "shots": 18,
+            "effects": 38,
+            "pickups": 11,
+            "pending": 18
+          }
+        }
+      ]
+    },
+    {
+      "route": "farm",
+      "seed": 0,
+      "unlock": {
+        "chapter": 1,
+        "stage": 5,
+        "time": 188.04
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "stage": 10,
+          "level": 25,
+          "time": 482.99,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 268,
+          "maxHp": 294,
+          "species": [
+            "forest_devourer",
+            "forest_goblin",
+            "forest_guardian",
+            "forest_mushroom",
+            "forest_orc",
+            "forest_spider",
+            "forest_wolf"
+          ],
+          "peak": {
+            "live": 17,
+            "actors": 19,
+            "shots": 13,
+            "effects": 32,
+            "pickups": 14,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "stage": 10,
+          "level": 33,
+          "time": 278.26,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 529,
+          "maxHp": 539,
+          "species": [
+            "ruins_bat",
+            "ruins_king",
+            "ruins_knight",
+            "ruins_mage",
+            "ruins_mimic",
+            "ruins_skeleton",
+            "ruins_wraith"
+          ],
+          "peak": {
+            "live": 15,
+            "actors": 20,
+            "shots": 10,
+            "effects": 32,
+            "pickups": 10,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "stage": 10,
+          "level": 39,
+          "time": 306.04,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 637,
+          "maxHp": 647,
+          "species": [
+            "frost_golem",
+            "frost_king",
+            "frost_leopard",
+            "frost_mage",
+            "frost_wisp",
+            "frost_wolf",
+            "frost_yeti"
+          ],
+          "peak": {
+            "live": 14,
+            "actors": 20,
+            "shots": 17,
+            "effects": 40,
+            "pickups": 9,
+            "pending": 18
+          }
+        }
+      ]
+    },
+    {
+      "route": "farm",
+      "seed": 4,
+      "unlock": {
+        "chapter": 1,
+        "stage": 5,
+        "time": 175.84
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "stage": 10,
+          "level": 25,
+          "time": 467.06,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 256,
+          "maxHp": 294,
+          "species": [
+            "forest_devourer",
+            "forest_goblin",
+            "forest_guardian",
+            "forest_mushroom",
+            "forest_orc",
+            "forest_spider",
+            "forest_wolf"
+          ],
+          "peak": {
+            "live": 16,
+            "actors": 20,
+            "shots": 15,
+            "effects": 41,
+            "pickups": 14,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "stage": 10,
+          "level": 33,
+          "time": 278.97,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 515,
+          "maxHp": 515,
+          "species": [
+            "ruins_bat",
+            "ruins_king",
+            "ruins_knight",
+            "ruins_mage",
+            "ruins_mimic",
+            "ruins_skeleton",
+            "ruins_wraith"
+          ],
+          "peak": {
+            "live": 13,
+            "actors": 21,
+            "shots": 8,
+            "effects": 40,
+            "pickups": 12,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "stage": 10,
+          "level": 39,
+          "time": 298.99,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 620,
+          "maxHp": 620,
+          "species": [
+            "frost_golem",
+            "frost_king",
+            "frost_leopard",
+            "frost_mage",
+            "frost_wisp",
+            "frost_wolf",
+            "frost_yeti"
+          ],
+          "peak": {
+            "live": 14,
+            "actors": 20,
+            "shots": 15,
+            "effects": 44,
+            "pickups": 12,
+            "pending": 18
+          }
+        }
+      ]
+    },
+    {
+      "route": "farm",
+      "seed": 9,
+      "unlock": {
+        "chapter": 1,
+        "stage": 5,
+        "time": 211.85
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "stage": 10,
+          "level": 25,
+          "time": 505.41,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 256,
+          "maxHp": 294,
+          "species": [
+            "forest_devourer",
+            "forest_goblin",
+            "forest_guardian",
+            "forest_mushroom",
+            "forest_orc",
+            "forest_spider",
+            "forest_wolf"
+          ],
+          "peak": {
+            "live": 17,
+            "actors": 19,
+            "shots": 17,
+            "effects": 35,
+            "pickups": 14,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "stage": 10,
+          "level": 33,
+          "time": 282.8,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 519,
+          "maxHp": 519,
+          "species": [
+            "ruins_bat",
+            "ruins_king",
+            "ruins_knight",
+            "ruins_mage",
+            "ruins_mimic",
+            "ruins_skeleton",
+            "ruins_wraith"
+          ],
+          "peak": {
+            "live": 14,
+            "actors": 20,
+            "shots": 10,
+            "effects": 36,
+            "pickups": 10,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "stage": 10,
+          "level": 39,
+          "time": 278.82,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 648,
+          "maxHp": 648,
+          "species": [
+            "frost_golem",
+            "frost_king",
+            "frost_leopard",
+            "frost_mage",
+            "frost_wisp",
+            "frost_wolf",
+            "frost_yeti"
+          ],
+          "peak": {
+            "live": 15,
+            "actors": 22,
+            "shots": 18,
+            "effects": 37,
+            "pickups": 11,
+            "pending": 18
+          }
+        }
+      ]
+    },
+    {
+      "route": "safe",
+      "seed": 0,
+      "unlock": {
+        "chapter": 1,
+        "stage": 5,
+        "time": 178.99
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "stage": 10,
+          "level": 25,
+          "time": 446.36,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 256,
+          "maxHp": 294,
+          "species": [
+            "forest_devourer",
+            "forest_goblin",
+            "forest_guardian",
+            "forest_mushroom",
+            "forest_orc",
+            "forest_spider",
+            "forest_wolf"
+          ],
+          "peak": {
+            "live": 16,
+            "actors": 19,
+            "shots": 18,
+            "effects": 36,
+            "pickups": 11,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "stage": 10,
+          "level": 33,
+          "time": 272.21,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 523,
+          "maxHp": 523,
+          "species": [
+            "ruins_bat",
+            "ruins_king",
+            "ruins_knight",
+            "ruins_mage",
+            "ruins_mimic",
+            "ruins_skeleton",
+            "ruins_wraith"
+          ],
+          "peak": {
+            "live": 14,
+            "actors": 21,
+            "shots": 10,
+            "effects": 30,
+            "pickups": 11,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "stage": 10,
+          "level": 39,
+          "time": 314.47,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 641,
+          "maxHp": 641,
+          "species": [
+            "frost_golem",
+            "frost_king",
+            "frost_leopard",
+            "frost_mage",
+            "frost_wisp",
+            "frost_wolf",
+            "frost_yeti"
+          ],
+          "peak": {
+            "live": 15,
+            "actors": 22,
+            "shots": 17,
+            "effects": 35,
+            "pickups": 9,
+            "pending": 18
+          }
+        }
+      ]
+    },
+    {
+      "route": "safe",
+      "seed": 4,
+      "unlock": {
+        "chapter": 1,
+        "stage": 5,
+        "time": 195.89
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "stage": 10,
+          "level": 25,
+          "time": 472.6,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 268,
+          "maxHp": 294,
+          "species": [
+            "forest_devourer",
+            "forest_goblin",
+            "forest_guardian",
+            "forest_mushroom",
+            "forest_orc",
+            "forest_spider",
+            "forest_wolf"
+          ],
+          "peak": {
+            "live": 18,
+            "actors": 20,
+            "shots": 17,
+            "effects": 34,
+            "pickups": 17,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "stage": 10,
+          "level": 33,
+          "time": 292.61,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 544,
+          "maxHp": 544,
+          "species": [
+            "ruins_bat",
+            "ruins_king",
+            "ruins_knight",
+            "ruins_mage",
+            "ruins_mimic",
+            "ruins_skeleton",
+            "ruins_wraith"
+          ],
+          "peak": {
+            "live": 15,
+            "actors": 20,
+            "shots": 15,
+            "effects": 38,
+            "pickups": 12,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "stage": 10,
+          "level": 39,
+          "time": 300.96,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 605,
+          "maxHp": 611,
+          "species": [
+            "frost_golem",
+            "frost_king",
+            "frost_leopard",
+            "frost_mage",
+            "frost_wisp",
+            "frost_wolf",
+            "frost_yeti"
+          ],
+          "peak": {
+            "live": 15,
+            "actors": 22,
+            "shots": 14,
+            "effects": 42,
+            "pickups": 11,
+            "pending": 18
+          }
+        }
+      ]
+    },
+    {
+      "route": "safe",
+      "seed": 9,
+      "unlock": {
+        "chapter": 1,
+        "stage": 5,
+        "time": 183.65
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "stage": 10,
+          "level": 25,
+          "time": 460.1,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 268,
+          "maxHp": 294,
+          "species": [
+            "forest_devourer",
+            "forest_goblin",
+            "forest_guardian",
+            "forest_mushroom",
+            "forest_orc",
+            "forest_spider",
+            "forest_wolf"
+          ],
+          "peak": {
+            "live": 18,
+            "actors": 19,
+            "shots": 16,
+            "effects": 39,
+            "pickups": 15,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "stage": 10,
+          "level": 33,
+          "time": 288.94,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 528,
+          "maxHp": 528,
+          "species": [
+            "ruins_bat",
+            "ruins_king",
+            "ruins_knight",
+            "ruins_mage",
+            "ruins_mimic",
+            "ruins_skeleton",
+            "ruins_wraith"
+          ],
+          "peak": {
+            "live": 15,
+            "actors": 20,
+            "shots": 13,
+            "effects": 35,
+            "pickups": 13,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "stage": 10,
+          "level": 39,
+          "time": 292.17,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 643,
+          "maxHp": 643,
+          "species": [
+            "frost_golem",
+            "frost_king",
+            "frost_leopard",
+            "frost_mage",
+            "frost_wisp",
+            "frost_wolf",
+            "frost_yeti"
+          ],
+          "peak": {
+            "live": 15,
+            "actors": 22,
+            "shots": 17,
+            "effects": 34,
+            "pickups": 18,
+            "pending": 18
+          }
+        }
+      ]
+    }
+  ]
+}

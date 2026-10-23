@@ -1,0 +1,79 @@
+{
+  "version": "0.95.2",
+  "units": "pixels",
+  "atlas": {
+    "file": "atlas.png",
+    "width": 1536,
+    "height": 1024
+  },
+  "art": {
+    "regular": {
+      "file": "regular.png",
+      "webp": "regular.webp",
+      "size": [
+        512,
+        512
+      ],
+      "atlas_rect": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "number_anchor": [
+        0.5,
+        0.5
+      ],
+      "display_width_in_seal_units": 1.12
+    },
+    "selected": {
+      "file": "selected.png",
+      "webp": "selected.webp",
+      "size": [
+        512,
+        845
+      ],
+      "atlas_rect": [
+        512,
+        0,
+        512,
+        845
+      ],
+      "number_anchor": [
+        0.5,
+        0.667
+      ],
+      "display_width_in_seal_units": 1.65
+    },
+    "boss": {
+      "file": "boss.png",
+      "webp": "boss.webp",
+      "size": [
+        512,
+        512
+      ],
+      "atlas_rect": [
+        1024,
+        0,
+        512,
+        512
+      ],
+      "number_anchor": [
+        0.5,
+        0.5
+      ],
+      "display_width_in_seal_units": 1.65
+    }
+  },
+  "native_number": true,
+  "completed_stars": "Decorative completion indicator, not a saved star rating.",
+  "states": {
+    "open": "regular",
+    "cleared": "regular + complete-stars.svg",
+    "selected": "selected",
+    "locked": "regular with CSS grayscale(.8), brightness(.7)",
+    "boss": "boss",
+    "boss_locked": "boss with CSS grayscale(.8), brightness(.7)"
+  },
+  "css": "hunt-map-scene.css"
+}

@@ -1,0 +1,54 @@
+Alpha0.40 · portrait armory / 2026-10-16
+
+Approved design and implementation
+- Approved image: art/references/equipment-approved-alpha040.png.
+- Design generation/refinement prompts: art/references/equipment-approved-alpha040-prompts.txt.
+- Charcoal #0a1116, antique champagne #d5b782, ivory #e5e1d7, burgundy #58232f; existing Noto Serif KR and Noto Sans KR.
+- Large Lirian/weapon hero, exactly3 equipped slots, live stats, compact synergy strip, icon-only4-column bag, gear/build tabs and existing five-item navigation.
+- Gear filtering folds away. Category shortcuts synchronize with the existing slot filter; rarity, favorites and sorting retain the same item identities.
+- Full inventory remains scrollable. Actual capacity and all displayed stats come from the live profile; concept image numbers are not hardcoded.
+- Build view retains three named equipment presets, actual comparisons, synergy changes, protected items and camp-only replacement guards.
+- Main portrait outfit stays fixed. Only the equipped weapon is composited over it, using display grip metadata and the original ancient frame grips where applicable. Armor/charm icons, stats and actual effects remain functional.
+- Base inventory/worn/detail art uses the new12-design presentation atlas. Ancient items retain their60 individual illustrations. Combat sprites, animations, sockets, engine and drop odds are unchanged.
+
+Visual review and corrections
+- Inspected approved image and actual390x844/320x740 captures. Rebuilt the information hierarchy rather than retaining the old layout.
+- Generated a weapon-free portrait so the held illustration never falsely shows a different static equipped sword.
+- First runtime showed the older thick-outlined combat illustrations at hero size; replaced equipment-window presentation with a refined12-design atlas preserving original shapes/colors/identities.
+- Adjusted portrait height to250px and slot rail spacing to show roughly3 bag rows at390px while retaining44px controls. Smaller screens scroll to the remaining rows.
+- Anchored weapons to the glove, with foreground glove occlusion. Preserved original item geometry instead of substituting the concept image's red sword for every item.
+- Removed inherited pale/gray sheet buttons through inventory-scoped styles, restoring burgundy primary action, quieter secondary actions and a translucent charcoal comparison sheet.
+- Comparison sheet opens only after activation. Direct coordinate click kept inventory scrollTop=0 and focused the close action. Removed legacy scrollIntoView from the fixed sheet; close returns focus to the item.
+- Page back/Escape dismiss details first, then return from build to gear, then leave inventory. Returning from combat inventory keeps the game paused until explicit resume.
+- Final captures: art/references/equipment-actual-alpha040-390.png and equipment-actual-alpha040-320.png. Detail/build/play captures are retained in the task outputs directory.
+
+Automated verification
+-413/413 full Node tests,0 failures. Existing inventory, crafting, codex and combat tests preserved.
+- Added5 integration regressions: layered back/focus and activation-only exploration; synchronized category/filter identities; actual weapon/synergy/build updates; truthful empty/paused states; complete UI atlas identities/bounds/anchors and ancient art preservation.
+- Updated the prior bag-detail scroll assertion to verify focus in the newly anchored sheet. Updated the prior display-atlas URL assertion to the approved new UI asset; identity, ownership and reload assertions retained.
+- node --check dist/app.js; git diff --check;24 unique bag tile IDs and no duplicate HTML IDs.
+- Combat boot remains23 images. New art is used through CSS presentation and is not added to the combat boot set.
+
+Actual browser interaction (CUA; local source)
+-390x844: actual equipment compare, weapon/charm replacement, active bleed-execution and frost-shatter combinations, named build saves and replacement. Re-entered the game and verified both build names/status restored.
+- Bag organization: selected1 unprotected item; review/cancel retained16 items; review/confirm removed exactly1, leaving15. Saved build remained replaceable and protected gear was retained.
+-320x740: clientWidth=scrollWidth=318,4 grid columns of69px, no horizontal document overflow. Click comparison, filter empty result/reset and ordinary scrolling verified.
+-1280x900:480px centered portrait shell; native Enter activation opened comparison and focused close; no horizontal overflow.
+-844x390 rotation: inventory content height258, scrollHeight1267, overlay bottom324 equals nav top324. Scrolling and opening/closing an item remained usable; no horizontal overflow.
+- Empty inventory:0/24, truthful no-loot message, empty worn slots disabled, synergy strip offers combination guidance.
+- Started real forest1-5 combat, enabled auto, paused and opened gear. Build replacement was disabled while paused; compare/close returned to the pause screen. Explicit resume continued combat to victory:17 kills,33 seconds,196 gold,3 cores,7 equipment drops.
+- Inspected game browser console: no warnings/errors.
+- Temporary localhost-only fixture backed up/restored the original localhost test profile; removed the fixture page before packaging. Production save data was not edited for testing.
+
+Generated art / provenance
+- Built-in image_gen mode throughout. Exact portrait prompt: art/references/equipment-armory-alpha040-prompts.txt.
+- Portrait: dist/assets/equipment-armory-portrait-v040.png and .webp,1448x1086, no weapon/UI/text; PNG2335180 -> WebP1632900 bytes,30.07% reduction; RGBA equality verified.
+- Exact atlas prompts/refinement: art/references/armory-equipment-alpha040-prompts.txt.
+- Atlas: dist/assets/armory-equipment-v040.png and .webp,1448x1086,4x3 cells; PNG1180119 -> WebP802730 bytes. RGBA equality verified. Frames and visually read UI-only grips recorded in matching .json; these are not combat pose metadata.
+- Alpha1 speckle in generated atlas is documented by its producer; alpha>=8 visible forms have cell margins and no visible adjacent-item contamination.
+- Total new WebP delivery2435630 bytes; source PNG originals retained without resampling.
+
+Evidence limits
+- Device-sized desktop browser validation; physical Android/Chrome touch/GPU, slow network, and before/after runtime performance were not measured.
+- The current save format, RNG, power, materials, drop tables and combat ownership remain unchanged. Metadata extends only the UI presentation atlas.
+- Site audience preserved. Publication is confirmed separately by the native Sites deployment result; the interaction evidence above is local-source validation.

@@ -1,0 +1,637 @@
+{
+  "scope": "Native canvas glyph metrics; no CSS layout or real device assertion.",
+  "skillNameCases": 105,
+  "maxNameLines": 2,
+  "measurements": [
+    {
+      "viewport": 320,
+      "id": "crescent",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "gale",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "dance",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "draw",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "plunge",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "parry",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "echo",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "triple",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "seeking",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "returning",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "field",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "breach",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "gather",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "stance",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "mark",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "bloodblade",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "opening",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "flow",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "finisher",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "footwork",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "pursuit",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "imbalance",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "breath",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "resolve",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "lone",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "surrounded",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "scar",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "recovery",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "steady",
+      "available": 78,
+      "nameLines": 2
+    },
+    {
+      "viewport": 320,
+      "id": "resonance",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "momentum",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "reserve",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "bloodmoon",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "eclipse",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 320,
+      "id": "phantoms",
+      "available": 78,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "crescent",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "gale",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "dance",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "draw",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "plunge",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "parry",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "echo",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "triple",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "seeking",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "returning",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "field",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "breach",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "gather",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "stance",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "mark",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "bloodblade",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "opening",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "flow",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "finisher",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "footwork",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "pursuit",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "imbalance",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "breath",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "resolve",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "lone",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "surrounded",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "scar",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "recovery",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "steady",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "resonance",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "momentum",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "reserve",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "bloodmoon",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "eclipse",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 360,
+      "id": "phantoms",
+      "available": 91.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "crescent",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "gale",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "dance",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "draw",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "plunge",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "parry",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "echo",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "triple",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "seeking",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "returning",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "field",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "breach",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "gather",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "stance",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "mark",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "bloodblade",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "opening",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "flow",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "finisher",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "footwork",
+      "available": 72.3,
+      "nameLines": 2
+    },
+    {
+      "viewport": 390,
+      "id": "pursuit",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "imbalance",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "breath",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "resolve",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "lone",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "surrounded",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "scar",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "recovery",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "steady",
+      "available": 72.3,
+      "nameLines": 2
+    },
+    {
+      "viewport": 390,
+      "id": "resonance",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "momentum",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "reserve",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "bloodmoon",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "eclipse",
+      "available": 72.3,
+      "nameLines": 1
+    },
+    {
+      "viewport": 390,
+      "id": "phantoms",
+      "available": 72.3,
+      "nameLines": 1
+    }
+  ]
+}

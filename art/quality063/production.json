@@ -1,0 +1,505 @@
+{
+  "scope": "Production matches selected candidate for measured simulation fields; XP result totals now include the growth bonus. Replays start from a synthetic level20/campaign-complete profile, one deterministic path per policy; not player timing or balance distribution.",
+  "actual": [
+    {
+      "route": "balanced",
+      "seed": 0,
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "level": 15,
+          "xp": 2,
+          "baseRunXp": 2937,
+          "time": 190.37,
+          "kills": 83,
+          "hp": 196,
+          "maxHp": 234
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "level": 20,
+          "xp": 406,
+          "baseRunXp": 3278,
+          "time": 141.11,
+          "kills": 83,
+          "hp": 416,
+          "maxHp": 416
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "level": 23,
+          "xp": 345,
+          "baseRunXp": 2250,
+          "time": 146.29,
+          "kills": 83,
+          "hp": 494,
+          "maxHp": 494
+        }
+      ],
+      "unlock": {
+        "chapter": 2,
+        "stage": 5,
+        "time": 311.57
+      },
+      "firstUse": {
+        "chapter": 3,
+        "stage": 3,
+        "time": 383.82
+      }
+    },
+    {
+      "route": "balanced",
+      "seed": 4,
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "level": 15,
+          "xp": 2,
+          "baseRunXp": 2937,
+          "time": 183.12,
+          "kills": 83,
+          "hp": 209,
+          "maxHp": 234
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "level": 20,
+          "xp": 406,
+          "baseRunXp": 3278,
+          "time": 145.85,
+          "kills": 83,
+          "hp": 456,
+          "maxHp": 456
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "level": 23,
+          "xp": 345,
+          "baseRunXp": 2250,
+          "time": 141.95,
+          "kills": 83,
+          "hp": 512,
+          "maxHp": 512
+        }
+      ],
+      "unlock": {
+        "chapter": 2,
+        "stage": 5,
+        "time": 303.93
+      },
+      "firstUse": {
+        "chapter": 3,
+        "stage": 3,
+        "time": 381.58
+      }
+    },
+    {
+      "route": "balanced",
+      "seed": 9,
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "level": 15,
+          "xp": 2,
+          "baseRunXp": 2937,
+          "time": 189.9,
+          "kills": 83,
+          "hp": 196,
+          "maxHp": 234
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "level": 20,
+          "xp": 406,
+          "baseRunXp": 3278,
+          "time": 142.87,
+          "kills": 83,
+          "hp": 454,
+          "maxHp": 454
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "level": 23,
+          "xp": 345,
+          "baseRunXp": 2250,
+          "time": 140.44,
+          "kills": 83,
+          "hp": 509,
+          "maxHp": 509
+        }
+      ],
+      "unlock": {
+        "chapter": 2,
+        "stage": 5,
+        "time": 306.68
+      },
+      "firstUse": {
+        "chapter": 3,
+        "stage": 3,
+        "time": 379.92
+      }
+    },
+    {
+      "route": "farm",
+      "seed": 0,
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "level": 15,
+          "xp": 2,
+          "baseRunXp": 2937,
+          "time": 185.61,
+          "kills": 83,
+          "hp": 209,
+          "maxHp": 234
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "level": 20,
+          "xp": 406,
+          "baseRunXp": 3278,
+          "time": 145.44,
+          "kills": 83,
+          "hp": 432,
+          "maxHp": 432
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "level": 23,
+          "xp": 345,
+          "baseRunXp": 2250,
+          "time": 151.54,
+          "kills": 83,
+          "hp": 496,
+          "maxHp": 496
+        }
+      ],
+      "unlock": {
+        "chapter": 2,
+        "stage": 5,
+        "time": 306.02
+      },
+      "firstUse": {
+        "chapter": 3,
+        "stage": 3,
+        "time": 384.83
+      }
+    },
+    {
+      "route": "farm",
+      "seed": 4,
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "level": 15,
+          "xp": 2,
+          "baseRunXp": 2937,
+          "time": 177.27,
+          "kills": 83,
+          "hp": 196,
+          "maxHp": 234
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "level": 20,
+          "xp": 406,
+          "baseRunXp": 3278,
+          "time": 146.99,
+          "kills": 83,
+          "hp": 458,
+          "maxHp": 458
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "level": 23,
+          "xp": 345,
+          "baseRunXp": 2250,
+          "time": 149.36,
+          "kills": 83,
+          "hp": 518,
+          "maxHp": 518
+        }
+      ],
+      "unlock": {
+        "chapter": 2,
+        "stage": 5,
+        "time": 298.95
+      },
+      "firstUse": {
+        "chapter": 3,
+        "stage": 3,
+        "time": 381.65
+      }
+    },
+    {
+      "route": "farm",
+      "seed": 9,
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "level": 15,
+          "xp": 2,
+          "baseRunXp": 2937,
+          "time": 189.02,
+          "kills": 83,
+          "hp": 196,
+          "maxHp": 234
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "level": 20,
+          "xp": 406,
+          "baseRunXp": 3278,
+          "time": 148.9,
+          "kills": 83,
+          "hp": 457,
+          "maxHp": 457
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "level": 23,
+          "xp": 345,
+          "baseRunXp": 2250,
+          "time": 156.01,
+          "kills": 83,
+          "hp": 505,
+          "maxHp": 505
+        }
+      ],
+      "unlock": {
+        "chapter": 2,
+        "stage": 5,
+        "time": 314.45
+      },
+      "firstUse": {
+        "chapter": 3,
+        "stage": 3,
+        "time": 395.52
+      }
+    },
+    {
+      "route": "safe",
+      "seed": 0,
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "level": 15,
+          "xp": 2,
+          "baseRunXp": 2937,
+          "time": 190.37,
+          "kills": 83,
+          "hp": 196,
+          "maxHp": 234
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "level": 20,
+          "xp": 406,
+          "baseRunXp": 3278,
+          "time": 142.48,
+          "kills": 83,
+          "hp": 416,
+          "maxHp": 416
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "level": 23,
+          "xp": 345,
+          "baseRunXp": 2250,
+          "time": 157.39,
+          "kills": 83,
+          "hp": 493,
+          "maxHp": 493
+        }
+      ],
+      "unlock": {
+        "chapter": 2,
+        "stage": 5,
+        "time": 311.83
+      },
+      "firstUse": {
+        "chapter": 3,
+        "stage": 3,
+        "time": 389.85
+      }
+    },
+    {
+      "route": "safe",
+      "seed": 4,
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "level": 15,
+          "xp": 2,
+          "baseRunXp": 2937,
+          "time": 183.12,
+          "kills": 83,
+          "hp": 209,
+          "maxHp": 234
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "level": 20,
+          "xp": 406,
+          "baseRunXp": 3278,
+          "time": 145.86,
+          "kills": 83,
+          "hp": 456,
+          "maxHp": 456
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "level": 23,
+          "xp": 345,
+          "baseRunXp": 2250,
+          "time": 149.7,
+          "kills": 83,
+          "hp": 526,
+          "maxHp": 526
+        }
+      ],
+      "unlock": {
+        "chapter": 2,
+        "stage": 5,
+        "time": 305.94
+      },
+      "firstUse": {
+        "chapter": 3,
+        "stage": 3,
+        "time": 386.08
+      }
+    },
+    {
+      "route": "safe",
+      "seed": 9,
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "level": 15,
+          "xp": 2,
+          "baseRunXp": 2937,
+          "time": 189.9,
+          "kills": 83,
+          "hp": 196,
+          "maxHp": 234
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "level": 20,
+          "xp": 406,
+          "baseRunXp": 3278,
+          "time": 149.11,
+          "kills": 83,
+          "hp": 454,
+          "maxHp": 454
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "level": 23,
+          "xp": 345,
+          "baseRunXp": 2250,
+          "time": 154.11,
+          "kills": 83,
+          "hp": 512,
+          "maxHp": 512
+        }
+      ],
+      "unlock": {
+        "chapter": 2,
+        "stage": 5,
+        "time": 313.3
+      },
+      "firstUse": {
+        "chapter": 3,
+        "stage": 3,
+        "time": 394.18
+      }
+    }
+  ],
+  "repeats": [
+    {
+      "route": "balanced",
+      "failed": 0,
+      "endLevel": 40,
+      "gates": {
+        "20": {
+          "hunts": 0,
+          "seconds": 0
+        },
+        "30": {
+          "hunts": 23,
+          "seconds": 704.22
+        },
+        "40": {
+          "hunts": 60,
+          "seconds": 1563.63
+        }
+      }
+    },
+    {
+      "route": "farm",
+      "failed": 0,
+      "endLevel": 40,
+      "gates": {
+        "20": {
+          "hunts": 0,
+          "seconds": 0
+        },
+        "30": {
+          "hunts": 23,
+          "seconds": 751.88
+        },
+        "40": {
+          "hunts": 60,
+          "seconds": 1657.24
+        }
+      }
+    },
+    {
+      "route": "safe",
+      "failed": 0,
+      "endLevel": 40,
+      "gates": {
+        "20": {
+          "hunts": 0,
+          "seconds": 0
+        },
+        "30": {
+          "hunts": 23,
+          "seconds": 769.7
+        },
+        "40": {
+          "hunts": 60,
+          "seconds": 1670.99
+        }
+      }
+    }
+  ]
+}

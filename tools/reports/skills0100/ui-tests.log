@@ -1,0 +1,24 @@
+(node:25) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ primary navigation exposes skills while the hunt action lives on home (443.659862ms)
+✔ skills tab leaves other camp panels, updates selection and returns focus without changing the profile (258.907385ms)
+✔ equipped skill art follows real loadouts and presets while locked sockets remain empty (278.287267ms)
+✔ skill details start at their heading and list return restores the active filter focus (98.374913ms)
+✔ skill workshop shows locked previews, real rank tables, free respec and persistent camp-only loadouts (338.376954ms)
+✔ actual skill controls spend resources, retain cooldown on pause and expose ultimate seconds (163.894066ms)
+✔ all nineteen actual skill buttons render authored body frames and finite VFX without the generic heavy cleave (2681.740771ms)
+✔ held movement and attack survive a skill cast and dodge, then release cleanly at 30 and 60 frames per second (373.558001ms)
+✔ live hostile shots and contact accents remain above ultimate skill images without area warnings (78.139911ms)
+✔ skill cast sounds retain skill identity, are consumed once and do not replay after pause (149.174192ms)
+✔ stage B five presets save real gear and skill settings, expose two-tap entry selection and restore without a false recovery warning (181.142785ms)
+✔ dungeon UI skill launches once, saves actual materials, retries and returns to the selected hall (167.305622ms)
+✔ dungeon rewards are the same balances seen by bag, enhancement, promotion and skill research (166.121472ms)
+✔ skill library pages all 35 skills without changing the loadout and resets paging for category changes (83.666075ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5871.694195

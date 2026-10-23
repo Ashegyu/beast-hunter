@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#111b20">
+  <title>괴수 사냥꾼 · 움직임 미리보기</title>
+  <link rel="stylesheet" href="lab.css">
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <div class="identity"><span class="mark" aria-hidden="true">✦</span><div><small>BEAST HUNTER / ASSET STUDY 02</small><h1>괴수 사냥꾼</h1></div></div>
+      <span class="edition">픽셀풍 전투 어셋 <b>v0.4</b></span>
+    </header>
+    <div class="workspace">
+      <section class="arena-wrap" aria-label="전투 및 동작 미리보기">
+        <div class="scene-caption"><span class="scene-dot"></span> 거대 괴수의 등 · 갑각 지대 <span id="scene-mode">전투 테스트</span></div>
+        <canvas id="arena" width="600" height="380" tabindex="0" aria-label="WASD 또는 방향키로 이동하고 스페이스로 베기. 터치 조작 버튼도 사용할 수 있습니다."></canvas>
+        <div class="loading" id="loading" role="status">전투 어셋을 불러오는 중…</div>
+        <div class="scene-hud"><div class="hp"><span>사냥꾼</span><div class="hp-track"><i id="hp-fill"></i></div><b id="hp-text">100</b></div><div class="counter">처치 <b id="kill-count">0</b><span id="enemy-total">/ 56</span></div></div>
+        <div class="scene-bottom"><p id="hint">WASD / 방향키 이동 · SPACE 베기 · 바닥 클릭 이동</p><span id="frame-readout">동작 준비 중</span></div>
+      </section>
+      <aside>
+        <div class="panel-heading"><span class="eyebrow">MOTION LAB</span><h2>움직임 확인</h2><p>같은 캐릭터의 프레임을<br>전투 속도에 맞춰 재생해봐.</p></div>
+        <div class="segmented" role="group" aria-label="미리보기 모드"><button id="combat-mode" class="selected" aria-pressed="true">전투 테스트</button><button id="inspect-mode" aria-pressed="false">동작 검사</button></div>
+        <div id="combat-tools">
+          <button id="attack" class="primary">크게 베기 <kbd>SPACE</kbd></button>
+          <button id="hit">피격 확인 <kbd>H</kbd></button>
+          <button id="reset">적 다시 배치 <span>↻</span></button>
+          <p class="muted">오른쪽 위 미니맵으로 전장을 확인해봐. 이동하면 카메라가 따라가.</p>
+        </div>
+        <div id="inspect-tools" hidden>
+          <label for="actor">대상</label><select id="actor"><option value="hunter">사냥꾼</option><option value="skitter">갑각충</option><option value="spitter">포격충</option><option value="bulwark">중갑 괴수</option><option value="fx">베기 효과</option></select>
+          <label for="clip">동작</label><select id="clip"></select>
+          <div class="playback"><button id="play" aria-pressed="true">일시 정지</button><button id="step">한 프레임 →</button></div>
+          <label for="frame">프레임 <b id="frame-label">1 / 6</b></label><input id="frame" type="range" min="0" max="5" value="0" step="1">
+        </div>
+        <div class="divider"></div>
+        <label for="speed">재생 속도 <b id="speed-label">1.0×</b></label><input id="speed" type="range" min="0.25" max="1.5" step="0.25" value="1">
+        <label class="check"><input id="pivots" type="checkbox"><span>발 기준점 표시</span></label>
+        <label class="check"><input id="range" type="checkbox"><span>공격 범위 표시</span></label>
+        <div class="spec"><span>ANIMATION DRAFT</span><p id="clip-info">걷기 · 베기 · 피격<br>갑각충 / 중갑 괴수 / 베기 효과</p></div>
+      </aside>
+    </div>
+    <div class="touch-controls" aria-label="터치 조작"><div class="dpad"><button data-dir="0,-1" aria-label="위로">↑</button><div><button data-dir="-1,0" aria-label="왼쪽으로">←</button><button data-dir="0,1" aria-label="아래로">↓</button><button data-dir="1,0" aria-label="오른쪽으로">→</button></div></div><button id="touch-attack" class="primary">베기</button></div>
+    <footer><span>원본 PNG + 프레임 영역 + 발 기준점으로 재생</span><span>한 방향의 동작 초안 · 최종 도트 규격과 전투 밸런스는 미확정</span></footer>
+  </main>
+  <script type="module" src="lab.js?v=0.65.0"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+{
+  "scope": "Node pure item rolling, not browser frame-time. 7 alternating trials of 30,000 rolls; median wall-time per roll. Distribution samples are conditional on an equipment drop, not a kill.",
+  "baselineCommit": "19eba118b865c554208eb6a2bbb943ec54a13346",
+  "cpu": {
+    "beforeMicroseconds": 5.883706666666672,
+    "afterMicroseconds": 5.6014494666666605
+  },
+  "normal": {
+    "before": {
+      "count": 200000,
+      "qualities": [
+        119529,
+        54484,
+        20030,
+        4957,
+        782,
+        218
+      ],
+      "legendaryOrBetterPercent": 2.9785,
+      "ancientPercent": 0.109,
+      "perfect": 0,
+      "maxDryDrops": 263
+    },
+    "after": {
+      "count": 200000,
+      "qualities": [
+        115079,
+        52547,
+        19202,
+        12161,
+        804,
+        207
+      ],
+      "legendaryOrBetterPercent": 6.586,
+      "ancientPercent": 0.1035,
+      "perfect": 2624,
+      "maxDryDrops": 19
+    }
+  },
+  "boss": {
+    "before": {
+      "count": 200000,
+      "qualities": [
+        0,
+        0,
+        163883,
+        30232,
+        5278,
+        607
+      ],
+      "legendaryOrBetterPercent": 18.0585,
+      "ancientPercent": 0.3035,
+      "perfect": 0,
+      "maxDryDrops": 58
+    },
+    "after": {
+      "count": 200000,
+      "qualities": [
+        0,
+        0,
+        81955,
+        112024,
+        5409,
+        612
+      ],
+      "legendaryOrBetterPercent": 59.0225,
+      "ancientPercent": 0.306,
+      "perfect": 16009,
+      "maxDryDrops": 1
+    }
+  }
+}

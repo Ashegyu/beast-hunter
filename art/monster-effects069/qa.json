@@ -1,0 +1,710 @@
+{
+  "forest": {
+    "width": 1254,
+    "height": 1254,
+    "sourceSha256": "ebfb3a856c259689aea4c8603c7ebf667a80463a89c2d16ede77f73e3e2c2233",
+    "rgbaSha256": "11695d8b2c99eb0a464a704894834790cf60ece485fa5214280787ae2aebf88a",
+    "runtimeBytes": 1465004,
+    "transparentPixels": 726783,
+    "partialAlphaPixels": 845706,
+    "decodedBytes": 6290064,
+    "frames": [
+      {
+        "kind": "slash",
+        "frame": 0,
+        "alphaBounds": [
+          0,
+          0,
+          313,
+          313
+        ],
+        "pivot": [
+          156.5,
+          156.5
+        ]
+      },
+      {
+        "kind": "slash",
+        "frame": 1,
+        "alphaBounds": [
+          0,
+          9,
+          314,
+          313
+        ],
+        "pivot": [
+          157.0,
+          156.5
+        ]
+      },
+      {
+        "kind": "slash",
+        "frame": 2,
+        "alphaBounds": [
+          0,
+          13,
+          313,
+          313
+        ],
+        "pivot": [
+          156.5,
+          156.5
+        ]
+      },
+      {
+        "kind": "slash",
+        "frame": 3,
+        "alphaBounds": [
+          0,
+          0,
+          314,
+          313
+        ],
+        "pivot": [
+          157.0,
+          156.5
+        ]
+      },
+      {
+        "kind": "bolt",
+        "frame": 0,
+        "alphaBounds": [
+          0,
+          0,
+          313,
+          314
+        ],
+        "pivot": [
+          243.85,
+          181.2
+        ]
+      },
+      {
+        "kind": "bolt",
+        "frame": 1,
+        "alphaBounds": [
+          0,
+          0,
+          314,
+          314
+        ],
+        "pivot": [
+          265.58,
+          178.63
+        ]
+      },
+      {
+        "kind": "bolt",
+        "frame": 2,
+        "alphaBounds": [
+          0,
+          0,
+          313,
+          314
+        ],
+        "pivot": [
+          279.85,
+          172.85
+        ]
+      },
+      {
+        "kind": "bolt",
+        "frame": 3,
+        "alphaBounds": [
+          0,
+          0,
+          308,
+          314
+        ],
+        "pivot": [
+          266.23,
+          181.65
+        ]
+      },
+      {
+        "kind": "impact",
+        "frame": 0,
+        "alphaBounds": [
+          0,
+          0,
+          313,
+          313
+        ],
+        "pivot": [
+          156.5,
+          237.88
+        ]
+      },
+      {
+        "kind": "impact",
+        "frame": 1,
+        "alphaBounds": [
+          0,
+          0,
+          314,
+          313
+        ],
+        "pivot": [
+          157.0,
+          237.88
+        ]
+      },
+      {
+        "kind": "impact",
+        "frame": 2,
+        "alphaBounds": [
+          0,
+          0,
+          313,
+          313
+        ],
+        "pivot": [
+          156.5,
+          237.88
+        ]
+      },
+      {
+        "kind": "impact",
+        "frame": 3,
+        "alphaBounds": [
+          0,
+          0,
+          306,
+          313
+        ],
+        "pivot": [
+          157.0,
+          237.88
+        ]
+      },
+      {
+        "kind": "charge",
+        "frame": 0,
+        "alphaBounds": [
+          0,
+          0,
+          313,
+          314
+        ],
+        "pivot": [
+          156.5,
+          157.0
+        ]
+      },
+      {
+        "kind": "charge",
+        "frame": 1,
+        "alphaBounds": [
+          0,
+          0,
+          314,
+          314
+        ],
+        "pivot": [
+          157.0,
+          157.0
+        ]
+      },
+      {
+        "kind": "charge",
+        "frame": 2,
+        "alphaBounds": [
+          0,
+          0,
+          313,
+          314
+        ],
+        "pivot": [
+          156.5,
+          157.0
+        ]
+      },
+      {
+        "kind": "charge",
+        "frame": 3,
+        "alphaBounds": [
+          0,
+          0,
+          314,
+          314
+        ],
+        "pivot": [
+          157.0,
+          157.0
+        ]
+      }
+    ]
+  },
+  "ruins": {
+    "width": 1254,
+    "height": 1254,
+    "sourceSha256": "235f6c6074884eb449b52607d24f5b496c35696337fe65d58f02d3eb7f5fe161",
+    "rgbaSha256": "a31b79a5282aa72944bce948b1db525c4df2277ca2a7a77a5ab6a0566cf1e27b",
+    "runtimeBytes": 1463116,
+    "transparentPixels": 749637,
+    "partialAlphaPixels": 822879,
+    "decodedBytes": 6290064,
+    "frames": [
+      {
+        "kind": "slash",
+        "frame": 0,
+        "alphaBounds": [
+          0,
+          11,
+          313,
+          313
+        ],
+        "pivot": [
+          156.5,
+          156.5
+        ]
+      },
+      {
+        "kind": "slash",
+        "frame": 1,
+        "alphaBounds": [
+          0,
+          19,
+          314,
+          313
+        ],
+        "pivot": [
+          157.0,
+          156.5
+        ]
+      },
+      {
+        "kind": "slash",
+        "frame": 2,
+        "alphaBounds": [
+          0,
+          14,
+          313,
+          313
+        ],
+        "pivot": [
+          156.5,
+          156.5
+        ]
+      },
+      {
+        "kind": "slash",
+        "frame": 3,
+        "alphaBounds": [
+          0,
+          3,
+          313,
+          313
+        ],
+        "pivot": [
+          157.0,
+          156.5
+        ]
+      },
+      {
+        "kind": "bolt",
+        "frame": 0,
+        "alphaBounds": [
+          0,
+          0,
+          313,
+          314
+        ],
+        "pivot": [
+          215.84,
+          152.62
+        ]
+      },
+      {
+        "kind": "bolt",
+        "frame": 1,
+        "alphaBounds": [
+          0,
+          0,
+          314,
+          314
+        ],
+        "pivot": [
+          239.18,
+          159.03
+        ]
+      },
+      {
+        "kind": "bolt",
+        "frame": 2,
+        "alphaBounds": [
+          0,
+          0,
+          313,
+          314
+        ],
+        "pivot": [
+          264.84,
+          158.21
+        ]
+      },
+      {
+        "kind": "bolt",
+        "frame": 3,
+        "alphaBounds": [
+          0,
+          0,
+          300,
+          314
+        ],
+        "pivot": [
+          250.65,
+          161.77
+        ]
+      },
+      {
+        "kind": "impact",
+        "frame": 0,
+        "alphaBounds": [
+          0,
+          0,
+          313,
+          313
+        ],
+        "pivot": [
+          156.5,
+          237.88
+        ]
+      },
+      {
+        "kind": "impact",
+        "frame": 1,
+        "alphaBounds": [
+          0,
+          0,
+          314,
+          313
+        ],
+        "pivot": [
+          157.0,
+          237.88
+        ]
+      },
+      {
+        "kind": "impact",
+        "frame": 2,
+        "alphaBounds": [
+          0,
+          0,
+          313,
+          313
+        ],
+        "pivot": [
+          156.5,
+          237.88
+        ]
+      },
+      {
+        "kind": "impact",
+        "frame": 3,
+        "alphaBounds": [
+          0,
+          0,
+          300,
+          313
+        ],
+        "pivot": [
+          157.0,
+          237.88
+        ]
+      },
+      {
+        "kind": "charge",
+        "frame": 0,
+        "alphaBounds": [
+          0,
+          0,
+          313,
+          314
+        ],
+        "pivot": [
+          156.5,
+          157.0
+        ]
+      },
+      {
+        "kind": "charge",
+        "frame": 1,
+        "alphaBounds": [
+          0,
+          0,
+          314,
+          314
+        ],
+        "pivot": [
+          157.0,
+          157.0
+        ]
+      },
+      {
+        "kind": "charge",
+        "frame": 2,
+        "alphaBounds": [
+          0,
+          0,
+          313,
+          314
+        ],
+        "pivot": [
+          156.5,
+          157.0
+        ]
+      },
+      {
+        "kind": "charge",
+        "frame": 3,
+        "alphaBounds": [
+          0,
+          0,
+          314,
+          314
+        ],
+        "pivot": [
+          157.0,
+          157.0
+        ]
+      }
+    ]
+  },
+  "frost": {
+    "width": 1254,
+    "height": 1254,
+    "sourceSha256": "f38041d4d125e4fc1d03a7a946e15be3eb0f726ffb39f0f64d133bd0543ee7af",
+    "rgbaSha256": "22349c68f2b15f8e2de15c08cf2e170838c6ec30c7b4c5e365cd0d310e03d4c0",
+    "runtimeBytes": 1471310,
+    "transparentPixels": 575419,
+    "partialAlphaPixels": 997083,
+    "decodedBytes": 6290064,
+    "frames": [
+      {
+        "kind": "slash",
+        "frame": 0,
+        "alphaBounds": [
+          0,
+          7,
+          313,
+          313
+        ],
+        "pivot": [
+          156.5,
+          156.5
+        ]
+      },
+      {
+        "kind": "slash",
+        "frame": 1,
+        "alphaBounds": [
+          0,
+          0,
+          314,
+          313
+        ],
+        "pivot": [
+          157.0,
+          156.5
+        ]
+      },
+      {
+        "kind": "slash",
+        "frame": 2,
+        "alphaBounds": [
+          0,
+          9,
+          313,
+          313
+        ],
+        "pivot": [
+          156.5,
+          156.5
+        ]
+      },
+      {
+        "kind": "slash",
+        "frame": 3,
+        "alphaBounds": [
+          0,
+          8,
+          314,
+          313
+        ],
+        "pivot": [
+          157.0,
+          156.5
+        ]
+      },
+      {
+        "kind": "bolt",
+        "frame": 0,
+        "alphaBounds": [
+          0,
+          0,
+          313,
+          314
+        ],
+        "pivot": [
+          240.14,
+          197.95
+        ]
+      },
+      {
+        "kind": "bolt",
+        "frame": 1,
+        "alphaBounds": [
+          0,
+          0,
+          314,
+          314
+        ],
+        "pivot": [
+          254.74,
+          192.51
+        ]
+      },
+      {
+        "kind": "bolt",
+        "frame": 2,
+        "alphaBounds": [
+          0,
+          0,
+          313,
+          314
+        ],
+        "pivot": [
+          271.82,
+          190.48
+        ]
+      },
+      {
+        "kind": "bolt",
+        "frame": 3,
+        "alphaBounds": [
+          0,
+          0,
+          314,
+          314
+        ],
+        "pivot": [
+          226.68,
+          200.85
+        ]
+      },
+      {
+        "kind": "impact",
+        "frame": 0,
+        "alphaBounds": [
+          0,
+          0,
+          313,
+          313
+        ],
+        "pivot": [
+          156.5,
+          237.88
+        ]
+      },
+      {
+        "kind": "impact",
+        "frame": 1,
+        "alphaBounds": [
+          0,
+          0,
+          314,
+          313
+        ],
+        "pivot": [
+          157.0,
+          237.88
+        ]
+      },
+      {
+        "kind": "impact",
+        "frame": 2,
+        "alphaBounds": [
+          0,
+          0,
+          313,
+          313
+        ],
+        "pivot": [
+          156.5,
+          237.88
+        ]
+      },
+      {
+        "kind": "impact",
+        "frame": 3,
+        "alphaBounds": [
+          0,
+          0,
+          314,
+          313
+        ],
+        "pivot": [
+          157.0,
+          237.88
+        ]
+      },
+      {
+        "kind": "charge",
+        "frame": 0,
+        "alphaBounds": [
+          0,
+          0,
+          313,
+          314
+        ],
+        "pivot": [
+          156.5,
+          157.0
+        ]
+      },
+      {
+        "kind": "charge",
+        "frame": 1,
+        "alphaBounds": [
+          0,
+          0,
+          314,
+          314
+        ],
+        "pivot": [
+          157.0,
+          157.0
+        ]
+      },
+      {
+        "kind": "charge",
+        "frame": 2,
+        "alphaBounds": [
+          0,
+          0,
+          313,
+          314
+        ],
+        "pivot": [
+          156.5,
+          157.0
+        ]
+      },
+      {
+        "kind": "charge",
+        "frame": 3,
+        "alphaBounds": [
+          0,
+          0,
+          314,
+          314
+        ],
+        "pivot": [
+          157.0,
+          157.0
+        ]
+      }
+    ]
+  }
+}

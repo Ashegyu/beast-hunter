@@ -1,0 +1,80 @@
+{
+  "dimensions": [
+    1536,
+    1024
+  ],
+  "alphaIdentical": true,
+  "visibleRGBAIdentical": true,
+  "files": {
+    "art/stage0844/seals-source-final.png": {
+      "sha256": "9803f22f4852d7b92de0c83e3bb3df183bb0748b25967ae20c8d3e728c12169d",
+      "bytes": 1937149
+    },
+    "dist/assets/ui-stage-v0844/seals.webp": {
+      "sha256": "4d00fcb76d6c2c4122455343b8a2ce743e0ae157d9b0658891f5a7eba8399e2c",
+      "bytes": 807962
+    }
+  },
+  "cells": [
+    {
+      "index": 0,
+      "visibleBoundsAlpha128": [
+        83,
+        73,
+        464,
+        450
+      ],
+      "maxBoundaryAlpha": 1
+    },
+    {
+      "index": 1,
+      "visibleBoundsAlpha128": [
+        65,
+        74,
+        446,
+        452
+      ],
+      "maxBoundaryAlpha": 1
+    },
+    {
+      "index": 2,
+      "visibleBoundsAlpha128": [
+        47,
+        73,
+        430,
+        452
+      ],
+      "maxBoundaryAlpha": 1
+    },
+    {
+      "index": 3,
+      "visibleBoundsAlpha128": [
+        81,
+        22,
+        464,
+        415
+      ],
+      "maxBoundaryAlpha": 1
+    },
+    {
+      "index": 4,
+      "visibleBoundsAlpha128": [
+        62,
+        28,
+        448,
+        416
+      ],
+      "maxBoundaryAlpha": 0
+    },
+    {
+      "index": 5,
+      "visibleBoundsAlpha128": [
+        47,
+        27,
+        432,
+        415
+      ],
+      "maxBoundaryAlpha": 0
+    }
+  ]
+}

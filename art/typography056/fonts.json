@@ -1,0 +1,20 @@
+[
+  {
+    "file": "dist/assets/fonts/GowunBatang-Bold.woff2",
+    "bytes": 491696,
+    "sha256": "26182b94642e77674f667cd48f031d5ce98f1c07926271072b57e2d9be8b0923",
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/gowunbatang/GowunBatang-Bold.ttf"
+  },
+  {
+    "file": "dist/assets/fonts/IBMPlexSansKR-Regular.woff2",
+    "bytes": 561096,
+    "sha256": "d35813173098cda51e3ed8fc7455643c63269341028e66a47ff2c55ce8a37148",
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexsanskr/IBMPlexSansKR-Regular.ttf"
+  },
+  {
+    "file": "dist/assets/fonts/IBMPlexSansKR-SemiBold.woff2",
+    "bytes": 601024,
+    "sha256": "0e4f6a58e35a026a1595bb884b8ebce2e986d274cfddd3bc3d2825c823ececa0",
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexsanskr/IBMPlexSansKR-SemiBold.ttf"
+  }
+]

@@ -1,0 +1,10 @@
+Use case: stylized-concept
+Asset type: production transparent VFX sprite atlas for a dark fantasy mobile action RPG, not a UI mockup.
+Primary request: spectacular ITEM ACQUISITION animation sprites: luminous crystalline sparks, fine magical filaments, upward light plumes, a sharp starburst and short outward arcs. Premium hand-painted 2D anime game VFX with crisp light cores and soft colored translucent fringes, legible at small size on a dark wooded battlefield.
+Composition: one square sprite sheet, exact 4 columns by 4 rows, 16 equally sized square cells, no visible grid. Each ROW is one consistent color family animated in four successive keyframes from LEFT to RIGHT: frame 1 tight ignition at lower center, frame 2 expanding brilliant bloom, frame 3 tall upward plume with spreading sparks, frame 4 dispersed fading sparks. In every cell the origin is at 50% horizontal and 78% vertical; effect safely contained within the cell with generous transparent gutters, no crossing cell edges.
+Row 1: silver and pale sapphire, modest rare loot bloom.
+Row 2: radiant amber gold and warm ivory, spectacular legendary loot plume.
+Row 3: crimson rose and violet with white hot cores, powerful mythic loot burst.
+Row 4: platinum white and champagne gold, the most brilliant perfect-roll loot burst, crystalline stars and elegant sharp beams.
+Scene/backdrop: genuine transparent alpha background, including all gutters and the empty spaces between wisps. Only emitted magical light and sparks, no scene.
+Constraints: no item, no sword, no treasure, no coin, no chest, no character, no text, no letters, no symbols, no numbers, no borders, no frames, no UI, no opaque background, no checkerboard painted into the pixels. No ground targeting circle or solid disc. Do not draw light as white rectangular panels. All effects detached on real transparency. Square 4x4 regular atlas.

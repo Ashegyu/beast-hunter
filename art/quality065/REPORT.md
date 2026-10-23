@@ -1,0 +1,22 @@
+# Alpha 0.65 — new chapter-native monsters
+
+- Added9 distinct ordinary species from the five user-supplied encyclopedia references, not color-only variants. Current roster18 ordinary +3 unchanged bosses =21. Each chapter lists6 ordinary monsters and one boss in the dossier.
+- Normal stage1 uses the established3 species. Stage2 introduces mobility variants, stage3 ranged variants, and stage4 the new heavy; stages4–9 mix all6. Role counts, chapter XP/loot schedules,339-kill chapter total and live population cap18 remain. Stage10 and all replay difficulties are one boss, one wave, no adds/barrels.
+- Species designs: spider short pounce/bite, mushroom5-way slow spore fan, stationary plant area bite, fast fragile dive bat, wraith narrow2-way soul fan/kiting, mimic bite/lunge, leopard quick pursuit/pounce, ice wisp4-way shard fan, yeti wide slam/heavy charge. Guardless heavy variants use body/behavior rather than reused shield logic. No implicit player poison/freeze system was added.
+- Factory validates chapter and role identity, boss skin always comes from chapter boss. Per-wave species assignment alternates unlocked role-compatible identities without changing the loot/material RNG streams. Attack cycles are immutable shared definitions. Targets lock at windup; telegraph and projectile fan share the species spread. Death/hurt/pause and stage cleanup use the established state transitions.
+
+Asset evidence:
+- Built-in image_gen,9 separate native1254×1254 RGBA sheets. Five direction rows; two walk, two attack and one corpse per row:225 poses /135 added clips. West directions mirror. Hurt reuses attack windup with recoil/flash; these are compact cycles, not high-frame-count animation.
+- Root reviewed all9 originals. Bat anatomy and leopard framing were regenerated. Body-core edge checks: all225 intact; faint outer alpha can remain. Agent's extraction review corrected cross-row mushroom fragments and preserved whole detached ice attack arms. Technical extraction copies assigned original RGBA without resampling or repainting.
+- Three lossless WebP atlases add13,294,066 encoded bytes. Dimensions: forest2048×2774, ruins2048×3152, frost2048×3074. Largest axis3152<4096. New texture decoded sizes are recorded in tools/reports/alpha065-monsters.json; they are not a browser/GPU residency measurement.
+- Independent final WebP RGBA and225 per-frame crop hashes match the packer report. Every established clip, direction and delivery mapping compares equal to the previous source commit. Existing045 assets were not replaced. No duplicate PNG atlases are shipped.
+- Runtime shared17 images plus selected-region3 =20; only one supplemental monster atlas is loaded for that region. Prior-region images are evicted through the existing ownership rules. The asset inspector now uses the same delivery mapping and exposes new species instead of requiring nonexistent PNG delivery copies.
+
+Verification:
+- Full suite531 passed,0 failed. Includes all21 species ×8 headings, fixed feet/scale/action frames, image validation/failure/retry/region cancellation, first appearance gates, caster fan velocities/colors/cap64, actual hit interruption, snapshot charges/death cancellation, rooted movement, boss isolation, campaign/saves/rewards and asset inspector frame scrubbing.
+- campaign.json:3 camp preparation policies ×3 deterministic seeds; real earned gear and budgets only. All9 runs complete all3 chapters, see all7 identities per chapter, each339 kills/10 clears. Peak live18; peak projectiles21. End chapter levels25/33/39.
+- cpu.json:7 fixed-crowd samples each,1000 warmup +10000 16ms engine steps. Median old18 actors16.490µs; new engine with old species16.480µs; new forest species16.970µs. Large HP/invulnerable assisted-player fixture keeps crowd stable. This is engine CPU only, excluding rendering/GPU/network and not a device-FPS guarantee.
+- Initial full suite exposed an asset-inspector PNG-only load path and historical clip-count expectations, which were corrected; paused simulation test excludes the profile last-seen timestamp because autosave continues during pause. Final suite ran on the final immutable asset state.
+- Browser control is unavailable in this managed cloud environment. No browser screenshot, actual touch/layout/GPU/device FPS or subjective in-game animation smoothness verification was performed. No user-computer access or login was used.
+
+Reproduce: npm test; node tools/measure-monsters065.mjs; node tools/benchmark-monsters065.mjs; python tools/pack-monsters065.py.

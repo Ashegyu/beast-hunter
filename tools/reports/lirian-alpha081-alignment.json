@@ -1,0 +1,279 @@
+{
+  "image": "lirian_locomotion-v05.png",
+  "sha256": "1be847571736d271cd4e9a5e6c33f99c99b2a717b6a68138024b26267fdbda69",
+  "logicalHeight": 126,
+  "directions": {
+    "s": {
+      "bodyHeight": 208.0,
+      "footLine": 238.0,
+      "headOffsetX": 0.0,
+      "poses": [
+        {
+          "column": 0,
+          "headX": 158.0,
+          "headY": 61.0,
+          "equalCellAnchorX": 158.0,
+          "anchorX": 158.0
+        },
+        {
+          "column": 1,
+          "headX": 378.0,
+          "headY": 60.0,
+          "equalCellAnchorX": 387.0,
+          "anchorX": 378.0
+        },
+        {
+          "column": 2,
+          "headX": 612.0,
+          "headY": 60.0,
+          "equalCellAnchorX": 616.0,
+          "anchorX": 612.0
+        },
+        {
+          "column": 3,
+          "headX": 823.0,
+          "headY": 60.0,
+          "equalCellAnchorX": 845.0,
+          "anchorX": 823.0
+        },
+        {
+          "column": 4,
+          "headX": 1016.0,
+          "headY": 60.0,
+          "equalCellAnchorX": 1074.0,
+          "anchorX": 1016.0
+        },
+        {
+          "column": 5,
+          "headX": 1231.0,
+          "headY": 60.0,
+          "equalCellAnchorX": 1303.0,
+          "anchorX": 1231.0
+        }
+      ]
+    },
+    "se": {
+      "bodyHeight": 210.0,
+      "footLine": 473.0,
+      "headOffsetX": 6.324999999999989,
+      "poses": [
+        {
+          "column": 0,
+          "headX": 169.0,
+          "headY": 292.0,
+          "equalCellAnchorX": 162.675,
+          "anchorX": 162.675
+        },
+        {
+          "column": 1,
+          "headX": 391.0,
+          "headY": 291.0,
+          "equalCellAnchorX": 391.675,
+          "anchorX": 384.675
+        },
+        {
+          "column": 2,
+          "headX": 627.0,
+          "headY": 292.0,
+          "equalCellAnchorX": 620.675,
+          "anchorX": 620.675
+        },
+        {
+          "column": 3,
+          "headX": 832.0,
+          "headY": 292.0,
+          "equalCellAnchorX": 849.675,
+          "anchorX": 825.675
+        },
+        {
+          "column": 4,
+          "headX": 1033.0,
+          "headY": 293.0,
+          "equalCellAnchorX": 1078.675,
+          "anchorX": 1026.675
+        },
+        {
+          "column": 5,
+          "headX": 1245.0,
+          "headY": 292.0,
+          "equalCellAnchorX": 1307.675,
+          "anchorX": 1238.675
+        }
+      ]
+    },
+    "e": {
+      "bodyHeight": 209.0,
+      "footLine": 701.0,
+      "headOffsetX": 11.87500000000017,
+      "poses": [
+        {
+          "column": 0,
+          "headX": 167.0,
+          "headY": 522.0,
+          "equalCellAnchorX": 155.12499999999983,
+          "anchorX": 155.12499999999983
+        },
+        {
+          "column": 1,
+          "headX": 391.0,
+          "headY": 522.0,
+          "equalCellAnchorX": 384.12499999999983,
+          "anchorX": 379.12499999999983
+        },
+        {
+          "column": 2,
+          "headX": 630.0,
+          "headY": 522.0,
+          "equalCellAnchorX": 613.1249999999998,
+          "anchorX": 618.1249999999998
+        },
+        {
+          "column": 3,
+          "headX": 839.0,
+          "headY": 522.0,
+          "equalCellAnchorX": 842.1249999999998,
+          "anchorX": 827.1249999999998
+        },
+        {
+          "column": 4,
+          "headX": 1036.0,
+          "headY": 521.0,
+          "equalCellAnchorX": 1071.1249999999998,
+          "anchorX": 1024.1249999999998
+        },
+        {
+          "column": 5,
+          "headX": 1247.0,
+          "headY": 522.0,
+          "equalCellAnchorX": 1300.1249999999998,
+          "anchorX": 1235.1249999999998
+        }
+      ]
+    },
+    "ne": {
+      "bodyHeight": 195.0,
+      "footLine": 922.0,
+      "headOffsetX": 0.5,
+      "poses": [
+        {
+          "column": 0,
+          "headX": 157.0,
+          "headY": 753.0,
+          "equalCellAnchorX": 156.5,
+          "anchorX": 156.5
+        },
+        {
+          "column": 1,
+          "headX": 380.0,
+          "headY": 753.0,
+          "equalCellAnchorX": 385.5,
+          "anchorX": 379.5
+        },
+        {
+          "column": 2,
+          "headX": 616.0,
+          "headY": 753.0,
+          "equalCellAnchorX": 614.5,
+          "anchorX": 615.5
+        },
+        {
+          "column": 3,
+          "headX": 833.0,
+          "headY": 754.0,
+          "equalCellAnchorX": 843.5,
+          "anchorX": 832.5
+        },
+        {
+          "column": 4,
+          "headX": 1036.0,
+          "headY": 754.0,
+          "equalCellAnchorX": 1072.5,
+          "anchorX": 1035.5
+        },
+        {
+          "column": 5,
+          "headX": 1244.0,
+          "headY": 753.0,
+          "equalCellAnchorX": 1301.5,
+          "anchorX": 1243.5
+        }
+      ]
+    },
+    "n": {
+      "bodyHeight": 188.0,
+      "footLine": 1124.5,
+      "headOffsetX": 0.0,
+      "poses": [
+        {
+          "column": 0,
+          "headX": 149.0,
+          "headY": 964.0,
+          "equalCellAnchorX": 149.0,
+          "anchorX": 149.0
+        },
+        {
+          "column": 1,
+          "headX": 380.0,
+          "headY": 965.0,
+          "equalCellAnchorX": 378.0,
+          "anchorX": 380.0
+        },
+        {
+          "column": 2,
+          "headX": 615.0,
+          "headY": 964.0,
+          "equalCellAnchorX": 607.0,
+          "anchorX": 615.0
+        },
+        {
+          "column": 3,
+          "headX": 831.0,
+          "headY": 966.0,
+          "equalCellAnchorX": 836.0,
+          "anchorX": 831.0
+        },
+        {
+          "column": 4,
+          "headX": 1032.0,
+          "headY": 965.0,
+          "equalCellAnchorX": 1065.0,
+          "anchorX": 1032.0
+        },
+        {
+          "column": 5,
+          "headX": 1236.0,
+          "headY": 966.0,
+          "equalCellAnchorX": 1294.0,
+          "anchorX": 1236.0
+        }
+      ]
+    }
+  },
+  "summary": {
+    "s": {
+      "beforeHorizontalSpan": 41.192,
+      "afterHorizontalSpan": 0.0,
+      "verticalSpan": 0.0
+    },
+    "se": {
+      "beforeHorizontalSpan": 41.4,
+      "afterHorizontalSpan": 0.0,
+      "verticalSpan": 0.6
+    },
+    "e": {
+      "beforeHorizontalSpan": 42.201,
+      "afterHorizontalSpan": 0.0,
+      "verticalSpan": 0.603
+    },
+    "ne": {
+      "beforeHorizontalSpan": 38.123,
+      "afterHorizontalSpan": 0.0,
+      "verticalSpan": 0.646
+    },
+    "n": {
+      "beforeHorizontalSpan": 44.234,
+      "afterHorizontalSpan": 0.0,
+      "verticalSpan": 1.34
+    }
+  }
+}

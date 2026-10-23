@@ -1,0 +1,18 @@
+{
+  "source": "/workspace/scratch/b9640f78719a/generated_images/exec-ff57fb96-9c34-429b-ab46-685f44f46d20.png",
+  "source_sha256": "11c2b440b672f32c79ca8f2a55fa69c38d1cefee34dff0905c844b9900618402",
+  "delivery_sha256": "6417db9847c218b1fbffce6d4fd6250c692ce067a7b2ddf2466e7da323b7c512",
+  "width": 1254,
+  "height": 1254,
+  "rgba_bytes": 6290064,
+  "webp_bytes": 1535414,
+  "rgba_equal": true,
+  "alpha_extrema": [
+    0,
+    253
+  ],
+  "cell_pivot_normalized": [
+    0.5,
+    0.9
+  ]
+}

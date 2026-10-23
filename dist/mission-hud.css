@@ -1,0 +1,106 @@
+/* Alpha 0.60: text owns the panel size; later HUD rows follow its real height. */
+#game-shell .battle .top-hud{
+ left:12px;right:12px;top:calc(10px + env(safe-area-inset-top,0px));
+ width:auto;min-width:0;max-width:none;height:auto;
+ display:grid;grid-template-columns:minmax(0,1fr) 44px;
+ grid-auto-rows:auto;gap:6px 10px;align-items:start;pointer-events:none;
+}
+#game-shell .battle .top-hud .hunter-hud{grid-column:1;grid-row:1;width:min(176px,100%);min-width:0}
+#game-shell .battle .top-hud #pause{grid-column:2;grid-row:1;justify-self:end;width:44px;min-width:44px;pointer-events:auto}
+#game-shell .battle .top-hud .mission{
+ grid-column:1/-1;grid-row:auto;display:grid;grid-template-columns:minmax(0,1fr);
+ width:100%;min-width:0;max-width:100%;height:auto;min-height:0;max-height:none;
+ margin:0;padding:3px 6px;gap:4px;
+ /* Nine-slice preserves the painted corners as content grows, rather than
+    stretching the thick frame across a fixed 56px rectangle. */
+ background:none;border:solid transparent;border-width:16px 20px;
+ border-image:url('assets/combat-mission-v046.webp') 48 45 fill / 16px 20px / 0 stretch;
+ border-radius:0;overflow:visible;box-sizing:border-box;
+}
+#game-shell .battle .top-hud .mission-caption{
+ grid-column:1;grid-row:1;display:flex;justify-content:space-between;
+ align-items:flex-start;flex-wrap:wrap;gap:2px 12px;min-width:0;
+}
+#game-shell .battle .top-hud #stage-caption{display:block;font-size:10px;line-height:1.4;letter-spacing:.03em;color:#b5baa9;min-width:0;overflow-wrap:anywhere}
+#game-shell .battle .top-hud #wave-label{display:block;grid-column:auto;grid-row:auto;min-width:0;font-size:11px;line-height:1.4;color:#ddc291;white-space:normal;overflow-wrap:anywhere}
+#game-shell .battle .top-hud .mission-title{grid-column:1;grid-row:2;display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 8px;min-width:0}
+#game-shell .battle .top-hud #combat-stage{flex:none;font-size:11px;line-height:1.5;color:#ddc291;white-space:normal}
+#game-shell .battle .top-hud #stage-name{flex:1 1 120px;min-width:0;max-width:100%;font-size:13px;font-weight:600;line-height:1.5;white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere;word-break:keep-all}
+#game-shell .battle .top-hud #quest{grid-column:1;grid-row:3;min-width:0;max-width:100%;margin:0;font-size:12px;line-height:1.5;color:#d3d4c6;white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere;word-break:keep-all}
+/* Detail remains in the paused tactics menu; the mission shows live progress. */
+#game-shell .battle .top-hud :is(.encounter-tactic,.wave-bar){display:none}
+#game-shell .battle .top-hud #craft-tracker{
+ position:relative;grid-column:1/-1;grid-row:auto;top:auto;right:auto;bottom:auto;left:auto;
+ justify-self:end;width:100%;max-width:220px;min-width:0;height:auto;min-height:44px;padding:8px 12px;
+ pointer-events:auto;white-space:normal;overflow-wrap:anywhere;
+}
+#game-shell .battle .top-hud #craft-tracker strong{font-size:11px;line-height:1.5;white-space:normal;overflow-wrap:anywhere}
+#game-shell .battle .top-hud #boss-hud{
+ position:relative;grid-column:1/-1;grid-row:auto;inset:auto;
+ display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:16px 5px;
+ align-content:center;justify-content:stretch;gap:4px;
+ width:100%;min-width:0;height:60px;min-height:60px;max-height:60px;
+ margin:0;padding:18px 10% 12px;border:0;box-sizing:border-box;
+}
+/* The painted frame's center starts below its crest. Both content rows share
+   one inset and explicit columns; text length cannot resize or shift the art. */
+#game-shell .battle .top-hud #boss-hud>div:first-child{
+ display:grid;grid-template-columns:minmax(0,1fr) auto;justify-content:stretch;
+ align-items:center;gap:8px;width:100%;min-width:0;height:16px;margin:0;padding:0;
+}
+#game-shell .battle .top-hud #boss-name{
+ min-width:0;margin:0;padding:0;font:600 11px/16px var(--body);
+ white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+#game-shell .battle .top-hud #boss-hp{
+ justify-self:end;min-width:0;margin:0;padding:0;font:600 11px/16px var(--body);
+ font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap;
+}
+#game-shell .battle .top-hud #boss-hud>.bar.boss{
+ width:100%;min-width:0;height:5px;margin:0;padding:0;border:0;
+ border-radius:2px;overflow:hidden;background:#190b13cc;
+}
+#game-shell .battle .top-hud .combat-announcements{
+ position:relative;grid-column:1/-1;grid-row:auto;inset:auto;
+ width:100%;min-width:0;display:grid;gap:8px;pointer-events:none;
+}
+#game-shell .battle .top-hud .combat-announcements :is(#notice,#reward-toast){max-width:100%;box-sizing:border-box}
+#game-shell .battle .top-hud .combat-announcements:has(#notice[hidden]):has(#reward-toast[hidden]){display:none}
+@media(orientation:landscape) and (max-height:500px){
+ #game-shell .battle .top-hud{right:auto;width:min(300px,calc(100% - 24px));gap:4px 10px}
+ #game-shell .battle .top-hud .mission{border-width:14px 18px;border-image-width:14px 18px;padding:2px 5px;gap:2px}
+ #game-shell .battle .top-hud #stage-caption{display:none}
+}
+
+/* Short screens reserve the lower field for movement and combat controls.
+   Transient announcements use compact summaries; full text stays in the DOM. */
+@media(max-height:680px){
+ #game-shell .battle .top-hud .mission{grid-template-columns:minmax(0,1fr) auto;gap:3px 6px;border-width:12px 16px;border-image-width:12px 16px;padding:4px 5px}
+ #game-shell .battle .top-hud .mission-caption{display:contents}
+ #game-shell .battle .top-hud #stage-caption{display:none}
+ #game-shell .battle .top-hud .mission-title{grid-column:1;grid-row:1;gap:2px 6px}
+ #game-shell .battle .top-hud #stage-name{flex-basis:100px;font-size:12px}
+ #game-shell .battle .top-hud #wave-label{grid-column:2;grid-row:1;font-size:10px;white-space:nowrap;align-self:start;line-height:1.8}
+ #game-shell .battle .top-hud #quest{grid-column:1/-1;grid-row:2;font-size:11px}
+ #game-shell .battle .top-hud .combat-announcements{gap:6px;align-items:start}
+ #game-shell .battle .top-hud .combat-announcements:has(#notice:not([hidden])):has(#reward-toast:not([hidden])){grid-template-columns:repeat(2,minmax(0,1fr))}
+ #game-shell .battle .top-hud .combat-announcements :is(#notice,#reward-toast){display:block;width:100%;max-width:100%;min-width:0;padding:6px 8px;gap:0;justify-self:stretch}
+ #game-shell .battle .top-hud :is(#notice-mark,#notice-kicker,#reward-sigil,#reward-kicker){display:none}
+ #game-shell .battle .top-hud .combat-announcements :is(#notice-title,#reward-title){display:block;margin:0;font-size:12px;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ #game-shell .battle .top-hud .combat-announcements :is(#notice-detail,#reward-meta){display:block;margin:1px 0 0;font-size:10px;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+}
+@media(max-height:620px){
+ #game-shell .battle .top-hud #boss-hud{
+  height:52px;min-height:52px;max-height:52px;padding:16px 10% 10px;
+  grid-template-rows:14px 4px;gap:3px;
+ }
+ #game-shell .battle .top-hud #boss-hud>div:first-child{height:14px;gap:6px}
+ #game-shell .battle .top-hud :is(#boss-name,#boss-hp){font-size:10px;line-height:14px}
+ #game-shell .battle .top-hud #boss-hud>.bar.boss{height:4px}
+}
+@media(orientation:landscape) and (max-height:500px){
+ #game-shell .battle .top-hud{gap:3px 8px}
+ #game-shell .battle .top-hud .hunter-hud{padding:5px 8px}
+ #game-shell .battle .top-hud .mission{border-width:8px 12px;border-image-width:8px 12px;padding:3px 5px;gap:2px 6px}
+ #game-shell .battle .top-hud .combat-announcements :is(#notice-detail,#reward-meta){display:none}
+}

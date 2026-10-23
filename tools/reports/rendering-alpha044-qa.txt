@@ -1,0 +1,55 @@
+Alpha0.44 combat raster quality,2026-10-16
+
+Observed causes
+app.js resized canvas to logical viewport/2 and drew through a fixed0.5 transform; arena CSS requested pixelated re-expansion. No device DPI support.
+390x844 browser: actual canvas CSS388x844,logical720x1566,backing360x783,DPR1 before change.
+High-resolution scenery/character minification used nearest-neighbor globally, producing unstable high-frequency detail.
+Regional monster sources have roughly54-90px body heights: forest guardian90,ruins king70,frost king69 for south walk frame0,while world heights250/244/254. Those source limitations are real and remain.
+
+Chosen implementation
+Separate render surface from existing camera units. Backing uses CSS dimensions times actual DPR,cap DPR2,2097152pixels,edge4096. Invalid geometry safely falls back to1200x760.
+draw uses backing/logical scale per axis; camera,world transforms,attack geometry and pointer conversion remain unchanged.
+Filter minified sprites/terrain at high quality; do not blur magnified low-resolution sprite frames. CSS arena image-rendering:auto,not pixelated whole-canvas re-expansion.
+Handle DPI-only transitions without clearing held movement/attacks; aspect/camera changes still release controls.
+Half-device-pixel terrain bleed eliminates filtered tile-edge gaps without changing tile positions or collision data.
+Versioned view-controls import and top-level0.44 asset queries prevent mixing cached old modules/CSS with the new renderer.
+No new frame allocations for surface state: dimensions computed only on resize/DPI transition; two numeric scale factors used in draw.
+
+Art direction before integration
+Built-in image_gen generated3 square quiet ground-only plates. Exact prompts:art/references/terrain-alpha044-prompts.txt.
+Forest matte earth/moss/wine stains,ruins broad charcoal stone,frost muted blue-gray ice/snow. Lower contrast and fewer bright micro-shapes let enemies/telegraphs stand out.
+Each1254x1254; PNG originals retained; WebP lossless RGBA equality verified.
+WebP bytes:forest1693036,ruins1804742,frost1701630,total5199408.
+Previous3 WebP terrain total6943944,now25.12% less network bytes. Decoded frame sizes differ; this is not a total memory benchmark.
+3 chapter environment references and3 delivery mappings changed. Every other manifest section deep-equal to starting HEAD; same23 startup images.
+Original monster sprites,animation timing/frames/pivots/body heights,weapon sockets,game-engine,world,motion,loot,craft rules and save schema unchanged.
+
+Automated checks
+Red test first: renderSurfaceFor missing export; implemented actual raster bounds and DPI semantics.
+421 tests,421pass,0fail,19602ms. Includes surface valid/invalid/extreme geometry limits,DPI changes preserving held input/swing identity/logical camera,filtered terrain vs unblurred enlarged boss.
+Existing all8 direction head/foot/contact/telegraph/corpse geometry assertions updated from half raster to full raster coordinates; world/input tests preserved.
+Canvas host now saves/restores smoothing like a real context and records per-draw sampling.
+node --check dist/app.js and git diff --check passed.
+
+Browser comparison
+Real browser controlled with CUA; baseline and candidate copies use actual renderer functions on identical fixed forest/ruins/frost scenes (one boss,one elite,one ordinary enemy). Fixed scene probes are inspection fixtures,not live combat.
+Baseline snapshots:outputs/alpha044-before-{forest,ruins,frost}-390.png.
+Final forest/ruins/frost snapshots and320/landscape/desktop captured in outputs; selected frost before/after retained under art/references.
+Candidate:CSS auto,388x844 backing at actual DPR1; explicit fixture2x-pixel simulation776x1688. Actual browser DPR remains1: not Android/retina device verification.
+320x740 simulation636x1480;1280x900 centered480px shell atx400,2x surface956x1796;landscape844x390 also inspected.
+Visual review found faint tile-edge lines after smoothing: added half-pixel overlap and recaptured. Low-contrast painterly ground reduces busy micro-patterns; monster outlines stay distinct. Larger source sprites are not reauthored,so pixel detail limits remain.
+Initial local candidate imported stale cached view-controls.js and failed; dependency now has?v=0.44.0. Normal app was explicitly reloaded and verified app.js?v=0.44.0,CSS auto,data-render-surface388x844 before final live hunt. Earlier cached0.43 hunt was stopped and is not counted as new-renderer acceptance.
+
+Actual gameplay
+Separate visible local QA page backed up the pre-fixture localhost profile,created an actual engine profile,crafted/equipped frost sword through real game APIs,then opened normal / app.
+Selected forest1-5 and enabled native auto. Real victory:17kills,31seconds,196gold,3cores,7equipment. Saved actual combat and result screenshots.
+Normal app reports23 loaded images and388x844 backing. No test toolbar/debug hook in normal app.
+Visible restore confirmed '원본 복구와 비교 데이터 정리 완료'; pre-fixture local profile restored (Lv8,gold468,cores5 from earlier baseline play). Dedicated comparison storage removed. Production Site profile never touched.
+Every __render* temporary page/module/manifest removed before packaging; source-only probe copies retained in workspace outputs for evidence.
+
+Performance evidence and limits
+Existing JS tick CPU120-frame rolling metrics observed:baseline live P95=1.700ms,max2.900ms;candidate live latest window P95=1.600ms,max4.300ms. Different fights/windows: these are observations,not a controlled speedup claim or overall worst case.
+Fixed candidate2x-pixel desktop scene observed P95=.500ms,max2.500ms; it omits game.advanceGame while keeping real draw/HUD,so not live combat throughput.
+Backing memory bounded to~8MiB RGBA per canvas at cap,excluding browser buffering,decoded assets and GPU copies. DPR2 increases fill work relative to old half-resolution render.
+No physical Android Chrome,real DPR2/3 hardware,GPU frame timing,thermal/battery or long stress evidence. Browser sampled metrics cannot establish those.
+This change removes raster amplification/filtering defects and busy ground. It does not invent missing high-resolution monster features; a full directional sprite repaint is a separate asset task.

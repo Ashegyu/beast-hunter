@@ -1,0 +1,221 @@
+{
+  "version": 10,
+  "characterId": "lirian",
+  "equipmentRng": 246813579,
+  "difficultyProgress": [
+    [
+      6,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "skillBook": {
+    "ranks": {
+      "crescent": 0
+    },
+    "loadout": {
+      "active": [
+        "crescent",
+        null
+      ],
+      "passive": [
+        null,
+        null,
+        null
+      ],
+      "ultimate": [
+        null
+      ]
+    },
+    "presets": [
+      {
+        "active": [
+          "crescent",
+          null
+        ],
+        "passive": [
+          null,
+          null,
+          null
+        ],
+        "ultimate": [
+          null
+        ],
+        "auto": {
+          "mode": "balanced",
+          "ultimate": "elite"
+        }
+      },
+      null,
+      null
+    ],
+    "auto": {
+      "mode": "balanced",
+      "ultimate": "elite"
+    },
+    "awakening": "area"
+  },
+  "favoriteItemIds": [
+    1
+  ],
+  "savedBuilds": [
+    {
+      "name": "이전 빌드",
+      "equipment": {
+        "weapon": 1,
+        "armor": 2,
+        "charm": 3
+      }
+    },
+    null,
+    null
+  ],
+  "targetCraftId": null,
+  "craftTrackerVisible": true,
+  "materials": {
+    "boneIron": 0,
+    "hide": 0,
+    "crystal": 0,
+    "root": 0,
+    "seal": 0,
+    "tear": 0,
+    "source": 0,
+    "origin": 0,
+    "refineStone": 91,
+    "refineCrystal": 0,
+    "refineEssence": 0,
+    "promotionStone": 0
+  },
+  "discoveredAncients": [],
+  "targetAncientId": null,
+  "bossMastery": [
+    1,
+    -1,
+    -1
+  ],
+  "lootPity": 0,
+  "legendaryPity": 0,
+  "pendingGold": 0,
+  "pendingMaterials": {
+    "boneIron": 0,
+    "hide": 0,
+    "crystal": 0,
+    "root": 0,
+    "seal": 0,
+    "tear": 0,
+    "source": 0,
+    "origin": 0,
+    "refineStone": 0,
+    "refineCrystal": 0,
+    "refineEssence": 0,
+    "promotionStone": 0
+  },
+  "pendingLoot": [],
+  "stageProgress": [
+    10,
+    7,
+    0
+  ],
+  "gold": 45678,
+  "cores": 123,
+  "level": 32,
+  "xp": 0,
+  "skillPoints": 0,
+  "skills": {
+    "edge": 0,
+    "chain": 0,
+    "guard": 0,
+    "haste": 0,
+    "magnet": 0,
+    "drain": 0
+  },
+  "forge": {
+    "blade": 0,
+    "armor": 0,
+    "core": 0
+  },
+  "unlockedStage": 2,
+  "clearedStage": 1,
+  "totalKills": 0,
+  "hunts": 0,
+  "lastSeenAt": 1792627200000,
+  "inventory": [
+    {
+      "id": 1,
+      "slot": "weapon",
+      "tier": 1,
+      "rarity": 4,
+      "name": "행운의 폭풍잎 검",
+      "catalogId": "1-weapon-12",
+      "artId": "forest_fang",
+      "affixes": {
+        "damage": 27,
+        "hp": 28,
+        "reduction": 3,
+        "crit": 5,
+        "speed": 5
+      },
+      "rollVersion": 1,
+      "enhancement": 12,
+      "enhancementAffixes": {
+        "damage": 1.23,
+        "hp": 1.23,
+        "reduction": 1.23,
+        "crit": 1.23,
+        "speed": 1.23
+      },
+      "rerollCandidate": {
+        "affixes": {
+          "damage": 37,
+          "hp": 30,
+          "reduction": 3,
+          "crit": 6,
+          "speed": 6
+        }
+      }
+    },
+    {
+      "id": 2,
+      "slot": "armor",
+      "tier": 1,
+      "rarity": 3,
+      "name": "행운의 오크 가시갑옷",
+      "catalogId": "1-armor-8",
+      "artId": "forest_armor",
+      "affixes": {
+        "hp": 77,
+        "crit": 5,
+        "speed": 4,
+        "reduction": 2
+      },
+      "rollVersion": 1
+    },
+    {
+      "id": 3,
+      "slot": "charm",
+      "tier": 1,
+      "rarity": 3,
+      "name": "날카로운 고대 충격핵",
+      "catalogId": "1-charm-9",
+      "artId": "forest_charm",
+      "affixes": {
+        "speed": 7,
+        "crit": 4,
+        "hp": 22,
+        "reduction": 2
+      },
+      "rollVersion": 1
+    }
+  ],
+  "equipment": {
+    "weapon": 1,
+    "armor": 2,
+    "charm": 3
+  },
+  "nextItemId": 5
+}

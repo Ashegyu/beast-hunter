@@ -1,0 +1,108 @@
+/* Alpha 0.94.2: equipment scene. Three owned slots and authored synergies remain authoritative. */
+#game-shell[data-panel=equipment]{--menu-rail:0px;--head-height:clamp(34px,10.4cqh,44px);--equipment-line:#b99b6c70;--equipment-radius:clamp(5px,.7cqw,8px)}
+#game-shell[data-panel=equipment] .masthead{inset:0 0 auto;height:var(--head-height);padding:0 max(48px,6cqw) 0 2.3cqw;background:linear-gradient(90deg,#080a0f90,#060a0ee8),url('assets/craft-forge-v041.webp') center 22%/cover;border:0;border-bottom:1px solid #b6a17e30;backdrop-filter:none;gap:8px}
+#game-shell[data-panel=equipment] .page-title{font:700 clamp(19px,2.7cqw,30px)/1.3 var(--serif);letter-spacing:1px}
+#game-shell[data-panel=equipment] .page-back{width:28px;min-width:28px;height:min(36px,calc(var(--head-height) - 2px))!important;min-height:0!important;padding:2px;border:0;background:none}
+#game-shell[data-panel=equipment] .wallet{margin-left:auto;flex-wrap:nowrap;max-width:none;gap:clamp(5px,1cqw,12px)}
+#game-shell[data-panel=equipment] .wallet>span:not(.build){display:flex;align-items:center;gap:5px;padding:3px 8px;border:1px solid #b59b6b40;border-radius:30px;background:#05090bbd;white-space:nowrap}
+#game-shell[data-panel=equipment] .wallet b{margin:0;font:500 clamp(10px,1.4cqw,16px)/1.2 var(--ui-font);white-space:nowrap;overflow-wrap:normal}
+#game-shell[data-panel=equipment] .wallet .build{display:none}
+#game-shell[data-panel=equipment] .wallet #sound{width:25px;min-width:25px;height:28px;min-height:28px;padding:3px}
+#game-shell[data-panel=equipment] .wallet #sound:before{width:19px;height:19px}
+#game-shell[data-panel=equipment][data-phase=camp] .app-nav{inset:0 1.8cqw auto auto;display:flex!important;flex-direction:row;align-items:center;justify-content:center;width:30px;height:var(--head-height);padding:0;border:0;background:none;box-shadow:none;z-index:40}
+#game-shell[data-panel=equipment] .app-nav>button{display:none}
+#game-shell[data-panel=equipment] .app-nav>#nav-home{display:grid;place-items:center;flex:0 0 30px;width:30px;min-width:30px;height:34px!important;min-height:34px!important;padding:2px;border:0;background:none;color:#efdfbd}
+#game-shell[data-panel=equipment] .app-nav>#nav-home>.menu-icon{width:25px;height:25px}
+#game-shell[data-panel=equipment] .app-nav>button>span{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+#game-shell[data-panel=equipment] .app-nav>button:after{display:none!important}
+#game-shell[data-panel=equipment]:not([data-phase=camp]) .app-nav{display:none!important}
+#game-shell[data-panel=equipment] #overlay[data-panel=equipment]{inset:var(--head-height) 0 0;padding:0;background:#080c10}
+#game-shell[data-panel=equipment]:not([data-phase=camp]) #overlay[data-panel=equipment]{inset:0}
+#game-shell[data-panel=equipment] #overlay[data-panel=equipment]>.modal{background:none}
+#game-shell[data-panel=equipment] #equipment-content:not([hidden]){position:relative;display:grid;grid-template-columns:minmax(52px,8.5%) minmax(0,1.2fr) minmax(0,1fr);grid-template-rows:34% minmax(0,1fr) 12%;gap:1.8cqh 1.2cqw;height:100%;min-height:0;padding:5cqh 2.2cqw 4.5cqh 0;overflow:hidden;isolation:isolate;background:#080c10}
+/* Keep the lit hall in the character area instead of the source image's empty left wall. */
+#game-shell[data-panel=equipment] #equipment-content:before{content:'';position:absolute;inset:0 37% 0 0;z-index:-1;pointer-events:none;background:linear-gradient(0deg,#080c10,#080c10ba 14%,transparent 34%) center/100% 100% no-repeat,url('assets/craft-forge-v041.webp') right 63%/150% auto no-repeat;filter:brightness(1.55);mask-image:linear-gradient(90deg,transparent,#000 18%,#000 78%,transparent)}
+#game-shell[data-panel=equipment] .loadout-heading{position:absolute;inset:1cqh auto auto 2cqw;display:flex;align-items:center;gap:9px;width:28cqw;min-width:164px;max-width:265px;height:13cqh;min-height:42px;z-index:3;pointer-events:none}
+#game-shell[data-panel=equipment] .equipment-profile-avatar{flex:none;width:clamp(35px,10.5cqh,50px);height:clamp(35px,10.5cqh,50px);border:1px solid #d6ba88;border-radius:50%;background:url('assets/lirian_home-illustration-v027.png') 50% 6%/210% auto;box-shadow:0 0 0 2px #0b0c0d}
+#game-shell[data-panel=equipment] .loadout-heading>div{display:block;flex:1;min-width:0}
+#game-shell[data-panel=equipment] .loadout-heading h3{margin:0 0 3px;font:700 clamp(13px,1.9cqw,21px)/1.2 var(--ui-font);color:#fff0df}
+#game-shell[data-panel=equipment] .equipment-profile-level{display:flex;justify-content:space-between;align-items:center;gap:8px;color:#dec698}
+#game-shell[data-panel=equipment] .loadout-heading #persona-level{font:600 clamp(9px,1.25cqw,14px)/1.2 var(--ui-font)}
+#game-shell[data-panel=equipment] #equipment-xp-label{font:clamp(8px,1.15cqw,12px)/1.2 var(--ui-font)}
+#game-shell[data-panel=equipment] .equipment-xp{display:block;height:4px;margin-top:4px;border-radius:4px;background:#d1c8b72d;overflow:hidden}
+#game-shell[data-panel=equipment] .equipment-xp i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#b9272b,#f5a568)}
+#game-shell[data-panel=equipment] #loadout-close{position:absolute;top:0;right:-32px;min-width:28px;width:28px;height:28px;min-height:28px;pointer-events:auto}
+#game-shell[data-panel=equipment][data-phase=camp] #loadout-close{display:none}
+#game-shell[data-panel=equipment] .equipment-scene-menu{grid-column:1;grid-row:1/4;align-self:start;display:grid;grid-template-rows:repeat(4,minmax(0,1fr));height:62cqh;min-height:0;margin:8cqh 0 0 1cqw;border-inline:1px solid #b89b693b;background:linear-gradient(90deg,#080a0ddb,#070b0e80)}
+#game-shell[data-panel=equipment] .equipment-scene-menu>:is(button,.equipment-scene-current){display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;width:100%;min-width:0;min-height:0;margin:0;padding:4px 2px;border:0;border-radius:0;background:none;box-shadow:none;font:600 clamp(9px,1.4cqw,15px)/1.2 var(--ui-font);color:#bfab8a}
+#game-shell[data-panel=equipment] .equipment-scene-menu svg{display:block;width:clamp(23px,3.1cqw,35px);height:clamp(23px,3.1cqw,35px);fill:#cfb18b20;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#game-shell[data-panel=equipment] .equipment-scene-menu>.equipment-scene-current{border-left:2px solid #ffb88a;background:#5e0a15 url('assets/button-primary-v043.webp') center 43%/400% 200% no-repeat;box-shadow:inset 0 0 12px #fd3b2133;color:#ffead0}
+#game-shell[data-panel=equipment] .equipment-scene-menu>button:disabled{opacity:.35;cursor:default}
+#game-shell[data-panel=equipment] .equipment-stats-panel{grid-column:3;grid-row:1;display:flex;flex-direction:column;min-width:0;min-height:0;border:1px solid var(--equipment-line);border-radius:var(--equipment-radius);background:linear-gradient(115deg,#0d0d12ed,#080c10e6);overflow:hidden}
+#game-shell[data-panel=equipment] .equipment-stats-panel>header{display:flex;align-items:center;justify-content:space-between;flex:none;gap:8px;min-height:clamp(28px,8cqh,36px);padding:4px 11px;border-bottom:1px solid #d8ab6a30;background:linear-gradient(90deg,#24111633,#64121f66);font:600 clamp(11px,1.7cqw,18px)/1.25 var(--ui-font);color:#ecd6ad}
+#game-shell[data-panel=equipment] #equipment-equipped-count{font:600 clamp(10px,1.65cqw,18px)/1.2 var(--ui-font);white-space:nowrap;color:#f3d3a0;text-shadow:0 0 12px #f44b2c66}
+#game-shell[data-panel=equipment] .loadout-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-self:stretch;align-content:center;flex:1;min-height:0;height:auto;margin:0;padding:5px 4px;border:0;border-image:none;background:none;gap:0}
+#game-shell[data-panel=equipment] .loadout-stats>div{display:flex;flex-direction:column;justify-content:center;min-width:0;min-height:0;padding:0 4px;text-align:center}
+#game-shell[data-panel=equipment] .loadout-stats>div+div{border-left:1px solid #c4ad7b24}
+#game-shell[data-panel=equipment] .loadout-stats dt{font:clamp(8px,1.25cqw,13px)/1.2 var(--ui-font);color:#bcb7b1;white-space:nowrap}
+#game-shell[data-panel=equipment] .loadout-stats dt:before{content:'⚔';display:block;margin-bottom:2px;color:#d1c7b9;font:clamp(13px,2cqw,22px)/1 Georgia,serif}
+#game-shell[data-panel=equipment] .loadout-stats>div:nth-child(2) dt:before{content:'♥'}
+#game-shell[data-panel=equipment] .loadout-stats>div:nth-child(3) dt:before{content:'✦'}
+#game-shell[data-panel=equipment] .loadout-stats dd{margin:3px 0 0;font:600 clamp(15px,2.25cqw,25px)/1.15 var(--ui-font);font-variant-numeric:tabular-nums;color:#f7eee3;overflow-wrap:anywhere}
+#game-shell[data-panel=equipment] #equipment-content #equipment-persona{grid-column:2;grid-row:1/4;display:grid;grid-template-columns:clamp(48px,8.5cqw,82px) minmax(0,1fr) clamp(48px,8.5cqw,82px);grid-template-rows:repeat(4,minmax(0,1fr));gap:3px 5px;align-items:center;width:100%;height:100%;min-height:0;margin:0;padding:8cqh 1cqw 9cqh;isolation:isolate;border:0;background:none;overflow:hidden}
+#game-shell[data-panel=equipment] #equipment-content .loadout-character{position:relative;grid-column:2;grid-row:1/5;display:grid;place-items:center;width:100%;height:100%;min-height:0;min-width:0;container-type:size;isolation:isolate;--figure-width:min(100cqw,85.7143cqh);--figure-height:min(100cqh,116.6667cqw);--feet-y:calc(50% + var(--figure-height) * .44);--dais-height:calc(var(--figure-width) * .7)}
+/* The figure preserves its 480:560 canvas ratio. Feet are at 94% of that rendered canvas. */
+#game-shell[data-panel=equipment] #equipment-content .loadout-character:before{content:'';position:absolute;inset:auto;left:50%;top:calc(var(--feet-y) - var(--dais-height) * .43);width:calc(var(--figure-width) * 1.65);height:var(--dais-height);transform:translateX(-50%);z-index:-1;border-radius:0;background:url('assets/equipment-stone-dais-v0942.webp') center/100% 100% no-repeat;filter:none;pointer-events:none}
+#game-shell[data-panel=equipment] #equipment-content .loadout-character:after{content:'';position:absolute;left:50%;top:var(--feet-y);width:calc(var(--figure-width) * .36);height:calc(var(--figure-width) * .07);transform:translate(-50%,-50%);z-index:0;background:radial-gradient(ellipse,#060608bd,#07080a70 35%,transparent 72%);pointer-events:none}
+#game-shell[data-panel=equipment] #equipment-content #equipment-preview{position:static;inset:auto;display:block;width:var(--figure-width);height:var(--figure-height);max-width:100%;max-height:100%;object-fit:contain;image-rendering:pixelated;transform:none;background:none;border:0;padding:0;margin:0;z-index:1}
+#game-shell[data-panel=equipment] #equipment-content .equipped-slot{position:relative;inset:auto!important;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;width:100%;max-width:100%;height:100%;min-width:0;min-height:0;margin:0;padding:2px;border:0;border-radius:0;background:none!important;box-shadow:none;transform:none;opacity:1;text-align:center}
+#game-shell[data-panel=equipment] #equipment-content #equipped-open-weapon{grid-column:1;grid-row:2/4}
+#game-shell[data-panel=equipment] #equipment-content #equipped-open-armor{grid-column:3;grid-row:1/3}
+#game-shell[data-panel=equipment] #equipment-content #equipped-open-charm{grid-column:3;grid-row:3/5}
+#game-shell[data-panel=equipment] #equipment-content .loadout-slot-frame{position:relative;isolation:isolate;display:block;flex:none;width:clamp(43px,8cqw,76px);height:clamp(43px,8cqw,76px);padding:7px;background:#0d0c12 var(--ui-slot) center/100% 100% no-repeat}
+#game-shell[data-panel=equipment] #equipment-content .loadout-slot-frame:before{content:'';position:absolute;inset:6px;z-index:-1;background:radial-gradient(ellipse,rgb(var(--equipment-glow,180 163 132) / .34),transparent 72%)}
+#game-shell[data-panel=equipment] #equipment-content .equipped-slot[data-rarity='1']{--equipment-glow:57 155 255}
+#game-shell[data-panel=equipment] #equipment-content .equipped-slot[data-rarity='2']{--equipment-glow:173 102 255}
+#game-shell[data-panel=equipment] #equipment-content .equipped-slot[data-rarity='3']{--equipment-glow:255 217 77}
+#game-shell[data-panel=equipment] #equipment-content .equipped-slot[data-rarity='4']{--equipment-glow:255 77 77}
+#game-shell[data-panel=equipment] #equipment-content .equipped-slot[data-rarity='5']{--equipment-glow:255 139 53}
+#game-shell[data-panel=equipment] #equipment-content .equipped-slot[data-rarity='6']{--equipment-glow:100 219 147}
+#game-shell[data-panel=equipment] #equipment-content .equipped-slot .equipment-icon{width:100%;height:100%;max-width:100%;margin:0;padding:0;border:0;background-color:transparent;box-shadow:none;transform:none}
+#game-shell[data-panel=equipment] #equipment-content .equipped-level{position:absolute;right:5px;bottom:4px;max-width:90%;padding:1px 2px;background:#09080bba;color:#f6d68c;font:700 clamp(9px,1.35cqw,14px)/1.1 var(--ui-font);text-shadow:0 1px 3px #000}
+#game-shell[data-panel=equipment] #equipment-content .equipped-slot>div{width:100%;min-width:0}
+#game-shell[data-panel=equipment] #equipment-content .equipped-slot small{display:block;font:clamp(8px,1.05cqw,12px)/1.2 var(--ui-font);color:#cbb994}
+#game-shell[data-panel=equipment] #equipment-content .equipped-slot strong{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;position:static;max-height:2.4em;margin:2px 0 0;overflow:hidden;white-space:normal;word-break:keep-all;overflow-wrap:anywhere;font:600 clamp(8px,1.2cqw,13px)/1.2 var(--ui-font);color:#e3d4b8}
+#game-shell[data-panel=equipment] #equipment-content .equipped-slot:disabled{opacity:.55;cursor:default}
+#game-shell[data-panel=equipment] .equipment-synergy-panel{grid-column:3;grid-row:2;display:flex;flex-direction:column;min-width:0;min-height:0;border:1px solid var(--equipment-line);border-radius:var(--equipment-radius);background:linear-gradient(120deg,#111015e6,#080d11ed);overflow:hidden}
+#game-shell[data-panel=equipment] #equipment-content #equipment-synergy-open{flex:none;display:grid;grid-template-columns:22px minmax(0,1fr) auto 10px;align-items:center;gap:6px;width:100%;min-height:clamp(29px,8.5cqh,37px);height:auto;margin:0;padding:4px 9px;border:0;border-bottom:1px solid #c6aa762e;background:none;text-align:left;color:#ead6b5}
+#game-shell[data-panel=equipment] #equipment-synergy-open>strong{font:600 clamp(10px,1.6cqw,17px)/1.3 var(--ui-font)}
+#game-shell[data-panel=equipment] #equipment-content #equipment-synergy-status{font:clamp(8px,1.1cqw,12px)/1.25 var(--ui-font);color:#c5bba8;white-space:nowrap}
+#game-shell[data-panel=equipment] .equipment-synergy-list{display:grid;grid-template-rows:repeat(2,minmax(0,1fr));flex:1;min-height:0;padding:0 8px;overflow:hidden}
+#game-shell[data-panel=equipment] .equipment-link{display:grid;grid-template-columns:clamp(19px,2.8cqw,30px) minmax(0,1fr) auto 9px;align-items:center;gap:7px;width:100%;min-width:0;min-height:0;margin:0;padding:5px 2px;border:0;border-radius:0;background:none;box-shadow:none;text-align:left;color:#d6c7b1}
+#game-shell[data-panel=equipment] .equipment-link+button{border-top:1px solid #b5a17b22}
+#game-shell[data-panel=equipment] .equipment-link>svg{width:100%;height:28px;fill:none;stroke:#93816c;stroke-width:1.3}
+#game-shell[data-panel=equipment] .equipment-link>span:not(.equipment-link-state){display:flex;flex-direction:column;gap:3px;min-width:0}
+#game-shell[data-panel=equipment] .equipment-link strong{font:600 clamp(10px,1.5cqw,16px)/1.25 var(--ui-font);color:#d5be9e;white-space:nowrap}
+#game-shell[data-panel=equipment] .equipment-link small{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;font:clamp(8px,.95cqw,11px)/1.35 var(--ui-font);color:#9fa09b;word-break:keep-all}
+#game-shell[data-panel=equipment] .equipment-link-state{align-self:start;margin-top:5px;padding:1px 3px;border:1px solid #8c785947;border-radius:3px;font:clamp(7px,.9cqw,10px)/1.2 var(--ui-font);white-space:nowrap;color:#a79a87}
+#game-shell[data-panel=equipment] .equipment-link>i{font:20px/1 Georgia,serif;color:#bcae99}
+#game-shell[data-panel=equipment] .equipment-link[data-active=true]{color:#f0cc8b}
+#game-shell[data-panel=equipment] .equipment-link[data-active=true]>svg{stroke:#e8b46e;filter:drop-shadow(0 0 4px #ee9b2e55)}
+#game-shell[data-panel=equipment] .equipment-link[data-active=true] strong{color:#efc28a}
+#game-shell[data-panel=equipment] .equipment-link[data-active=true] .equipment-link-state{color:#d8c590;border-color:#bf9b5f77;background:#a6803315}
+#game-shell[data-panel=equipment] #equipment-content .loadout-actions{grid-column:3;grid-row:3;display:grid;grid-template-columns:1fr 1fr;align-self:stretch;align-content:stretch;min-height:0;gap:1.1cqw}
+#game-shell[data-panel=equipment] #equipment-content .loadout-actions>button{display:flex;align-items:center;justify-content:center;width:100%;height:100%!important;min-height:0;margin:0;padding:3px 5px!important;border:1px solid #c4a36e!important;border-radius:3px!important;background:none!important;font:600 clamp(10px,1.55cqw,17px)/1.25 var(--serif);color:#fff0da;box-shadow:none!important}
+#game-shell[data-panel=equipment] #equipment-content .loadout-actions>button:after{inset:0;border:0;border-image:none;border-radius:inherit;background-size:100% 154%;background-position:center 44%;box-shadow:inset 0 0 0 1px #d2b38220}
+#game-shell[data-panel=equipment] #equipment-content #loadout-bag-open{box-shadow:0 0 12px #e7292540!important}
+@container game-view (max-width:680px){
+ #game-shell[data-panel=equipment] .equipment-link{gap:4px;grid-template-columns:18px minmax(0,1fr) auto 7px}
+ #game-shell[data-panel=equipment] .equipment-synergy-list{padding-inline:5px}
+ #game-shell[data-panel=equipment] .equipment-link-state{font-size:7px;padding-inline:2px}
+ #game-shell[data-panel=equipment] .equipment-profile-avatar{width:34px;height:34px}
+ #game-shell[data-panel=equipment] #equipment-content .loadout-slot-frame{padding:5px}
+}
+
+@container game-view (max-height:350px){
+ #game-shell[data-panel=equipment] .equipment-link{padding-block:4px}
+ #game-shell[data-panel=equipment] .equipment-link small{-webkit-line-clamp:1}
+}

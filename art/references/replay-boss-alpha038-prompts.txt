@@ -1,0 +1,21 @@
+Alpha 0.38 boss replay header assets
+Mode: built-in image_gen; generate; stylized-concept. No CLI/API fallback.
+Reference role: supplied boss replay UI screenshot was inspected for composition and mood; assets generated as no-text illustrations.
+Original outputs retained under C:\Users\USER\.codex\generated_images\01a13ea1-7939-7932-ba75-b8352e3de07b
+
+dist/assets/replay-forest-v038.png
+Use case: stylized-concept. Asset type: actual dark fantasy action RPG boss replay header background, horizontal approximately 2:1 landscape composition. Primary request: 세계수의 수호령, a terrifying colossal ancient twisted wood guardian with branching antlers and gnarled roots, weathered dark bark armor, hollow crimson glowing eyes and subtle red fissures, emerging in a gothic forest with ruined stone spires. Premium painterly game illustration, beautifully detailed natural materials, cinematic restrained charcoal, blue-black mist, burgundy ember accents, faint warm champagne rim light. Boss occupies the RIGHT 55 percent, face and upper body clear within right half; LEFT 45 percent is very dark quiet forest fog with low contrast reserved for live HTML title and text. Deep dramatic atmosphere like the provided user's UI reference: polished dark fantasy rather than cartoon. No human heroine. No text, lettering, typography, labels, buttons, icons, logos, watermark, UI panel, border, or frame. Full bleed opaque background. Important: create just a single landscape art background, not a screen or mockup.
+
+dist/assets/replay-ruins-v038.png
+Use case: stylized-concept. Asset type: actual dark fantasy action RPG boss replay header background, horizontal approximately 2:1 landscape composition. Primary request: 무덤의 왕, a formidable regal skeletal armored king with an ashen jagged crown, antique blackened plate armor with fine aged gold trim, dim crimson eyes, a massive worn sword, commanding an abandoned gothic throne court among ruined castle towers. Premium painterly game illustration, detailed stone and black metal, cinematic restrained charcoal, blue-black mist, burgundy ember accents and faint champagne rim lighting. The skeletal king occupies the RIGHT 55 percent, face and upper body visible clearly within right half; LEFT 45 percent remains dark quiet fog and castle architecture with low contrast reserved for live HTML title and text. Polished dramatic dark fantasy mood matching the user's reference, not cartoon. No human heroine. No text, lettering, typography, labels, buttons, icons, logos, watermark, UI panel, border, or frame. Full bleed opaque art. Important: only one landscape art background, not a screen or mockup.
+
+dist/assets/replay-frost-v038.png
+Use case: stylized-concept. Asset type: actual dark fantasy action RPG boss replay header background, horizontal approximately 2:1 landscape composition. Primary request: 빙원의 지배자, an enormous formidable ice and crystalline horned draconic sovereign, angular frost encrusted armor scales, ancient curled horns, pale icy eyes, restrained faint red fissures within blue-white ice, looming amid a frozen gothic castle. Premium painterly game illustration, rich detailed ice and weathered obsidian, cinematic charcoal, blue-black mist, icy moonlight, very restrained burgundy accent and faint champagne edges. Dragon occupies the RIGHT 55 percent, menacing face and upper body clearly inside right half; LEFT 45 percent is deep dark quiet frosty fog and distant castle silhouettes with low contrast reserved for live HTML title and text. Polished dark fantasy mood matching the user's reference, not cartoon. No human heroine. No text, lettering, typography, labels, buttons, icons, logos, watermark, UI panel, border, or frame. Full bleed opaque background. Important: create just one single landscape art background, not a screen or mockup.
+
+Delivery encoding: WebP lossless=True, exact=True, method=6; decoded RGBA byte identity verified for all three.
+Dimensions: all 1774 x 887, exact 2:1 landscape.
+forest PNG 2543941 bytes -> WebP 1737472 bytes.
+ruins PNG 2600876 bytes -> WebP 1767596 bytes.
+frost PNG 2557585 bytes -> WebP 1652876 bytes.
+Total PNG 7702402 bytes -> WebP 5157944 bytes (33.03% reduction).
+Visual inspection: correct wood guardian/skeletal king/ice dragon identities; all subject-right and low-contrast dark left text area, no lettering, controls, icons or frames.

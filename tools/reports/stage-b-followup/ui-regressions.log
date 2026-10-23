@@ -1,0 +1,97 @@
+(node:19) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ hunting map scene follows real checkpoint limits and boss rewards without changing the profile (643.785173ms)
+✔ all ten stage buttons preserve selected identity through redraws, repeated chapter taps and navigation (626.389194ms)
+✔ boss reward view shows actual selected mode values and prepares the map without launching (213.384131ms)
+✔ boss reward view preserves unlocks and backs out to the same selected map checkpoint (93.070284ms)
+✔ build UI saves names and complete equipment, updates synergy preview, applies in camp and restores (321.773081ms)
+✔ actual stage transition clears held controls, saves checkpoint and resumes it at camp (225.391317ms)
+✖ perfect gear retains its bag marker and max-option note while legendary protection stays outside combat HUD (100.696832ms)
+✔ result images distinguish reused IDs by their actual item owner and update after dismantling (123.23801ms)
+✔ real render draws dropped equipment and limits ordinary pickup HUD spam (147.666742ms)
+✔ actual auto button takes a hunt through content, victory, saved rewards and a camp return (7477.173743ms)
+✔ chapter selection changes real terrain, creature previews and boss names while preserving stage locks (360.461077ms)
+✖ equipped items retain slot icons, statistics and saved ownership while character poses have no weapon overlay (326.590387ms)
+✔ charged capacitor UI advertises zero stamina heavy and capture works through the real button (83.21319ms)
+✖ camp codex masks undiscovered art, filters, persists targets and prepares unlocked boss replays (202.975021ms)
+✔ archive recent discovery uses real records including removed equipment and empty state is honest (316.441659ms)
+✔ archive filters, category tabs, sorting and view mode preserve identities and profile (161.348238ms)
+✔ advanced victory offers another hunt of the same boss and captured difficulty (114.456934ms)
+✔ entry shows the current stage, countdown and remaining monsters without old progress panels (140.704291ms)
+✔ stage clear is a short nonblocking notice and resets the minute clock without carrying held movement (229.691772ms)
+✔ ultimate details and final fractional cooldown show seconds until truly ready (113.722903ms)
+✔ boss reward notice uses the actual chapter and difficulty payout receipt (213.021802ms)
+✔ max-level growth caps XP, fills the bar and explains the final awakening without changing builds (142.153837ms)
+✔ ninth checkpoint transitions directly to a single-boss final with matching HUD and retry (160.641959ms)
+✔ stage B five presets save real gear and skill settings, expose two-tap entry selection and restore without a false recovery warning (241.596236ms)
+✔ stage B inscription UI charges one atomic cost and persists the selected optional effect (217.082652ms)
+✔ stage B storage failure keeps settlement pending, retry commits once and preset retry keeps the failed destination (161.452167ms)
+✔ stage B result loot keeps ownership by instance ID after durable settlement clones the inventory (214.34724ms)
+✔ followup HUD writes preserve simulation, controls, pause and live diagnostics (295.290743ms)
+✔ followup unchanged HUD text preserves its node while changed values and capacitor actions appear immediately (104.2229ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 26
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14406.352104
+
+✖ failing tests:
+
+test at tests/game-ui.test.mjs:561:1
+✖ perfect gear retains its bag marker and max-option note while legendary protection stays outside combat HUD (100.696832ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '일반 드롭 → 최대 강화 → 승급'
+  - '전설 보장까지 최대 1드롭'
+  
+      at TestContext.<anonymous> (file:///workspace/sites/beast-hunter-motion/tests/game-ui.test.mjs:563:54)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '일반 드롭 → 최대 강화 → 승급',
+    expected: '전설 보장까지 최대 1드롭',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/game-ui.test.mjs:1201:1
+✖ equipped items retain slot icons, statistics and saved ownership while character poses have no weapon overlay (326.590387ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  '24' !== 24
+  
+      at TestContext.<anonymous> (file:///workspace/sites/beast-hunter-motion/tests/game-ui.test.mjs:1213:231)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '24',
+    expected: 24,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/game-ui.test.mjs:1245:1
+✖ camp codex masks undiscovered art, filters, persists targets and prepares unlocked boss replays (202.975021ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'ancient-1-weapon-2'
+  - 'ancient-1-weapon-1'
+                      ^
+  
+      at TestContext.<anonymous> (file:///workspace/sites/beast-hunter-motion/tests/game-ui.test.mjs:1251:57)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'ancient-1-weapon-2',
+    expected: 'ancient-1-weapon-1',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

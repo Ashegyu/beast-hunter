@@ -1,0 +1,62 @@
+{
+  "atlas": "Generated from user component reference with built-in imagegen; individual cells extracted without repainting.",
+  "boxes": {
+    "panel": [
+      84,
+      48,
+      480,
+      484
+    ],
+    "card": [
+      568,
+      88,
+      974,
+      466
+    ],
+    "card-selected": [
+      1047,
+      86,
+      1479,
+      471
+    ],
+    "button": [
+      50,
+      576,
+      502,
+      692
+    ],
+    "button-primary": [
+      550,
+      576,
+      991,
+      693
+    ],
+    "button-primary-hover": [
+      1035,
+      573,
+      1494,
+      697
+    ],
+    "equipped": [
+      47,
+      791,
+      557,
+      929
+    ],
+    "icon": [
+      653,
+      789,
+      808,
+      941
+    ],
+    "disclosure": [
+      898,
+      808,
+      1495,
+      924
+    ]
+  },
+  "slicePixels": 36,
+  "renderInsets": "0; artwork fills actual button hitbox; no 400% background crop",
+  "text": "Native DOM; separate from image; centered by grid"
+}

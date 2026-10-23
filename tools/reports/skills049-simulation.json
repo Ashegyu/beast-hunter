@@ -1,0 +1,49 @@
+{
+  "scope": "Headless production engine, one deterministic frost boss run per build; no browser, GPU, device or statistical balance claim.",
+  "results": [
+    {
+      "build": "보스 폭딜",
+      "phase": "victory",
+      "simulationSeconds": 42.1,
+      "steps": 1747,
+      "cpuMs": 51.38,
+      "hp": 395.8,
+      "maxHp": 484,
+      "kills": 17,
+      "gauge": 69
+    },
+    {
+      "build": "자동 광역",
+      "phase": "victory",
+      "simulationSeconds": 56.68,
+      "steps": 2367,
+      "cpuMs": 30.73,
+      "hp": 389.4,
+      "maxHp": 484,
+      "kills": 17,
+      "gauge": 72
+    },
+    {
+      "build": "자동 안정",
+      "phase": "victory",
+      "simulationSeconds": 45.07,
+      "steps": 1896,
+      "cpuMs": 17.25,
+      "hp": 425.5,
+      "maxHp": 484,
+      "kills": 17,
+      "gauge": 96
+    },
+    {
+      "build": "잔상 표식",
+      "phase": "victory",
+      "simulationSeconds": 46.13,
+      "steps": 1923,
+      "cpuMs": 19.34,
+      "hp": 432.3,
+      "maxHp": 484,
+      "kills": 17,
+      "gauge": 72
+    }
+  ]
+}

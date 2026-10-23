@@ -1,0 +1,628 @@
+{
+  "scope": "Node rule processing; no Canvas/GPU/device FPS",
+  "before": {
+    "rows": [
+      {
+        "chapter": 1,
+        "phase": "victory",
+        "kills": 83,
+        "items": 24,
+        "time": 176,
+        "hp": 135,
+        "seed": 0
+      },
+      {
+        "chapter": 1,
+        "phase": "victory",
+        "kills": 83,
+        "items": 20,
+        "time": 175,
+        "hp": 135,
+        "seed": 1
+      },
+      {
+        "chapter": 1,
+        "phase": "victory",
+        "kills": 83,
+        "items": 25,
+        "time": 201,
+        "hp": 135,
+        "seed": 2
+      },
+      {
+        "chapter": 1,
+        "phase": "victory",
+        "kills": 83,
+        "items": 24,
+        "time": 183,
+        "hp": 174,
+        "seed": 3
+      },
+      {
+        "chapter": 1,
+        "phase": "victory",
+        "kills": 83,
+        "items": 24,
+        "time": 192,
+        "hp": 174,
+        "seed": 4
+      },
+      {
+        "chapter": 1,
+        "phase": "victory",
+        "kills": 83,
+        "items": 21,
+        "time": 177,
+        "hp": 135,
+        "seed": 5
+      },
+      {
+        "chapter": 1,
+        "phase": "victory",
+        "kills": 83,
+        "items": 24,
+        "time": 204,
+        "hp": 135,
+        "seed": 6
+      },
+      {
+        "chapter": 1,
+        "phase": "victory",
+        "kills": 83,
+        "items": 24,
+        "time": 178,
+        "hp": 160,
+        "seed": 7
+      },
+      {
+        "chapter": 1,
+        "phase": "victory",
+        "kills": 83,
+        "items": 22,
+        "time": 191,
+        "hp": 160,
+        "seed": 8
+      },
+      {
+        "chapter": 1,
+        "phase": "victory",
+        "kills": 83,
+        "items": 25,
+        "time": 194,
+        "hp": 135,
+        "seed": 9
+      }
+    ],
+    "calls": 78174,
+    "p95ms": 0.005599999999958527,
+    "p99ms": 0.01569999999992433,
+    "maxMs": 0.6628999999998086,
+    "effectPeak": 21
+  },
+  "after": {
+    "rows": [
+      {
+        "chapter": 1,
+        "phase": "victory",
+        "kills": 83,
+        "items": 24,
+        "time": 176,
+        "hp": 135,
+        "seed": 0
+      },
+      {
+        "chapter": 1,
+        "phase": "victory",
+        "kills": 83,
+        "items": 23,
+        "time": 175,
+        "hp": 135,
+        "seed": 1
+      },
+      {
+        "chapter": 1,
+        "phase": "victory",
+        "kills": 83,
+        "items": 25,
+        "time": 201,
+        "hp": 135,
+        "seed": 2
+      },
+      {
+        "chapter": 1,
+        "phase": "victory",
+        "kills": 83,
+        "items": 24,
+        "time": 183,
+        "hp": 174,
+        "seed": 3
+      },
+      {
+        "chapter": 1,
+        "phase": "victory",
+        "kills": 83,
+        "items": 24,
+        "time": 192,
+        "hp": 174,
+        "seed": 4
+      },
+      {
+        "chapter": 1,
+        "phase": "victory",
+        "kills": 83,
+        "items": 21,
+        "time": 177,
+        "hp": 135,
+        "seed": 5
+      },
+      {
+        "chapter": 1,
+        "phase": "victory",
+        "kills": 83,
+        "items": 24,
+        "time": 204,
+        "hp": 135,
+        "seed": 6
+      },
+      {
+        "chapter": 1,
+        "phase": "victory",
+        "kills": 83,
+        "items": 24,
+        "time": 178,
+        "hp": 160,
+        "seed": 7
+      },
+      {
+        "chapter": 1,
+        "phase": "victory",
+        "kills": 83,
+        "items": 22,
+        "time": 191,
+        "hp": 160,
+        "seed": 8
+      },
+      {
+        "chapter": 1,
+        "phase": "victory",
+        "kills": 83,
+        "items": 25,
+        "time": 194,
+        "hp": 135,
+        "seed": 9
+      }
+    ],
+    "calls": 78174,
+    "p95ms": 0.006200000000035288,
+    "p99ms": 0.015399999999999636,
+    "maxMs": 0.8474999999998545,
+    "effectPeak": 21
+  },
+  "builds": [
+    {
+      "build": [
+        "echo",
+        "barrier",
+        "momentum"
+      ],
+      "beforeRows": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "kills": 83,
+          "items": 24,
+          "time": 161,
+          "hp": 279
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "kills": 83,
+          "items": 21,
+          "time": 173,
+          "hp": 347
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "kills": 83,
+          "items": 22,
+          "time": 181,
+          "hp": 288
+        }
+      ],
+      "rowsEqual": true,
+      "rows": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "kills": 83,
+          "items": 24,
+          "time": 161,
+          "hp": 279
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "kills": 83,
+          "items": 21,
+          "time": 173,
+          "hp": 347
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "kills": 83,
+          "items": 22,
+          "time": 181,
+          "hp": 288
+        }
+      ],
+      "calls": 21401,
+      "p95ms": 0.007800000000088403,
+      "p99ms": 0.019000000000005457,
+      "maxMs": 0.9579000000001088,
+      "effectPeak": 27,
+      "shotPeak": 6,
+      "seen": [
+        "echo",
+        "barrier",
+        "momentum"
+      ]
+    },
+    {
+      "build": [
+        "storm",
+        "thorns",
+        "focus"
+      ],
+      "beforeRows": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "kills": 83,
+          "items": 25,
+          "time": 162,
+          "hp": 285
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "kills": 83,
+          "items": 21,
+          "time": 174,
+          "hp": 321
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "kills": 83,
+          "items": 22,
+          "time": 189,
+          "hp": 274
+        }
+      ],
+      "rowsEqual": true,
+      "rows": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "kills": 83,
+          "items": 25,
+          "time": 162,
+          "hp": 285
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "kills": 83,
+          "items": 21,
+          "time": 174,
+          "hp": 321
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "kills": 83,
+          "items": 22,
+          "time": 189,
+          "hp": 274
+        }
+      ],
+      "calls": 21828,
+      "p95ms": 0.005799999999908323,
+      "p99ms": 0.010999999999967258,
+      "maxMs": 0.45499999999992724,
+      "effectPeak": 21,
+      "shotPeak": 6,
+      "seen": [
+        "focus",
+        "storm",
+        "thorns"
+      ]
+    },
+    {
+      "build": [
+        "execution",
+        "pulse",
+        "capacitor"
+      ],
+      "beforeRows": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "kills": 83,
+          "items": 24,
+          "time": 157,
+          "hp": 291
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "kills": 83,
+          "items": 23,
+          "time": 161,
+          "hp": 360
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "kills": 83,
+          "items": 22,
+          "time": 173,
+          "hp": 250
+        }
+      ],
+      "rowsEqual": true,
+      "rows": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "kills": 83,
+          "items": 24,
+          "time": 157,
+          "hp": 291
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "kills": 83,
+          "items": 23,
+          "time": 161,
+          "hp": 360
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "kills": 83,
+          "items": 22,
+          "time": 173,
+          "hp": 250
+        }
+      ],
+      "calls": 20356,
+      "p95ms": 0.005099999999856664,
+      "p99ms": 0.010199999999940701,
+      "maxMs": 0.49450000000001637,
+      "effectPeak": 21,
+      "shotPeak": 3,
+      "seen": [
+        "capacitor",
+        "execution",
+        "pulse"
+      ]
+    },
+    {
+      "build": [
+        "blood",
+        "frostWard",
+        "hunter"
+      ],
+      "beforeRows": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "kills": 83,
+          "items": 25,
+          "time": 157,
+          "hp": 298
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "kills": 83,
+          "items": 22,
+          "time": 156,
+          "hp": 369
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "kills": 83,
+          "items": 22,
+          "time": 163,
+          "hp": 339
+        }
+      ],
+      "rowsEqual": true,
+      "rows": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "kills": 83,
+          "items": 25,
+          "time": 157,
+          "hp": 298
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "kills": 83,
+          "items": 22,
+          "time": 156,
+          "hp": 369
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "kills": 83,
+          "items": 22,
+          "time": 163,
+          "hp": 339
+        }
+      ],
+      "calls": 19797,
+      "p95ms": 0.005199999999831562,
+      "p99ms": 0.00980000000004111,
+      "maxMs": 0.32979999999997744,
+      "effectPeak": 20,
+      "shotPeak": 3,
+      "seen": [
+        "hunter",
+        "blood",
+        "frostWard"
+      ]
+    },
+    {
+      "build": [
+        "frostNova",
+        "lastStand",
+        "orbit"
+      ],
+      "beforeRows": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "kills": 83,
+          "items": 24,
+          "time": 155,
+          "hp": 279
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "kills": 83,
+          "items": 24,
+          "time": 167,
+          "hp": 346
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "kills": 83,
+          "items": 22,
+          "time": 181,
+          "hp": 266
+        }
+      ],
+      "rowsEqual": true,
+      "rows": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "kills": 83,
+          "items": 24,
+          "time": 155,
+          "hp": 279
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "kills": 83,
+          "items": 24,
+          "time": 167,
+          "hp": 346
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "kills": 83,
+          "items": 22,
+          "time": 181,
+          "hp": 266
+        }
+      ],
+      "calls": 20891,
+      "p95ms": 0.005000000000109139,
+      "p99ms": 0.009000000000014552,
+      "maxMs": 0.328899999999976,
+      "effectPeak": 33,
+      "shotPeak": 6,
+      "seen": [
+        "frostNova",
+        "orbit"
+      ]
+    },
+    {
+      "build": [
+        "whirlwind",
+        "recovery",
+        "magnet"
+      ],
+      "beforeRows": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "kills": 83,
+          "items": 24,
+          "time": 152,
+          "hp": 279
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "kills": 83,
+          "items": 24,
+          "time": 162,
+          "hp": 345
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "kills": 83,
+          "items": 22,
+          "time": 184,
+          "hp": 259
+        }
+      ],
+      "rowsEqual": true,
+      "rows": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "kills": 83,
+          "items": 24,
+          "time": 152,
+          "hp": 279
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "kills": 83,
+          "items": 24,
+          "time": 162,
+          "hp": 345
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "kills": 83,
+          "items": 22,
+          "time": 184,
+          "hp": 259
+        }
+      ],
+      "calls": 20753,
+      "p95ms": 0.00430000000005748,
+      "p99ms": 0.008100000000013097,
+      "maxMs": 0.24179999999978463,
+      "effectPeak": 27,
+      "shotPeak": 6,
+      "seen": [
+        "whirlwind",
+        "magnet",
+        "recovery"
+      ]
+    }
+  ]
+}

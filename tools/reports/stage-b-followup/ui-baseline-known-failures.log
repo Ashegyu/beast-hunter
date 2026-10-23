@@ -1,0 +1,214 @@
+(node:12) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ hunting map scene follows real checkpoint limits and boss rewards without changing the profile (560.580973ms)
+✖ all ten stage buttons preserve selected identity through redraws, repeated chapter taps and navigation (258.462868ms)
+✖ boss reward view shows actual selected mode values and prepares the map without launching (226.222802ms)
+✖ boss reward view preserves unlocks and backs out to the same selected map checkpoint (169.105128ms)
+✖ build UI saves names and complete equipment, updates synergy preview, applies in camp and restores (186.835061ms)
+✖ actual stage transition clears held controls, saves checkpoint and resumes it at camp (176.316911ms)
+✖ perfect gear retains its bag marker and max-option note while legendary protection stays outside combat HUD (169.148622ms)
+✖ result images distinguish reused IDs by their actual item owner and update after dismantling (226.906254ms)
+✔ real render draws dropped equipment and limits ordinary pickup HUD spam (232.17352ms)
+✖ actual auto button takes a hunt through content, victory, saved rewards and a camp return (5183.903246ms)
+✔ chapter selection changes real terrain, creature previews and boss names while preserving stage locks (326.412229ms)
+✖ equipped items retain slot icons, statistics and saved ownership while character poses have no weapon overlay (410.73002ms)
+✔ charged capacitor UI advertises zero stamina heavy and capture works through the real button (103.30036ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 3
+ℹ fail 10
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8953.316097
+
+✖ failing tests:
+
+test at tests/game-ui.test.mjs:21:1
+✖ hunting map scene follows real checkpoint limits and boss rewards without changing the profile (560.580973ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'part-helmet'
+  - 'frost_charm'
+  
+      at TestContext.<anonymous> (file:///workspace/sites/beast-hunter-motion/tests/game-ui.test.mjs:36:54)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'part-helmet',
+    expected: 'frost_charm',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/game-ui.test.mjs:251:1
+✖ all ten stage buttons preserve selected identity through redraws, repeated chapter taps and navigation (258.462868ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /3웨이브/. Input:
+  
+  '일반 · 일반 구간'
+  
+      at TestContext.<anonymous> (file:///workspace/sites/beast-hunter-motion/tests/game-ui.test.mjs:257:263)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '일반 · 일반 구간',
+    expected: /3웨이브/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/game-ui.test.mjs:295:1
+✖ boss reward view shows actual selected mode values and prepares the map without launching (226.222802ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  '레이드 예정' !== '0.30%'
+  
+      at TestContext.<anonymous> (file:///workspace/sites/beast-hunter-motion/tests/game-ui.test.mjs:296:472)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '레이드 예정',
+    expected: '0.30%',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/game-ui.test.mjs:298:1
+✖ boss reward view preserves unlocks and backs out to the same selected map checkpoint (169.105128ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  '레이드 예정' !== '0.30%'
+  
+      at TestContext.<anonymous> (file:///workspace/sites/beast-hunter-motion/tests/game-ui.test.mjs:299:359)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '레이드 예정',
+    expected: '0.30%',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/game-ui.test.mjs:509:1
+✖ build UI saves names and complete equipment, updates synergy preview, applies in camp and restores (186.835061ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /활성화 · 빙결 파쇄/. Input:
+  
+  '교체 후 공격 32 · 체력 195 · 치명타 7%'
+  
+      at TestContext.<anonymous> (file:///workspace/sites/beast-hunter-motion/tests/game-ui.test.mjs:510:289)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '교체 후 공격 32 · 체력 195 · 치명타 7%',
+    expected: /활성화 · 빙결 파쇄/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/game-ui.test.mjs:552:1
+✖ actual stage transition clears held controls, saves checkpoint and resumes it at camp (176.316911ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'stageClear'
+  - 'combat'
+  
+      at TestContext.<anonymous> (file:///workspace/sites/beast-hunter-motion/tests/game-ui.test.mjs:554:34)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'stageClear',
+    expected: 'combat',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/game-ui.test.mjs:561:1
+✖ perfect gear retains its bag marker and max-option note while legendary protection stays outside combat HUD (169.148622ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '일반 드롭 → 최대 강화 → 승급'
+  - '전설 보장까지 최대 13드롭'
+  
+      at TestContext.<anonymous> (file:///workspace/sites/beast-hunter-motion/tests/game-ui.test.mjs:562:158)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '일반 드롭 → 최대 강화 → 승급',
+    expected: '전설 보장까지 최대 13드롭',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/game-ui.test.mjs:584:1
+✖ result images distinguish reused IDs by their actual item owner and update after dismantling (226.906254ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  '보관' !== '분해됨'
+  
+      at TestContext.<anonymous> (file:///workspace/sites/beast-hunter-motion/tests/game-ui.test.mjs:586:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '보관',
+    expected: '분해됨',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/game-ui.test.mjs:717:1
+✖ actual auto button takes a hunt through content, victory, saved rewards and a camp return (5183.903246ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'defeat'
+  - 'victory'
+  
+      at TestContext.<anonymous> (file:///workspace/sites/beast-hunter-motion/tests/game-ui.test.mjs:721:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'defeat',
+    expected: 'victory',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/game-ui.test.mjs:1201:1
+✖ equipped items retain slot icons, statistics and saved ownership while character poses have no weapon overlay (410.73002ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      armor: 11,
+  +   boots: null,
+      charm: 12,
+  +   earringLeft: null,
+  +   earringRight: null,
+  +   helmet: null,
+  +   pants: null,
+  +   special: null,
+      weapon: 9
+    }
+  
+      at TestContext.<anonymous> (file:///workspace/sites/beast-hunter-motion/tests/game-ui.test.mjs:1212:189)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { weapon: 9, helmet: null, armor: 11, pants: null, boots: null, charm: 12, earringLeft: null, earringRight: null, special: null },
+    expected: { weapon: 9, armor: 11, charm: 12 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

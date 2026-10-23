@@ -1,0 +1,67 @@
+Alpha 0.37 portrait UI QA - 2026-10-15
+
+Reference: approved portrait home/equipment/world-map mockup.
+Source: art/references/portrait-ui-alpha037-reference.png
+Existing illustration/maps/gear atlases reused; no new runtime image set.
+
+State invariants:
+- More reuses the existing camp drawer, guarded by ready + camp phase.
+- Non-camp modals explicitly hide/reset the camp drawer.
+- Back/Escape restores focus to a visible origin, including nav-more for growth.
+- Map selection/unlocks and launches use existing real chapter/stage state.
+- Explicit item entry still clears conflicting filters/organize state.
+- Pause -> equipment/tracker -> back remains paused until explicit resume.
+- Armor/charm gameplay retained; only weapon cosmetic composition remains active.
+- Engine, RNG, progression and persistence format unchanged.
+
+Automated: 401/401 passed, 0 failures, full Node test suite.
+New meaningful integration tests: More exclusivity/focus/state preservation;
+route selection + actual character statistics; failed-load/combat entry guards.
+HTML: 1126 unique IDs, no duplicates. JS syntax and git diff whitespace checked.
+
+Actual local Chromium UI and gameplay, isolated localhost:8787 profile:
+- 390x844: icon detail comparison/synergy -> equipped Hunter Greatsword;
+  saved named build, reload restored its name.
+- Crafted and equipped Jeokwol unique sword: gold 10000 -> 6500,
+  origin material 1 -> 0; tracker correctly reports crafted ownership.
+- More -> growth/codex/tracker, back, and navigation operated.
+- Real weapon-only preview label reflected crafted weapon; armor remained owned.
+- Manual joystick drag/release + attack/dash/thunder; auto combat enabled.
+  Joystick data-active false after release, no stuck movement.
+- A no-input attempt also produced a valid defeat result (18 seconds, 0 kills).
+- Retry -> pause -> 320x740 equipment/back -> tracker/back -> resume:
+  boss victory, forest 1-5, 17 kills, 25 seconds, gold 196, cores 3, equipment 7.
+- 320x740 result controls: next-stage bottom 623, camp bottom 681,
+  tracker bottom 491; all fit. Document width 320.
+- 320x740 home start 288x58; bottom navigation 60x65 per item.
+  Map start 288x48, bottom 663. Equipment filter height 44.
+- 390x844 final map start bottom 763, document width 390.
+- 1536x1024 desktop: app frame x528, width 480, height 1024.
+- 844x390 rotation: document width 844; map scroll area 107 high,
+  fixed start bottom 309. Primary portrait layout remains the intended mode.
+- Initial game image count remains 23.
+
+Browser-found fixes: equipment face crop, inventory toolbar whitespace;
+old drawer cross-axis alignment, old important burgundy button rule;
+explicit camp drawer DOM visibility when entering another modal;
+44px filter/chapter/organize action targets.
+Game-page console errors: none observed. An initial temporary QA preparation
+page attempted to select armor from a weapons-only catalog slice; fixture
+was corrected before successful profile creation and gameplay.
+
+Screenshots in task outputs/:
+alpha037-home-390.png
+alpha037-equipment-390.png
+alpha037-map-390.png
+alpha037-home-320.png
+alpha037-equipment-320.png
+alpha037-map-320.png
+alpha037-combat-390.png
+alpha037-pause-320.png
+alpha037-victory-320.png
+alpha037-desktop-portrait.png
+
+Limits: desktop Chromium mobile-sized viewport, not physical Android Chrome.
+Gameplay against local preview; production publication checked separately.
+No controlled CPU/GPU/FPS or before/after benchmark claim.
+Temporary QA preparation page removed before official source packaging.

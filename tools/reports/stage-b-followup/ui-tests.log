@@ -1,0 +1,27 @@
+(node:34) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ primary navigation exposes skills while the hunt action lives on home (338.887826ms)
+✔ skills tab leaves other camp panels, updates selection and returns focus without changing the profile (239.29029ms)
+✔ camp map and growth drawers preserve locked selection, keyboard close focus and selected hunt route (403.705157ms)
+✔ equipment and bag are distinct screens and cold camp renders the real hunter without battle downloads (144.017686ms)
+✔ equipment scene reads real levels, slots and synergies while its camp links preserve ownership (214.746465ms)
+✔ crafted earrings expose a second craft then route each owned instance to explicit wearable selection (172.596097ms)
+✔ nine-slot inventory groups armor parts, chooses either earring position and preserves ownership after resize (135.389652ms)
+✔ equipment item pages reuse fixed cells and preserve every surrounding control (108.462835ms)
+✔ detail reads every long effect without scrolling or changing the fixed item and actions (115.24536ms)
+✔ unified detail reading follows selected identity through resize and resets on another item (136.829636ms)
+✔ bag views and layered back actions preserve the profile and never open details on exploration (112.301362ms)
+✔ armory category shortcuts and folded filters act on real identities without changing ownership (134.346469ms)
+✔ stage B five presets save real gear and skill settings, expose two-tap entry selection and restore without a false recovery warning (196.100012ms)
+✔ stage B inscription UI charges one atomic cost and persists the selected optional effect (92.00666ms)
+✔ stage B storage failure keeps settlement pending, retry commits once and preset retry keeps the failed destination (163.399248ms)
+✔ stage B result loot keeps ownership by instance ID after durable settlement clones the inventory (126.621611ms)
+✔ followup HUD batching keeps simulation, controls, pause and durable settlement responsive (209.393341ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3370.721068

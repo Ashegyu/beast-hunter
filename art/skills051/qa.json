@@ -1,0 +1,28 @@
+{
+  "tests": {
+    "total": 469,
+    "pass": 469,
+    "fail": 0,
+    "scope": "Full npm test, production app in DOM/Canvas host; not a browser."
+  },
+  "runtimeAssets": {
+    "skill-effects-v051.webp": 2377350,
+    "skill-bloodmoon-v051.webp": 1394258,
+    "skill-eclipse-v051.webp": 1210514,
+    "skill-phantoms-v051.webp": 1222376
+  },
+  "totalEncodedBytes": 6204498,
+  "decodedRGBABytes": 16906896,
+  "browserVerified": false,
+  "userComputerUsed": false,
+  "loginUsed": false,
+  "preview": "Offline production-engine + generated textures, 24fps, 390x780 portrait serial cutins, 6 seconds",
+  "packaging": {
+    "reason": "Initial expanded archive exceeded256MiB; runtime-unused64original PNGs moved out of static root.",
+    "from": "dist/assets/source",
+    "to": "art/equipment-source-originals",
+    "files": 64,
+    "bytes": 57124202,
+    "sha256BeforeAfterMatched": true
+  }
+}

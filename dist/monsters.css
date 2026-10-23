@@ -1,0 +1,5 @@
+#game-shell .chapter-roster{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#game-shell .chapter-roster>div{min-width:0;display:flex;flex-direction:column;align-items:center;padding:10px 8px;text-align:center}
+#game-shell .chapter-roster>div>span:not(.roster-art){max-width:100%;white-space:normal;overflow-wrap:anywhere;font-size:12px;line-height:1.5}
+#game-shell .chapter-roster small{display:block;max-width:100%;white-space:normal;overflow-wrap:anywhere;font-size:10px;line-height:1.6;color:#bac7bc;margin-top:5px}
+#game-shell .chapter-roster>div:last-child{grid-column:1/-1;border-color:#c5aa7866}

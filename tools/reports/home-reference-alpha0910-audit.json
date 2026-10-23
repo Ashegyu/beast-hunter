@@ -1,0 +1,166 @@
+[
+  {
+    "label": "home0910-1280",
+    "buttons": 17,
+    "height": 720,
+    "issues": [],
+    "panel": "camp",
+    "revision": 3,
+    "view": "home",
+    "width": 1280
+  },
+  {
+    "label": "home0910-892",
+    "buttons": 17,
+    "height": 412,
+    "issues": [
+      {
+        "id": "sound",
+        "type": "label-overflow"
+      },
+      {
+        "id": "home-intel",
+        "type": "label-overflow"
+      },
+      {
+        "id": "nav-home",
+        "other": "home-nav-hunt",
+        "type": "overlap"
+      },
+      {
+        "id": "home-nav-hunt",
+        "other": "home-nav-growth",
+        "type": "overlap"
+      },
+      {
+        "id": "home-nav-growth",
+        "other": "home-nav-codex",
+        "type": "overlap"
+      },
+      {
+        "id": "home-nav-codex",
+        "other": "nav-skills",
+        "type": "overlap"
+      },
+      {
+        "id": "nav-skills",
+        "other": "nav-equipment",
+        "type": "overlap"
+      },
+      {
+        "id": "nav-equipment",
+        "other": "nav-bag",
+        "type": "overlap"
+      },
+      {
+        "id": "nav-bag",
+        "other": "nav-craft",
+        "type": "overlap"
+      },
+      {
+        "id": "nav-craft",
+        "other": "nav-more",
+        "type": "overlap"
+      }
+    ],
+    "panel": "camp",
+    "revision": 3,
+    "view": "home",
+    "width": 892
+  },
+  {
+    "label": "home0910-892-fixed",
+    "buttons": 17,
+    "height": 412,
+    "issues": [
+      {
+        "id": "sound",
+        "type": "label-overflow"
+      }
+    ],
+    "panel": "camp",
+    "revision": 3,
+    "view": "home",
+    "width": 892
+  },
+  {
+    "label": "home0910-568",
+    "buttons": 17,
+    "height": 320,
+    "issues": [
+      {
+        "id": "sound",
+        "type": "label-overflow"
+      }
+    ],
+    "panel": "camp",
+    "revision": 3,
+    "view": "home",
+    "width": 568
+  },
+  {
+    "label": "home0910-568-final",
+    "buttons": 17,
+    "height": 320,
+    "issues": [],
+    "panel": "camp",
+    "revision": 3,
+    "view": "home",
+    "width": 568
+  },
+  {
+    "label": "home0910-667-final",
+    "buttons": 17,
+    "height": 375,
+    "issues": [
+      {
+        "id": "home-intel",
+        "type": "label-overflow"
+      }
+    ],
+    "panel": "camp",
+    "revision": 3,
+    "view": "home",
+    "width": 667
+  },
+  {
+    "label": "home0910-667-final-fixed",
+    "buttons": 0,
+    "height": 375,
+    "issues": [],
+    "panel": "camp",
+    "revision": 3,
+    "view": "home",
+    "width": 667
+  },
+  {
+    "label": "home0910-892-final",
+    "buttons": 17,
+    "height": 412,
+    "issues": [],
+    "panel": "camp",
+    "revision": 3,
+    "view": "home",
+    "width": 892
+  },
+  {
+    "label": "home0910-667-confirmed",
+    "buttons": 17,
+    "height": 375,
+    "issues": [],
+    "panel": "camp",
+    "revision": 3,
+    "view": "home",
+    "width": 667
+  },
+  {
+    "label": "home0910-1280-final",
+    "buttons": 17,
+    "height": 720,
+    "issues": [],
+    "panel": "camp",
+    "revision": 3,
+    "view": "home",
+    "width": 1280
+  }
+]

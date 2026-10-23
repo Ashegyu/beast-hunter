@@ -1,0 +1,306 @@
+{
+  "scope": "Offline generated-atlas crop and native-font composition using actual app values. Not browser CSS layout, hit testing or device QA.",
+  "cases": 30,
+  "report": [
+    {
+      "width": 320,
+      "stage": 1,
+      "frame": 3,
+      "targetWidth": 54.4,
+      "targetMinHeight": 72,
+      "number": "01",
+      "state": "open",
+      "selected": true
+    },
+    {
+      "width": 320,
+      "stage": 2,
+      "frame": 0,
+      "targetWidth": 54.4,
+      "targetMinHeight": 72,
+      "number": "02",
+      "state": "locked",
+      "selected": false
+    },
+    {
+      "width": 320,
+      "stage": 3,
+      "frame": 0,
+      "targetWidth": 54.4,
+      "targetMinHeight": 72,
+      "number": "03",
+      "state": "locked",
+      "selected": false
+    },
+    {
+      "width": 320,
+      "stage": 4,
+      "frame": 0,
+      "targetWidth": 54.4,
+      "targetMinHeight": 72,
+      "number": "04",
+      "state": "locked",
+      "selected": false
+    },
+    {
+      "width": 320,
+      "stage": 5,
+      "frame": 0,
+      "targetWidth": 54.4,
+      "targetMinHeight": 72,
+      "number": "05",
+      "state": "locked",
+      "selected": false
+    },
+    {
+      "width": 320,
+      "stage": 6,
+      "frame": 0,
+      "targetWidth": 54.4,
+      "targetMinHeight": 72,
+      "number": "06",
+      "state": "locked",
+      "selected": false
+    },
+    {
+      "width": 320,
+      "stage": 7,
+      "frame": 0,
+      "targetWidth": 54.4,
+      "targetMinHeight": 72,
+      "number": "07",
+      "state": "locked",
+      "selected": false
+    },
+    {
+      "width": 320,
+      "stage": 8,
+      "frame": 0,
+      "targetWidth": 54.4,
+      "targetMinHeight": 72,
+      "number": "08",
+      "state": "locked",
+      "selected": false
+    },
+    {
+      "width": 320,
+      "stage": 9,
+      "frame": 0,
+      "targetWidth": 54.4,
+      "targetMinHeight": 72,
+      "number": "09",
+      "state": "locked",
+      "selected": false
+    },
+    {
+      "width": 320,
+      "stage": 10,
+      "frame": 4,
+      "targetWidth": 54.4,
+      "targetMinHeight": 72,
+      "number": "10",
+      "state": "locked",
+      "selected": false
+    },
+    {
+      "width": 390,
+      "stage": 1,
+      "frame": 2,
+      "targetWidth": 68.4,
+      "targetMinHeight": 72,
+      "number": "01",
+      "state": "cleared",
+      "selected": false
+    },
+    {
+      "width": 390,
+      "stage": 2,
+      "frame": 2,
+      "targetWidth": 68.4,
+      "targetMinHeight": 72,
+      "number": "02",
+      "state": "cleared",
+      "selected": false
+    },
+    {
+      "width": 390,
+      "stage": 3,
+      "frame": 3,
+      "targetWidth": 68.4,
+      "targetMinHeight": 72,
+      "number": "03",
+      "state": "cleared",
+      "selected": true
+    },
+    {
+      "width": 390,
+      "stage": 4,
+      "frame": 2,
+      "targetWidth": 68.4,
+      "targetMinHeight": 72,
+      "number": "04",
+      "state": "cleared",
+      "selected": false
+    },
+    {
+      "width": 390,
+      "stage": 5,
+      "frame": 1,
+      "targetWidth": 68.4,
+      "targetMinHeight": 72,
+      "number": "05",
+      "state": "open",
+      "selected": false
+    },
+    {
+      "width": 390,
+      "stage": 6,
+      "frame": 0,
+      "targetWidth": 68.4,
+      "targetMinHeight": 72,
+      "number": "06",
+      "state": "locked",
+      "selected": false
+    },
+    {
+      "width": 390,
+      "stage": 7,
+      "frame": 0,
+      "targetWidth": 68.4,
+      "targetMinHeight": 72,
+      "number": "07",
+      "state": "locked",
+      "selected": false
+    },
+    {
+      "width": 390,
+      "stage": 8,
+      "frame": 0,
+      "targetWidth": 68.4,
+      "targetMinHeight": 72,
+      "number": "08",
+      "state": "locked",
+      "selected": false
+    },
+    {
+      "width": 390,
+      "stage": 9,
+      "frame": 0,
+      "targetWidth": 68.4,
+      "targetMinHeight": 72,
+      "number": "09",
+      "state": "locked",
+      "selected": false
+    },
+    {
+      "width": 390,
+      "stage": 10,
+      "frame": 4,
+      "targetWidth": 68.4,
+      "targetMinHeight": 72,
+      "number": "10",
+      "state": "locked",
+      "selected": false
+    },
+    {
+      "width": 480,
+      "stage": 1,
+      "frame": 2,
+      "targetWidth": 86.4,
+      "targetMinHeight": 72,
+      "number": "01",
+      "state": "cleared",
+      "selected": false
+    },
+    {
+      "width": 480,
+      "stage": 2,
+      "frame": 2,
+      "targetWidth": 86.4,
+      "targetMinHeight": 72,
+      "number": "02",
+      "state": "cleared",
+      "selected": false
+    },
+    {
+      "width": 480,
+      "stage": 3,
+      "frame": 2,
+      "targetWidth": 86.4,
+      "targetMinHeight": 72,
+      "number": "03",
+      "state": "cleared",
+      "selected": false
+    },
+    {
+      "width": 480,
+      "stage": 4,
+      "frame": 2,
+      "targetWidth": 86.4,
+      "targetMinHeight": 72,
+      "number": "04",
+      "state": "cleared",
+      "selected": false
+    },
+    {
+      "width": 480,
+      "stage": 5,
+      "frame": 2,
+      "targetWidth": 86.4,
+      "targetMinHeight": 72,
+      "number": "05",
+      "state": "cleared",
+      "selected": false
+    },
+    {
+      "width": 480,
+      "stage": 6,
+      "frame": 2,
+      "targetWidth": 86.4,
+      "targetMinHeight": 72,
+      "number": "06",
+      "state": "cleared",
+      "selected": false
+    },
+    {
+      "width": 480,
+      "stage": 7,
+      "frame": 2,
+      "targetWidth": 86.4,
+      "targetMinHeight": 72,
+      "number": "07",
+      "state": "cleared",
+      "selected": false
+    },
+    {
+      "width": 480,
+      "stage": 8,
+      "frame": 2,
+      "targetWidth": 86.4,
+      "targetMinHeight": 72,
+      "number": "08",
+      "state": "cleared",
+      "selected": false
+    },
+    {
+      "width": 480,
+      "stage": 9,
+      "frame": 2,
+      "targetWidth": 86.4,
+      "targetMinHeight": 72,
+      "number": "09",
+      "state": "cleared",
+      "selected": false
+    },
+    {
+      "width": 480,
+      "stage": 10,
+      "frame": 5,
+      "targetWidth": 86.4,
+      "targetMinHeight": 72,
+      "number": "10",
+      "state": "open",
+      "selected": true
+    }
+  ]
+}

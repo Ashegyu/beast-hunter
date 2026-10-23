@@ -1,0 +1,182 @@
+{
+  "version": "0.96.1",
+  "source": "lobby-reference-v0920.webp",
+  "source_size": [
+    1672,
+    941
+  ],
+  "atlas": {
+    "file": "atlas.png",
+    "size": [
+      512,
+      64
+    ]
+  },
+  "icons": {
+    "hunt": {
+      "source_crop": [
+        1015,
+        389,
+        64,
+        64
+      ],
+      "atlas_rect": [
+        0,
+        0,
+        64,
+        64
+      ],
+      "file": "hunt.png",
+      "original_background_preserved": true
+    },
+    "bag": {
+      "source_crop": [
+        1237,
+        389,
+        64,
+        64
+      ],
+      "atlas_rect": [
+        64,
+        0,
+        64,
+        64
+      ],
+      "file": "bag.png",
+      "original_background_preserved": true
+    },
+    "equipment": {
+      "source_crop": [
+        1347,
+        389,
+        64,
+        64
+      ],
+      "atlas_rect": [
+        128,
+        0,
+        64,
+        64
+      ],
+      "file": "equipment.png",
+      "original_background_preserved": true
+    },
+    "skills": {
+      "source_crop": [
+        1457,
+        389,
+        64,
+        64
+      ],
+      "atlas_rect": [
+        192,
+        0,
+        64,
+        64
+      ],
+      "file": "skills.png",
+      "original_background_preserved": true
+    },
+    "craft": {
+      "source_crop": [
+        400,
+        832,
+        64,
+        64
+      ],
+      "atlas_rect": [
+        256,
+        0,
+        64,
+        64
+      ],
+      "file": "craft.png",
+      "original_background_preserved": true
+    },
+    "growth": {
+      "source_crop": [
+        237,
+        832,
+        64,
+        64
+      ],
+      "atlas_rect": [
+        320,
+        0,
+        64,
+        64
+      ],
+      "file": "growth.png",
+      "original_background_preserved": true
+    },
+    "codex": {
+      "source_crop": [
+        1568,
+        389,
+        64,
+        64
+      ],
+      "atlas_rect": [
+        384,
+        0,
+        64,
+        64
+      ],
+      "file": "codex.png",
+      "original_background_preserved": true
+    },
+    "mission": {
+      "source_crop": [
+        38,
+        256,
+        64,
+        64
+      ],
+      "atlas_rect": [
+        448,
+        0,
+        64,
+        64
+      ],
+      "file": "mission.png",
+      "original_background_preserved": true
+    },
+    "home": {
+      "file": "home.svg",
+      "viewBox": [
+        0,
+        0,
+        32,
+        32
+      ]
+    },
+    "more": {
+      "file": "more.svg",
+      "viewBox": [
+        0,
+        0,
+        32,
+        32
+      ]
+    }
+  },
+  "runtime_sizes": {
+    "rail": 28,
+    "short_landscape_rail": 24,
+    "equipment": "clamp(23px,3.1cqw,35px)",
+    "more_rows": 32,
+    "header_home_more": 25
+  },
+  "rendering": {
+    "raster_blend": "screen",
+    "selected_brightness": 1.12,
+    "corner_clip_for": [
+      "character",
+      "bag",
+      "codex",
+      "mission"
+    ],
+    "clip_polygon": "0 0,75% 0,75% 30%,100% 30%,100% 100%,0 100%"
+  },
+  "actions": "Existing button IDs, labels, ARIA states and event handlers retained"
+}

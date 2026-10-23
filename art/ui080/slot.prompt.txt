@@ -1,0 +1,5 @@
+Use case: stylized-concept
+Asset type: a single empty equipment/skill SLOT background for a dark fantasy RPG inventory.
+Primary request: one square recessed socket of dark graphite metal with thin antique brass bevels, small angular corner clasps and a subtle inner rim, extremely dark and empty in the center. A tiny polished burgundy gem at the top midpoint of the frame, integrated, not protruding. Beautiful tactile metal, precise and restrained filigree, hand-painted premium game UI art.
+Composition: square front-on orthographic, frame reaches the canvas edges, identical width and height, perfectly centered, no outer margins. Most of the 80 percent center is blank almost-black slate with very subtle texture for displaying a separate item icon. Outside clipped corners genuinely transparent.
+Constraints: exactly one slot, no item, no weapon, no letter, no number, no text, no circular badge, no scene, no character, no perspective, no surrounding UI, no glow flooding the center. Real alpha transparency outside the square silhouette.

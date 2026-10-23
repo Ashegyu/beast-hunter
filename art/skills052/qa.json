@@ -1,0 +1,15 @@
+{
+  "tests": {
+    "total": 471,
+    "pass": 471,
+    "fail": 0
+  },
+  "scope": "Production engine and app DOM/Canvas host, opaque scene contain fit on320px; not browser or real device.",
+  "runtimeEffectAndScenesBytes": 6929404,
+  "decodedRGBABytes": 16906896,
+  "expandedStaticBytes": 214206177,
+  "runtimeImageCount": 22,
+  "sceneArtCount": 3,
+  "login": false,
+  "userComputer": false
+}

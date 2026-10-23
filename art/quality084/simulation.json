@@ -1,0 +1,1315 @@
+{
+  "version": "0.84.0",
+  "environment": "Work Linux v24.19.0",
+  "scope": "Nine deterministic automatic campaigns using earned gear and camp budgets, no invulnerability. First uninterrupted attempts and subsequent checkpoint retries are reported separately. Density fixture alone uses invulnerability. Node engine CPU only; no browser, rendering, GPU, network time or human playtime.",
+  "plans": [
+    {
+      "stage": 1,
+      "seconds": 60,
+      "monsters": 56,
+      "bossOnly": false
+    },
+    {
+      "stage": 2,
+      "seconds": 60,
+      "monsters": 64,
+      "bossOnly": false
+    },
+    {
+      "stage": 3,
+      "seconds": 60,
+      "monsters": 75,
+      "bossOnly": false
+    },
+    {
+      "stage": 4,
+      "seconds": 60,
+      "monsters": 80,
+      "bossOnly": false
+    },
+    {
+      "stage": 5,
+      "seconds": 60,
+      "monsters": 84,
+      "bossOnly": false
+    },
+    {
+      "stage": 6,
+      "seconds": 60,
+      "monsters": 92,
+      "bossOnly": false
+    },
+    {
+      "stage": 7,
+      "seconds": 60,
+      "monsters": 97,
+      "bossOnly": false
+    },
+    {
+      "stage": 8,
+      "seconds": 60,
+      "monsters": 105,
+      "bossOnly": false
+    },
+    {
+      "stage": 9,
+      "seconds": 60,
+      "monsters": 116,
+      "bossOnly": false
+    },
+    {
+      "stage": 10,
+      "seconds": 60,
+      "monsters": 1,
+      "bossOnly": true
+    }
+  ],
+  "expectedKills": 770,
+  "runs": [
+    {
+      "route": "balanced",
+      "priorHunts": 0,
+      "level20": {
+        "chapter": 1,
+        "stage": 3,
+        "time": 92.555
+      },
+      "firstFullBag": {
+        "chapter": 1,
+        "stage": 4,
+        "time": 126.93
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "defeat",
+          "timedOut": true,
+          "stage": 7,
+          "level": 28,
+          "seconds": 314.87,
+          "kills": 537,
+          "rooms": 6,
+          "hp": 312,
+          "maxHp": 312,
+          "items": 114,
+          "monsterItems": 108,
+          "autoSalvaged": 66,
+          "qualities": [
+            60,
+            34,
+            15,
+            5,
+            0,
+            0,
+            0
+          ],
+          "perfect": 0,
+          "gold": 3807,
+          "cores": 11,
+          "materials": 198,
+          "peak": {
+            "live": 31,
+            "actors": 35,
+            "shots": 11,
+            "effects": 72,
+            "pickups": 58
+          },
+          "cpuMs": {
+            "samples": 6683,
+            "p95": 0.157,
+            "p99": 0.35,
+            "max": 2.215
+          },
+          "stages": [
+            {
+              "stage": 1,
+              "start": 0,
+              "level": 1
+            },
+            {
+              "stage": 2,
+              "start": 27.465,
+              "level": 10
+            },
+            {
+              "stage": 3,
+              "start": 60.865,
+              "level": 16
+            },
+            {
+              "stage": 4,
+              "start": 105.525,
+              "level": 20
+            },
+            {
+              "stage": 5,
+              "start": 153.965,
+              "level": 22
+            },
+            {
+              "stage": 6,
+              "start": 203.255,
+              "level": 24
+            },
+            {
+              "stage": 7,
+              "start": 257.47,
+              "level": 26
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "route": "balanced",
+      "priorHunts": 4,
+      "level20": {
+        "chapter": 1,
+        "stage": 3,
+        "time": 99.87
+      },
+      "firstFullBag": {
+        "chapter": 1,
+        "stage": 4,
+        "time": 146.355
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "defeat",
+          "timedOut": true,
+          "stage": 5,
+          "level": 24,
+          "seconds": 225.18,
+          "kills": 358,
+          "rooms": 4,
+          "hp": 280,
+          "maxHp": 288,
+          "items": 72,
+          "monsterItems": 68,
+          "autoSalvaged": 24,
+          "qualities": [
+            45,
+            18,
+            5,
+            4,
+            0,
+            0,
+            0
+          ],
+          "perfect": 0,
+          "gold": 2140,
+          "cores": 6,
+          "materials": 105,
+          "peak": {
+            "live": 26,
+            "actors": 31,
+            "shots": 11,
+            "effects": 53,
+            "pickups": 40
+          },
+          "cpuMs": {
+            "samples": 4755,
+            "p95": 0.118,
+            "p99": 0.291,
+            "max": 0.965
+          },
+          "stages": [
+            {
+              "stage": 1,
+              "start": 0,
+              "level": 1
+            },
+            {
+              "stage": 2,
+              "start": 33.795,
+              "level": 10
+            },
+            {
+              "stage": 3,
+              "start": 71.225,
+              "level": 16
+            },
+            {
+              "stage": 4,
+              "start": 112.725,
+              "level": 20
+            },
+            {
+              "stage": 5,
+              "start": 168.03,
+              "level": 22
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "route": "balanced",
+      "priorHunts": 9,
+      "level20": {
+        "chapter": 1,
+        "stage": 3,
+        "time": 84.45
+      },
+      "firstFullBag": {
+        "chapter": 1,
+        "stage": 4,
+        "time": 118.14
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "defeat",
+          "timedOut": true,
+          "stage": 7,
+          "level": 28,
+          "seconds": 310.28,
+          "kills": 546,
+          "rooms": 6,
+          "hp": 312,
+          "maxHp": 312,
+          "items": 109,
+          "monsterItems": 103,
+          "autoSalvaged": 61,
+          "qualities": [
+            61,
+            30,
+            10,
+            7,
+            1,
+            0,
+            0
+          ],
+          "perfect": 0,
+          "gold": 3691,
+          "cores": 11,
+          "materials": 201,
+          "peak": {
+            "live": 31,
+            "actors": 35,
+            "shots": 12,
+            "effects": 68,
+            "pickups": 53
+          },
+          "cpuMs": {
+            "samples": 6593,
+            "p95": 0.122,
+            "p99": 0.263,
+            "max": 1.724
+          },
+          "stages": [
+            {
+              "stage": 1,
+              "start": 0,
+              "level": 1
+            },
+            {
+              "stage": 2,
+              "start": 19.69,
+              "level": 10
+            },
+            {
+              "stage": 3,
+              "start": 58.68,
+              "level": 16
+            },
+            {
+              "stage": 4,
+              "start": 98.755,
+              "level": 20
+            },
+            {
+              "stage": 5,
+              "start": 155.51,
+              "level": 22
+            },
+            {
+              "stage": 6,
+              "start": 201.46,
+              "level": 24
+            },
+            {
+              "stage": 7,
+              "start": 253.7,
+              "level": 26
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "route": "farm",
+      "priorHunts": 0,
+      "level20": {
+        "chapter": 1,
+        "stage": 3,
+        "time": 85.42
+      },
+      "firstFullBag": {
+        "chapter": 1,
+        "stage": 4,
+        "time": 131.03
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "defeat",
+          "timedOut": true,
+          "stage": 7,
+          "level": 27,
+          "seconds": 306.19,
+          "kills": 542,
+          "rooms": 6,
+          "hp": 296,
+          "maxHp": 306,
+          "items": 111,
+          "monsterItems": 105,
+          "autoSalvaged": 63,
+          "qualities": [
+            55,
+            32,
+            18,
+            6,
+            0,
+            0,
+            0
+          ],
+          "perfect": 2,
+          "gold": 3813,
+          "cores": 11,
+          "materials": 196,
+          "peak": {
+            "live": 31,
+            "actors": 35,
+            "shots": 18,
+            "effects": 62,
+            "pickups": 60
+          },
+          "cpuMs": {
+            "samples": 6445,
+            "p95": 0.134,
+            "p99": 0.265,
+            "max": 2.519
+          },
+          "stages": [
+            {
+              "stage": 1,
+              "start": 0,
+              "level": 1
+            },
+            {
+              "stage": 2,
+              "start": 23.935,
+              "level": 10
+            },
+            {
+              "stage": 3,
+              "start": 58.415,
+              "level": 16
+            },
+            {
+              "stage": 4,
+              "start": 101.71,
+              "level": 20
+            },
+            {
+              "stage": 5,
+              "start": 149.935,
+              "level": 22
+            },
+            {
+              "stage": 6,
+              "start": 199.815,
+              "level": 24
+            },
+            {
+              "stage": 7,
+              "start": 248.215,
+              "level": 26
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "route": "farm",
+      "priorHunts": 4,
+      "level20": {
+        "chapter": 1,
+        "stage": 3,
+        "time": 80.6
+      },
+      "firstFullBag": {
+        "chapter": 1,
+        "stage": 4,
+        "time": 135.645
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "defeat",
+          "timedOut": true,
+          "stage": 4,
+          "level": 22,
+          "seconds": 163.84,
+          "kills": 272,
+          "rooms": 3,
+          "hp": 276,
+          "maxHp": 276,
+          "items": 53,
+          "monsterItems": 50,
+          "autoSalvaged": 5,
+          "qualities": [
+            32,
+            15,
+            3,
+            3,
+            0,
+            0,
+            0
+          ],
+          "perfect": 0,
+          "gold": 1396,
+          "cores": 4,
+          "materials": 87,
+          "peak": {
+            "live": 25,
+            "actors": 41,
+            "shots": 7,
+            "effects": 57,
+            "pickups": 39
+          },
+          "cpuMs": {
+            "samples": 3432,
+            "p95": 0.092,
+            "p99": 0.185,
+            "max": 0.688
+          },
+          "stages": [
+            {
+              "stage": 1,
+              "start": 0,
+              "level": 1
+            },
+            {
+              "stage": 2,
+              "start": 26.655,
+              "level": 10
+            },
+            {
+              "stage": 3,
+              "start": 54.835,
+              "level": 16
+            },
+            {
+              "stage": 4,
+              "start": 106.165,
+              "level": 20
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "route": "farm",
+      "priorHunts": 9,
+      "level20": {
+        "chapter": 1,
+        "stage": 3,
+        "time": 97.15
+      },
+      "firstFullBag": {
+        "chapter": 1,
+        "stage": 4,
+        "time": 135.835
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "defeat",
+          "timedOut": true,
+          "stage": 7,
+          "level": 28,
+          "seconds": 289.385,
+          "kills": 545,
+          "rooms": 6,
+          "hp": 312,
+          "maxHp": 312,
+          "items": 109,
+          "monsterItems": 103,
+          "autoSalvaged": 61,
+          "qualities": [
+            65,
+            32,
+            5,
+            6,
+            1,
+            0,
+            0
+          ],
+          "perfect": 1,
+          "gold": 3681,
+          "cores": 11,
+          "materials": 197,
+          "peak": {
+            "live": 32,
+            "actors": 35,
+            "shots": 17,
+            "effects": 78,
+            "pickups": 57
+          },
+          "cpuMs": {
+            "samples": 6130,
+            "p95": 0.158,
+            "p99": 0.308,
+            "max": 1.353
+          },
+          "stages": [
+            {
+              "stage": 1,
+              "start": 0,
+              "level": 1
+            },
+            {
+              "stage": 2,
+              "start": 24.685,
+              "level": 10
+            },
+            {
+              "stage": 3,
+              "start": 62.69,
+              "level": 16
+            },
+            {
+              "stage": 4,
+              "start": 112.82,
+              "level": 20
+            },
+            {
+              "stage": 5,
+              "start": 153.295,
+              "level": 22
+            },
+            {
+              "stage": 6,
+              "start": 187.905,
+              "level": 24
+            },
+            {
+              "stage": 7,
+              "start": 231.985,
+              "level": 26
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "route": "safe",
+      "priorHunts": 0,
+      "level20": {
+        "chapter": 1,
+        "stage": 3,
+        "time": 92.555
+      },
+      "firstFullBag": {
+        "chapter": 1,
+        "stage": 4,
+        "time": 130.765
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "defeat",
+          "timedOut": true,
+          "stage": 7,
+          "level": 28,
+          "seconds": 320.1,
+          "kills": 546,
+          "rooms": 6,
+          "hp": 312,
+          "maxHp": 312,
+          "items": 112,
+          "monsterItems": 106,
+          "autoSalvaged": 64,
+          "qualities": [
+            59,
+            35,
+            13,
+            5,
+            0,
+            0,
+            0
+          ],
+          "perfect": 0,
+          "gold": 3809,
+          "cores": 11,
+          "materials": 199,
+          "peak": {
+            "live": 29,
+            "actors": 35,
+            "shots": 12,
+            "effects": 69,
+            "pickups": 52
+          },
+          "cpuMs": {
+            "samples": 6785,
+            "p95": 0.169,
+            "p99": 0.281,
+            "max": 4.051
+          },
+          "stages": [
+            {
+              "stage": 1,
+              "start": 0,
+              "level": 1
+            },
+            {
+              "stage": 2,
+              "start": 27.465,
+              "level": 10
+            },
+            {
+              "stage": 3,
+              "start": 60.865,
+              "level": 16
+            },
+            {
+              "stage": 4,
+              "start": 110.85,
+              "level": 20
+            },
+            {
+              "stage": 5,
+              "start": 162.11,
+              "level": 22
+            },
+            {
+              "stage": 6,
+              "start": 219.145,
+              "level": 24
+            },
+            {
+              "stage": 7,
+              "start": 263.275,
+              "level": 26
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "route": "safe",
+      "priorHunts": 4,
+      "level20": {
+        "chapter": 1,
+        "stage": 3,
+        "time": 109.125
+      },
+      "firstFullBag": null,
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "defeat",
+          "timedOut": true,
+          "stage": 3,
+          "level": 20,
+          "seconds": 136.34,
+          "kills": 193,
+          "rooms": 2,
+          "hp": 217.554,
+          "maxHp": 264,
+          "items": 38,
+          "monsterItems": 36,
+          "autoSalvaged": 0,
+          "qualities": [
+            25,
+            11,
+            1,
+            1,
+            0,
+            0,
+            0
+          ],
+          "perfect": 0,
+          "gold": 943,
+          "cores": 3,
+          "materials": 57,
+          "peak": {
+            "live": 23,
+            "actors": 31,
+            "shots": 6,
+            "effects": 44,
+            "pickups": 37
+          },
+          "cpuMs": {
+            "samples": 2869,
+            "p95": 0.104,
+            "p99": 0.156,
+            "max": 1.146
+          },
+          "stages": [
+            {
+              "stage": 1,
+              "start": 0,
+              "level": 1
+            },
+            {
+              "stage": 2,
+              "start": 33.795,
+              "level": 10
+            },
+            {
+              "stage": 3,
+              "start": 79.165,
+              "level": 16
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "route": "safe",
+      "priorHunts": 9,
+      "level20": {
+        "chapter": 1,
+        "stage": 3,
+        "time": 84.45
+      },
+      "firstFullBag": {
+        "chapter": 1,
+        "stage": 4,
+        "time": 118.14
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "defeat",
+          "timedOut": true,
+          "stage": 8,
+          "level": 29,
+          "seconds": 370.275,
+          "kills": 649,
+          "rooms": 7,
+          "hp": 318,
+          "maxHp": 318,
+          "items": 130,
+          "monsterItems": 123,
+          "autoSalvaged": 82,
+          "qualities": [
+            67,
+            41,
+            12,
+            9,
+            1,
+            0,
+            0
+          ],
+          "perfect": 0,
+          "gold": 4766,
+          "cores": 14,
+          "materials": 228,
+          "peak": {
+            "live": 32,
+            "actors": 39,
+            "shots": 17,
+            "effects": 63,
+            "pickups": 48
+          },
+          "cpuMs": {
+            "samples": 7856,
+            "p95": 0.116,
+            "p99": 0.192,
+            "max": 4.727
+          },
+          "stages": [
+            {
+              "stage": 1,
+              "start": 0,
+              "level": 1
+            },
+            {
+              "stage": 2,
+              "start": 19.69,
+              "level": 10
+            },
+            {
+              "stage": 3,
+              "start": 58.68,
+              "level": 16
+            },
+            {
+              "stage": 4,
+              "start": 98.755,
+              "level": 20
+            },
+            {
+              "stage": 5,
+              "start": 154.775,
+              "level": 22
+            },
+            {
+              "stage": 6,
+              "start": 204.63,
+              "level": 24
+            },
+            {
+              "stage": 7,
+              "start": 260.465,
+              "level": 26
+            },
+            {
+              "stage": 8,
+              "start": 313.57,
+              "level": 28
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "checkpointRuns": [
+    {
+      "route": "balanced",
+      "priorHunts": 0,
+      "clearedChapters": 3,
+      "stageProgress": [
+        10,
+        10,
+        10
+      ],
+      "retries": [
+        {
+          "chapter": 1,
+          "attempt": 1,
+          "startStage": 7,
+          "endStage": 10,
+          "phase": "victory",
+          "timedOut": false,
+          "seconds": 107.52,
+          "level": 34,
+          "items": 64,
+          "autoSalvaged": 64
+        },
+        {
+          "chapter": 2,
+          "attempt": 1,
+          "startStage": 1,
+          "endStage": 10,
+          "phase": "victory",
+          "timedOut": false,
+          "seconds": 208.76,
+          "level": 42,
+          "items": 158,
+          "autoSalvaged": 158
+        },
+        {
+          "chapter": 3,
+          "attempt": 1,
+          "startStage": 1,
+          "endStage": 10,
+          "phase": "victory",
+          "timedOut": false,
+          "seconds": 220.75,
+          "level": 47,
+          "items": 158,
+          "autoSalvaged": 158
+        }
+      ]
+    },
+    {
+      "route": "balanced",
+      "priorHunts": 4,
+      "clearedChapters": 3,
+      "stageProgress": [
+        10,
+        10,
+        10
+      ],
+      "retries": [
+        {
+          "chapter": 1,
+          "attempt": 1,
+          "startStage": 5,
+          "endStage": 10,
+          "phase": "victory",
+          "timedOut": false,
+          "seconds": 135.005,
+          "level": 35,
+          "items": 105,
+          "autoSalvaged": 105
+        },
+        {
+          "chapter": 2,
+          "attempt": 1,
+          "startStage": 1,
+          "endStage": 10,
+          "phase": "victory",
+          "timedOut": false,
+          "seconds": 192.715,
+          "level": 43,
+          "items": 158,
+          "autoSalvaged": 158
+        },
+        {
+          "chapter": 3,
+          "attempt": 1,
+          "startStage": 1,
+          "endStage": 10,
+          "phase": "victory",
+          "timedOut": false,
+          "seconds": 216.355,
+          "level": 47,
+          "items": 161,
+          "autoSalvaged": 161
+        }
+      ]
+    },
+    {
+      "route": "balanced",
+      "priorHunts": 9,
+      "clearedChapters": 3,
+      "stageProgress": [
+        10,
+        10,
+        10
+      ],
+      "retries": [
+        {
+          "chapter": 1,
+          "attempt": 1,
+          "startStage": 7,
+          "endStage": 10,
+          "phase": "victory",
+          "timedOut": false,
+          "seconds": 103.73,
+          "level": 34,
+          "items": 68,
+          "autoSalvaged": 68
+        },
+        {
+          "chapter": 2,
+          "attempt": 1,
+          "startStage": 1,
+          "endStage": 10,
+          "phase": "victory",
+          "timedOut": false,
+          "seconds": 209.21,
+          "level": 42,
+          "items": 164,
+          "autoSalvaged": 164
+        },
+        {
+          "chapter": 3,
+          "attempt": 1,
+          "startStage": 1,
+          "endStage": 10,
+          "phase": "victory",
+          "timedOut": false,
+          "seconds": 225.69,
+          "level": 47,
+          "items": 160,
+          "autoSalvaged": 160
+        }
+      ]
+    },
+    {
+      "route": "farm",
+      "priorHunts": 0,
+      "clearedChapters": 3,
+      "stageProgress": [
+        10,
+        10,
+        10
+      ],
+      "retries": [
+        {
+          "chapter": 1,
+          "attempt": 1,
+          "startStage": 7,
+          "endStage": 10,
+          "phase": "victory",
+          "timedOut": false,
+          "seconds": 94.485,
+          "level": 34,
+          "items": 64,
+          "autoSalvaged": 64
+        },
+        {
+          "chapter": 2,
+          "attempt": 1,
+          "startStage": 1,
+          "endStage": 10,
+          "phase": "victory",
+          "timedOut": false,
+          "seconds": 221.895,
+          "level": 42,
+          "items": 155,
+          "autoSalvaged": 155
+        },
+        {
+          "chapter": 3,
+          "attempt": 1,
+          "startStage": 1,
+          "endStage": 10,
+          "phase": "victory",
+          "timedOut": false,
+          "seconds": 203.165,
+          "level": 47,
+          "items": 156,
+          "autoSalvaged": 156
+        }
+      ]
+    },
+    {
+      "route": "farm",
+      "priorHunts": 4,
+      "clearedChapters": 3,
+      "stageProgress": [
+        10,
+        10,
+        10
+      ],
+      "retries": [
+        {
+          "chapter": 1,
+          "attempt": 1,
+          "startStage": 4,
+          "endStage": 10,
+          "phase": "victory",
+          "timedOut": false,
+          "seconds": 152.2,
+          "level": 35,
+          "items": 129,
+          "autoSalvaged": 129
+        },
+        {
+          "chapter": 2,
+          "attempt": 1,
+          "startStage": 1,
+          "endStage": 10,
+          "phase": "victory",
+          "timedOut": false,
+          "seconds": 203.205,
+          "level": 43,
+          "items": 156,
+          "autoSalvaged": 156
+        },
+        {
+          "chapter": 3,
+          "attempt": 1,
+          "startStage": 1,
+          "endStage": 10,
+          "phase": "victory",
+          "timedOut": false,
+          "seconds": 242.75,
+          "level": 47,
+          "items": 165,
+          "autoSalvaged": 165
+        }
+      ]
+    },
+    {
+      "route": "farm",
+      "priorHunts": 9,
+      "clearedChapters": 3,
+      "stageProgress": [
+        10,
+        10,
+        10
+      ],
+      "retries": [
+        {
+          "chapter": 1,
+          "attempt": 1,
+          "startStage": 7,
+          "endStage": 10,
+          "phase": "victory",
+          "timedOut": false,
+          "seconds": 68.765,
+          "level": 34,
+          "items": 68,
+          "autoSalvaged": 68
+        },
+        {
+          "chapter": 2,
+          "attempt": 1,
+          "startStage": 1,
+          "endStage": 10,
+          "phase": "victory",
+          "timedOut": false,
+          "seconds": 199.975,
+          "level": 42,
+          "items": 169,
+          "autoSalvaged": 169
+        },
+        {
+          "chapter": 3,
+          "attempt": 1,
+          "startStage": 1,
+          "endStage": 10,
+          "phase": "victory",
+          "timedOut": false,
+          "seconds": 215.705,
+          "level": 47,
+          "items": 160,
+          "autoSalvaged": 160
+        }
+      ]
+    },
+    {
+      "route": "safe",
+      "priorHunts": 0,
+      "clearedChapters": 3,
+      "stageProgress": [
+        10,
+        10,
+        10
+      ],
+      "retries": [
+        {
+          "chapter": 1,
+          "attempt": 1,
+          "startStage": 7,
+          "endStage": 10,
+          "phase": "victory",
+          "timedOut": false,
+          "seconds": 110.07,
+          "level": 34,
+          "items": 68,
+          "autoSalvaged": 68
+        },
+        {
+          "chapter": 2,
+          "attempt": 1,
+          "startStage": 1,
+          "endStage": 10,
+          "phase": "victory",
+          "timedOut": false,
+          "seconds": 200.605,
+          "level": 42,
+          "items": 158,
+          "autoSalvaged": 158
+        },
+        {
+          "chapter": 3,
+          "attempt": 1,
+          "startStage": 1,
+          "endStage": 10,
+          "phase": "victory",
+          "timedOut": false,
+          "seconds": 235.62,
+          "level": 47,
+          "items": 156,
+          "autoSalvaged": 156
+        }
+      ]
+    },
+    {
+      "route": "safe",
+      "priorHunts": 4,
+      "clearedChapters": 3,
+      "stageProgress": [
+        10,
+        10,
+        10
+      ],
+      "retries": [
+        {
+          "chapter": 1,
+          "attempt": 1,
+          "startStage": 3,
+          "endStage": 10,
+          "phase": "victory",
+          "timedOut": false,
+          "seconds": 201.875,
+          "level": 34,
+          "items": 143,
+          "autoSalvaged": 133
+        },
+        {
+          "chapter": 2,
+          "attempt": 1,
+          "startStage": 1,
+          "endStage": 10,
+          "phase": "victory",
+          "timedOut": false,
+          "seconds": 210.615,
+          "level": 42,
+          "items": 159,
+          "autoSalvaged": 159
+        },
+        {
+          "chapter": 3,
+          "attempt": 1,
+          "startStage": 1,
+          "endStage": 10,
+          "phase": "victory",
+          "timedOut": false,
+          "seconds": 240.575,
+          "level": 47,
+          "items": 160,
+          "autoSalvaged": 160
+        }
+      ]
+    },
+    {
+      "route": "safe",
+      "priorHunts": 9,
+      "clearedChapters": 3,
+      "stageProgress": [
+        10,
+        10,
+        10
+      ],
+      "retries": [
+        {
+          "chapter": 1,
+          "attempt": 1,
+          "startStage": 8,
+          "endStage": 10,
+          "phase": "victory",
+          "timedOut": false,
+          "seconds": 86.305,
+          "level": 34,
+          "items": 50,
+          "autoSalvaged": 50
+        },
+        {
+          "chapter": 2,
+          "attempt": 1,
+          "startStage": 1,
+          "endStage": 10,
+          "phase": "victory",
+          "timedOut": false,
+          "seconds": 226.745,
+          "level": 42,
+          "items": 166,
+          "autoSalvaged": 166
+        },
+        {
+          "chapter": 3,
+          "attempt": 1,
+          "startStage": 1,
+          "endStage": 10,
+          "phase": "victory",
+          "timedOut": false,
+          "seconds": 235.47,
+          "level": 47,
+          "items": 161,
+          "autoSalvaged": 161
+        }
+      ]
+    }
+  ],
+  "stress": {
+    "peak": 32,
+    "cpuMs": {
+      "samples": 2397,
+      "p95": 0.026,
+      "p99": 0.072,
+      "max": 0.36
+    }
+  }
+}

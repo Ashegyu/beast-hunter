@@ -1,0 +1,10 @@
+/* Alpha 0.85.1: a small two-action overlay over the frozen battlefield. */
+#game-shell[data-panel=pause] .battle{filter:blur(6px);pointer-events:none}
+#game-shell #overlay[data-panel=pause]{inset:0;padding:24px;background:#02070b60;backdrop-filter:none;-webkit-backdrop-filter:none;display:flex;align-items:center;justify-content:center;overflow:hidden}
+#game-shell #overlay[data-panel=pause] .modal{display:block;width:min(280px,100%);height:auto;min-height:0;max-height:100%;margin:0;padding:0;border:0;border-image:none;border-radius:0;background:transparent;box-shadow:none;overflow:visible;backdrop-filter:none}
+#game-shell #overlay[data-panel=pause] .panel-heading{display:none}
+#game-shell #overlay[data-panel=pause] #pause-content:not([hidden]){display:block;flex:none;height:auto;min-height:0;max-height:none;margin:0;padding:0;overflow:visible;background:none}
+#game-shell #pause-content .pause-actions{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin:0;padding:0;border:0;background:none}
+#game-shell #pause-content .pause-actions button{width:100%;height:auto;min-height:56px;margin:0;padding:14px 22px;font-size:17px;line-height:1.5;letter-spacing:0;text-align:center}
+#game-shell #pause-content #retreat{border:0;margin:0;color:#eadcc2}
+@media(max-height:400px){#game-shell #overlay[data-panel=pause]{padding:16px}#game-shell #pause-content .pause-actions{gap:8px}#game-shell #pause-content .pause-actions button{min-height:48px;font-size:16px;padding-block:10px}}

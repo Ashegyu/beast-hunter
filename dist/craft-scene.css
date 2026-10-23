@@ -1,0 +1,94 @@
+/* Alpha 0.93.0: reference composition; existing recipe, atlas and payment ownership. */
+#game-shell[data-panel=craft]{--craft-line:#b99c6b80;--craft-radius:clamp(5px,.7cqw,8px);--menu-rail:0px;--head-height:clamp(34px,10.4cqh,44px);background:#090b0e}
+#game-shell[data-panel=craft] .masthead{inset:0 0 auto;height:var(--head-height);padding:0 calc(max(66px,9.5cqw) + 3.6cqw) 0 2.3cqw;background:linear-gradient(90deg,#100a0d9c,#080c10ec),url('assets/craft-forge-v041.webp') center 22%/cover;border:0;backdrop-filter:none;gap:8px}
+#game-shell[data-panel=craft] .page-title{font:700 clamp(19px,2.7cqw,30px)/1.3 var(--serif);letter-spacing:1px}
+#game-shell[data-panel=craft] .page-back{width:28px;min-width:28px;height:36px;min-height:36px;padding:2px;background:none;border:0}
+#game-shell[data-panel=craft] .wallet{margin-left:auto;gap:clamp(6px,1cqw,12px);flex-wrap:nowrap;max-width:none}
+#game-shell[data-panel=craft] .wallet>span:not(.build){display:flex;align-items:center;gap:5px;padding:3px 8px;border:1px solid #b59b6b40;border-radius:30px;background:#06090bbd;white-space:nowrap}
+#game-shell[data-panel=craft] .wallet b{margin:0;font:500 clamp(10px,1.4cqw,16px)/1.2 var(--ui-font);white-space:nowrap;overflow-wrap:normal}
+#game-shell[data-panel=craft] .wallet .build{display:none}
+#game-shell[data-panel=craft] .wallet #sound{width:25px;min-width:25px;height:28px;min-height:28px;padding:3px}
+#game-shell[data-panel=craft] .wallet #sound:before{width:19px;height:19px}
+#game-shell[data-panel=craft] .app-nav{inset:0 1.8cqw auto auto;display:flex!important;flex-direction:row;align-items:center;justify-content:flex-end;align-content:normal;width:9.5cqw;min-width:66px;height:var(--head-height);padding:0;gap:5px;border:0;background:none;box-shadow:none;z-index:40}
+#game-shell[data-panel=craft] .app-nav>button{display:none}
+#game-shell[data-panel=craft] .app-nav>:is(#nav-home,#nav-more){display:grid;place-items:center;flex:0 0 30px;width:30px;min-width:30px;height:34px!important;min-height:34px!important;padding:2px;border:0;background:none;color:#efdfbd}
+#game-shell[data-panel=craft] .app-nav>:is(#nav-home,#nav-more)>.menu-icon{width:25px;height:25px}
+#game-shell[data-panel=craft] .app-nav>button>span{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+#game-shell[data-panel=craft] .app-nav>button:after{display:none!important}
+#game-shell[data-panel=craft] #overlay[data-panel=craft]{inset:var(--head-height) 0 0;padding:0;background:none}
+#game-shell[data-panel=craft] #overlay[data-panel=craft]>.modal{background:none}
+#game-shell[data-panel=craft] #craft-content:not([hidden]){position:relative;display:flex;flex-direction:column;gap:2cqh;height:100%;min-height:0;padding:0!important;overflow:hidden;background:linear-gradient(90deg,#29091065,#090b0e8a 55%,#080c10ec),url('assets/craft-forge-v041.webp') center 48%/cover}
+#game-shell[data-panel=craft] #craft-content .craft-categories{position:static;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));flex:none;height:8.1cqh;min-height:30px;padding:0 4.4cqw;gap:1.5cqw;border:0;background:linear-gradient(#0b0a0cc0,#100b0c55)}
+#game-shell[data-panel=craft] #craft-content .craft-categories>button{height:100%;min-height:0;gap:clamp(5px,1cqw,12px);padding:3px!important;border:1px solid #8e81604d!important;border-image:none!important;border-radius:999px;background:#0a0c0ebd url('assets/button-secondary-v043.webp') center 43%/400% 200% no-repeat!important;box-shadow:inset 0 0 0 1px #d8bd8a0c;font:600 clamp(11px,1.65cqw,18px)/1.3 var(--ui-font);color:#bbb8b3;white-space:nowrap}
+#game-shell[data-panel=craft] #craft-content .craft-categories>button[aria-pressed=true]{border-color:#e3bd7c!important;background-image:url('assets/button-primary-v043.webp')!important;box-shadow:inset 0 0 0 1px #f2c38745,0 0 12px #ec341b40;color:#fff0da}
+#game-shell[data-panel=craft] #craft-content .craft-categories svg{width:clamp(17px,2.2cqw,25px);height:clamp(17px,2.2cqw,25px)}
+#game-shell[data-panel=craft] #craft-content .craft-workbench{display:grid;grid-template-columns:clamp(48px,8.2cqw,76px) minmax(0,1fr);grid-template-rows:minmax(0,1fr);flex:1;min-height:0;margin:0;padding:0 2.3cqw 5.5cqh;gap:1.45cqw}
+#game-shell[data-panel=craft] #craft-content .craft-recipes{position:relative;display:flex;flex-direction:column;align-items:center;gap:5px;height:100%;min-height:0;max-height:100%;margin:0;padding:4px;overflow:auto;overscroll-behavior:contain;border:1px solid var(--craft-line);border-radius:var(--craft-radius);background:#05080bd1;scrollbar-width:thin;scrollbar-color:#9a775747 transparent}
+#game-shell[data-panel=craft] #craft-content .craft-recipes:before{content:'제작법';position:sticky;top:-4px;z-index:2;display:block;flex:none;width:calc(100% + 8px);padding:4px 0;text-align:center;background:#0d0b0ded;color:#e6c78a;font:600 clamp(9px,1.15cqw,13px)/1.3 var(--ui-font)}
+#game-shell[data-panel=craft] #craft-content .craft-recipes>button{flex:none;width:100%;max-width:none;height:auto;min-width:0;min-height:40px;aspect-ratio:1;margin:0;padding:2px;border:1px solid #bea16d7a;border-radius:1px;background-color:#120e12!important;box-shadow:none;overflow:hidden}
+#game-shell[data-panel=craft] #craft-content .craft-recipes>button[aria-pressed=true]{border-color:#ffe4ab;box-shadow:inset 0 0 0 1px #e7c798,0 0 8px #ff8c4d85}
+#game-shell[data-panel=craft] #craft-content .craft-recipes .equipment-icon{width:100%;height:100%;max-width:none;aspect-ratio:1;transform:none}
+#game-shell[data-panel=craft] #craft-content #craft-detail{display:grid;grid-template-columns:minmax(0,1.015fr) minmax(0,1fr);grid-template-rows:11.2% minmax(0,1fr) 21.8%;gap:1.5cqh 1.1cqw;height:100%;min-height:0;margin:0;padding:0;border:0;background:none;overflow:hidden}
+#game-shell[data-panel=craft] #craft-content .craft-hero{grid-column:1;grid-row:1/4;position:relative;height:100%;min-height:0;border:1px solid var(--craft-line);border-radius:var(--craft-radius);background:linear-gradient(0deg,#4c0c152b,transparent 55%),url('assets/craft-forge-v041.webp') center 68%/cover;overflow:hidden}
+#game-shell[data-panel=craft] #craft-content .craft-hero:before{background:linear-gradient(90deg,#100a0fdc,transparent 80%),linear-gradient(0deg,#080b1070,transparent 50%)}
+#game-shell[data-panel=craft] #craft-content .craft-caption{position:relative;z-index:1;width:100%;height:100%;padding:clamp(9px,2.7cqh,17px) clamp(10px,2.4cqw,25px);pointer-events:none}
+#game-shell[data-panel=craft] #craft-content #craft-kind{display:inline-block;max-width:100%;padding:2px 9px;background:linear-gradient(90deg,#a60926,#720c2590,transparent);border-left:2px solid #ef4560;font:600 clamp(9px,1.3cqw,15px)/1.25 var(--ui-font);letter-spacing:.5px;color:#ffe9d6}
+#game-shell[data-panel=craft] #craft-content #craft-name{width:100%;max-width:100%;margin:7px 0 5px;font:700 clamp(16px,2.6cqw,28px)/1.3 var(--serif);letter-spacing:.2px;color:#fff0e6;word-break:keep-all}
+#game-shell[data-panel=craft] #craft-content #craft-flavor{display:block;max-width:100%;margin:0 0 8px;font:clamp(8px,1.25cqw,13px)/1.5 var(--ui-font);white-space:normal;color:#d6cbc6}
+#game-shell[data-panel=craft] #craft-content #craft-stats{position:relative;display:flex;flex-direction:column;width:52%;max-width:160px;margin:0;padding-top:7px;gap:4px;border-top:1px solid #cdb99566;background:none;box-shadow:none}
+#game-shell[data-panel=craft] #craft-content #craft-stats>div{display:flex;align-items:center;justify-content:space-between;gap:7px;font:clamp(9px,1.35cqw,14px)/1.35 var(--ui-font)}
+#game-shell[data-panel=craft] #craft-content #craft-stats dt{font:inherit;color:#e2d9d3}
+#game-shell[data-panel=craft] #craft-content #craft-stats dd{font:600 clamp(11px,1.65cqw,18px)/1.3 var(--ui-font);color:#fff1df}
+#game-shell[data-panel=craft] #craft-content #craft-detail #craft-art{top:auto;right:-2%;bottom:5cqh;width:min(30cqw,78%);height:auto;aspect-ratio:1;transform:none;opacity:1}
+#game-shell[data-panel=craft] #craft-content #craft-target{left:clamp(10px,2.4cqw,25px);bottom:2.4cqh;display:flex;align-items:center;justify-content:center;max-width:85%;width:max-content;height:clamp(28px,6.6cqh,36px)!important;min-height:0;margin:0;padding:3px 12px!important;border:1px solid #d5ae68!important;border-radius:999px!important;background:none!important;color:#f0dfba;font:600 clamp(9px,1.4cqw,15px)/1.3 var(--ui-font);pointer-events:auto}
+#game-shell[data-panel=craft] #craft-content button.image-button:after{inset:0;border:0;border-image:none;border-radius:inherit;background-origin:border-box;background-clip:border-box;box-shadow:inset 0 0 0 1px #d6b98325}
+#game-shell[data-panel=craft] #craft-content .unique-summary{grid-column:2;grid-row:1;align-self:stretch;margin:0;padding:0;border:1px solid var(--craft-line);border-radius:var(--craft-radius);background:linear-gradient(110deg,#121014cb,#080b0eee);overflow:auto}
+#game-shell[data-panel=craft] #craft-content .unique-summary>summary{box-sizing:border-box;height:100%;min-height:0;padding:3px 10px;font:600 clamp(10px,1.5cqw,16px)/1.3 var(--ui-font);color:#ebe4db;list-style:none}
+#game-shell[data-panel=craft] #craft-content .unique-summary>summary:before{font-size:clamp(17px,2cqw,24px)}
+#game-shell[data-panel=craft] #craft-content .unique-summary:not([open]){overflow:hidden}
+#game-shell[data-panel=craft] #craft-content .unique-summary[open]{grid-row:1/4;z-index:12;background:#100e12f5;box-shadow:0 6px 20px #0008}
+#game-shell[data-panel=craft] #craft-content .unique-summary[open]>summary{height:36px;border-bottom:1px solid var(--craft-line)}
+#game-shell[data-panel=craft] #craft-content #craft-powers{padding:12px;font:clamp(11px,1.4cqw,15px)/1.8 var(--ui-font);color:#d8c8b7}
+#game-shell[data-panel=craft] #craft-content .craft-material-section{grid-column:2;grid-row:2;display:flex;flex-direction:column;min-width:0;min-height:0;padding:0;gap:4px;overflow:hidden}
+#game-shell[data-panel=craft] #craft-content .craft-cost-heading{flex:none;min-height:clamp(26px,6.8cqh,36px);padding:2px 4px 2px 10px;gap:7px;border:1px solid var(--craft-line);border-radius:var(--craft-radius);background:#110e12ba}
+#game-shell[data-panel=craft] #craft-content .craft-cost-heading h3{font:600 clamp(11px,1.7cqw,19px)/1.3 var(--serif);color:#e8c991}
+#game-shell[data-panel=craft] #craft-content #craft-ready{display:block;margin-left:auto;font:clamp(8px,1.2cqw,13px)/1.3 var(--ui-font);color:#c6bcb3}
+#game-shell[data-panel=craft] #craft-content #craft-track{flex:none;min-width:0;width:auto;height:clamp(23px,5.7cqh,30px)!important;min-height:0;padding:2px 8px!important;border:1px solid #b8955d99!important;border-radius:3px!important;background:none!important;font:600 clamp(8px,1.15cqw,13px)/1.2 var(--ui-font);color:#f2e6d1}
+#game-shell[data-panel=craft] #craft-content .craft-costs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:minmax(clamp(53px,18cqh,75px),1fr);flex:1;min-height:0;padding:0 1px 1px 0;margin:0;gap:4px;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#a88a5a55 transparent}
+#game-shell[data-panel=craft] #craft-content .craft-costs li[data-ready]{min-width:0;min-height:0;margin:0;padding:0;border:1px solid #b4996a70;border-radius:var(--craft-radius);background:linear-gradient(145deg,#0d1014e6,#090b0ef2);box-shadow:inset 0 0 10px #b58f4310}
+#game-shell[data-panel=craft] #craft-content .craft-costs button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;width:100%;height:100%;min-height:0;padding:2px;border:0;border-radius:inherit;background:none;color:#f0e7d9}
+#game-shell[data-panel=craft] #craft-content .craft-costs .craft-material-icon{width:clamp(24px,9cqh,42px);height:clamp(24px,9cqh,42px)}
+#game-shell[data-panel=craft] #craft-content .craft-costs button>span{font:clamp(8px,1.25cqw,13px)/1.2 var(--ui-font);color:#d8d0c6;white-space:nowrap}
+#game-shell[data-panel=craft] #craft-content .craft-costs b{font:600 clamp(11px,1.65cqw,18px)/1.1 var(--ui-font);color:#f03851;white-space:nowrap}
+#game-shell[data-panel=craft] #craft-content .craft-costs li[data-ready=true] b{color:#82e278}
+#game-shell[data-panel=craft] #craft-content .craft-actions{grid-column:2;grid-row:3;position:relative;display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr);grid-template-rows:minmax(0,1fr) auto auto;gap:2px 8px;min-width:0;min-height:0;margin:0;padding:5px 7px 4px 10px;border:1px solid var(--craft-line);border-radius:var(--craft-radius);background:linear-gradient(110deg,#191016d9,#0b0c0fed);overflow:hidden}
+#game-shell[data-panel=craft] #craft-content .craft-purchase{display:contents;height:auto;min-height:0}
+#game-shell[data-panel=craft] #craft-content .craft-price{grid-column:1;grid-row:1/3;display:flex;justify-content:center;gap:3px;min-width:0}
+#game-shell[data-panel=craft] #craft-content .craft-price small{font:clamp(8px,1.15cqw,12px)/1.2 var(--ui-font);color:#d6c9b7}
+#game-shell[data-panel=craft] #craft-content #craft-gold{font:600 clamp(16px,2.25cqw,24px)/1.05 var(--ui-font);color:#f4d48d;white-space:nowrap}
+#game-shell[data-panel=craft] #craft-content #craft-gold:before{font-size:.8em;margin-right:4px}
+#game-shell[data-panel=craft] #craft-content #craft-gold-owned{font:clamp(8px,1.15cqw,12px)/1.25 var(--ui-font);color:#bcb4af;white-space:nowrap}
+#game-shell[data-panel=craft] #craft-content :is(#craft-submit,#craft-equip){grid-column:2;grid-row:1;align-self:stretch;width:100%;max-width:none;height:100%!important;min-height:0;margin:0;padding:3px 5px!important;border:1px solid #efba70!important;border-radius:3px!important;background:none!important;font:700 clamp(13px,2cqw,22px)/1.2 var(--serif);color:#fff0db;box-shadow:0 0 12px #ef221f35!important}
+#game-shell[data-panel=craft] #craft-content :is(#craft-submit,#craft-equip):after{background-size:100% 154%;background-position:center 44%}
+#game-shell[data-panel=craft] #craft-content :is(#craft-submit,#craft-equip):before{content:'⚒';margin-right:6px;font-size:1.2em;color:#fff0db}
+#game-shell[data-panel=craft] #craft-content :is(#craft-submit,#craft-equip):disabled:after{filter:saturate(.7) brightness(.52)}
+#game-shell[data-panel=craft] #craft-content :is(#craft-submit,#craft-equip):disabled{color:#bcb0a8;border-color:#9b774e99!important}
+#game-shell[data-panel=craft] #craft-content .craft-actions:has(#craft-equip:not([hidden])) #craft-submit{display:none}
+#game-shell[data-panel=craft] #craft-content #craft-equip{font-size:clamp(11px,1.6cqw,17px)}
+#game-shell[data-panel=craft] #craft-content #craft-equip:before{display:none}
+#game-shell[data-panel=craft] #craft-content #craft-status{grid-column:2;grid-row:2;min-width:0;margin:0;text-align:center;font:clamp(8px,1cqw,11px)/1.3 var(--ui-font);color:#ee6775;overflow-wrap:anywhere}
+#game-shell[data-panel=craft] #craft-content #craft-status[data-ready=true]{color:#c5b891}
+#game-shell[data-panel=craft] #craft-content #craft-feedback{grid-column:1/-1;grid-row:3;margin:0;min-width:0;font:clamp(8px,1cqw,11px)/1.3 var(--ui-font);color:#e7cd99;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#game-shell[data-panel=craft] #craft-content>.loot-guide{position:absolute;left:2.3cqw;bottom:.7cqh;width:max-content;max-width:80%;max-height:80%;margin:0;padding:0;z-index:15;border:0;overflow:auto}
+#game-shell[data-panel=craft] #craft-content>.loot-guide>summary{min-height:16px;padding:1px 4px;font:clamp(8px,1cqw,11px)/1.3 var(--ui-font);color:#bcab90}
+#game-shell[data-panel=craft] #craft-content>.loot-guide[open]{inset:10cqh 2.3cqw 5.5cqh;width:auto;max-width:none;max-height:none;padding:10px 14px;border:1px solid var(--craft-line);border-radius:var(--craft-radius);background:#100d11fa;box-shadow:0 10px 30px #000b}
+#game-shell[data-panel=craft] #craft-content>.loot-guide[open]>summary{min-height:30px;border-bottom:1px solid var(--craft-line);font-size:12px;color:#eeddb8}
+@container game-view (max-height:350px){
+ #game-shell[data-panel=craft] #craft-content .craft-costs{grid-auto-rows:minmax(53px,1fr)}
+ #game-shell[data-panel=craft] #craft-content .craft-costs .craft-material-icon{width:24px;height:24px}
+ #game-shell[data-panel=craft] #craft-content #craft-flavor{margin-bottom:5px;font-size:8px}
+ #game-shell[data-panel=craft] #craft-content #craft-stats{gap:2px;padding-top:5px}
+ #game-shell[data-panel=craft] #craft-content #craft-name{margin-block:4px}
+}
+/* Broad silhouettes stay beside the statistics rather than beneath their values. */
+#game-shell[data-panel=craft] #craft-content #craft-detail:is([data-slot=armor],[data-slot=charm]) #craft-art{right:-2%;bottom:6cqh;width:48%;max-width:22cqw}

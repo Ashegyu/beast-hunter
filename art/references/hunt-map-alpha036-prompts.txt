@@ -1,0 +1,25 @@
+Mode: built-in image_gen__imagegen (no CLI/API fallback).
+Reference image role: style/composition only.
+Reference: C:/Users/USER/Documents/Codex/2026-10-13/new-chat-2/outputs/ui-crimson-map-v3.png
+Generated originals retained under C:/Users/USER/.codex/generated_images/01a13e49-6af8-7fc1-afc9-23ca82395ca6/
+
+RUINS FULL PROMPT
+Use case: stylized-concept
+Asset type: actual game hunting-map background, portrait 1024 x 1536 pixels.
+Input image: style and composition reference only, the approved crimson forest hunting map. Generate a new ruined kingdom region, not a duplicate forest scene.
+Primary request: richly painted dark fantasy bird's-eye RPG hunting map of an abandoned gothic kingdom. A winding readable pale stone S trail travels from the bottom ruined gateway and small camp through crumbled medieval streets, broken bridges and black rock terraces, up to a ruined throne citadel at the top. The route must remain spacious enough for five stage markers that the game will overlay; paint no markers yourself. Scattered shattered towers, cathedral arches, roofless courtyards, thin smoke and silver mist give scale, ruin and depth. Sparse ember-red accents at isolated ruins, otherwise desaturated ash, graphite, charcoal and silver.
+Style: highly detailed hand-painted illustration, premium mature dark fantasy mobile RPG world map. Same painterly texture, atmospheric depth, edge detail and elaborate landscape quality as the reference. Elevated bird's-eye viewpoint, vertically layered terrain. Landscape fills full image with no border. Route visually continuous from bottom center toward upper center, natural organic curvature; no straight UI line. Bottom 15 percent and top 15 percent slightly darker for game overlays but fully painted.
+Lighting: subdued overcast silver moonlight, dramatic atmospheric mist, restrained warm embers. Avoid purple or violet entirely.
+Constraints: no UI, no text, no letters, no numbers, no icons, no circular stage medallions, no buttons, no characters, no logo, no watermark. Opaque full illustration.
+
+FROST FULL PROMPT
+Use case: stylized-concept
+Asset type: actual game hunting-map background, portrait 1024 x 1536 pixels.
+Input image: style and composition reference only, the approved crimson forest hunting map. Generate a new frost kingdom region, not a duplicate forest scene.
+Primary request: richly painted dark fantasy bird's-eye RPG hunting map of a frozen kingdom. A winding readable snow-dusted pale stone S trail travels from the bottom small hunter camp and broken gate, through snowy pines and black granite terraces, crosses a ruined ice bridge over an icy river, then climbs to a frozen monolithic throne palace at the top. The route must remain spacious enough for five stage markers that the game will overlay; paint no markers yourself. Frozen waterfalls, angular icy ravines, leaning gothic ruins, distant frost peaks, silver fog and sparse old burgundy banners.
+Style: highly detailed hand-painted illustration, premium mature dark fantasy mobile RPG world map. Same painterly texture, atmospheric depth, edge detail and elaborate landscape quality as the reference. Elevated bird's-eye viewpoint, vertically layered terrain. Landscape fills full image with no border. Route visually continuous from bottom center toward upper center, natural organic curvature; no straight UI line. Bottom 15 percent and top 15 percent slightly darker for game overlays but fully painted.
+Lighting: cold subtle moonlight, silver-blue frost, graphite and charcoal rock, luminous silver mist, tiny warm camp light below. Restrained desaturated palette. Avoid purple or violet entirely.
+Constraints: no UI, no text, no letters, no numbers, no icons, no circular stage medallions, no buttons, no characters, no logo, no watermark. Opaque full illustration.
+
+Inspection: Both outputs inspected visually. Portrait 1024 x 1536; opaque painted scene with central winding route, bottom camp/gate, top palace/citadel, no text, UI, stage icons or purple. Ruins uses dark gray masonry and sparse ember red; frost uses silver-blue snow, black stone and moonlight.
+

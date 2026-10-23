@@ -1,0 +1,21 @@
+{
+  "tests": {
+    "total": 482,
+    "pass": 482,
+    "fail": 0
+  },
+  "runtimeVideoBytes": 1267121,
+  "expandedStaticBytes": 215480029,
+  "browserVerified": false,
+  "sourceVideoDecoded": true,
+  "cutClipsFullyDecoded": true,
+  "appVideoControlVerified": "Production app in DOM/Canvas/media host, mocked native playback",
+  "presentationSeconds": 1.35,
+  "normalStartupImages": 22,
+  "optionalVideoElements": 3,
+  "pendingPlayPromisesPerElementMax": 1,
+  "originalUnchanged": true,
+  "login": false,
+  "userComputer": false,
+  "pauseAbortResumeVerified": true
+}

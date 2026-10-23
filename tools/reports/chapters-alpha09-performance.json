@@ -1,0 +1,32 @@
+{
+  "node": "v24.19.0",
+  "baselineCommit": "f72cdfa5710fa3d84503f03f81fdde9a484d0b01",
+  "scope": "pure game engine only, container CPU; excludes canvas, audio hardware, browser GC and input latency",
+  "baseline": {
+    "samples": 42000,
+    "meanMs": 0.003920044023809501,
+    "p95Ms": 0.005958999999990056,
+    "p99Ms": 0.014151999999995724,
+    "maxMs": 1.54810599999999,
+    "maxEffects": 18,
+    "maxShots": 2
+  },
+  "current": {
+    "samples": 42000,
+    "meanMs": 0.00690735999999987,
+    "p95Ms": 0.010055000000079417,
+    "p99Ms": 0.04053999999996449,
+    "maxMs": 1.4615850000000137,
+    "maxEffects": 18,
+    "maxShots": 2
+  },
+  "currentStress": {
+    "samples": 42000,
+    "meanMs": 0.03085950659523782,
+    "p95Ms": 0.04845300000033603,
+    "p99Ms": 0.13968999999997322,
+    "maxMs": 1.755476999999928,
+    "maxEffects": 23,
+    "maxShots": 64
+  }
+}

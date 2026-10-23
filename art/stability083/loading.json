@@ -1,0 +1,42 @@
+{
+  "scope": "JS-managed combat images only; CSS/HTML UI images, browser cache, network time and GPU memory excluded",
+  "before": {
+    "imageCount": 30,
+    "transferBytes": 61486500,
+    "theoreticalRgbaBytes": 280310776
+  },
+  "common": {
+    "imageCount": 18,
+    "transferBytes": 24653502,
+    "theoreticalRgbaBytes": 119002264
+  },
+  "regions": [
+    {
+      "id": 1,
+      "name": "붉은 숲",
+      "imageCount": 22,
+      "transferBytes": 37350676,
+      "theoreticalRgbaBytes": 170297784,
+      "savedTransferBytes": 24135824,
+      "transferReductionPercent": 39.25
+    },
+    {
+      "id": 2,
+      "name": "망자의 폐성",
+      "imageCount": 22,
+      "transferBytes": 36641540,
+      "theoreticalRgbaBytes": 174098872,
+      "savedTransferBytes": 24844960,
+      "transferReductionPercent": 40.41
+    },
+    {
+      "id": 3,
+      "name": "서리 왕좌",
+      "imageCount": 22,
+      "transferBytes": 36801288,
+      "theoreticalRgbaBytes": 173918648,
+      "savedTransferBytes": 24685212,
+      "transferReductionPercent": 40.15
+    }
+  ]
+}

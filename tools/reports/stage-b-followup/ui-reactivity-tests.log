@@ -1,0 +1,47 @@
+(node:33) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ actual stage transition clears held controls, saves checkpoint and resumes it at camp (574.673227ms)
+✔ result images distinguish reused IDs by their actual item owner and update after dismantling (253.299689ms)
+✔ real render draws dropped equipment and limits ordinary pickup HUD spam (192.797586ms)
+✔ charged capacitor UI advertises zero stamina heavy and capture works through the real button (167.058596ms)
+✔ advanced victory offers another hunt of the same boss and captured difficulty (108.501929ms)
+✔ stage clear is a short nonblocking notice and resets the minute clock without carrying held movement (170.319686ms)
+✔ ultimate details and final fractional cooldown show seconds until truly ready (153.414508ms)
+✖ boss reward notice uses the actual chapter and difficulty payout receipt (136.181698ms)
+✔ max-level growth caps XP, fills the bar and explains the final awakening without changing builds (183.500401ms)
+✔ ninth checkpoint transitions directly to a single-boss final with matching HUD and retry (86.661973ms)
+✔ stage B five presets save real gear and skill settings, expose two-tap entry selection and restore without a false recovery warning (230.739343ms)
+✔ stage B inscription UI charges one atomic cost and persists the selected optional effect (84.551377ms)
+✔ stage B storage failure keeps settlement pending, retry commits once and preset retry keeps the failed destination (134.456873ms)
+✔ stage B result loot keeps ownership by instance ID after durable settlement clones the inventory (202.273698ms)
+✔ followup HUD writes preserve simulation, controls, pause and live diagnostics (139.91614ms)
+✔ followup unchanged HUD text preserves its node while changed values and capacitor actions appear immediately (144.826159ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 15
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3388.546363
+
+✖ failing tests:
+
+test at tests/game-ui.test.mjs:1556:1
+✖ boss reward notice uses the actual chapter and difficulty payout receipt (136.181698ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'playing'
+  - 'victory'
+  
+      at TestContext.<anonymous> (file:///workspace/sites/beast-hunter-motion/tests/game-ui.test.mjs:1560:142)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'playing',
+    expected: 'victory',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

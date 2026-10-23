@@ -1,0 +1,29 @@
+(node:12) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ cold camp opens equipment and backup menus without downloading battle images (58.71719ms)
+✔ first hunt waits for validated images, reuses pending work and starts its timer only once (60.267254ms)
+✔ leaving and returning to cold-launch origin cancels intent but keeps the finished image cache (48.190887ms)
+✔ a partial battle load failure keeps the camp usable and retry never launches an abandoned hunt (70.500615ms)
+✔ preparation shortcuts use live point budgets, open the requested page and stay inert during combat (40.439455ms)
+✔ 48th slot retains action identity, protection and ownership through backup and reload (122.298711ms)
+✔ bag paging preserves bulk selection across pages and all-filter selection protects owned builds (51.81799ms)
+✔ emergency backup exports unsaved live progress and releases its download URL (38.442327ms)
+✔ unreadable existing storage is not overwritten by a fresh session or a restore (32.362944ms)
+✔ backup restore previews, confirms once, preserves rollback and blocks stale page autosaves (54.540538ms)
+✔ blocked storage stays explicit and failed assets never enable a broken hunt (57.406512ms)
+✔ a missing regional atlas leaves camp open but never starts a hunt or replaces saved gear (50.866163ms)
+✔ late battle assets cannot promote a partial failed bundle or enable combat (34.243126ms)
+✔ invalid equipment sockets fail before gameplay and preserve the saved profile (46.334912ms)
+✔ shared startup failure can retry in place and cannot launch before the successful retry (57.526883ms)
+✔ native backup round trip retains progress, gear, skills and pity without mutating the source (11.275915ms)
+✔ reserved resources are recovered once when a combat backup is restored (1.020289ms)
+✔ unrelated, incomplete, oversized and damaged backup files are rejected (0.765896ms)
+✔ cold camp decodes only preview images that are reused by the battle plan (9.373694ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 998.990184

@@ -1,0 +1,21 @@
+Alpha 0.39 codex archive scenery assets
+Mode: built-in image_gen; generate; stylized-concept. No CLI/API fallback.
+Approved design reference inspected: C:/Users/USER/.codex/generated_images/01a13446-2f8d-7a30-9e07-1f5521e40ec1/exec-d39b41f5-fc96-4dce-9358-7b5fe5af96c1.png
+Role: style/composition only. Final plates contain no embedded items, text, controls or characters; actual artifacts are layered dynamically in HTML.
+
+Hero original retained: C:\Users\USER\.codex\generated_images\01a13ea1-7939-7932-ba75-b8352e3de07b\exec-22a4e0c6-15df-4a49-ae8b-f707d601b0eb.png
+Final: dist/assets/codex-archive-hero-v039.png and lossless .webp
+Prompt:
+Use case: stylized-concept. Asset type: no-text dark fantasy action RPG archive hero BACKGROUND plate for real web UI. Wide 2:1 landscape. A decaying gothic cathedral museum alcove, charcoal stone columns, tall pointed arches, dim old glass windows, a modest OLD STONE DISPLAY PLINTH on the RIGHT lower quadrant, empty display surface with a little dark burgundy draped cloth and a few red autumn leaves near bottom-right. LEFT 45 percent almost black quiet shadow, low contrast, reserved for live HTML title. Premium painterly dark fantasy game art, restrained cinematic soft champagne moonlight outlining architecture, black slate, muted warm antique metal, deep smoky atmospheric depth. Strong but refined detailed stone material, elegant and somber, no bright lights. On right the architecture readable despite overall darkness. Actual weapon will be layered dynamically by software: ABSOLUTELY NO sword, weapon, equipment, armor, jewelry, item, trophy, human, creature, statue or character anywhere. No text, lettering, typography, UI, icons, buttons, borders, frames, symbols, watermarks. Just full bleed opaque background, not a mockup.
+
+Gallery original retained: C:\Users\USER\.codex\generated_images\01a13ea1-7939-7932-ba75-b8352e3de07b\exec-ef87def0-2677-4107-9a45-e449689cb4d5.png
+Final: dist/assets/codex-gallery-floor-v039.png and lossless .webp
+Prompt:
+Use case: stylized-concept. Asset type: reusable no-text dark fantasy RPG museum artifact gallery BACKGROUND plate, 2:1 wide landscape. A very quiet empty low black stone museum ledge across the bottom 20 percent, subtly weathered charcoal stone and faint old antique dark metal trim, with hazy gothic cathedral ruins very far in the deep dark background. The top and middle 80 percent are mostly quiet charcoal-black atmospheric negative space so software can layer actual different artifact sprites. Premium painterly realistic game illustration with softly readable stone surface, extremely restrained antique champagne edging, almost black blue-gray shadows. Elegant somber polished museum gallery atmosphere, dark enough that real items remain the visual focus. This must be plain reusable scenery only, no hero object or accent identity. Absolutely NO weapon, sword, armor, jewelry, equipment, artifact, display case, candlestick, human, creature, statue or other object on the ledge. NO text, lettering, logo, icon, UI, border, frame, or watermark. Full bleed opaque single environment background, not a mockup or contact sheet.
+
+Delivery: lossless WebP, exact=True, method=6; decoded RGBA identity verified against PNG for both plates.
+Dimensions: both 1774 x 887, exact 2:1 landscape.
+Hero PNG 2133591 bytes -> WebP 1454570 bytes.
+Gallery PNG 1794782 bytes -> WebP 1212626 bytes.
+Total PNG 3928373 bytes -> WebP 2667196 bytes (32.10% reduction).
+Visual inspection: hero has empty stone plinth on right, red leaves and burgundy cloth, very dark left text area. Gallery has an empty low black stone ledge and quiet distant gothic ruins. Neither contains weapons, equipment, characters, labels or interface elements.

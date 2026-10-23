@@ -1,0 +1,395 @@
+{
+  "baseline": "ceb64aa5ac6a7ef16261b666453bddcecf55cfaf",
+  "environment": "Work Linux Node v24.19.0",
+  "scope": "headless CPU, no rendering/GPU/device measurement",
+  "before": {
+    "cap": 18,
+    "stageTotals": [
+      27,
+      29,
+      33,
+      35,
+      37,
+      39,
+      42,
+      45,
+      51,
+      1
+    ],
+    "campaign": [
+      {
+        "chapter": 1,
+        "phase": "victory",
+        "timedOut": false,
+        "kills": 339,
+        "level": 25,
+        "time": 498.1749999998193,
+        "items": 65,
+        "peak": 16,
+        "peakFX": 32,
+        "peakShots": 18,
+        "p95": 0.07217899999977817,
+        "p99": 0.2237169999998514,
+        "max": 3.125344000000041,
+        "stages": [
+          {
+            "stage": 1,
+            "level": 1
+          },
+          {
+            "stage": 2,
+            "level": 5
+          },
+          {
+            "stage": 3,
+            "level": 11
+          },
+          {
+            "stage": 4,
+            "level": 15
+          },
+          {
+            "stage": 5,
+            "level": 18
+          },
+          {
+            "stage": 6,
+            "level": 20
+          },
+          {
+            "stage": 7,
+            "level": 21
+          },
+          {
+            "stage": 8,
+            "level": 22
+          },
+          {
+            "stage": 9,
+            "level": 23
+          },
+          {
+            "stage": 10,
+            "level": 25
+          }
+        ]
+      },
+      {
+        "chapter": 2,
+        "phase": "victory",
+        "timedOut": false,
+        "kills": 339,
+        "level": 32,
+        "time": 402.9899999999054,
+        "items": 70,
+        "peak": 17,
+        "peakFX": 33,
+        "peakShots": 10,
+        "p95": 0.054270999999971536,
+        "p99": 0.15586499999972148,
+        "max": 2.855481999999938,
+        "stages": [
+          {
+            "stage": 1,
+            "level": 25
+          },
+          {
+            "stage": 2,
+            "level": 25
+          },
+          {
+            "stage": 3,
+            "level": 26
+          },
+          {
+            "stage": 4,
+            "level": 27
+          },
+          {
+            "stage": 5,
+            "level": 28
+          },
+          {
+            "stage": 6,
+            "level": 28
+          },
+          {
+            "stage": 7,
+            "level": 29
+          },
+          {
+            "stage": 8,
+            "level": 30
+          },
+          {
+            "stage": 9,
+            "level": 31
+          },
+          {
+            "stage": 10,
+            "level": 32
+          }
+        ]
+      },
+      {
+        "chapter": 3,
+        "phase": "victory",
+        "timedOut": false,
+        "kills": 339,
+        "level": 38,
+        "time": 393.2799999999142,
+        "items": 75,
+        "peak": 15,
+        "peakFX": 46,
+        "peakShots": 14,
+        "p95": 0.0573869999998351,
+        "p99": 0.1713079999999536,
+        "max": 2.112141999999949,
+        "stages": [
+          {
+            "stage": 1,
+            "level": 32
+          },
+          {
+            "stage": 2,
+            "level": 32
+          },
+          {
+            "stage": 3,
+            "level": 33
+          },
+          {
+            "stage": 4,
+            "level": 34
+          },
+          {
+            "stage": 5,
+            "level": 34
+          },
+          {
+            "stage": 6,
+            "level": 35
+          },
+          {
+            "stage": 7,
+            "level": 35
+          },
+          {
+            "stage": 8,
+            "level": 36
+          },
+          {
+            "stage": 9,
+            "level": 37
+          },
+          {
+            "stage": 10,
+            "level": 38
+          }
+        ]
+      }
+    ],
+    "stress": {
+      "peak": 16,
+      "p95": 0.023616000000401982,
+      "p99": 0.09308000000055472,
+      "max": 0.4285360000003493,
+      "samples": 2397
+    }
+  },
+  "after": {
+    "cap": 32,
+    "stageTotals": [
+      56,
+      64,
+      75,
+      80,
+      84,
+      92,
+      97,
+      105,
+      116,
+      1
+    ],
+    "campaign": [
+      {
+        "chapter": 1,
+        "phase": "victory",
+        "timedOut": false,
+        "kills": 770,
+        "level": 31,
+        "time": 533.554999999787,
+        "items": 154,
+        "peak": 32,
+        "peakFX": 82,
+        "peakShots": 17,
+        "p95": 0.14363700000012614,
+        "p99": 0.3470520000000761,
+        "max": 3.391939999999522,
+        "stages": [
+          {
+            "stage": 1,
+            "level": 1
+          },
+          {
+            "stage": 2,
+            "level": 10
+          },
+          {
+            "stage": 3,
+            "level": 16
+          },
+          {
+            "stage": 4,
+            "level": 20
+          },
+          {
+            "stage": 5,
+            "level": 22
+          },
+          {
+            "stage": 6,
+            "level": 24
+          },
+          {
+            "stage": 7,
+            "level": 26
+          },
+          {
+            "stage": 8,
+            "level": 28
+          },
+          {
+            "stage": 9,
+            "level": 30
+          },
+          {
+            "stage": 10,
+            "level": 31
+          }
+        ]
+      },
+      {
+        "chapter": 2,
+        "phase": "victory",
+        "timedOut": false,
+        "kills": 770,
+        "level": 41,
+        "time": 463.90999999985047,
+        "items": 155,
+        "peak": 32,
+        "peakFX": 63,
+        "peakShots": 12,
+        "p95": 0.17031700000006822,
+        "p99": 0.4322810000003301,
+        "max": 4.311370000000352,
+        "stages": [
+          {
+            "stage": 1,
+            "level": 31
+          },
+          {
+            "stage": 2,
+            "level": 32
+          },
+          {
+            "stage": 3,
+            "level": 33
+          },
+          {
+            "stage": 4,
+            "level": 34
+          },
+          {
+            "stage": 5,
+            "level": 35
+          },
+          {
+            "stage": 6,
+            "level": 37
+          },
+          {
+            "stage": 7,
+            "level": 38
+          },
+          {
+            "stage": 8,
+            "level": 39
+          },
+          {
+            "stage": 9,
+            "level": 40
+          },
+          {
+            "stage": 10,
+            "level": 41
+          }
+        ]
+      },
+      {
+        "chapter": 3,
+        "phase": "victory",
+        "timedOut": false,
+        "kills": 770,
+        "level": 45,
+        "time": 470.18999999984453,
+        "items": 152,
+        "peak": 32,
+        "peakFX": 63,
+        "peakShots": 21,
+        "p95": 0.16142299999955867,
+        "p99": 0.4196119999996881,
+        "max": 3.5219660000002477,
+        "stages": [
+          {
+            "stage": 1,
+            "level": 41
+          },
+          {
+            "stage": 2,
+            "level": 41
+          },
+          {
+            "stage": 3,
+            "level": 41
+          },
+          {
+            "stage": 4,
+            "level": 42
+          },
+          {
+            "stage": 5,
+            "level": 42
+          },
+          {
+            "stage": 6,
+            "level": 43
+          },
+          {
+            "stage": 7,
+            "level": 43
+          },
+          {
+            "stage": 8,
+            "level": 44
+          },
+          {
+            "stage": 9,
+            "level": 44
+          },
+          {
+            "stage": 10,
+            "level": 45
+          }
+        ]
+      }
+    ],
+    "stress": {
+      "peak": 32,
+      "p95": 0.05419199999960256,
+      "p99": 0.19476300000042102,
+      "max": 3.003026999999747,
+      "samples": 2397
+    }
+  }
+}

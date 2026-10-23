@@ -1,0 +1,9 @@
+{
+  "scope": "Static IDs, local HTML/CSS/module references and guide ancestry. No computed CSS or browser pixels.",
+  "uniqueIds": 1512,
+  "missing": [],
+  "inventoryCapacity": 48,
+  "visibleBagSlots": 24,
+  "itemDetailPanels": 24,
+  "distBytes": 243871517
+}

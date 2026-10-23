@@ -1,0 +1,50 @@
+Alpha 0.38 boss replay/rewards UI - 2026-10-15
+
+Reference: user-supplied tactical/boss-reward design, adapted to the existing
+portrait app. Map opens a separate camp tactics subview. Fixed bottom action
+prepares the selected boss mode in the map; it does not launch or consume RNG.
+Back/Escape returns to the map with visible focus. Fresh tactics entry resets
+the internal scroll position. Only one camp subview is visible.
+
+Automated: 404/404 complete Node tests passed, 0 failures, 18001 ms.
+Three added integration cases: real mode statistics and prepare-without-launch;
+unlock gating/focus/selected mode; uncleared/loading/combat entry restrictions.
+Existing equipment click-only, held input, combat, loot and save tests retained.
+JS syntax/duplicate IDs/whitespace checked; engine and hunt mode tables unchanged.
+
+Actual local Chromium, isolated existing localhost:8787 QA profile:
+- 390x844: normal -> nightmare shows HP2.2, damage1.55, gold2, ancient1.00%.
+- Prepare returns to map with CHAPTER03/STAGE05/nightmare; still camp phase.
+- Forest elite selected: ancient0.60%, correct actual world-tree guardian.
+- All three regional banners and names observed, including ruins king/frost ruler.
+- 320x740: prepare action294x56, bottom662; doc width320.
+- 390x844: prepare action358x56, bottom766; doc width390.
+- 1280x900 desktop: centered480px app, action bottom821, no horizontal overflow.
+- 844x390 rotation: action448x56, bottom312, no horizontal overflow.
+- Real forest elite 1-5 launched with the selected difficulty. Attack/dash/thunder,
+  auto combat and pause/resume operated. Victory:17kills/29seconds, total run
+  gold385, cores4, equipment9. These totals are not the boss bonus alone.
+- Boss dossier expanded: exact region boss title and20 ancient loot rows.
+- Codex shortcut -> frost ancient target selection -> route -> tactics -> target
+  hunt preparation returned to map correctly.
+- Initial game image count remains23. New art is noncombat CSS background only.
+- Game-page console errors: none observed.
+
+Browser-found fixes: old drawer right-padding override, correct primary action
+contrast, dedicated fixed action area, returning to map for targeted boss routes,
+scroll reset on entering the tactics subview.
+
+Assets generated with built-in image_gen. Exact prompts, originals and delivery
+conversion recorded in art/references/replay-boss-alpha038-prompts.txt.
+3 x1774x887, WebP lossless exact RGBA match;7702402->5157944bytes.
+
+Screenshots in task outputs/:
+alpha038-replay-forest-390.png
+alpha038-replay-ruins-390.png
+alpha038-replay-320.png
+alpha038-elite-combat-320.png
+alpha038-elite-victory-320.png
+
+Limits: desktop Chromium mobile-size viewport, not physical Android Chrome.
+Gameplay was local, production publication verified separately.
+No CPU/GPU/FPS or before/after performance benchmark claim.

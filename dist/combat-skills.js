@@ -1,0 +1,216 @@
+import {createSkillMotion} from './skill-motion.js';
+// Lirian skill rules: one catalog drives unlocks, rank values, UI and combat.
+const active=(id,name,unlock,damage,step,cost,cooldown,shape,description,extra={})=>({id,name,kind:'active',unlock,damage,step,cost,cooldown,shape,description,...extra});
+const passive=(id,name,unlock,value,step,unit,description)=>({id,name,kind:'passive',unlock,value,step,unit,description});
+const ultimate=(id,name,unlock,damage,step,shape,description,extra={})=>({id,name,kind:'ultimate',unlock,damage,step,cost:0,cooldown:60,shape,description,...extra});
+export const SKILL_CATALOG=Object.freeze([
+ active('crescent','월아참',1,140,20,18,6,'line','사거리 300의 관통 검기. 적마다 한 번 명중.',{range:300,width:60,delay:.12}),
+ active('gale','질풍참',5,110,15,20,7,'dash','전방 170만큼 돌진하며 경로를 벤다. 무적 없음.',{range:260,width:65,delay:.15}),
+ active('dance','윤무',10,180,20,28,8,'circle','1.2초 동안 주변 175 범위를 4회 벤다. 사용 중 이동 속도 70%.',{range:175,hits:4,interval:.3,delay:.1}),
+ active('draw','발도',25,220,30,25,10,'cone','0.45초 준비 후 전방 240 범위에 일격. 회피·피격으로 취소 가능.',{range:240,dot:.65,delay:.45,poise:40}),
+ active('plunge','낙월',35,180,25,25,9,'targetArea','전방으로 도약해 반경 150을 내려친다. 중심부 경직 누적 50% 증가.',{range:260,radius:150,delay:.35,poise:40}),
+ active('parry','흘려베기',15,220,30,12,9,'parry','0.25초 동안 정면의 괴수 공격·투사체 한 번을 무효화하고 반격. 폭발은 방어 불가.',{range:220,delay:0,poise:65}),
+ active('echo','잔영참',30,180,25,22,8,'echo','뒤로 95만큼 물러나며 전방을 베고, 0.4초 뒤 출발 지점의 잔상이 다시 벤다. 무적 없음.',{range:210,delay:.1,hits:2,interval:.4}),
+ active('triple','연월참',7,210,25,24,7,'cone','전방 185 범위를 3회 베기. 마지막 타격은 전체 피해의 50%.',{range:185,dot:.55,hits:3,interval:.18,delay:.1}),
+ active('seeking','추적 검기',4,120,15,16,5,'seeking','사거리 460 안의 조준 대상에게 추적 검기를 보낸다. 대상이 죽으면 소멸.',{range:460,delay:.28}),
+ active('returning','회귀월',12,170,20,20,7,'returning','전방 320의 검기를 던지고 0.6초 뒤 같은 경로로 회수. 왕복 각각 한 번 명중.',{range:320,width:70,hits:2,interval:.6,delay:.15}),
+ active('field','잔월진',18,240,30,30,12,'field','조준 지점 반경 150에 3초간 검기 영역을 남겨 6회 공격. 적이 벗어나면 빗나감.',{range:280,radius:150,hits:6,interval:.5,delay:.2}),
+ active('breach','파갑참',22,150,20,24,10,'cone','전방 180을 강타해 5초 동안 받는 직접 검술 피해를 증가시킨다. 약화는 중첩 불가.',{range:180,dot:.6,delay:.28,poise:55}),
+ active('gather','월쇄',16,120,15,22,9,'gather','주변 240의 일반 괴수를 모아 벤다. 정예·보스는 이동시키지 않음.',{range:240,delay:.2,poise:20}),
+ active('stance','수월의 자세',9,0,0,0,14,'stance','3초 동안 기력을 추가 회복하고 받는 피해를 줄인다. 공격·스킬을 사용하면 종료.',{range:0,delay:0}),
+ active('mark','월영 표식',28,180,25,18,10,'mark','사거리 380 안 대상에게 8초 표식. 직접 타격 5회 후 추가 일격. 중첩 불가.',{range:380,delay:0}),
+ active('bloodblade','혈월의 칼날',32,0,0,20,14,'bloodblade','6초 동안 기본 연격 피해 증가. 다른 액티브·궁극기를 사용하면 종료.',{range:0,delay:0}),
+ passive('opening','찰나의 틈',18,15,5,'%','완벽 회피 후 3초 안에 쓰는 다음 발도의 준비 시간 감소.'),
+ passive('flow','검무의 흐름',23,3,1,'기력','서로 다른 일반 액티브를 4초 안에 연계하면 기력 회복. 발동 간격 6초.'),
+ passive('finisher','마지막 검끝',8,15,5,'%','연격 마지막 타격 적중 후 3초 안에 쓰는 다음 액티브의 경직 누적 증가.'),
+ passive('footwork','사냥꾼의 발걸음',13,10,2,'%','완벽 회피 후 2초간 이동 속도 증가. 중첩 없이 갱신.'),
+ passive('pursuit','잔상 추격',28,20,5,'%','질풍참·잔영참 후 3초 안의 다음 기본 공격에 공격력 비례 추가 피해와 짧은 전진.'),
+ passive('imbalance','무너진 균형',40,10,3,'%','경직·노출 상태의 적에게 주는 직접 검술 스킬 피해 증가.'),
+ passive('breath','절제된 호흡',3,15,5,'%','공격·스킬 없이 1.5초 이동하면 기본 기력 재생 속도 증가. 멈추거나 공격하면 해제.'),
+ passive('resolve','적월의 결의',45,180,-15,'초','치명적인 피해를 체력 1로 버티고 0.6초 보호. 수치는 재발동 대기 시간.'),
+ passive('lone','고독한 사냥',11,10,3,'%','주변 400 안에 적이 한 명일 때 직접 검술 스킬 피해 증가.'),
+ passive('surrounded','포위 돌파',14,20,5,'%','주변 240 안에 적이 3명 이상이면 윤무·월쇄 경직 누적 증가.'),
+ passive('scar','깊은 검흔',24,30,10,'%','연격 마지막 타격이 5초 검흔을 남긴다. 발도 적중 시 소비하여 공격력 비례 추가 피해.'),
+ passive('recovery','회수의 궤적',17,3,1,'기력','회귀월의 돌아오는 검기가 적중하면 기력 회복. 한 번의 시전당 한 번.'),
+ passive('steady','흔들리지 않는 검',27,20,5,'%','준비 중 이동하지 않은 발도의 경직 누적 증가.'),
+ passive('resonance','월영 공명',33,20,10,'%','잔영참의 잔상·월영군무가 표식 타격에 기여하고 표식 폭발 피해 증가. 추가 피해는 재발동하지 않음.'),
+ passive('momentum','사냥의 여세',19,.3,.1,'초','적 처치 시 일반 스킬의 남은 대기 시간 감소. 발동 간격 1초.'),
+ passive('reserve','남겨둔 여력',6,8,2,'%','기력 40 이상일 때 받는 피해 감소.'),
+ ultimate('bloodmoon','적월난무',20,520,80,'ultimateArea','주변 260을 6회 베고 마지막에 검기를 방출. 재사용 60초.',{range:260,hits:7,interval:.16,delay:.1}),
+ ultimate('eclipse','일섬·월식',30,600,90,'line','0.65초 준비 후 길이 560의 좁은 직선에 강한 일격. 재사용 60초.',{range:560,width:55,delay:.65,poise:80}),
+ ultimate('phantoms','월영군무',40,240,40,'phantoms','8초 동안 기본 공격에 잔상이 최대 8회 동행. 표의 피해는 8회 모두 적중한 합계. 재사용 60초.',{range:180,delay:0}),
+].map(row=>Object.freeze({...row,icon:'assets/skills/'+row.id+'.webp'})));
+export const SKILL_BY_ID=Object.freeze(Object.assign(Object.create(null),Object.fromEntries(SKILL_CATALOG.map(r=>[r.id,r]))));
+const AREA_SHAPES=new Set(['line','dash','circle','cone','targetArea','echo','returning','field','gather','ultimateArea']);
+const RADIAL_REACH=new Set(['circle','cone','echo','gather','ultimateArea']);
+// Levels widen area attacks, while targeting distance and dash travel stay fixed.
+export function skillAreaScale(p,id){return AREA_SHAPES.has(SKILL_BY_ID[id]?.shape)?1+Math.min(4,Math.floor(int(p.level,1,50)/10))*.1:1;}
+export function skillReach(p,id){const d=SKILL_BY_ID[id];return d?d.range*(RADIAL_REACH.has(d.shape)?skillAreaScale(p,id):1):0;}
+const cleanAuto=raw=>({mode:['balanced','boss','farm','safe'].includes(raw?.mode)?raw.mode:'balanced',ultimate:['elite','any','off'].includes(raw?.ultimate)?raw.ultimate:'elite'});
+const int=(n,min,max,fallback=min)=>Number.isFinite(n)?Math.max(min,Math.min(max,Math.floor(n))):fallback;
+export const SKILL_SLOT_UNLOCKS=Object.freeze([
+ {kind:'active',index:1,level:5,label:'일반 슬롯 2'},
+ {kind:'passive',index:1,level:10,label:'패시브 슬롯 2'},
+ {kind:'ultimate',index:0,level:20,label:'궁극기 슬롯'},
+ {kind:'passive',index:2,level:25,label:'패시브 슬롯 3'},
+].map(Object.freeze));
+export const skillSlots=level=>{const slots={active:1,passive:1,ultimate:0};for(const row of SKILL_SLOT_UNLOCKS)if(level>=row.level)slots[row.kind]++;return slots;};
+// A read-only level interval; viewing progress never equips or spends points.
+export function skillMilestones(afterLevel,throughLevel=50){
+ const rows=SKILL_CATALOG.filter(d=>d.unlock>afterLevel&&d.unlock<=throughLevel).map(d=>({level:d.unlock,label:d.name,id:d.id,kind:d.kind}));
+ for(const row of SKILL_SLOT_UNLOCKS)if(row.level>afterLevel&&row.level<=throughLevel)rows.push({...row,kind:'slot'});
+ if(afterLevel<50&&throughLevel>=50)rows.push({level:50,label:'적월난무 각성',kind:'awakening'});
+ return rows.sort((a,b)=>a.level-b.level);
+}
+export function skillLevelGate(id,rank){const d=SKILL_BY_ID[id];if(!d)return 51;return d.unlock+Math.ceil((Math.max(1,Math.min(5,rank))-1)*Math.min(d.kind==='ultimate'?7:3,(50-d.unlock)/4));}
+export function skillRank(profile,id){const d=SKILL_BY_ID[id];if(!d||profile.level<d.unlock)return 0;if(d.kind==='ultimate'){let rank=1;while(rank<5&&profile.level>=skillLevelGate(id,rank+1))rank++;return rank;}return 1+(profile.skillBook?.ranks?.[id]??0);}
+export function skillValue(profile,id){const d=SKILL_BY_ID[id],rank=skillRank(profile,id);return rank?(d.damage??d.value)+d.step*(rank-1):0;}
+export function skillPoints(profile){return Math.max(0,profile.level-1+(profile.skillBook?.trainingPoints??0)-Object.values(profile.skillBook?.ranks??{}).reduce((a,b)=>a+b,0));}
+function cleanLoadout(raw,level){const slots=skillSlots(level),used=new Set();const list=(kind,n)=>Array.from({length:n},(_,i)=>{const id=raw?.[kind]?.[i],d=SKILL_BY_ID[id];if(i>=slots[kind]||!d||d.kind!==kind||d.unlock>level||used.has(id))return null;used.add(id);return id;});return {active:list('active',2),passive:list('passive',3),ultimate:list('ultimate',1)};}
+export function restoreSkillBook(raw,level){
+ const ranks={},trainingPoints=int(raw?.trainingPoints,0,49,0);let budget=level-1+trainingPoints;
+ for(const d of SKILL_CATALOG){if(d.kind==='ultimate'||d.unlock>level)continue;let maximum=0;while(maximum<4&&level>=skillLevelGate(d.id,maximum+2))maximum++;const n=int(raw?.ranks?.[d.id],0,maximum);ranks[d.id]=Math.min(n,budget);budget-=ranks[d.id];}
+ const defaults={active:['crescent',level>=5?'gale':null],passive:[level>=3?'breath':null,level>=10?'finisher':null,level>=25?'reserve':null],ultimate:[level>=20?'bloodmoon':null]};
+ return {ranks,trainingPoints,loadout:cleanLoadout(raw?.loadout??defaults,level),presets:Array.from({length:3},(_,i)=>raw?.presets?.[i]?{...cleanLoadout(raw.presets[i],level),auto:cleanAuto(raw.presets[i].auto)}:null),auto:cleanAuto(raw?.auto),awakening:raw?.awakening==='execution'?'execution':'area'};
+}
+export function upgradeSkill(s,id){const d=SKILL_BY_ID[id],p=s.profile;if(s.phase!=='camp'||!d||d.kind==='ultimate'||!skillRank(p,id)||skillRank(p,id)>=5||!skillPoints(p)||p.level<skillLevelGate(id,skillRank(p,id)+1))return false;p.skillBook.ranks[id]=(p.skillBook.ranks[id]??0)+1;return true;}
+export function equipSkill(s,id,slot){const p=s.profile,d=SKILL_BY_ID[id];if(s.phase!=='camp'||!d||!skillRank(p,id)||!Number.isInteger(slot)||slot<0||slot>=skillSlots(p.level)[d.kind])return false;const list=p.skillBook.loadout[d.kind],prior=list.indexOf(id);if(prior===slot){list[slot]=null;return true;}if(prior>=0)list[prior]=list[slot];list[slot]=id;return true;}
+export function resetSkills(s){if(s.phase!=='camp')return false;s.profile.skillBook.ranks={};return true;}
+export function skillPreset(s,index,action){if(s.phase!=='camp'||!Number.isInteger(index)||index<0||index>=3)return false;const b=s.profile.skillBook;if(action==='save'){b.presets[index]={...cleanLoadout(b.loadout,s.profile.level),auto:cleanAuto(b.auto)};return true;}if(action==='load'&&b.presets[index]){b.loadout=cleanLoadout(b.presets[index],s.profile.level);b.auto=cleanAuto(b.presets[index].auto);return true;}return false;}
+export function skillNumbers(p,id,rank=skillRank(p,id)){const d=SKILL_BY_ID[id];if(!d)return '';const v=(d.damage??d.value)+d.step*(Math.max(1,rank)-1);if(d.kind==='passive')return v+(d.unit==='%'?'%':d.unit==='초'?'초':d.unit==='회'?'회':' 기력');if(id==='stance')return '기력 +'+(9+rank*3)+'/초 · 피해 감소 '+(15+rank*3)+'%';if(id==='bloodblade')return '연격 피해 +'+(20+rank*5)+'%';if(id==='breach')return '피해 '+v+'% · 약화 '+(10+rank*2)+'%';return '총 피해 '+v+'%';}
+export const SKILL_BUILD_EXAMPLES=Object.freeze([
+ {name:'보스 폭딜',active:['breach','draw'],passive:['lone','scar','steady'],ultimate:['eclipse']},
+ {name:'자동 광역',active:['gather','dance'],passive:['surrounded','momentum','flow'],ultimate:['bloodmoon']},
+ {name:'자동 안정',active:['seeking','stance'],passive:['breath','reserve','resolve'],ultimate:['phantoms']},
+ {name:'잔상 표식',active:['echo','mark'],passive:['resonance','pursuit','flow'],ultimate:['phantoms']},
+]);
+export function applySkillExample(s,index){const example=SKILL_BUILD_EXAMPLES[index];if(s.phase!=='camp'||!example)return false;const clean=cleanLoadout(example,s.profile.level);if(!clean.active.some(Boolean))return false;s.profile.skillBook.loadout=clean;return true;}
+
+const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
+const unit=(x,y)=>{const n=Math.hypot(x,y);return n>.00001?{x:x/n,y:y/n}:{x:0,y:1};};
+const live=e=>!e.dead;
+const capStamina=(s,n)=>{s.player.stamina=Math.min(100,s.player.stamina+n);};
+export function createSkillRuntime(){return {ultimatePresentation:null,motion:null,travel:null,fxReady:{},cooldowns:{},cooldownKeys:[],jobs:[],serial:0,token:0,casting:null,lastCast:null,flowReady:0,killReady:0,resolveReady:0,openingUntil:0,footworkUntil:0,finisherUntil:0,pursuitUntil:0,breathTime:0,stanceUntil:0,bloodbladeUntil:0,phantomUntil:0,phantomHits:0,phantomDamage:0,parryUntil:0,parryCast:null};}
+const pv=(s,id)=>s.profile.skillBook.loadout.passive.includes(id)?skillValue(s.profile,id):0;
+function passiveVisual(s,id,h,target=s.player){const r=s.skillRuntime;if(!h?.visual||!pv(s,id)||s.run.time<(r.fxReady[id]??-1))return;r.fxReady[id]=s.run.time+1.2;h.visual(s,'skillPassive',{skillId:id,x:target.x,y:target.y-130,radius:23},.65);}
+export function interruptSkill(s){const r=s.skillRuntime;if(!r)return;r.token++;r.ultimatePresentation=null;r.motion=null;r.travel=null;r.casting=null;r.parryUntil=0;r.parryCast=null;r.breathTime=0;}
+export function clearSkillStage(s){const r=s.skillRuntime;interruptSkill(s);r.jobs.length=0;r.stanceUntil=0;r.bloodbladeUntil=0;r.phantomUntil=0;r.pursuitUntil=0;r.finisherUntil=0;r.openingUntil=0;r.footworkUntil=0;r.lastCast=null;}
+export function skillMoveScale(s){const r=s.skillRuntime;return (r.footworkUntil>s.run.time?1+pv(s,'footwork')/100:1)*(r.casting?.id==='dance'?.7:1);}
+function nearestTarget(s,n,range){let best=null,score=-Infinity;for(const e of s.enemies){if(!live(e))continue;const dx=e.x-s.player.x,dy=e.y-s.player.y,d=Math.hypot(dx,dy);if(d>range)continue;const facing=d>.001?(dx*n.x+dy*n.y)/d:1,v=facing*300-d;if(v>score){score=v;best=e;}}return best;}
+export function skillReady(s,id){const d=SKILL_BY_ID[id],r=s.skillRuntime;return !!d&&s.phase==='playing'&&!s.paused&&s.run.flow==='combat'&&s.player.hp>0&&!!skillRank(s.profile,id)&&s.profile.skillBook.loadout[d.kind]?.includes(id)&&!['attack','heavy','dash','hurt','death'].includes(s.player.action)&&!r.casting&&!(r.cooldowns[id]>0)&&s.player.stamina>=d.cost;}
+export function castSkill(s,id,aim,h){
+ if(!skillReady(s,id))return false;const d=SKILL_BY_ID[id],r=s.skillRuntime,p=s.player,reach=skillReach(s.profile,id),areaScale=skillAreaScale(s.profile,id),n=unit(Number.isFinite(aim?.x)?aim.x:p.aimX,Number.isFinite(aim?.y)?aim.y:p.aimY),target=s.enemies.find(e=>e.id===aim?.targetId&&live(e)&&distance(e,p)<=reach)??nearestTarget(s,n,reach),rank=skillRank(s.profile,id),now=s.run.time;
+ if(['mark','seeking'].includes(d.shape)&&!target||r.jobs.length+(d.hits??1)>64)return false;
+ const attack=h.stats(s.profile).damage,root={id,serial:++r.serial,rank,attack,areaScale,range:reach,radius:d.radius?d.radius*areaScale:undefined,width:d.width?d.width*areaScale:undefined,equipmentAtStart:h.capture?.(s)??null,inscriptions:h.inscriptions?.(s)??null,damage:skillValue(s.profile,id)/100*attack,x:p.x,y:p.y,n,targetId:target?.id,token:r.token,recovered:false,poise:(d.poise??12)*(r.finisherUntil>now?1+pv(s,'finisher')/100:1),castX:p.x,castY:p.y};
+ p.stamina-=d.cost;if(!Object.hasOwn(r.cooldowns,id))r.cooldownKeys.push(id);r.cooldowns[id]=d.cooldown;r.stanceUntil=0;if(id!=='bloodblade')r.bloodbladeUntil=0;
+ if(d.kind==='ultimate'){r.ultimatePresentation={id,startedAt:now,token:r.token,x:p.x,y:p.y,nx:n.x,ny:n.y};}
+ if(d.kind==='active'){
+  if(r.lastCast&&r.lastCast.id!==id&&now-r.lastCast.time<=4&&now>=r.flowReady&&pv(s,'flow')){capStamina(s,pv(s,'flow'));passiveVisual(s,'flow',h);r.flowReady=now+6;}
+  r.lastCast={id,time:now};
+ }
+ if(r.finisherUntil>now){passiveVisual(s,'finisher',h);r.finisherUntil=0;}
+ let delay=d.delay??.12;
+ if(id==='draw'&&r.openingUntil>now){delay*=1-pv(s,'opening')/100;passiveVisual(s,'opening',h);r.openingUntil=0;}
+ const count=d.hits??1,duration=delay+(count-1)*(d.interval??0)+.18,utility=['stance','bloodblade','mark','phantoms'].includes(id);
+ r.motion=createSkillMotion(id,root,now,utility?.16:delay,count,d.interval??0,utility?.42:id==='parry'?.25:duration);
+ if(id==='gale'||id==='echo'||id==='plunge'){
+  if(id!=='plunge')r.pursuitUntil=now+3;
+  const reach=id==='echo'?-95:id==='plunge'?Math.min(170,target?distance(p,target):170):170,end={x:p.x+n.x*reach,y:p.y+n.y*reach};h.clamp(end,s.bounds);
+  r.travel={fromX:p.x,fromY:p.y,toX:end.x,toY:end.y,startedAt:now,duration:Math.max(.025,delay)};
+  if(id==='plunge'){root.x=end.x;root.y=end.y;}
+ }
+
+ if(id==='stance'){r.stanceUntil=now+3;h.visual(s,'skillCast',{skillId:id,x:p.x,y:p.y,radius:100},.5);return true;}
+ if(id==='bloodblade'){r.bloodbladeUntil=now+6;h.visual(s,'skillCast',{skillId:id,x:p.x,y:p.y,radius:120},.5);return true;}
+ if(id==='mark'){target.skillMark={root,count:0,expires:now+8};h.visual(s,'skillMark',{skillId:id,x:target.x,y:target.y,radius:45},.6);return true;}
+ if(id==='phantoms'){r.phantomUntil=now+8;r.phantomHits=8;r.phantomDamage=root.damage/8;h.visual(s,'skillCast',{skillId:id,x:p.x,y:p.y,radius:160},.6);return true;}
+ if(id==='parry'){r.parryUntil=now+.25;r.parryCast=root;h.motion(s,n,.25,id);h.visual(s,'skillCast',{skillId:id,x:p.x,y:p.y,radius:110,n},.25);return true;}
+ h.motion(s,n,id==='dance'?.2:duration,id);r.casting={id,until:now+duration};
+ const center=d.shape==='field'?(target?{x:target.x,y:target.y}:{x:p.x+n.x*d.range,y:p.y+n.y*d.range}):{x:root.x,y:root.y};
+ const interruptible=['draw','triple','dance','bloodmoon','eclipse'].includes(id);
+ for(let i=0;i<count;i++)r.jobs.push({root,at:now+delay+i*(d.interval??0),index:i,center,interruptible,rootToken:r.token});
+ h.visual(s,'skillCast',{skillId:id,x:center.x,y:center.y,radius:root.radius??root.range,areaScale,n,fromX:root.castX,fromY:root.castY,targetX:target?.x??center.x+n.x*d.range,targetY:target?.y??center.y+n.y*d.range,serial:root.serial,targetId:root.targetId},Math.max(.025,delay));return true;
+}
+function shapeHits(s,e,j,d){const root=j.root,p=s.player,n=root.n;let origin=j.center;
+ let reach=root.range??d.range;if(root.id==='bloodmoon'&&s.profile.level>=50&&s.profile.skillBook.awakening==='area'&&j.index===6)reach*=1.4;
+ if(d.shape==='circle'||d.shape==='ultimateArea')origin=p;
+ const dx=e.x-origin.x,dy=e.y-origin.y,dist=Math.hypot(dx,dy),along=dx*n.x+dy*n.y,cross=Math.abs(dx*n.y-dy*n.x);
+ if(d.shape==='seeking')return e.id===root.targetId;
+ if(d.shape==='field'||d.shape==='targetArea')return dist<=(root.radius??d.radius??150);
+ if(d.shape==='line'||d.shape==='returning'||d.shape==='dash')return along>=-25&&along<=reach&&cross<(root.width??d.width)+(e.boss?30:0);
+ if(d.shape==='cone'||d.shape==='echo'||d.shape==='parry')return dist<=reach&&(dist<.01||along/dist>=(d.dot??.25));
+ return dist<=reach;
+}
+function markHit(s,e,h,allow){const m=e.skillMark;if(!allow||!m||s.run.time>m.expires)return;if(++m.count<5)return;e.skillMark=null;const boost=pv(s,'resonance');passiveVisual(s,'resonance',h,e);h.hit(s,e,m.root.damage*(1+boost/100),false,'proc',s.player);h.visual(s,'skillImpact',{skillId:'mark',x:e.x,y:e.y,radius:80},.3);}
+function applyJob(s,j,h){const r=s.skillRuntime,root=j.root,d=SKILL_BY_ID[root.id],p=s.player;let count=0,living=0,crowd=0;
+ for(const e of s.enemies)if(live(e)){const range=distance(e,p);if(range<400)living++;if(range<240)crowd++;}
+ const boost=(living===1?pv(s,'lone'):0),surrounded=crowd>=3?pv(s,'surrounded'):0;
+ let scale=1/(d.hits??1);
+ if(root.id==='triple')scale=j.index===2?.5:.25;
+ if(root.id==='echo')scale=j.index===0?(80+10*(root.rank-1))/(180+25*(root.rank-1)):(100+15*(root.rank-1))/(180+25*(root.rank-1));
+ if(root.id==='bloodmoon')scale=j.index===6?(160+20*(root.rank-1))/(520+80*(root.rank-1)):(60+10*(root.rank-1))/(520+80*(root.rank-1));
+ const targets=s.enemies.filter(e=>live(e)&&shapeHits(s,e,j,d));
+ for(const e of targets){if(s.phase!=='playing')break;let extra=boost+(e.exposed>0||e.action==='stagger'?pv(s,'imbalance'):0)+(e.skillBreach?.until>s.run.time?e.skillBreach.value:0),value=root.damage*scale*(1+extra/100);
+  if(root.id==='draw'&&e.skillScarUntil>s.run.time){value+=root.attack*pv(s,'scar')/100;e.skillScarUntil=0;passiveVisual(s,'scar',h,e);}
+  if(root.id==='bloodmoon'&&j.index===6&&s.profile.level>=50&&s.profile.skillBook.awakening==='execution'&&targets.length===1)value*=1.5;
+  if(boost)passiveVisual(s,'lone',h);if(e.exposed>0||e.action==='stagger')passiveVisual(s,'imbalance',h,e);
+  const result=h.hit(s,e,value,false,root.poise>=35?'heavy':'normal',d.shape==='circle'||d.shape==='ultimateArea'?p:j.center,false,null,{inscriptions:root.inscriptions??s.buildEffects});
+  if(result==='miss')continue;count++;
+  if(root.id==='breach'&&!e.dead)e.skillBreach={until:s.run.time+5,value:10+root.rank*2};
+  if(root.id==='gather'&&!e.dead&&!e.boss&&!e.elite){e.x=p.x+(e.x-p.x)*.35;e.y=p.y+(e.y-p.y)*.35;h.clamp(e,s.bounds);}
+  if(!e.dead){let poise=root.poise;if(root.id==='draw'&&distance(p,{x:root.castX,y:root.castY})<4){poise*=1+pv(s,'steady')/100;passiveVisual(s,'steady',h);}if(['dance','gather'].includes(root.id)){poise*=1+surrounded/100;if(surrounded)passiveVisual(s,'surrounded',h);}if(root.id==='plunge'&&distance(e,j.center)<70)poise*=1.5;
+   e.skillPoise=(e.skillPoise??0)+poise;if(e.skillPoise>=100){e.skillPoise=0;e.exposed=Math.max(e.exposed??0,1.5);e.action='stagger';e.actionTime=0;h.visual(s,'guardBreak',{x:e.x,y:e.y},.5);}
+   markHit(s,e,h,root.id!=='echo'||j.index===0||!!pv(s,'resonance'));
+  }
+ }
+ if(count&&root.id==='returning'&&j.index===1&&!root.recovered){capStamina(s,pv(s,'recovery'));passiveVisual(s,'recovery',h);root.recovered=true;}
+ let x=j.center.x,y=j.center.y;if(d.shape==='seeking'){const e=s.enemies.find(e=>e.id===root.targetId);if(e){x=e.x;y=e.y;}}else if(['circle','ultimateArea'].includes(d.shape)){x=p.x;y=p.y;}
+ const visualReach=root.id==='bloodmoon'&&s.profile.level>=50&&s.profile.skillBook.awakening==='area'&&j.index===6?root.range*1.4:root.radius??root.range;
+ h.visual(s,'skillImpact',{skillId:root.id,x,y,radius:visualReach,areaScale:root.areaScale,n:root.n,index:j.index,fromX:root.castX,fromY:root.castY,targetX:x,targetY:y,serial:root.serial},.3);
+}
+export function tickSkills(s,dt,h){const r=s.skillRuntime,p=s.player,now=s.run.time;
+ if(r.ultimatePresentation&&now-r.ultimatePresentation.startedAt>=1.35)r.ultimatePresentation=null;
+ if(r.travel&&s.run.flow==='combat'){const v=r.travel,t=Math.max(0,Math.min(1,(now-v.startedAt)/v.duration));p.x=v.fromX+(v.toX-v.fromX)*t;p.y=v.fromY+(v.toY-v.fromY)*t;h.clamp(p,s.bounds);if(t>=1)r.travel=null;}
+ if(r.motion&&now>=r.motion.startedAt+r.motion.duration&&!(r.motion.id==='parry'&&r.parryCast&&now<=r.parryUntil))r.motion=null;
+ for(const id of r.cooldownKeys)r.cooldowns[id]=Math.max(0,r.cooldowns[id]-dt);
+ if(r.casting&&now>=r.casting.until)r.casting=null;
+ if(r.parryUntil&&now>r.parryUntil){r.parryUntil=0;r.parryCast=null;}
+ if(s.run.flow!=='combat'){if(r.jobs.length)r.jobs=r.jobs.filter(j=>j.at>now);return;}
+ if(r.stanceUntil>now)capStamina(s,(9+skillRank(s.profile,'stance')*3)*dt);
+ // Compact first: a damage callback may finish a run; no deferred attack leaks to another stage.
+ if(!r.jobs.length)return;const due=[],later=[];for(const j of r.jobs)(j.at<=now?due:later).push(j);r.jobs=later;
+ for(const j of due){if(s.phase!=='playing'||s.run.flow!=='combat')break;if(j.interruptible&&j.rootToken!==r.token)continue;applyJob(s,j,h);}
+}
+export function afterSkillMovement(s,dt,moved,h){const r=s.skillRuntime,p=s.player;if(s.run.flow!=='combat')return;r.breathTime=moved>.0001&&!['attack','heavy','dash','hurt'].includes(p.action)&&!r.casting?r.breathTime+dt:0;if(r.breathTime>=1.5){capStamina(s,18*pv(s,'breath')/100*dt);passiveVisual(s,'breath',h);}}
+export function skillPerfect(s,h){passiveVisual(s,'opening',h);passiveVisual(s,'footwork',h);const r=s.skillRuntime;r.openingUntil=s.run.time+3;r.footworkUntil=s.run.time+2;}
+export function skillKill(s,h){const r=s.skillRuntime;if(!r||!pv(s,'momentum')||s.run.time<r.killReady)return;r.killReady=s.run.time+1;passiveVisual(s,'momentum',h);for(const id of r.cooldownKeys)if(SKILL_BY_ID[id]?.kind==='active')r.cooldowns[id]=Math.max(0,r.cooldowns[id]-pv(s,'momentum'));}
+export function basicSkillBonus(s,swing){const r=s.skillRuntime;r.stanceUntil=0;let scale=1;if(!swing.heavy&&r.bloodbladeUntil>s.run.time)scale+=(20+skillRank(s.profile,'bloodblade')*5)/100;return scale;}
+export function basicSkillContact(s,swing,targets,h){const r=s.skillRuntime,p=s.player;if(!targets.length)return;
+ const pursuit=!swing.heavy&&r.pursuitUntil>s.run.time?pv(s,'pursuit'):0;if(pursuit){r.pursuitUntil=0;passiveVisual(s,'pursuit',h);}
+ for(const e of targets){if(!live(e)||s.phase!=='playing')continue;markHit(s,e,h,true);if(p.combo===3&&!swing.heavy){r.finisherUntil=s.run.time+3;if(pv(s,'scar')){e.skillScarUntil=s.run.time+5;passiveVisual(s,'scar',h,e);}}if(pursuit&&live(e))h.hit(s,e,h.stats(s.profile).damage*pursuit/100,false,'proc',p);}
+ if(!swing.heavy&&r.phantomUntil>s.run.time&&r.phantomHits>0){r.phantomHits--;for(const e of targets){if(s.phase!=='playing')break;if(live(e)){h.hit(s,e,r.phantomDamage,false,'proc',p);if(live(e)&&pv(s,'resonance'))markHit(s,e,h,true);}}h.visual(s,'skillImpact',{skillId:'phantoms',x:p.x,y:p.y,radius:180,n:{x:swing.x,y:swing.y}},.3);}
+}
+export function incomingSkillDamage(s,value,source,h){const r=s.skillRuntime,p=s.player,now=s.run.time;
+ if(r.parryCast&&r.parryUntil>=now&&source){const n=unit(source.x-p.x,source.y-p.y);if(n.x*p.lookX+n.y*p.lookY>=.1){const root=r.parryCast;if(r.motion){r.motion.reactionAt=now;r.motion.duration=Math.max(r.motion.duration,now-r.motion.startedAt+.3);}r.parryCast=null;r.parryUntil=0;skillPerfect(s,h);applyJob(s,{root,index:0,center:{x:p.x,y:p.y}},h);h.visual(s,'perfectDodge',{x:p.x,y:p.y},.5);return 0;}}
+ let reduction=p.stamina>=40?pv(s,'reserve'):0;if(reduction)passiveVisual(s,'reserve',h);if(r.stanceUntil>now)reduction+=15+skillRank(s.profile,'stance')*3;return value*(1-Math.min(.7,reduction/100+h.stats(s.profile).reduction));
+}
+export function skillLastStand(s,h){const r=s.skillRuntime,cooldown=pv(s,'resolve');if(!cooldown||s.run.time<r.resolveReady)return false;r.resolveReady=s.run.time+cooldown;passiveVisual(s,'resolve',h);s.player.hp=1;s.player.invulnerable=.6;return true;}
+export function autoSkill(s,n,h){const p=s.player,r=s.skillRuntime,b=s.profile.skillBook,near=s.enemies.filter(e=>live(e)&&distance(e,p)<240),boss=near.some(e=>e.boss||e.elite);
+ const ultimate=b.loadout.ultimate[0];if(ultimate&&b.auto.ultimate!=='off'&&(b.auto.ultimate==='any'||boss)&&castSkill(s,ultimate,n,h))return true;
+ for(const id of b.loadout.active){const d=SKILL_BY_ID[id];if(!d)continue;
+  if(id==='stance'){if(p.stamina>45&&p.hp/p.maxHp>.5)continue;}else if(p.stamina<d.cost+(b.auto.mode==='safe'?35:22))continue;
+  const reach=skillReach(s.profile,id);
+  if(id==='gather'){let crowd=0;for(const e of s.enemies)if(live(e)&&distance(e,p)<=reach&&++crowd>=3)break;if(crowd<3)continue;}
+  if(id==='parry'&&!near.some(e=>e.action==='windup'&&e.windup-e.actionTime<.24))continue;
+  if(id==='mark'&&!boss)continue;
+  const target=id==='mark'?s.enemies.find(e=>live(e)&&(e.boss||e.elite)&&distance(e,p)<=reach):nearestTarget(s,n,reach);if(reach&&!target)continue;if(id==='mark'&&target.skillMark?.expires>s.run.time)continue;
+  if(['draw','eclipse'].includes(id)&&near.some(e=>e.action==='windup'))continue;
+  if(r.stanceUntil>s.run.time&&(p.stamina<65||p.hp/p.maxHp<.5))continue;
+  if(castSkill(s,id,target?{x:n.x,y:n.y,targetId:target.id}:n,h))return true;
+ }
+ return false;
+}
+
+export const SKILL_STUDY_COST=Object.freeze({gold:500,pages:3,max:49});
+export function skillStudyStatus(p){const c=SKILL_STUDY_COST;return (p.skillBook.trainingPoints??0)>=c.max?'연구 포인트 최대 달성':p.materials.skillPage<c.pages?'검술서 부족':p.gold<c.gold?'골드 부족':'';}
+export function studySkill(s){if(s.phase!=='camp'||skillStudyStatus(s.profile))return false;const p=s.profile,c=SKILL_STUDY_COST;p.gold-=c.gold;p.materials.skillPage-=c.pages;p.skillBook.trainingPoints=(p.skillBook.trainingPoints??0)+1;return true;}

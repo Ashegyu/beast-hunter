@@ -1,0 +1,18 @@
+(node:21) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ 48th slot retains action identity, protection and ownership through backup and reload (203.661885ms)
+✔ bag paging preserves bulk selection across pages and all-filter selection protects owned builds (67.059294ms)
+✔ worn item details find the 48th identity and return to the correct equipment slot (69.759612ms)
+✔ materials have independent quantities, empty states and no equipment storage or salvage actions (59.492436ms)
+✔ material category select and crafting route preserve collected progress and remain camp-only (118.965899ms)
+✔ equipment item pages reuse fixed cells and preserve every surrounding control (60.620485ms)
+✔ bag density fills measured list width and height and pages only overflow items (85.792177ms)
+✔ bag resizing preserves focused and selected item identities including detail actions (49.867568ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 858.067565

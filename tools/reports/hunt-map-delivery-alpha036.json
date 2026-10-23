@@ -1,0 +1,35 @@
+{
+  "encoding": "WebP lossless=True, exact=True, method=6",
+  "totalInputBytes": 10817506,
+  "totalOutputBytes": 7022224,
+  "allRgbaEqual": true,
+  "maps": [
+    {
+      "input": "dist/assets/hunt-map-forest-v036.png",
+      "output": "dist/assets/hunt-map-forest-v036.webp",
+      "width": 1024,
+      "height": 1536,
+      "inputBytes": 3458850,
+      "outputBytes": 2321574,
+      "rgbaEqual": true
+    },
+    {
+      "input": "dist/assets/hunt-map-ruins-v036.png",
+      "output": "dist/assets/hunt-map-ruins-v036.webp",
+      "width": 1024,
+      "height": 1536,
+      "inputBytes": 3559233,
+      "outputBytes": 2309368,
+      "rgbaEqual": true
+    },
+    {
+      "input": "dist/assets/hunt-map-frost-v036.png",
+      "output": "dist/assets/hunt-map-frost-v036.webp",
+      "width": 1024,
+      "height": 1536,
+      "inputBytes": 3799423,
+      "outputBytes": 2391282,
+      "rgbaEqual": true
+    }
+  ]
+}

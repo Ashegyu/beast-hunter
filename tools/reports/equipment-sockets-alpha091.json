@@ -1,0 +1,1033 @@
+{
+  "frames": [
+    {
+      "id": "lirian_idle_s_v05",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_idle_s_v05",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_idle_se_v05",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_idle_se_v05",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_idle_e_v05",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_idle_e_v05",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_idle_ne_v05",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_idle_ne_v05",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_idle_n_v05",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_idle_n_v05",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_walk_s_v05",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_walk_s_v05",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_walk_s_v05",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_walk_s_v05",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_walk_se_v05",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_walk_se_v05",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_walk_se_v05",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_walk_se_v05",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_walk_e_v05",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_walk_e_v05",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_walk_e_v05",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_walk_e_v05",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_walk_ne_v05",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_walk_ne_v05",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_walk_ne_v05",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_walk_ne_v05",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_walk_n_v05",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_walk_n_v05",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_walk_n_v05",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_walk_n_v05",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_s_v05",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_s_v05",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_s_v05",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_s_v05",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_s_v05",
+      "frame": 4,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_s_v05",
+      "frame": 5,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_se_v05",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_se_v05",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_se_v05",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_se_v05",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_se_v05",
+      "frame": 4,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_se_v05",
+      "frame": 5,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_e_v05",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_e_v05",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_e_v05",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_e_v05",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_e_v05",
+      "frame": 4,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_e_v05",
+      "frame": 5,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_ne_v05",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_ne_v05",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_ne_v05",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_ne_v05",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_ne_v05",
+      "frame": 4,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_ne_v05",
+      "frame": 5,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_n_v05",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_n_v05",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_n_v05",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": true
+    },
+    {
+      "id": "lirian_forehand_n_v05",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_n_v05",
+      "frame": 4,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_forehand_n_v05",
+      "frame": 5,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_s_v05",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_s_v05",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_s_v05",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_s_v05",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_s_v05",
+      "frame": 4,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_s_v05",
+      "frame": 5,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_se_v05",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_se_v05",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_se_v05",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_se_v05",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_se_v05",
+      "frame": 4,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_se_v05",
+      "frame": 5,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_e_v05",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_e_v05",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_e_v05",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_e_v05",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_e_v05",
+      "frame": 4,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_e_v05",
+      "frame": 5,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_ne_v05",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_ne_v05",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_ne_v05",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_ne_v05",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_ne_v05",
+      "frame": 4,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_ne_v05",
+      "frame": 5,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_n_v05",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_n_v05",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_n_v05",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_n_v05",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_backhand_n_v05",
+      "frame": 4,
+      "manuallyReviewed": true,
+      "weaponOccluded": true
+    },
+    {
+      "id": "lirian_backhand_n_v05",
+      "frame": 5,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_s_v05",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_s_v05",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_s_v05",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_s_v05",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_s_v05",
+      "frame": 4,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_s_v05",
+      "frame": 5,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_se_v05",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_se_v05",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_se_v05",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_se_v05",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_se_v05",
+      "frame": 4,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_se_v05",
+      "frame": 5,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_e_v05",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_e_v05",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_e_v05",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_e_v05",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_e_v05",
+      "frame": 4,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_e_v05",
+      "frame": 5,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_ne_v05",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_ne_v05",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_ne_v05",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_ne_v05",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_ne_v05",
+      "frame": 4,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_ne_v05",
+      "frame": 5,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_n_v05",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_n_v05",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_n_v05",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_n_v05",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": true
+    },
+    {
+      "id": "lirian_finisher_n_v05",
+      "frame": 4,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_finisher_n_v05",
+      "frame": 5,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_dash_s_v06",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_dash_s_v06",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_dash_s_v06",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_dash_s_v06",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_dash_se_v06",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_dash_se_v06",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_dash_se_v06",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_dash_se_v06",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_dash_e_v06",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_dash_e_v06",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_dash_e_v06",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_dash_e_v06",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_dash_ne_v06",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_dash_ne_v06",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_dash_ne_v06",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_dash_ne_v06",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_dash_n_v06",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_dash_n_v06",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_dash_n_v06",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_dash_n_v06",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_hurt_s_v06",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_hurt_s_v06",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_hurt_se_v06",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_hurt_se_v06",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_hurt_e_v06",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_hurt_e_v06",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_hurt_ne_v06",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_hurt_ne_v06",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_hurt_n_v06",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_hurt_n_v06",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_death_s_v06",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_death_s_v06",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_death_s_v06",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_death_s_v06",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_death_se_v06",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_death_se_v06",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_death_se_v06",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_death_se_v06",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_death_e_v06",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_death_e_v06",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_death_e_v06",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_death_e_v06",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_death_ne_v06",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_death_ne_v06",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_death_ne_v06",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_death_ne_v06",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_death_n_v06",
+      "frame": 0,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_death_n_v06",
+      "frame": 1,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_death_n_v06",
+      "frame": 2,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    },
+    {
+      "id": "lirian_death_n_v06",
+      "frame": 3,
+      "manuallyReviewed": true,
+      "weaponOccluded": false
+    }
+  ],
+  "sourceHashes": {
+    "lirian_locomotion-v05.png": "1be847571736d271cd4e9a5e6c33f99c99b2a717b6a68138024b26267fdbda69",
+    "lirian_forehand-v05.png": "49106dd663e9199e51cb47da830c6e5f644a2162eecc65a92f65345886b4195e",
+    "lirian_backhand-v05.png": "210b1fc8831e2960417a76e6443ccf6579acf03a5de6b0ef24d978b7aaf10650",
+    "lirian_finisher-v05.png": "eae9a3cc4806a67dcd43d26a0b916deb2da1f6b07787f06790076be5ade8be23",
+    "lirian_actions-v06.png": "9d1999e8f268ea524546ba4f05f61dcac9700e47c86b22c7f389eb17914c9019",
+    "lirian_death-v06.png": "de6dfffd63ef6428ea17ce9bd1346733fd2e25d7ba2c0f0beb8799119fe8aee0"
+  },
+  "scope": "Visually inspected hand/tip landmarks; source-pixel torso centroids; body height and pivots unchanged"
+}

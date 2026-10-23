@@ -1,0 +1,13 @@
+{
+  "baselineCommit": "84f4a0a22ecb6c7a2443ec5eb3f3379b0044d3f0",
+  "frames": 898,
+  "phase": "victory",
+  "kills": 24,
+  "rooms": 4,
+  "rewards": {
+    "gold": 304,
+    "cores": 7,
+    "items": 5
+  },
+  "scope": "all live gameplay state; excludes trail index, presentation effects and transient shot/pickup IDs"
+}

@@ -1,0 +1,28 @@
+/* Round, spaced thumb controls; live skill art and input handlers are preserved. */
+#game-shell .battle .bottom-hud{--control:clamp(44px,14cqh,64px);--dock-bottom:max(20px,env(safe-area-inset-bottom,0px))}
+#game-shell .battle .abilities{inset:0;width:auto;height:auto;pointer-events:none}
+#game-shell .battle .abilities button{pointer-events:auto;top:auto;left:auto;margin:0;min-width:0;box-sizing:border-box}
+#game-shell .battle #attack{right:calc(14px + var(--control)*.9);bottom:var(--dock-bottom);width:calc(var(--control)*1.5);height:calc(var(--control)*1.5);min-height:0}
+#game-shell .battle #dash{right:calc(14px + var(--control)*2.65);bottom:var(--dock-bottom);width:var(--control);height:var(--control);min-height:0}
+#game-shell .battle #thunder{right:14px;bottom:calc(var(--dock-bottom) + var(--control)*1.7);width:var(--control);height:var(--control);min-height:0}
+#game-shell .battle .skill-combat-button,#game-shell .battle #combat-skill-2{width:var(--control);height:var(--control);min-width:var(--control);max-width:var(--control);min-height:var(--control);padding:0;border:0;border-radius:50%;background:transparent url('assets/combat-controls-v2/skill_ring_normal.png') center/100% 100% no-repeat;box-shadow:none;overflow:visible}
+#game-shell .battle #combat-skill-0{right:calc(14px + var(--control)*2);bottom:calc(var(--dock-bottom) + var(--control)*3.05)}
+#game-shell .battle #combat-skill-1{right:calc(14px + var(--control)*2.6);bottom:calc(var(--dock-bottom) + var(--control)*1.65)}
+#game-shell .battle #combat-skill-2{right:14px;bottom:calc(var(--dock-bottom) + var(--control)*2.95)}
+#game-shell .battle .skill-combat-button img,#game-shell .battle #combat-skill-2 img{width:80%;height:80%;border-radius:50%;object-fit:cover;clip-path:circle(49%);margin:0}
+#game-shell .battle .skill-combat-button strong{display:none}
+#game-shell .battle .skill-combat-button small,#game-shell .battle .skill-combat-button[data-cooldown=true] small{display:block;position:absolute;inset:auto;left:50%;bottom:-7px;transform:translateX(-50%);width:max-content;min-width:28px;min-height:0;padding:2px 5px;border-radius:4px;background:#080b10e8;color:#fff0d8;font:600 9px/12px var(--ui-font);white-space:nowrap;pointer-events:none}
+#game-shell .battle .skill-combat-button[data-ready=true]{background-image:url('assets/combat-controls-v2/skill_ring_selected.png');box-shadow:none}
+#game-shell .battle .skill-combat-button:disabled{background-image:url('assets/combat-controls-v2/skill_ring_disabled.png');opacity:.8}
+#game-shell .battle #joystick{left:max(18px,env(safe-area-inset-left,0px));bottom:calc(var(--dock-bottom) + 5px);width:calc(var(--control)*2.3);height:calc(var(--control)*2.3);min-height:0;opacity:.9}
+#game-shell .battle #stick-thumb{width:34%;height:34%}
+#game-shell .battle #joystick small{display:none}
+#game-shell .battle .battle-actions{left:max(18px,env(safe-area-inset-left,0px));right:auto;bottom:calc(var(--dock-bottom) + var(--control)*2.65)}
+#game-shell .battle .battle-actions #auto{width:66px;min-width:66px;height:37px;min-height:37px;background:transparent url('assets/combat-controls-v2/button_normal.png') center/100% 100% no-repeat;display:flex;align-items:center;justify-content:center;gap:5px;font-size:11px}
+#game-shell .battle #auto small{font-size:10px}
+#game-shell .battle .ability small{bottom:-7px}
+#game-shell .battle .ability kbd{display:none}
+#game-shell .battle .battle-actions #auto small,#game-shell .battle .battle-actions #auto span{position:static;inset:auto;transform:none;margin:0;display:inline;font-size:10px;line-height:1.2}
+#game-shell .battle .battle-actions #auto{flex-direction:row!important;gap:5px}
+#game-shell .battle #joystick{background:transparent url('assets/combat-controls-v2/skill_ring_normal.png') center/100% 100% no-repeat}
+#game-shell .battle #stick-thumb{background:radial-gradient(circle at 36% 28%,#5d5a57,#18191b 50%,#080b0e 75%);border:2px solid #ac9163;box-shadow:0 3px 7px #0009,inset 0 0 0 3px #25282d}

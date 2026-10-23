@@ -1,0 +1,153 @@
+/* Alpha 0.95: chapter selection, ten live checkpoints and launch details share one map. */
+#game-shell[data-panel=camp][data-camp-view=map]{--menu-rail:0px;--head-height:clamp(34px,10.4cqh,44px);--map-scene-art:var(--map-art);--route-seal:clamp(29px,4.9cqw,49px);--map-frame:#bfa37380}
+#game-shell[data-panel=camp][data-camp-view=map][data-biome=frost]{--map-scene-art:url('assets/hunt-map-frost-wide-v0950.webp')}
+#game-shell[data-panel=camp][data-camp-view=map] .masthead{inset:0 0 auto;height:var(--head-height);padding:0 max(48px,6cqw) 0 2.3cqw;border:0;border-bottom:1px solid #c0b09544;background:#060e18ed;backdrop-filter:none;gap:8px}
+#game-shell[data-panel=camp][data-camp-view=map] .page-title{font:700 clamp(18px,2.7cqw,30px)/1.3 var(--serif);letter-spacing:1px}
+#game-shell[data-panel=camp][data-camp-view=map] .page-back{width:28px;min-width:28px;height:min(36px,calc(var(--head-height) - 2px))!important;min-height:0!important;padding:2px;border:0;background:none}
+#game-shell[data-panel=camp][data-camp-view=map] .wallet{margin-left:auto;flex-wrap:nowrap;max-width:none;gap:clamp(5px,1cqw,12px)}
+#game-shell[data-panel=camp][data-camp-view=map] .wallet>span:not(.build){display:flex;align-items:center;gap:5px;padding:3px 8px;border:1px solid #b59b6b40;border-radius:30px;background:#05090bbd;white-space:nowrap}
+#game-shell[data-panel=camp][data-camp-view=map] .wallet b{margin:0;font:500 clamp(10px,1.4cqw,16px)/1.2 var(--ui-font);white-space:nowrap;overflow-wrap:normal}
+#game-shell[data-panel=camp][data-camp-view=map] .wallet .build{display:none}
+#game-shell[data-panel=camp][data-camp-view=map] .wallet #sound{width:25px;min-width:25px;height:28px;min-height:28px;padding:3px}
+#game-shell[data-panel=camp][data-camp-view=map] .wallet #sound:before{width:19px;height:19px}
+#game-shell[data-panel=camp][data-camp-view=map] .app-nav{inset:0 1.8cqw auto auto;display:flex!important;flex-direction:row;align-items:center;justify-content:center;width:30px;height:var(--head-height);padding:0;border:0;background:none;box-shadow:none;z-index:40}
+#game-shell[data-panel=camp][data-camp-view=map] .app-nav>button{display:none}
+#game-shell[data-panel=camp][data-camp-view=map] .app-nav>#nav-home{display:grid;place-items:center;flex:0 0 30px;width:30px;min-width:30px;height:32px!important;min-height:32px!important;padding:2px;border:0;background:none;color:#efdfbd}
+#game-shell[data-panel=camp][data-camp-view=map] .app-nav>#nav-home>.menu-icon{width:25px;height:25px}
+#game-shell[data-panel=camp][data-camp-view=map] .app-nav>button>span{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+#game-shell[data-panel=camp][data-camp-view=map] .app-nav>button:after{display:none!important}
+#game-shell[data-panel=camp][data-camp-view=map] #overlay[data-panel=camp]{inset:0!important}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-content{overflow:hidden}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-drawer.hub-drawer{inset:var(--head-height) 0 0!important;display:block;width:100%;height:auto;min-height:0;margin:0;padding:0;border:0;border-radius:0;background:linear-gradient(0deg,#030b14b0,transparent 45%),var(--map-scene-art) center 42%/cover no-repeat #07111d;overflow:hidden;backdrop-filter:none}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel{position:absolute;inset:0;display:block;flex:none;width:100%;height:100%;min-height:0;margin:0;padding:0;background:none;overflow:hidden}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .map-overview{position:relative;display:block;width:100%;height:100%;min-height:0;padding:0;overflow:hidden;background:none}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .stage-tabs{position:absolute;inset:21% auto 28% 1.2%;display:grid;grid-template-columns:1fr;grid-template-rows:repeat(3,minmax(0,1fr));align-content:start;gap:0;width:10.8%;height:auto;min-height:0;margin:0;padding:0;border-block:1px solid #b79b6b55;background:#06101ac9}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .stage-tabs>button{display:flex;align-items:center;justify-content:flex-start;gap:6px;width:100%;height:100%;min-height:0;min-width:0;margin:0;padding:5px 6px!important;border:0!important;border-bottom:1px solid #b79b6b30!important;border-radius:0;border-image:none!important;background:none!important;box-shadow:none;text-align:left;color:#c4b9a4;white-space:normal}
+#game-shell[data-panel=camp][data-camp-view=map] .stage-tabs>button svg{flex:none;width:clamp(13px,2cqw,23px);height:clamp(13px,2cqw,23px);fill:none;stroke:currentColor;stroke-width:1.4}
+#game-shell[data-panel=camp][data-camp-view=map] .stage-tabs>button>span{display:flex;flex-direction:column;gap:4px;min-width:0}
+#game-shell[data-panel=camp][data-camp-view=map] .stage-tabs>button small{font:clamp(8px,1.15cqw,12px)/1.2 var(--ui-font);color:#b3b09f}
+#game-shell[data-panel=camp][data-camp-view=map] .stage-tabs>button strong{font:600 clamp(8px,1.25cqw,13px)/1.4 var(--ui-font);word-break:keep-all}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .stage-tabs>button.selected{background:#571622 url('assets/button-primary-v043.webp') center 43%/400% 200% no-repeat!important;border-left:2px solid #ffcf8e!important;box-shadow:inset 0 0 15px #fa70263d;color:#ffefda}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .stage-tabs>button:disabled{opacity:.45}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel #chapter-banner{position:absolute;inset:2.3% auto auto 1.8%;display:flex;flex-direction:column;justify-content:center;width:42%;height:14%;min-height:0;margin:0;padding:2px 12px 2px 14cqw;border:1px solid var(--map-frame);border-radius:5px;background:linear-gradient(90deg,#06101a00,#06101af5 32%),var(--map-scene-art) 50% 28%/cover!important;overflow:hidden;box-shadow:inset 0 0 0 2px #0c1a25}
+#game-shell[data-panel=camp][data-camp-view=map] #chapter-label{font:clamp(7px,.95cqw,11px)/1.25 Georgia,serif;letter-spacing:.7px;color:#d1bea0}
+#game-shell[data-panel=camp][data-camp-view=map] #chapter-preview-name{margin:0;font:700 clamp(12px,1.8cqw,20px)/1.35 var(--serif);color:#f2e8d7;white-space:nowrap}
+#game-shell[data-panel=camp][data-camp-view=map] #map-banner-stage{font:clamp(7px,1.05cqw,12px)/1.25 var(--ui-font);color:#c8bba7;white-space:nowrap}
+#game-shell[data-panel=camp][data-camp-view=map] #chapter-preview-boss{display:none}
+/* The segmented selector owns its geometry; shared image-button rules do not apply. */
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .map-difficulty{position:absolute;inset:4% 19.2% auto auto;width:clamp(145px,22.2cqw,240px);height:clamp(30px,8cqh,38px);min-height:0;margin:0;padding:0}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .map-difficulty-modes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch;gap:0;width:100%;height:100%;padding:2px;border:1px solid #9da8b36e;border-radius:999px;background:#04101cf2;box-shadow:inset 0 0 0 1px #d3dce11a,0 2px 7px #02071180;overflow:visible}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .map-difficulty-modes>button{position:relative;display:flex;flex-direction:row;align-items:center;justify-content:center;gap:clamp(3px,.6cqw,6px);width:100%;height:100%;min-height:0;min-width:0;margin:0;padding:2px!important;border:1px solid transparent!important;border-image:none!important;border-radius:999px;background:none!important;box-shadow:none;outline:0;color:#d0c9bd;line-height:1;white-space:nowrap}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .map-difficulty-modes>button+button:before{content:"";position:absolute;left:-1px;top:23%;bottom:23%;width:1px;background:#b5b4ab45;pointer-events:none}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .map-difficulty-modes>button[aria-pressed=true]{border-color:#dbad64!important;background:#6a0b15 url("assets/button-primary-v043.webp") center 43%/400% 200% no-repeat!important;box-shadow:inset 0 0 0 1px #efcd8d35,0 0 7px #df572a40;color:#fff0dc}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .map-difficulty-modes>button[aria-pressed=true]:before{display:none}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .map-difficulty-modes>button:disabled{opacity:.5;cursor:default}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .map-difficulty-modes>button:after{display:none!important}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .map-difficulty-modes strong{display:block;flex:none;margin:0;padding:0;font:600 clamp(10px,1.35cqw,15px)/1 var(--ui-font);white-space:nowrap;color:inherit}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .map-mode-emblem{display:block;flex:none;width:clamp(15px,2.1cqw,21px);height:clamp(18px,2.5cqw,25px);margin:0;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .map-emblem-lock{display:none;fill:#07111c;stroke:#b7bec4;stroke-width:1.6}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .map-difficulty-modes>button:disabled .map-emblem-lock{display:block}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .map-difficulty-modes>button[aria-pressed=true] .map-mode-emblem{color:#ffdfaa;filter:drop-shadow(0 0 3px #ffbd6370)}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .map-difficulty-modes>button:focus-visible{outline:2px solid #ffe3a2;outline-offset:1px}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel :is(.map-difficulty h4,.map-difficulty-modes small,#map-difficulty-note,#stage-progress-note,.stage-board-heading,.stage-board-progress){position:absolute!important;inset:auto!important;width:1px!important;height:1px!important;min-height:0!important;padding:0!important;margin:0!important;overflow:hidden!important;clip-path:inset(50%);white-space:nowrap}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .stage-board{position:absolute;inset:21% 19.2% 31% 13%;display:block;width:auto;height:auto;min-height:0;margin:0;padding:0;border:0;background:none;overflow:visible}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .sub-stage-tabs{position:absolute;inset:0;display:block;width:100%;height:100%;min-height:0;margin:0;padding:0}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .sub-stage-tabs>button:nth-child(n){position:absolute;inset:auto;left:var(--route-x);top:calc(var(--route-y) - var(--route-seal) / 2);transform:translateX(-50%);display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:var(--route-seal) 14px;justify-items:center;align-items:center;align-content:start;gap:0;width:9.4%;height:calc(var(--route-seal) + 14px);min-width:0;min-height:0;margin:0;padding:0!important;border:0!important;background:none!important;overflow:visible}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .stage-seal{display:grid;place-items:center;flex:none;width:var(--route-seal);height:var(--route-seal);min-width:0;min-height:0;max-width:none;aspect-ratio:1;margin:0;padding:0;font:600 clamp(12px,1.9cqw,21px)/1 var(--ui-font);letter-spacing:0;color:#fff0d2}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .stage-state{position:static;display:block;width:100%;height:14px;min-height:0;margin:0;padding:1px 0;font:clamp(7px,.95cqw,10px)/12px var(--ui-font);text-align:center;white-space:nowrap;background:#040a13ba;color:#d5c7b0;border-radius:2px}
+#game-shell[data-panel=camp][data-camp-view=map] .sub-stage-tabs>button[aria-pressed=true] .stage-seal{filter:drop-shadow(0 0 6px #f6bb53bd)}
+#game-shell[data-panel=camp][data-camp-view=map] .sub-stage-tabs>button[data-boss=true] .stage-state{color:#ffcec7;background:#400d16d9}
+#game-shell[data-panel=camp][data-camp-view=map] .sub-stage-tabs>button[data-state=locked]{opacity:.65}
+/* Artwork shares the native number/path anchor; ornaments never take pointer events. */
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .stage-seal{position:relative;isolation:isolate;z-index:0;background:none!important;text-shadow:0 1px 3px #000,0 0 4px #000;font-family:var(--serif);font-weight:700;color:#f4eee1}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .stage-seal:before{content:"";position:absolute;z-index:-1;left:50%;top:50%;width:112%;height:112%;transform:translate(-50%,-50%);background:url('assets/ui-stage-v0952/regular.webp') center/100% 100% no-repeat;pointer-events:none}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .stage-seal:after{content:"";display:none;position:absolute;z-index:1;left:5%;top:85%;width:90%;height:29%;background:url('assets/ui-stage-v0952/complete-stars.svg') center/contain no-repeat;filter:drop-shadow(0 1px 1px #000);pointer-events:none}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .sub-stage-tabs>button[data-state=cleared] .stage-seal:after{display:block}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .sub-stage-tabs>button[aria-pressed=true] .stage-seal:before{width:165%;height:272.4%;transform:translate(-50%,-66.7%);background-image:url('assets/ui-stage-v0952/selected.webp');mask-image:linear-gradient(#000 0 80%,transparent 91%)}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .sub-stage-tabs>button[data-boss=true] .stage-seal:before{width:165%;height:165%;transform:translate(-50%,-50%);background-image:url('assets/ui-stage-v0952/boss.webp');mask-image:none}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .sub-stage-tabs>button[data-boss=true][aria-pressed=true] .stage-seal{filter:drop-shadow(0 0 5px #ff52349c)}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .sub-stage-tabs>button[data-state=locked] .stage-seal:before{filter:grayscale(.8) brightness(.7)}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .stage-state{position:relative;z-index:1;align-self:end;height:11px;padding:0;font-size:clamp(7px,.95cqw,10px);line-height:11px;background:linear-gradient(90deg,transparent,#040a13d9 15% 85%,transparent)}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .sub-stage-tabs>button[aria-pressed=true]{z-index:2}
+#game-shell[data-panel=camp][data-camp-view=map] .map-scene-route{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+#game-shell[data-panel=camp][data-camp-view=map] .map-scene-route path{fill:none;stroke:#9d99844d;stroke-width:2;stroke-linecap:round}
+#game-shell[data-panel=camp][data-camp-view=map] .map-scene-route path[data-open=true]{stroke:#ffd494;stroke-width:2.5;filter:drop-shadow(0 0 4px #ff9b39)}
+/* Right details live beside the route, rather than inside its coordinate space. */
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .map-overview>.stage-preview{position:absolute;inset:4% 1.4% auto auto;display:flex;flex-direction:column;gap:7px;width:16.5%;height:82%;max-height:none;min-height:0;margin:0;padding:8px;border:1px solid #a9b4c064;border-radius:5px;background:linear-gradient(#06101ae8,#030b15f5);box-shadow:inset 0 0 0 2px #11223388;overflow:hidden}
+#game-shell[data-panel=camp][data-camp-view=map] .map-region-art{display:block;flex:none;width:100%;height:24%;min-height:0;border:1px solid #a6b8c044;border-radius:2px;background:var(--map-scene-art) 65% 28%/cover}
+#game-shell[data-panel=camp][data-camp-view=map] .stage-preview-copy{flex:1;min-height:0;min-width:0;overflow:hidden}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel #stage-preview-kind{display:block;margin:0 0 4px;font:clamp(7px,1cqw,11px)/1.3 var(--ui-font);color:#c4b394}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel #stage-preview-title{margin:0 0 5px;font:700 clamp(10px,1.45cqw,16px)/1.35 var(--serif)!important;white-space:normal;word-break:keep-all;overflow-wrap:anywhere;color:#f0e6d5}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel #stage-preview-description{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;margin:0;font:clamp(8px,1.05cqw,12px)/1.5 var(--ui-font);white-space:normal;overflow:hidden;color:#b5c0c9}
+#game-shell[data-panel=camp][data-camp-view=map] .map-enemy-preview{display:flex;align-items:center;flex:none;gap:5px;min-width:0;padding-top:5px;border-top:1px solid #b3a17e3b}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel #stage-preview-art{display:block;flex:none;width:clamp(22px,3.2cqw,34px);height:clamp(22px,3.2cqw,34px);min-width:0;margin:0;padding:0}
+#game-shell[data-panel=camp][data-camp-view=map] .map-enemy-preview>span:last-child{min-width:0}
+#game-shell[data-panel=camp][data-camp-view=map] .map-enemy-preview small{display:block;margin-bottom:3px;font:clamp(7px,.8cqw,9px)/1.2 var(--ui-font);color:#9ca8b3}
+#game-shell[data-panel=camp][data-camp-view=map] .map-enemy-preview strong{display:block;font:clamp(8px,1cqw,11px)/1.3 var(--ui-font);color:#d3dce1;word-break:keep-all}
+#game-shell[data-panel=camp][data-camp-view=map] .map-scene-progress{display:flex;align-items:center;justify-content:space-between;flex:none;gap:5px;padding:5px 0;border-block:1px solid #b3a17e3b}
+#game-shell[data-panel=camp][data-camp-view=map] .map-scene-progress small{font:clamp(7px,.9cqw,10px)/1.3 var(--ui-font);color:#aeb9c5}
+#game-shell[data-panel=camp][data-camp-view=map] .map-scene-progress strong{font:600 clamp(10px,1.6cqw,17px)/1.2 var(--ui-font);color:#f1dec0;white-space:nowrap}
+#game-shell[data-panel=camp][data-camp-view=map] #map-boss-rewards{flex:none;width:100%;min-height:0;margin:0;padding:0;border:0;background:none;font-size:0;line-height:1}
+#game-shell[data-panel=camp][data-camp-view=map] #map-boss-rewards>small{display:block;font:clamp(7px,.9cqw,10px)/1.3 var(--ui-font);color:#d4c29e}
+#game-shell[data-panel=camp][data-camp-view=map] #map-boss-rewards>div{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:5px}
+#game-shell[data-panel=camp][data-camp-view=map] #map-boss-rewards>div>span{display:flex;align-items:center;justify-content:center;gap:4px;min-width:0;padding:4px 2px;border:1px solid #b8a27350;border-radius:3px;background:#0a111b}
+#game-shell[data-panel=camp][data-camp-view=map] #map-boss-rewards i{font:700 clamp(12px,1.8cqw,20px)/1 Georgia,serif;font-style:normal;color:#e8c17c}
+#game-shell[data-panel=camp][data-camp-view=map] #map-boss-rewards .map-core-symbol{color:#c2a8ea}
+#game-shell[data-panel=camp][data-camp-view=map] #map-boss-rewards b{font:clamp(8px,1.05cqw,12px)/1.2 var(--ui-font);white-space:nowrap;color:#e5dbc9}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-tactics-open{display:flex;align-items:center;justify-content:space-between;flex:none;gap:3px;width:100%;height:clamp(25px,7cqh,31px)!important;min-height:0!important;margin:0;padding:3px 5px!important;border:1px solid #b9a47566!important;border-radius:3px;background:#0f1924!important;color:#ddcaaa}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-tactics-open>span{font:600 clamp(8px,1.05cqw,12px)/1.3 var(--ui-font)}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-tactics-open :is(small,b),#game-shell[data-panel=camp][data-camp-view=map] #camp-tactics-open:after{display:none}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-launch{position:absolute;inset:auto 19.2% 4% 1.8%;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) minmax(95px,.85fr);align-items:center;gap:1cqw;width:auto;height:23%;min-height:0;margin:0;padding:8px 10px;border:1px solid var(--map-frame);border-radius:5px;background:linear-gradient(110deg,#06111de8,#020b14f5);box-shadow:inset 0 0 0 2px #8f764722;z-index:4}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-launch .map-launch-summary{position:relative;display:flex;flex-direction:column;justify-content:center;gap:5px;min-height:0;height:100%;min-width:0;margin:0;padding:0 0 0 8.5cqw}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-launch .map-launch-summary:before{display:block;position:absolute;inset:0 auto 0 0;width:7.5cqw;height:auto;max-height:100%;margin:0;border:1px solid #b2a18466;border-radius:3px;background:var(--map-scene-art) 65% 30%/cover}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-launch-meta{font:clamp(7px,.8cqw,9px)/1.35 var(--ui-font);color:#bcb59e;white-space:normal}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-launch-name{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:0;font:700 clamp(10px,1.5cqw,17px)/1.4 var(--serif);color:#eee4d1;word-break:keep-all}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-launch-tactic{display:none}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-launch .map-launch-rewards{min-width:0;min-height:0;height:auto;padding:0 0 0 1cqw;border-left:1px solid #b1a08040}
+#game-shell[data-panel=camp][data-camp-view=map] .map-launch-rewards>small{display:block;margin-bottom:5px;font:clamp(7px,1cqw,11px)/1.3 var(--ui-font);color:#d9c9a9}
+#game-shell[data-panel=camp][data-camp-view=map] .map-reward-icons{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;min-width:0}
+#game-shell[data-panel=camp][data-camp-view=map] .map-reward-frame{position:relative;isolation:isolate;display:grid;place-items:center;aspect-ratio:1;min-width:0;padding:3px;border:1px solid #b69a664d;border-radius:3px;background:#090d15 var(--ui-slot) center/100% 100% no-repeat;overflow:hidden}
+#game-shell[data-panel=camp][data-camp-view=map] .map-reward-frame>.equipment-icon,#game-shell[data-panel=camp][data-camp-view=map] .map-reward-frame>.craft-material-icon{display:block;width:100%;height:100%;aspect-ratio:1;margin:0;padding:0;border:0;box-shadow:none;background-color:transparent}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-launch .map-launch-actions{display:block;width:100%;height:80%;min-height:0;padding:0}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-launch .map-launch-actions:before{display:none}
+#game-shell[data-panel=camp][data-camp-view=map] .map-launch-rewards:before{display:none}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-launch #camp-map-start{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;height:100%!important;min-height:0!important;margin:0;padding:4px 8px!important;border:1px solid #c6a16b!important;border-radius:4px;background:none!important;font:700 clamp(12px,2cqw,22px)/1.3 var(--serif);color:#fff1da;box-shadow:0 0 12px #e8432e30}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-start:after{inset:0;border:0;border-image:none;border-radius:inherit;background-size:100% 154%;background-position:center 44%}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-start .button-edge{position:static;flex:none;margin:0;font:24px/1 Georgia,serif}
+@container game-view (max-width:680px){
+ #game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .stage-tabs>button{gap:3px;padding:4px 3px!important}
+ #game-shell[data-panel=camp][data-camp-view=map] .stage-tabs>button svg{width:12px;height:16px}
+ #game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .map-overview>.stage-preview{gap:5px;padding:5px}
+ #game-shell[data-panel=camp][data-camp-view=map] #camp-map-launch{gap:5px;padding:6px}
+ #game-shell[data-panel=camp][data-camp-view=map] #camp-map-launch .map-launch-summary{padding-left:7.5cqw}
+ #game-shell[data-panel=camp][data-camp-view=map] #camp-map-launch .map-launch-summary:before{width:6.5cqw}
+ #game-shell[data-panel=camp][data-camp-view=map] .map-reward-icons{gap:2px}
+ #game-shell[data-panel=camp][data-camp-view=map] .map-reward-frame{padding:2px}
+}
+@container game-view (max-height:350px){
+ #game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .map-overview>.stage-preview{gap:4px}
+ #game-shell[data-panel=camp][data-camp-view=map] .map-region-art{height:22%}
+ #game-shell[data-panel=camp][data-camp-view=map] .map-enemy-preview{display:none}
+ #game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel #stage-preview-description{-webkit-line-clamp:2}
+ #game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel #chapter-banner{height:16%}
+}
+
+/* Node centers match the nine route segments in the map SVG. */
+#game-shell[data-panel=camp][data-camp-view=map] #run-stage-1{--route-x:4%;--route-y:42%}
+#game-shell[data-panel=camp][data-camp-view=map] #run-stage-2{--route-x:14%;--route-y:49%}
+#game-shell[data-panel=camp][data-camp-view=map] #run-stage-3{--route-x:24%;--route-y:60%}
+#game-shell[data-panel=camp][data-camp-view=map] #run-stage-4{--route-x:34%;--route-y:64%}
+#game-shell[data-panel=camp][data-camp-view=map] #run-stage-5{--route-x:44%;--route-y:66%}
+#game-shell[data-panel=camp][data-camp-view=map] #run-stage-6{--route-x:54%;--route-y:80%}
+#game-shell[data-panel=camp][data-camp-view=map] #run-stage-7{--route-x:64%;--route-y:85%}
+#game-shell[data-panel=camp][data-camp-view=map] #run-stage-8{--route-x:74%;--route-y:84%}
+#game-shell[data-panel=camp][data-camp-view=map] #run-stage-9{--route-x:84%;--route-y:76%}
+#game-shell[data-panel=camp][data-camp-view=map] #run-stage-10{--route-x:94%;--route-y:55%}
+
+#game-shell[data-panel=camp][data-camp-view=map][data-biome=frost] #camp-drawer.hub-drawer{background-size:100% 100%,100% 100%}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel[data-boss=true] .map-enemy-preview{display:none}
+
+#game-shell[data-panel=camp][data-camp-view=map] #map-boss-rewards .ui-utility-icon{display:block;flex:none;width:clamp(16px,2.4cqw,26px);height:clamp(16px,2.4cqw,26px)}
+
+#game-shell[data-panel=camp][data-camp-view=map] #chapter-banner:before{content:'';position:absolute;inset:0 auto 0 0;width:12cqw;pointer-events:none;background:var(--map-scene-art) center 25%/cover;mask-image:linear-gradient(90deg,#000 75%,transparent)}
+#game-shell[data-panel=camp][data-camp-view=map][data-biome=frost] #chapter-banner:before,#game-shell[data-panel=camp][data-camp-view=map][data-biome=frost] .map-region-art{background-size:180% auto;background-position:83% top}

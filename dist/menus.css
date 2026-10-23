@@ -1,0 +1,302 @@
+/* Alpha 0.42 — one material, type and navigation system across the real game menus. */
+:root{--menu-ink:#081116;--menu-metal:#111c22;--menu-line:#b4a38539;--menu-gold:#dec28d;--menu-ivory:#eee4d3;--menu-muted:#a7b1ad;--menu-wine:#602632}
+#game-shell{color:var(--menu-ivory)}
+#game-shell button:focus-visible,#game-shell summary:focus-visible,#game-shell :is(input,select):focus-visible{outline:2px solid var(--menu-gold);outline-offset:2px}
+#game-shell .masthead{border-bottom:1px solid #b9a38524;background-color:var(--menu-ink)}
+#game-shell[data-panel=camp][data-camp-view=home] .masthead{background:linear-gradient(#08111670,transparent);border:0;backdrop-filter:none}
+#game-shell .page-back{width:40px;min-width:40px;min-height:44px;color:#ded6c8}
+#game-shell .page-title{font:500 23px/1.4 var(--serif);letter-spacing:.4px;color:#efe4d1}
+#game-shell .wallet{gap:9px}
+#game-shell .wallet>span{gap:5px}
+#game-shell .wallet i{display:inline-flex;align-items:center;justify-content:center;width:19px;height:22px;font-size:0;text-shadow:none}
+.wallet i svg{width:19px;height:22px;stroke-width:1.1;stroke:currentColor;fill:none}
+#game-shell .wallet .currency-coin{color:#d7b97e}
+.currency-coin svg{fill:#b6904233!important}
+#game-shell .wallet .currency-core{color:#b7d4e3}
+.currency-core svg{fill:#5691bc3b!important}
+#game-shell .wallet b{font:13px/1.3 Georgia,serif;color:#eee4d3}
+#game-shell #sound{position:relative;min-width:40px;width:40px;max-width:40px;height:44px;min-height:44px;font-size:0;line-height:0;padding:10px;border:0;border-radius:0;background:transparent;color:#c3c8c2}
+#sound:before{content:'';display:block;width:20px;height:20px;background:currentColor;mask:url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.6"%3E%3Cpath d="M3 9h4l5-5v16l-5-5H3zM16 8c3 2 3 6 0 8M19 4c6 4 6 12 0 16"/%3E%3C/svg%3E') center/contain no-repeat}
+#sound[aria-pressed=false]:after{content:'';position:absolute;left:9px;top:21px;width:23px;height:1px;background:#d8b5aa;transform:rotate(-45deg)}
+#game-shell .app-nav{background:#091217f5;border-top:1px solid #baa17c52;box-shadow:0 -7px 22px #02080c40}
+#game-shell .app-nav button{color:#8e9c9e;gap:5px}
+#game-shell .app-nav button svg{width:24px;height:24px;stroke-width:1.25}
+#game-shell .app-nav button span{font:11px/1.4 var(--body);letter-spacing:.2px}
+#game-shell .app-nav button:after{content:'';display:block!important;position:absolute;bottom:5px;left:25%;right:25%;height:1px;background:transparent}
+#game-shell[data-panel=camp][data-camp-view=home] #nav-home:after,#game-shell[data-panel=camp]:is([data-camp-view=map],[data-camp-view=tactics]) #nav-hunt:after,#game-shell[data-panel=inventory] #nav-equipment:after,#game-shell:is([data-panel=craft],[data-panel=track]) #nav-craft:after,#game-shell[data-panel=codex] #nav-more:after,#game-shell[data-panel=camp]:is([data-camp-view=more],[data-camp-view=growth]) #nav-more:after{background:#ddbf84}
+#game-shell .app-nav button{filter:none}
+#game-shell .primary{border-radius:2px;border-color:#b18a79;color:#f1dfc8;background:linear-gradient(105deg,#3f1a25,#662733);box-shadow:inset 0 0 0 2px #d7b6880b}
+#game-shell button:disabled{cursor:default}
+
+/* Home: the illustration remains the focal point; chrome becomes quiet engraved metal. */
+#game-shell .hub-profile .profile-avatar{border-color:#cbb187;box-shadow:0 0 0 3px #08111655}
+#game-shell .hub-profile strong{font:500 16px var(--serif);color:#f1e7d5}
+#game-shell .hub-profile small{font-size:12px;color:#d6c293}
+#game-shell .hub-profile strong small:after{height:2px;border-radius:0}
+#game-shell .hub-icon{min-width:48px;min-height:52px}
+#game-shell .hub-icon-label{font-size:11px;line-height:1.5;color:#e8e0d0}
+#game-shell .hub-icon-disc svg{stroke:#ded3bc;stroke-width:1.25}
+#game-shell .hub-identity small{font:10px/1.5 Georgia,serif;letter-spacing:3px}
+#game-shell .hub-identity strong{font:500 34px/1.35 var(--serif);letter-spacing:1px}
+#game-shell .hub-identity>span{font:12px/1.8 var(--body);color:#d1d3ca}
+#game-shell .hub-launch #start{border-radius:2px;min-height:54px;border:1px solid #cda58c;background:linear-gradient(100deg,#3c1821f0,#692832f0);box-shadow:inset 0 0 0 3px #d7b8890d;font:500 19px var(--serif);letter-spacing:1px}
+#game-shell .hub-launch .hub-route{border:0;border-top:1px solid var(--menu-line);border-radius:0;background:#081116df!important;padding:8px 10px!important;min-height:62px}
+#game-shell .hub-route strong{font:500 14px/1.5 var(--serif);color:#eee1c8}
+#game-shell .hub-route small{font:10px/1.4 var(--body);color:#a7b3ae}
+
+/* Growth: a single scene followed by three readable functional upgrade rows. */
+#game-shell[data-panel=camp][data-camp-view=growth] #camp-drawer,#game-shell[data-panel=camp][data-camp-view=more] #camp-drawer{background:var(--menu-ink);backdrop-filter:none}
+#game-shell[data-panel=camp][data-camp-view=growth] .masthead{background:linear-gradient(90deg,#081116f2,#08111685),url('assets/growth-forge-v042.webp') center 15%/cover}
+#camp-drawer #camp-growth-panel{padding:0;overflow:auto;background:var(--menu-ink);scrollbar-width:none}
+.growth-hero{position:relative;min-height:200px;padding:19px 19px 18px;overflow:hidden;background:linear-gradient(90deg,#081116dd,transparent 90%),url('assets/growth-forge-v042.webp') center 55%/cover}
+.growth-hero>small{font:9px/1.4 Georgia,serif;letter-spacing:2px;color:#ccb383}
+.growth-hero h3{margin:12px 0 10px;font:500 29px/1.35 var(--serif);letter-spacing:1px;color:#f1e7d6;text-shadow:0 2px 12px #000}
+.growth-hero p{max-width:65%;font:11px/1.7 var(--body);margin:0 0 14px;color:#bac2b9}
+#camp-drawer #stat-summary{display:inline-block;margin:0;padding:7px 9px;border:0;border-block:1px solid #c7ad7b45;background:#081116b0;color:#dfd8c5;font:12px/1.6 var(--body)}
+#camp-drawer .growth-panel{display:block;margin:0;padding:0 16px;border:0;border-radius:0;background:var(--menu-ink)}
+#camp-drawer .growth-panel>summary{min-height:44px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 2px;border-bottom:1px solid var(--menu-line);list-style:none;font:16px var(--serif);color:#dcca9f}
+#camp-drawer .growth-panel>summary span{font:10px var(--body);color:#8f9d99}
+#camp-drawer .growth-panel>summary::-webkit-details-marker{display:none}
+#camp-drawer .growth-panel>summary:after{content:'⌄';font:18px Georgia,serif;color:#bcb69f}
+#camp-drawer .forge{display:block;margin:0;padding:0;gap:0}
+#camp-drawer .forge button{position:relative;width:100%;display:grid;grid-template-columns:66px minmax(0,1fr) 91px;grid-template-rows:auto auto auto;align-items:center;gap:3px 9px;min-height:99px;padding:12px 0;margin:0;border:0;border-bottom:1px solid var(--menu-line);border-radius:0;background:none!important;text-align:left;box-shadow:none;opacity:1}
+#camp-drawer .forge button:before{content:'';grid-column:1;grid-row:1/4;width:64px;height:66px;background-image:url('assets/armory-equipment-v040.webp');background-size:400% 300%;background-position:0 50%;background-repeat:no-repeat}
+#camp-drawer .forge #forge-armor:before{background-position:66.6667% 50%}
+#camp-drawer .forge #forge-core:before{background-image:url('assets/craft-materials-v041.webp');background-size:400% 200%;background-position:66.6667% 100%}
+#camp-drawer .forge .forge-symbol{display:none}
+#camp-drawer .forge button>span{grid-column:2;grid-row:1;margin:0;color:#e5dfd0;font:500 15px/1.6 var(--serif)}
+#camp-drawer .forge button>span b{color:#d4bc87;font:13px Georgia,serif;margin-left:3px}
+#camp-drawer .forge button>small{grid-column:2;grid-row:2;white-space:normal;word-break:keep-all;color:#b3bdb7;font:11px/1.6 var(--body);margin:0}
+#camp-drawer .forge button .forge-state{grid-column:2;grid-row:3;color:#aeb79d;font:10px/1.5 var(--body);font-style:normal;margin:0}
+#camp-drawer .forge button>strong{grid-column:3;grid-row:1/4;display:flex;align-items:center;justify-content:center;align-self:stretch;min-height:44px;white-space:normal;padding:8px;text-align:center;color:#ecd9b6;font:12px/1.7 var(--body);border:1px solid #9f786970;background:#4c202cc2;border-radius:2px}
+#camp-drawer .forge button:disabled{opacity:1}
+#camp-drawer .forge button:disabled>span{color:#c5c8bc}
+#camp-drawer .forge button:disabled>small{color:#9ca9a2}
+#camp-drawer .forge button:disabled>strong{color:#a39b96;background:#1e2228;border-color:#7e75623b}
+#camp-drawer .forge button:disabled .forge-state{color:#bc9a90}
+#camp-drawer #camp-upgrade{min-height:48px;width:calc(100% - 32px);margin:12px 16px 0;padding:10px 12px;border:1px solid #b99c685c;border-radius:2px;background:#282a23;color:#e4cea0;font:14px var(--serif)}
+#camp-drawer #growth-feedback{margin:0;padding:0;border:0;background:none;color:#e3cc96;font:12px/1.8 var(--body)}
+#camp-drawer #growth-feedback:not(:empty){padding:9px 0}
+#camp-drawer #offline-note{position:relative;margin:13px 0 18px;padding:14px 13px 14px 16px;border:0;border-left:2px solid #9b865e;background:linear-gradient(90deg,#10191eea,#10191ec9),url('assets/hunt-map-forest-v036.webp') center 60%/cover;color:#aebbb2;font:12px/1.9 var(--body)}
+#offline-note:before{content:'정찰 보상';display:block;margin-bottom:6px;font:16px var(--serif);color:#d7c394}
+
+/* World: readable region tabs and five real checkpoints over an unobstructed painting. */
+#camp-drawer #camp-map-panel{padding:0 16px}
+#camp-drawer .stage-tabs{gap:0;margin:0 -16px;border-bottom:1px solid var(--menu-line);padding:0 9px;background:#081116b8}
+#camp-drawer .stage-tabs button{position:relative;min-height:44px;padding:5px 2px;border:0!important;border-radius:0;background:transparent!important;font:12px var(--serif);color:#aeb7b2;box-shadow:none}
+#camp-drawer .stage-tabs button.selected{color:#ebce9b;background:#80604412!important}
+#camp-drawer .stage-tabs button.selected:after{content:'';position:absolute;bottom:-1px;left:10%;right:10%;height:2px;background:#dac08b}
+#camp-drawer .stage-tabs button:disabled{opacity:.55}
+#camp-drawer #chapter-banner{padding:20px 4px 8px;min-height:110px}
+#camp-drawer #chapter-label{font:10px/1.5 Georgia,serif;letter-spacing:3px}
+#camp-drawer #chapter-preview-name{font:500 32px/1.35 var(--serif);letter-spacing:1px;margin:8px 0;color:#f3e9d7}
+#camp-drawer #chapter-preview-boss{font:12px/1.5 var(--body);color:#c4c9be}
+#camp-drawer .sub-stage-tabs button{left:60%;border-color:#c9b590!important;background:#08151bd9!important;box-shadow:inset 0 0 0 3px #b39a6510,0 5px 14px #0009}
+#camp-drawer .sub-stage-tabs button:nth-child(2){left:42%}
+#camp-drawer .sub-stage-tabs button:nth-child(3){left:66%}
+#camp-drawer .sub-stage-tabs button:nth-child(4){left:78%}
+#camp-drawer .sub-stage-tabs button:nth-child(5){left:61%}
+#camp-drawer .sub-stage-tabs button:after{font:14px/1.2 Georgia,serif;color:#ecdfc5}
+#camp-drawer .sub-stage-tabs button.selected{background:#592530ed!important;border-color:#eed7ac!important;box-shadow:inset 0 0 0 3px #7d433d44,0 0 16px #d1786155}
+#camp-drawer .sub-stage-tabs button:disabled{border-color:#7a858485!important;background:#0b161ad9!important;opacity:.8}
+#camp-drawer .sub-stage-tabs button:disabled:after{color:#9aa7a4}
+#camp-drawer #camp-tactics-open{margin:12px 0 0;padding:11px 5px;border:0;border-top:1px solid #b39b7444;border-radius:0;min-height:50px;background:#081116c9;color:#d5c499;box-shadow:none}
+#camp-drawer #camp-tactics-open>span{font:14px var(--serif)}
+#camp-tactics-open small{font:10px/1.5 var(--body);color:#a5b2ac}
+#camp-drawer #camp-map-launch{border-top:1px solid #b6a07740;background:#081116f2;padding:13px 17px;gap:9px}
+#camp-drawer #camp-map-launch-meta{font:10px/1.6 var(--body);color:#b5a787}
+#camp-drawer #camp-map-launch-name{font:500 17px/1.5 var(--serif);color:#f0e2c8}
+#camp-drawer #camp-map-launch-tactic{font:12px/1.7 var(--body);color:#b4bdb5;margin:4px 0 0}
+#camp-drawer #camp-map-start{border-radius:2px;min-height:50px;background:linear-gradient(105deg,#401b25,#692b35);border-color:#b88d76;box-shadow:inset 0 0 0 3px #d3b3850c;font:17px var(--serif)}
+
+/* More is an illustrated index, not another stack of boxed dashboards. */
+#camp-drawer #camp-more-panel{padding:0 18px 18px;background:var(--menu-ink);overflow:auto;scrollbar-width:none}
+#camp-more-panel .more-intro{position:relative;margin:0 -18px;padding:37px 22px 25px;min-height:215px;border:0;border-bottom:1px solid var(--menu-line);background:linear-gradient(90deg,#081116e8,#08111655),url('assets/codex-archive-hero-v039.webp') center 48%/cover}
+#camp-more-panel .more-intro>span{font:10px Georgia,serif;letter-spacing:4px;color:#d5bb8a}
+#camp-more-panel .more-intro h3{font:500 32px/1.4 var(--serif);margin:22px 0 12px;max-width:260px;letter-spacing:1px}
+#camp-more-panel .more-intro p{font:12px/1.8 var(--body);color:#b2bcb5;max-width:230px}
+#camp-more-panel .more-menu{display:block;margin-top:14px;counter-reset:menu}
+#camp-more-panel .more-menu button{position:relative;display:flex;align-items:center;gap:20px;width:100%;min-height:98px;padding:14px 3px;margin:0;border:0;border-bottom:1px solid var(--menu-line);border-radius:0;background:none;box-shadow:none;opacity:1}
+#camp-more-panel .more-menu button:after{content:'›';font:28px Georgia,serif;color:#c9b98e;margin-left:auto;flex:none}
+#camp-more-panel .more-menu svg{width:37px;height:42px;stroke:#c3ab7e;stroke-width:1.1;flex:none}
+#camp-more-panel .more-menu button span{font:500 20px/1.4 var(--serif);color:#e4dcc9}
+#camp-more-panel .more-menu small{max-width:245px;font:12px/1.7 var(--body);letter-spacing:0;color:#a0b1a8;margin-top:7px}
+#camp-more-panel .more-menu button:disabled>span{color:#adb6ad}
+#camp-more-panel .more-menu button:disabled:after,#camp-more-panel .more-menu button:disabled svg{color:#6d7c79;stroke:#7d8a7e}
+#camp-more-panel .more-version{margin-top:24px;font:9px/1.6 Georgia,serif;letter-spacing:2px;color:#758a89}
+
+/* Tracking uses the same real material atlas as crafting. Inspection never changes a saved goal. */
+#game-shell #overlay[data-panel=track]{inset:var(--head-height) 0 var(--nav-height);padding:0;background:var(--menu-ink);backdrop-filter:none}
+#game-shell #overlay[data-panel=track] .modal{height:100%;width:100%;max-height:none;max-width:none;padding:0;margin:0;border:0;border-radius:0;background:var(--menu-ink);overflow:hidden}
+#game-shell #overlay[data-panel=track] .panel-heading{display:none}
+#game-shell #overlay #track-content{height:100%;display:block;padding:0;overflow:auto;overscroll-behavior:contain;scrollbar-width:none;background:var(--menu-ink)}
+#track-content [hidden]{display:none!important}
+#track-content .codex-toolbar{display:flex;justify-content:space-between;gap:8px;margin:0;padding:0 15px;border:0;min-height:44px;background:var(--menu-ink)}
+#track-content .codex-toolbar button{min-height:44px;padding:0 4px;border:0;border-radius:0;background:none;color:#cbb78e;font:12px var(--body);box-shadow:none}
+#track-content .codex-toolbar #track-hide{font-size:11px;color:#94a59f}
+#track-content .tracking-summary{margin:0;padding:0 15px;border:0;border-radius:0;background:none;box-shadow:none}
+.tracking-hero{position:relative;min-height:204px;margin:0 -15px;padding:21px 18px 22px;background:linear-gradient(90deg,#081116d9,#08111622),url('assets/craft-forge-v041.webp') center 48%/cover;overflow:hidden;isolation:isolate}
+#track-content #track-art{position:absolute;right:-3px;top:0;width:200px;height:200px;border:0;border-radius:0;background-color:transparent;image-rendering:auto;box-shadow:none;transform:rotate(-5deg);pointer-events:none;z-index:-1}
+#track-content .tracking-caption{position:relative;width:190px;max-width:66%;text-shadow:0 2px 7px #02080c}
+#track-content #track-kind{font:12px var(--serif);color:#d6c294;letter-spacing:.5px}
+#track-content #track-name{font:500 25px/1.4 var(--serif);letter-spacing:.3px;margin:14px 0 18px;color:#f1e6d4;word-break:keep-all}
+#track-content #track-progress{font:12px/1.7 var(--body);color:#e0cfaa;background:none;border:0;padding:0;margin:0;white-space:normal}
+#track-content .track-bar{position:absolute;bottom:13px;left:18px;right:18px;height:3px;margin:0;border:0;border-radius:0;background:#c7c2aa25;overflow:hidden}
+#track-content .track-bar i{height:3px;background:#d8bd81;box-shadow:0 0 9px #d7b87755}
+#track-content #track-status{font:12px/1.8 var(--body);color:#b8bea9;padding:10px 0;margin:0;border:0;background:none}
+#track-content .collection-caption{min-height:44px;display:flex;align-items:center;justify-content:space-between;gap:8px;border-bottom:1px solid var(--menu-line);margin:0;color:#d8c59b}
+#track-content .collection-caption strong{font:18px var(--serif);color:#e6d8b8}
+#track-content .collection-caption small{font:10px var(--body);color:#8d9e98}
+#track-content #track-materials{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin:0;padding:0;border:0;background:none}
+#track-content #track-materials button{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:115px;min-width:0;margin:0;padding:4px 1px;border:0;border-bottom:1px solid var(--menu-line);border-radius:0;background:none;box-shadow:none}
+#track-content #track-materials button:not(:nth-child(3n)){box-shadow:1px 0 #a6a58b22}
+#track-content #track-materials button .craft-material-icon{width:46px;height:46px;flex:none}
+#track-content #track-materials span{font:13px/1.5 var(--serif);color:#d4d7cb}
+#track-content #track-materials b{font:18px/1.3 Georgia,serif;color:#df9586}
+#track-content #track-materials small{font:10px/1.4 var(--body);color:#98a99d}
+#track-content #track-materials button[data-ready=true] b{color:#ddc18a}
+#track-content #track-materials button[aria-pressed=true]{background:#bca3630b;border-bottom-color:#dbc18a;box-shadow:inset 0 -2px #dbc18a}
+#track-content #track-gold{font:12px/1.7 var(--body);color:#afbbad;margin:12px 0;padding:0;background:none;border:0;border-radius:0}
+#game-shell #track-content #track-materials button[data-ready]{background:none;border:0;border-bottom:1px solid var(--menu-line)}
+#game-shell #track-content #track-materials button[aria-pressed=true]{background:#bca3630b;border-bottom-color:#dbc18a;box-shadow:inset 0 -2px #dbc18a}
+#game-shell #track-content #track-craft{background:#522531;border-color:#ad8c6b70;color:#ead7b6}
+#track-content .codex-buttons{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}
+#track-content .codex-buttons button{flex:1;min-width:100px;min-height:44px;border:1px solid #b7a27b52;border-radius:2px;background:none;color:#d8c6a1;font:13px var(--serif);box-shadow:none;padding:8px}
+#track-content #track-clear{color:#a9b5aa;border-color:#8b9a8e33}
+#track-content #track-route{margin:0;padding:16px 15px 24px;border:0;border-top:1px solid #c5a97855;border-radius:0;background:#0a1419;scroll-margin-top:0}
+#track-content #track-materials-back{min-height:44px;margin:0 0 9px;padding:0;border:0;background:none;color:#bfae87;font:12px var(--body)}
+#track-content #track-route-title{font:500 22px/1.5 var(--serif);color:#e5d9bb;margin:0 0 10px}
+#track-content #track-route-info{font:12px/1.8 var(--body);color:#b6c0b3;margin:0 0 14px}
+#track-content #track-route>button.wide{position:relative;display:flex;align-items:center;gap:12px;width:100%;min-height:74px;margin:0;padding:11px 24px 11px 0;border:0;border-bottom:1px solid var(--menu-line);border-radius:0;background:none;text-align:left;color:#ddd3bc;box-shadow:none}
+#track-route>button.wide:before{content:'';display:block;flex:none;width:70px;height:49px;background:url('assets/hunt-map-forest-v036.webp') center/cover;border:1px solid #9c8a6d44}
+#track-route #track-route-2:before{background-image:url('assets/hunt-map-ruins-v036.webp')}
+#track-route #track-route-3:before{background-image:url('assets/hunt-map-frost-v036.webp')}
+#track-content #track-route>button.wide:after{content:'›';position:absolute;right:3px;font:25px Georgia,serif;color:#d2bd90}
+#track-content #track-route>button span{font:13px/1.8 var(--body);white-space:normal;word-break:keep-all;color:#d0d5c8}
+#track-content #track-route>button:disabled{opacity:.58}
+#track-content #track-route-note{font:11px/1.9 var(--body);color:#91a39a;margin:15px 0 0}
+#game-shell:not([data-phase=camp]) #overlay[data-panel=track]{inset:0}
+
+/* Archive and armory inherit the common material without changing their catalogs or input rules. */
+#game-shell #inventory-content .inventory-tabs button[aria-pressed=true],#game-shell #inventory-content .armory-categories button[aria-pressed=true]{color:#e8cca0}
+#game-shell #inventory-content .armory-bag-heading h3{font-size:23px;color:#e5d7bb}
+#game-shell #inventory-content .armory-bag-heading{border-bottom:1px solid #ab977224;margin-bottom:3px}
+#game-shell #inventory-content .bag-tile{border-radius:1px;background:#0e191f;box-shadow:inset 0 0 0 2px #b8ad8e06}
+#game-shell #inventory-content .armory-synergy{border-radius:1px;background:#22251f55;border-color:#ad96674d}
+#game-shell #inventory-content .armory-build-heading{padding:23px 16px 18px;background:linear-gradient(90deg,#081116e8,#0811168c),url('assets/codex-archive-hero-v039.webp') center/cover;border-bottom:1px solid var(--menu-line)}
+#game-shell #inventory-content .build-card{position:relative;padding:20px 0 24px;border-bottom-color:#b8a27840}
+#game-shell #inventory-content .build-card label{font-size:14px;color:#d0ba8b}
+#game-shell #inventory-content .build-card input{font-size:14px;background:#0d181d;border:0;border-bottom:1px solid #a28b635c;border-radius:0}
+#game-shell #inventory-content .build-card p{font-size:12px;line-height:1.8;color:#b8c0b4}
+#game-shell #inventory-content .build-card button{font-size:12px;border-radius:2px;background:#131f23;border-color:#9f8c644f;color:#dfcfad}
+#game-shell #inventory-content .build-card button:first-child{background:#562631;border-color:#af887670}
+#game-shell #inventory-content .build-card button:disabled{opacity:.65}
+#game-shell #inventory-content #bag-detail:not([hidden]){border-radius:2px;background:#081318ee;border-color:#baa06e6b;backdrop-filter:blur(18px)}
+#game-shell #inventory-content #bag-detail-close{background:#0b151aeb;color:#dbbf8e}
+#game-shell #inventory-content .item-card>div button{font-size:13px;border-radius:2px;background:#142024}
+#game-shell #inventory-content .item-card>div button:first-child{background:#562631;border-color:#ab846b73}
+#game-shell #inventory-content #bag-review{border-radius:2px;background:#191d20;border-color:#ac976944}
+#game-shell #codex-content .archive-record{height:62px}
+#game-shell #codex-content #codex-count{font-size:26px;color:#eee0c5}
+#game-shell #codex-content .archive-search input{background:#0c171d;border-radius:1px;font-size:14px;border-color:#a3987e48}
+#game-shell #codex-content #codex-filter-toggle{background:transparent;border-color:#a3987e48}
+#game-shell #codex-content .archive-categories button{font-size:14px}
+#game-shell #codex-content .codex-card{border-radius:0}
+#game-shell #codex-content .codex-card strong{font-size:15px;color:#e0dbc9}
+#game-shell #codex-content .codex-card small{font-size:12px;color:#9eada2}
+#game-shell #codex-content .archive-farm-banner{border-radius:1px;border-color:#a68e5c59}
+#game-shell #codex-content #codex-detail{border-radius:0;background:#091319}
+#game-shell #codex-content .codex-buttons button{font-size:13px;border-radius:2px;color:#dec59b;background:#142025;border-color:#ac92664c}
+
+/* Boss dossier: quiet type and functional rewards; no decorative pill controls. */
+#camp-tactics-panel .tactics-intro h3{font-size:27px;color:#ecdfc6}
+#camp-tactics-panel #replay-panel,#camp-tactics-panel .enemy-dossier,#camp-tactics-panel .replay-targets,#camp-tactics-panel .replay-locked{border-radius:2px;border-color:#b49c714a;background-color:#0a151ae6}
+#camp-tactics-panel .replay-modes button{border-radius:2px;min-height:108px;background:#0d1a20!important;box-shadow:none}
+#camp-tactics-panel .replay-modes button strong{font-size:16px}
+#camp-tactics-panel .replay-modes button small{font-size:11px;color:#9eafa5}
+#camp-tactics-panel .replay-modes button[aria-pressed=true]{background:#4a3e273d!important;border-color:#d6bc8a;box-shadow:inset 0 -2px #d6bc8a}
+#camp-tactics-panel .replay-rewards{gap:16px 10px;border-color:var(--menu-line)}
+#camp-tactics-panel .replay-rewards dt{font-size:11px;color:#abb5ac}
+#camp-tactics-panel .replay-rewards dd{font-size:24px;color:#eee0c3}
+#camp-tactics-panel .replay-progression li>div{font-size:12px;color:#adb9ad}
+#camp-tactics-panel .replay-progression small{font-size:10px}
+#camp-tactics-panel #replay-prepare{border-radius:2px;background:linear-gradient(110deg,#401d28,#622a34)!important;border-color:#b49177;font-size:14px;box-shadow:none}
+#game-shell #camp-drawer #replay-prepare{border-radius:2px;background:linear-gradient(110deg,#401d28,#622a34)!important;border-color:#b49177!important;font-size:14px;box-shadow:none}
+#camp-tactics-panel #farm-target-note,#camp-tactics-panel .enemy-dossier p,#camp-tactics-panel .enemy-dossier li{font-size:12px;line-height:1.8}
+#camp-tactics-panel .replay-combat-note,#camp-tactics-panel .replay-unlock{font-size:11px;line-height:1.8}
+
+/* Pause/result are one translucent editorial surface over the actual battle. */
+#game-shell #overlay:is([data-panel=pause],[data-panel=result]){inset:0;padding:20px 14px;background:#02090eb8;backdrop-filter:blur(4px);overflow:auto}
+#game-shell #overlay:is([data-panel=pause],[data-panel=result]) .modal{height:auto;max-height:100%;padding:21px 19px;border:1px solid #ba9e6b56;border-radius:2px;background:#081116ed;box-shadow:0 15px 50px #0006;overflow:auto;scrollbar-width:none}
+#game-shell #overlay:is([data-panel=pause],[data-panel=result]) .panel-heading{display:block;text-align:center;padding:9px 0 17px;margin:0 0 16px;border:0;border-bottom:1px solid #a18a6242;background:none}
+.dialog-emblem{display:none}
+#game-shell #overlay:is([data-panel=pause],[data-panel=result]) .dialog-emblem{display:block;width:36px;height:44px;margin:0 auto 15px;stroke:#cfb37d;stroke-width:1;fill:none}
+#game-shell #overlay:is([data-panel=pause],[data-panel=result]) #modal-eyebrow{font:10px/1.6 Georgia,serif;letter-spacing:3px;color:#c5ab7a;margin-bottom:11px}
+#game-shell #overlay:is([data-panel=pause],[data-panel=result]) #modal-title{font:500 29px/1.4 var(--serif);color:#f0e4cf;letter-spacing:.4px;margin:8px 0 0}
+#game-shell #overlay:is([data-panel=pause],[data-panel=result]) .panel-heading>p{display:none}
+#game-shell #pause-content,#game-shell #result-content{overflow:visible;max-height:none}
+#game-shell .pause-brief{padding:0;border:0;background:none;text-align:center}
+#game-shell #pause-progress{font:15px/1.8 var(--serif);color:#ded5bf;margin:0 0 14px}
+#game-shell #pause-vitals{font:13px/1.9 var(--body);color:#bfc7bb;margin:0 0 11px;padding:0;background:none;border:0}
+#game-shell .pause-description{font:12px/1.8 var(--body);color:#94a69b;margin:7px 0 12px}
+#game-shell .pause-details{border:0;border-top:1px solid var(--menu-line);border-radius:0;background:none;margin:13px 0 0;padding:0}
+#game-shell .pause-details summary{min-height:44px;padding:11px 0;font:13px var(--serif);color:#cbb68d}
+#game-shell #pause-loadout{font:12px/1.9 var(--body);color:#b1beb1;white-space:pre-line;background:none;border:0;padding:0}
+#game-shell .pause-actions,#game-shell .result-actions{padding:15px 0 0;margin-top:14px;border:0;border-top:1px solid var(--menu-line)}
+#game-shell .pause-actions button,#game-shell .result-actions button{min-height:48px;margin:0;border-radius:2px;font:14px/1.6 var(--serif);box-shadow:none}
+#game-shell .pause-actions .primary,#game-shell .result-actions .primary{min-height:52px;font-size:17px;background:linear-gradient(110deg,#411d28,#692b36);border-color:#b98f79;color:#f1e0c5}
+#game-shell .pause-tools{display:grid;grid-template-columns:1fr;gap:8px;margin:10px 0 0}
+#game-shell .pause-tools button{background:none;border:1px solid #a38e6254;color:#d7c7a6}
+#game-shell #retreat{margin-top:15px;background:none;border:0;border-top:1px solid var(--menu-line);font:12px var(--body);color:#9eafa2}
+#game-shell .result-report{padding:0;background:none;border:0}
+#game-shell .result-stats{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:0;padding:0;background:none;border:0}
+#game-shell .result-stats>span{display:flex;flex-direction:column-reverse;justify-content:center;align-items:center;gap:6px;padding:14px 3px;border:0;border-bottom:1px solid var(--menu-line);border-radius:0;background:none;color:#a4b1a3;font:12px/1.5 var(--body)}
+#game-shell .result-stats>span b{font:28px/1.1 Georgia,serif;color:#e2c99a;font-weight:400}
+#game-shell .result-stats>span:nth-child(2){order:-2}
+#game-shell .result-stats>span:nth-child(6){order:-1}
+#game-shell .result-stats>span:is(:nth-child(2),:nth-child(6)) b{font-size:39px;color:#edd9ad}
+#game-shell .result-record{margin:10px 0 0;padding:0;border:0;border-bottom:1px solid var(--menu-line);background:none}
+#game-shell .result-record>summary{min-height:44px;padding:12px 0;font:13px var(--serif);color:#d6c39d}
+#game-shell .result-record p{font:12px/1.8 var(--body);color:#a6b5a7;white-space:pre-line}
+#game-shell #result-note{font:12px/1.8 var(--body);color:#acb7a7;margin:12px 0 0}
+#game-shell #result-track{min-height:44px;margin-top:10px;border-radius:2px;background:#142124;border-color:#9c90644d;color:#d2c49c;font-size:13px}
+#game-shell #result-craft-target{font:12px/1.8 var(--body);color:#b9c3ae}
+#game-shell #result-camp{background:none;border-color:#a38e6254;color:#d3c19e}
+#game-shell #overlay[data-panel=result] .dialog-emblem{height:32px;margin-bottom:8px}
+#game-shell #overlay[data-panel=result] .panel-heading{padding:4px 0 12px;margin-bottom:10px}
+#game-shell #overlay[data-panel=result] .result-stats>span{padding:10px 3px}
+#game-shell #overlay[data-panel=result] .result-stats>span b{font-size:25px}
+#game-shell #overlay[data-panel=result] .result-stats>span:is(:nth-child(2),:nth-child(6)) b{font-size:35px}
+#game-shell #result-note{padding:0;border:0;background:none}
+#game-shell #result-content .result-actions{gap:8px;padding-top:12px;margin-top:12px}
+#game-shell[data-phase=defeat] #overlay[data-panel=result] #modal-title{color:#d5b8aa}
+#game-shell[data-phase=defeat] .result-stats>span b{color:#c4b8a2}
+
+/* Training choices: one legible list with actual effects and available point count. */
+#game-shell[data-phase=camp] #overlay[data-panel=choice]{inset:var(--head-height) var(--menu-rail,0px) var(--nav-height);padding:0;background:#081116;backdrop-filter:none}
+#game-shell[data-phase=camp] #overlay[data-panel=choice] .modal{width:100%;height:100%;max-height:none;max-width:none;margin:0;padding:0;border:0;border-radius:0;background:#081116;overflow:hidden}
+#game-shell #choice-content{height:100%;overflow:auto;padding:0 17px 22px;background:#081116;scrollbar-width:none}
+.training-heading{padding:25px 0 16px;border-bottom:1px solid var(--menu-line)}
+.training-heading small{font:9px Georgia,serif;letter-spacing:3px;color:#bda372}
+.training-heading h3{font:500 28px/1.4 var(--serif);margin:13px 0 10px;color:#ebdfc6}
+.training-heading p{font:12px/1.8 var(--body);color:#9cafa3;margin:0}
+#game-shell #choice-note{font:13px var(--serif);color:#ddc494;background:none;border:0;padding:14px 0;margin:0}
+#game-shell #choice-content .choices{display:block;gap:0}
+#game-shell #choice-content .choices button{display:grid;grid-template-columns:38px minmax(0,1fr) 42px;gap:11px;width:100%;min-height:85px;margin:0;padding:12px 0;border:0;border-bottom:1px solid var(--menu-line);border-radius:0;background:none;box-shadow:none;text-align:left}
+#game-shell #choice-content .choices button>span{font-size:25px;color:#c9af78}
+#game-shell #choice-content .choices strong{font:500 16px var(--serif);color:#e6d8bc}
+#game-shell #choice-content .choices small{display:block;font:12px/1.7 var(--body);color:#a9b9a9;margin-top:7px;word-break:keep-all}
+#game-shell #choice-content .choices b{font:13px Georgia,serif;color:#bcaa83}
+#game-shell #choice-back{min-height:46px;border-radius:2px;background:#111e22;color:#d5bd93;border-color:#aa926444;font:14px var(--serif);margin-top:17px}
+
+/* Existing combat layout is retained; only material and ink are unified. */
+#game-shell .top-hud{background:transparent;box-shadow:none;color:#e9dec8}
+#game-shell .top-hud .hp{border-color:#b49c7050;background:#081116c9}
+#game-shell #hp-fill{background:linear-gradient(90deg,#642e3b,#b3636d)}
+#game-shell #stamina-fill{background:#b49d6f}
+#game-shell .ability{border-color:#b09b6d66;background:#081116a6;color:#e5d6b5;box-shadow:inset 0 0 0 3px #c2ae7d09}
+#game-shell #attack.ability{background:#592835b3;border-color:#cdad8e88}
+#game-shell .battle-actions button{background:#081116b8;border-color:#a996713b;color:#cfc6ad}
+
+@media(max-width:360px){#game-shell .masthead{gap:3px;padding-inline:9px}#game-shell .page-back{min-width:32px;width:32px}#game-shell .page-title{font-size:21px}#game-shell .wallet{gap:4px}#game-shell .wallet b{font-size:12px}#game-shell .wallet i{width:16px}#game-shell .wallet #sound{min-width:34px;width:34px;max-width:34px;padding:7px}#game-shell .app-nav button span{font-size:10px}#game-shell .hub-profile strong{font-size:14px}#game-shell .hub-identity strong{font-size:29px}#game-shell .hub-identity>span{font-size:11px}#camp-drawer .forge button{grid-template-columns:53px minmax(0,1fr) 76px;gap:3px 7px}#camp-drawer .forge button:before{width:52px;height:58px}#camp-drawer .forge button>span{font-size:14px}#camp-drawer .forge button>strong{font-size:11px;padding:7px 4px}#camp-drawer .forge button>small{font-size:10px}#camp-drawer .stage-tabs button{font-size:11px}#track-content .tracking-caption{max-width:72%}#track-content #track-name{font-size:23px}#track-content #track-art{right:-32px}#track-content #track-materials span{font-size:12px}#track-content #track-materials small{font-size:9px}#game-shell #overlay:is([data-panel=pause],[data-panel=result]) .modal{padding:14px}#game-shell #overlay:is([data-panel=pause],[data-panel=result]) #modal-title{font-size:25px}#game-shell #overlay:is([data-panel=pause],[data-panel=result]) .dialog-emblem{height:32px;margin-bottom:9px}#game-shell .result-stats>span{padding:10px 2px}#camp-more-panel .more-menu small{max-width:210px}}
+@media(orientation:landscape) and (max-height:500px){#game-shell #overlay:is([data-panel=pause],[data-panel=result]){padding:8px 12px;align-items:start}#game-shell #overlay:is([data-panel=pause],[data-panel=result]) .modal{max-height:100%;padding:16px}#game-shell #overlay:is([data-panel=pause],[data-panel=result]) .dialog-emblem{display:none}#camp-drawer .forge button{min-height:99px}.growth-hero{min-height:200px}#game-shell .hub-identity strong{font-size:23px}#game-shell .hub-identity>span{display:none}}

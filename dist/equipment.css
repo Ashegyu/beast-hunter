@@ -1,0 +1,154 @@
+/* Alpha 0.40 · the approved portrait armory. Live equipment remains engine-owned. */
+#inventory-content .loot-luck{margin:12px 0 0;padding:0 0 10px;border-bottom:1px solid #b7ac932e;color:#d9bf88;font:11px/1.6 var(--ui-font,sans-serif);overflow-wrap:anywhere}
+#inventory-content .loot-luck small{display:block;color:#909d99;font-size:10px}
+#inventory-content .bag-tile[data-perfect="true"]{box-shadow:inset 0 0 0 1px #fff0b44d,0 0 8px #f2d79825}
+#overlay[data-panel=inventory]{inset:var(--head-height) 0 var(--nav-height);padding:0;background:#0a1116;backdrop-filter:none}
+#overlay[data-panel=inventory] .modal{position:relative;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;border-radius:0;background:#0a1116;box-shadow:none;overflow:hidden}
+#overlay[data-panel=inventory] #inventory-content{position:static;height:100%;padding:0;overflow:auto;overscroll-behavior:contain;scroll-padding-top:52px;scrollbar-width:none;color:#e5e1d7;background:#0a1116}
+#inventory-content::-webkit-scrollbar{display:none}
+#inventory-content [hidden]{display:none!important}
+#inventory-content button{touch-action:manipulation;min-height:44px;border-radius:2px}
+#inventory-content button:focus-visible,#inventory-content :is(select,input,summary):focus-visible{outline:2px solid #e1c28d;outline-offset:2px}
+.game-shell[data-panel=inventory] .masthead{background:linear-gradient(90deg,#0a1116e8,#0a1116b3),url('assets/codex-archive-hero-v039.webp') right 15%/cover}
+.game-shell[data-panel=inventory] .page-back{width:44px;min-width:44px}
+#inventory-content .inventory-tabs{position:sticky;top:0;height:44px;display:grid;grid-template-columns:1fr 1fr;z-index:6;border:0;border-bottom:1px solid #baaa8a35;background:#0a1116f5}
+#inventory-content .inventory-tabs button{position:relative;min-height:44px;padding:0;border:0;border-radius:0;background:transparent!important;color:#8d999b;font:14px var(--serif);box-shadow:none}
+#inventory-content .inventory-tabs button[aria-pressed=true]{color:#e7cfa3}
+#inventory-content .inventory-tabs button[aria-pressed=true]:after{content:'';position:absolute;bottom:-1px;left:21%;right:21%;height:2px;background:#d5b782;box-shadow:0 -2px 10px #d5b78230}
+#inventory-content #bag-feedback{position:relative;padding:9px 16px;margin:0;background:#162128;color:#decdaa;font:11px/1.7 var(--body);border:0}
+#inventory-content #bag-feedback:empty{display:none}
+#inventory-content #equipment-persona{position:relative;display:block;width:100%;height:250px;min-height:250px;margin:0;padding:0;border:0;border-radius:0;overflow:hidden;background:linear-gradient(90deg,#0a1116c9 0%,#0a111620 39%,transparent 60%,#0a11165c 89%,#0a1116a8),linear-gradient(0deg,#0a1116a8,transparent 33%),url('assets/equipment-armory-portrait-v040.webp') center/cover}
+#inventory-content .persona-caption{position:absolute;left:18px;bottom:14px;right:auto;top:auto;width:123px;max-width:none;padding:0;z-index:3;text-shadow:0 2px 9px #03080e}
+#inventory-content .persona-caption>small,#inventory-content .persona-caption>p{display:none}
+#inventory-content .persona-caption>strong{display:block;margin:0 0 4px;font:500 28px/1.4 var(--serif);letter-spacing:1px;color:#f1e6d2}
+#inventory-content .persona-caption>span{font:15px Georgia,serif;color:#d5b782}
+#inventory-content .persona-stats{width:100%;margin:11px 0 0;padding:6px 0 0;border-top:1px solid #b2a38335}
+#inventory-content .persona-stats>div{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:6px 0 0;font:11px/1.5 var(--body);color:#c0c5c0}
+#inventory-content .persona-stats dt{font-weight:400;white-space:nowrap}
+#inventory-content .persona-stats dt:before{content:'✦';font-size:9px;color:#aaaca1;margin-right:5px}
+#inventory-content .persona-stats dd{margin:0;font:13px Georgia,serif;color:#f2e9d6}
+#inventory-content #equipped-open-weapon,#inventory-content #equipped-open-armor,#inventory-content #equipped-open-charm{position:absolute;left:auto;right:16px;top:10px!important;display:grid;place-items:center;width:58px;height:60px;min-height:44px;padding:0;border:1px solid #b8a47c55;border-radius:2px;background:linear-gradient(135deg,#182027ce,#0a1116de);box-shadow:inset 0 0 0 2px #060e143b;z-index:4;overflow:visible}
+#inventory-content #equipped-open-armor{top:90px!important}
+#inventory-content #equipped-open-charm{top:172px!important}
+#inventory-content .equipped-slot .equipment-icon{width:var(--ui-art-slot);height:var(--ui-art-slot);transform:none;image-rendering:auto;border:0;background-color:transparent;box-shadow:none}
+#inventory-content .equipped-slot>div{position:absolute;left:-6px;right:-6px;top:61px;display:block;text-align:center;padding:0;line-height:1}
+#inventory-content .equipped-slot small{display:block;font:10px/1.5 var(--body);color:#c1c6bf;text-shadow:0 2px 6px #000}
+#inventory-content .equipped-slot strong{display:none}
+#inventory-content .equipped-slot:disabled{opacity:.52;cursor:default}
+#inventory-content .equipped-slot:enabled:first-of-type{border-color:#d5b782b3}
+#inventory-content .armory-synergy{position:relative;width:calc(100% - 32px);margin:0 16px;min-height:44px;padding:0 11px;display:flex;align-items:center;gap:9px;border:1px solid #a48d6740;background:linear-gradient(90deg,#25211a79,#0f1a2099);border-radius:2px;box-shadow:none;color:#c4c6ba}
+.armory-synergy svg{flex:none;width:30px;height:24px;stroke:#a8a698;stroke-width:1}
+.armory-synergy strong{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font:12px var(--serif);font-weight:500}
+.armory-synergy small{flex:none;font:10px var(--body);color:#919c9b;border-left:1px solid #a7997a4c;padding-left:9px}
+.armory-synergy>span{margin-left:auto;color:#c4b18b;font:24px Georgia,serif}
+#inventory-content .armory-synergy[data-active=true]{color:#e6d1ab;border-color:#b7a06c88}
+.armory-synergy[data-active=true] svg,.armory-synergy[data-active=true] small{color:#d5b782;stroke:#d5b782}
+#inventory-content .armory-bag{display:block;padding:0 16px 16px;margin:0;border:0;background:#0a1116}
+.armory-bag-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:53px;margin-top:4px}
+#inventory-content .armory-bag-heading h3{font:500 21px var(--serif);color:#e9dfcc;margin:0;white-space:nowrap}
+#bag-capacity{margin-left:7px;font:12px Georgia,serif;color:#a8afa9}
+.armory-bag-heading>div{display:flex;align-items:center;gap:4px}
+#inventory-content #bag-sort{width:80px;max-width:80px;min-height:44px;padding:5px 3px;border:0;border-radius:0;background:transparent;font:11px var(--body);color:#bfc6bf}
+#inventory-content #bag-filter-toggle,#inventory-content #bag-organize{position:relative;display:grid;place-items:center;min-width:44px;width:44px;height:44px;min-height:44px;padding:10px;border:0;background:transparent;color:#a6aea7;box-shadow:none}
+#bag-filter-toggle svg{width:18px;height:18px;stroke-width:1.3}
+#bag-filter-dot{position:absolute;right:6px;top:6px;width:4px;height:4px;border-radius:50%;background:#d5b782}
+#inventory-content #bag-organize{font-size:0}
+#bag-organize:before{content:'';display:block;width:20px;height:20px;background:currentColor;mask:url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.3"%3E%3Cpath d="M3 3h6v6H3zM14 3h6v6h-6zM3 14h6v6H3zM13 17l3 3 6-7"/%3E%3C/svg%3E') center/contain no-repeat}
+#inventory-content #bag-organize[aria-pressed=true]{color:#ebc887;background:#d3b78214}
+#inventory-content #bag-filters{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:0 0 7px;padding:10px 0;border:0;border-bottom:1px solid #afa18724;background:none}
+#inventory-content #bag-filters label{display:flex;flex-direction:column;gap:5px;font:10px var(--body);color:#aab4b1}
+#inventory-content #bag-filters select{width:100%;min-height:44px;padding:6px 9px;border:1px solid #a8a48738;border-radius:2px;background:#142027;color:#e0dccf;font:12px var(--body)}
+#inventory-content #bag-favorites,#inventory-content #bag-filter-reset{grid-column:auto;min-height:44px;margin:0;padding:4px 0;border:0;border-radius:0;background:none;text-align:left;font:11px var(--body);color:#c2b08f}
+.armory-categories{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-bottom:1px solid #b7ac932e;margin:0 0 10px}
+#inventory-content .armory-categories button{position:relative;min-height:44px;display:flex;align-items:center;justify-content:center;gap:5px;border:0;border-radius:0;padding:0;background:transparent;color:#8b999b;font:12px var(--serif);box-shadow:none}
+.armory-categories svg{width:17px;height:17px;stroke-width:1.2}
+#inventory-content .armory-categories button[aria-pressed=true]{color:#e0c596}
+.armory-categories button[aria-pressed=true]:after{content:'';position:absolute;bottom:-1px;left:10%;right:10%;height:2px;background:#d5b782}
+#inventory-content #bag-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:0;margin:0;max-height:none;overflow:visible;border:0;background:none}
+#inventory-content .bag-tile{position:relative;display:grid;place-items:center;aspect-ratio:1;width:100%;min-width:0;min-height:0;padding:7px;overflow:hidden;border:1px solid #9a9d8c30!important;border-radius:2px;background:linear-gradient(135deg,#27303636,#0b1318);box-shadow:inset 0 0 0 2px #b8ad8e06}
+#inventory-content .bag-tile:after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;background:#7c898a}
+#inventory-content .bag-tile[data-rarity='1']:after{background:#769c8c}
+#inventory-content .bag-tile[data-rarity='2']:after{background:#9a80bf}
+#inventory-content .bag-tile[data-rarity='3']:after{background:#d2b784}
+#inventory-content .bag-tile[data-rarity='4']:after{background:#c77c93}
+#inventory-content .bag-tile[data-rarity='5']:after{background:#9bbec7}
+#inventory-content .bag-tile[data-rarity='6']:after{background:#dfbea5}
+#inventory-content .bag-tile[aria-pressed=true]{border-color:#dfc58b!important;box-shadow:inset 0 0 0 1px #dfc58b55,0 0 11px #c89d4933!important}
+#inventory-content .bag-tile .equipment-icon{width:100%;max-width:var(--ui-bag-art);height:auto;aspect-ratio:1;transform:none;margin:0;image-rendering:auto;box-shadow:none;background-color:transparent;border:0;border-radius:0}
+#inventory-content .bag-badge{position:absolute;left:5px;top:4px;font:9px/1 var(--body);color:#e8cc8b}
+#inventory-content .bag-check{position:absolute;right:4px;bottom:4px;color:#e8cc8b}
+#inventory-content #bag-hint{display:block;margin:12px 0 0;padding:0;text-align:center;font:10px/1.8 var(--body);color:#8c9b9c;background:none;border:0}
+#inventory-content .bag-help{font:10px/1.8 var(--body);color:#667d80;margin:17px 0 0;border-top:1px solid #9eaa9a18;padding-top:12px}
+#inventory-content #inventory-empty{font:12px/1.9 var(--body);text-align:center;padding:25px 10px;margin:0;color:#9eaeac}
+#inventory-content #bag-bulk{margin:0 0 12px;padding:12px;border:1px solid #a68d6a55;border-radius:2px;background:#182129;font:12px/1.8 var(--body);color:#d4c6ac}
+#inventory-content #bag-bulk p{white-space:pre-line;font-size:11px;color:#c5c5b7}
+#inventory-content #bag-bulk button{font:11px var(--body);min-height:44px;padding:8px 10px;background:#26302f;border:1px solid #a6a68e33;color:#e1d7c3}
+#inventory-content #bag-confirmation{margin-top:12px;border-top:1px solid #bda17d3b;padding-top:12px}
+#inventory-content #bag-confirm{background:#572834;border-color:#b27f7269}
+#inventory-content #bag-detail:not([hidden]){position:absolute;z-index:12;inset:auto 9px 9px;top:auto;max-height:67%;padding:13px 16px 16px;margin:0;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;border:1px solid #b9a48275;border-top-color:#e2c793a3;border-radius:4px;background:#0c171ef5;box-shadow:0 -20px 60px #000b;backdrop-filter:blur(18px)}
+#inventory-content #bag-detail-close{position:sticky;top:-13px;display:block;width:100%;min-height:44px;padding:0;margin:0 0 10px;border:0;border-radius:0;border-bottom:1px solid #c1ad8540;background:#0c171ef5;text-align:right;font:12px var(--body);color:#d5bf97;z-index:1}
+#inventory-content .item-card{display:block;padding:0;margin:0;border:0;background:none;border-radius:0;box-shadow:none;min-width:0}
+#inventory-content .item-card>.equipment-icon{float:left;width:96px;height:96px;margin:0 9px 9px 0;transform:none;image-rendering:auto;border:0;background-color:transparent;box-shadow:none}
+#inventory-content .item-card>strong{display:block;min-height:52px;font:500 20px/1.5 var(--serif);padding-top:8px}
+#inventory-content .item-card>p{font:12px/1.9 var(--body);margin:10px 0;color:#c6c6b9;white-space:pre-line}
+#inventory-content .item-card>.item-trait{clear:both;padding-top:10px;border-top:1px solid #b7a88a24}
+#inventory-content .item-card>small{clear:both;display:block;font:12px/1.9 var(--body);color:#d7c6a1;border-top:1px solid #b7a88a30;padding-top:12px}
+#inventory-content .item-powers{clear:both;padding:0;border:0;border-bottom:1px solid #b7a88a24;background:none;font:12px/1.9 var(--body)}
+#inventory-content .item-powers>summary{padding:12px 0;min-height:44px;color:#cbb993}
+#inventory-content .item-unique{font:12px/1.9 var(--body);white-space:pre-line}
+#inventory-content .item-card>div{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:15px}
+#inventory-content .item-card>div button{min-height:44px;padding:8px 9px;font:11px var(--body);border:1px solid #9e99843b;background:#263030;color:#e2d5ba}
+#inventory-content .item-card>div button:first-child{background:#58232f;border-color:#b27b7180}
+#inventory-content .item-card>div button:last-child{grid-column:1/-1;background:transparent;color:#a5aaa2}
+#inventory-content .item-card button:disabled{opacity:.4}
+/* Override the older nested bag rules at the sheet boundary. */
+#inventory-content #bag-detail #bag-detail-close{background:#0c171ef5!important;color:#d5bf97!important;border:0;border-bottom:1px solid #c1ad8540;box-shadow:none;min-height:44px}
+#inventory-content #bag-detail .item-card>small{background:transparent;border:0;border-top:1px solid #b7a88a30;padding:12px 0 0;font:12px/1.9 var(--body);color:#d7c6a1}
+#inventory-content #bag-detail .compare-synergy{background:none;border:0;padding:0;color:#c2c4b6;font:12px/1.9 var(--body)}
+#inventory-content #bag-detail .item-card>div{position:sticky;bottom:-16px;display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:10px 0 4px;margin-top:12px;background:#0c171ef5;border-top:1px solid #b3a4802e}
+#inventory-content #bag-detail .item-card>div button{min-height:44px;font:12px var(--body);padding:8px 9px;grid-column:auto;background:transparent!important;border:1px solid #9e99843b;color:#c7bfab!important;box-shadow:none}
+#inventory-content #bag-detail .item-card>div button:first-child{grid-column:1/-1;background:#58232f!important;border-color:#b27b7180!important;color:#eddbc0!important}
+#inventory-build-view{padding:20px 18px 28px}
+.armory-build-heading>small{font:9px Georgia,serif;letter-spacing:2px;color:#b8a17e}
+#inventory-content .armory-build-heading h3{font:500 25px/1.5 var(--serif);color:#ece1ca;margin:9px 0}
+.armory-build-heading>p{font:11px/1.8 var(--body);color:#a6b3b1;margin:0 0 16px}
+#inventory-content #build-library,#inventory-content #bag-equipped{background:none;border:0;border-top:1px solid #b3a48138;border-radius:0;margin:0;padding:0}
+#inventory-content #build-library>summary,#inventory-content #bag-equipped>summary{min-height:44px;padding:12px 0;font:13px var(--serif);color:#d7c19b}
+#inventory-content #build-library>p,#inventory-content #bag-equipped>p{font:11px/1.9 var(--body);color:#9dacaa}
+#inventory-content .build-card{margin:0;padding:18px 0 20px;border:0;border-bottom:1px solid #b3a4812e;border-radius:0;background:none}
+#inventory-content .build-card label{display:flex;align-items:center;gap:12px;font:13px var(--serif);color:#c6b28b}
+#inventory-content .build-card input{min-width:0;flex:1;min-height:44px;border:1px solid #929d903c;border-radius:2px;background:#152028;color:#e4d8bf;font:12px var(--body);padding:7px 10px}
+#inventory-content .build-card p{font:11px/1.9 var(--body);color:#b7c0b8;white-space:pre-line;margin:10px 0}
+#inventory-content .build-card>div{display:grid;grid-template-columns:1.7fr 1fr 1fr;gap:7px}
+#inventory-content .build-card button{min-height:44px;padding:8px 5px;font:11px var(--body);border:1px solid #a2937545;background:#25302d;color:#dfcfad}
+#inventory-content .build-card button:disabled{opacity:.35}
+#inventory-content #bag-equipped details{padding:10px 0;background:none;border:0;border-top:1px solid #b3a48122;border-radius:0;font:12px/1.9 var(--body);color:#b8c1b8;white-space:pre-line}
+#inventory-content #bag-equipped details>summary{min-height:44px;color:#d3bc94;font-size:12px}
+#inventory-content .weapon-preview{position:static;top:auto!important;left:auto;right:auto;width:100%;padding:0;margin:18px 0;border:0;border-top:1px solid #b3a48138;border-radius:0;background:transparent}
+#inventory-content .weapon-preview>summary{min-height:44px;padding:12px 0;text-align:left;list-style:revert;border:0;border-radius:0;background:none;color:#c4b392;font:12px var(--body)}
+#inventory-content .weapon-preview[open]{position:static!important;top:auto!important;width:100%!important;padding:0!important;box-shadow:none;border:0!important;background:none!important}
+#inventory-content .weapon-preview canvas{display:block;width:240px;max-width:100%;height:280px;max-height:none;image-rendering:pixelated;margin:0 auto}
+#inventory-content .armory-return{position:sticky;bottom:0;padding:8px 16px;background:#0a1116f2;border-top:1px solid #b4a07e44;z-index:7}
+#inventory-content .armory-return button{width:100%;min-height:44px;font:13px var(--serif)}
+.game-shell[data-phase=camp] #inventory-content .armory-return{display:none}
+.game-shell:not([data-phase=camp]) #overlay[data-panel=inventory]{inset:12px 6px}
+@media(max-width:350px){
+ #inventory-content #equipment-persona{height:250px;min-height:250px}
+ #inventory-content .persona-caption{left:14px;width:111px;bottom:17px}
+ #inventory-content .persona-caption>strong{font-size:25px}
+ #inventory-content .persona-stats>div{font-size:10px}
+ #inventory-content .persona-stats dd{font-size:12px}
+ #inventory-content #equipped-open-weapon,#inventory-content #equipped-open-armor,#inventory-content #equipped-open-charm{right:12px;width:52px;height:59px}
+ #inventory-content .equipped-slot>div{top:60px}
+ #inventory-content #equipped-open-armor{top:92px!important}
+ #inventory-content #equipped-open-charm{top:174px!important}
+ #inventory-content .armory-bag{padding-left:12px;padding-right:12px}
+ #inventory-content .armory-synergy{width:calc(100% - 24px);margin:0 12px;gap:7px;padding:0 8px}
+ .armory-bag-heading{gap:4px}
+ #inventory-content .armory-bag-heading h3{font-size:19px}
+ #bag-capacity{font-size:10px;margin-left:4px}
+ #inventory-content #bag-sort{width:67px;font-size:10px}
+ #inventory-content .armory-categories button{font-size:11px;gap:3px}
+ #inventory-content #bag-grid{gap:6px}
+}
+@media(max-height:500px){#inventory-content #equipment-persona{height:270px;min-height:270px}}

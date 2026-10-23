@@ -1,0 +1,90 @@
+{
+  "method": "Read-only browser DOM inspection; visual review at 844x390 and 568x320",
+  "screens": [
+    {
+      "viewport": "568x320",
+      "frame": "568x320",
+      "clipped": [],
+      "blocked": [],
+      "slots": 3,
+      "stats": {
+        "attack": "198",
+        "health": "837.4",
+        "critical": "50.0%"
+      },
+      "background": {
+        "asset": "assets/craft-forge-v041.webp",
+        "brightness": 1.55,
+        "pointerEvents": "none"
+      }
+    },
+    {
+      "viewport": "667x375",
+      "frame": "667x375",
+      "clipped": [],
+      "blocked": [],
+      "slots": 3,
+      "stats": {
+        "attack": "198",
+        "health": "837.4",
+        "critical": "50.0%"
+      },
+      "background": {
+        "asset": "assets/craft-forge-v041.webp",
+        "brightness": 1.55,
+        "pointerEvents": "none"
+      }
+    },
+    {
+      "viewport": "915x412",
+      "frame": "915x412",
+      "clipped": [],
+      "blocked": [],
+      "slots": 3,
+      "stats": {
+        "attack": "198",
+        "health": "837.4",
+        "critical": "50.0%"
+      },
+      "background": {
+        "asset": "assets/craft-forge-v041.webp",
+        "brightness": 1.55,
+        "pointerEvents": "none"
+      }
+    },
+    {
+      "viewport": "1280x720",
+      "frame": "900x405",
+      "clipped": [],
+      "blocked": [],
+      "slots": 3,
+      "stats": {
+        "attack": "198",
+        "health": "837.4",
+        "critical": "50.0%"
+      },
+      "background": {
+        "asset": "assets/craft-forge-v041.webp",
+        "brightness": 1.55,
+        "pointerEvents": "none"
+      }
+    },
+    {
+      "viewport": "844x390",
+      "frame": "844x390",
+      "clipped": [],
+      "blocked": [],
+      "slots": 3,
+      "stats": {
+        "attack": "198",
+        "health": "837.4",
+        "critical": "50.0%"
+      },
+      "background": {
+        "asset": "assets/craft-forge-v041.webp",
+        "brightness": 1.55,
+        "pointerEvents": "none"
+      }
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "name": "panel",
+    "source": "art/ui080/panel-source.png",
+    "delivery": "dist/assets/ui-panel-v080.webp",
+    "width": 1254,
+    "height": 1254,
+    "bytes": 1841466,
+    "rgbaBytes": 6290064,
+    "sourceSha256": "d4720e722f6b65286959bf8b6d542756e462a0f6cd3828e4638a91995923d25c",
+    "deliverySha256": "c7f8ac536de6557f707925f5c1181c3d62204c60d8594c5e237be3745323027a",
+    "rgbaIdentical": true
+  },
+  {
+    "name": "slot",
+    "source": "art/ui080/slot-source.png",
+    "delivery": "dist/assets/ui-slot-v080.webp",
+    "width": 1254,
+    "height": 1254,
+    "bytes": 1779718,
+    "rgbaBytes": 6290064,
+    "sourceSha256": "797cca9b0e5c26c6d9d07c40b5ea4e0b4f2b972575d6c0d2507045cb4e73a406",
+    "deliverySha256": "15261734003950e8c5269e12165a0138ac8eafae730e02919de0b6ca73e6167a",
+    "rgbaIdentical": true
+  },
+  {
+    "name": "crest",
+    "source": "art/ui080/crest-source.png",
+    "delivery": "dist/assets/ui-crest-v080.webp",
+    "width": 2172,
+    "height": 724,
+    "bytes": 328808,
+    "rgbaBytes": 6290112,
+    "sourceSha256": "bae4598c4aaa621e3c9c66a6b2f79c1324d3026ccaf13dc221fa7e70971f2910",
+    "deliverySha256": "a952df69040ba20057913dd0ebbc4233bc29b222ad137bff28d7788141753b1d",
+    "rgbaIdentical": true
+  },
+  {
+    "name": "nav",
+    "source": "art/ui080/nav-source.png",
+    "delivery": "dist/assets/ui-nav-v080.webp",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 1562110,
+    "rgbaBytes": 6291456,
+    "sourceSha256": "9482f8dabfec7ffdbd052671fbfcfa8abf309639d08ebd6b77b34251527ce67d",
+    "deliverySha256": "daecea5194e4542b08f2a4be0f02923d1d706c3d5c1e262304ce5f82919ecf34",
+    "rgbaIdentical": true
+  },
+  {
+    "name": "utility",
+    "source": "art/ui080/utility-source.png",
+    "delivery": "dist/assets/ui-utility-v080.webp",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 1776656,
+    "rgbaBytes": 6291456,
+    "sourceSha256": "5ffc42702c68df6fb3a186fbaeb5475fce83b0b6c673db6c837e488a1e853d59",
+    "deliverySha256": "6e40e5a00f3b3c7f00d326fc9f35a7b9ad857bc12aa1a9e4e81c1a3c3cc65f78",
+    "rgbaIdentical": true
+  }
+]

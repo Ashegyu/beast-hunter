@@ -1,0 +1,128 @@
+{
+  "source": {
+    "saved_version": 166,
+    "commit_sha": "90a0324021c812f547e702f61974dee7806bef63",
+    "original_files": 1362,
+    "original_bytes": 642987619,
+    "missing_files": [],
+    "sha256_manifest": "SOURCE_MANIFEST.json",
+    "original_files_modified": false
+  },
+  "local_server": {
+    "node": "v24.13.1",
+    "host": "127.0.0.1",
+    "port": 8080,
+    "dist_files_checked": 463,
+    "failed_responses": [],
+    "http_checks": [
+      {
+        "url": "/",
+        "method": "GET",
+        "status": 200,
+        "type": "text/html; charset=utf-8",
+        "length": "389088",
+        "contentRange": null
+      },
+      {
+        "url": "/app.js",
+        "method": "GET",
+        "status": 200,
+        "type": "text/javascript; charset=utf-8",
+        "length": "208608",
+        "contentRange": null
+      },
+      {
+        "url": "/assets/fonts/Pretendard-Regular.woff2",
+        "method": "HEAD",
+        "status": 200,
+        "type": "font/woff2",
+        "length": "765892",
+        "contentRange": null
+      },
+      {
+        "url": "/README.md",
+        "method": "GET",
+        "status": 404,
+        "type": "text/plain; charset=utf-8",
+        "length": null,
+        "contentRange": null
+      },
+      {
+        "url": "/%2e%2e%2fpackage.json",
+        "method": "GET",
+        "status": 403,
+        "type": "text/plain; charset=utf-8",
+        "length": null,
+        "contentRange": null
+      },
+      {
+        "url": "/",
+        "method": "POST",
+        "status": 405,
+        "type": "text/plain; charset=utf-8",
+        "length": null,
+        "contentRange": null
+      },
+      {
+        "url": "/app.js",
+        "method": "GET",
+        "range": "bytes=0-15",
+        "status": 206,
+        "type": "text/javascript; charset=utf-8",
+        "length": "16",
+        "contentRange": "bytes 0-15/208608"
+      },
+      {
+        "url": "/app.js",
+        "method": "GET",
+        "range": "bytes=999999999-",
+        "status": 416,
+        "type": "text/plain; charset=utf-8",
+        "length": null,
+        "contentRange": "bytes */208608"
+      }
+    ]
+  },
+  "existing_tests": {
+    "total": 776,
+    "passed": 744,
+    "failed": 32,
+    "cancelled": 0,
+    "skipped": 0,
+    "exit_code": 1,
+    "log": "LOCAL_TEST_RESULTS.txt",
+    "note": "Tests ran against unchanged original game source. Failure causes have not been fixed or fully diagnosed in this export task."
+  },
+  "browser_gameplay_verified": false,
+  "external_runtime_urls": [
+    {
+      "file": "dist/bag-scene.css",
+      "urls": [
+        "http://www.w3.org/2000/svg"
+      ]
+    },
+    {
+      "file": "dist/equipment.css",
+      "urls": [
+        "http://www.w3.org/2000/svg"
+      ]
+    },
+    {
+      "file": "dist/home-scene.css",
+      "urls": [
+        "http://www.w3.org/2000/svg"
+      ]
+    },
+    {
+      "file": "dist/menus.css",
+      "urls": [
+        "http://www.w3.org/2000/svg"
+      ]
+    }
+  ],
+  "packaging": {
+    "game_archive": "beast-hunter-local-game.zip",
+    "art_and_tools_archive": "beast-hunter-art-and-tools.zip",
+    "extract_both_into_same_parent": true
+  }
+}

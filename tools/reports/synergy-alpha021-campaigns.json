@@ -1,0 +1,80 @@
+[
+  {
+    "build": "shatter",
+    "chapter": 1,
+    "phase": "victory",
+    "kills": 17,
+    "time": 33.079999999999224,
+    "synergies": {
+      "shatter": 6,
+      "execute": 0
+    },
+    "hp": 377,
+    "peakEffects": 16
+  },
+  {
+    "build": "shatter",
+    "chapter": 2,
+    "phase": "victory",
+    "kills": 17,
+    "time": 40.27499999999881,
+    "synergies": {
+      "shatter": 4,
+      "execute": 0
+    },
+    "hp": 391,
+    "peakEffects": 20
+  },
+  {
+    "build": "shatter",
+    "chapter": 3,
+    "phase": "victory",
+    "kills": 17,
+    "time": 44.28999999999859,
+    "synergies": {
+      "shatter": 5,
+      "execute": 0
+    },
+    "hp": 361.3997500000003,
+    "peakEffects": 17
+  },
+  {
+    "build": "execute",
+    "chapter": 1,
+    "phase": "victory",
+    "kills": 17,
+    "time": 36.16499999999904,
+    "synergies": {
+      "shatter": 0,
+      "execute": 3
+    },
+    "hp": 366,
+    "peakEffects": 14
+  },
+  {
+    "build": "execute",
+    "chapter": 2,
+    "phase": "victory",
+    "kills": 17,
+    "time": 41.814999999998726,
+    "synergies": {
+      "shatter": 0,
+      "execute": 4
+    },
+    "hp": 381,
+    "peakEffects": 28
+  },
+  {
+    "build": "execute",
+    "chapter": 3,
+    "phase": "victory",
+    "kills": 17,
+    "time": 49.4049999999983,
+    "synergies": {
+      "shatter": 0,
+      "execute": 2
+    },
+    "hp": 312.9360000000008,
+    "peakEffects": 20
+  }
+]

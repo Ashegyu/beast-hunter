@@ -1,0 +1,428 @@
+[
+  {
+    "id": "crescent",
+    "source": "recovered prior generated skill art",
+    "sourceName": "붉은 잔광의 월아참.png",
+    "original": "art/skills049/originals/crescent.png",
+    "asset": "dist/assets/skills/crescent.webp",
+    "bytes": 17284,
+    "sha256": "5b7f080a2536bb2df82f06712096ed0aa6030028baa1025ab8104df862078e8c",
+    "prompt": "Original generation prompt unavailable in recovered PNG; no new generation claimed."
+  },
+  {
+    "id": "gale",
+    "source": "recovered prior generated skill art",
+    "sourceName": "진홍 궤적의 은빛 질풍참.png",
+    "original": "art/skills049/originals/gale.png",
+    "asset": "dist/assets/skills/gale.webp",
+    "bytes": 17574,
+    "sha256": "8e8825d7c0b48ef5023bd47f022574b58b8e7f0396ce7d7994779f384c8d888b",
+    "prompt": "Original generation prompt unavailable in recovered PNG; no new generation claimed."
+  },
+  {
+    "id": "dance",
+    "source": "recovered prior generated skill art",
+    "sourceName": "은빛 검의 붉은 윤무.png",
+    "original": "art/skills049/originals/dance.png",
+    "asset": "dist/assets/skills/dance.webp",
+    "bytes": 19568,
+    "sha256": "15532955c8def0d2e8a648f2ff408fff0e9462438533e3502f4176f212cd8291",
+    "prompt": "Original generation prompt unavailable in recovered PNG; no new generation claimed."
+  },
+  {
+    "id": "draw",
+    "source": "recovered prior generated skill art",
+    "sourceName": "핏빛 달빛의 은검 발도.png",
+    "original": "art/skills049/originals/draw.png",
+    "asset": "dist/assets/skills/draw.webp",
+    "bytes": 14934,
+    "sha256": "3201a2c9ef37ff3c1c4839710d7d5275681a754f2f27b6c25ecce79d0fe9e0f3",
+    "prompt": "Original generation prompt unavailable in recovered PNG; no new generation claimed."
+  },
+  {
+    "id": "plunge",
+    "source": "recovered prior generated skill art",
+    "sourceName": "낙월의 붉은 초승달.png",
+    "original": "art/skills049/originals/plunge.png",
+    "asset": "dist/assets/skills/plunge.webp",
+    "bytes": 20088,
+    "sha256": "289d1901b741b404e984329cf4163a5a419a7c6305edea6ac8c78bc2343449a6",
+    "prompt": "Original generation prompt unavailable in recovered PNG; no new generation claimed."
+  },
+  {
+    "id": "parry",
+    "source": "recovered prior generated skill art",
+    "sourceName": "은빛 흘려베기와 붉은 반격.png",
+    "original": "art/skills049/originals/parry.png",
+    "asset": "dist/assets/skills/parry.webp",
+    "bytes": 18052,
+    "sha256": "61b33d92a70928ee025386f8095a244c9ad1fd7b8e7ab47686db110dad5bb9ce",
+    "prompt": "Original generation prompt unavailable in recovered PNG; no new generation claimed."
+  },
+  {
+    "id": "echo",
+    "source": "recovered prior generated skill art",
+    "sourceName": "붉은 잔영의 은빛 검격.png",
+    "original": "art/skills049/originals/echo.png",
+    "asset": "dist/assets/skills/echo.webp",
+    "bytes": 17870,
+    "sha256": "2c39b48887e148d6ce902929bf761f043f29cf1bd6344bdeb9e0030dc420252f",
+    "prompt": "Original generation prompt unavailable in recovered PNG; no new generation claimed."
+  },
+  {
+    "id": "bloodmoon",
+    "source": "recovered prior generated skill art",
+    "sourceName": "붉은 월식의 삼중 검무.png",
+    "original": "art/skills049/originals/bloodmoon.png",
+    "asset": "dist/assets/skills/bloodmoon.webp",
+    "bytes": 21990,
+    "sha256": "a9ced97614fc2a170458b4a5d89601e9d1c1bf7fdfd72887e5ee6d750a9a1ddd",
+    "prompt": "Original generation prompt unavailable in recovered PNG; no new generation claimed."
+  },
+  {
+    "id": "opening",
+    "source": "recovered prior generated skill art",
+    "sourceName": "붉은 초승달의 은빛 틈.png",
+    "original": "art/skills049/originals/opening.png",
+    "asset": "dist/assets/skills/opening.webp",
+    "bytes": 11998,
+    "sha256": "befc011104b9db8568c788040324aa23f80255d186d5c989e48825c34b3fcc18",
+    "prompt": "Original generation prompt unavailable in recovered PNG; no new generation claimed."
+  },
+  {
+    "id": "flow",
+    "source": "recovered prior generated skill art",
+    "sourceName": "붉은 후광을 두른 은빛 검무.png",
+    "original": "art/skills049/originals/flow.png",
+    "asset": "dist/assets/skills/flow.webp",
+    "bytes": 14844,
+    "sha256": "63cafcb887c49031fa319091081ed99b46dc0dfe57791eea90b5d3c5b48d8fed",
+    "prompt": "Original generation prompt unavailable in recovered PNG; no new generation claimed."
+  },
+  {
+    "id": "finisher",
+    "source": "recovered prior generated skill art",
+    "sourceName": "붉은 별에 닿은 은빛 검끝.png",
+    "original": "art/skills049/originals/finisher.png",
+    "asset": "dist/assets/skills/finisher.webp",
+    "bytes": 14124,
+    "sha256": "8a432c03d03c41a4618e3a458ffa528d07380ac5e1df789a767fdfd7041d9f76",
+    "prompt": "Original generation prompt unavailable in recovered PNG; no new generation claimed."
+  },
+  {
+    "id": "footwork",
+    "source": "recovered prior generated skill art",
+    "sourceName": "붉은 궤적을 넘는 사냥꾼의 발걸음.png",
+    "original": "art/skills049/originals/footwork.png",
+    "asset": "dist/assets/skills/footwork.webp",
+    "bytes": 16150,
+    "sha256": "c41f779242f18dd723e8d279f1f655d6a9db10006f6221af21ca1dc59fedf51b",
+    "prompt": "Original generation prompt unavailable in recovered PNG; no new generation claimed."
+  },
+  {
+    "id": "pursuit",
+    "source": "recovered prior generated skill art",
+    "sourceName": "붉은 잔상을 좇는 은빛 칼날.png",
+    "original": "art/skills049/originals/pursuit.png",
+    "asset": "dist/assets/skills/pursuit.webp",
+    "bytes": 13334,
+    "sha256": "9616338ed97ecaf7a60b7cc9cbabb3dd839b12d7344e066e753957682ae333ff",
+    "prompt": "Original generation prompt unavailable in recovered PNG; no new generation claimed."
+  },
+  {
+    "id": "imbalance",
+    "source": "recovered prior generated skill art",
+    "sourceName": "무너진 균형의 은빛 칼날.png",
+    "original": "art/skills049/originals/imbalance.png",
+    "asset": "dist/assets/skills/imbalance.webp",
+    "bytes": 19480,
+    "sha256": "6f9d701fdcfd8727863d3aab73f11d47fdd0a3e0196e5fa283b0447cdd6d47f7",
+    "prompt": "Original generation prompt unavailable in recovered PNG; no new generation claimed."
+  },
+  {
+    "id": "breath",
+    "source": "recovered prior generated skill art",
+    "sourceName": "은빛 호흡의 불씨.png",
+    "original": "art/skills049/originals/breath.png",
+    "asset": "dist/assets/skills/breath.webp",
+    "bytes": 13408,
+    "sha256": "5275c772d31ec0696b6ef6b0c2b3cff46540bb99d841265e06c68b4e84581f13",
+    "prompt": "Original generation prompt unavailable in recovered PNG; no new generation claimed."
+  },
+  {
+    "id": "resolve",
+    "source": "recovered prior generated skill art",
+    "sourceName": "적월 앞의 은빛 검.png",
+    "original": "art/skills049/originals/resolve.png",
+    "asset": "dist/assets/skills/resolve.webp",
+    "bytes": 17864,
+    "sha256": "0e3e76415b1621083a943e0f4f41167f345d1f8001a15cc0139f3d42d39250d3",
+    "prompt": "Original generation prompt unavailable in recovered PNG; no new generation claimed."
+  },
+  {
+    "id": "triple",
+    "name": "연월참",
+    "prompt": "Use case: stylized-concept. Asset type: individual square fantasy RPG skill icon for mobile game, 연월참. Subject: three parallel bright silver sword slash arcs converging into one red moon, sequential narrow triple strike. Painterly polished silver steel and crimson moonlight on blue-black charcoal background, subtle thin beveled silver border with clipped corners. One strong central readable silhouette, dramatic restrained red particles, high contrast readable at 48px. No lettering, no words, no numerals, no UI labels, no collage. Match premium dark moon swordswoman skill icon set. Square 1:1.",
+    "source": "Built-in image_gen; one separate generation call per asset",
+    "original": "art/skills049/originals/triple.png",
+    "asset": "dist/assets/skills/triple.webp",
+    "bytes": 25932,
+    "sha256": "92ec4dfb93a53c60aa0e6eaa3bec1ab4236b728d88a5038c5d6bb3f8c6bec8b9",
+    "dimensions": [
+      256,
+      256
+    ]
+  },
+  {
+    "id": "seeking",
+    "name": "추적 검기",
+    "prompt": "Use case: stylized-concept. Individual square fantasy RPG skill icon, 추적 검기. Subject ONLY: one curved silver spectral blade following a curved crimson trail toward a small distant red target. Polished painterly silver steel and crimson moonlight on blue-black charcoal background. Thin simple beveled silver border with clipped corners. Single strong central silhouette readable at 48px. Restrained red particles. No people, no landscape, no lettering, no words, no numerals, no UI labels, no collage. Premium dark moon swordswoman skill icon set. Square 1:1.",
+    "source": "Built-in image_gen; one separate generation call per asset",
+    "original": "art/skills049/originals/seeking.png",
+    "asset": "dist/assets/skills/seeking.webp",
+    "bytes": 16058,
+    "sha256": "45640582965a7046875acfed99ee688697feeffbd2c18e1ce97d85f4a4ad9f26",
+    "dimensions": [
+      256,
+      256
+    ]
+  },
+  {
+    "id": "returning",
+    "name": "회귀월",
+    "prompt": "Use case: stylized-concept. Individual square fantasy RPG skill icon, 회귀월. Subject ONLY: a silver crescent blade and its looping crimson return trail forming a clear oval around a red moon. Polished painterly silver steel and crimson moonlight on blue-black charcoal background. Thin simple beveled silver border with clipped corners. Single strong central silhouette readable at 48px. Restrained red particles. No people, no landscape, no lettering, no words, no numerals, no UI labels, no collage. Premium dark moon swordswoman skill icon set. Square 1:1.",
+    "source": "Built-in image_gen; one separate generation call per asset",
+    "original": "art/skills049/originals/returning.png",
+    "asset": "dist/assets/skills/returning.webp",
+    "bytes": 18824,
+    "sha256": "53444c4ceff927b01dcdd6081944117b64e8e11e2edcb6dd7aede1271cd90f43",
+    "dimensions": [
+      256,
+      256
+    ]
+  },
+  {
+    "id": "field",
+    "name": "잔월진",
+    "prompt": "Use case: stylized-concept. Individual square fantasy RPG skill icon, 잔월진. Subject ONLY: a tilted circular crimson magical ground field with three short silver blades rising within the ring. Polished painterly silver steel and crimson moonlight on blue-black charcoal background. Thin simple beveled silver border with clipped corners. Single strong central silhouette readable at 48px. Restrained red particles. No people, no landscape, no lettering, no words, no numerals, no UI labels, no collage. Premium dark moon swordswoman skill icon set. Square 1:1.",
+    "source": "Built-in image_gen; one separate generation call per asset",
+    "original": "art/skills049/originals/field.png",
+    "asset": "dist/assets/skills/field.webp",
+    "bytes": 19308,
+    "sha256": "a4071ccc6efd98e4269948c2ef549d4b67589a7765e7cb828062b313593dfa63",
+    "dimensions": [
+      256,
+      256
+    ]
+  },
+  {
+    "id": "breach",
+    "name": "파갑참",
+    "prompt": "Use case: stylized-concept. Individual square fantasy RPG skill icon, 파갑참. Subject ONLY: a heavy silver sword splitting a cracked dark metal breastplate with a sharp crimson impact. Polished painterly silver steel and crimson moonlight on blue-black charcoal background. Thin simple beveled silver border with clipped corners. Single strong central silhouette readable at 48px. Restrained red particles. No people, no landscape, no lettering, no words, no numerals, no UI labels, no collage. Premium dark moon swordswoman skill icon set. Square 1:1.",
+    "source": "Built-in image_gen; one separate generation call per asset",
+    "original": "art/skills049/originals/breach.png",
+    "asset": "dist/assets/skills/breach.webp",
+    "bytes": 25082,
+    "sha256": "eecd9248b1e0b84680897a012b330b7ef940bbc8b76ebf41fd49ca0e4c5966e1",
+    "dimensions": [
+      256,
+      256
+    ]
+  },
+  {
+    "id": "gather",
+    "name": "월쇄",
+    "prompt": "Use case: stylized-concept. Individual square fantasy RPG skill icon, 월쇄. Subject ONLY: three inward curling silver slash crescents pulling dark fragments toward a bright crimson central sword. Polished painterly silver steel and crimson moonlight on blue-black charcoal background. Thin simple beveled silver border with clipped corners. Single strong central silhouette readable at 48px. Restrained red particles. No people, no landscape, no lettering, no words, no numerals, no UI labels, no collage. Premium dark moon swordswoman skill icon set. Square 1:1.",
+    "source": "Built-in image_gen; one separate generation call per asset",
+    "original": "art/skills049/originals/gather.png",
+    "asset": "dist/assets/skills/gather.webp",
+    "bytes": 21794,
+    "sha256": "0804867641ce22c51c6e1c5e662d0f63e0f474f5fc25079ef4b042b868d64290",
+    "dimensions": [
+      256,
+      256
+    ]
+  },
+  {
+    "id": "stance",
+    "name": "수월의 자세",
+    "prompt": "Use case: stylized-concept. Individual square fantasy RPG skill icon, 수월의 자세. Subject ONLY: a vertical silver katana reflected in calm dark water within a protective crimson crescent halo. Polished painterly silver steel and crimson moonlight on blue-black charcoal background. Thin simple beveled silver border with clipped corners. Single strong central silhouette readable at 48px. Restrained red particles. No people, no landscape, no lettering, no words, no numerals, no UI labels, no collage. Premium dark moon swordswoman skill icon set. Square 1:1.",
+    "source": "Built-in image_gen; one separate generation call per asset",
+    "original": "art/skills049/originals/stance.png",
+    "asset": "dist/assets/skills/stance.webp",
+    "bytes": 14802,
+    "sha256": "8a0fa8ccae2846528984d9c6d72af78008553ec01e76683c71562939a308b808",
+    "dimensions": [
+      256,
+      256
+    ]
+  },
+  {
+    "id": "mark",
+    "name": "월영 표식",
+    "prompt": "Use case: stylized-concept. Individual square fantasy RPG skill icon, 월영 표식. Subject ONLY: a luminous crimson crescent target sigil pierced by a small silver sword tip, four clear notches. Polished painterly silver steel and crimson moonlight on blue-black charcoal background. Thin simple beveled silver border with clipped corners. Single strong central silhouette readable at 48px. Restrained red particles. No people, no landscape, no lettering, no words, no numerals, no UI labels, no collage. Premium dark moon swordswoman skill icon set. Square 1:1.",
+    "source": "Built-in image_gen; one separate generation call per asset",
+    "original": "art/skills049/originals/mark.png",
+    "asset": "dist/assets/skills/mark.webp",
+    "bytes": 19020,
+    "sha256": "4448b57a23f60c51b3353a38cb59980672ef4c8b703935ee9b447b0398dc95e1",
+    "dimensions": [
+      256,
+      256
+    ]
+  },
+  {
+    "id": "bloodblade",
+    "name": "혈월의 칼날",
+    "prompt": "Use case: stylized-concept. Individual square fantasy RPG skill icon, 혈월의 칼날. Subject ONLY: one upright steel sword engulfed in a crimson lunar aura, strong single blade silhouette. Polished painterly silver steel and crimson moonlight on blue-black charcoal background. Thin simple beveled silver border with clipped corners. Single strong central silhouette readable at 48px. Restrained red particles. No people, no landscape, no lettering, no words, no numerals, no UI labels, no collage. Premium dark moon swordswoman skill icon set. Square 1:1.",
+    "source": "Built-in image_gen; one separate generation call per asset",
+    "original": "art/skills049/originals/bloodblade.png",
+    "asset": "dist/assets/skills/bloodblade.webp",
+    "bytes": 17012,
+    "sha256": "88def81a6eb8d3d0f14c303e76c69c7bf68570634f70abaf8b78d8c0278c3ca9",
+    "dimensions": [
+      256,
+      256
+    ]
+  },
+  {
+    "id": "lone",
+    "name": "고독한 사냥",
+    "prompt": "Use case: stylized-concept. Individual square fantasy RPG skill icon, 고독한 사냥. Subject ONLY: one solitary upright silver sword beneath a small crimson moon, vast empty charcoal space. Polished painterly silver steel and crimson moonlight on blue-black charcoal background. Thin simple beveled silver border with clipped corners. Single strong central silhouette readable at 48px. Restrained red particles. No people, no landscape, no lettering, no words, no numerals, no UI labels, no collage. Premium dark moon swordswoman skill icon set. Square 1:1.",
+    "source": "Built-in image_gen; one separate generation call per asset",
+    "original": "art/skills049/originals/lone.png",
+    "asset": "dist/assets/skills/lone.webp",
+    "bytes": 8220,
+    "sha256": "5cd14ad47c1e1691fb78022fa0432ebbbc10ec0162002d10a00b761ff26d8e25",
+    "dimensions": [
+      256,
+      256
+    ]
+  },
+  {
+    "id": "surrounded",
+    "name": "포위 돌파",
+    "prompt": "Use case: stylized-concept. Individual square fantasy RPG skill icon, 포위 돌파. Subject ONLY: a central silver sword bursting outward through a surrounding ring of dark spear silhouettes. Polished painterly silver steel and crimson moonlight on blue-black charcoal background. Thin simple beveled silver border with clipped corners. Single strong central silhouette readable at 48px. Restrained red particles. No people, no landscape, no lettering, no words, no numerals, no UI labels, no collage. Premium dark moon swordswoman skill icon set. Square 1:1.",
+    "source": "Built-in image_gen; one separate generation call per asset",
+    "original": "art/skills049/originals/surrounded.png",
+    "asset": "dist/assets/skills/surrounded.webp",
+    "bytes": 21840,
+    "sha256": "4380d01d17468e32ac5b3dfcadda467055e69e62188c5093c87a3c38ec924d1e",
+    "dimensions": [
+      256,
+      256
+    ]
+  },
+  {
+    "id": "scar",
+    "name": "깊은 검흔",
+    "prompt": "Use case: stylized-concept. Individual square fantasy RPG skill icon, 깊은 검흔. Subject ONLY: three deep diagonal crimson slashes scored across a dark steel plate, silver sharp cut edges. Polished painterly silver steel and crimson moonlight on blue-black charcoal background. Thin simple beveled silver border with clipped corners. Single strong central silhouette readable at 48px. Restrained red particles. No people, no landscape, no lettering, no words, no numerals, no UI labels, no collage. Premium dark moon swordswoman skill icon set. Square 1:1.",
+    "source": "Built-in image_gen; one separate generation call per asset",
+    "original": "art/skills049/originals/scar.png",
+    "asset": "dist/assets/skills/scar.webp",
+    "bytes": 21042,
+    "sha256": "3ae3cdfaae4738a1c9dbef4bada100de463ed684d6e49c1a735d3acb55b3f6bc",
+    "dimensions": [
+      256,
+      256
+    ]
+  },
+  {
+    "id": "recovery",
+    "name": "회수의 궤적",
+    "prompt": "Use case: stylized-concept. Individual square fantasy RPG skill icon, 회수의 궤적. Subject ONLY: a small silver crescent returning along a crimson circular trail toward an open silver armored hand. Polished painterly silver steel and crimson moonlight on blue-black charcoal background. Thin simple beveled silver border with clipped corners. Single strong central silhouette readable at 48px. Restrained red particles. No people, no landscape, no lettering, no words, no numerals, no UI labels, no collage. Premium dark moon swordswoman skill icon set. Square 1:1.",
+    "source": "Built-in image_gen; one separate generation call per asset",
+    "original": "art/skills049/originals/recovery.png",
+    "asset": "dist/assets/skills/recovery.webp",
+    "bytes": 19244,
+    "sha256": "f1f07a0b03f473f000f553a258fbed8fe49245637b952315c50adfa3d6b254b9",
+    "dimensions": [
+      256,
+      256
+    ]
+  },
+  {
+    "id": "steady",
+    "name": "흔들리지 않는 검",
+    "prompt": "Use case: stylized-concept. Individual square fantasy RPG skill icon, 흔들리지 않는 검. Subject ONLY: a silver sword planted firmly in cracked dark stone, symmetrical crimson halo, stable solid silhouette. Polished painterly silver steel and crimson moonlight on blue-black charcoal background. Thin simple beveled silver border with clipped corners. Single strong central silhouette readable at 48px. Restrained red particles. No people, no landscape, no lettering, no words, no numerals, no UI labels, no collage. Premium dark moon swordswoman skill icon set. Square 1:1.",
+    "source": "Built-in image_gen; one separate generation call per asset",
+    "original": "art/skills049/originals/steady.png",
+    "asset": "dist/assets/skills/steady.webp",
+    "bytes": 18556,
+    "sha256": "73a42188dd8039202eb57ca6f8858420de5e1f09ef70fa28ed91c644f1bfeec9",
+    "dimensions": [
+      256,
+      256
+    ]
+  },
+  {
+    "id": "resonance",
+    "name": "월영 공명",
+    "prompt": "Use case: stylized-concept. Individual square fantasy RPG skill icon, 월영 공명. Subject ONLY: two offset translucent silver swords resonating across a bright crimson crescent, mirrored waves. Polished painterly silver steel and crimson moonlight on blue-black charcoal background. Thin simple beveled silver border with clipped corners. Single strong central silhouette readable at 48px. Restrained red particles. No people, no landscape, no lettering, no words, no numerals, no UI labels, no collage. Premium dark moon swordswoman skill icon set. Square 1:1.",
+    "source": "Built-in image_gen; one separate generation call per asset",
+    "original": "art/skills049/originals/resonance.png",
+    "asset": "dist/assets/skills/resonance.webp",
+    "bytes": 21036,
+    "sha256": "577aff074b74c3292174e43cdaae4ccf84baa5dd521197621dc401770f604033",
+    "dimensions": [
+      256,
+      256
+    ]
+  },
+  {
+    "id": "momentum",
+    "name": "사냥의 여세",
+    "prompt": "Use case: stylized-concept. Individual square fantasy RPG skill icon, 사냥의 여세. Subject ONLY: three ascending silver blade streaks with accelerating crimson trails, forward sweeping momentum. Polished painterly silver steel and crimson moonlight on blue-black charcoal background. Thin simple beveled silver border with clipped corners. Single strong central silhouette readable at 48px. Restrained red particles. No people, no landscape, no lettering, no words, no numerals, no UI labels, no collage. Premium dark moon swordswoman skill icon set. Square 1:1.",
+    "source": "Built-in image_gen; one separate generation call per asset",
+    "original": "art/skills049/originals/momentum.png",
+    "asset": "dist/assets/skills/momentum.webp",
+    "bytes": 19480,
+    "sha256": "ce889926be97dded2621f04babf462b5960f0332addf03d039d8ab91b1ed543f",
+    "dimensions": [
+      256,
+      256
+    ]
+  },
+  {
+    "id": "reserve",
+    "name": "남겨둔 여력",
+    "prompt": "Use case: stylized-concept. Individual square fantasy RPG skill icon, 남겨둔 여력. Subject ONLY: a guarded silver sword and a small bright crimson energy core enclosed in a protective dark steel ring. Polished painterly silver steel and crimson moonlight on blue-black charcoal background. Thin simple beveled silver border with clipped corners. Single strong central silhouette readable at 48px. Restrained red particles. No people, no landscape, no lettering, no words, no numerals, no UI labels, no collage. Premium dark moon swordswoman skill icon set. Square 1:1.",
+    "source": "Built-in image_gen; one separate generation call per asset",
+    "original": "art/skills049/originals/reserve.png",
+    "asset": "dist/assets/skills/reserve.webp",
+    "bytes": 14468,
+    "sha256": "4c76d44c7b4f9b91503b64c8354c4c9c0973f544bd84f5eda9b86c2f9cd851c1",
+    "dimensions": [
+      256,
+      256
+    ]
+  },
+  {
+    "id": "eclipse",
+    "name": "일섬·월식",
+    "prompt": "Use case: stylized-concept. Individual square fantasy RPG skill icon, 일섬·월식. Subject ONLY: one blinding diagonal silver sword slash cutting through a total crimson solar eclipse, monumental single stroke. Polished painterly silver steel and crimson moonlight on blue-black charcoal background. Thin simple beveled silver border with clipped corners. Single strong central silhouette readable at 48px. Restrained red particles. No people, no landscape, no lettering, no words, no numerals, no UI labels, no collage. Premium dark moon swordswoman skill icon set. Square 1:1.",
+    "source": "Built-in image_gen; one separate generation call per asset",
+    "original": "art/skills049/originals/eclipse.png",
+    "asset": "dist/assets/skills/eclipse.webp",
+    "bytes": 18560,
+    "sha256": "922b30e3b7683c5494918defbdcfefb122be6e8685730719a3bf5cb94f383bb3",
+    "dimensions": [
+      256,
+      256
+    ]
+  },
+  {
+    "id": "phantoms",
+    "name": "월영군무",
+    "prompt": "Use case: stylized-concept. Individual square fantasy RPG skill icon, 월영군무. Subject ONLY: three spectral silver swords arranged as a fan beneath a crimson full moon with overlapping ghost trails. Polished painterly silver steel and crimson moonlight on blue-black charcoal background. Thin simple beveled silver border with clipped corners. Single strong central silhouette readable at 48px. Restrained red particles. No people, no landscape, no lettering, no words, no numerals, no UI labels, no collage. Premium dark moon swordswoman skill icon set. Square 1:1.",
+    "source": "Built-in image_gen; one separate generation call per asset",
+    "original": "art/skills049/originals/phantoms.png",
+    "asset": "dist/assets/skills/phantoms.webp",
+    "bytes": 19772,
+    "sha256": "6c3d4429e76f7fec2371b5c7df9dca25684292ca3caea203d9419e5e1b100624",
+    "dimensions": [
+      256,
+      256
+    ]
+  }
+]

@@ -1,0 +1,279 @@
+{
+  "scope": "Static HTML/CSS source audit; no browser computed styles or screenshots.",
+  "button_count": 34,
+  "unique_html_ids": 1466,
+  "local_script_and_styles": 21,
+  "buttons": [
+    {
+      "id": "start",
+      "label": "사냥을 떠난다",
+      "edge_icons": 1,
+      "disabled": false
+    },
+    {
+      "id": "dashboard-start",
+      "label": "입장",
+      "edge_icons": 1,
+      "disabled": false
+    },
+    {
+      "id": "target-hunt",
+      "label": "목표 보스 사냥 준비",
+      "edge_icons": 0,
+      "disabled": false
+    },
+    {
+      "id": "farm-codex-open",
+      "label": "도감 바로가기",
+      "edge_icons": 1,
+      "disabled": false
+    },
+    {
+      "id": "replay-prepare",
+      "label": "선택 난이도 보스전 준비하기",
+      "edge_icons": 2,
+      "disabled": false
+    },
+    {
+      "id": "growth-skills",
+      "label": "스킬 · 빌드 정비",
+      "edge_icons": 1,
+      "disabled": false
+    },
+    {
+      "id": "camp-upgrade",
+      "label": "사용하지 않은 성장 선택",
+      "edge_icons": 0,
+      "disabled": false
+    },
+    {
+      "id": "camp-map-start",
+      "label": "전투 준비",
+      "edge_icons": 1,
+      "disabled": false
+    },
+    {
+      "id": "choice-back",
+      "label": "거점으로",
+      "edge_icons": 0,
+      "disabled": false
+    },
+    {
+      "id": "build-save-0",
+      "label": "현재 장비 저장",
+      "edge_icons": 0,
+      "disabled": false
+    },
+    {
+      "id": "build-apply-0",
+      "label": "교체",
+      "edge_icons": 0,
+      "disabled": false
+    },
+    {
+      "id": "build-delete-0",
+      "label": "삭제",
+      "edge_icons": 0,
+      "disabled": false
+    },
+    {
+      "id": "build-save-1",
+      "label": "현재 장비 저장",
+      "edge_icons": 0,
+      "disabled": false
+    },
+    {
+      "id": "build-apply-1",
+      "label": "교체",
+      "edge_icons": 0,
+      "disabled": false
+    },
+    {
+      "id": "build-delete-1",
+      "label": "삭제",
+      "edge_icons": 0,
+      "disabled": false
+    },
+    {
+      "id": "build-save-2",
+      "label": "현재 장비 저장",
+      "edge_icons": 0,
+      "disabled": false
+    },
+    {
+      "id": "build-apply-2",
+      "label": "교체",
+      "edge_icons": 0,
+      "disabled": false
+    },
+    {
+      "id": "build-delete-2",
+      "label": "삭제",
+      "edge_icons": 0,
+      "disabled": false
+    },
+    {
+      "id": "result-skills",
+      "label": "스킬 · 빌드 정비",
+      "edge_icons": 1,
+      "disabled": false
+    },
+    {
+      "id": "result-track",
+      "label": "제작 목표 수집 상황",
+      "edge_icons": 0,
+      "disabled": false
+    },
+    {
+      "id": "next-stage",
+      "label": "다음 구역으로",
+      "edge_icons": 0,
+      "disabled": false
+    },
+    {
+      "id": "result-camp",
+      "label": "거점으로 돌아가기",
+      "edge_icons": 0,
+      "disabled": false
+    },
+    {
+      "id": "track-craft",
+      "label": "목표 제작법 보기",
+      "edge_icons": 0,
+      "disabled": false
+    },
+    {
+      "id": "track-clear",
+      "label": "목표 해제",
+      "edge_icons": 0,
+      "disabled": false
+    },
+    {
+      "id": "craft-target",
+      "label": "제작 목표 지정",
+      "edge_icons": 0,
+      "disabled": false
+    },
+    {
+      "id": "craft-track",
+      "label": "수집처 보기",
+      "edge_icons": 1,
+      "disabled": false
+    },
+    {
+      "id": "craft-submit",
+      "label": "제작하기",
+      "edge_icons": 0,
+      "disabled": false
+    },
+    {
+      "id": "craft-equip",
+      "label": "제작 장비 착용",
+      "edge_icons": 0,
+      "disabled": false
+    },
+    {
+      "id": "codex-target",
+      "label": "목표 지정",
+      "edge_icons": 0,
+      "disabled": false
+    },
+    {
+      "id": "codex-route",
+      "label": "보스 사냥 준비",
+      "edge_icons": 0,
+      "disabled": false
+    },
+    {
+      "id": "codex-hunt",
+      "label": "사냥터로 이동",
+      "edge_icons": 2,
+      "disabled": false
+    },
+    {
+      "id": "resume",
+      "label": "사냥 계속",
+      "edge_icons": 1,
+      "disabled": false
+    },
+    {
+      "id": "pause-inventory",
+      "label": "장비 정비",
+      "edge_icons": 0,
+      "disabled": false
+    },
+    {
+      "id": "pause-track",
+      "label": "제작 목표 · 수집 상황",
+      "edge_icons": 0,
+      "disabled": false
+    }
+  ],
+  "alignment_rules": [
+    {
+      "file": "style.css",
+      "selector": "#resume,#next-stage",
+      "declarations": "justify-content:center"
+    },
+    {
+      "file": "style.css",
+      "selector": "#replay-prepare",
+      "declarations": "font-size:12px;min-height:48px;line-height:1.8;text-align:center;justify-content:center;background:#49233a!important;border-color:#c68aa45f!important;margin:14px 0 0"
+    },
+    {
+      "file": "style.css",
+      "selector": "#camp-map-start",
+      "declarations": "flex:none;min-height:50px;width:164px;background:linear-gradient(110deg,#89334e,#b85572)!important;border-color:#e398b48a!important;font-size:13px;padding:10px 15px;display:flex;align-items:center;justify-content:center;gap:18px"
+    },
+    {
+      "file": "style.css",
+      "selector": ".pause-actions #resume",
+      "declarations": "min-height:52px;justify-content:center;padding:12px 16px"
+    },
+    {
+      "file": "buttons.css",
+      "selector": "/* Generated artwork is decorative; native buttons retain labels, focus and hit regions. */\n#game-shell button.centered-action",
+      "declarations": "display:flex;align-items:center;justify-content:center;text-align:center;position:relative;padding-inline:44px"
+    },
+    {
+      "file": "buttons.css",
+      "selector": "#game-shell button.image-button",
+      "declarations": "display:flex;align-items:center;justify-content:center;text-align:center;min-width:0;max-width:100%;position:relative;isolation:isolate;border-color:transparent!important;border-radius:0!important;background:#10181c!important;box-shadow:none!important;text-shadow:0 1px 3px #000;color:#f1e2c7"
+    },
+    {
+      "file": "buttons.css",
+      "selector": "#game-shell button.image-button>.button-edge,#game-shell button.centered-action>.button-edge",
+      "declarations": "position:absolute;inset-inline-end:var(--button-edge-inset,14px);inset-inline-start:auto;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:var(--button-edge-width,20px);max-width:var(--button-edge-width,20px);margin:0;line-height:1;pointer-events:none"
+    },
+    {
+      "file": "buttons.css",
+      "selector": "#game-shell #craft-track",
+      "declarations": "--button-label-padding:32px;--button-edge-inset:8px"
+    },
+    {
+      "file": "buttons.css",
+      "selector": "#game-shell #camp-map-start",
+      "declarations": "--button-label-padding:28px;--button-edge-inset:6px;--button-edge-width:16px"
+    },
+    {
+      "file": "replay.css",
+      "selector": "#camp-tactics-panel #replay-prepare",
+      "declarations": "display:flex;align-items:center;justify-content:center;gap:9px;width:calc(100% - 24px);margin:0 12px 15px;padding:12px 12px;min-height:51px;border-radius:26px;border:1px solid #d0ab85;background:linear-gradient(100deg,#461622,#7c2937,#391824)!important;color:#fff0d7;font:500 13px/1.7 var(--serif);box-shadow:inset 0 0 0 3px #dfb28d13,0 0 12px #8d35442b"
+    },
+    {
+      "file": "replay.css",
+      "selector": "#farm-codex-open",
+      "declarations": "display:flex;align-items:center;justify-content:center;font-size:11px;background:#18232b!important;border-color:#beb19b55!important"
+    },
+    {
+      "file": "replay.css",
+      "selector": "#camp-drawer #replay-prepare",
+      "declarations": "display:flex;align-items:center;justify-content:center;gap:9px;width:100%;margin:0;padding:11px 15px;min-height:49px;border-radius:26px;border:1px solid #d0ab85!important;background:linear-gradient(100deg,#461622,#7c2937,#391824)!important;color:#fff0d7;font:500 13px/1.7 var(--serif);box-shadow:inset 0 0 0 3px #dfb28d13,0 0 12px #8d35442b"
+    },
+    {
+      "file": "codex.css",
+      "selector": "#codex-content #codex-hunt",
+      "declarations": "width:100%;display:flex;align-items:center;justify-content:center;gap:25px;padding:0 17px;color:#ead9bb;border:1px solid #ac8b664f;background:linear-gradient(90deg,#25171bc9,#241b1cc9),url('assets/hunt-map-forest-v036.webp') center 40%/cover;font:14px var(--serif)"
+    }
+  ]
+}

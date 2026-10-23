@@ -1,0 +1,144 @@
+[
+  {
+    "id": "forest_spider",
+    "mode": "built-in image_gen",
+    "useCase": "stylized-concept",
+    "prompt": "Use case: stylized-concept. Asset type: production monster sprite animation sheet for the existing portrait action RPG.\nREFERENCE ROLES: Image1 is STYLE/LAYOUT reference ONLY: match crisp finely detailed high-resolution pixel illustrated fantasy sprites, dark ink outlines, 3/4 overhead RPG camera, shading and level of detail; never copy its wolf subject. Image2 is SUBJECT CONCEPT reference only, its small matching creature. Produce a brand-new single-species sheet.\nOUTPUT: genuinely transparent RGBA, no matte, no checkerboard, no background, no floor, no shadow oval. Square 2048x2048 or larger native pixels. Exactly25 separate full-body monster silhouettes in a perfectly regular5 columns x5rows invisible grid. Each cell same dimensions and clear padding; do not touch adjacent poses or canvas edge. No labels, text, frame borders, UI, grid lines, glow background, extra monsters or scenery.\nDIRECTIONS by ROW top-to-bottom: row1 front facing screen/down(south);row2 front-right three-quarter(southeast);row3 right profile(east);row4 back-right three-quarter(northeast);row5 back facing screen/up(north). Actually turn anatomy, faces and bodies in each row; do not repeat front view.\nACTIONS by COLUMN left-to-right:1 walkA planted leftfoot;2 walkB visibly alternating limbs;3 attack windup;4 attack contact with distinct forward action;5 dead flattened body lying on ground. Keep each direction's anatomical body scale unchanged across actions. All poses independently isolated. Feet or grounded contact point aligned near cell bottom; full anatomy, no clipping. This is ONE creature species repeated25 times for animation, not a monster catalog. \nSUBJECT: A dangerous eight-legged forest hunting spider, broad moss-green/brown hairy abdomen, amber eyes, red-tipped fang mandibles, two clear body sections and eight long angular legs. Match spider archetype in reference encyclopaedia. Distinct from wolves and humanoids. Attack windup pulls front legs back and raises fangs; attack contact lunges forward with spread fangs; death curled-in eight legs.",
+    "referenceImages": [
+      {
+        "path": "art/monsters045/forest_wolf.png",
+        "role": "style and 25-pose layout reference",
+        "sha256": "1a86901508e419eb74e4fd293707ee06201fae3c60c2bee289dba5131ecfaf6f"
+      },
+      {
+        "path": "art/monsters065/references/encyclopedia-1.png",
+        "role": "subject concept reference",
+        "sha256": "f00e4cfbdeb7e3d55bc2426c7db9a16a1887bc33844a336d4c3fafb3851bda63"
+      }
+    ],
+    "revision": null,
+    "output": "art/monsters065/forest_spider.png",
+    "generatedSourceFilename": "exec-44f89b24-16b0-4927-8fe3-a251ae3e0eb2.png",
+    "sourceSHA256": "33df778c64d985ee8357bf71669bd563a8810891a3f237209435481d6d8374ee"
+  },
+  {
+    "id": "forest_mushroom",
+    "mode": "built-in image_gen",
+    "useCase": "stylized-concept",
+    "prompt": "Use case: stylized-concept. Asset type: production monster sprite animation sheet for the existing portrait action RPG.\nREFERENCE ROLES: Image1 is STYLE/LAYOUT reference ONLY: match crisp finely detailed high-resolution pixel illustrated fantasy sprites, dark ink outlines, 3/4 overhead RPG camera, shading and level of detail; never copy its wolf subject. Image2 is SUBJECT CONCEPT reference only, its small matching creature. Produce a brand-new single-species sheet.\nOUTPUT: genuinely transparent RGBA, no matte, no checkerboard, no background, no floor, no shadow oval. Square 2048x2048 or larger native pixels. Exactly25 separate full-body monster silhouettes in a perfectly regular5 columns x5rows invisible grid. Each cell same dimensions and clear padding; do not touch adjacent poses or canvas edge. No labels, text, frame borders, UI, grid lines, glow background, extra monsters or scenery.\nDIRECTIONS by ROW top-to-bottom: row1 front facing screen/down(south);row2 front-right three-quarter(southeast);row3 right profile(east);row4 back-right three-quarter(northeast);row5 back facing screen/up(north). Actually turn anatomy, faces and bodies in each row; do not repeat front view.\nACTIONS by COLUMN left-to-right:1 walkA planted leftfoot;2 walkB visibly alternating limbs;3 attack windup;4 attack contact with distinct forward action;5 dead flattened body lying on ground. Keep each direction's anatomical body scale unchanged across actions. All poses independently isolated. Feet or grounded contact point aligned near cell bottom; full anatomy, no clipping. This is ONE creature species repeated25 times for animation, not a monster catalog. \nSUBJECT: An animated poisonous mushroom monster: squat cream stalk body with tiny roots used as walking feet, huge purple cap with crimson rim and cream spots, angry recessed eyes under cap, small crooked root arms. Subject from plant/fungus panel. Attack windup compresses stalk under cap; attack contact cap opens upward releasing a few tight purple spore puffs kept attached and fully within cell; corpse is a collapsed cap and bent stalk. Clearly a mushroom, not humanoid or animal.",
+    "referenceImages": [
+      {
+        "path": "art/monsters045/forest_wolf.png",
+        "role": "style and 25-pose layout reference",
+        "sha256": "1a86901508e419eb74e4fd293707ee06201fae3c60c2bee289dba5131ecfaf6f"
+      },
+      {
+        "path": "art/monsters065/references/encyclopedia-4.png",
+        "role": "subject concept reference",
+        "sha256": "38cc078f0d59cea2097e9c6257e16977c67ac2c6403d18074a13613c8d853168"
+      }
+    ],
+    "revision": null,
+    "output": "art/monsters065/forest_mushroom.png",
+    "generatedSourceFilename": "exec-0d481787-9ecf-4bf9-887b-15bd93e0ea09.png",
+    "sourceSHA256": "bbee4f63f18966ca67a89d81810b4e2b439f288110d4c6268ba0e54ce96e8ed0"
+  },
+  {
+    "id": "forest_devourer",
+    "mode": "built-in image_gen",
+    "useCase": "stylized-concept",
+    "prompt": "Use case: stylized-concept. Asset type: production monster sprite animation sheet for the existing portrait action RPG.\nREFERENCE ROLES: Image1 is STYLE/LAYOUT reference ONLY: match crisp finely detailed high-resolution pixel illustrated fantasy sprites, dark ink outlines, 3/4 overhead RPG camera, shading and level of detail; never copy its wolf subject. Image2 is SUBJECT CONCEPT reference only, its small matching creature. Produce a brand-new single-species sheet.\nOUTPUT: genuinely transparent RGBA, no matte, no checkerboard, no background, no floor, no shadow oval. Square 2048x2048 or larger native pixels. Exactly25 separate full-body monster silhouettes in a perfectly regular5 columns x5rows invisible grid. Each cell same dimensions and clear padding; do not touch adjacent poses or canvas edge. No labels, text, frame borders, UI, grid lines, glow background, extra monsters or scenery.\nDIRECTIONS by ROW top-to-bottom: row1 front facing screen/down(south);row2 front-right three-quarter(southeast);row3 right profile(east);row4 back-right three-quarter(northeast);row5 back facing screen/up(north). Actually turn anatomy, faces and bodies in each row; do not repeat front view.\nACTIONS by COLUMN left-to-right:1 walkA planted leftfoot;2 walkB visibly alternating limbs;3 attack windup;4 attack contact with distinct forward action;5 dead flattened body lying on ground. Keep each direction's anatomical body scale unchanged across actions. All poses independently isolated. Feet or grounded contact point aligned near cell bottom; full anatomy, no clipping. This is ONE creature species repeated25 times for animation, not a monster catalog. \nSUBJECT: A carnivorous forest plant monster from the plant panels: large red fleshy Venus flytrap jaw with ivory teeth, thick curved green stalk, two thorny leaf arms, tangled crawling roots as feet. No pot and no dirt base. The red toothed flower jaw is its head, no human head. Attack windup jaw wide open; contact jaw snaps down and stalk lunges; corpse collapsed roots with wilted sideways jaw. Keep saturated crimson and leaf green.",
+    "referenceImages": [
+      {
+        "path": "art/monsters045/forest_wolf.png",
+        "role": "style and 25-pose layout reference",
+        "sha256": "1a86901508e419eb74e4fd293707ee06201fae3c60c2bee289dba5131ecfaf6f"
+      },
+      {
+        "path": "art/monsters065/references/encyclopedia-3.png",
+        "role": "subject concept reference",
+        "sha256": "20d80411c74413f468fcd2f500397cac563b8241ee2d9a3c9efab90266879911"
+      }
+    ],
+    "revision": null,
+    "output": "art/monsters065/forest_devourer.png",
+    "generatedSourceFilename": "exec-a1f87fc2-e5fa-4b8c-a72e-eb1b6a4a0fb0.png",
+    "sourceSHA256": "39379502f8656f24d91d1174a800d2163c4af837d9cf7c2f63dbb7bff4a392f7"
+  },
+  {
+    "id": "frost_leopard",
+    "mode": "built-in image_gen",
+    "useCase": "stylized-concept",
+    "prompt": "Use case: stylized-concept. Asset type: production monster sprite animation sheet for the existing portrait action RPG.\nREFERENCE ROLES: Image1 is STYLE/LAYOUT reference ONLY: match crisp finely detailed high-resolution pixel illustrated fantasy sprites, dark ink outlines, 3/4 overhead RPG camera, shading and level of detail; never copy its wolf subject. Image2 is SUBJECT CONCEPT reference only, its small matching creature. Produce a brand-new single-species sheet.\nOUTPUT: genuinely transparent RGBA, no matte, no checkerboard, no background, no floor, no shadow oval. Square 2048x2048 or larger native pixels. Exactly25 separate full-body monster silhouettes in a perfectly regular5 columns x5rows invisible grid. Each cell same dimensions and clear padding; do not touch adjacent poses or canvas edge. No labels, text, frame borders, UI, grid lines, glow background, extra monsters or scenery.\nDIRECTIONS by ROW top-to-bottom: row1 front facing screen/down(south);row2 front-right three-quarter(southeast);row3 right profile(east);row4 back-right three-quarter(northeast);row5 back facing screen/up(north). Actually turn anatomy, faces and bodies in each row; do not repeat front view.\nACTIONS by COLUMN left-to-right:1 walkA planted leftfoot;2 walkB visibly alternating limbs;3 attack windup;4 attack contact with distinct forward action;5 dead flattened body lying on ground. Keep each direction's anatomical body scale unchanged across actions. All poses independently isolated. Feet or grounded contact point aligned near cell bottom; full anatomy, no clipping. This is ONE creature species repeated25 times for animation, not a monster catalog. \nSUBJECT: A muscular snow leopard monster from snowfield panels, clearly feline NOT a wolf: rounded cat ears, broad short feline muzzle, long thick curling tail, powerful spotted white/silver fur body and paws, charcoal rosette markings, icy-blue predatory eyes. Low athletic hunting stance. WalkA/walkB visibly alternate feline forelegs; attack windup crouches shoulders with one raised paw; contact pounces forward with extended claws and snarling cat mouth; corpse lies sideways with limp long tail. Five directions clearly turn full body and tail.",
+    "referenceImages": [
+      {
+        "path": "art/monsters045/forest_wolf.png",
+        "role": "style and 25-pose layout reference",
+        "sha256": "1a86901508e419eb74e4fd293707ee06201fae3c60c2bee289dba5131ecfaf6f"
+      },
+      {
+        "path": "art/monsters065/references/encyclopedia-2.png",
+        "role": "subject concept reference",
+        "sha256": "7a55da1489a8f89f4295f50c859df1e505aa7cabc73050787ffcc8b30e261a31"
+      }
+    ],
+    "revision": {
+      "prompt": "Use case: precise-object-edit. Image1 is EDIT TARGET sprite sheet. Preserve this exact snow leopard character identity, facial anatomy, rosette markings, silver fur, all25 poses and5x5 layout and rendering style. CORRECT ONLY framing: every leopard including its long tail must be fully visible with generous clear transparent padding; currently leftmost row3 tail and some outer paws almost touch canvas edge. Recompose all25 poses about15% smaller within their respective cells, at least24pixels transparent outer canvas margin, no cutoff tail/paw. Maintain body size consistently within each direction and full-five-direction anatomy. Transparent RGBA, no text/grid/background/drop shadows.",
+      "role": "targeted built-in edit for anatomy or framing",
+      "referenceImages": [
+        {
+          "generatedFilename": "exec-d0bacf4f-3287-400d-8586-adc61805474a.png",
+          "role": "edit target: initial sheet before targeted anatomy/framing correction",
+          "sha256": "5d5cfba74fb2043bed65876339b5c718cfe5e3ccf41c2bde379f945538a5cc22"
+        }
+      ]
+    },
+    "output": "art/monsters065/frost_leopard.png",
+    "generatedSourceFilename": "exec-76879ce4-3630-4a57-9ac6-821cf141fb72.png",
+    "sourceSHA256": "84caff947e4c3c050b760477d08c3f27a807e2dc7f64002e55263518bf5dddfa"
+  },
+  {
+    "id": "frost_wisp",
+    "mode": "built-in image_gen",
+    "useCase": "stylized-concept",
+    "prompt": "Use case: stylized-concept. Asset type: production monster sprite animation sheet for the existing portrait action RPG.\nREFERENCE ROLES: Image1 is STYLE/LAYOUT reference ONLY: match crisp finely detailed high-resolution pixel illustrated fantasy sprites, dark ink outlines, 3/4 overhead RPG camera, shading and level of detail; never copy its wolf subject. Image2 is SUBJECT CONCEPT reference only, its small matching creature. Produce a brand-new single-species sheet.\nOUTPUT: genuinely transparent RGBA, no matte, no checkerboard, no background, no floor, no shadow oval. Square 2048x2048 or larger native pixels. Exactly25 separate full-body monster silhouettes in a perfectly regular5 columns x5rows invisible grid. Each cell same dimensions and clear padding; do not touch adjacent poses or canvas edge. No labels, text, frame borders, UI, grid lines, glow background, extra monsters or scenery.\nDIRECTIONS by ROW top-to-bottom: row1 front facing screen/down(south);row2 front-right three-quarter(southeast);row3 right profile(east);row4 back-right three-quarter(northeast);row5 back facing screen/up(north). Actually turn anatomy, faces and bodies in each row; do not repeat front view.\nACTIONS by COLUMN left-to-right:1 walkA planted leftfoot;2 walkB visibly alternating limbs;3 attack windup;4 attack contact with distinct forward action;5 dead flattened body lying on ground. Keep each direction's anatomical body scale unchanged across actions. All poses independently isolated. Feet or grounded contact point aligned near cell bottom; full anatomy, no clipping. This is ONE creature species repeated25 times for animation, not a monster catalog. \nSUBJECT: A floating cyan ice crystal elemental from snowfield/elemental panels, one compact faceted icy-blue crystal core surrounded by several attached jagged crystalline spikes, small narrow glowing eyes, sculpted icy shoulders and two short shard-like arms. Floating tapering icicle lower body, no robe, no cloth, no humanoid feet, no staff. Strong pointed crystal silhouette distinct from existing ice mage and heavy ice golem. WalkA/walkB gently tilt side shard arms in opposite directions while maintaining same height; attack windup pulls arms around concentrated core; contact extends one arm launching a tight attached shard burst fully inside cell; corpse broken dim ice shards piled on ground. Five directions clearly rotate solid faceted core, back without eyes. No disconnected glow specks.",
+    "referenceImages": [
+      {
+        "path": "art/monsters045/forest_wolf.png",
+        "role": "style and 25-pose layout reference",
+        "sha256": "1a86901508e419eb74e4fd293707ee06201fae3c60c2bee289dba5131ecfaf6f"
+      },
+      {
+        "path": "art/monsters065/references/encyclopedia-4.png",
+        "role": "subject concept reference",
+        "sha256": "38cc078f0d59cea2097e9c6257e16977c67ac2c6403d18074a13613c8d853168"
+      }
+    ],
+    "revision": null,
+    "output": "art/monsters065/frost_wisp.png",
+    "generatedSourceFilename": "exec-29da303d-bdf6-44f2-afd8-a82dcb85cf7b.png",
+    "sourceSHA256": "73458a662fc190c7f435f9d0ef3f7efc4ed2201159255eaacc2894a4b284dcc2"
+  },
+  {
+    "id": "frost_yeti",
+    "mode": "built-in image_gen",
+    "useCase": "stylized-concept",
+    "prompt": "Use case: stylized-concept. Asset type: production monster sprite animation sheet for the existing portrait action RPG.\nREFERENCE ROLES: Image1 is STYLE/LAYOUT reference ONLY: match crisp finely detailed high-resolution pixel illustrated fantasy sprites, dark ink outlines, 3/4 overhead RPG camera, shading and level of detail; never copy its wolf subject. Image2 is SUBJECT CONCEPT reference only, its small matching creature. Produce a brand-new single-species sheet.\nOUTPUT: genuinely transparent RGBA, no matte, no checkerboard, no background, no floor, no shadow oval. Square 2048x2048 or larger native pixels. Exactly25 separate full-body monster silhouettes in a perfectly regular5 columns x5rows invisible grid. Each cell same dimensions and clear padding; do not touch adjacent poses or canvas edge. No labels, text, frame borders, UI, grid lines, glow background, extra monsters or scenery.\nDIRECTIONS by ROW top-to-bottom: row1 front facing screen/down(south);row2 front-right three-quarter(southeast);row3 right profile(east);row4 back-right three-quarter(northeast);row5 back facing screen/up(north). Actually turn anatomy, faces and bodies in each row; do not repeat front view.\nACTIONS by COLUMN left-to-right:1 walkA planted leftfoot;2 walkB visibly alternating limbs;3 attack windup;4 attack contact with distinct forward action;5 dead flattened body lying on ground. Keep each direction's anatomical body scale unchanged across actions. All poses independently isolated. Feet or grounded contact point aligned near cell bottom; full anatomy, no clipping. This is ONE creature species repeated25 times for animation, not a monster catalog. \nSUBJECT: A large white-furred ice yeti beast from snowfield panels: hulking gorilla-like hunched shoulders, long muscular shaggy arms, short thick legs, dark slate-blue bare face and hands, small icy brow horns and blue eyes, heavy white fur with cool grey shadows. Organic furry monster, NOT a rock/crystal golem, no armor or weapons. WalkA/walkB clearly alternate arms/legs in knuckle-heavy gait; attack windup raises both giant fists overhead; contact slams both fists onto ground with body leaning forward (no ground effect); corpse lies on its side with collapsed shoulders and limp arms. Keep same anatomical scale between poses; do not enlarge fists beyond cell.",
+    "referenceImages": [
+      {
+        "path": "art/monsters045/forest_wolf.png",
+        "role": "style and 25-pose layout reference",
+        "sha256": "1a86901508e419eb74e4fd293707ee06201fae3c60c2bee289dba5131ecfaf6f"
+      },
+      {
+        "path": "art/monsters065/references/encyclopedia-2.png",
+        "role": "subject concept reference",
+        "sha256": "7a55da1489a8f89f4295f50c859df1e505aa7cabc73050787ffcc8b30e261a31"
+      }
+    ],
+    "revision": null,
+    "output": "art/monsters065/frost_yeti.png",
+    "generatedSourceFilename": "exec-5f95d326-06b4-4c2c-ba50-c805ba15d5d1.png",
+    "sourceSHA256": "f3a253c7b6432370112dad131f910fec8169778b36bbb220d4c779d6bea1e453"
+  }
+]

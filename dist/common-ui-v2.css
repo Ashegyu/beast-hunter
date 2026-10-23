@@ -1,0 +1,93 @@
+/* Supplied common UI v2. Only independent parts; no baked text reference crops. */
+#game-shell{--common-tab:url("assets/common-ui-v2/empty_skins/tab_base_dark.png");--common-bar:url("assets/common-ui-v2/empty_skins/button_base_ornate_dark.png");--common-panel:url("assets/common-ui-v2/empty_skins/panel_info.png");--common-card:url("assets/common-ui-v2/hollow_frames/card_frame_default.png");--common-card-on:url("assets/common-ui-v2/hollow_frames/card_frame_selected.png");--common-slot:url("assets/common-ui-v2/hollow_frames/frame_normal.png")}
+#game-shell [data-common-skin][data-common-skin]{position:relative;isolation:isolate;--common-surface:var(--common-bar);--common-slices:16 19 16 19;--common-edge:6px 7px;--common-fill:fill;text-shadow:0 1px 2px #0008}
+#game-shell [data-common-skin][data-common-skin]::before{content:""!important;display:block!important;position:absolute!important;inset:0!important;box-sizing:border-box!important;border:0 solid transparent!important;border-image:var(--common-surface) var(--common-slices) fill / var(--common-edge) / 0 stretch!important;background:none!important;box-shadow:none!important;border-radius:0!important;pointer-events:none!important;z-index:-1!important;opacity:1!important;filter:none!important;transform:none!important}
+#game-shell [data-common-skin][data-common-skin][data-common-skin=panel]{--common-surface:var(--common-panel);--common-slices:17;--common-edge:6px}
+#game-shell [data-common-skin][data-common-skin][data-common-skin=tab]{--common-surface:var(--common-tab);--common-slices:13 15 13 15;--common-edge:5px 6px}
+#game-shell [data-common-skin][data-common-skin][data-common-skin=card],#game-shell [data-common-skin][data-common-skin][data-common-skin=slot]{--common-surface:none}
+#game-shell [data-common-skin][data-common-skin][data-common-skin=card]::before,#game-shell [data-common-skin][data-common-skin][data-common-skin=slot]::before{border:0!important;border-image:none!important;background:var(--common-card) center/100% 100% no-repeat!important;z-index:2!important}
+#game-shell [data-common-skin][data-common-skin][data-common-skin=slot]::before{background-image:var(--common-slot)!important}
+#game-shell [data-common-skin][data-common-skin][data-common-skin=card]:is([aria-pressed=true],[data-selected=true],.selected)::before{background-image:var(--common-card-on)!important}
+#game-shell [data-common-skin][data-common-skin][data-common-skin=primary]::before{border-image:var(--common-bar) 16 19 16 19 / 6px 7px / 0 stretch!important;background:linear-gradient(#7b1426,#390d16)!important}
+#game-shell [data-common-skin][data-common-skin][data-common-skin=tab][aria-pressed=true]::before{border-image:var(--common-bar) 16 19 16 19 / 6px 7px / 0 stretch!important;background:linear-gradient(#7b1426,#390d16)!important}
+#game-shell [data-common-skin][data-common-skin]:is([data-common-skin=tab],[data-common-skin=primary],[data-common-skin=button])::after{display:none!important}
+#game-shell [data-common-skin][data-common-skin]:is([data-common-skin=tab],[data-common-skin=primary],[data-common-skin=button]):disabled::before{filter:grayscale(1) brightness(.6)!important}
+#game-shell [data-common-skin][data-common-skin]:is([data-common-skin=tab],[data-common-skin=primary],[data-common-skin=button]):enabled:active::before{filter:brightness(.75)!important}
+#game-shell [data-common-skin][data-common-skin][hidden]{display:none!important}
+#game-shell :is(#camp-skills-panel,#inventory-content,#codex-content,#craft-content,#equipment-content,#camp-map-panel,#camp-dungeons-panel,#pause-content,#result-content,#camp-growth-panel,#camp-more-panel,#track-content) [data-common-skin][data-common-skin]{position:relative;isolation:isolate;--common-surface:var(--common-bar);--common-slices:16 19 16 19;--common-edge:6px 7px;--common-fill:fill;text-shadow:0 1px 2px #0008}
+#game-shell :is(#camp-skills-panel,#inventory-content,#codex-content,#craft-content,#equipment-content,#camp-map-panel,#camp-dungeons-panel,#pause-content,#result-content,#camp-growth-panel,#camp-more-panel,#track-content) [data-common-skin][data-common-skin]::before{content:""!important;display:block!important;position:absolute!important;inset:0!important;box-sizing:border-box!important;border:0 solid transparent!important;border-image:var(--common-surface) var(--common-slices) fill / var(--common-edge) / 0 stretch!important;background:none!important;box-shadow:none!important;border-radius:0!important;pointer-events:none!important;z-index:-1!important;opacity:1!important;filter:none!important;transform:none!important}
+#game-shell :is(#camp-skills-panel,#inventory-content,#codex-content,#craft-content,#equipment-content,#camp-map-panel,#camp-dungeons-panel,#pause-content,#result-content,#camp-growth-panel,#camp-more-panel,#track-content) [data-common-skin][data-common-skin][data-common-skin=panel]{--common-surface:var(--common-panel);--common-slices:17;--common-edge:6px}
+#game-shell :is(#camp-skills-panel,#inventory-content,#codex-content,#craft-content,#equipment-content,#camp-map-panel,#camp-dungeons-panel,#pause-content,#result-content,#camp-growth-panel,#camp-more-panel,#track-content) [data-common-skin][data-common-skin][data-common-skin=tab]{--common-surface:var(--common-tab);--common-slices:13 15 13 15;--common-edge:5px 6px}
+#game-shell :is(#camp-skills-panel,#inventory-content,#codex-content,#craft-content,#equipment-content,#camp-map-panel,#camp-dungeons-panel,#pause-content,#result-content,#camp-growth-panel,#camp-more-panel,#track-content) [data-common-skin][data-common-skin][data-common-skin=card],#game-shell :is(#camp-skills-panel,#inventory-content,#codex-content,#craft-content,#equipment-content,#camp-map-panel,#camp-dungeons-panel,#pause-content,#result-content,#camp-growth-panel,#camp-more-panel,#track-content) [data-common-skin][data-common-skin][data-common-skin=slot]{--common-surface:none}
+#game-shell :is(#camp-skills-panel,#inventory-content,#codex-content,#craft-content,#equipment-content,#camp-map-panel,#camp-dungeons-panel,#pause-content,#result-content,#camp-growth-panel,#camp-more-panel,#track-content) [data-common-skin][data-common-skin][data-common-skin=card]::before,#game-shell :is(#camp-skills-panel,#inventory-content,#codex-content,#craft-content,#equipment-content,#camp-map-panel,#camp-dungeons-panel,#pause-content,#result-content,#camp-growth-panel,#camp-more-panel,#track-content) [data-common-skin][data-common-skin][data-common-skin=slot]::before{border:0!important;border-image:none!important;background:var(--common-card) center/100% 100% no-repeat!important;z-index:2!important}
+#game-shell :is(#camp-skills-panel,#inventory-content,#codex-content,#craft-content,#equipment-content,#camp-map-panel,#camp-dungeons-panel,#pause-content,#result-content,#camp-growth-panel,#camp-more-panel,#track-content) [data-common-skin][data-common-skin][data-common-skin=slot]::before{background-image:var(--common-slot)!important}
+#game-shell :is(#camp-skills-panel,#inventory-content,#codex-content,#craft-content,#equipment-content,#camp-map-panel,#camp-dungeons-panel,#pause-content,#result-content,#camp-growth-panel,#camp-more-panel,#track-content) [data-common-skin][data-common-skin][data-common-skin=card]:is([aria-pressed=true],[data-selected=true],.selected)::before{background-image:var(--common-card-on)!important}
+#game-shell :is(#camp-skills-panel,#inventory-content,#codex-content,#craft-content,#equipment-content,#camp-map-panel,#camp-dungeons-panel,#pause-content,#result-content,#camp-growth-panel,#camp-more-panel,#track-content) [data-common-skin][data-common-skin][data-common-skin=primary]::before{border-image:var(--common-bar) 16 19 16 19 / 6px 7px / 0 stretch!important;background:linear-gradient(#7b1426,#390d16)!important}
+#game-shell :is(#camp-skills-panel,#inventory-content,#codex-content,#craft-content,#equipment-content,#camp-map-panel,#camp-dungeons-panel,#pause-content,#result-content,#camp-growth-panel,#camp-more-panel,#track-content) [data-common-skin][data-common-skin][data-common-skin=tab][aria-pressed=true]::before{border-image:var(--common-bar) 16 19 16 19 / 6px 7px / 0 stretch!important;background:linear-gradient(#7b1426,#390d16)!important}
+#game-shell :is(#camp-skills-panel,#inventory-content,#codex-content,#craft-content,#equipment-content,#camp-map-panel,#camp-dungeons-panel,#pause-content,#result-content,#camp-growth-panel,#camp-more-panel,#track-content) [data-common-skin][data-common-skin]:is([data-common-skin=tab],[data-common-skin=primary],[data-common-skin=button])::after{display:none!important}
+#game-shell :is(#camp-skills-panel,#inventory-content,#codex-content,#craft-content,#equipment-content,#camp-map-panel,#camp-dungeons-panel,#pause-content,#result-content,#camp-growth-panel,#camp-more-panel,#track-content) [data-common-skin][data-common-skin]:is([data-common-skin=tab],[data-common-skin=primary],[data-common-skin=button]):disabled::before{filter:grayscale(1) brightness(.6)!important}
+#game-shell :is(#camp-skills-panel,#inventory-content,#codex-content,#craft-content,#equipment-content,#camp-map-panel,#camp-dungeons-panel,#pause-content,#result-content,#camp-growth-panel,#camp-more-panel,#track-content) [data-common-skin][data-common-skin]:is([data-common-skin=tab],[data-common-skin=primary],[data-common-skin=button]):enabled:active::before{filter:brightness(.75)!important}
+#game-shell :is(#camp-skills-panel,#inventory-content,#codex-content,#craft-content,#equipment-content,#camp-map-panel,#camp-dungeons-panel,#pause-content,#result-content,#camp-growth-panel,#camp-more-panel,#track-content) [data-common-skin][data-common-skin][hidden]{display:none!important}
+#game-shell .lobby-icon[data-lobby-icon=skills]{background:url("assets/common-ui-v2/independent_icons/navigation_skills.png") center/contain no-repeat!important;clip-path:none!important;mix-blend-mode:normal!important;filter:none!important}
+#game-shell .lobby-icon[data-lobby-icon=equipment]{background:url("assets/common-ui-v2/independent_icons/navigation_equipment.png") center/contain no-repeat!important;clip-path:none!important;mix-blend-mode:normal!important;filter:none!important}
+#game-shell .lobby-icon[data-lobby-icon=bag]{background:url("assets/common-ui-v2/independent_icons/navigation_bag.png") center/contain no-repeat!important;clip-path:none!important;mix-blend-mode:normal!important;filter:none!important}
+#game-shell .lobby-icon[data-lobby-icon=craft]{background:url("assets/common-ui-v2/independent_icons/navigation_crafting.png") center/contain no-repeat!important;clip-path:none!important;mix-blend-mode:normal!important;filter:none!important}
+#game-shell .lobby-icon[data-lobby-icon=home]{background:url("assets/common-ui-v2/independent_icons/home_filled.png") center/contain no-repeat!important;clip-path:none!important;mix-blend-mode:normal!important;filter:none!important}
+#game-shell .lobby-icon[data-lobby-icon=more]{background:url("assets/common-ui-v2/independent_icons/navigation_more.png") center/contain no-repeat!important;clip-path:none!important;mix-blend-mode:normal!important;filter:none!important}
+#game-shell .ui-utility-icon[data-ui-icon=gold]{background:url("assets/common-ui-v2/independent_icons/currency_gold.png") center/contain no-repeat!important;mix-blend-mode:normal!important;filter:none!important}
+#game-shell .ui-utility-icon[data-ui-icon=core]{background:url("assets/common-ui-v2/independent_icons/currency_blue_crystal.png") center/contain no-repeat!important;mix-blend-mode:normal!important;filter:none!important}
+#game-shell .ui-utility-icon[data-ui-icon=filter]{background:url("assets/common-ui-v2/independent_icons/filter_funnel.png") center/contain no-repeat!important;mix-blend-mode:normal!important;filter:none!important}
+#game-shell .app-nav #nav-home,#game-shell .app-nav #nav-home:hover{background:transparent!important;box-shadow:none!important;border:0!important}
+#game-shell .app-nav #nav-home:before,#game-shell .app-nav #nav-home:after{display:none!important}
+#game-shell .page-back>svg{visibility:hidden}
+#game-shell .page-back{background:transparent url("assets/common-ui-v2/independent_icons/navigation_back.png") center/24px 24px no-repeat!important;border:0!important;box-shadow:none!important}
+#game-shell #sound{background:transparent url("assets/common-ui-v2/independent_icons/audio_on.png") center/22px 22px no-repeat!important;border:0!important;box-shadow:none!important}
+#game-shell #sound:before{display:none!important}
+#game-shell #sound[aria-pressed=false]{opacity:.5}
+#game-shell #lobby-mail{background:transparent url("assets/common-ui-v2/independent_icons/mail.png") center/22px 22px no-repeat!important}
+#game-shell #lobby-settings{background:transparent url("assets/common-ui-v2/independent_icons/action_settings.png") center/22px 22px no-repeat!important}
+#game-shell #lobby-mail>svg,#game-shell #lobby-settings>svg{visibility:hidden}
+#game-shell :is(#codex-filter-toggle,.archive-search) svg{visibility:hidden}
+#game-shell #codex-filter-toggle{background:transparent url("assets/common-ui-v2/independent_icons/filter_funnel.png") 8px center/15px 15px no-repeat!important}
+#game-shell .archive-search{background:#07121b url("assets/common-ui-v2/independent_icons/search.png") 8px center/16px 16px no-repeat!important}
+#game-shell :is(#skill-page-prev,#skill-page-next){font-size:0!important}
+#game-shell #skill-page-prev::before{background:transparent url("assets/common-ui-v2/controls/control_previous.png") center/100% 100% no-repeat!important;border:0!important;border-image:none!important}
+#game-shell #skill-page-next::before{background:transparent url("assets/common-ui-v2/controls/control_next.png") center/100% 100% no-repeat!important;border:0!important;border-image:none!important}
+#game-shell #bag-filter-toggle{background:transparent url("assets/common-ui-v2/controls/control_filter.png") center/100% 100% no-repeat!important;border:0!important;box-shadow:none!important}
+#game-shell #bag-filter-toggle>svg,#game-shell #bag-filter-toggle>i{visibility:hidden}
+#game-shell #bag-filter-toggle:before,#game-shell #bag-filter-toggle:after{display:none!important}
+#game-shell #bag-organize{background:transparent url("assets/common-ui-v2/controls/control_grid_default.png") center/100% 100% no-repeat!important;border:0!important;box-shadow:none!important}
+#game-shell #bag-organize>svg,#game-shell #bag-organize>i{visibility:hidden}
+#game-shell #bag-organize:before,#game-shell #bag-organize:after{display:none!important}
+#game-shell #codex-view-grid{background:transparent url("assets/common-ui-v2/controls/control_grid_default.png") center/100% 100% no-repeat!important;border:0!important;box-shadow:none!important}
+#game-shell #codex-view-grid>svg,#game-shell #codex-view-grid>i{visibility:hidden}
+#game-shell #codex-view-grid:before,#game-shell #codex-view-grid:after{display:none!important}
+#game-shell #bag-organize[aria-pressed=true],#game-shell #codex-view-grid[aria-pressed=true]{background-image:url("assets/common-ui-v2/controls/control_grid_selected.png")!important}
+
+#game-shell [data-common-skin][data-common-skin]{isolation:isolate!important}
+
+#game-shell #camp-skills-panel .skill-card[data-common-skin]{padding:8px 4px 7px}
+
+#game-shell #camp-skills-panel :is(#skill-page-prev,#skill-page-next):before{display:block!important;border:0!important;border-image:none!important;background:transparent var(--pager-part) center/100% 100% no-repeat!important}
+#game-shell #skill-page-prev{--pager-part:url("assets/common-ui-v2/controls/control_previous.png")}
+#game-shell #skill-page-next{--pager-part:url("assets/common-ui-v2/controls/control_next.png")}
+
+#game-shell #home-settings{background:transparent url("assets/common-ui-v2/independent_icons/action_settings.png") center/22px 22px no-repeat!important}
+#game-shell #home-settings>svg{visibility:hidden}
+
+/* Keep ornament corners at a fixed screen size rather than stretching the art. */
+#game-shell#game-shell [data-common-skin=card][data-common-skin][data-common-skin]::before,
+#game-shell#game-shell [data-common-skin=slot][data-common-skin][data-common-skin]::before{background:none!important;border:0 solid transparent!important;border-image:var(--common-card) 12 / 6px / 0 stretch!important}
+#game-shell#game-shell [data-common-skin=slot][data-common-skin][data-common-skin]::before{border-image-source:var(--common-slot)!important}
+#game-shell#game-shell [data-common-skin=card][data-common-skin]:is([aria-pressed=true],[data-selected=true],.selected)::before{border-image-source:var(--common-card-on)!important}
+#game-shell #codex-content .codex-card[data-common-skin][data-common-skin]::before,
+#game-shell #camp-skills-panel .skill-card[data-common-skin][data-common-skin]::before{background:none!important;border:0 solid transparent!important;border-image:var(--common-card) 12 / 6px / 0 stretch!important}
+#game-shell #codex-content .codex-card[data-common-skin][aria-pressed=true]::before,
+#game-shell #camp-skills-panel .skill-card[data-common-skin][aria-pressed=true]::before{border-image-source:var(--common-card-on)!important}
+#game-shell[data-panel=craft] #craft-content .craft-costs{grid-template-rows:repeat(2,minmax(0,1fr));grid-auto-rows:minmax(0,1fr);overflow:hidden}
+#game-shell[data-panel=craft] #craft-content .craft-costs .craft-material-icon{width:clamp(20px,6cqh,28px);height:clamp(20px,6cqh,28px)}
+#game-shell[data-panel=craft] #craft-content .craft-costs button{padding:2px;gap:0}
+#game-shell#game-shell#game-shell [data-common-skin=card]::before,
+#game-shell#game-shell#game-shell [data-common-skin=slot]::before{background:none!important}
+#game-shell#game-shell #equipment-content .equipped-slot[data-common-skin]::before{display:none!important}
+#game-shell[data-panel=equipment] #equipment-content .loadout-slot-frame{background:#0d0c12 var(--common-slot) center/100% 100% no-repeat}

@@ -1,0 +1,32 @@
+/* Low-noise phone skin. Geometry is drawn at output resolution, never resampled. */
+@media(orientation:landscape) and (min-width:560px){
+ #game-shell #camp-skills-panel:not([hidden]){background:#0b131c;--skill-side:26%}
+ #game-shell:has(#camp-skills-panel:not([hidden])) .masthead{background:#0a1119;border-bottom:1px solid #7f6b4555}
+ #game-shell #camp-skills-panel:before,#game-shell #camp-skills-panel .skill-heading:after,#game-shell #camp-skills-panel .skill-library:before,#game-shell #camp-skills-panel .skill-detail:before,#game-shell #camp-skills-panel .skill-detail:after,#game-shell #camp-skills-panel .skill-study:before,#game-shell #camp-skills-panel .skill-card:before,#game-shell #camp-skills-panel .skill-equipped>button:before,#game-shell #camp-skills-panel .skill-presets:before,#game-shell #camp-skills-panel .skill-tabs>button:before,#game-shell #camp-skills-panel .skill-study>button:before,#game-shell #camp-skills-panel .skill-detail-actions>button:before,#game-shell #camp-skills-panel .skill-paging>button:before{display:none!important}
+ #game-shell #camp-skills-panel .skill-heading{padding-inline:6px}
+ #game-shell #camp-skills-panel .skill-heading>small{letter-spacing:.4px;color:#b6a17e}
+ #game-shell #camp-skills-panel .skill-heading h3{font-family:var(--body);font-size:18px;font-weight:650;color:#eee7d8;text-shadow:none}
+ #game-shell #camp-skills-panel .skill-study{padding:7px;background:#101d28!important;border:1px solid #6c798133;border-radius:6px}
+ #game-shell #camp-skills-panel .skill-library,#game-shell #camp-skills-panel .skill-detail{background:#101c27!important;border:1px solid #7b8a9433!important;border-image:none!important;border-radius:7px;box-shadow:none!important}
+ #game-shell #camp-skills-panel .skill-tabs>button,#game-shell #camp-skills-panel .skill-study>button,#game-shell #camp-skills-panel .skill-detail-actions>button,#game-shell #camp-skills-panel .skill-paging>button{background:#1a2834!important;border:1px solid #75838c55!important;border-image:none!important;border-radius:5px;box-shadow:none!important;color:#dce1e3;text-shadow:none}
+ #game-shell #camp-skills-panel .skill-tabs>button[aria-pressed=true]{background:#68303a!important;border-color:#b47e76!important;color:#fff0df}
+ #game-shell #camp-skills-panel .skill-detail-actions>#skill-upgrade{background:#7a303b!important;border:1px solid #ba7978!important;border-image:none!important;border-radius:5px;box-shadow:none!important;color:#fff2df}
+ #game-shell #camp-skills-panel .skill-equipped>button{background:#15222e!important;border:1px solid #71808a44!important;border-image:none!important;border-radius:6px;box-shadow:none!important}
+ #game-shell #camp-skills-panel .skill-equipped>button>small{color:#b9a889}
+ #game-shell #camp-skills-panel .skill-equipped>button>strong{color:#e7e8e3}
+ #game-shell #camp-skills-panel .skill-card{background:#172632!important;border:1px solid #7c8b953d!important;border-image:none!important;border-radius:6px;box-shadow:none!important;overflow:hidden}
+ #game-shell #camp-skills-panel .skill-card[aria-pressed=true]{background:#302b29!important;border-color:#d0b077!important;box-shadow:inset 0 0 0 1px #d0b07755!important}
+ #game-shell #camp-skills-panel .skill-card[data-locked=true]{background:#101a23!important;border-color:#61707922!important}
+ #game-shell #camp-skills-panel .skill-card img{image-rendering:auto;filter:none;border:0;border-radius:4px;opacity:1;max-height:48px;object-fit:contain;transform:none;box-shadow:none}
+ #game-shell #camp-skills-panel .skill-card[data-locked=true] img{filter:grayscale(1);opacity:.35}
+ #game-shell #camp-skills-panel .skill-card strong{font-weight:500;text-shadow:none;color:#e8e7df}
+ #game-shell #camp-skills-panel .skill-card small{color:#aab5bd}
+ #game-shell #camp-skills-panel .skill-card[aria-pressed=true] small{color:#dcc49b}
+ #game-shell #camp-skills-panel .skill-detail h3{font-family:var(--body);font-weight:650;text-shadow:none;color:#f0e8d9}
+ #game-shell #camp-skills-panel .skill-detail img,#game-shell #camp-skills-panel .skill-equipped .skill-slot-art{background:none!important;border:0;padding:0;border-radius:4px;box-shadow:none;image-rendering:auto}
+ #game-shell #camp-skills-panel .skill-effect-summary{background:#1a2935;border:1px solid #7c8a9244;border-radius:5px;color:#e3d7bd}
+ #game-shell #camp-skills-panel .skill-presets:not([open]){background:#162430!important;border:1px solid #76868e44!important;border-image:none!important;border-radius:5px;padding:5px 8px}
+ #game-shell #camp-skills-panel .skill-detail-resource{border-color:#71818d44}
+ #game-shell #camp-skills-panel .skill-rank-disclosure>summary,#game-shell #camp-skills-panel .skill-presets>summary{color:#c9b593}
+ #game-shell #camp-skills-panel .skill-catalog{gap:6px}
+}

@@ -1,0 +1,16 @@
+(node:10) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ equipped and crafting thumbnails reuse a responsive image when their actual item source changes (145.737644ms)
+✔ material category select and crafting route preserve collected progress and remain camp-only (115.233425ms)
+✔ craft recipe can be targeted without selecting other recipes changing the goal, and it restores or clears independently (150.054336ms)
+✔ routes validate locked regional material and select real elite or boss stage without launching combat (147.682847ms)
+✔ goal progress reflects acquisition immediately and stays complete after craft consumes materials (169.575483ms)
+✔ camp craft UI shows exact costs, makes unique once, equips and restores without consuming materials twice (138.473135ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1115.410855

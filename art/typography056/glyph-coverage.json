@@ -1,0 +1,23 @@
+[
+  {
+    "file": "IBMPlexSansKR-Regular.woff2",
+    "modernHangul": 11172,
+    "glyphs": 12224,
+    "digits": true,
+    "licenseFile": "IBMPlexSansKR-OFL.txt"
+  },
+  {
+    "file": "GowunBatang-Bold.woff2",
+    "modernHangul": 11172,
+    "glyphs": 12494,
+    "digits": true,
+    "licenseFile": "GowunBatang-OFL.txt"
+  },
+  {
+    "file": "IBMPlexSansKR-SemiBold.woff2",
+    "modernHangul": 11172,
+    "glyphs": 12224,
+    "digits": true,
+    "licenseFile": "IBMPlexSansKR-OFL.txt"
+  }
+]

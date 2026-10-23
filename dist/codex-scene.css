@@ -1,0 +1,148 @@
+/* Landscape archive: original equipment paintings and shared game frames. */
+@media(orientation:landscape) and (min-width:560px){
+ #game-shell[data-panel=codex] .masthead{background:linear-gradient(90deg,#080c11b8,#080c1175),url('assets/codex-archive-hero-v039.webp') center 20%/cover}
+ #game-shell #overlay[data-panel=codex],#game-shell #overlay[data-panel=codex]>.modal{background:transparent}
+ #game-shell #codex-content:not([hidden]){--archive-side:22.5%;--archive-gap:14px;position:relative;display:flex;flex-direction:column;padding:8px 12px 6px;background:linear-gradient(90deg,#060c1226,#060c1248),url('assets/codex-archive-hero-v039.webp') center/cover;overflow:hidden}
+ #game-shell #codex-browser:not([hidden]){isolation:isolate;display:grid;flex:1;min-height:0;min-width:0;padding:10px 12px;grid-template-columns:var(--archive-side) minmax(0,1fr);grid-template-rows:32px 32px minmax(0,1fr);gap:8px var(--archive-gap);border:1px solid #ac81489c;border-radius:6px;background:linear-gradient(90deg,#090e1226,#050b10bd);overflow:hidden}
+ #codex-browser:before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;border:9px solid transparent;border-image:var(--ui-panel) 18%/9px/0 stretch;opacity:.85}
+ #codex-browser:after{content:'';position:absolute;top:0;bottom:0;left:calc(var(--archive-side) + 14px);width:1px;background:linear-gradient(transparent,#c29154b0 8%,#c2915470 90%,transparent);pointer-events:none}
+ #game-shell #codex-content .archive-record{grid-column:1;grid-row:1/3;align-self:start;height:72px;min-width:0;margin:0;padding:4px 7px}
+ #game-shell #codex-content .archive-record>small{font:10px/1.4 Georgia,serif;letter-spacing:.5px;color:#d9ac64;white-space:nowrap}
+ #game-shell #codex-count{font:700 clamp(19px,2.65vw,38px)/1.4 var(--serif);color:#f2e5c9;white-space:nowrap}
+ #game-shell #codex-percent{position:absolute;right:9px;bottom:2px;font:11px/1.2 var(--body);color:#e3c999}
+ #game-shell #codex-content .archive-progress{display:block;left:7px;right:45px;bottom:5px;height:5px;border:1px solid #b8a17c55;border-radius:4px;background:#0008;overflow:hidden}
+ #game-shell .archive-progress i{background:linear-gradient(90deg,#c92e2a,#f0a15e)}
+ #game-shell #codex-content .archive-feature{grid-column:1;grid-row:3;display:block;min-height:0;height:100%;margin:0;padding:2px 7px 0;align-self:stretch;background:linear-gradient(0deg,#080e1440,transparent),url('assets/codex-archive-hero-v039.webp') 77% 50%/cover;border:0;overflow:hidden}
+ #game-shell .archive-feature:after{background:linear-gradient(0deg,#07101722,transparent 40%,#07101799)}
+ #game-shell #codex-content .archive-feature-copy{position:relative;width:100%;z-index:2}
+ #game-shell #codex-feature-kicker{font-size:12px;letter-spacing:.5px;color:#f0d7a4;border-bottom:1px solid #a4855159;padding-bottom:6px}
+ #game-shell #codex-content #codex-feature-name{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;max-height:2.7em;font:700 clamp(15px,2.1vw,27px)/1.3 var(--serif);color:#efe2bd;margin:7px 0 5px;white-space:normal}
+ #game-shell #codex-content #codex-feature-meta{font:11px/1.4 var(--body);color:#e1d9c8;margin:0}
+ #game-shell #codex-content #codex-feature-open{min-height:25px;height:25px;padding:0;margin:4px 0 0;font-size:12px;font-weight:600;color:#e6be77;gap:10px}
+ #game-shell #codex-content #codex-feature-empty{font-size:10px;line-height:1.5;max-width:90%;margin-top:9px}
+ #game-shell #codex-content #codex-feature-art{position:absolute;inset:auto 1% 0 auto;top:auto;right:1%;bottom:0;width:98%;height:auto;aspect-ratio:1;max-height:50%;margin:0;transform:none;opacity:1;z-index:1;filter:drop-shadow(0 8px 9px #0009)!important}
+ #game-shell #codex-content .archive-tools{grid-column:2;grid-row:1;gap:8px;align-self:stretch;min-height:0}
+ #game-shell #codex-content .archive-search{height:32px;border:1px solid #afa59175;border-radius:4px;padding:0 10px;background:#071118c9}
+ #game-shell #codex-content #codex-search{height:30px;min-height:30px;font-size:12px}
+ #game-shell #codex-content #codex-filter-toggle{flex:none;height:32px;min-height:32px;min-width:68px;padding:0 10px;border:1px solid #967e5766;border-radius:4px;background:#0a1118d9;font-size:12px}
+ #game-shell #codex-content .archive-categories{grid-column:2;grid-row:2;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;height:32px;min-height:32px;border:0}
+ #game-shell #codex-content .archive-categories>button{display:flex;align-items:center;justify-content:center;gap:6px;min-width:0;height:32px;min-height:32px;padding:3px 5px!important;border:5px solid transparent;border-image:var(--ui-panel) 18%/5px/0 stretch;border-radius:3px;background:linear-gradient(#292b2d,#10171b);font-size:12px;color:#e6dfd1}
+ #game-shell #codex-content .archive-categories>button[aria-pressed=true]{background:linear-gradient(#821e23,#480d13);color:#fff0d6;box-shadow:inset 0 0 12px #dd492e44}
+ #game-shell #codex-content .archive-categories>button:after{display:none}
+ #game-shell #codex-content .archive-categories svg{display:block;flex:none;width:17px;height:17px}
+ #game-shell #codex-content .archive-gallery{grid-column:2;grid-row:3;min-height:0;display:flex;flex-direction:column;overflow:hidden;background:none}
+ #game-shell #codex-content .archive-gallery-heading{flex:none;display:flex;min-width:0;justify-content:space-between;gap:8px;height:32px;min-height:32px;border:0;margin:0 0 5px}
+ #game-shell #codex-content .archive-gallery-heading>div:first-child{display:flex;align-items:baseline;gap:6px;min-width:0}
+ #game-shell #codex-content .archive-gallery-heading h3{font:700 15px var(--serif);white-space:nowrap;color:#f0dfb9}
+ #game-shell #codex-content #codex-results{font-size:10px;line-height:1.3;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .archive-gallery-controls{display:flex;align-items:center;gap:7px;flex:none}
+ #game-shell #codex-content .archive-sort select{width:112px;max-width:16vw;height:28px;min-height:28px;margin:0;padding:3px 20px 3px 8px;border:1px solid #a78c5660;border-radius:3px;background-color:#09131b;color:#e1d2b4;font:11px var(--body)}
+ #game-shell #codex-content .archive-view{gap:5px}
+ #game-shell #codex-content .archive-view>button{width:28px;height:28px;min-height:28px;padding:5px;border:1px solid #a18b5944;border-radius:3px;background:#0a1118;color:#9ca6a7}
+ #game-shell #codex-content .archive-view>button[aria-pressed=true]{background:#721b1e;border-color:#e7a368;color:#f4d39b;box-shadow:0 0 7px #e55e3140}
+ #game-shell #codex-content #codex-grid{display:grid;flex:1;min-width:0;min-height:0;overflow:auto;grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:max-content;align-content:start;gap:7px 6px;padding:3px 6px 5px 0;margin:0;background:none;scrollbar-width:thin;scrollbar-color:#98646c #090e13}
+ #game-shell #codex-content .codex-card{position:relative;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;height:auto;min-height:0;padding:0 0 5px;border:1px solid #b2945d62!important;border-radius:3px;background:linear-gradient(150deg,#1b161b90,#071016e8)!important;box-shadow:none!important;overflow:visible}
+ #game-shell #codex-content .codex-card:before{content:'';position:absolute;inset:0;pointer-events:none;z-index:2;border:5px solid transparent;border-image:var(--ui-panel) 18%/5px/0 stretch}
+ #game-shell #codex-content .codex-card:after{content:'';position:absolute;top:-4px;left:50%;right:auto;transform:translateX(-50%) rotate(45deg);width:7px;height:7px;border:1px solid #ead3a0;z-index:3;background:#0b1116}
+ #game-shell #codex-content .codex-card[data-discovered=true]{border-color:#d5b16b!important;background:linear-gradient(150deg,#55371f70,#101415)!important}
+ #game-shell #codex-content .codex-card[data-goal=true]:after{content:'';background:#ffd27a;border-color:#ffd27a}
+ #game-shell #codex-content .codex-card .equipment-icon{position:relative;display:block;flex:none;align-self:center;width:100%;max-width:none;height:auto;aspect-ratio:1;margin:0;border:0;border-bottom:1px solid #b49a6750;border-radius:0;background-color:#03080d70;transform:none;opacity:1}
+ #game-shell #codex-content .codex-card[data-discovered=false] .equipment-icon{filter:drop-shadow(0 0 4px #c57e2220)!important;opacity:1}
+ #game-shell #codex-content .codex-card strong{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;min-height:2.6em;max-height:2.6em;overflow:hidden;text-align:center;font:600 clamp(10px,1.15vw,15px)/1.3 var(--serif);color:#e9e2d3;padding:5px 3px 0;overflow-wrap:anywhere;word-break:keep-all}
+ #game-shell #codex-content .codex-card small{font-size:clamp(9px,1vw,12px);line-height:1.35;margin:3px 2px 0;color:#a0adae;text-align:center}
+ #game-shell #codex-content #codex-grid[data-layout=list]{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #game-shell #codex-content #codex-grid[data-layout=list] .codex-card{display:grid;grid-template-columns:70px minmax(0,1fr);grid-template-rows:1fr 1fr;gap:0 6px;height:76px;min-height:76px;padding:2px 5px}
+ #game-shell #codex-content #codex-grid[data-layout=list] .equipment-icon{grid-row:1/3;width:70px;height:70px;max-width:none;border:0}
+ #game-shell #codex-content #codex-grid[data-layout=list] strong{text-align:left;align-self:end;padding:0 3px;min-height:0;max-height:2.6em}
+ #game-shell #codex-content #codex-grid[data-layout=list] small{text-align:left;align-self:start;margin:3px}
+ #game-shell #codex-content #codex-filters:not([hidden]){position:absolute;z-index:10;top:48px;left:calc(var(--archive-side) + 25px);right:12px;max-height:calc(100% - 58px);overflow:auto;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:12px;border:1px solid #a98a53;border-radius:5px;background:#0b151ef5;box-shadow:0 8px 28px #000b}
+ #game-shell #codex-content .archive-footer{position:static;display:flex;flex:none;height:40px;min-height:40px;justify-content:flex-end;margin:0;padding:5px 0 0;border:0;background:transparent;box-shadow:none}
+ #game-shell #codex-content #codex-hunt{width:220px;height:34px!important;min-height:34px;font-size:13px}
+ #game-shell #codex-content #codex-detail:not([hidden]){background:linear-gradient(90deg,#081018e8,#081018c9),url('assets/codex-archive-hero-v039.webp') center/cover;border:1px solid #aa8a5380;border-radius:5px}
+ #game-shell #codex-content #codex-detail[data-discovered=false] #codex-detail-art{filter:drop-shadow(0 0 5px #c57e2220)!important}
+}
+@media(orientation:landscape) and (max-width:740px) and (min-width:560px){
+ #game-shell #codex-content:not([hidden]){--archive-side:22%;--archive-gap:10px;padding:5px 8px}
+ #game-shell #codex-browser:not([hidden]){padding:8px;gap:6px var(--archive-gap);grid-template-rows:30px 30px minmax(0,1fr)}
+ #game-shell #codex-content .archive-record{height:66px;padding-left:2px;padding-right:2px}
+ #game-shell #codex-content .archive-record>small{font-size:8px}
+ #game-shell #codex-count{font-size:19px}
+ #game-shell #codex-content .archive-progress{left:2px;right:36px}
+ #game-shell #codex-percent{right:2px;font-size:10px}
+ #game-shell #codex-content .archive-feature{padding:0 2px}
+ #game-shell #codex-content #codex-feature-name{font-size:16px}
+ #game-shell #codex-content #codex-feature-meta{font-size:10px}
+ #game-shell #codex-content .archive-categories{gap:3px;height:30px;min-height:30px}
+ #game-shell #codex-content .archive-categories>button{gap:3px;height:30px;min-height:30px;font-size:10px;border-image-width:4px}
+ #game-shell #codex-content .archive-categories svg{display:block;width:13px;height:13px}
+ #game-shell #codex-content .archive-tools{gap:5px}
+ #game-shell #codex-content .archive-search{height:30px;padding:0 7px}
+ #game-shell #codex-content #codex-search{height:28px;min-height:28px;font-size:11px}
+ #game-shell #codex-content #codex-filter-toggle{height:30px;min-height:30px;min-width:54px;padding:0 6px;font-size:11px}
+ #game-shell #codex-content .archive-gallery-heading h3{font-size:13px}
+ #game-shell #codex-content #codex-results{font-size:9px}
+ #game-shell #codex-content .archive-sort select{width:88px;font-size:10px}
+ #game-shell #codex-content .archive-gallery-controls{gap:4px}
+ #game-shell #codex-content .archive-view>button{width:25px;height:27px;min-height:27px;padding:4px}
+ #game-shell #codex-content #codex-grid{gap:7px 5px;grid-template-columns:repeat(5,minmax(0,1fr))}
+ #game-shell #codex-content .codex-card strong{font-size:10px}
+ #game-shell #codex-content .codex-card small{font-size:9px}
+ #game-shell #codex-content #codex-filters:not([hidden]){left:calc(var(--archive-side) + 15px);right:8px;grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+/* Compact phone archive: square artwork, distinct collection state, aligned controls. */
+@media(orientation:landscape) and (min-width:560px){
+ #game-shell #codex-content:not([hidden]){--archive-side:20%;--archive-gap:10px;padding:4px 8px}
+ #game-shell #codex-browser:not([hidden]){padding:7px 9px;grid-template-rows:26px 26px minmax(0,1fr);gap:5px var(--archive-gap)}
+ #game-shell #codex-content .archive-record{height:56px;padding:1px 4px}
+ #game-shell #codex-content .archive-record>small{font-size:8px}
+ #game-shell #codex-count{font-size:20px;line-height:1.3}
+ #game-shell #codex-percent{font-size:9px}
+ #game-shell #codex-content #codex-feature-kicker{font-size:10px;padding-bottom:3px}
+ #game-shell #codex-content #codex-feature-name{font-size:14px;margin:5px 0 3px}
+ #game-shell #codex-content #codex-feature-meta{font-size:9px}
+ #game-shell #codex-content #codex-feature-open{font-size:10px;height:22px;min-height:22px;margin-top:2px}
+ #game-shell #codex-content #codex-feature-art{width:100%;height:58%;max-height:58%;aspect-ratio:auto;object-fit:contain;right:0;bottom:0}
+ #game-shell #codex-content .archive-tools{gap:5px}
+ #game-shell #codex-content .archive-search{height:26px;padding:0 7px;display:flex;align-items:center}
+ #game-shell #codex-content #codex-search{height:24px;min-height:24px;font-size:10px}
+ #game-shell #codex-content #codex-filter-toggle{height:26px;min-height:26px;min-width:54px;font-size:10px;padding:0 7px;display:flex;align-items:center;justify-content:center;gap:5px}
+ #game-shell #codex-content .archive-categories{height:26px;min-height:26px;gap:4px}
+ #game-shell #codex-content .archive-categories>button{height:26px;min-height:26px;font-size:10px;border:0;border-image:none;padding:0 6px!important;gap:5px;background:linear-gradient(#252729,#10171b);box-shadow:inset 0 0 0 1px #a98b515e}
+ #game-shell #codex-content .archive-categories>button[aria-pressed=true]{background:linear-gradient(#862128,#4d1017);box-shadow:inset 0 0 0 1px #e6a15d}
+ #game-shell #codex-content .archive-categories svg{width:14px;height:14px;flex:0 0 14px}
+ #game-shell #codex-content .archive-gallery-heading{height:24px;min-height:24px;margin-bottom:3px;align-items:center}
+ #game-shell #codex-content .archive-gallery-heading h3{font-size:12px;margin:0}
+ #game-shell #codex-content #codex-results{font-size:9px}
+ #game-shell #codex-content .archive-sort select{height:23px;min-height:23px;font-size:9px;width:94px;padding:0 17px 0 6px}
+ #game-shell #codex-content .archive-view>button{height:23px;min-height:23px;width:23px;padding:4px;display:grid;place-items:center}
+ #game-shell #codex-content #codex-grid{grid-template-columns:repeat(7,minmax(0,1fr));gap:6px 5px;padding:3px 4px 4px 0}
+ #game-shell #codex-content .codex-card{padding-bottom:3px;overflow:hidden;border-radius:4px}
+ #game-shell #codex-content .codex-card:after{display:none}
+ #game-shell #codex-content .codex-card .equipment-icon{aspect-ratio:1;width:100%;height:auto;object-fit:contain;overflow:hidden}
+ #game-shell #codex-content .codex-card strong{font-size:9px;line-height:1.25;min-height:2.5em;max-height:2.5em;padding:3px 3px 0}
+ #game-shell #codex-content .codex-card small{font-size:8px;line-height:1.25;margin:3px 2px 0}
+ #game-shell #codex-content .codex-card[data-discovered=false]{background:#081018!important;border-color:#666e7155!important}
+ #game-shell #codex-content .codex-card[data-discovered=false]:before{opacity:.28}
+ #game-shell #codex-content .codex-card[data-discovered=false] .equipment-icon{filter:grayscale(1) brightness(.45)!important;opacity:.75}
+ #game-shell #codex-content .codex-card[data-discovered=false] strong{color:#9ba4a9}
+ #game-shell #codex-content .codex-card[data-discovered=false] small{color:#849097}
+ #game-shell #codex-content .codex-card[data-discovered=true]{border-color:#edbd68!important;box-shadow:inset 0 0 0 1px #e8b560!important}
+ #game-shell #codex-content .codex-card[data-discovered=true] small{color:#f6cf83;font-weight:700}
+ #game-shell #codex-content .archive-footer{height:30px;min-height:30px;padding-top:3px}
+ #game-shell #codex-content #codex-hunt{width:180px;height:27px!important;min-height:27px;font-size:11px;display:flex;align-items:center;justify-content:center;gap:8px;background-size:100% 100%;padding:0 12px}
+ #game-shell #codex-content #codex-filters:not([hidden]){top:36px}
+}
+@media(orientation:landscape) and (min-width:560px) and (max-width:740px){
+ #game-shell #codex-content #codex-grid{grid-template-columns:repeat(6,minmax(0,1fr))}
+ #game-shell #codex-content #codex-feature-name{font-size:12px}
+ #game-shell #codex-content .archive-categories>button{font-size:9px;gap:3px}
+}
+@media(orientation:landscape) and (min-width:560px){
+ #game-shell #codex-content .archive-categories>button:before{display:none!important}
+ #game-shell #codex-content #codex-hunt:before,#game-shell #codex-content #codex-hunt:after{display:none!important}
+ #game-shell #codex-content #codex-hunt{background:linear-gradient(#20272b,#10171b);border:1px solid #ad8e58;border-radius:4px;box-shadow:inset 0 0 8px #baa06b12}
+}
+@media(orientation:landscape) and (min-width:560px){
+ #game-shell #codex-content .archive-categories>button{background-image:linear-gradient(#252729,#10171b)!important;background-size:100% 100%!important;border:1px solid #806947!important;border-image:none!important;box-shadow:none!important}
+ #game-shell #codex-content .archive-categories>button[aria-pressed=true]{background-image:linear-gradient(#862128,#4d1017)!important;border-color:#d59d5d!important}
+}

@@ -1,0 +1,5 @@
+Use case: stylized-concept
+Asset type: transparent decorative header crest/divider for dark fantasy RPG menus.
+Primary request: one wide, delicate horizontal ornament: an antique champagne-brass crescent moon encircling a tiny dark crimson gemstone in the exact center, with thin symmetric thorn-like etched metal branches extending to both sides, ending in narrow pointed filigree. Elegant hunter's moon motif, premium hand-painted 2D game UI, understated aged brass with ivory highlights and blackened recesses, matching charcoal-metal panels and crimson velvet buttons.
+Composition: wide landscape about 4:1, ornament occupies the middle horizontal band with clear transparent space above and below. Front-on orthographic; crescent/gem occupies only central 18 percent of width, branches thin and symmetrical. Delicate rather than bulky.
+Constraints: actual transparent background, no plaque behind it, no text, no letters, no numbers, no character, no weapons, no skulls, no opaque rectangular background, no visual mockup, only one isolated ornament.

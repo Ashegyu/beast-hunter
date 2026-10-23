@@ -1,0 +1,48 @@
+Alpha 0.41 crafting UI QA, 2026-10-16
+
+Scope
+Approved image: art/references/crafting-approved-alpha041.png.
+UI-only forge background, six crafted item illustrations, eight material illustrations.
+Craft categories, horizontal icon selection, large selected item, actual stats, native ability disclosure, three-column materials and actual craft payment actions.
+Existing engine crafting status/payment, loot odds, equipment rules, weapon-only character composition and profile schema retained.
+Existing manifest fields deep-compared to HEAD after removing only the new craftedPresentation and its delivery mapping: exact match.
+
+Automated evidence
+node --experimental-vm-modules --test tests/*.test.mjs
+417 tests, 417 pass, 0 fail; 22883ms. Includes 4 added ownership/navigation/readiness regressions and updated inspection expectation.
+node --check dist/app.js; git diff --check passed.
+Checks are DOM/canvas-host integration and engine tests, not screenshot tests.
+
+Browser evidence (actual localhost app)
+390x844: six recipes and every category, actual 6/7-material recipes, native ability disclosure. No hover details introduced.
+Temporary named QA page backed up the original local profile through a visible button; fixture states used only on localhost.
+Partial fixture: gold2796, cores44, materials22/60,16/20,8/12,3/6,2/2,0/1; ready1/6, craft disabled.
+Set blood charm as saved target, inspect frost sword origin material: preview caption, no clear/hide target action; reopening actual tracker still shows blood charm. Preview does not overwrite the goal.
+Material origin inspection: real boss-only 0.001% routes in all3 regions; choosing frost route selects chapter3/stage5 without launching or changing the saved goal.
+Back/Escape returns to crafting and originating material/action. Category changes select an actually visible recipe. Armor has7 materials, weapons6.
+Ready fixture: gold10000, every material100 except origin1. Crafted frost sword via real UI; gold6500; bone40,hide80,crystal88,tear94,source98,origin0. Craft disabled after ownership, equip enabled. Equipped, reloaded: gold6500,origin0,craft disabled,equip disabled because worn. Inventory shows actual weapon and1/24.
+Full-bag fixture:24 valid ordinary items; material ready6/6 and gold10000, but craft disabled with actual bag-space reason; gold remained10000.
+Actual auto hunt with crafted frost sword: forest1-5 victory,17kills,25seconds,196gold,3cores,6items. Screenshot saved in workspace outputs.
+Original localhost profile restored through fixture UI; visible '원본 복구 완료', then original gold0/cores0 confirmed in app. Temporary QA page removed before packaging.
+
+Visual critique / fixes
+Initial implementation inherited column flex direction from old recipe CSS: corrected to one horizontal row.
+Initial hero clipped the goal button and blade edge: corrected art scale/placement and caption dimensions.
+Stats locally darkened to remain readable over the large sword; selected art and actual numbers independently rendered.
+Initial sticky action covered material row2: removed overlay. Final390 composition removes redundant subtitle/flavor, compacts hero and material spacing so all6 materials and craft action fit without an overlay.
+Final390x844 submit y692.08..740.08, bottom nav begins778; goal y343.98..387.98 inside hero bottom396.98. Real craft price3500; reference image's50000 was not copied.
+320x740: no document/content horizontal overflow; goal44px inside hero. Scroll reveals lower materials/craft action; final submit y524.09..572.09, nav begins674. Capture stored.
+844x390 rotation: scrolling reaches48px craft button y174.09..222.09, nav begins324; no horizontal overflow.
+1280x900: centered480px portrait app x400, no horizontal overflow. Screenshots saved.
+390/320 actual PNGs reviewed against approved mockup: charcoal/champagne/ivory materials, blue weapon/warm forge balance, icon rail, two-column stats, material count hierarchy, narrow navigation preserved. Utility text remains real DOM, decorative scene is artwork.
+Console warning/error log query returned []. Initial combat image count remains23; new UI WebP assets load on matching views, about0.94MiB total. No frame CPU/GPU, P95, physical-device or touch latency measurements claimed.
+
+Artifacts
+art/references/crafting-actual-alpha041-390.png
+art/references/crafting-actual-alpha041-320.png
+Workspace outputs: alpha041-crafting-390.png,alpha041-crafting-materials-320.png,alpha041-crafting-desktop.png,alpha041-crafting-landscape.png,alpha041-crafted-boss-victory-390.png.
+Asset prompts: art/references/crafting-alpha041-prompts.txt. Built-in image_gen; no external image API/CLI.
+
+Limits
+Android Chrome hardware not connected; mobile checks use real browser at specified viewport sizes. No claim of physical Android QA.
+No engine balance, drop odds, save schema or combat sprite changes.

@@ -1,0 +1,7 @@
+{
+  "baselineCommit": "f72cdfa5710fa3d84503f03f81fdde9a484d0b01",
+  "frames": 2400,
+  "equal": true,
+  "comparison": "exact player/profile/run/RNG/effects/phase snapshots each frame; excludes authored chapter/monster/treasure state",
+  "scope": "manual walking, held combo, directed heavy attack, dash and pause; no enemies"
+}

@@ -1,0 +1,2395 @@
+{
+  "scope": "Nine deterministic engine-driven automatic campaigns, real earned gear and camp budgets only. Not browser rendering, device FPS, player playtime, or a statistical balance survey.",
+  "encounters": [
+    {
+      "stage": 1,
+      "name": "추격전",
+      "formation": "hunt",
+      "waves": [
+        8,
+        9,
+        10
+      ],
+      "interval": 0.18,
+      "timeLimit": 120,
+      "boss": false
+    },
+    {
+      "stage": 2,
+      "name": "교차 사격",
+      "formation": "crossfire",
+      "waves": [
+        9,
+        10,
+        10
+      ],
+      "interval": 0.16,
+      "timeLimit": 120,
+      "boss": false
+    },
+    {
+      "stage": 3,
+      "name": "갑각 돌파",
+      "formation": "front",
+      "waves": [
+        10,
+        11,
+        12
+      ],
+      "interval": 0.18,
+      "timeLimit": 120,
+      "boss": false
+    },
+    {
+      "stage": 4,
+      "name": "포위 생존",
+      "formation": "ring",
+      "waves": [
+        11,
+        12,
+        12
+      ],
+      "interval": 0.14,
+      "timeLimit": 120,
+      "boss": false
+    },
+    {
+      "stage": 5,
+      "name": "양면 협공",
+      "formation": "pincer",
+      "waves": [
+        12,
+        12,
+        13
+      ],
+      "interval": 0.14,
+      "timeLimit": 120,
+      "boss": false
+    },
+    {
+      "stage": 6,
+      "name": "탄막 돌파",
+      "formation": "barrage",
+      "waves": [
+        12,
+        13,
+        14
+      ],
+      "interval": 0.13,
+      "timeLimit": 120,
+      "boss": false
+    },
+    {
+      "stage": 7,
+      "name": "정예 사냥",
+      "formation": "front",
+      "waves": [
+        13,
+        14,
+        15
+      ],
+      "interval": 0.14,
+      "timeLimit": 120,
+      "boss": false
+    },
+    {
+      "stage": 8,
+      "name": "혼돈의 포위망",
+      "formation": "ring",
+      "waves": [
+        14,
+        15,
+        16
+      ],
+      "interval": 0.12,
+      "timeLimit": 120,
+      "boss": false
+    },
+    {
+      "stage": 9,
+      "name": "최후의 공세",
+      "formation": "surge",
+      "waves": [
+        16,
+        17,
+        18
+      ],
+      "interval": 0.1,
+      "timeLimit": 120,
+      "boss": false
+    },
+    {
+      "stage": 10,
+      "name": "수문장 결전",
+      "formation": "boss",
+      "waves": [
+        1
+      ],
+      "interval": 0,
+      "timeLimit": 180,
+      "boss": true
+    }
+  ],
+  "expectedKills": 339,
+  "runs": [
+    {
+      "route": "balanced",
+      "seed": 0,
+      "unlock": {
+        "chapter": 1,
+        "stage": 5,
+        "time": 209.93
+      },
+      "chapters": [
+        {
+          "clocks": [
+            {
+              "stage": 1,
+              "spent": 26.8,
+              "minimumRemaining": 93.2
+            },
+            {
+              "stage": 2,
+              "spent": 36.95,
+              "minimumRemaining": 83.05
+            },
+            {
+              "stage": 3,
+              "spent": 49.63,
+              "minimumRemaining": 70.37
+            },
+            {
+              "stage": 4,
+              "spent": 61.08,
+              "minimumRemaining": 58.92
+            },
+            {
+              "stage": 5,
+              "spent": 46.03,
+              "minimumRemaining": 73.97
+            },
+            {
+              "stage": 6,
+              "spent": 47.28,
+              "minimumRemaining": 72.72
+            },
+            {
+              "stage": 7,
+              "spent": 76.5,
+              "minimumRemaining": 43.5
+            },
+            {
+              "stage": 8,
+              "spent": 69.75,
+              "minimumRemaining": 50.25
+            },
+            {
+              "stage": 9,
+              "spent": 75.7,
+              "minimumRemaining": 44.3
+            },
+            {
+              "stage": 10,
+              "spent": 11.23,
+              "minimumRemaining": 168.77
+            }
+          ],
+          "chapter": 1,
+          "phase": "victory",
+          "stage": 10,
+          "level": 25,
+          "time": 498.17,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 256,
+          "maxHp": 294,
+          "species": [
+            "forest_devourer",
+            "forest_goblin",
+            "forest_guardian",
+            "forest_mushroom",
+            "forest_orc",
+            "forest_spider",
+            "forest_wolf"
+          ],
+          "peak": {
+            "live": 16,
+            "actors": 19,
+            "shots": 18,
+            "effects": 32,
+            "pickups": 17,
+            "pending": 18
+          }
+        },
+        {
+          "clocks": [
+            {
+              "stage": 1,
+              "spent": 15.65,
+              "minimumRemaining": 104.35
+            },
+            {
+              "stage": 2,
+              "spent": 20.68,
+              "minimumRemaining": 99.32
+            },
+            {
+              "stage": 3,
+              "spent": 28.28,
+              "minimumRemaining": 91.72
+            },
+            {
+              "stage": 4,
+              "spent": 41.08,
+              "minimumRemaining": 78.92
+            },
+            {
+              "stage": 5,
+              "spent": 25.78,
+              "minimumRemaining": 94.22
+            },
+            {
+              "stage": 6,
+              "spent": 31.35,
+              "minimumRemaining": 88.65
+            },
+            {
+              "stage": 7,
+              "spent": 31.1,
+              "minimumRemaining": 88.9
+            },
+            {
+              "stage": 8,
+              "spent": 32.98,
+              "minimumRemaining": 87.02
+            },
+            {
+              "stage": 9,
+              "spent": 32.95,
+              "minimumRemaining": 87.05
+            },
+            {
+              "stage": 10,
+              "spent": 5.03,
+              "minimumRemaining": 174.97
+            }
+          ],
+          "chapter": 2,
+          "phase": "victory",
+          "stage": 10,
+          "level": 33,
+          "time": 271.55,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 535,
+          "maxHp": 535,
+          "species": [
+            "ruins_bat",
+            "ruins_king",
+            "ruins_knight",
+            "ruins_mage",
+            "ruins_mimic",
+            "ruins_skeleton",
+            "ruins_wraith"
+          ],
+          "peak": {
+            "live": 15,
+            "actors": 20,
+            "shots": 13,
+            "effects": 46,
+            "pickups": 11,
+            "pending": 18
+          }
+        },
+        {
+          "clocks": [
+            {
+              "stage": 1,
+              "spent": 13.1,
+              "minimumRemaining": 106.9
+            },
+            {
+              "stage": 2,
+              "spent": 25.68,
+              "minimumRemaining": 94.32
+            },
+            {
+              "stage": 3,
+              "spent": 30.25,
+              "minimumRemaining": 89.75
+            },
+            {
+              "stage": 4,
+              "spent": 41.3,
+              "minimumRemaining": 78.7
+            },
+            {
+              "stage": 5,
+              "spent": 23.15,
+              "minimumRemaining": 96.85
+            },
+            {
+              "stage": 6,
+              "spent": 22.4,
+              "minimumRemaining": 97.6
+            },
+            {
+              "stage": 7,
+              "spent": 29.25,
+              "minimumRemaining": 90.75
+            },
+            {
+              "stage": 8,
+              "spent": 33.2,
+              "minimumRemaining": 86.8
+            },
+            {
+              "stage": 9,
+              "spent": 41.5,
+              "minimumRemaining": 78.5
+            },
+            {
+              "stage": 10,
+              "spent": 7.5,
+              "minimumRemaining": 172.5
+            }
+          ],
+          "chapter": 3,
+          "phase": "victory",
+          "stage": 10,
+          "level": 39,
+          "time": 274.17,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 627,
+          "maxHp": 627,
+          "species": [
+            "frost_golem",
+            "frost_king",
+            "frost_leopard",
+            "frost_mage",
+            "frost_wisp",
+            "frost_wolf",
+            "frost_yeti"
+          ],
+          "peak": {
+            "live": 14,
+            "actors": 21,
+            "shots": 21,
+            "effects": 38,
+            "pickups": 10,
+            "pending": 18
+          }
+        }
+      ]
+    },
+    {
+      "route": "balanced",
+      "seed": 4,
+      "unlock": {
+        "chapter": 1,
+        "stage": 5,
+        "time": 195.89
+      },
+      "chapters": [
+        {
+          "clocks": [
+            {
+              "stage": 1,
+              "spent": 25.63,
+              "minimumRemaining": 94.37
+            },
+            {
+              "stage": 2,
+              "spent": 34.48,
+              "minimumRemaining": 85.52
+            },
+            {
+              "stage": 3,
+              "spent": 45.35,
+              "minimumRemaining": 74.65
+            },
+            {
+              "stage": 4,
+              "spent": 59.6,
+              "minimumRemaining": 60.4
+            },
+            {
+              "stage": 5,
+              "spent": 46.4,
+              "minimumRemaining": 73.6
+            },
+            {
+              "stage": 6,
+              "spent": 54.88,
+              "minimumRemaining": 65.12
+            },
+            {
+              "stage": 7,
+              "spent": 56.95,
+              "minimumRemaining": 63.05
+            },
+            {
+              "stage": 8,
+              "spent": 72.1,
+              "minimumRemaining": 47.9
+            },
+            {
+              "stage": 9,
+              "spent": 75.68,
+              "minimumRemaining": 44.32
+            },
+            {
+              "stage": 10,
+              "spent": 11.1,
+              "minimumRemaining": 168.9
+            }
+          ],
+          "chapter": 1,
+          "phase": "victory",
+          "stage": 10,
+          "level": 25,
+          "time": 479.31,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 256,
+          "maxHp": 294,
+          "species": [
+            "forest_devourer",
+            "forest_goblin",
+            "forest_guardian",
+            "forest_mushroom",
+            "forest_orc",
+            "forest_spider",
+            "forest_wolf"
+          ],
+          "peak": {
+            "live": 17,
+            "actors": 19,
+            "shots": 17,
+            "effects": 36,
+            "pickups": 11,
+            "pending": 18
+          }
+        },
+        {
+          "clocks": [
+            {
+              "stage": 1,
+              "spent": 16.55,
+              "minimumRemaining": 103.45
+            },
+            {
+              "stage": 2,
+              "spent": 26.9,
+              "minimumRemaining": 93.1
+            },
+            {
+              "stage": 3,
+              "spent": 31,
+              "minimumRemaining": 89
+            },
+            {
+              "stage": 4,
+              "spent": 41.3,
+              "minimumRemaining": 78.7
+            },
+            {
+              "stage": 5,
+              "spent": 20.95,
+              "minimumRemaining": 99.05
+            },
+            {
+              "stage": 6,
+              "spent": 22.48,
+              "minimumRemaining": 97.52
+            },
+            {
+              "stage": 7,
+              "spent": 32.4,
+              "minimumRemaining": 87.6
+            },
+            {
+              "stage": 8,
+              "spent": 35.93,
+              "minimumRemaining": 84.07
+            },
+            {
+              "stage": 9,
+              "spent": 31.9,
+              "minimumRemaining": 88.1
+            },
+            {
+              "stage": 10,
+              "spent": 5,
+              "minimumRemaining": 175
+            }
+          ],
+          "chapter": 2,
+          "phase": "victory",
+          "stage": 10,
+          "level": 33,
+          "time": 271.26,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 554,
+          "maxHp": 554,
+          "species": [
+            "ruins_bat",
+            "ruins_king",
+            "ruins_knight",
+            "ruins_mage",
+            "ruins_mimic",
+            "ruins_skeleton",
+            "ruins_wraith"
+          ],
+          "peak": {
+            "live": 14,
+            "actors": 19,
+            "shots": 12,
+            "effects": 44,
+            "pickups": 8,
+            "pending": 18
+          }
+        },
+        {
+          "clocks": [
+            {
+              "stage": 1,
+              "spent": 19.8,
+              "minimumRemaining": 100.2
+            },
+            {
+              "stage": 2,
+              "spent": 22.95,
+              "minimumRemaining": 97.05
+            },
+            {
+              "stage": 3,
+              "spent": 33.95,
+              "minimumRemaining": 86.05
+            },
+            {
+              "stage": 4,
+              "spent": 41.13,
+              "minimumRemaining": 78.87
+            },
+            {
+              "stage": 5,
+              "spent": 29.3,
+              "minimumRemaining": 90.7
+            },
+            {
+              "stage": 6,
+              "spent": 31,
+              "minimumRemaining": 89
+            },
+            {
+              "stage": 7,
+              "spent": 35.48,
+              "minimumRemaining": 84.52
+            },
+            {
+              "stage": 8,
+              "spent": 38.78,
+              "minimumRemaining": 81.22
+            },
+            {
+              "stage": 9,
+              "spent": 40.8,
+              "minimumRemaining": 79.2
+            },
+            {
+              "stage": 10,
+              "spent": 7.9,
+              "minimumRemaining": 172.1
+            }
+          ],
+          "chapter": 3,
+          "phase": "victory",
+          "stage": 10,
+          "level": 39,
+          "time": 307.06,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 611,
+          "maxHp": 611,
+          "species": [
+            "frost_golem",
+            "frost_king",
+            "frost_leopard",
+            "frost_mage",
+            "frost_wisp",
+            "frost_wolf",
+            "frost_yeti"
+          ],
+          "peak": {
+            "live": 18,
+            "actors": 27,
+            "shots": 21,
+            "effects": 45,
+            "pickups": 14,
+            "pending": 18
+          }
+        }
+      ]
+    },
+    {
+      "route": "balanced",
+      "seed": 9,
+      "unlock": {
+        "chapter": 1,
+        "stage": 5,
+        "time": 182.65
+      },
+      "chapters": [
+        {
+          "clocks": [
+            {
+              "stage": 1,
+              "spent": 30.68,
+              "minimumRemaining": 89.32
+            },
+            {
+              "stage": 2,
+              "spent": 36.03,
+              "minimumRemaining": 83.97
+            },
+            {
+              "stage": 3,
+              "spent": 37.6,
+              "minimumRemaining": 82.4
+            },
+            {
+              "stage": 4,
+              "spent": 48.33,
+              "minimumRemaining": 71.67
+            },
+            {
+              "stage": 5,
+              "spent": 42.48,
+              "minimumRemaining": 77.52
+            },
+            {
+              "stage": 6,
+              "spent": 62.25,
+              "minimumRemaining": 57.75
+            },
+            {
+              "stage": 7,
+              "spent": 60.78,
+              "minimumRemaining": 59.22
+            },
+            {
+              "stage": 8,
+              "spent": 61.43,
+              "minimumRemaining": 58.57
+            },
+            {
+              "stage": 9,
+              "spent": 82.6,
+              "minimumRemaining": 37.4
+            },
+            {
+              "stage": 10,
+              "spent": 9.78,
+              "minimumRemaining": 170.22
+            }
+          ],
+          "chapter": 1,
+          "phase": "victory",
+          "stage": 10,
+          "level": 25,
+          "time": 468.8,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 256,
+          "maxHp": 294,
+          "species": [
+            "forest_devourer",
+            "forest_goblin",
+            "forest_guardian",
+            "forest_mushroom",
+            "forest_orc",
+            "forest_spider",
+            "forest_wolf"
+          ],
+          "peak": {
+            "live": 17,
+            "actors": 20,
+            "shots": 12,
+            "effects": 38,
+            "pickups": 14,
+            "pending": 18
+          }
+        },
+        {
+          "clocks": [
+            {
+              "stage": 1,
+              "spent": 16.95,
+              "minimumRemaining": 103.05
+            },
+            {
+              "stage": 2,
+              "spent": 21.08,
+              "minimumRemaining": 98.92
+            },
+            {
+              "stage": 3,
+              "spent": 30.6,
+              "minimumRemaining": 89.4
+            },
+            {
+              "stage": 4,
+              "spent": 40.8,
+              "minimumRemaining": 79.2
+            },
+            {
+              "stage": 5,
+              "spent": 24.18,
+              "minimumRemaining": 95.82
+            },
+            {
+              "stage": 6,
+              "spent": 27.43,
+              "minimumRemaining": 92.57
+            },
+            {
+              "stage": 7,
+              "spent": 26.18,
+              "minimumRemaining": 93.82
+            },
+            {
+              "stage": 8,
+              "spent": 37.5,
+              "minimumRemaining": 82.5
+            },
+            {
+              "stage": 9,
+              "spent": 41.1,
+              "minimumRemaining": 78.9
+            },
+            {
+              "stage": 10,
+              "spent": 5.65,
+              "minimumRemaining": 174.35
+            }
+          ],
+          "chapter": 2,
+          "phase": "victory",
+          "stage": 10,
+          "level": 33,
+          "time": 278.26,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 520,
+          "maxHp": 520,
+          "species": [
+            "ruins_bat",
+            "ruins_king",
+            "ruins_knight",
+            "ruins_mage",
+            "ruins_mimic",
+            "ruins_skeleton",
+            "ruins_wraith"
+          ],
+          "peak": {
+            "live": 14,
+            "actors": 19,
+            "shots": 15,
+            "effects": 34,
+            "pickups": 11,
+            "pending": 18
+          }
+        },
+        {
+          "clocks": [
+            {
+              "stage": 1,
+              "spent": 15.55,
+              "minimumRemaining": 104.45
+            },
+            {
+              "stage": 2,
+              "spent": 26.03,
+              "minimumRemaining": 93.97
+            },
+            {
+              "stage": 3,
+              "spent": 29.73,
+              "minimumRemaining": 90.27
+            },
+            {
+              "stage": 4,
+              "spent": 41.13,
+              "minimumRemaining": 78.87
+            },
+            {
+              "stage": 5,
+              "spent": 26.7,
+              "minimumRemaining": 93.3
+            },
+            {
+              "stage": 6,
+              "spent": 27.55,
+              "minimumRemaining": 92.45
+            },
+            {
+              "stage": 7,
+              "spent": 30.75,
+              "minimumRemaining": 89.25
+            },
+            {
+              "stage": 8,
+              "spent": 39.7,
+              "minimumRemaining": 80.3
+            },
+            {
+              "stage": 9,
+              "spent": 43.98,
+              "minimumRemaining": 76.02
+            },
+            {
+              "stage": 10,
+              "spent": 7.45,
+              "minimumRemaining": 172.55
+            }
+          ],
+          "chapter": 3,
+          "phase": "victory",
+          "stage": 10,
+          "level": 39,
+          "time": 293.78,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 626,
+          "maxHp": 638,
+          "species": [
+            "frost_golem",
+            "frost_king",
+            "frost_leopard",
+            "frost_mage",
+            "frost_wisp",
+            "frost_wolf",
+            "frost_yeti"
+          ],
+          "peak": {
+            "live": 17,
+            "actors": 20,
+            "shots": 18,
+            "effects": 38,
+            "pickups": 11,
+            "pending": 18
+          }
+        }
+      ]
+    },
+    {
+      "route": "farm",
+      "seed": 0,
+      "unlock": {
+        "chapter": 1,
+        "stage": 5,
+        "time": 188.04
+      },
+      "chapters": [
+        {
+          "clocks": [
+            {
+              "stage": 1,
+              "spent": 29.58,
+              "minimumRemaining": 90.42
+            },
+            {
+              "stage": 2,
+              "spent": 31.53,
+              "minimumRemaining": 88.47
+            },
+            {
+              "stage": 3,
+              "spent": 40.73,
+              "minimumRemaining": 79.27
+            },
+            {
+              "stage": 4,
+              "spent": 55.23,
+              "minimumRemaining": 64.77
+            },
+            {
+              "stage": 5,
+              "spent": 40.23,
+              "minimumRemaining": 79.77
+            },
+            {
+              "stage": 6,
+              "spent": 58.38,
+              "minimumRemaining": 61.62
+            },
+            {
+              "stage": 7,
+              "spent": 65.75,
+              "minimumRemaining": 54.25
+            },
+            {
+              "stage": 8,
+              "spent": 79.85,
+              "minimumRemaining": 40.15
+            },
+            {
+              "stage": 9,
+              "spent": 72.28,
+              "minimumRemaining": 47.72
+            },
+            {
+              "stage": 10,
+              "spent": 10.63,
+              "minimumRemaining": 169.37
+            }
+          ],
+          "chapter": 1,
+          "phase": "victory",
+          "stage": 10,
+          "level": 25,
+          "time": 482.99,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 268,
+          "maxHp": 294,
+          "species": [
+            "forest_devourer",
+            "forest_goblin",
+            "forest_guardian",
+            "forest_mushroom",
+            "forest_orc",
+            "forest_spider",
+            "forest_wolf"
+          ],
+          "peak": {
+            "live": 17,
+            "actors": 19,
+            "shots": 13,
+            "effects": 32,
+            "pickups": 14,
+            "pending": 18
+          }
+        },
+        {
+          "clocks": [
+            {
+              "stage": 1,
+              "spent": 17.4,
+              "minimumRemaining": 102.6
+            },
+            {
+              "stage": 2,
+              "spent": 23.2,
+              "minimumRemaining": 96.8
+            },
+            {
+              "stage": 3,
+              "spent": 28.15,
+              "minimumRemaining": 91.85
+            },
+            {
+              "stage": 4,
+              "spent": 40.28,
+              "minimumRemaining": 79.72
+            },
+            {
+              "stage": 5,
+              "spent": 23.18,
+              "minimumRemaining": 96.82
+            },
+            {
+              "stage": 6,
+              "spent": 22.43,
+              "minimumRemaining": 97.57
+            },
+            {
+              "stage": 7,
+              "spent": 31,
+              "minimumRemaining": 89
+            },
+            {
+              "stage": 8,
+              "spent": 38.3,
+              "minimumRemaining": 81.7
+            },
+            {
+              "stage": 9,
+              "spent": 37.65,
+              "minimumRemaining": 82.35
+            },
+            {
+              "stage": 10,
+              "spent": 5.5,
+              "minimumRemaining": 174.5
+            }
+          ],
+          "chapter": 2,
+          "phase": "victory",
+          "stage": 10,
+          "level": 33,
+          "time": 278.26,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 529,
+          "maxHp": 539,
+          "species": [
+            "ruins_bat",
+            "ruins_king",
+            "ruins_knight",
+            "ruins_mage",
+            "ruins_mimic",
+            "ruins_skeleton",
+            "ruins_wraith"
+          ],
+          "peak": {
+            "live": 15,
+            "actors": 20,
+            "shots": 10,
+            "effects": 32,
+            "pickups": 10,
+            "pending": 18
+          }
+        },
+        {
+          "clocks": [
+            {
+              "stage": 1,
+              "spent": 17.93,
+              "minimumRemaining": 102.07
+            },
+            {
+              "stage": 2,
+              "spent": 28.43,
+              "minimumRemaining": 91.57
+            },
+            {
+              "stage": 3,
+              "spent": 33.75,
+              "minimumRemaining": 86.25
+            },
+            {
+              "stage": 4,
+              "spent": 40.68,
+              "minimumRemaining": 79.32
+            },
+            {
+              "stage": 5,
+              "spent": 29.23,
+              "minimumRemaining": 90.77
+            },
+            {
+              "stage": 6,
+              "spent": 31.38,
+              "minimumRemaining": 88.62
+            },
+            {
+              "stage": 7,
+              "spent": 26.93,
+              "minimumRemaining": 93.07
+            },
+            {
+              "stage": 8,
+              "spent": 41,
+              "minimumRemaining": 79
+            },
+            {
+              "stage": 9,
+              "spent": 39.88,
+              "minimumRemaining": 80.12
+            },
+            {
+              "stage": 10,
+              "spent": 7.4,
+              "minimumRemaining": 172.6
+            }
+          ],
+          "chapter": 3,
+          "phase": "victory",
+          "stage": 10,
+          "level": 39,
+          "time": 306.04,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 637,
+          "maxHp": 647,
+          "species": [
+            "frost_golem",
+            "frost_king",
+            "frost_leopard",
+            "frost_mage",
+            "frost_wisp",
+            "frost_wolf",
+            "frost_yeti"
+          ],
+          "peak": {
+            "live": 14,
+            "actors": 20,
+            "shots": 17,
+            "effects": 40,
+            "pickups": 9,
+            "pending": 18
+          }
+        }
+      ]
+    },
+    {
+      "route": "farm",
+      "seed": 4,
+      "unlock": {
+        "chapter": 1,
+        "stage": 5,
+        "time": 175.84
+      },
+      "chapters": [
+        {
+          "clocks": [
+            {
+              "stage": 1,
+              "spent": 21.48,
+              "minimumRemaining": 98.52
+            },
+            {
+              "stage": 2,
+              "spent": 32.58,
+              "minimumRemaining": 87.42
+            },
+            {
+              "stage": 3,
+              "spent": 34.65,
+              "minimumRemaining": 85.35
+            },
+            {
+              "stage": 4,
+              "spent": 50.18,
+              "minimumRemaining": 69.82
+            },
+            {
+              "stage": 5,
+              "spent": 44.83,
+              "minimumRemaining": 75.17
+            },
+            {
+              "stage": 6,
+              "spent": 43.43,
+              "minimumRemaining": 76.57
+            },
+            {
+              "stage": 7,
+              "spent": 65.75,
+              "minimumRemaining": 54.25
+            },
+            {
+              "stage": 8,
+              "spent": 64.58,
+              "minimumRemaining": 55.42
+            },
+            {
+              "stage": 9,
+              "spent": 99.85,
+              "minimumRemaining": 20.15
+            },
+            {
+              "stage": 10,
+              "spent": 10.73,
+              "minimumRemaining": 169.27
+            }
+          ],
+          "chapter": 1,
+          "phase": "victory",
+          "stage": 10,
+          "level": 25,
+          "time": 467.06,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 256,
+          "maxHp": 294,
+          "species": [
+            "forest_devourer",
+            "forest_goblin",
+            "forest_guardian",
+            "forest_mushroom",
+            "forest_orc",
+            "forest_spider",
+            "forest_wolf"
+          ],
+          "peak": {
+            "live": 16,
+            "actors": 20,
+            "shots": 15,
+            "effects": 41,
+            "pickups": 14,
+            "pending": 18
+          }
+        },
+        {
+          "clocks": [
+            {
+              "stage": 1,
+              "spent": 15.08,
+              "minimumRemaining": 104.92
+            },
+            {
+              "stage": 2,
+              "spent": 24.1,
+              "minimumRemaining": 95.9
+            },
+            {
+              "stage": 3,
+              "spent": 28.8,
+              "minimumRemaining": 91.2
+            },
+            {
+              "stage": 4,
+              "spent": 40.53,
+              "minimumRemaining": 79.47
+            },
+            {
+              "stage": 5,
+              "spent": 24.65,
+              "minimumRemaining": 95.35
+            },
+            {
+              "stage": 6,
+              "spent": 23.9,
+              "minimumRemaining": 96.1
+            },
+            {
+              "stage": 7,
+              "spent": 29.1,
+              "minimumRemaining": 90.9
+            },
+            {
+              "stage": 8,
+              "spent": 40.25,
+              "minimumRemaining": 79.75
+            },
+            {
+              "stage": 9,
+              "spent": 33.6,
+              "minimumRemaining": 86.4
+            },
+            {
+              "stage": 10,
+              "spent": 6.9,
+              "minimumRemaining": 173.1
+            }
+          ],
+          "chapter": 2,
+          "phase": "victory",
+          "stage": 10,
+          "level": 33,
+          "time": 278.97,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 515,
+          "maxHp": 515,
+          "species": [
+            "ruins_bat",
+            "ruins_king",
+            "ruins_knight",
+            "ruins_mage",
+            "ruins_mimic",
+            "ruins_skeleton",
+            "ruins_wraith"
+          ],
+          "peak": {
+            "live": 13,
+            "actors": 21,
+            "shots": 8,
+            "effects": 40,
+            "pickups": 12,
+            "pending": 18
+          }
+        },
+        {
+          "clocks": [
+            {
+              "stage": 1,
+              "spent": 20.85,
+              "minimumRemaining": 99.15
+            },
+            {
+              "stage": 2,
+              "spent": 21.95,
+              "minimumRemaining": 98.05
+            },
+            {
+              "stage": 3,
+              "spent": 28.68,
+              "minimumRemaining": 91.32
+            },
+            {
+              "stage": 4,
+              "spent": 40.55,
+              "minimumRemaining": 79.45
+            },
+            {
+              "stage": 5,
+              "spent": 26.48,
+              "minimumRemaining": 93.52
+            },
+            {
+              "stage": 6,
+              "spent": 29.45,
+              "minimumRemaining": 90.55
+            },
+            {
+              "stage": 7,
+              "spent": 39.55,
+              "minimumRemaining": 80.45
+            },
+            {
+              "stage": 8,
+              "spent": 38.48,
+              "minimumRemaining": 81.52
+            },
+            {
+              "stage": 9,
+              "spent": 35.38,
+              "minimumRemaining": 84.62
+            },
+            {
+              "stage": 10,
+              "spent": 8.45,
+              "minimumRemaining": 171.55
+            }
+          ],
+          "chapter": 3,
+          "phase": "victory",
+          "stage": 10,
+          "level": 39,
+          "time": 298.99,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 620,
+          "maxHp": 620,
+          "species": [
+            "frost_golem",
+            "frost_king",
+            "frost_leopard",
+            "frost_mage",
+            "frost_wisp",
+            "frost_wolf",
+            "frost_yeti"
+          ],
+          "peak": {
+            "live": 14,
+            "actors": 20,
+            "shots": 15,
+            "effects": 44,
+            "pickups": 12,
+            "pending": 18
+          }
+        }
+      ]
+    },
+    {
+      "route": "farm",
+      "seed": 9,
+      "unlock": {
+        "chapter": 1,
+        "stage": 5,
+        "time": 211.85
+      },
+      "chapters": [
+        {
+          "clocks": [
+            {
+              "stage": 1,
+              "spent": 31.03,
+              "minimumRemaining": 88.97
+            },
+            {
+              "stage": 2,
+              "spent": 36.63,
+              "minimumRemaining": 83.37
+            },
+            {
+              "stage": 3,
+              "spent": 48.28,
+              "minimumRemaining": 71.72
+            },
+            {
+              "stage": 4,
+              "spent": 54.78,
+              "minimumRemaining": 65.22
+            },
+            {
+              "stage": 5,
+              "spent": 49.03,
+              "minimumRemaining": 70.97
+            },
+            {
+              "stage": 6,
+              "spent": 48.85,
+              "minimumRemaining": 71.15
+            },
+            {
+              "stage": 7,
+              "spent": 67.98,
+              "minimumRemaining": 52.02
+            },
+            {
+              "stage": 8,
+              "spent": 67.83,
+              "minimumRemaining": 52.17
+            },
+            {
+              "stage": 9,
+              "spent": 92.88,
+              "minimumRemaining": 27.12
+            },
+            {
+              "stage": 10,
+              "spent": 10.83,
+              "minimumRemaining": 169.17
+            }
+          ],
+          "chapter": 1,
+          "phase": "victory",
+          "stage": 10,
+          "level": 25,
+          "time": 505.41,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 256,
+          "maxHp": 294,
+          "species": [
+            "forest_devourer",
+            "forest_goblin",
+            "forest_guardian",
+            "forest_mushroom",
+            "forest_orc",
+            "forest_spider",
+            "forest_wolf"
+          ],
+          "peak": {
+            "live": 17,
+            "actors": 19,
+            "shots": 17,
+            "effects": 35,
+            "pickups": 14,
+            "pending": 18
+          }
+        },
+        {
+          "clocks": [
+            {
+              "stage": 1,
+              "spent": 19.8,
+              "minimumRemaining": 100.2
+            },
+            {
+              "stage": 2,
+              "spent": 20.38,
+              "minimumRemaining": 99.62
+            },
+            {
+              "stage": 3,
+              "spent": 26.9,
+              "minimumRemaining": 93.1
+            },
+            {
+              "stage": 4,
+              "spent": 40.5,
+              "minimumRemaining": 79.5
+            },
+            {
+              "stage": 5,
+              "spent": 23.1,
+              "minimumRemaining": 96.9
+            },
+            {
+              "stage": 6,
+              "spent": 29.48,
+              "minimumRemaining": 90.52
+            },
+            {
+              "stage": 7,
+              "spent": 30.4,
+              "minimumRemaining": 89.6
+            },
+            {
+              "stage": 8,
+              "spent": 34.55,
+              "minimumRemaining": 85.45
+            },
+            {
+              "stage": 9,
+              "spent": 40.3,
+              "minimumRemaining": 79.7
+            },
+            {
+              "stage": 10,
+              "spent": 6.78,
+              "minimumRemaining": 173.22
+            }
+          ],
+          "chapter": 2,
+          "phase": "victory",
+          "stage": 10,
+          "level": 33,
+          "time": 282.8,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 519,
+          "maxHp": 519,
+          "species": [
+            "ruins_bat",
+            "ruins_king",
+            "ruins_knight",
+            "ruins_mage",
+            "ruins_mimic",
+            "ruins_skeleton",
+            "ruins_wraith"
+          ],
+          "peak": {
+            "live": 14,
+            "actors": 20,
+            "shots": 10,
+            "effects": 36,
+            "pickups": 10,
+            "pending": 18
+          }
+        },
+        {
+          "clocks": [
+            {
+              "stage": 1,
+              "spent": 20.9,
+              "minimumRemaining": 99.1
+            },
+            {
+              "stage": 2,
+              "spent": 25.25,
+              "minimumRemaining": 94.75
+            },
+            {
+              "stage": 3,
+              "spent": 20.15,
+              "minimumRemaining": 99.85
+            },
+            {
+              "stage": 4,
+              "spent": 40.68,
+              "minimumRemaining": 79.32
+            },
+            {
+              "stage": 5,
+              "spent": 20.43,
+              "minimumRemaining": 99.57
+            },
+            {
+              "stage": 6,
+              "spent": 24.75,
+              "minimumRemaining": 95.25
+            },
+            {
+              "stage": 7,
+              "spent": 33.9,
+              "minimumRemaining": 86.1
+            },
+            {
+              "stage": 8,
+              "spent": 38.8,
+              "minimumRemaining": 81.2
+            },
+            {
+              "stage": 9,
+              "spent": 35.9,
+              "minimumRemaining": 84.1
+            },
+            {
+              "stage": 10,
+              "spent": 7.28,
+              "minimumRemaining": 172.72
+            }
+          ],
+          "chapter": 3,
+          "phase": "victory",
+          "stage": 10,
+          "level": 39,
+          "time": 278.82,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 648,
+          "maxHp": 648,
+          "species": [
+            "frost_golem",
+            "frost_king",
+            "frost_leopard",
+            "frost_mage",
+            "frost_wisp",
+            "frost_wolf",
+            "frost_yeti"
+          ],
+          "peak": {
+            "live": 15,
+            "actors": 22,
+            "shots": 18,
+            "effects": 37,
+            "pickups": 11,
+            "pending": 18
+          }
+        }
+      ]
+    },
+    {
+      "route": "safe",
+      "seed": 0,
+      "unlock": {
+        "chapter": 1,
+        "stage": 5,
+        "time": 178.99
+      },
+      "chapters": [
+        {
+          "clocks": [
+            {
+              "stage": 1,
+              "spent": 26.8,
+              "minimumRemaining": 93.2
+            },
+            {
+              "stage": 2,
+              "spent": 36.15,
+              "minimumRemaining": 83.85
+            },
+            {
+              "stage": 3,
+              "spent": 44.15,
+              "minimumRemaining": 75.85
+            },
+            {
+              "stage": 4,
+              "spent": 44.25,
+              "minimumRemaining": 75.75
+            },
+            {
+              "stage": 5,
+              "spent": 35.4,
+              "minimumRemaining": 84.6
+            },
+            {
+              "stage": 6,
+              "spent": 53.18,
+              "minimumRemaining": 66.82
+            },
+            {
+              "stage": 7,
+              "spent": 67.8,
+              "minimumRemaining": 52.2
+            },
+            {
+              "stage": 8,
+              "spent": 66.78,
+              "minimumRemaining": 53.22
+            },
+            {
+              "stage": 9,
+              "spent": 64.2,
+              "minimumRemaining": 55.8
+            },
+            {
+              "stage": 10,
+              "spent": 10.35,
+              "minimumRemaining": 169.65
+            }
+          ],
+          "chapter": 1,
+          "phase": "victory",
+          "stage": 10,
+          "level": 25,
+          "time": 446.36,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 256,
+          "maxHp": 294,
+          "species": [
+            "forest_devourer",
+            "forest_goblin",
+            "forest_guardian",
+            "forest_mushroom",
+            "forest_orc",
+            "forest_spider",
+            "forest_wolf"
+          ],
+          "peak": {
+            "live": 16,
+            "actors": 19,
+            "shots": 18,
+            "effects": 36,
+            "pickups": 11,
+            "pending": 18
+          }
+        },
+        {
+          "clocks": [
+            {
+              "stage": 1,
+              "spent": 17.5,
+              "minimumRemaining": 102.5
+            },
+            {
+              "stage": 2,
+              "spent": 22.75,
+              "minimumRemaining": 97.25
+            },
+            {
+              "stage": 3,
+              "spent": 28.88,
+              "minimumRemaining": 91.12
+            },
+            {
+              "stage": 4,
+              "spent": 40.95,
+              "minimumRemaining": 79.05
+            },
+            {
+              "stage": 5,
+              "spent": 23.7,
+              "minimumRemaining": 96.3
+            },
+            {
+              "stage": 6,
+              "spent": 26.63,
+              "minimumRemaining": 93.37
+            },
+            {
+              "stage": 7,
+              "spent": 29.2,
+              "minimumRemaining": 90.8
+            },
+            {
+              "stage": 8,
+              "spent": 37.85,
+              "minimumRemaining": 82.15
+            },
+            {
+              "stage": 9,
+              "spent": 30.83,
+              "minimumRemaining": 89.17
+            },
+            {
+              "stage": 10,
+              "spent": 5.68,
+              "minimumRemaining": 174.32
+            }
+          ],
+          "chapter": 2,
+          "phase": "victory",
+          "stage": 10,
+          "level": 33,
+          "time": 272.21,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 523,
+          "maxHp": 523,
+          "species": [
+            "ruins_bat",
+            "ruins_king",
+            "ruins_knight",
+            "ruins_mage",
+            "ruins_mimic",
+            "ruins_skeleton",
+            "ruins_wraith"
+          ],
+          "peak": {
+            "live": 14,
+            "actors": 21,
+            "shots": 10,
+            "effects": 30,
+            "pickups": 11,
+            "pending": 18
+          }
+        },
+        {
+          "clocks": [
+            {
+              "stage": 1,
+              "spent": 17.6,
+              "minimumRemaining": 102.4
+            },
+            {
+              "stage": 2,
+              "spent": 23.8,
+              "minimumRemaining": 96.2
+            },
+            {
+              "stage": 3,
+              "spent": 32.95,
+              "minimumRemaining": 87.05
+            },
+            {
+              "stage": 4,
+              "spent": 41.3,
+              "minimumRemaining": 78.7
+            },
+            {
+              "stage": 5,
+              "spent": 24.95,
+              "minimumRemaining": 95.05
+            },
+            {
+              "stage": 6,
+              "spent": 25.55,
+              "minimumRemaining": 94.45
+            },
+            {
+              "stage": 7,
+              "spent": 41.65,
+              "minimumRemaining": 78.35
+            },
+            {
+              "stage": 8,
+              "spent": 46.4,
+              "minimumRemaining": 73.6
+            },
+            {
+              "stage": 9,
+              "spent": 46.5,
+              "minimumRemaining": 73.5
+            },
+            {
+              "stage": 10,
+              "spent": 8.2,
+              "minimumRemaining": 171.8
+            }
+          ],
+          "chapter": 3,
+          "phase": "victory",
+          "stage": 10,
+          "level": 39,
+          "time": 314.47,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 641,
+          "maxHp": 641,
+          "species": [
+            "frost_golem",
+            "frost_king",
+            "frost_leopard",
+            "frost_mage",
+            "frost_wisp",
+            "frost_wolf",
+            "frost_yeti"
+          ],
+          "peak": {
+            "live": 15,
+            "actors": 22,
+            "shots": 17,
+            "effects": 35,
+            "pickups": 9,
+            "pending": 18
+          }
+        }
+      ]
+    },
+    {
+      "route": "safe",
+      "seed": 4,
+      "unlock": {
+        "chapter": 1,
+        "stage": 5,
+        "time": 195.89
+      },
+      "chapters": [
+        {
+          "clocks": [
+            {
+              "stage": 1,
+              "spent": 25.63,
+              "minimumRemaining": 94.37
+            },
+            {
+              "stage": 2,
+              "spent": 34.48,
+              "minimumRemaining": 85.52
+            },
+            {
+              "stage": 3,
+              "spent": 45.35,
+              "minimumRemaining": 74.65
+            },
+            {
+              "stage": 4,
+              "spent": 59.6,
+              "minimumRemaining": 60.4
+            },
+            {
+              "stage": 5,
+              "spent": 46.4,
+              "minimumRemaining": 73.6
+            },
+            {
+              "stage": 6,
+              "spent": 54.88,
+              "minimumRemaining": 65.12
+            },
+            {
+              "stage": 7,
+              "spent": 53.55,
+              "minimumRemaining": 66.45
+            },
+            {
+              "stage": 8,
+              "spent": 71.9,
+              "minimumRemaining": 48.1
+            },
+            {
+              "stage": 9,
+              "spent": 71.15,
+              "minimumRemaining": 48.85
+            },
+            {
+              "stage": 10,
+              "spent": 11.1,
+              "minimumRemaining": 168.9
+            }
+          ],
+          "chapter": 1,
+          "phase": "victory",
+          "stage": 10,
+          "level": 25,
+          "time": 472.6,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 268,
+          "maxHp": 294,
+          "species": [
+            "forest_devourer",
+            "forest_goblin",
+            "forest_guardian",
+            "forest_mushroom",
+            "forest_orc",
+            "forest_spider",
+            "forest_wolf"
+          ],
+          "peak": {
+            "live": 18,
+            "actors": 20,
+            "shots": 17,
+            "effects": 34,
+            "pickups": 17,
+            "pending": 18
+          }
+        },
+        {
+          "clocks": [
+            {
+              "stage": 1,
+              "spent": 16.05,
+              "minimumRemaining": 103.95
+            },
+            {
+              "stage": 2,
+              "spent": 29.6,
+              "minimumRemaining": 90.4
+            },
+            {
+              "stage": 3,
+              "spent": 30.08,
+              "minimumRemaining": 89.92
+            },
+            {
+              "stage": 4,
+              "spent": 40.8,
+              "minimumRemaining": 79.2
+            },
+            {
+              "stage": 5,
+              "spent": 27.73,
+              "minimumRemaining": 92.27
+            },
+            {
+              "stage": 6,
+              "spent": 26.48,
+              "minimumRemaining": 93.52
+            },
+            {
+              "stage": 7,
+              "spent": 31.18,
+              "minimumRemaining": 88.82
+            },
+            {
+              "stage": 8,
+              "spent": 38.38,
+              "minimumRemaining": 81.62
+            },
+            {
+              "stage": 9,
+              "spent": 37.55,
+              "minimumRemaining": 82.45
+            },
+            {
+              "stage": 10,
+              "spent": 7.55,
+              "minimumRemaining": 172.45
+            }
+          ],
+          "chapter": 2,
+          "phase": "victory",
+          "stage": 10,
+          "level": 33,
+          "time": 292.61,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 544,
+          "maxHp": 544,
+          "species": [
+            "ruins_bat",
+            "ruins_king",
+            "ruins_knight",
+            "ruins_mage",
+            "ruins_mimic",
+            "ruins_skeleton",
+            "ruins_wraith"
+          ],
+          "peak": {
+            "live": 15,
+            "actors": 20,
+            "shots": 15,
+            "effects": 38,
+            "pickups": 12,
+            "pending": 18
+          }
+        },
+        {
+          "clocks": [
+            {
+              "stage": 1,
+              "spent": 15.88,
+              "minimumRemaining": 104.12
+            },
+            {
+              "stage": 2,
+              "spent": 24.15,
+              "minimumRemaining": 95.85
+            },
+            {
+              "stage": 3,
+              "spent": 33.55,
+              "minimumRemaining": 86.45
+            },
+            {
+              "stage": 4,
+              "spent": 40.7,
+              "minimumRemaining": 79.3
+            },
+            {
+              "stage": 5,
+              "spent": 27.15,
+              "minimumRemaining": 92.85
+            },
+            {
+              "stage": 6,
+              "spent": 31.95,
+              "minimumRemaining": 88.05
+            },
+            {
+              "stage": 7,
+              "spent": 33.25,
+              "minimumRemaining": 86.75
+            },
+            {
+              "stage": 8,
+              "spent": 34.85,
+              "minimumRemaining": 85.15
+            },
+            {
+              "stage": 9,
+              "spent": 45,
+              "minimumRemaining": 75
+            },
+            {
+              "stage": 10,
+              "spent": 7.63,
+              "minimumRemaining": 172.37
+            }
+          ],
+          "chapter": 3,
+          "phase": "victory",
+          "stage": 10,
+          "level": 39,
+          "time": 300.96,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 605,
+          "maxHp": 611,
+          "species": [
+            "frost_golem",
+            "frost_king",
+            "frost_leopard",
+            "frost_mage",
+            "frost_wisp",
+            "frost_wolf",
+            "frost_yeti"
+          ],
+          "peak": {
+            "live": 15,
+            "actors": 22,
+            "shots": 14,
+            "effects": 42,
+            "pickups": 11,
+            "pending": 18
+          }
+        }
+      ]
+    },
+    {
+      "route": "safe",
+      "seed": 9,
+      "unlock": {
+        "chapter": 1,
+        "stage": 5,
+        "time": 183.65
+      },
+      "chapters": [
+        {
+          "clocks": [
+            {
+              "stage": 1,
+              "spent": 30.68,
+              "minimumRemaining": 89.32
+            },
+            {
+              "stage": 2,
+              "spent": 36.03,
+              "minimumRemaining": 83.97
+            },
+            {
+              "stage": 3,
+              "spent": 37.6,
+              "minimumRemaining": 82.4
+            },
+            {
+              "stage": 4,
+              "spent": 50.38,
+              "minimumRemaining": 69.62
+            },
+            {
+              "stage": 5,
+              "spent": 43.3,
+              "minimumRemaining": 76.7
+            },
+            {
+              "stage": 6,
+              "spent": 44.68,
+              "minimumRemaining": 75.32
+            },
+            {
+              "stage": 7,
+              "spent": 64.98,
+              "minimumRemaining": 55.02
+            },
+            {
+              "stage": 8,
+              "spent": 72.73,
+              "minimumRemaining": 47.27
+            },
+            {
+              "stage": 9,
+              "spent": 72.1,
+              "minimumRemaining": 47.9
+            },
+            {
+              "stage": 10,
+              "spent": 10.6,
+              "minimumRemaining": 169.4
+            }
+          ],
+          "chapter": 1,
+          "phase": "victory",
+          "stage": 10,
+          "level": 25,
+          "time": 460.1,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 268,
+          "maxHp": 294,
+          "species": [
+            "forest_devourer",
+            "forest_goblin",
+            "forest_guardian",
+            "forest_mushroom",
+            "forest_orc",
+            "forest_spider",
+            "forest_wolf"
+          ],
+          "peak": {
+            "live": 18,
+            "actors": 19,
+            "shots": 16,
+            "effects": 39,
+            "pickups": 15,
+            "pending": 18
+          }
+        },
+        {
+          "clocks": [
+            {
+              "stage": 1,
+              "spent": 18.23,
+              "minimumRemaining": 101.77
+            },
+            {
+              "stage": 2,
+              "spent": 20.25,
+              "minimumRemaining": 99.75
+            },
+            {
+              "stage": 3,
+              "spent": 31.65,
+              "minimumRemaining": 88.35
+            },
+            {
+              "stage": 4,
+              "spent": 41.25,
+              "minimumRemaining": 78.75
+            },
+            {
+              "stage": 5,
+              "spent": 28.18,
+              "minimumRemaining": 91.82
+            },
+            {
+              "stage": 6,
+              "spent": 25.33,
+              "minimumRemaining": 94.67
+            },
+            {
+              "stage": 7,
+              "spent": 32.58,
+              "minimumRemaining": 87.42
+            },
+            {
+              "stage": 8,
+              "spent": 33.53,
+              "minimumRemaining": 86.47
+            },
+            {
+              "stage": 9,
+              "spent": 45.18,
+              "minimumRemaining": 74.82
+            },
+            {
+              "stage": 10,
+              "spent": 5.7,
+              "minimumRemaining": 174.3
+            }
+          ],
+          "chapter": 2,
+          "phase": "victory",
+          "stage": 10,
+          "level": 33,
+          "time": 288.94,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 528,
+          "maxHp": 528,
+          "species": [
+            "ruins_bat",
+            "ruins_king",
+            "ruins_knight",
+            "ruins_mage",
+            "ruins_mimic",
+            "ruins_skeleton",
+            "ruins_wraith"
+          ],
+          "peak": {
+            "live": 15,
+            "actors": 20,
+            "shots": 13,
+            "effects": 35,
+            "pickups": 13,
+            "pending": 18
+          }
+        },
+        {
+          "clocks": [
+            {
+              "stage": 1,
+              "spent": 14.93,
+              "minimumRemaining": 105.07
+            },
+            {
+              "stage": 2,
+              "spent": 22.6,
+              "minimumRemaining": 97.4
+            },
+            {
+              "stage": 3,
+              "spent": 29.03,
+              "minimumRemaining": 90.97
+            },
+            {
+              "stage": 4,
+              "spent": 41.08,
+              "minimumRemaining": 78.92
+            },
+            {
+              "stage": 5,
+              "spent": 29.95,
+              "minimumRemaining": 90.05
+            },
+            {
+              "stage": 6,
+              "spent": 30.65,
+              "minimumRemaining": 89.35
+            },
+            {
+              "stage": 7,
+              "spent": 31.93,
+              "minimumRemaining": 88.07
+            },
+            {
+              "stage": 8,
+              "spent": 42.13,
+              "minimumRemaining": 77.87
+            },
+            {
+              "stage": 9,
+              "spent": 34.68,
+              "minimumRemaining": 85.32
+            },
+            {
+              "stage": 10,
+              "spent": 8.05,
+              "minimumRemaining": 171.95
+            }
+          ],
+          "chapter": 3,
+          "phase": "victory",
+          "stage": 10,
+          "level": 39,
+          "time": 292.17,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 643,
+          "maxHp": 643,
+          "species": [
+            "frost_golem",
+            "frost_king",
+            "frost_leopard",
+            "frost_mage",
+            "frost_wisp",
+            "frost_wolf",
+            "frost_yeti"
+          ],
+          "peak": {
+            "live": 15,
+            "actors": 22,
+            "shots": 17,
+            "effects": 34,
+            "pickups": 18,
+            "pending": 18
+          }
+        }
+      ]
+    }
+  ]
+}

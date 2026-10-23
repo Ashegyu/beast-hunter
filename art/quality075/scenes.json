@@ -1,0 +1,22 @@
+[
+  {
+    "mode": "before",
+    "rarity": 3,
+    "perfect": true,
+    "viewport": [
+      390,
+      780
+    ],
+    "scope": "Actual app Canvas only. CSS/DOM HUD, browser and device rendering excluded."
+  },
+  {
+    "mode": "after",
+    "rarity": 3,
+    "perfect": true,
+    "viewport": [
+      390,
+      780
+    ],
+    "scope": "Actual app Canvas only. CSS/DOM HUD, browser and device rendering excluded."
+  }
+]

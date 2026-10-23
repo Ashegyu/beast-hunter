@@ -1,0 +1,23 @@
+{
+  "mode": "built-in image_gen",
+  "intent": "style-transfer",
+  "references": "art/skills051/{skillId}-original.png",
+  "prompts": {},
+  "outputs": {
+    "bloodmoon": {
+      "source": "/workspace/sites/beast-hunter-motion/art/skills052/bloodmoon-scene-original.png",
+      "runtime": "/workspace/sites/beast-hunter-motion/dist/assets/skill-bloodmoon-v052.webp",
+      "encodedBytes": 1520270
+    },
+    "eclipse": {
+      "source": "/workspace/sites/beast-hunter-motion/art/skills052/eclipse-scene-original.png",
+      "runtime": "/workspace/sites/beast-hunter-motion/dist/assets/skill-eclipse-v052.webp",
+      "encodedBytes": 1471504
+    },
+    "phantoms": {
+      "source": "/workspace/sites/beast-hunter-motion/art/skills052/phantoms-scene-original.png",
+      "runtime": "/workspace/sites/beast-hunter-motion/dist/assets/skill-phantoms-v052.webp",
+      "encodedBytes": 1560280
+    }
+  }
+}

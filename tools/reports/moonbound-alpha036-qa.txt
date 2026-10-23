@@ -1,0 +1,53 @@
+Alpha 0.36 - actual game validation (2026-10-15)
+
+Scope: reference-inspired charcoal/champagne interface, desktop three-panel home,
+mobile single-view navigation, all secondary windows/combat HUD, weapon-only cosmetics.
+No combat mechanics or profile persistence format changes.
+
+Automated: 398/398 tests passed; duration 19079 ms.
+Command: node --experimental-vm-modules --test tests/*.test.mjs
+Full output: moonbound-alpha036-tests.txt
+Weapon alignment: 4008 pose cases and 72 hidden cases retained.
+Armor/charm statistics, active effects and synergy retained; cosmetic composition
+and rank decoration now use only the equipped weapon.
+
+Actual local Chromium gameplay, isolated test profile, localhost:8786:
+- 390x844: crafted Jeokwol weapon, materials 1 -> 0 and gold 10000 -> 6500;
+  equipped it and verified weapon-only preview with ancient armor still equipped.
+- Full forest chapter, five stages and boss: victory, 83 kills, 2:43.
+  Gold 840, cores 8, equipment 24, stage rewards 5, monster drops 19,
+  auto salvage 11, perfect dodges 4, guard breaks 6, explosions 5,
+  crafted effect activations 21, materials 42, level 8 -> 11.
+- Real joystick drag/release, attack, dash, thunder and auto combat used.
+- 320x740: pause -> tracker -> pause -> resume and victory results operated.
+- Reload retained crafted weapon and original armor ownership.
+- Craft, codex, growth and map selection operated with actual profile data.
+- Desktop 1536x1024: actual 24/24 bag, three panels, unique HTML IDs.
+- 320x740: document width 320, map drawer 300x601 inside viewport;
+  map start button bottom 651 and home start bottom 666.
+- 844x390: document width 844; map start bottom 364, home start bottom 370.
+- Armor filter -> home weapon detail and organize mode -> home item detail both
+  operated after correcting stale filter/organize state; regression tests added.
+- Console errors: none observed.
+
+Browser-found corrections: transparent hub grid row, inherited drawer transform,
+historical burgundy selector precedence, real chapter marker numbering, explicit
+item entry filter state, mobile/landscape portrait face framing.
+
+Observed desktop Chromium CPU sample during mobile-sized stage 3:
+ready 71 ms, initial image count 23, CPU P95 1.7 ms, max 2.9 ms.
+This is not a controlled before/after benchmark or physical Android GPU/FPS evidence.
+
+Screenshots in task outputs/:
+alpha036-home-desktop.jpg
+alpha036-home-mobile-320.jpg
+alpha036-live-combat-390.jpg
+alpha036-victory-320.jpg
+alpha036-pause-320.jpg
+alpha036-tracking-320.jpg
+alpha036-weapon-only-preview-390.jpg
+
+Limits: desktop Chromium mobile-sized viewport, not physical Android Chrome.
+Whole chapter gameplay was local, not against the production URL.
+The isolated profile preparation page was removed from dist before packaging.
+Map generation prompts/provenance: ANIMATION_ASSETS.md and art/references/.

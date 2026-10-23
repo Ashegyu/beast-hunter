@@ -1,0 +1,378 @@
+{
+  "frames": [
+    {
+      "blocked": [],
+      "cells": 36,
+      "detail": "false",
+      "label": "844×390",
+      "layout": "9:4:48",
+      "outside": [],
+      "overlaps": [],
+      "page": "1 / 6",
+      "reading": {
+        "height": 44.546875,
+        "line": "15px",
+        "text": "기본 옵션 범위 (강화 보너스 제외)\n공격 18 [18~24] · 체력 34 [25~38] · 이동 4 [4~6] · "
+      },
+      "shell": {
+        "bottom": 390,
+        "h": 390,
+        "right": 844,
+        "w": 844,
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "blocked": [],
+      "cells": 40,
+      "detail": "false",
+      "label": "915×412",
+      "layout": "10:4:47",
+      "outside": [],
+      "overlaps": [],
+      "page": "1 / 5",
+      "reading": {
+        "height": 61.5,
+        "line": "15px",
+        "text": "기본 옵션 범위 (강화 보너스 제외)\n공격 18 [18~24] · 체력 34 [25~38] · 이동 4 [4~6] · 치명타 \n5 [5~6] · 피해 감소 3 [2~3]\n"
+      },
+      "shell": {
+        "bottom": 412,
+        "h": 412,
+        "right": 915,
+        "w": 915,
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "blocked": [],
+      "cells": 21,
+      "detail": "false",
+      "label": "667×375",
+      "layout": "7:3:47",
+      "outside": [],
+      "overlaps": [],
+      "page": "1 / 10",
+      "reading": {
+        "height": 40.40625,
+        "line": "15px",
+        "text": "기본 옵션 범위 (강화 보너스 제외)\n공격 18 [18~24] · 체력 34 [25~38] · 이"
+      },
+      "shell": {
+        "bottom": 375,
+        "h": 375,
+        "right": 667,
+        "w": 667,
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "blocked": [],
+      "cells": 21,
+      "detail": "false",
+      "label": "568×320",
+      "layout": "7:3:39",
+      "outside": [],
+      "overlaps": [],
+      "page": "1 / 10",
+      "reading": {
+        "height": 34.40625,
+        "line": "13px",
+        "text": "기본 옵션 범위 (강화 보너스 제외)\n공격 18 [18~24] · 체력 34 [25~38] · 이동"
+      },
+      "shell": {
+        "bottom": 320,
+        "h": 320,
+        "right": 568,
+        "w": 568,
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "blocked": [],
+      "cells": 40,
+      "detail": "false",
+      "label": "1280×720 → 900×405",
+      "layout": "10:4:46",
+      "outside": [],
+      "overlaps": [],
+      "page": "1 / 5",
+      "reading": {
+        "height": 55.796875,
+        "line": "15px",
+        "text": "기본 옵션 범위 (강화 보너스 제외)\n공격 18 [18~24] · 체력 34 [25~38] · 이동 4 [4~6] · 치명\n타 5 [5~6] · 피해 감소 3 [2~3]"
+      },
+      "shell": {
+        "bottom": 562.5,
+        "h": 405,
+        "right": 1090,
+        "w": 900,
+        "x": 190,
+        "y": 157.5
+      }
+    },
+    {
+      "blocked": [],
+      "cells": 0,
+      "detail": "true",
+      "label": "workshop 900×405",
+      "layout": "10:4:46",
+      "outside": [],
+      "overlaps": [
+        [
+          "bag-detail-close",
+          "workshop-tab-reroll",
+          17.984375,
+          1
+        ]
+      ],
+      "page": "1 / 5",
+      "reading": {
+        "height": 0,
+        "line": "15px",
+        "text": ""
+      },
+      "shell": {
+        "bottom": 562.5,
+        "h": 405,
+        "right": 1090,
+        "w": 900,
+        "x": 190,
+        "y": 157.5
+      }
+    },
+    {
+      "blocked": [],
+      "cells": 40,
+      "detail": "false",
+      "label": "bulk review 900×405",
+      "layout": "10:4:46",
+      "outside": [],
+      "overlaps": [],
+      "page": "2 / 5",
+      "reading": null,
+      "shell": {
+        "bottom": 562.5,
+        "h": 405,
+        "right": 1090,
+        "w": 900,
+        "x": 190,
+        "y": 157.5
+      }
+    },
+    {
+      "blocked": [],
+      "cells": 21,
+      "detail": "false",
+      "label": "bulk review 568×320",
+      "layout": "7:3:39",
+      "outside": [],
+      "overlaps": [],
+      "page": "2 / 10",
+      "reading": null,
+      "shell": {
+        "bottom": 320,
+        "h": 320,
+        "right": 568,
+        "w": 568,
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "blocked": [
+        "bag-material-craft"
+      ],
+      "cells": 0,
+      "detail": "false",
+      "label": "materials 568×320",
+      "layout": "7:3:39",
+      "outside": [],
+      "overlaps": [],
+      "page": "1 / 1",
+      "reading": null,
+      "shell": {
+        "bottom": 320,
+        "h": 320,
+        "right": 568,
+        "w": 568,
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "blocked": [
+        "bag-0",
+        "bag-1",
+        "bag-2",
+        "bag-3",
+        "bag-4",
+        "bag-5",
+        "bag-6",
+        "bag-7",
+        "bag-8",
+        "bag-9",
+        "bag-10",
+        "bag-11",
+        "bag-12",
+        "bag-13",
+        "bag-14",
+        "bag-15",
+        "bag-16",
+        "bag-17",
+        "bag-18",
+        "bag-19",
+        "bag-20"
+      ],
+      "cells": 21,
+      "detail": "false",
+      "label": "filters 568×320",
+      "layout": "7:3:39",
+      "outside": [],
+      "overlaps": [
+        [
+          "bag-favorites",
+          "bag-14",
+          28.453125,
+          34.5
+        ],
+        [
+          "bag-favorites",
+          "bag-15",
+          28.6875,
+          34.5
+        ],
+        [
+          "bag-filter-reset",
+          "bag-17",
+          15,
+          34.5
+        ],
+        [
+          "bag-filter-reset",
+          "bag-18",
+          39,
+          34.5
+        ],
+        [
+          "bag-filter-reset",
+          "bag-19",
+          39,
+          34.5
+        ],
+        [
+          "bag-filter-reset",
+          "bag-20",
+          28.46875,
+          34.5
+        ]
+      ],
+      "page": "1 / 10",
+      "reading": null,
+      "shell": {
+        "bottom": 320,
+        "h": 320,
+        "right": 568,
+        "w": 568,
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "blocked": [],
+      "cells": 21,
+      "detail": "false",
+      "label": "empty 568×320",
+      "layout": "7:3:39",
+      "outside": [],
+      "overlaps": [],
+      "page": "1 / 1",
+      "reading": null,
+      "shell": {
+        "bottom": 320,
+        "h": 320,
+        "right": 568,
+        "w": 568,
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "blocked": [
+        "bag-material-craft"
+      ],
+      "cells": 0,
+      "detail": "false",
+      "label": "empty materials 568×320",
+      "layout": "7:3:39",
+      "outside": [],
+      "overlaps": [],
+      "page": "1 / 1",
+      "reading": null,
+      "shell": {
+        "bottom": 320,
+        "h": 320,
+        "right": 568,
+        "w": 568,
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "blocked": [],
+      "cells": 0,
+      "detail": "false",
+      "label": "paused combat materials 568×320",
+      "layout": "7:3:39",
+      "outside": [],
+      "overlaps": [],
+      "page": "1 / 1",
+      "reading": null,
+      "shell": {
+        "bottom": 320,
+        "h": 320,
+        "right": 568,
+        "w": 568,
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "blocked": [],
+      "cells": 0,
+      "detail": "false",
+      "label": "paused combat final 568×320",
+      "layout": "7:3:39",
+      "outside": [],
+      "overlaps": [
+        [
+          "pause",
+          "inventory-back",
+          35.984375,
+          4
+        ]
+      ],
+      "page": "1 / 1",
+      "reading": null,
+      "shell": {
+        "bottom": 320,
+        "h": 320,
+        "right": 568,
+        "w": 568,
+        "x": 0,
+        "y": 0
+      }
+    }
+  ],
+  "notes": [
+    "Filter popup intentionally overlays inventory cells; only controls inside the popup are interactive until closed.",
+    "Bulk review used 200 owned items, with 197 eligible; the three equipped items stayed protected.",
+    "Materials showed twelve owned kinds, and the empty profile preserved the same twenty-one frames with zero owned kinds.",
+    "Workshop return restored the same item and focus to item-workshop-open.",
+    "Paused combat bag returned to pause menu; the combat timer stayed at 00:50."
+  ]
+}

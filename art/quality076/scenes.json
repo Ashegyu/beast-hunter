@@ -1,0 +1,164 @@
+{
+  "scope": "Actual app Canvas and real result DOM bindings. Result-art-check is a native atlas contact sheet, not a browser/CSS screenshot.",
+  "report": [
+    {
+      "name": "floor",
+      "gold": 0,
+      "pendingGold": 16,
+      "materials": {
+        "boneIron": 0,
+        "hide": 0,
+        "crystal": 0,
+        "root": 0,
+        "seal": 0,
+        "tear": 0,
+        "source": 0,
+        "origin": 0
+      },
+      "pendingMaterials": {
+        "boneIron": 2,
+        "hide": 0,
+        "crystal": 0,
+        "root": 0,
+        "seal": 0,
+        "tear": 0,
+        "source": 0,
+        "origin": 0
+      },
+      "items": 0,
+      "effects": [
+        "damage",
+        "impact",
+        "gearDrop",
+        "materialDrop",
+        "acidImpact"
+      ]
+    },
+    {
+      "name": "collect",
+      "gold": 16,
+      "pendingGold": 0,
+      "materials": {
+        "boneIron": 2,
+        "hide": 0,
+        "crystal": 0,
+        "root": 0,
+        "seal": 0,
+        "tear": 0,
+        "source": 0,
+        "origin": 0
+      },
+      "pendingMaterials": {
+        "boneIron": 0,
+        "hide": 0,
+        "crystal": 0,
+        "root": 0,
+        "seal": 0,
+        "tear": 0,
+        "source": 0,
+        "origin": 0
+      },
+      "items": 1,
+      "effects": [
+        "gearDrop",
+        "materialDrop",
+        "resourceCollect",
+        "resourceCollect",
+        "loot",
+        "lootPickup"
+      ]
+    },
+    {
+      "name": "pulse",
+      "gold": 16,
+      "pendingGold": 0,
+      "materials": {
+        "boneIron": 2,
+        "hide": 0,
+        "crystal": 0,
+        "root": 0,
+        "seal": 0,
+        "tear": 0,
+        "source": 0,
+        "origin": 0
+      },
+      "pendingMaterials": {
+        "boneIron": 0,
+        "hide": 0,
+        "crystal": 0,
+        "root": 0,
+        "seal": 0,
+        "tear": 0,
+        "source": 0,
+        "origin": 0
+      },
+      "items": 1,
+      "effects": [
+        "gearDrop",
+        "materialDrop",
+        "resourceCollect",
+        "resourceCollect",
+        "loot",
+        "lootPickup"
+      ]
+    }
+  ],
+  "gallery": [
+    {
+      "name": "완벽한 혈월 가시검",
+      "state": "보관",
+      "image": "assets/equipment_chapters-v09.webp",
+      "frame": {
+        "x": 337,
+        "y": 40,
+        "w": 270,
+        "h": 372,
+        "pivotX": 134.5,
+        "pivotY": 369,
+        "bodyHeight": 368
+      }
+    },
+    {
+      "name": "수호의 숨결의 흉갑",
+      "state": "보관",
+      "image": "assets/equipment_chapters-v09.webp",
+      "frame": {
+        "x": 626,
+        "y": 94,
+        "w": 311,
+        "h": 324,
+        "pivotX": 155,
+        "pivotY": 321,
+        "bodyHeight": 320
+      }
+    },
+    {
+      "name": "견고한 겨울씨앗 검",
+      "state": "보관",
+      "image": "assets/equipment_chapters-v09.webp",
+      "frame": {
+        "x": 51,
+        "y": 44,
+        "w": 263,
+        "h": 365,
+        "pivotX": 131,
+        "pivotY": 362,
+        "bodyHeight": 361
+      }
+    },
+    {
+      "name": "견고한 오크 송곳니 검",
+      "state": "보관",
+      "image": "assets/equipment_chapters-v09.webp",
+      "frame": {
+        "x": 337,
+        "y": 40,
+        "w": 270,
+        "h": 372,
+        "pivotX": 134.5,
+        "pivotY": 369,
+        "bodyHeight": 368
+      }
+    }
+  ]
+}

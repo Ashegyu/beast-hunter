@@ -1,0 +1,49 @@
+/* Ten checkpoints: one normal-flow grid with native labels and matching hit areas. */
+#game-shell #camp-map-panel .map-overview{flex:none;min-height:0;height:auto}
+#game-shell #camp-drawer .run-selector{flex:none;height:auto;min-height:0;margin:16px 0 0;padding:14px 0 0;border-top:1px solid #bba37d40}
+#game-shell #camp-drawer .stage-board-heading{position:static;display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 10px;padding:0;min-height:0}
+#game-shell #camp-drawer .stage-board-heading small{display:block;font:8px/1.5 var(--body);letter-spacing:.16em;color:#a3957a}
+#game-shell #camp-drawer .stage-board-heading h3{font:700 18px/1.5 var(--serif);color:#eee0c2;margin:2px 0 0}
+#game-shell #camp-drawer #stage-board-count{font:600 12px/1.5 var(--body);color:#d2bf96;white-space:nowrap}
+#game-shell #camp-drawer .stage-board-progress{height:3px;overflow:hidden;background:#b8aa8620;margin:0 0 14px}
+#game-shell #camp-drawer #stage-board-fill{display:block;width:0;height:100%;background:#d4b275}
+#game-shell #camp-drawer .sub-stage-tabs{position:relative;inset:auto;z-index:auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px 4px;width:100%;height:auto;margin:0}
+#game-shell #camp-drawer .sub-stage-tabs:before{display:none}
+#game-shell #camp-drawer .sub-stage-tabs button:nth-child(n){position:relative;inset:auto;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:1px;width:100%;height:auto;min-width:44px;min-height:72px;padding:0 0 4px;transform:none;pointer-events:auto;touch-action:manipulation;border:0!important;border-radius:0;background:none!important;box-shadow:none!important;opacity:1;font:inherit!important;overflow:visible}
+#game-shell #camp-drawer .sub-stage-tabs button:before,#game-shell #camp-drawer .sub-stage-tabs button:after{display:none!important}
+/* Registered to the painted disk centers, rather than the atlas cell centers. */
+#game-shell #camp-drawer .stage-seal{position:relative;display:grid;place-items:center;flex:none;width:100%;max-width:72px;height:auto;aspect-ratio:1;font:600 19px/1 var(--body);color:#f5ead3;text-shadow:0 2px 3px #000;pointer-events:none;background:url('assets/ui-stage-v0844/seals.webp') 49.913% 1.441%/300% 200% no-repeat;image-rendering:auto}
+#game-shell #camp-drawer .sub-stage-tabs button[data-state=locked] .stage-seal{background-position:1.681% 1.176%;color:#9ba19b}
+#game-shell #camp-drawer .sub-stage-tabs button[data-state=cleared] .stage-seal{background-position:98.225% 1.123%;color:#ffe5a6}
+#game-shell #camp-drawer .sub-stage-tabs button[aria-pressed=true] .stage-seal{background-position:1.590% 93.838%;color:#fff2da}
+#game-shell #camp-drawer .sub-stage-tabs button[data-boss=true] .stage-seal{background-position:98.331% 93.660%}
+#game-shell #camp-drawer .sub-stage-tabs button[data-boss=true][data-state=locked] .stage-seal{background-position:49.846% 93.984%}
+#game-shell #camp-drawer .stage-state{display:block;min-height:16px;font:10px/1.6 var(--body);color:#b2b4a5;white-space:nowrap;text-align:center;pointer-events:none}
+#game-shell #camp-drawer .sub-stage-tabs button[data-state=cleared] .stage-state{color:#d8bf8e}
+#game-shell #camp-drawer .sub-stage-tabs button[aria-pressed=true] .stage-state{color:#f1b09d;font-weight:600}
+#game-shell #camp-drawer #stage-progress-note{display:block;position:static;min-height:0;line-height:1.6;white-space:normal;overflow-wrap:anywhere;margin:9px 0 12px;font-size:10px;color:#b7b09e;text-align:center}
+#game-shell #camp-drawer .stage-preview{position:relative;display:grid;grid-template-columns:60px minmax(0,1fr);align-items:center;gap:12px;min-width:0;padding:12px 0;border-top:1px solid #bba37d30;border-bottom:1px solid #bba37d30;background:none}
+#game-shell #camp-drawer #stage-preview-art{position:relative;inset:auto;display:block;float:none;width:60px;height:60px;min-width:0;max-width:none;aspect-ratio:1;overflow:hidden;margin:0;transform:none;image-rendering:auto}
+#game-shell #camp-drawer .stage-preview-copy{min-width:0}
+#game-shell #camp-drawer #stage-preview-kind{font:10px/1.6 var(--body);color:#bbaa86}
+#game-shell #camp-drawer #stage-preview-title{font:700 15px/1.6 var(--serif);color:#f2e2c0;margin:2px 0 4px;white-space:normal;overflow-wrap:anywhere}
+#game-shell #camp-drawer #stage-preview-description{font:11px/1.7 var(--body);color:#b7bbb0;white-space:normal;overflow-wrap:anywhere;margin:0}
+@media(max-width:360px){#game-shell #camp-drawer .stage-seal{font-size:16px}#game-shell #camp-drawer .stage-preview{grid-template-columns:50px minmax(0,1fr);gap:8px}#game-shell #camp-drawer #stage-preview-art{width:50px;height:50px}}
+#camp-map-panel .map-route-line{display:none}
+.dashboard-landmarks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(5,minmax(44px,1fr));gap:8px;padding:0 22px}
+.dashboard-landmarks button:nth-child(n){position:relative;left:auto;top:auto;transform:none;width:100%;height:auto;min-height:44px;border-radius:4px;display:flex;align-items:center;justify-content:space-between;gap:5px;padding:5px 10px;overflow:hidden}
+.dashboard-landmarks button span{transform:none;font:12px var(--body)}
+.dashboard-landmarks button small{position:static;transform:none;min-width:0;overflow:hidden;text-overflow:ellipsis;font-size:10px}
+.dashboard-landmarks button:last-child{border-color:#d9ad70!important}
+
+/* Difficulty stays visible in the map flow; both views use the same selection. */
+#camp-map-panel .map-difficulty{position:relative;flex:none;min-width:0;margin:4px 0 16px;padding:0}
+#camp-map-panel .map-difficulty h4{font:600 13px/1.6 var(--body);color:#e9ddc4;margin:0 0 8px}
+#camp-map-panel .map-difficulty-modes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;min-width:0}
+#game-shell #camp-map-panel .map-difficulty-modes button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:0;min-height:74px;width:100%;height:auto;padding:10px 6px!important;white-space:normal;line-height:1.5}
+#camp-map-panel .map-difficulty-modes strong{font:600 14px/1.5 var(--body)}
+#camp-map-panel .map-difficulty-modes small{display:block;min-width:0;max-width:100%;font:10px/1.6 var(--body);white-space:normal;overflow-wrap:anywhere;color:#c0b9aa}
+#game-shell #camp-map-panel .map-difficulty-modes button[aria-pressed=true]{outline:1px solid #e1c68d;outline-offset:-3px;color:#fff0cb}
+#camp-map-panel .map-difficulty-modes button[aria-pressed=true]:after{filter:brightness(1.2)}
+#camp-map-panel #map-difficulty-note{font:11px/1.7 var(--body);color:#b3b5a6;white-space:normal;overflow-wrap:anywhere;margin:9px 0 0}
+#game-shell #camp-drawer .sub-stage-tabs button:focus-visible,#game-shell #camp-map-panel .map-difficulty-modes button:focus-visible{outline:2px solid #e6c98b;outline-offset:2px}

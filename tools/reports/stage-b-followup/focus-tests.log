@@ -1,0 +1,24 @@
+✔ bounded frame diagnostics separate CPU, frame intervals and work actually performed (3.230715ms)
+✔ A baseline saves migrate without resetting identity, currencies, progression, enhancements or old skill presets (41.767602ms)
+✔ five unified presets share owned IDs and atomically swap skills, order, passives and awakening (12.290347ms)
+✔ missing references empty only those positions, warn, and reject duplicate identities without partial application (12.219056ms)
+✔ inscription replaces exactly one optional effect, preserves innate identity/base/enhancement and charges atomically (3.713498ms)
+✔ craft plus inscription checks combined costs before allocating or charging, and saved art stays the same (2.224855ms)
+✔ new stage types preserve ten stages and difficulty, while failed special rewards and new refresh rewards are not owned (13.095043ms)
+✔ durable stage settlement freezes until acknowledged, exposes candidate only to save, and commits exactly once (22.452741ms)
+✔ boss completion remains unpublished until one durable write, timeout never unlocks, and no replay of the settlement ID pays twice (22.100431ms)
+✔ chain chooses nearby targets, caps at five, adds duplicate magnitude and never chains recursively (10.985712ms)
+✔ explosion kills have depth one, fury refreshes and stops increasing after expiry (4.316635ms)
+✔ bleed stacks and expires, shred caps at forty percent, leech caps at ten percent (18.933432ms)
+✔ all inscription damage shares a fifty-proc advance budget and bounded visual list under dense contact (10.75987ms)
+✔ three boss decisions are real: timed defense/weakness, regeneration, and bounded threshold summons (13.1581ms)
+✔ a committed skill keeps its inscription snapshot after a paused ownership swap (9.140294ms)
+✔ defense weakening penetrates the boss defense stance, respects the cap and expires (7.028138ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 614.268823

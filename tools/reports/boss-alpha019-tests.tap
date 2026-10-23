@@ -1,0 +1,1910 @@
+TAP version 13
+# Subtest: raw save recipes and boss ownership cannot replace authored immutable definitions
+ok 1 - raw save recipes and boss ownership cannot replace authored immutable definitions
+  ---
+  duration_ms: 1.3905
+  type: 'test'
+  ...
+# Subtest: maximum health change re-bounds remaining shield owners and only swapped bank is cancelled
+ok 2 - maximum health change re-bounds remaining shield owners and only swapped bank is cancelled
+  ---
+  duration_ms: 1.2719
+  type: 'test'
+  ...
+# Subtest: all boss pools produce seeded production boss kills and retain reserved ownership once
+ok 3 - all boss pools produce seeded production boss kills and retain reserved ownership once
+  ---
+  duration_ms: 43.7337
+  type: 'test'
+  ...
+# Subtest: ordinary item identity and atlas rectangle stay constant across all five qualities
+ok 4 - ordinary item identity and atlas rectangle stay constant across all five qualities
+  ---
+  duration_ms: 2.4417
+  type: 'test'
+  ...
+# Subtest: ancient definitions are separate identities with fixed properties and no ordinary quality versions
+ok 5 - ancient definitions are separate identities with fixed properties and no ordinary quality versions
+  ---
+  duration_ms: 1.8313
+  type: 'test'
+  ...
+# Subtest: ordinary quality intervals never select ancient identity and ancient interval selects only ancient
+ok 6 - ordinary quality intervals never select ancient identity and ancient interval selects only ancient
+  ---
+  duration_ms: 0.7074
+  type: 'test'
+  ...
+# Subtest: every old ultra/extreme identity migrates once with ID stats trait effect and worn ownership intact
+ok 7 - every old ultra/extreme identity migrates once with ID stats trait effect and worn ownership intact
+  ---
+  duration_ms: 8.7253
+  type: 'test'
+  ...
+# Subtest: legacy art fallback and pending migration settle duplicate drops once without granting extra gold
+ok 8 - legacy art fallback and pending migration settle duplicate drops once without granting extra gold
+  ---
+  duration_ms: 0.8174
+  type: 'test'
+  ...
+# Subtest: forged ancient IDs or ordinary grade five cannot obtain ancient artwork or top effect
+ok 9 - forged ancient IDs or ordinary grade five cannot obtain ancient artwork or top effect
+  ---
+  duration_ms: 0.1718
+  type: 'test'
+  ...
+# Subtest: committed ancient snapshot retains item identity and theme through mutation and equip swap
+ok 10 - committed ancient snapshot retains item identity and theme through mutation and equip swap
+  ---
+  duration_ms: 0.1781
+  type: 'test'
+  ...
+# Subtest: 60 signatures bind stable identities, unique recipes and partitioned boss pools
+ok 11 - 60 signatures bind stable identities, unique recipes and partitioned boss pools
+  ---
+  duration_ms: 3.649
+  type: 'test'
+  ...
+# Subtest: ancient-1-weapon-1 activates via finisher with real combat effects
+ok 12 - ancient-1-weapon-1 activates via finisher with real combat effects
+  ---
+  duration_ms: 4.8976
+  type: 'test'
+  ...
+# Subtest: ancient-1-weapon-2 activates via heavy with real combat effects
+ok 13 - ancient-1-weapon-2 activates via heavy with real combat effects
+  ---
+  duration_ms: 2.2184
+  type: 'test'
+  ...
+# Subtest: ancient-1-weapon-3 activates via normal with real combat effects
+ok 14 - ancient-1-weapon-3 activates via normal with real combat effects
+  ---
+  duration_ms: 0.5945
+  type: 'test'
+  ...
+# Subtest: ancient-1-weapon-4 activates via heavy with real combat effects
+ok 15 - ancient-1-weapon-4 activates via heavy with real combat effects
+  ---
+  duration_ms: 0.7428
+  type: 'test'
+  ...
+# Subtest: ancient-1-weapon-5 activates via finisher with real combat effects
+ok 16 - ancient-1-weapon-5 activates via finisher with real combat effects
+  ---
+  duration_ms: 0.6095
+  type: 'test'
+  ...
+# Subtest: ancient-1-weapon-6 activates via normal with real combat effects
+ok 17 - ancient-1-weapon-6 activates via normal with real combat effects
+  ---
+  duration_ms: 1.1209
+  type: 'test'
+  ...
+# Subtest: ancient-1-weapon-8 activates via counter with real combat effects
+ok 18 - ancient-1-weapon-8 activates via counter with real combat effects
+  ---
+  duration_ms: 0.373
+  type: 'test'
+  ...
+# Subtest: ancient-1-weapon-9 activates via finisher with real combat effects
+ok 19 - ancient-1-weapon-9 activates via finisher with real combat effects
+  ---
+  duration_ms: 0.3655
+  type: 'test'
+  ...
+# Subtest: ancient-1-armor-1 activates via dash with real combat effects
+ok 20 - ancient-1-armor-1 activates via dash with real combat effects
+  ---
+  duration_ms: 0.5224
+  type: 'test'
+  ...
+# Subtest: ancient-1-armor-2 activates via hurt with real combat effects
+ok 21 - ancient-1-armor-2 activates via hurt with real combat effects
+  ---
+  duration_ms: 0.7082
+  type: 'test'
+  ...
+# Subtest: ancient-1-armor-3 activates via idle with real combat effects
+ok 22 - ancient-1-armor-3 activates via idle with real combat effects
+  ---
+  duration_ms: 1.4404
+  type: 'test'
+  ...
+# Subtest: ancient-1-armor-4 activates via perfect with real combat effects
+ok 23 - ancient-1-armor-4 activates via perfect with real combat effects
+  ---
+  duration_ms: 0.3376
+  type: 'test'
+  ...
+# Subtest: ancient-1-armor-5 activates via lowHp with real combat effects
+ok 24 - ancient-1-armor-5 activates via lowHp with real combat effects
+  ---
+  duration_ms: 0.191
+  type: 'test'
+  ...
+# Subtest: ancient-1-armor-6 activates via dash with real combat effects
+ok 25 - ancient-1-armor-6 activates via dash with real combat effects
+  ---
+  duration_ms: 0.1336
+  type: 'test'
+  ...
+# Subtest: ancient-1-charm-1 activates via pickup with real combat effects
+ok 26 - ancient-1-charm-1 activates via pickup with real combat effects
+  ---
+  duration_ms: 0.3583
+  type: 'test'
+  ...
+# Subtest: ancient-1-charm-2 activates via finisher with real combat effects
+ok 27 - ancient-1-charm-2 activates via finisher with real combat effects
+  ---
+  duration_ms: 0.4293
+  type: 'test'
+  ...
+# Subtest: ancient-1-charm-3 activates via heavy with real combat effects
+ok 28 - ancient-1-charm-3 activates via heavy with real combat effects
+  ---
+  duration_ms: 0.2353
+  type: 'test'
+  ...
+# Subtest: ancient-1-charm-4 activates via dash with real combat effects
+ok 29 - ancient-1-charm-4 activates via dash with real combat effects
+  ---
+  duration_ms: 0.0962
+  type: 'test'
+  ...
+# Subtest: ancient-1-charm-5 activates via periodic with real combat effects
+ok 30 - ancient-1-charm-5 activates via periodic with real combat effects
+  ---
+  duration_ms: 0.1075
+  type: 'test'
+  ...
+# Subtest: ancient-1-charm-6 activates via normal with real combat effects
+ok 31 - ancient-1-charm-6 activates via normal with real combat effects
+  ---
+  duration_ms: 0.1677
+  type: 'test'
+  ...
+# Subtest: ancient-2-weapon-1 activates via finisher with real combat effects
+ok 32 - ancient-2-weapon-1 activates via finisher with real combat effects
+  ---
+  duration_ms: 0.5993
+  type: 'test'
+  ...
+# Subtest: ancient-2-weapon-2 activates via heavy with real combat effects
+ok 33 - ancient-2-weapon-2 activates via heavy with real combat effects
+  ---
+  duration_ms: 0.244
+  type: 'test'
+  ...
+# Subtest: ancient-2-weapon-3 activates via normal with real combat effects
+ok 34 - ancient-2-weapon-3 activates via normal with real combat effects
+  ---
+  duration_ms: 0.2676
+  type: 'test'
+  ...
+# Subtest: ancient-2-weapon-4 activates via heavy with real combat effects
+ok 35 - ancient-2-weapon-4 activates via heavy with real combat effects
+  ---
+  duration_ms: 0.2278
+  type: 'test'
+  ...
+# Subtest: ancient-2-weapon-5 activates via counter with real combat effects
+ok 36 - ancient-2-weapon-5 activates via counter with real combat effects
+  ---
+  duration_ms: 0.3945
+  type: 'test'
+  ...
+# Subtest: ancient-2-weapon-6 activates via finisher with real combat effects
+ok 37 - ancient-2-weapon-6 activates via finisher with real combat effects
+  ---
+  duration_ms: 0.2256
+  type: 'test'
+  ...
+# Subtest: ancient-2-weapon-8 activates via normal with real combat effects
+ok 38 - ancient-2-weapon-8 activates via normal with real combat effects
+  ---
+  duration_ms: 0.3843
+  type: 'test'
+  ...
+# Subtest: ancient-2-weapon-9 activates via heavy with real combat effects
+ok 39 - ancient-2-weapon-9 activates via heavy with real combat effects
+  ---
+  duration_ms: 0.2244
+  type: 'test'
+  ...
+# Subtest: ancient-2-armor-1 activates via idle with real combat effects
+ok 40 - ancient-2-armor-1 activates via idle with real combat effects
+  ---
+  duration_ms: 0.6487
+  type: 'test'
+  ...
+# Subtest: ancient-2-armor-2 activates via dash with real combat effects
+ok 41 - ancient-2-armor-2 activates via dash with real combat effects
+  ---
+  duration_ms: 0.113
+  type: 'test'
+  ...
+# Subtest: ancient-2-armor-3 activates via hurt with real combat effects
+ok 42 - ancient-2-armor-3 activates via hurt with real combat effects
+  ---
+  duration_ms: 0.3809
+  type: 'test'
+  ...
+# Subtest: ancient-2-armor-4 activates via perfect with real combat effects
+ok 43 - ancient-2-armor-4 activates via perfect with real combat effects
+  ---
+  duration_ms: 0.1159
+  type: 'test'
+  ...
+# Subtest: ancient-2-armor-5 activates via lowHp with real combat effects
+ok 44 - ancient-2-armor-5 activates via lowHp with real combat effects
+  ---
+  duration_ms: 0.0959
+  type: 'test'
+  ...
+# Subtest: ancient-2-armor-6 activates via dash with real combat effects
+ok 45 - ancient-2-armor-6 activates via dash with real combat effects
+  ---
+  duration_ms: 0.0867
+  type: 'test'
+  ...
+# Subtest: ancient-2-charm-1 activates via pickup with real combat effects
+ok 46 - ancient-2-charm-1 activates via pickup with real combat effects
+  ---
+  duration_ms: 0.0929
+  type: 'test'
+  ...
+# Subtest: ancient-2-charm-2 activates via heavy with real combat effects
+ok 47 - ancient-2-charm-2 activates via heavy with real combat effects
+  ---
+  duration_ms: 0.2022
+  type: 'test'
+  ...
+# Subtest: ancient-2-charm-3 activates via finisher with real combat effects
+ok 48 - ancient-2-charm-3 activates via finisher with real combat effects
+  ---
+  duration_ms: 0.2735
+  type: 'test'
+  ...
+# Subtest: ancient-2-charm-4 activates via periodic with real combat effects
+ok 49 - ancient-2-charm-4 activates via periodic with real combat effects
+  ---
+  duration_ms: 0.0988
+  type: 'test'
+  ...
+# Subtest: ancient-2-charm-5 activates via normal with real combat effects
+ok 50 - ancient-2-charm-5 activates via normal with real combat effects
+  ---
+  duration_ms: 0.1229
+  type: 'test'
+  ...
+# Subtest: ancient-2-charm-6 activates via perfect with real combat effects
+ok 51 - ancient-2-charm-6 activates via perfect with real combat effects
+  ---
+  duration_ms: 0.1079
+  type: 'test'
+  ...
+# Subtest: ancient-3-weapon-1 activates via heavy with real combat effects
+ok 52 - ancient-3-weapon-1 activates via heavy with real combat effects
+  ---
+  duration_ms: 0.5799
+  type: 'test'
+  ...
+# Subtest: ancient-3-weapon-2 activates via finisher with real combat effects
+ok 53 - ancient-3-weapon-2 activates via finisher with real combat effects
+  ---
+  duration_ms: 0.1919
+  type: 'test'
+  ...
+# Subtest: ancient-3-weapon-3 activates via normal with real combat effects
+ok 54 - ancient-3-weapon-3 activates via normal with real combat effects
+  ---
+  duration_ms: 0.2245
+  type: 'test'
+  ...
+# Subtest: ancient-3-weapon-4 activates via heavy with real combat effects
+ok 55 - ancient-3-weapon-4 activates via heavy with real combat effects
+  ---
+  duration_ms: 0.2242
+  type: 'test'
+  ...
+# Subtest: ancient-3-weapon-5 activates via counter with real combat effects
+ok 56 - ancient-3-weapon-5 activates via counter with real combat effects
+  ---
+  duration_ms: 0.168
+  type: 'test'
+  ...
+# Subtest: ancient-3-weapon-6 activates via finisher with real combat effects
+ok 57 - ancient-3-weapon-6 activates via finisher with real combat effects
+  ---
+  duration_ms: 0.2796
+  type: 'test'
+  ...
+# Subtest: ancient-3-weapon-8 activates via normal with real combat effects
+ok 58 - ancient-3-weapon-8 activates via normal with real combat effects
+  ---
+  duration_ms: 0.117
+  type: 'test'
+  ...
+# Subtest: ancient-3-weapon-9 activates via heavy with real combat effects
+ok 59 - ancient-3-weapon-9 activates via heavy with real combat effects
+  ---
+  duration_ms: 0.3397
+  type: 'test'
+  ...
+# Subtest: ancient-3-armor-1 activates via hurt with real combat effects
+ok 60 - ancient-3-armor-1 activates via hurt with real combat effects
+  ---
+  duration_ms: 0.0906
+  type: 'test'
+  ...
+# Subtest: ancient-3-armor-2 activates via idle with real combat effects
+ok 61 - ancient-3-armor-2 activates via idle with real combat effects
+  ---
+  duration_ms: 0.614
+  type: 'test'
+  ...
+# Subtest: ancient-3-armor-3 activates via perfect with real combat effects
+ok 62 - ancient-3-armor-3 activates via perfect with real combat effects
+  ---
+  duration_ms: 0.7232
+  type: 'test'
+  ...
+# Subtest: ancient-3-armor-4 activates via dash with real combat effects
+ok 63 - ancient-3-armor-4 activates via dash with real combat effects
+  ---
+  duration_ms: 0.137
+  type: 'test'
+  ...
+# Subtest: ancient-3-armor-5 activates via lowHp with real combat effects
+ok 64 - ancient-3-armor-5 activates via lowHp with real combat effects
+  ---
+  duration_ms: 0.1287
+  type: 'test'
+  ...
+# Subtest: ancient-3-armor-6 activates via dash with real combat effects
+ok 65 - ancient-3-armor-6 activates via dash with real combat effects
+  ---
+  duration_ms: 0.0852
+  type: 'test'
+  ...
+# Subtest: ancient-3-charm-1 activates via finisher with real combat effects
+ok 66 - ancient-3-charm-1 activates via finisher with real combat effects
+  ---
+  duration_ms: 0.4677
+  type: 'test'
+  ...
+# Subtest: ancient-3-charm-2 activates via heavy with real combat effects
+ok 67 - ancient-3-charm-2 activates via heavy with real combat effects
+  ---
+  duration_ms: 0.1862
+  type: 'test'
+  ...
+# Subtest: ancient-3-charm-3 activates via periodic with real combat effects
+ok 68 - ancient-3-charm-3 activates via periodic with real combat effects
+  ---
+  duration_ms: 0.184
+  type: 'test'
+  ...
+# Subtest: ancient-3-charm-4 activates via normal with real combat effects
+ok 69 - ancient-3-charm-4 activates via normal with real combat effects
+  ---
+  duration_ms: 0.1316
+  type: 'test'
+  ...
+# Subtest: ancient-3-charm-5 activates via perfect with real combat effects
+ok 70 - ancient-3-charm-5 activates via perfect with real combat effects
+  ---
+  duration_ms: 0.0932
+  type: 'test'
+  ...
+# Subtest: ancient-3-charm-6 activates via pickup with real combat effects
+ok 71 - ancient-3-charm-6 activates via pickup with real combat effects
+  ---
+  duration_ms: 0.1568
+  type: 'test'
+  ...
+# Subtest: nonlethal sacrifices and affordability reserve no cooldown on failed proc
+ok 72 - nonlethal sacrifices and affordability reserve no cooldown on failed proc
+  ---
+  duration_ms: 0.1588
+  type: 'test'
+  ...
+# Subtest: shield wholly absorbed hit has no hurt proc or lastDamage mutation and owner swap cancels banks
+ok 73 - shield wholly absorbed hit has no hurt proc or lastDamage mutation and owner swap cancels banks
+  ---
+  duration_ms: 0.2318
+  type: 'test'
+  ...
+# Subtest: captured attack retains old signature after paused swap but cannot leave unowned zones
+ok 74 - captured attack retains old signature after paused swap but cannot leave unowned zones
+  ---
+  duration_ms: 0.258
+  type: 'test'
+  ...
+# Subtest: spatial ticks pause and terminate at stage boundary without resetting signature cooldown
+ok 75 - spatial ticks pause and terminate at stage boundary without resetting signature cooldown
+  ---
+  duration_ms: 0.727
+  type: 'test'
+  ...
+# Subtest: five owned battle plans preserve chapter quota and specify distinct roles
+ok 76 - five owned battle plans preserve chapter quota and specify distinct roles
+  ---
+  duration_ms: 1.3761
+  type: 'test'
+  ...
+# Subtest: crossfire casters materialize on opposite sides and remain random across hunts
+ok 77 - crossfire casters materialize on opposite sides and remain random across hunts
+  ---
+  duration_ms: 1.9789
+  type: 'test'
+  ...
+# Subtest: survival batches have full warnings and neither early kills nor time alone can finish
+ok 78 - survival batches have full warnings and neither early kills nor time alone can finish
+  ---
+  duration_ms: 15.144
+  type: 'test'
+  ...
+# Subtest: survival retry resets timer, reservations and kills without granting a checkpoint
+ok 79 - survival retry resets timer, reservations and kills without granting a checkpoint
+  ---
+  duration_ms: 1.2017
+  type: 'test'
+  ...
+# Subtest: elite factory retains chapter identity, guard mechanics and a longer warning
+ok 80 - elite factory retains chapter identity, guard mechanics and a longer warning
+  ---
+  duration_ms: 2.2041
+  type: 'test'
+  ...
+# Subtest: crowded front formations do not duplicate spawn points across 100 hunt seeds
+ok 81 - crowded front formations do not duplicate spawn points across 100 hunt seeds
+  ---
+  duration_ms: 5.0527
+  type: 'test'
+  ...
+# Subtest: late survival batches track movement until warning starts, then keep the marked position
+ok 82 - late survival batches track movement until warning starts, then keep the marked position
+  ---
+  duration_ms: 3.0175
+  type: 'test'
+  ...
+# Subtest: spawn warning, deterministic seed, random replay and stage locks
+ok 83 - spawn warning, deterministic seed, random replay and stage locks
+  ---
+  duration_ms: 4.3194
+  type: 'test'
+  ...
+# Subtest: three complete waves award exactly one checkpoint and pause freezes automatic transition
+ok 84 - three complete waves award exactly one checkpoint and pause freezes automatic transition
+  ---
+  duration_ms: 8.7704
+  type: 'test'
+  ...
+# Subtest: 15 substages retain chapter identity and only final bosses unlock the next chapter
+ok 85 - 15 substages retain chapter identity and only final bosses unlock the next chapter
+  ---
+  duration_ms: 75.5781
+  type: 'test'
+  ...
+# Subtest: pending or living enemies cannot be skipped and death cancels stage advance
+ok 86 - pending or living enemies cannot be skipped and death cancels stage advance
+  ---
+  duration_ms: 1.1082
+  type: 'test'
+  ...
+# Subtest: v1/v2 migration and v3 sanitization preserve gear and cap forged checkpoints
+ok 87 - v1/v2 migration and v3 sanitization preserve gear and cap forged checkpoints
+  ---
+  duration_ms: 0.3235
+  type: 'test'
+  ...
+# Subtest: corner spawns stay reachable, safely spaced, and concurrency remains bounded
+ok 88 - corner spawns stay reachable, safely spaced, and concurrency remains bounded
+  ---
+  duration_ms: 2.5636
+  type: 'test'
+  ...
+# Subtest: a stale boss cannot complete a new stage and duplicate contacts award only one kill
+ok 89 - a stale boss cannot complete a new stage and duplicate contacts award only one kill
+  ---
+  duration_ms: 0.3673
+  type: 'test'
+  ...
+# Subtest: all twelve chapter identities remain distinct and definitions stay immutable
+ok 90 - all twelve chapter identities remain distinct and definitions stay immutable
+  ---
+  duration_ms: 5.3691
+  type: 'test'
+  ...
+# Subtest: boss attack plans drive actual contact and death/pause cancel uncommitted volleys
+ok 91 - boss attack plans drive actual contact and death/pause cancel uncommitted volleys
+  ---
+  duration_ms: 1.9231
+  type: 'test'
+  ...
+# Subtest: forest wolf charge follows the locked target and stays inside world limits
+ok 92 - forest wolf charge follows the locked target and stays inside world limits
+  ---
+  duration_ms: 0.311
+  type: 'test'
+  ...
+# Subtest: chapter caster volleys keep the projectile cap and target snapshot
+ok 93 - chapter caster volleys keep the projectile cap and target snapshot
+  ---
+  duration_ms: 0.6914
+  type: 'test'
+  ...
+# Subtest: equipment artwork survives valid saves and cannot spoof another slot or chapter
+ok 94 - equipment artwork survives valid saves and cannot spoof another slot or chapter
+  ---
+  duration_ms: 1.135
+  type: 'test'
+  ...
+# Subtest: chapter pixel landmarks retain constant scale and aligned gait across all source views
+ok 95 - chapter pixel landmarks retain constant scale and aligned gait across all source views
+  ---
+  duration_ms: 11.0348
+  type: 'test'
+  ...
+# Subtest: spitter holds range, retreats up close and fires toward its locked windup target
+ok 96 - spitter holds range, retreats up close and fires toward its locked windup target
+  ---
+  duration_ms: 5.0462
+  type: 'test'
+  ...
+# Subtest: front armor reduces hits; flanking avoids it and breaker attacks expose a real stagger window
+ok 97 - front armor reduces hits; flanking avoids it and breaker attacks expose a real stagger window
+  ---
+  duration_ms: 1.9633
+  type: 'test'
+  ...
+# Subtest: only a late threatened dodge grants one counter, which costs no stamina and never overshoots nearby targets
+ok 98 - only a late threatened dodge grants one counter, which costs no stamina and never overshoots nearby targets
+  ---
+  duration_ms: 0.9979
+  type: 'test'
+  ...
+# Subtest: projectile near misses award perfect dodge once and heavy attacks return shots to the attacker
+ok 99 - projectile near misses award perfect dodge once and heavy attacks return shots to the attacker
+  ---
+  duration_ms: 1.0785
+  type: 'test'
+  ...
+# Subtest: core detonation is delayed, chains once per core, hurts nearby enemies and the hunter, and freezes on pause
+ok 100 - core detonation is delayed, chains once per core, hurts nearby enemies and the hunter, and freezes on pause
+  ---
+  duration_ms: 1.0264
+  type: 'test'
+  ...
+# Subtest: cores intercept incoming shots and swept collision cannot skip a target in one substep
+ok 101 - cores intercept incoming shots and swept collision cannot skip a target in one substep
+  ---
+  duration_ms: 0.2307
+  type: 'test'
+  ...
+# Subtest: boss fan grows on rage, shots are capped and expire, and pause leaves all resources unchanged
+ok 102 - boss fan grows on rage, shots are capped and expire, and pause leaves all resources unchanged
+  ---
+  duration_ms: 2.6234
+  type: 'test'
+  ...
+# Subtest: armor swapping in a paused hunt never heals, including repeatedly swapping while critically wounded
+ok 103 - armor swapping in a paused hunt never heals, including repeatedly swapping while critically wounded
+  ---
+  duration_ms: 0.5213
+  type: 'test'
+  ...
+# Subtest: blast damage follows its displayed ellipse and an intercepted shot is not a perfect-dodge threat
+ok 104 - blast damage follows its displayed ellipse and an intercepted shot is not a perfect-dodge threat
+  ---
+  duration_ms: 0.3365
+  type: 'test'
+  ...
+# Subtest: looping and nonlooping frame indices handle exact boundaries and invalid time
+ok 105 - looping and nonlooping frame indices handle exact boundaries and invalid time
+  ---
+  duration_ms: 0.674
+  type: 'test'
+  ...
+# Subtest: per-frame duration is measured in seconds and wraps after the entire clip
+ok 106 - per-frame duration is measured in seconds and wraps after the entire clip
+  ---
+  duration_ms: 0.1101
+  type: 'test'
+  ...
+# Subtest: frame rectangles clamp indices, provide defaults and never mutate metadata
+ok 107 - frame rectangles clamp indices, provide defaults and never mutate metadata
+  ---
+  duration_ms: 0.4502
+  type: 'test'
+  ...
+# Subtest: clip validation rejects out-of-image frames, invalid pivots, durations and metadata
+ok 108 - clip validation rejects out-of-image frames, invalid pivots, durations and metadata
+  ---
+  duration_ms: 0.3698
+  type: 'test'
+  ...
+# Subtest: default spawn provides two accessible dummies and six skitters plus two bulwarks
+ok 109 - default spawn provides two accessible dummies and six skitters plus two bulwarks
+  ---
+  duration_ms: 2.898
+  type: 'test'
+  ...
+# Subtest: diagonal movement is normalized and preserves analog input magnitude
+ok 110 - diagonal movement is normalized and preserves analog input magnitude
+  ---
+  duration_ms: 0.3045
+  type: 'test'
+  ...
+# Subtest: movement remains bounded and invalid inputs cannot poison state
+ok 111 - movement remains bounded and invalid inputs cannot poison state
+  ---
+  duration_ms: 0.7692
+  type: 'test'
+  ...
+# Subtest: attack hits once at .25 seconds, then finishes at .7 seconds
+ok 112 - attack hits once at .25 seconds, then finishes at .7 seconds
+  ---
+  duration_ms: 0.4237
+  type: 'test'
+  ...
+# Subtest: attack range includes exactly 180; misses do not retry when an enemy approaches later
+ok 113 - attack range includes exactly 180; misses do not retry when an enemy approaches later
+  ---
+  duration_ms: 0.2739
+  type: 'test'
+  ...
+# Subtest: death never revives through a hurt timeout or a later attack
+ok 114 - death never revives through a hurt timeout or a later attack
+  ---
+  duration_ms: 0.2948
+  type: 'test'
+  ...
+# Subtest: player hurt interrupts an attack, resumes after .5 seconds and clamps HP at zero
+ok 115 - player hurt interrupts an attack, resumes after .5 seconds and clamps HP at zero
+  ---
+  duration_ms: 0.1907
+  type: 'test'
+  ...
+# Subtest: delta clamp limits suspended frames and rejects nonfinite deltas
+ok 116 - delta clamp limits suspended frames and rejects nonfinite deltas
+  ---
+  duration_ms: 0.1922
+  type: 'test'
+  ...
+# Subtest: animation clocks and boundary strikes are independent of render-frame partitioning
+ok 117 - animation clocks and boundary strikes are independent of render-frame partitioning
+  ---
+  duration_ms: 0.2245
+  type: 'test'
+  ...
+# Subtest: reset preserves the root reference and bounds while clearing damage and action state
+ok 118 - reset preserves the root reference and bounds while clearing damage and action state
+  ---
+  duration_ms: 0.2774
+  type: 'test'
+  ...
+# Subtest: all authored player frames have finite reviewed sockets tied to unchanged source pixels
+ok 119 - all authored player frames have finite reviewed sockets tied to unchanged source pixels
+  ---
+  duration_ms: 9.5986
+  type: 'test'
+  ...
+# Subtest: equipment selection honors slot ownership, supports old artwork IDs and leaves authoritative data unchanged
+ok 120 - equipment selection honors slot ownership, supports old artwork IDs and leaves authoritative data unchanged
+  ---
+  duration_ms: 0.609
+  type: 'test'
+  ...
+# Subtest: version one migrates without losing progress; unsafe equipment and malformed saves are rejected
+ok 121 - version one migrates without losing progress; unsafe equipment and malformed saves are rejected
+  ---
+  duration_ms: 2.0606
+  type: 'test'
+  ...
+# Subtest: offline scouting requires a cleared boss, caps four hours, and claims once
+ok 122 - offline scouting requires a cleared boss, caps four hours, and claims once
+  ---
+  duration_ms: 0.3259
+  type: 'test'
+  ...
+# Subtest: random hunts queue warning markers without authored rooms or caches
+ok 123 - random hunts queue warning markers without authored rooms or caches
+  ---
+  duration_ms: 1.0263
+  type: 'test'
+  ...
+# Subtest: three committed directional swings hit once, get stronger and reset after the chain window
+ok 124 - three committed directional swings hit once, get stronger and reset after the chain window
+  ---
+  duration_ms: 4.0843
+  type: 'test'
+  ...
+# Subtest: a buffered second swing locks its direction, and dodge cancels pending damage and consumes stamina
+ok 125 - a buffered second swing locks its direction, and dodge cancels pending damage and consumes stamina
+  ---
+  duration_ms: 1.7683
+  type: 'test'
+  ...
+# Subtest: heavy attack requires direction, windup and stamina; it no longer selects radial targets
+ok 126 - heavy attack requires direction, windup and stamina; it no longer selects radial targets
+  ---
+  duration_ms: 0.7486
+  type: 'test'
+  ...
+# Subtest: monster telegraphs resolve their marked ellipse and hurt causes a flinch
+ok 127 - monster telegraphs resolve their marked ellipse and hurt causes a flinch
+  ---
+  duration_ms: 0.5494
+  type: 'test'
+  ...
+# Subtest: level ups continue combat; permanent skill allocation is an explicit camp activity
+ok 128 - level ups continue combat; permanent skill allocation is an explicit camp activity
+  ---
+  duration_ms: 0.4946
+  type: 'test'
+  ...
+# Subtest: no manual interaction is required by random waves
+ok 129 - no manual interaction is required by random waves
+  ---
+  duration_ms: 0.2633
+  type: 'test'
+  ...
+# Subtest: equipment changes combat stats, saves identity and only unequipped items can be salvaged
+ok 130 - equipment changes combat stats, saves identity and only unequipped items can be salvaged
+  ---
+  duration_ms: 0.5115
+  type: 'test'
+  ...
+# Subtest: forge spends currencies atomically and capped skills convert remaining points
+ok 131 - forge spends currencies atomically and capped skills convert remaining points
+  ---
+  duration_ms: 0.2199
+  type: 'test'
+  ...
+# Subtest: pause freezes combat and defeat preserves collected progression
+ok 132 - pause freezes combat and defeat preserves collected progression
+  ---
+  duration_ms: 0.3461
+  type: 'test'
+  ...
+# Subtest: assisted play completes all chapter waves and bosses; full bags preserve equipped items
+ok 133 - assisted play completes all chapter waves and bosses; full bags preserve equipped items
+  ---
+  duration_ms: 119.5826
+  type: 'test'
+  ...
+# Subtest: inherited object keys cannot masquerade as valid upgrade ids or item slots
+ok 134 - inherited object keys cannot masquerade as valid upgrade ids or item slots
+  ---
+  duration_ms: 0.1599
+  type: 'test'
+  ...
+# Subtest: whoosh is emitted at launch once, contact is emitted once, and early dodge cancels both
+ok 135 - whoosh is emitted at launch once, contact is emitted once, and early dodge cancels both
+  ---
+  duration_ms: 0.3214
+  type: 'test'
+  ...
+# Subtest: knockback feedback uses actual clamped displacement and freezes with combat time
+ok 136 - knockback feedback uses actual clamped displacement and freezes with combat time
+  ---
+  duration_ms: 0.5111
+  type: 'test'
+  ...
+# Subtest: fatal hits stop gameplay immediately while the death clock and transient effects finish
+ok 137 - fatal hits stop gameplay immediately while the death clock and transient effects finish
+  ---
+  duration_ms: 0.3561
+  type: 'test'
+  ...
+# Subtest: dash trail snapshots follow the resolved path, stay bounded and never replay the dash sound
+ok 138 - dash trail snapshots follow the resolved path, stay bounded and never replay the dash sound
+  ---
+  duration_ms: 0.1589
+  type: 'test'
+  ...
+# Subtest: victory settles an interrupted windup without damage, regeneration or queued attacks
+ok 139 - victory settles an interrupted windup without damage, regeneration or queued attacks
+  ---
+  duration_ms: 0.1683
+  type: 'test'
+  ...
+# Subtest: destination walking consumes only the remaining distance across speeds, substeps and hitstop
+ok 140 - destination walking consumes only the remaining distance across speeds, substeps and hitstop
+  ---
+  duration_ms: 4.3721
+  type: 'test'
+  ...
+# Subtest: assist keeps near-equal targets, switches for a clear improvement or invalidation and resets outside the hunt
+ok 141 - assist keeps near-equal targets, switches for a clear improvement or invalidation and resets outside the hunt
+  ---
+  duration_ms: 0.4538
+  type: 'test'
+  ...
+# Subtest: assist exits a windup once, waits outside its boundary and interrupts that wait for an incoming shot
+ok 142 - assist exits a windup once, waits outside its boundary and interrupts that wait for an incoming shot
+  ---
+  duration_ms: 0.6483
+  type: 'test'
+  ...
+# Subtest: assist leaves an armed core, waits for its fuse and never steps back into the same blast
+ok 143 - assist leaves an armed core, waits for its fuse and never steps back into the same blast
+  ---
+  duration_ms: 0.6753
+  type: 'test'
+  ...
+# Subtest: skitter contact dispatches only at windup completion and applies its damage once
+ok 144 - skitter contact dispatches only at windup completion and applies its damage once
+  ---
+  duration_ms: 0.2918
+  type: 'test'
+  ...
+# Subtest: skitter flinch cancels its windup and death remains presentation-only with one reward
+ok 145 - skitter flinch cancels its windup and death remains presentation-only with one reward
+  ---
+  duration_ms: 0.4099
+  type: 'test'
+  ...
+# (node:18024) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: actual stage transition clears held controls, saves checkpoint and resumes it at camp
+ok 146 - actual stage transition clears held controls, saves checkpoint and resumes it at camp
+  ---
+  duration_ms: 56.0217
+  type: 'test'
+  ...
+# Subtest: survival HUD explains waiting after early kills and pause retains the timer
+ok 147 - survival HUD explains waiting after early kills and pause retains the timer
+  ---
+  duration_ms: 64.9251
+  type: 'test'
+  ...
+# Subtest: weapon cards, equipped summary and combat HUD show the saved sword trait
+ok 148 - weapon cards, equipped summary and combat HUD show the saved sword trait
+  ---
+  duration_ms: 31.2507
+  type: 'test'
+  ...
+# Subtest: bleed ticks render separately labelled damage and their own status marker
+ok 149 - bleed ticks render separately labelled damage and their own status marker
+  ---
+  duration_ms: 21.8979
+  type: 'test'
+  ...
+# Subtest: compact HUD keeps tactics and equipment reachable through a paused menu without stale movement
+ok 150 - compact HUD keeps tactics and equipment reachable through a paused menu without stale movement
+  ---
+  duration_ms: 40.2513
+  type: 'test'
+  ...
+# Subtest: 24-slot inventory filter keeps action identity after filtering and salvage
+ok 151 - 24-slot inventory filter keeps action identity after filtering and salvage
+  ---
+  duration_ms: 44.986
+  type: 'test'
+  ...
+# Subtest: real render draws dropped equipment and limits ordinary pickup HUD spam
+ok 152 - real render draws dropped equipment and limits ordinary pickup HUD spam
+  ---
+  duration_ms: 26.4449
+  type: 'test'
+  ...
+# Subtest: boot shows real camp, locked stages and a saved versioned profile
+ok 153 - boot shows real camp, locked stages and a saved versioned profile
+  ---
+  duration_ms: 41.6089
+  type: 'test'
+  ...
+# Subtest: keyboard and action buttons operate real combat, movement and recovery
+ok 154 - keyboard and action buttons operate real combat, movement and recovery
+  ---
+  duration_ms: 34.9222
+  type: 'test'
+  ...
+# Subtest: pause and blur freeze combat and resume never applies hidden-tab elapsed time
+ok 155 - pause and blur freeze combat and resume never applies hidden-tab elapsed time
+  ---
+  duration_ms: 20.6958
+  type: 'test'
+  ...
+# Subtest: training happens at camp and never interrupts the hunt
+ok 156 - training happens at camp and never interrupts the hunt
+  ---
+  duration_ms: 19.4729
+  type: 'test'
+  ...
+# Subtest: forge and unlocked stages survive loading another application instance
+ok 157 - forge and unlocked stages survive loading another application instance
+  ---
+  duration_ms: 45.198
+  type: 'test'
+  ...
+# Subtest: actual auto button takes a hunt through content, victory, saved rewards and a camp return
+ok 158 - actual auto button takes a hunt through content, victory, saved rewards and a camp return
+  ---
+  duration_ms: 329.3581
+  type: 'test'
+  ...
+# Subtest: responsive canvas clicks use world coordinates and joystick inputs have pointer ownership
+ok 159 - responsive canvas clicks use world coordinates and joystick inputs have pointer ownership
+  ---
+  duration_ms: 23.747
+  type: 'test'
+  ...
+# Subtest: blocked storage stays explicit and failed assets never enable a broken hunt
+ok 160 - blocked storage stays explicit and failed assets never enable a broken hunt
+  ---
+  duration_ms: 52.5763
+  type: 'test'
+  ...
+# Subtest: joystick drag changes axes, preserves diagonal speed and releases on cancellation
+ok 161 - joystick drag changes axes, preserves diagonal speed and releases on cancellation
+  ---
+  duration_ms: 19.1523
+  type: 'test'
+  ...
+# Subtest: mobile movement survives a second finger attack and stops on cancellation or pause
+ok 162 - mobile movement survives a second finger attack and stops on cancellation or pause
+  ---
+  duration_ms: 41.2676
+  type: 'test'
+  ...
+# Subtest: touching the battlefield does not discard a held mobile direction
+ok 163 - touching the battlefield does not discard a held mobile direction
+  ---
+  duration_ms: 17.2765
+  type: 'test'
+  ...
+# Subtest: mobile page cache transition pauses the hunt and releases every held control
+ok 164 - mobile page cache transition pauses the hunt and releases every held control
+  ---
+  duration_ms: 19.9712
+  type: 'test'
+  ...
+# Subtest: joystick rejects a second owner and ignores moves after capture loss
+ok 165 - joystick rejects a second owner and ignores moves after capture loss
+  ---
+  duration_ms: 39.8528
+  type: 'test'
+  ...
+# Subtest: portrait camera uses the whole canvas, maps taps to world coordinates and releases input on rotation
+ok 166 - portrait camera uses the whole canvas, maps taps to world coordinates and releases input on rotation
+  ---
+  duration_ms: 18.8061
+  type: 'test'
+  ...
+# Subtest: rotation during a swing preserves the attack while releasing held controls
+ok 167 - rotation during a swing preserves the attack while releasing held controls
+  ---
+  duration_ms: 19.4661
+  type: 'test'
+  ...
+# Subtest: unreadable saves are backed up before a fresh profile replaces the active slot
+ok 168 - unreadable saves are backed up before a fresh profile replaces the active slot
+  ---
+  duration_ms: 36.0227
+  type: 'test'
+  ...
+# Subtest: equipment panel pauses combat, compares, equips and persists items without deleting v1 progress
+ok 169 - equipment panel pauses combat, compares, equips and persists items without deleting v1 progress
+  ---
+  duration_ms: 36.7732
+  type: 'test'
+  ...
+# Subtest: mouse aiming drives directed attacks in the real app
+ok 170 - mouse aiming drives directed attacks in the real app
+  ---
+  duration_ms: 37.9765
+  type: 'test'
+  ...
+# Subtest: new ranged frames, danger cores, perfect counter UI and one-shot sound dispatch run in the real host
+ok 171 - new ranged frames, danger cores, perfect counter UI and one-shot sound dispatch run in the real host
+  ---
+  duration_ms: 19.5054
+  type: 'test'
+  ...
+# Subtest: movement renders all eight views including true front/back and never rotates the body sprite
+ok 172 - movement renders all eight views including true front/back and never rotates the body sprite
+  ---
+  duration_ms: 20.0615
+  type: 'test'
+  ...
+# Subtest: attack pose and slash FX start contact together, keep direction during the swing, and fresh mouse aim turns idle
+ok 173 - attack pose and slash FX start contact together, keep direction during the swing, and fresh mouse aim turns idle
+  ---
+  duration_ms: 40.8021
+  type: 'test'
+  ...
+# Subtest: first attack follows the visible idle direction instead of the initial east aim
+ok 174 - first attack follows the visible idle direction instead of the initial east aim
+  ---
+  duration_ms: 16.3559
+  type: 'test'
+  ...
+# Subtest: all eight attack-button directions work immediately after movement input, before a frame runs
+ok 175 - all eight attack-button directions work immediately after movement input, before a frame runs
+  ---
+  duration_ms: 201.7053
+  type: 'test'
+  ...
+# Subtest: leaving the arena clears old mouse aim for keyboard and touch attacks
+ok 176 - leaving the arena clears old mouse aim for keyboard and touch attacks
+  ---
+  duration_ms: 19.3023
+  type: 'test'
+  ...
+# Subtest: held keyboard combos turn the next strike while keeping the current strike locked
+ok 177 - held keyboard combos turn the next strike while keeping the current strike locked
+  ---
+  duration_ms: 19.5259
+  type: 'test'
+  ...
+# Subtest: stationary cursor aim is recomputed when the player moves at a clamped camera edge
+ok 178 - stationary cursor aim is recomputed when the player moves at a clamped camera edge
+  ---
+  duration_ms: 21.5163
+  type: 'test'
+  ...
+# Subtest: new keyboard movement replaces old mouse aim, and a fresh mouse move can aim while moving
+ok 179 - new keyboard movement replaces old mouse aim, and a fresh mouse move can aim while moving
+  ---
+  duration_ms: 25.3201
+  type: 'test'
+  ...
+# Subtest: all eight Q directions follow movement input immediately without needing a mouse
+ok 180 - all eight Q directions follow movement input immediately without needing a mouse
+  ---
+  duration_ms: 190.0588
+  type: 'test'
+  ...
+# Subtest: the actual held combo renders three distinct Lirian motions and reversed FX in all eight directions
+ok 181 - the actual held combo renders three distinct Lirian motions and reversed FX in all eight directions
+  ---
+  duration_ms: 217.9722
+  type: 'test'
+  ...
+# Subtest: Lirian remains the player through idle, walk, dash, hit and death without loading old hunter sprites
+ok 182 - Lirian remains the player through idle, walk, dash, hit and death without loading old hunter sprites
+  ---
+  duration_ms: 19.7052
+  type: 'test'
+  ...
+# Subtest: real 45-degree drawing keeps measured head position stable across walking, stopping and boosted speed in all eight views
+ok 183 - real 45-degree drawing keeps measured head position stable across walking, stopping and boosted speed in all eight views
+  ---
+  duration_ms: 498.7983
+  type: 'test'
+  ...
+# Subtest: real hit rendering flashes only the enemy and smoothly catches up with authoritative knockback
+ok 184 - real hit rendering flashes only the enemy and smoothly catches up with authoritative knockback
+  ---
+  duration_ms: 56.9092
+  type: 'test'
+  ...
+# Subtest: dash, hurt and death render dedicated unrotated directional poses in all eight views
+ok 185 - dash, hurt and death render dedicated unrotated directional poses in all eight views
+  ---
+  duration_ms: 215.614
+  type: 'test'
+  ...
+# Subtest: death reveals results after the fall, ignores combat/inventory input and never skips on tab return
+ok 186 - death reveals results after the fall, ignores combat/inventory input and never skips on tab return
+  ---
+  duration_ms: 50.048
+  type: 'test'
+  ...
+# Subtest: dash follows movement over mouse aim and idle facing over stale released mouse aim
+ok 187 - dash follows movement over mouse aim and idle facing over stale released mouse aim
+  ---
+  duration_ms: 18.0313
+  type: 'test'
+  ...
+# Subtest: 45-degree terrain keeps upright art, foot anchors, depth order and minimap independent of ground scale
+ok 188 - 45-degree terrain keeps upright art, foot anchors, depth order and minimap independent of ground scale
+  ---
+  duration_ms: 17.82
+  type: 'test'
+  ...
+# Subtest: letterboxed projected clicks keep a fixed world destination and all eight mouse strikes invert the ground projection
+ok 189 - letterboxed projected clicks keep a fixed world destination and all eight mouse strikes invert the ground projection
+  ---
+  duration_ms: 70.4655
+  type: 'test'
+  ...
+# Subtest: clicking the projected upright head or overlapping bodies selects the visually front enemy
+ok 190 - clicking the projected upright head or overlapping bodies selects the visually front enemy
+  ---
+  duration_ms: 34.6989
+  type: 'test'
+  ...
+# Subtest: projected telegraphs and airborne shots share ground positions while visible boss heads survive bottom-edge culling
+ok 191 - projected telegraphs and airborne shots share ground positions while visible boss heads survive bottom-edge culling
+  ---
+  duration_ms: 23.0534
+  type: 'test'
+  ...
+# Subtest: boosted near-destination clicks stop without reversing at either frame rate in every direction
+ok 192 - boosted near-destination clicks stop without reversing at either frame rate in every direction
+  ---
+  duration_ms: 545.5713
+  type: 'test'
+  ...
+# Subtest: click pursuit uses a wider restart distance and yields immediately to direct movement
+ok 193 - click pursuit uses a wider restart distance and yields immediately to direct movement
+  ---
+  duration_ms: 19.2918
+  type: 'test'
+  ...
+# Subtest: successful manual dodge cancels old click travel while a rejected dodge preserves it
+ok 194 - successful manual dodge cancels old click travel while a rejected dodge preserves it
+  ---
+  duration_ms: 76.3855
+  type: 'test'
+  ...
+# Subtest: all eight skitter attacks show preparation, contact at damage time and locked recovery without body rotation
+ok 195 - all eight skitter attacks show preparation, contact at damage time and locked recovery without body rotation
+  ---
+  duration_ms: 250.8768
+  type: 'test'
+  ...
+# Subtest: real skitter flinch replaces windup, pauses its pose clock and prevents the canceled strike sound
+ok 196 - real skitter flinch replaces windup, pauses its pose clock and prevents the canceled strike sound
+  ---
+  duration_ms: 61.3594
+  type: 'test'
+  ...
+# Subtest: a killed skitter completes its fall during defeat, holds a corpse at constant scale and then fades without new loot
+ok 197 - a killed skitter completes its fall during defeat, holds a corpse at constant scale and then fades without new loot
+  ---
+  duration_ms: 23.7159
+  type: 'test'
+  ...
+# Subtest: a simultaneous skitter kill burst keeps each reward but dispatches at most two collapse sounds per frame
+ok 198 - a simultaneous skitter kill burst keeps each reward but dispatches at most two collapse sounds per frame
+  ---
+  duration_ms: 21.4289
+  type: 'test'
+  ...
+# Subtest: chapter selection changes real terrain, creature previews and boss names while preserving stage locks
+ok 199 - chapter selection changes real terrain, creature previews and boss names while preserving stage locks
+  ---
+  duration_ms: 76.0779
+  type: 'test'
+  ...
+# Subtest: all twelve new creatures render locked windup/contact, hurt and fixed-scale corpses in eight directions
+ok 200 - all twelve new creatures render locked windup/contact, hurt and fixed-scale corpses in eight directions
+  ---
+  duration_ms: 149.7384
+  type: 'test'
+  ...
+# Subtest: equipment sprites, slot summaries and art identity survive equip and application reload
+ok 201 - equipment sprites, slot summaries and art identity survive equip and application reload
+  ---
+  duration_ms: 78.3543
+  type: 'test'
+  ...
+# Subtest: one missing new atlas keeps boot closed and never lets start advance or silently replace saved gear
+ok 202 - one missing new atlas keeps boot closed and never lets start advance or silently replace saved gear
+  ---
+  duration_ms: 16.3738
+  type: 'test'
+  ...
+# Subtest: encoded delivery loads valid WebP bounds and omits unused original terrain and props
+ok 203 - encoded delivery loads valid WebP bounds and omits unused original terrain and props
+  ---
+  duration_ms: 17.4936
+  type: 'test'
+  ...
+# Subtest: late successful assets cannot overwrite an earlier loading failure or enable combat
+ok 204 - late successful assets cannot overwrite an earlier loading failure or enable combat
+  ---
+  duration_ms: 56.9441
+  type: 'test'
+  ...
+# Subtest: invalid equipment sockets fail before gameplay and preserve the saved profile
+ok 205 - invalid equipment sockets fail before gameplay and preserve the saved profile
+  ---
+  duration_ms: 19.4181
+  type: 'test'
+  ...
+# Subtest: actual equip events draw only equipped artwork, mirror it with the body and restore appearance after reload
+ok 206 - actual equip events draw only equipped artwork, mirror it with the body and restore appearance after reload
+  ---
+  duration_ms: 82.3064
+  type: 'test'
+  ...
+# Subtest: high-grade cards explain the real slot effect and highest-grade filter preserves identity
+ok 207 - high-grade cards explain the real slot effect and highest-grade filter preserves identity
+  ---
+  duration_ms: 20.7739
+  type: 'test'
+  ...
+# Subtest: five qualities and ancient drops draw their distinct beams, ring counts and chime grades without extra HUD lines
+ok 208 - five qualities and ancient drops draw their distinct beams, ring counts and chime grades without extra HUD lines
+  ---
+  duration_ms: 193.1647
+  type: 'test'
+  ...
+# Subtest: charged capacitor UI advertises zero stamina heavy and capture works through the real button
+ok 209 - charged capacitor UI advertises zero stamina heavy and capture works through the real button
+  ---
+  duration_ms: 19.3918
+  type: 'test'
+  ...
+# Subtest: all 60 individual ancient sprites reach inventory icons, character composition and committed attack drawing
+ok 210 - all 60 individual ancient sprites reach inventory icons, character composition and committed attack drawing
+  ---
+  duration_ms: 7970.4462
+  type: 'test'
+  ...
+# Subtest: paused equipment swap keeps current swing pixels and next attack uses the newly worn grade
+ok 211 - paused equipment swap keeps current swing pixels and next attack uses the newly worn grade
+  ---
+  duration_ms: 105.8737
+  type: 'test'
+  ...
+# Subtest: missing rarity art fails closed and preserves saved high-grade ownership
+ok 212 - missing rarity art fails closed and preserves saved high-grade ownership
+  ---
+  duration_ms: 16.6946
+  type: 'test'
+  ...
+# Subtest: 108 immutable item families cover all three slots in every chapter using valid art
+ok 213 - 108 immutable item families cover all three slots in every chapter using valid art
+  ---
+  duration_ms: 1.2266
+  type: 'test'
+  ...
+# Subtest: five qualities and ancient tables have measured frequencies and stronger enemies have higher quality floors
+ok 214 - five qualities and ancient tables have measured frequencies and stronger enemies have higher quality floors
+  ---
+  duration_ms: 16.9826
+  type: 'test'
+  ...
+# Subtest: rolled variants vary affixes, obey save limits and survive complete round trips
+ok 215 - rolled variants vary affixes, obey save limits and survive complete round trips
+  ---
+  duration_ms: 22.7791
+  type: 'test'
+  ...
+# Subtest: normal monsters guarantee an item by the tenth dry kill while loot uses an independent RNG
+ok 216 - normal monsters guarantee an item by the tenth dry kill while loot uses an independent RNG
+  ---
+  duration_ms: 3.5597
+  type: 'test'
+  ...
+# Subtest: a drop reserves ownership, has a short landing time and claims exactly once on approach
+ok 217 - a drop reserves ownership, has a short landing time and claims exactly once on approach
+  ---
+  duration_ms: 0.7973
+  type: 'test'
+  ...
+# Subtest: a reserved drop recovers after reload without resetting currencies, gear or grade
+ok 218 - a reserved drop recovers after reload without resetting currencies, gear or grade
+  ---
+  duration_ms: 0.346
+  type: 'test'
+  ...
+# Subtest: a duplicate reserved ID already owned never duplicates the item or grants salvage gold
+ok 219 - a duplicate reserved ID already owned never duplicates the item or grants salvage gold
+  ---
+  duration_ms: 0.1617
+  type: 'test'
+  ...
+# Subtest: full bags protect equipped/high-quality gear and salvage a worse incoming item instead
+ok 220 - full bags protect equipped/high-quality gear and salvage a worse incoming item instead
+  ---
+  duration_ms: 0.3424
+  type: 'test'
+  ...
+# Subtest: recovering a full-bag reservation credits conversion once and clears its pending ownership
+ok 221 - recovering a full-bag reservation credits conversion once and clears its pending ownership
+  ---
+  duration_ms: 0.4358
+  type: 'test'
+  ...
+# Subtest: defeat and camp return settle uncollected equipment without granting extra kills
+ok 222 - defeat and camp return settle uncollected equipment without granting extra kills
+  ---
+  duration_ms: 0.6432
+  type: 'test'
+  ...
+# Subtest: pending equipment is bounded and a long pickup-free session settles every item once
+ok 223 - pending equipment is bounded and a long pickup-free session settles every item once
+  ---
+  duration_ms: 1.4283
+  type: 'test'
+  ...
+# Subtest: item identity wraps safely at the save ceiling without reusing an owned or reserved ID
+ok 224 - item identity wraps safely at the save ceiling without reusing an owned or reserved ID
+  ---
+  duration_ms: 0.7388
+  type: 'test'
+  ...
+# Subtest: boss loot is guaranteed, settles before the reveal and result delay never replays rewards
+ok 225 - boss loot is guaranteed, settles before the reveal and result delay never replays rewards
+  ---
+  duration_ms: 0.8761
+  type: 'test'
+  ...
+# Subtest: all eight headings, zero vectors and sector-boundary hysteresis keep a stable direction
+ok 226 - all eight headings, zero vectors and sector-boundary hysteresis keep a stable direction
+  ---
+  duration_ms: 0.5846
+  type: 'test'
+  ...
+# Subtest: all actors have canonical front/back/side/diagonal clips, constant frame scale and safe runtime loading
+ok 227 - all actors have canonical front/back/side/diagonal clips, constant frame scale and safe runtime loading
+  ---
+  duration_ms: 1.0208
+  type: 'test'
+  ...
+# Subtest: gait is distance-based, handles reverse steps, and contact pose never precedes damage timing
+ok 228 - gait is distance-based, handles reverse steps, and contact pose never precedes damage timing
+  ---
+  duration_ms: 0.2208
+  type: 'test'
+  ...
+# Subtest: walking faces movement while aim remains independent; attack and dodge lock their own headings
+ok 229 - walking faces movement while aim remains independent; attack and dodge lock their own headings
+  ---
+  duration_ms: 3.332
+  type: 'test'
+  ...
+# Subtest: blocked movement never advances gait and pausing preserves direction and pose clocks
+ok 230 - blocked movement never advances gait and pausing preserves direction and pose clocks
+  ---
+  duration_ms: 0.9307
+  type: 'test'
+  ...
+# Subtest: enemies face their target, keep attack direction, and backpedal without showing their backs
+ok 231 - enemies face their target, keep attack direction, and backpedal without showing their backs
+  ---
+  duration_ms: 0.657
+  type: 'test'
+  ...
+# Subtest: buffered direction survives releasing input, and rendering always uses the locked strike direction
+ok 232 - buffered direction survives releasing input, and rendering always uses the locked strike direction
+  ---
+  duration_ms: 0.3667
+  type: 'test'
+  ...
+# Subtest: six-pose attacks gate contact and effects on the actual impact across attack speeds
+ok 233 - six-pose attacks gate contact and effects on the actual impact across attack speeds
+  ---
+  duration_ms: 0.3146
+  type: 'test'
+  ...
+# Subtest: Lirian uses dedicated motion atlases, shared foot baselines and no old hunter runtime assets
+ok 234 - Lirian uses dedicated motion atlases, shared foot baselines and no old hunter runtime assets
+  ---
+  duration_ms: 0.3027
+  type: 'test'
+  ...
+# Subtest: actual locomotion head landmarks remain aligned through idle and gait without changing standing scale
+ok 235 - actual locomotion head landmarks remain aligned through idle and gait without changing standing scale
+  ---
+  duration_ms: 2.8146
+  type: 'test'
+  ...
+# Subtest: short state poses clamp at exact terminal time and fallen bodies retain the standing scale
+ok 236 - short state poses clamp at exact terminal time and fallen bodies retain the standing scale
+  ---
+  duration_ms: 0.2655
+  type: 'test'
+  ...
+# Subtest: skitter contact is gated by the attack transition and its fall remains opaque until the corpse fades
+ok 237 - skitter contact is gated by the attack transition and its fall remains opaque until the corpse fades
+  ---
+  duration_ms: 0.1848
+  type: 'test'
+  ...
+# Subtest: skitter combat clips preserve canonical views and use standing scale for collapsed bodies
+ok 238 - skitter combat clips preserve canonical views and use standing scale for collapsed bodies
+  ---
+  duration_ms: 0.1452
+  type: 'test'
+  ...
+# Subtest: 12 distinct grade/slot frames are valid and grade resolution never mutates or promotes old gear
+ok 239 - 12 distinct grade/slot frames are valid and grade resolution never mutates or promotes old gear
+  ---
+  duration_ms: 1.8291
+  type: 'test'
+  ...
+# Subtest: measured grip and tip align with all 170 authored poses for every grade including mirrors and hidden blades
+ok 240 - measured grip and tip align with all 170 authored poses for every grade including mirrors and hidden blades
+  ---
+  duration_ms: 17.5111
+  type: 'test'
+  ...
+# Subtest: front/back armor and charm layers stay inside the shared pose ownership and restore transforms
+ok 241 - front/back armor and charm layers stay inside the shared pose ownership and restore transforms
+  ---
+  duration_ms: 0.6972
+  type: 'test'
+  ...
+# Subtest: grade attack geometries differ, consume no state and secondary worn pieces add their own motes
+ok 242 - grade attack geometries differ, consume no state and secondary worn pieces add their own motes
+  ---
+  duration_ms: 0.5874
+  type: 'test'
+  ...
+# Subtest: equipment snapshot is immutable, detached from save items and survives swap without altering game stats
+ok 243 - equipment snapshot is immutable, detached from save items and survives swap without altering game stats
+  ---
+  duration_ms: 0.3846
+  type: 'test'
+  ...
+# Subtest: audio is lazy, shares one context and refuses to play before a gesture unlock
+ok 244 - audio is lazy, shares one context and refuses to play before a gesture unlock
+  ---
+  duration_ms: 2.0891
+  type: 'test'
+  ...
+# Subtest: overlapping effects stay within ten voices; mute, suspend and natural end disconnect resources
+ok 245 - overlapping effects stay within ten voices; mute, suspend and natural end disconnect resources
+  ---
+  duration_ms: 6.2761
+  type: 'test'
+  ...
+# Subtest: unsupported audio, resume rejection and graph construction failure leave the game usable
+ok 246 - unsupported audio, resume rejection and graph construction failure leave the game usable
+  ---
+  duration_ms: 0.7812
+  type: 'test'
+  ...
+# Subtest: rarity drop chimes differ, remain bounded and release every voice on mute
+ok 247 - rarity drop chimes differ, remain bounded and release every voice on mute
+  ---
+  duration_ms: 1.9871
+  type: 'test'
+  ...
+# Subtest: a late resume cannot undo pause; rapid suspend/resume keeps the last requested audio state
+ok 248 - a late resume cannot undo pause; rapid suspend/resume keeps the last requested audio state
+  ---
+  duration_ms: 3.3214
+  type: 'test'
+  ...
+# Subtest: combo swings and heavy impacts have distinct audible envelopes within the voice cap
+ok 249 - combo swings and heavy impacts have distinct audible envelopes within the voice cap
+  ---
+  duration_ms: 1.0971
+  type: 'test'
+  ...
+# Subtest: skitter contact and shell collapse use bounded distinct voices and obey mute cleanup
+ok 250 - skitter contact and shell collapse use bounded distinct voices and obey mute cleanup
+  ---
+  duration_ms: 0.4452
+  type: 'test'
+  ...
+# Subtest: mythic and ancient drop chimes use distinct note counts and stay inside ten voices
+ok 251 - mythic and ancient drop chimes use distinct note counts and stay inside ten voices
+  ---
+  duration_ms: 0.3474
+  type: 'test'
+  ...
+# Subtest: fixed tiles cover every visible viewport corner without gaps
+ok 252 - fixed tiles cover every visible viewport corner without gaps
+  ---
+  duration_ms: 1.4839
+  type: 'test'
+  ...
+# Subtest: larger worlds do not enlarge tiles or decoration sprites
+ok 253 - larger worlds do not enlarge tiles or decoration sprites
+  ---
+  duration_ms: 0.8587
+  type: 'test'
+  ...
+# Subtest: adjacent tiles reflect the matching source edge without reversing its other axis
+ok 254 - adjacent tiles reflect the matching source edge without reversing its other axis
+  ---
+  duration_ms: 0.1475
+  type: 'test'
+  ...
+# Subtest: tilted camera ground tiles cover screen corners and seams without enlarging source tiles
+ok 255 - tilted camera ground tiles cover screen corners and seams without enlarging source tiles
+  ---
+  duration_ms: 0.2183
+  type: 'test'
+  ...
+# (node:69592) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: all 682 frames use valid explicit source rectangles and local pivots
+ok 256 - all 682 frames use valid explicit source rectangles and local pivots
+  ---
+  duration_ms: 218.1558
+  type: 'test'
+  ...
+# Subtest: boot loads every PNG and draws actual atlas rectangles
+ok 257 - boot loads every PNG and draws actual atlas rectangles
+  ---
+  duration_ms: 35.3402
+  type: 'test'
+  ...
+# Subtest: inspect pause, scrubbing and stepping select real source frames
+ok 258 - inspect pause, scrubbing and stepping select real source frames
+  ---
+  duration_ms: 23.9416
+  type: 'test'
+  ...
+# Subtest: two attacks play the start of death sequence instead of skipping to the corpse
+ok 259 - two attacks play the start of death sequence instead of skipping to the corpse
+  ---
+  duration_ms: 31.1701
+  type: 'test'
+  ...
+# Subtest: screen click becomes a fixed world destination while the camera scrolls
+ok 260 - screen click becomes a fixed world destination while the camera scrolls
+  ---
+  duration_ms: 31.9241
+  type: 'test'
+  ...
+# Subtest: button Space remains native and older pointer release does not stop active touch
+ok 261 - button Space remains native and older pointer release does not stop active touch
+  ---
+  duration_ms: 27.0422
+  type: 'test'
+  ...
+# Subtest: HP zero freezes hit frame and reset restores the combat scene
+ok 262 - HP zero freezes hit frame and reset restores the combat scene
+  ---
+  duration_ms: 22.2965
+  type: 'test'
+  ...
+# Subtest: slash arc flips opposite to the actor sprite and stays in front in both directions
+ok 263 - slash arc flips opposite to the actor sprite and stays in front in both directions
+  ---
+  duration_ms: 29.2042
+  type: 'test'
+  ...
+# Subtest: camera moves the terrain while player remains centered and enemy total reflects the expanded map
+ok 264 - camera moves the terrain while player remains centered and enemy total reflects the expanded map
+  ---
+  duration_ms: 30.8359
+  type: 'test'
+  ...
+# Subtest: scaled letterboxed touch coordinates include the scrolled world offset
+ok 265 - scaled letterboxed touch coordinates include the scrolled world offset
+  ---
+  duration_ms: 30.971
+  type: 'test'
+  ...
+# Subtest: terrain and actors share the same pixel grid and receive lighting together before the minimap
+ok 266 - terrain and actors share the same pixel grid and receive lighting together before the minimap
+  ---
+  duration_ms: 27.7501
+  type: 'test'
+  ...
+# Subtest: terrain texture is repeated at fixed size and never stretched to fill the world
+ok 267 - terrain texture is repeated at fixed size and never stretched to fill the world
+  ---
+  duration_ms: 27.6919
+  type: 'test'
+  ...
+# Subtest: invalid frame coordinates and image failures stay behind a readable error banner
+ok 268 - invalid frame coordinates and image failures stay behind a readable error banner
+  ---
+  duration_ms: 48.4758
+  type: 'test'
+  ...
+# Subtest: five qualities and ancient have strictly decreasing eligible odds and exact deterministic interval coverage
+ok 269 - five qualities and ancient have strictly decreasing eligible odds and exact deterministic interval coverage
+  ---
+  duration_ms: 0.8938
+  type: 'test'
+  ...
+# Subtest: all 108 identities gain validated slot effects at high grade and preserve them through old-v4 saves
+ok 270 - all 108 identities gain validated slot effects at high grade and preserve them through old-v4 saves
+  ---
+  duration_ms: 5.5343
+  type: 'test'
+  ...
+# Subtest: echo adds a finisher-only forward shockwave with cooldown and no reverse damage
+ok 271 - echo adds a finisher-only forward shockwave with cooldown and no reverse damage
+  ---
+  duration_ms: 4.6488
+  type: 'test'
+  ...
+# Subtest: storm chains from one heavy contact to at most three distinct secondary targets
+ok 272 - storm chains from one heavy contact to at most three distinct secondary targets
+  ---
+  duration_ms: 1.124
+  type: 'test'
+  ...
+# Subtest: execution thresholds distinguish regular monsters from bosses
+ok 273 - execution thresholds distinguish regular monsters from bosses
+  ---
+  duration_ms: 0.5283
+  type: 'test'
+  ...
+# Subtest: blood supports a low-health damage style and restores health once per unguarded strike
+ok 274 - blood supports a low-health damage style and restores health once per unguarded strike
+  ---
+  duration_ms: 0.3908
+  type: 'test'
+  ...
+# Subtest: frost nova hits surrounding enemies on heavy impact and respects cooldown
+ok 275 - frost nova hits surrounding enemies on heavy impact and respects cooldown
+  ---
+  duration_ms: 0.3958
+  type: 'test'
+  ...
+# Subtest: whirlwind turns only the finisher into a full-circle attack
+ok 276 - whirlwind turns only the finisher into a full-circle attack
+  ---
+  duration_ms: 0.2663
+  type: 'test'
+  ...
+# Subtest: barrier absorbs damage, expires, freezes when paused and cannot be refreshed by swapping
+ok 277 - barrier absorbs damage, expires, freezes when paused and cannot be refreshed by swapping
+  ---
+  duration_ms: 2.3023
+  type: 'test'
+  ...
+# Subtest: thorns reflect actual received damage once without recursively triggering direct sword procs
+ok 278 - thorns reflect actual received damage once without recursively triggering direct sword procs
+  ---
+  duration_ms: 0.5772
+  type: 'test'
+  ...
+# Subtest: perfect dodge pulse requires the real hazard timing window
+ok 279 - perfect dodge pulse requires the real hazard timing window
+  ---
+  duration_ms: 0.2845
+  type: 'test'
+  ...
+# Subtest: frost ward applies control only after actual nonlethal damage
+ok 280 - frost ward applies control only after actual nonlethal damage
+  ---
+  duration_ms: 0.1389
+  type: 'test'
+  ...
+# Subtest: last stand is once per hunt, survives swapping and resets only on a new hunt
+ok 281 - last stand is once per hunt, survives swapping and resets only on a new hunt
+  ---
+  duration_ms: 0.3842
+  type: 'test'
+  ...
+# Subtest: recovery needs uninterrupted quiet time and stops immediately when movement resumes
+ok 282 - recovery needs uninterrupted quiet time and stops immediately when movement resumes
+  ---
+  duration_ms: 0.3492
+  type: 'test'
+  ...
+# Subtest: momentum buffs exactly the next committed strike and is consumed even on a miss
+ok 283 - momentum buffs exactly the next committed strike and is consumed even on a miss
+  ---
+  duration_ms: 0.3698
+  type: 'test'
+  ...
+# Subtest: focus grants one resource refund per finisher regardless of target count
+ok 284 - focus grants one resource refund per finisher regardless of target count
+  ---
+  duration_ms: 0.2597
+  type: 'test'
+  ...
+# Subtest: capacitor gives the third heavy zero cost and unequipping clears the owned charge
+ok 285 - capacitor gives the third heavy zero cost and unequipping clears the owned charge
+  ---
+  duration_ms: 0.3222
+  type: 'test'
+  ...
+# Subtest: hunter refunds resources on a kill and limits simultaneous-kill gain
+ok 286 - hunter refunds resources on a kill and limits simultaneous-kill gain
+  ---
+  duration_ms: 0.3761
+  type: 'test'
+  ...
+# Subtest: orbit owns three delayed ticks, freezes in pause and cannot recursively activate weapon chains
+ok 287 - orbit owns three delayed ticks, freezes in pause and cannot recursively activate weapon chains
+  ---
+  duration_ms: 0.8008
+  type: 'test'
+  ...
+# Subtest: magnet expands collection and grants a bounded equipment pickup pulse
+ok 288 - magnet expands collection and grants a bounded equipment pickup pulse
+  ---
+  duration_ms: 0.2884
+  type: 'test'
+  ...
+# Subtest: captured sword and charm effects survive a pause swap without inheriting the new item effect
+ok 289 - captured sword and charm effects survive a pause swap without inheriting the new item effect
+  ---
+  duration_ms: 0.2036
+  type: 'test'
+  ...
+# Subtest: proc kills pay once, result states freeze zones and return clears their lifetime
+ok 290 - proc kills pay once, result states freeze zones and return clears their lifetime
+  ---
+  duration_ms: 0.8639
+  type: 'test'
+  ...
+# Subtest: free heavy hits and perfect counters do not recharge or consume a stored paid-heavy charge
+ok 291 - free heavy hits and perfect counters do not recharge or consume a stored paid-heavy charge
+  ---
+  duration_ms: 0.2468
+  type: 'test'
+  ...
+# Subtest: stage transitions discard spatial buffs, keep earned charges and advance cooldown clocks
+ok 292 - stage transitions discard spatial buffs, keep earned charges and advance cooldown clocks
+  ---
+  duration_ms: 0.6097
+  type: 'test'
+  ...
+# Subtest: highest grades strengthen scalable control and range while free-heavy behavior stays bounded
+ok 293 - highest grades strengthen scalable control and range while free-heavy behavior stays bounded
+  ---
+  duration_ms: 0.355
+  type: 'test'
+  ...
+# Subtest: phone cameras fill the displayed aspect ratio without changing sprite proportions
+ok 294 - phone cameras fill the displayed aspect ratio without changing sprite proportions
+  ---
+  duration_ms: 0.6926
+  type: 'test'
+  ...
+# Subtest: zero or invalid layout geometry leaves a usable default viewport
+ok 295 - zero or invalid layout geometry leaves a usable default viewport
+  ---
+  duration_ms: 0.9914
+  type: 'test'
+  ...
+# Subtest: joystick dead zone, all eight headings and external captured drags stay bounded
+ok 296 - joystick dead zone, all eight headings and external captured drags stay bounded
+  ---
+  duration_ms: 0.2242
+  type: 'test'
+  ...
+# Subtest: all six existing swords get immutable traits and legacy art fallback survives save restore
+ok 297 - all six existing swords get immutable traits and legacy art fallback survives save restore
+  ---
+  duration_ms: 1.8312
+  type: 'test'
+  ...
+# Subtest: bleed ticks exactly three times without stagger, extra drain or stacked instances
+ok 298 - bleed ticks exactly three times without stagger, extra drain or stacked instances
+  ---
+  duration_ms: 4.5202
+  type: 'test'
+  ...
+# Subtest: repeated hits refresh count without resetting tick countdown or multiplying damage
+ok 299 - repeated hits refresh count without resetting tick countdown or multiplying damage
+  ---
+  duration_ms: 1.0689
+  type: 'test'
+  ...
+# Subtest: guarded contact blocks bleed and frost, rear contact can apply them
+ok 300 - guarded contact blocks bleed and frost, rear contact can apply them
+  ---
+  duration_ms: 0.5555
+  type: 'test'
+  ...
+# Subtest: pause freezes statuses, re-equipping changes future swings but keeps the applied bleed
+ok 301 - pause freezes statuses, re-equipping changes future swings but keeps the applied bleed
+  ---
+  duration_ms: 0.6635
+  type: 'test'
+  ...
+# Subtest: committed swing keeps its weapon trait when equipment changes during pause
+ok 302 - committed swing keeps its weapon trait when equipment changes during pause
+  ---
+  duration_ms: 0.2516
+  type: 'test'
+  ...
+# Subtest: bleed death owns one reward and never repeats damage or rewards after death
+ok 303 - bleed death owns one reward and never repeats damage or rewards after death
+  ---
+  duration_ms: 0.8623
+  type: 'test'
+  ...
+# Subtest: frost reduces movement only, expires, and bosses retain 85 percent speed
+ok 304 - frost reduces movement only, expires, and bosses retain 85 percent speed
+  ---
+  duration_ms: 1.2812
+  type: 'test'
+  ...
+# Subtest: piercing is limited to heavy and finisher, damages guard extra and does not create a projectile
+ok 305 - piercing is limited to heavy and finisher, damages guard extra and does not create a projectile
+  ---
+  duration_ms: 0.4851
+  type: 'test'
+  ...
+# Subtest: an unequipped or salvaged sword never grants traits to a basic weapon
+ok 306 - an unequipped or salvaged sword never grants traits to a basic weapon
+  ---
+  duration_ms: 0.3864
+  type: 'test'
+  ...
+# Subtest: piercing feedback appears only when hitting armor, not on unarmored targets
+ok 307 - piercing feedback appears only when hitting armor, not on unarmored targets
+  ---
+  duration_ms: 0.21
+  type: 'test'
+  ...
+# Subtest: expired bleed releases old damage; a later weaker hit snapshots its own strength
+ok 308 - expired bleed releases old damage; a later weaker hit snapshots its own strength
+  ---
+  duration_ms: 0.7593
+  type: 'test'
+  ...
+# Subtest: a final boss killed by bleed advances chapter and rewards once, and victory freezes statuses
+ok 309 - a final boss killed by bleed advances chapter and rewards once, and victory freezes statuses
+  ---
+  duration_ms: 1.54
+  type: 'test'
+  ...
+# Subtest: entry chapter and boss cues give reaction time while later melee retains its challenge
+ok 310 - entry chapter and boss cues give reaction time while later melee retains its challenge
+  ---
+  duration_ms: 0.8543
+  type: 'test'
+  ...
+# Subtest: world has nine viewport areas and seven separate enemy camps
+ok 311 - world has nine viewport areas and seven separate enemy camps
+  ---
+  duration_ms: 1.6097
+  type: 'test'
+  ...
+# Subtest: camera tracks both axes and stops at all four world edges
+ok 312 - camera tracks both axes and stops at all four world edges
+  ---
+  duration_ms: 2.8691
+  type: 'test'
+  ...
+# Subtest: pointer conversion includes camera offset and clamps to reachable world bounds
+ok 313 - pointer conversion includes camera offset and clamps to reachable world bounds
+  ---
+  duration_ms: 0.1741
+  type: 'test'
+  ...
+# Subtest: small worlds never create negative camera offsets
+ok 314 - small worlds never create negative camera offsets
+  ---
+  duration_ms: 0.0805
+  type: 'test'
+  ...
+# Subtest: 45-degree ground projection round-trips points and centers the feet through camera motion
+ok 315 - 45-degree ground projection round-trips points and centers the feet through camera motion
+  ---
+  duration_ms: 0.1683
+  type: 'test'
+  ...
+# Subtest: projected culling keeps upright heads at the bottom edge and small-world cameras stay valid
+ok 316 - projected culling keeps upright heads at the bottom edge and small-world cameras stay valid
+  ---
+  duration_ms: 0.0775
+  type: 'test'
+  ...
+1..316
+# tests 316
+# suites 0
+# pass 316
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 13047.5552

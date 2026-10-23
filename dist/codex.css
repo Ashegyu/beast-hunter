@@ -1,0 +1,105 @@
+/* Alpha 0.39 · approved Ancient Archive portrait direction.
+   The archive displays catalog identities; it never owns inventory or drop odds. */
+#overlay[data-panel=codex]{inset:var(--head-height) 0 var(--nav-height);padding:0;background:#0a1116;backdrop-filter:none;border:0}
+#overlay[data-panel=codex] .modal{width:100%;height:100%;max-height:none;max-width:none;margin:0;padding:0;background:#0a1116;border:0;border-radius:0;box-shadow:none;overflow:hidden}
+.overlay .modal #codex-content{--archive-gold:#d5b782;--archive-ivory:#e5e1d7;padding:0;position:relative;color:var(--archive-ivory);background:#0a1116;scrollbar-width:thin;scrollbar-color:#625a49 #0a1116}
+#codex-content [hidden]{display:none!important}
+#codex-content button{touch-action:manipulation;font-family:var(--body);border-radius:2px;box-shadow:none;min-height:44px}
+#codex-content button:focus-visible,#codex-content :is(input,select):focus-visible{outline:2px solid #e5c992;outline-offset:2px}
+.game-shell[data-panel=codex] .masthead{background:linear-gradient(90deg,#0a1116 24%,#0a1116b8),url('assets/codex-archive-hero-v039.webp') right 15%/cover}
+.game-shell[data-panel=codex] .page-back{width:44px;min-width:44px}
+#codex-browser{padding:10px 18px 0}
+#codex-content .archive-record{position:relative;height:52px;margin:0 0 8px;padding:0;border:0;background:none}
+.archive-record>small{display:block;font:9px/12px Georgia,serif;letter-spacing:3px;color:#b69d79}
+.archive-record>div:not(.archive-progress){display:flex;align-items:baseline;justify-content:space-between;margin:5px 0 0}
+#codex-count{font:500 23px/1.3 var(--serif);letter-spacing:.2px}
+#codex-percent{position:absolute;right:0;bottom:11px;font:12px Georgia,serif;color:#c9b591}
+.archive-progress{position:absolute;left:47%;right:37px;bottom:15px;height:3px;background:#b8b5a51c}
+.archive-progress i{display:block;height:100%;background:#d5b782;min-width:0;transition:width .2s}
+.archive-tools{display:flex;align-items:center;gap:10px;margin-bottom:0}
+.archive-search{display:flex;align-items:center;gap:9px;flex:1;min-width:0;height:44px;padding:0 10px;background:#15202766;border:1px solid #9bada52c;border-radius:2px}
+.archive-search svg{width:18px;height:18px;flex:none;fill:none;stroke:#9ca6a6;stroke-width:1.4}
+#codex-content #codex-search{min-height:40px;height:40px;width:100%;min-width:0;border:0;padding:0;background:transparent;font:12px var(--body);color:#e5e1d7;box-shadow:none}
+#codex-search::placeholder{color:#8a9697}
+#codex-content #codex-filter-toggle{position:relative;display:flex;align-items:center;justify-content:center;gap:6px;min-width:70px;max-width:40%;padding:0 5px;border:0;background:none;color:#c4c5ba;font-size:11px}
+#codex-filter-toggle svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.4;flex:none}
+#codex-filter-dot{position:absolute;right:0;top:5px;width:4px;height:4px;background:#d5b782;border-radius:50%}
+#codex-content .archive-filters{display:grid;grid-template-columns:1fr 1fr;gap:12px 10px;padding:15px 0 10px;border-bottom:1px solid #b8b5a522;background:none}
+.archive-filters label{display:flex;flex-direction:column;gap:5px;font-size:10px;color:#b0b8b6;min-width:0}
+#codex-content .archive-filters select{width:100%;min-height:44px;border:1px solid #a2aba536;border-radius:2px;background:#111c23;color:#e5e1d7;font:12px var(--body);padding:7px}
+#codex-content #codex-filter-reset{grid-column:1/-1;justify-self:end;padding:0 3px;background:none;border:0;font-size:11px;color:#c4ad86}
+.archive-categories{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid #b8b5a529;margin:0}
+#codex-content .archive-categories button{position:relative;display:flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:0;border:0;border-radius:0;background:transparent;color:#879496;font:13px var(--serif)}
+.archive-categories svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.2}
+#codex-content .archive-categories button[aria-pressed=true]{color:#ead5af}
+.archive-categories button[aria-pressed=true]:after{content:'';position:absolute;bottom:-1px;left:17%;right:17%;height:2px;background:#d5b782;box-shadow:0 -3px 12px #e1b56822}
+#codex-content .archive-feature{position:relative;display:flex;align-items:center;min-height:164px;margin:0 -18px;padding:8px 18px;overflow:hidden;border:0;background:linear-gradient(90deg,#0b1218e8 0%,#0b1218a3 42%,transparent 74%),url('assets/codex-archive-hero-v039.webp') 67% 50%/cover}
+.archive-feature:after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,#0a1116,transparent 27%,transparent 86%,#0a1116)}
+.archive-feature-copy{position:relative;width:53%;z-index:2;text-shadow:0 2px 9px #000}
+.archive-feature-copy>small{display:block;font:10px/14px var(--body);letter-spacing:2px;color:#bea783}
+#codex-content #codex-feature-name{font:500 24px/1.2 var(--serif);margin:8px 0 4px;color:#f2e8d5;word-break:keep-all;white-space:pre-line}
+#codex-content #codex-feature-meta{font:11px/1.5 var(--body);color:#aeb8b8;margin:0}
+#codex-content #codex-feature-open{display:flex;align-items:center;gap:18px;padding:0;border:0;background:none;color:#d5c29e;font-size:11px;margin-top:0}
+#codex-feature-empty{font:10px/1.8 var(--body);color:#9ca6a6;display:block;margin-top:10px}
+#codex-content #codex-feature-art{position:absolute;width:200px;height:200px;right:-8px;top:50%;margin-top:-100px;background-color:transparent;border:0;border-radius:0;box-shadow:none;image-rendering:auto;transform:scale(.84) rotate(8deg);z-index:1}
+#codex-content .archive-feature[data-empty=true] .archive-feature-copy{width:70%}
+#codex-content .archive-feature[data-empty=true]{min-height:160px}
+#codex-content .archive-gallery{padding:0;background:none;border:0}
+.archive-gallery-heading{display:flex;align-items:center;justify-content:space-between;min-height:44px;margin-top:0;border-bottom:1px solid #c6ba9b24}
+#codex-content .archive-gallery-heading h3{display:inline;font:500 15px var(--serif);color:#d9d4c8;margin:0}
+#codex-content #codex-results{display:inline;margin-left:8px;font:10px var(--body);color:#939e9e}
+.archive-view{display:flex;gap:2px}
+#codex-content .archive-view button{display:grid;place-items:center;width:44px;min-height:44px;background:none;border:0;padding:8px;color:#687778}
+.archive-view svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.6}
+#codex-content .archive-view button[aria-pressed=true]{color:#d5b782}
+#codex-content #codex-grid{display:grid;width:100%;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 10px;max-height:none;overflow:visible;padding:7px 0 14px;margin:0;background:linear-gradient(#0a111697,#0a1116c7),url('assets/codex-gallery-floor-v039.webp') center top/100% auto repeat-y;border:0;border-radius:0}
+#codex-content .codex-card{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:0;min-height:159px;min-width:0;padding:0 3px 6px;border:0!important;border-bottom:1px solid #beb69c12!important;border-radius:0;background:none!important;box-shadow:none!important;text-align:center;overflow:hidden;transition:background-color .15s}
+#codex-content .codex-card:hover{background:#d6c49409!important}
+#codex-content .codex-card .equipment-icon{position:relative;display:block;flex:none;width:100%;max-width:120px;height:auto;aspect-ratio:1;margin:0;image-rendering:auto;background-color:transparent;border:0;border-radius:0;box-shadow:none;transform:none;opacity:1}
+#codex-content .codex-card[data-discovered=false] .equipment-icon{filter:grayscale(.65) brightness(.58)!important;opacity:.83}
+#codex-content .codex-card strong{display:block;max-width:100%;font:500 12.5px/1.6 var(--serif);color:#dcd6c8;word-break:keep-all;overflow-wrap:anywhere;white-space:normal}
+#codex-content .codex-card small{display:block;font:11px/1.6 var(--body);color:#899696;margin-top:4px}
+#codex-content .codex-card[data-goal=true]:after{content:'◆';position:absolute;top:8px;right:9px;font-size:10px;color:#e8c681;text-shadow:0 0 9px #ddab6a66}
+#codex-content .codex-card[data-discovered=true] strong{color:#e5cda3}
+#codex-content #codex-grid[data-layout=list]{grid-template-columns:1fr;background-size:100% auto}
+#codex-content .codex-grid[data-layout=list] .codex-card{display:grid;grid-template-columns:84px 1fr;grid-template-rows:auto auto;column-gap:8px;min-height:91px;text-align:left;align-content:center;padding:3px 12px 3px 0;overflow:hidden}
+#codex-content .codex-grid[data-layout=list] .equipment-icon{grid-row:1/3;width:100%;max-width:84px;height:auto;aspect-ratio:1;transform:none;margin:0;align-self:center}
+#codex-content .codex-grid[data-layout=list] strong{align-self:end;font-size:13px;padding-top:10px}
+#codex-content .codex-grid[data-layout=list] small{align-self:start;padding-bottom:10px}
+#codex-content .archive-empty{padding:35px 15px 60px;font:13px/2 var(--body);text-align:center;color:#aeb6b3}
+#codex-content .archive-footer{position:sticky;bottom:0;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:5px 18px 6px;background:#0a1116f5;border-top:1px solid #b4a17a32;box-shadow:0 -8px 18px #0a111688;margin:0}
+#codex-content[data-detail=true] .archive-footer{display:none}
+.archive-footer>span{display:none}
+#codex-content #codex-hunt{width:100%;display:flex;align-items:center;justify-content:center;gap:25px;padding:0 17px;color:#ead9bb;border:1px solid #ac8b664f;background:linear-gradient(90deg,#25171bc9,#241b1cc9),url('assets/hunt-map-forest-v036.webp') center 40%/cover;font:14px var(--serif)}
+#codex-hunt svg{width:27px;height:34px;stroke:#d3b582;stroke-width:.9}
+#codex-content #codex-detail{position:relative;margin:0;padding:10px 18px 22px;min-height:100%;border:0;border-radius:0;background:#0a1116;overflow:visible}
+#codex-content #codex-list-back{display:block;width:100%;text-align:left;padding:0;color:#c6b391;border:0;border-bottom:1px solid #b8b5a523;background:none;font:12px var(--body)}
+#codex-content .codex-detail-heading{display:flex;flex-direction:column;align-items:flex-start;gap:0;padding:0 0 18px;border:0;background:linear-gradient(#0a111650,#0a1116 72%),url('assets/codex-archive-hero-v039.webp') 65% 0/auto 240px no-repeat}
+#codex-content #codex-detail-art{width:200px;height:200px;align-self:center;border:0;border-radius:0;background-color:transparent;box-shadow:none;image-rendering:auto;transform:none;margin:0}
+#codex-content #codex-detail[data-discovered=false] #codex-detail-art{filter:grayscale(.65) brightness(.58)!important}
+#codex-detail-state{font:10px var(--body);letter-spacing:1px;color:#c6ab81}
+#codex-content #codex-detail-name{font:500 25px/1.5 var(--serif);color:#f0e3cc;margin:8px 0}
+#codex-content #codex-detail-boss{font:12px/1.8 var(--body);color:#aeb7b4;margin:0}
+#codex-content #codex-signature{font:13px/1.95 var(--body);color:#d9d3c5;margin:0;padding:17px 0;border:0;border-top:1px solid #c8ba9830;background:none}
+#codex-content #codex-detail .loot-guide{margin:0 0 20px;background:none;border:0;border-top:1px solid #c8ba9820;border-radius:0;padding:0}
+#codex-content #codex-detail .loot-guide summary{font:12px var(--body);color:#c5b493;padding:16px 0;min-height:44px}
+#codex-content #codex-detail .loot-guide p{font:12px/1.9 var(--body);color:#aab6b6;margin:0 0 12px;white-space:normal}
+#codex-content .codex-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#codex-content .codex-buttons button{font:12px var(--serif);padding:10px 7px;border:1px solid #b49c6d66;background:#202427;color:#e3d2b3}
+#codex-content #codex-target{background:#501f2b;border-color:#ab6a6859}
+#codex-content #codex-route{background:#202427;border-color:#b49c6d66}
+#codex-content #codex-route-note{font:11px/1.8 var(--body);color:#93a1a2;margin:13px 0}
+#codex-content #codex-clear{font:11px var(--body);color:#b7a485;border:0;background:none;text-align:left;padding:0}
+#codex-content button:disabled{opacity:.42;cursor:default}
+@media(max-width:350px){
+ #codex-browser{padding-left:14px;padding-right:14px}
+ #codex-count{font-size:21px}
+ #codex-content .archive-feature{margin-left:-14px;margin-right:-14px;padding-left:14px;min-height:166px}
+ #codex-content #codex-feature-name{font-size:22px}
+ #codex-content #codex-feature-art{right:-27px;transform:scale(.76) rotate(8deg)}
+ #codex-content .codex-card .equipment-icon{transform:scale(.9);margin:-9px 0 -8px}
+ #codex-content .codex-card{min-height:169px}
+ #codex-content .archive-footer{padding-left:14px;padding-right:14px}
+ #codex-content #codex-hunt{gap:14px;padding:0 12px}
+}
+@media(prefers-reduced-motion:reduce){.archive-progress i,#codex-content .codex-card{transition:none}}

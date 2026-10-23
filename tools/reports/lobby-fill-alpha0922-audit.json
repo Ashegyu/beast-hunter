@@ -1,0 +1,90 @@
+{
+  "version": "0.92.2",
+  "audits": [
+    {
+      "label": "844×390",
+      "buttons": 25,
+      "height": 390,
+      "issues": [],
+      "panel": "camp",
+      "view": "home",
+      "width": 844,
+      "artwork": {
+        "bannerPosition": "calc(100% + 14.235px) 65.3%",
+        "bannerSize": "auto 650%",
+        "label": "사냥\n›",
+        "textureBorder": "0px",
+        "textureInset": "0px",
+        "textureSize": "400% 200%"
+      }
+    },
+    {
+      "label": "915×412",
+      "buttons": 25,
+      "height": 412,
+      "issues": [],
+      "panel": "camp",
+      "view": "home",
+      "width": 915,
+      "artwork": {
+        "bannerPosition": "calc(100% + 15.038px) 65.3%",
+        "bannerSize": "auto 650%",
+        "label": "사냥\n›",
+        "textureBorder": "0px",
+        "textureInset": "0px",
+        "textureSize": "400% 200%"
+      }
+    },
+    {
+      "label": "667×375",
+      "buttons": 24,
+      "height": 375,
+      "issues": [],
+      "panel": "camp",
+      "view": "home",
+      "width": 667,
+      "artwork": {
+        "bannerPosition": "calc(100% + 13.6875px) 65.3%",
+        "bannerSize": "auto 650%",
+        "label": "사냥\n›",
+        "textureBorder": "0px",
+        "textureInset": "0px",
+        "textureSize": "400% 200%"
+      }
+    },
+    {
+      "label": "568×320",
+      "buttons": 24,
+      "height": 320,
+      "issues": [],
+      "panel": "camp",
+      "view": "home",
+      "width": 568,
+      "artwork": {
+        "bannerPosition": "calc(100% + 11.68px) 65.3%",
+        "bannerSize": "auto 650%",
+        "label": "사냥\n›",
+        "textureBorder": "0px",
+        "textureInset": "0px",
+        "textureSize": "400% 200%"
+      }
+    },
+    {
+      "label": "1280×720",
+      "buttons": 25,
+      "height": 405,
+      "issues": [],
+      "panel": "camp",
+      "view": "home",
+      "width": 900,
+      "artwork": {
+        "bannerPosition": "calc(100% + 14.7825px) 65.3%",
+        "bannerSize": "auto 650%",
+        "label": "사냥\n›",
+        "textureBorder": "0px",
+        "textureInset": "0px",
+        "textureSize": "400% 200%"
+      }
+    }
+  ]
+}

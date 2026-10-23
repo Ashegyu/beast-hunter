@@ -1,0 +1,110 @@
+/* Alpha 0.46: image artwork only; DOM owns input, live labels and meters. */
+#game-shell .battle .ability,
+#game-shell .battle #attack.ability {
+  background: transparent var(--combat-art) center / 100% 100% no-repeat;
+  border-color: transparent;
+  border-radius: 50%;
+  box-shadow: none;
+  color: #fff0d8;
+  text-shadow: 0 1px 3px #000, 0 0 4px #000;
+}
+#game-shell #attack { --combat-art: url('assets/combat-attack-v046.webp'); }
+#game-shell #dash { --combat-art: url('assets/combat-dash-v046.webp'); }
+#game-shell #thunder { --combat-art: url('assets/combat-thunder-v046.webp'); }
+#game-shell .battle .ability svg { display: none; }
+/* Place the label in the painted inset; cooldown has its own readable badge. */
+#game-shell .battle .ability span {
+  position: absolute; left: 0; right: 0; bottom: 17%;
+  font-size: 9px; line-height: 1.1; margin: 0; pointer-events: none;
+}
+#game-shell .battle .ability small {
+  position: absolute; left: 50%; bottom: -12px; transform: translateX(-50%);
+  min-width: 30px; padding: 2px 4px; border-radius: 3px;
+  white-space: nowrap; color: #fff0d5; background: #0c0f14e8;
+  font-size: 9px; line-height: 1.1; pointer-events: none;
+}
+#game-shell .battle .ability:disabled { opacity: .48; filter: saturate(.3); }
+#game-shell .battle .ability:enabled:active { filter: brightness(.75); }
+#game-shell .battle #thunder[data-counter=true] {
+  filter: drop-shadow(0 0 7px #f7c47b);
+  box-shadow: none;
+}
+#game-shell .battle #joystick {
+  background: transparent url('assets/combat-joystick-v046.webp') center / 100% 100% no-repeat;
+  border-color: transparent;
+  box-shadow: none;
+  opacity: .87;
+}
+#game-shell .battle #joystick:before,
+#game-shell .battle #joystick:after { background: transparent; }
+#game-shell #joystick .stick-axis,
+#game-shell #stick-thumb svg { visibility: hidden; }
+#game-shell #stick-thumb {
+  background: transparent url('assets/combat-thumb-v046.webp') center / 100% 100% no-repeat;
+  border-color: transparent;
+  box-shadow: 0 3px 8px #0005;
+}
+#game-shell #joystick[data-active=true] { opacity: 1; filter: drop-shadow(0 0 4px #d5b68466); }
+#game-shell .battle #pause,
+#game-shell .battle .battle-actions button {
+  background: transparent url('assets/combat-utility-v046.webp') center / 100% 100% no-repeat;
+  border-color: transparent;
+  border-radius: 7px;
+  box-shadow: none;
+  color: #f3dfbc;
+  text-shadow: 0 1px 3px #000;
+  backdrop-filter: none;
+}
+#game-shell .battle #auto[aria-pressed=true] { filter: drop-shadow(0 0 5px #e0ba70); color: #fff1c3; }
+#game-shell .battle #auto[aria-pressed=true] #auto-status { color: #ffe5a2; }
+#game-shell .battle :is(.hunter-hud,.mission,.boss-hud) {
+  background: transparent var(--panel-art) center / 100% 100% no-repeat;
+  border-color: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  text-shadow: 0 1px 2px #000;
+}
+#game-shell .battle .hunter-hud { --panel-art: url('assets/combat-hunter-v046.webp'); }
+#game-shell .battle .mission { --panel-art: url('assets/combat-mission-v046.webp'); }
+#game-shell .battle .boss-hud { --panel-art: url('assets/combat-boss-v046.webp'); }
+/* The old 76px boss offset intersected the second row of the portrait HUD. */
+#game-shell .battle .top-hud { top: calc(10px + env(safe-area-inset-top, 0px)); }
+#game-shell .battle .mission { padding: 7px 12px; min-width: 0; max-height: 56px; overflow: hidden; }
+#game-shell .battle .hunter-hud { padding: 9px 12px; }
+#game-shell .battle .boss-hud {
+  top: calc(128px + env(safe-area-inset-top, 0px)); left: 12px; right: 12px;
+  padding: 9px 16px; min-width: 0;
+}
+#game-shell .battle .boss-hud > div:first-child { min-width: 0; align-items: center; gap: 8px; }
+#game-shell .battle #boss-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#game-shell .battle #boss-hp { flex: none; white-space: nowrap; }
+#game-shell .battle #notice { top: calc(188px + env(safe-area-inset-top, 0px)); }
+#game-shell .battle #reward-toast { top: calc(188px + env(safe-area-inset-top, 0px)); }
+#game-shell .battle #notice:not([hidden]) + #reward-toast { top: calc(282px + env(safe-area-inset-top, 0px)); }
+#game-shell .battle :is(#notice,#reward-toast,#craft-tracker) {
+  background: #111419 url('assets/combat-mission-v046.webp') center / 100% 100% no-repeat;
+  border-color: transparent;
+  box-shadow: none;
+}
+#game-shell .battle button:focus-visible { outline: 2px solid #ffe0a2; outline-offset: 3px; }
+@media (hover:hover) {
+  #game-shell .battle :is(.ability,#pause,.battle-actions button):enabled:hover:not(:active) { filter: brightness(1.15); }
+}
+@media (prefers-reduced-motion:reduce) {
+  #game-shell .battle button { transition: none; }
+}
+@media (orientation:landscape) and (max-height:500px) {
+  #game-shell .battle .boss-hud { top: calc(10px + env(safe-area-inset-top, 0px)); left: 228px; right: 12px; }
+  #game-shell .battle #notice { top: calc(176px + env(safe-area-inset-top, 0px)); }
+  #game-shell .battle #reward-toast,
+  #game-shell .battle #notice:not([hidden]) + #reward-toast {
+    top: calc(238px + env(safe-area-inset-top, 0px)); bottom: auto;
+    left: 12px; right: auto; max-width: min(220px, calc(100% - 170px));
+  }
+}
+
+/* Regional preparation leaves navigation available and never captures arena input. */
+#region-status{position:absolute;z-index:75;left:12px;right:12px;bottom:calc(78px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;background:#111820f5;border:1px solid #b49c7066;border-radius:5px;font-size:12px;color:#f0dfc2;pointer-events:none}
+#region-status span{min-width:0;overflow-wrap:anywhere}
+#region-retry{min-width:80px;min-height:44px;padding:7px 10px;pointer-events:auto;background:#562b37;color:#ffe9d3}
+@media(orientation:landscape) and (max-height:500px){#region-status{bottom:12px;left:120px;right:160px;font-size:10px;padding:5px 8px}}

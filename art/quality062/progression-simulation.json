@@ -1,0 +1,38 @@
+{
+  "scope": "One deterministic auto-hunt path; same engine dependencies except baseline game-engine.js. Not a balance distribution or device performance test.",
+  "baselineSha": "84198d55cb871a08c80a0b8b703495b1149085c5",
+  "savedProfileAndMeasuredTotalsEqual": true,
+  "rows": [
+    {
+      "chapter": 1,
+      "level": 9,
+      "xp": 921,
+      "gold": 680,
+      "cores": 8,
+      "items": 25,
+      "kills": 83,
+      "time": 188.95000000002497
+    },
+    {
+      "chapter": 2,
+      "level": 12,
+      "xp": 1023,
+      "gold": 1221,
+      "cores": 9,
+      "items": 21,
+      "kills": 83,
+      "time": 178.93500000002274
+    },
+    {
+      "chapter": 3,
+      "level": 15,
+      "xp": 1125,
+      "gold": 1572,
+      "cores": 10,
+      "items": 22,
+      "kills": 83,
+      "time": 179.41500000002281
+    }
+  ],
+  "firstUltimateLevel": 20
+}

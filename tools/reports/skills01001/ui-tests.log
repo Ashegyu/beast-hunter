@@ -1,0 +1,14 @@
+(node:25) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ equipped skill art follows real loadouts and presets while locked sockets remain empty (353.468695ms)
+✔ skill details start at their heading and list return restores the active filter focus (132.399456ms)
+✔ skill workshop shows locked previews, real rank tables, free respec and persistent camp-only loadouts (230.541146ms)
+✔ skill library pages all 35 skills without changing the loadout and resets paging for category changes (158.056531ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1213.116159

@@ -1,0 +1,14 @@
+{
+  "source": "art/stage0843/seals-source.png",
+  "delivery": "dist/assets/ui-stage-v0843/seals.webp",
+  "sourceSize": 2399275,
+  "deliverySize": 1212104,
+  "dimensions": [
+    1536,
+    1024
+  ],
+  "alphaUnchanged": true,
+  "visibleRGBAUnchanged": true,
+  "sourceSha256": "1f17a23306f5e46c886d7e8464a5979f652a664cca7ea9149e2225c41dc63c6d",
+  "deliverySha256": "6b84d249c9849c23cca7c3267ccb3b20226de0c7e52f2d543c2f48a0cf4ffaa5"
+}

@@ -1,0 +1,7 @@
+/* Combat essentials: timer, monster count and boss health. */
+#game-shell .battle :is(#hunt-stage,#stage-rule-hud,#boss-rule-status){display:none!important}
+#game-shell .battle .top-hud .mission.hunt-status{grid-template-rows:minmax(0,1fr);height:34px;min-height:34px;max-height:34px;width:158px;justify-self:center;padding:2px 8px;gap:8px;border-width:1px;border-image:none;background:#0b1118c9;border-color:#9d815358;border-radius:6px}
+#game-shell .battle .top-hud #boss-hud{height:31px;min-height:31px;max-height:31px;padding:4px 10px;border:1px solid #9d815358;border-image:none;border-radius:5px;background:#0b1118d6;box-shadow:none}
+#game-shell .battle .top-hud #boss-hud::before,#game-shell .battle .top-hud #boss-hud::after{display:none}
+#game-shell .battle .top-hud #boss-hud>div:first-child{font-size:10px;line-height:13px}
+#game-shell .battle .top-hud #boss-hud .bar{height:4px;margin-top:3px}

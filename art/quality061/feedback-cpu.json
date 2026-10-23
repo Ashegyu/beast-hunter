@@ -1,0 +1,8 @@
+{
+  "scope": "Offline N-API canvas CPU, new feedback renderers only; excludes browser/GPU/audio/device",
+  "contacts": 10,
+  "shots": 64,
+  "samples": 200,
+  "p95Ms": 1.023571999999831,
+  "maxMs": 2.4369560000000092
+}

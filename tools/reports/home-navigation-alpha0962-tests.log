@@ -1,0 +1,17 @@
+(node:11) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ primary navigation exposes skills while the hunt action lives on home (222.229489ms)
+✔ skills tab leaves other camp panels, updates selection and returns focus without changing the profile (137.544089ms)
+✔ camp map and growth drawers preserve locked selection, keyboard close focus and selected hunt route (206.070775ms)
+✔ equipment and bag are distinct screens and cold camp renders the real hunter without battle downloads (77.066469ms)
+✔ equipment scene reads real levels, slots and synergies while its camp links preserve ownership (230.858613ms)
+✔ bag views and layered back actions preserve the profile and never open details on exploration (75.223627ms)
+✔ armory category shortcuts and folded filters act on real identities without changing ownership (140.170505ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1336.566125

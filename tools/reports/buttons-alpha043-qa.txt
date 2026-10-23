@@ -1,0 +1,52 @@
+Alpha0.43 generated button skins,2026-10-16
+
+Design-first asset production
+Built-in image_gen generated three independent production button plates before implementation.
+Primary: oxblood metal/champagne bevel; secondary: blued charcoal steel; cost: engraved bronze/champagne frame.
+Exact prompts and roles: art/references/buttons-alpha043-prompts.txt.
+Original primary/secondary2048x768,cost1254x1254 PNGs preserved under dist/assets/button-*-v043.png.
+Generation included surrounding transparent margins; CSS background framing isolates usable plate while keeping original pixels untouched.
+Artwork is displayed below real text, not baked labels. Fine material details concentrated at rims; dark centers retain contrast.
+
+Export and loading
+WebP quality85 method6,dimensions and alpha exactly preserved,verified with Pillow channel comparison.
+Primary169840bytes,secondary173446bytes,cost216640bytes,total559926bytes.
+Initial lossless exports total3819984bytes; quality85 reduces85.34% without altering alpha.
+No extra startup manifest entries,dependencies,render-loop work,timers or animation callbacks.
+Only dist/index.html and new buttons.css plus new menu assets changed in runtime. No app.js,game-engine.js,loot.js,crafting.js,manifest or profile schema changes.
+
+Integration
+31 actual action buttons receive decorative image-button classes. Three forge cost strong elements use cost art.
+Native ID,disabled attribute,labels,keyboard and event ownership preserved; decorative pseudo-elements use pointer-events:none.
+Primary/secondary/disabled/pressed/hover/focus states use same coherent artwork. Hover excludes active so pressed feedback wins.
+Native fallback backgrounds keep labels readable if images fail. Existing native focus-visible outline retained.
+No hover-triggered equipment details introduced. Navigation icons,stage nodes and combat control layouts unchanged.
+
+Automated verification
+npm test:418/418pass,0fail,19315ms. Existing engine and integration tests; no styling-mirror tests added.
+git diff --check passed.1213 unique IDs,local HTML and button resources exist.
+
+Real browser verification on localhost8143
+390x844 home primary,enabled/disabled growth and pause;320x740 growth,map,craft goal/material-source/disabled craft;844x390 growth scroll;1280x900 growth.
+Original empty profile showed disabled cost plates with readable30/25/60gold+core1 amounts.
+Visible local QA button backed up original storage and applied actual createProfile/encodeProfile test profile.
+Enabled growth gold1000/core10. Clicking actual forge-blade deducted30 once:gold970,blade+1,nextcost85,attack28->31. No double callback or blocked hit target.
+320 growth upgrade286x52,forge rows286x99;no document horizontal overflow.
+Craft submit reported disabled=true with actual gold shortage; image plate did not enable payment.
+Forest1-1 actual start->pause at180/180HP->resume through native Enter->pause->retreat returned camp, gold970/core10 retained.
+Pause primary/secondary labels visible; decoration did not intercept keyboard/click.
+CSS read-only check cost pseudo pointer-events:none. Console warnings/errors[] at final query.
+Original profile restored through visible QA restore button, '원본 복구 완료'; actual game gold0/core0 confirmed.
+Temporary QA page removed before packaging. Production Site profile never modified by fixture.
+
+Visual review
+Compared native screenshot to three generated plates: forged edge details and dark blank text center remain visible at mobile scale.
+320px craft amount and action scroll into view above bottom nav; no text hidden behind generated border.
+Disabled states use dimmed neutral metal; native reason text remains outside button where already present.
+Actual captures: art/references/buttons-actual-alpha043-growth-390.png,growth-320.png,pause-390.png.
+Additional workspace outputs: alpha043-craft-320.png,craft-action-320.png,map-320.png,growth-disabled-390.png,growth-landscape.png,growth-desktop.png.
+
+Limits
+Viewport QA is not physical Android Chrome/touch/performance acceptance; no phone connected.
+No new boss victory/result/defeat visual run or frame-time benchmark this turn; shared button CSS and existing418 state tests pass.
+Publication must preserve current owner-private audience and use official source helper.

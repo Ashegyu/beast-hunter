@@ -1,0 +1,6532 @@
+{
+  "kind": "generated-source-extraction-and-lossless-atlas",
+  "scope": "Native pixel geometry and encoded/decoded size; no browser/GPU measurements.",
+  "sources": {
+    "forest_spider": "33df778c64d985ee8357bf71669bd563a8810891a3f237209435481d6d8374ee",
+    "forest_mushroom": "bbee4f63f18966ca67a89d81810b4e2b439f288110d4c6268ba0e54ce96e8ed0",
+    "forest_devourer": "39379502f8656f24d91d1174a800d2163c4af837d9cf7c2f63dbb7bff4a392f7",
+    "ruins_bat": "f43778c39f7e72f6fe69ab73c20cf2da113a687b9827791419014d157682583c",
+    "ruins_wraith": "572fb0903519afd497966ff08f5f6d722fcf61af714a066baf19730e89b2719a",
+    "ruins_mimic": "a797a47fe5565db3d0c4b404a884b5578ee4c0b79751ae7ca1b8eb60680ed4da",
+    "frost_leopard": "84caff947e4c3c050b760477d08c3f27a807e2dc7f64002e55263518bf5dddfa",
+    "frost_wisp": "73458a662fc190c7f435f9d0ef3f7efc4ed2201159255eaacc2894a4b284dcc2",
+    "frost_yeti": "f3a253c7b6432370112dad131f910fec8169778b36bbb220d4c779d6bea1e453"
+  },
+  "species": {
+    "forest_spider": {
+      "source": "art/monsters065/forest_spider.png",
+      "sha256": "33df778c64d985ee8357bf71669bd563a8810891a3f237209435481d6d8374ee",
+      "width": 1254,
+      "height": 1254,
+      "transparentFraction": 0.554115,
+      "bodyCores": 25,
+      "independentComponentsOver1500px": 25,
+      "rowBands": null,
+      "directions": [
+        {
+          "direction": "s",
+          "bodyHeight": 192.0,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                33,
+                58,
+                227,
+                250
+              ],
+              "crop": [
+                0,
+                23,
+                237,
+                277
+              ],
+              "pivotX": 86.0,
+              "pivotY": 226,
+              "bodyHeight": 192.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "85caf301faa9872581d8c1b4d3285d9fa44c69bc2e5f71230de486824c165cab",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                864,
+                592,
+                237,
+                254
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                278,
+                58,
+                465,
+                250
+              ],
+              "crop": [
+                258,
+                19,
+                492,
+                281
+              ],
+              "pivotX": 154.0,
+              "pivotY": 230,
+              "bodyHeight": 192.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "19e843fffc57baf01d2ca6f980db38dbfcfe75dcd1841314faec64891dc10f49",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1105,
+                310,
+                234,
+                262
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                510,
+                60,
+                732,
+                250
+              ],
+              "crop": [
+                487,
+                18,
+                748,
+                261
+              ],
+              "pivotX": 124.0,
+              "pivotY": 231,
+              "bodyHeight": 192.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "b4db91263b2f15657d64cc2377fe15d8e926505bb90e4e287aee0180ae6c1023",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1138,
+                1113,
+                261,
+                243
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                754,
+                59,
+                980,
+                253
+              ],
+              "crop": [
+                736,
+                15,
+                1027,
+                271
+              ],
+              "pivotX": 183.0,
+              "pivotY": 237,
+              "bodyHeight": 192.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "d3c61ee0ee432a7364f4fd5fc92ae83d0bcf172f9e6bd5ac0ddb6c046e93f95d",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                4,
+                592,
+                291,
+                256
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                996,
+                143,
+                1239,
+                249
+              ],
+              "crop": [
+                989,
+                4,
+                1246,
+                302
+              ],
+              "pivotX": 128.5,
+              "pivotY": 244,
+              "bodyHeight": 192.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "bade553183046ccac526fb834e0c6b0c4060807cd37a88d15704b8891b8ea55c",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                4,
+                4,
+                257,
+                298
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "se",
+          "bodyHeight": 190.5,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                18,
+                296,
+                229,
+                488
+              ],
+              "crop": [
+                9,
+                280,
+                249,
+                519
+              ],
+              "pivotX": 118.0,
+              "pivotY": 207,
+              "bodyHeight": 190.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "31030170d2bba7fad843a9b0df2803a0e73ef9d30673ad39078fabadbe64d4e2",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                532,
+                1616,
+                240,
+                239
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                265,
+                299,
+                482,
+                488
+              ],
+              "crop": [
+                230,
+                266,
+                499,
+                521
+              ],
+              "pivotX": 159.0,
+              "pivotY": 221,
+              "bodyHeight": 190.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "258a4b3e7252626994158b0b9cca1e4fe4deae53b857c4ba41c4e80731cbab00",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                303,
+                592,
+                269,
+                255
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                508,
+                286,
+                735,
+                485
+              ],
+              "crop": [
+                473,
+                268,
+                749,
+                504
+              ],
+              "pivotX": 166.0,
+              "pivotY": 216,
+              "bodyHeight": 190.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "f344f04c141922a1918a117f91eeda9e8d228c5a20c7326f8d217370f07e5893",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1547,
+                1616,
+                276,
+                236
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                755,
+                295,
+                998,
+                484
+              ],
+              "crop": [
+                738,
+                260,
+                1016,
+                511
+              ],
+              "pivotX": 142.0,
+              "pivotY": 223,
+              "bodyHeight": 190.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "632c0f4b9724ee3f0c70f3091539d122d3c43261ccbd7a986ecc3dae46ef7e69",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1109,
+                592,
+                278,
+                251
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                1016,
+                351,
+                1241,
+                477
+              ],
+              "crop": [
+                1005,
+                308,
+                1254,
+                544
+              ],
+              "pivotX": 123.5,
+              "pivotY": 168,
+              "bodyHeight": 190.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "6b6c7430fa0ab6b118037389371f5d40ef1bab05ab8b21cc067154b45552462a",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                4,
+                1865,
+                249,
+                236
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "e",
+          "bodyHeight": 171.5,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                26,
+                544,
+                253,
+                718
+              ],
+              "crop": [
+                0,
+                510,
+                267,
+                752
+              ],
+              "pivotX": 186.0,
+              "pivotY": 207,
+              "bodyHeight": 171.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "5b2f5c9aeb584aa4bd509e77cd0f3e217a0fc0f4d78f82152077791e415312a7",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                519,
+                1365,
+                267,
+                242
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                268,
+                549,
+                516,
+                718
+              ],
+              "crop": [
+                246,
+                503,
+                536,
+                752
+              ],
+              "pivotX": 208.0,
+              "pivotY": 214,
+              "bodyHeight": 171.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "2872926be601ebe7ab147d2545107adf29af6bf6f6c152a788d768f32c5b2fb1",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1395,
+                592,
+                290,
+                249
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                541,
+                515,
+                746,
+                715
+              ],
+              "crop": [
+                495,
+                507,
+                763,
+                738
+              ],
+              "pivotX": 153.0,
+              "pivotY": 207,
+              "bodyHeight": 171.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "1d9ef0c54b12c96cdbe3aa90b6c693c9eaf9cc43ce4b6a9d73e9350a5f099ded",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                4,
+                2109,
+                268,
+                231
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                754,
+                548,
+                1017,
+                725
+              ],
+              "crop": [
+                735,
+                531,
+                1043,
+                754
+              ],
+              "pivotX": 200.5,
+              "pivotY": 193,
+              "bodyHeight": 171.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "b3592bb2db4d1690756188698252707b99facd20319e027c2d5ff646708c0dad",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                4,
+                2348,
+                308,
+                223
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                1029,
+                591,
+                1238,
+                703
+              ],
+              "crop": [
+                1015,
+                530,
+                1245,
+                715
+              ],
+              "pivotX": 118.5,
+              "pivotY": 172,
+              "bodyHeight": 171.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "1c559d1cf6dd8af804c048108d5c5e7cad023f5552ded15798928960d19769c5",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                573,
+                2579,
+                230,
+                185
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "ne",
+          "bodyHeight": 170.5,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                33,
+                779,
+                239,
+                950
+              ],
+              "crop": [
+                4,
+                733,
+                258,
+                977
+              ],
+              "pivotX": 120.0,
+              "pivotY": 216,
+              "bodyHeight": 170.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "383bbc33e102291bdd25187985f18271fd217790cd8a0b7e6526cee967a24610",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                4,
+                1113,
+                254,
+                244
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                276,
+                777,
+                507,
+                947
+              ],
+              "crop": [
+                250,
+                740,
+                530,
+                1002
+              ],
+              "pivotX": 142.0,
+              "pivotY": 206,
+              "bodyHeight": 170.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "859526b2d1a0288ce8c82bbf3275f316fcac3d11e095041af31656c0417dc2ee",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1347,
+                310,
+                280,
+                262
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                545,
+                742,
+                753,
+                944
+              ],
+              "crop": [
+                513,
+                728,
+                772,
+                977
+              ],
+              "pivotX": 144.0,
+              "pivotY": 215,
+              "bodyHeight": 170.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "492276cdff72e09bf6e046e81568b91eb9abfe7fcb7eaa18a28bf76c92710506",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1693,
+                592,
+                259,
+                249
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                767,
+                763,
+                1017,
+                952
+              ],
+              "crop": [
+                749,
+                747,
+                1047,
+                971
+              ],
+              "pivotX": 167.0,
+              "pivotY": 204,
+              "bodyHeight": 170.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "a52d05a9db6bc6618e7f4676cddf4392532e4d9174958c5ca589731d982f96fd",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1278,
+                2109,
+                298,
+                224
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                1034,
+                820,
+                1239,
+                949
+              ],
+              "crop": [
+                1006,
+                765,
+                1248,
+                1023
+              ],
+              "pivotX": 130.5,
+              "pivotY": 183,
+              "bodyHeight": 170.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "8e5979f7e2c64e76595aa1ecd53bc7032602d8646820c77bfff73e980c08527c",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1635,
+                310,
+                242,
+                258
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "n",
+          "bodyHeight": 180.5,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                38,
+                995,
+                229,
+                1177
+              ],
+              "crop": [
+                0,
+                966,
+                246,
+                1254
+              ],
+              "pivotX": 130.0,
+              "pivotY": 210,
+              "bodyHeight": 180.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "6340774cf8c516223ef9834231afe8fa41eb8599059637ef55a11d38e415ffa5",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                794,
+                4,
+                246,
+                288
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                278,
+                999,
+                479,
+                1178
+              ],
+              "crop": [
+                254,
+                970,
+                508,
+                1254
+              ],
+              "pivotX": 122.0,
+              "pivotY": 207,
+              "bodyHeight": 180.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "c5e4eb1104975b366ca86fd58eba9ef99b4b168bb8b01e9dac8615972c915217",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1295,
+                4,
+                254,
+                284
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                523,
+                987,
+                727,
+                1179
+              ],
+              "crop": [
+                485,
+                966,
+                750,
+                1240
+              ],
+              "pivotX": 141.5,
+              "pivotY": 212,
+              "bodyHeight": 180.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "6cbe235c1410b3fc2b22ce91fc7164d954b2c87194c1eb50e2e0b69479331c03",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                4,
+                310,
+                265,
+                274
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                767,
+                989,
+                990,
+                1182
+              ],
+              "crop": [
+                744,
+                976,
+                1003,
+                1240
+              ],
+              "pivotX": 127.0,
+              "pivotY": 205,
+              "bodyHeight": 180.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "225a1991fc97ed58ad7801cdecb5d95e4fdc6d4a20a79e25aa621725ed0e09a0",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                838,
+                310,
+                259,
+                264
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                1008,
+                1073,
+                1233,
+                1181
+              ],
+              "crop": [
+                993,
+                1012,
+                1242,
+                1254
+              ],
+              "pivotX": 127.5,
+              "pivotY": 168,
+              "bodyHeight": 180.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "b4caea759905ca1868d07500865143b916f19ec962b84f007d38627450bfefa5",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                794,
+                1365,
+                249,
+                242
+              ]
+            }
+          ]
+        }
+      ],
+      "frames": 25
+    },
+    "forest_mushroom": {
+      "source": "art/monsters065/forest_mushroom.png",
+      "sha256": "bbee4f63f18966ca67a89d81810b4e2b439f288110d4c6268ba0e54ce96e8ed0",
+      "width": 1254,
+      "height": 1254,
+      "transparentFraction": 0.592473,
+      "bodyCores": 25,
+      "independentComponentsOver1500px": 26,
+      "rowBands": [
+        0,
+        251,
+        492,
+        727,
+        963,
+        1254
+      ],
+      "directions": [
+        {
+          "direction": "s",
+          "bodyHeight": 172.0,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                53,
+                72,
+                231,
+                245
+              ],
+              "crop": [
+                21,
+                19,
+                271,
+                255
+              ],
+              "pivotX": 124.0,
+              "pivotY": 225,
+              "bodyHeight": 172.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "e93a96bb25f86a46e3c37905974becb66f2f5fad1a0dd56f4eead3ff39664a1a",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                261,
+                1865,
+                250,
+                236
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                293,
+                72,
+                474,
+                243
+              ],
+              "crop": [
+                262,
+                19,
+                508,
+                255
+              ],
+              "pivotX": 110.0,
+              "pivotY": 223,
+              "bodyHeight": 172.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "512f6005328cb155ec2a00ac79c650165e0ca63121d868507b84f94005dfbd40",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                519,
+                1865,
+                246,
+                236
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                534,
+                92,
+                716,
+                239
+              ],
+              "crop": [
+                501,
+                19,
+                730,
+                255
+              ],
+              "pivotX": 124.0,
+              "pivotY": 219,
+              "bodyHeight": 172.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "3c44f734fb2b0efeb5cddeb9fb377138ec43f5d1e0d65778b2c53e02cd580f32",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                773,
+                1865,
+                229,
+                236
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                779,
+                71,
+                953,
+                243
+              ],
+              "crop": [
+                706,
+                13,
+                1055,
+                255
+              ],
+              "pivotX": 157.0,
+              "pivotY": 229,
+              "bodyHeight": 172.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "99c78ddf6e2cc4ab732acbbee6202a51ea62fa5d7b538bb8e332dd82ab7cad68",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1051,
+                1365,
+                349,
+                242
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                1000,
+                141,
+                1235,
+                244
+              ],
+              "crop": [
+                992,
+                45,
+                1250,
+                255
+              ],
+              "pivotX": 125.5,
+              "pivotY": 198,
+              "bodyHeight": 172.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "0f9b59bb2fe837a47ce996e97de25a20f72a26601b88982aef96bc98ec2d7c3f",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1735,
+                2348,
+                258,
+                210
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "se",
+          "bodyHeight": 175.0,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                53,
+                300,
+                234,
+                474
+              ],
+              "crop": [
+                0,
+                247,
+                263,
+                496
+              ],
+              "pivotX": 141.0,
+              "pivotY": 226,
+              "bodyHeight": 175.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "5e2b75bf72968c4bfa48b6fa2ba52a6f7ead6032110a9a39073d51e3f89596c3",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                4,
+                856,
+                263,
+                249
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                302,
+                300,
+                475,
+                476
+              ],
+              "crop": [
+                282,
+                248,
+                504,
+                496
+              ],
+              "pivotX": 95.0,
+              "pivotY": 227,
+              "bodyHeight": 175.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "22cd1659a3213c938df40c34d838fe8199aa7e7acb5c58f8cf3e9a9356d52024",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                877,
+                856,
+                222,
+                248
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                544,
+                317,
+                736,
+                471
+              ],
+              "crop": [
+                493,
+                247,
+                766,
+                496
+              ],
+              "pivotX": 136.0,
+              "pivotY": 223,
+              "bodyHeight": 175.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "c055d8825cc47d1d03787a85b4341ae2272cc977b442404b87d36754e96af248",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                275,
+                856,
+                273,
+                249
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                788,
+                292,
+                967,
+                473
+              ],
+              "crop": [
+                708,
+                247,
+                1021,
+                496
+              ],
+              "pivotX": 155.0,
+              "pivotY": 225,
+              "bodyHeight": 175.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "d5b4c1f4b2408267f11587b9337b57052bcb38265eb5a74bfdf478e57c897e4a",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                556,
+                856,
+                313,
+                249
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                1006,
+                369,
+                1236,
+                476
+              ],
+              "crop": [
+                994,
+                273,
+                1243,
+                494
+              ],
+              "pivotX": 127.0,
+              "pivotY": 202,
+              "bodyHeight": 175.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "bc7681e591bb5960530f7063912108d7651b85ef28296da2de91595725c81244",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                590,
+                2348,
+                249,
+                221
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "e",
+          "bodyHeight": 169.0,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                55,
+                534,
+                232,
+                703
+              ],
+              "crop": [
+                43,
+                493,
+                275,
+                731
+              ],
+              "pivotX": 103.0,
+              "pivotY": 209,
+              "bodyHeight": 169.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "5cdb24f04d3fcd9c9f9d5c13b22fa5a3318d21b243db9e65f27a2d79abb18e73",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                780,
+                1616,
+                232,
+                238
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                308,
+                534,
+                488,
+                703
+              ],
+              "crop": [
+                266,
+                488,
+                547,
+                730
+              ],
+              "pivotX": 132.0,
+              "pivotY": 214,
+              "bodyHeight": 169.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "c0b95bf02e16940260521646b4d0ca15564d74b324da8049124d7c0fbe9607e1",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1408,
+                1365,
+                281,
+                242
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                538,
+                559,
+                752,
+                701
+              ],
+              "crop": [
+                517,
+                488,
+                762,
+                731
+              ],
+              "pivotX": 113.0,
+              "pivotY": 212,
+              "bodyHeight": 169.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "05004da8e93b8541ae7b3414213b1ffda241c4975dbd42f8d0196865c1947c52",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1407,
+                1113,
+                245,
+                243
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                772,
+                525,
+                942,
+                705
+              ],
+              "crop": [
+                746,
+                488,
+                1083,
+                731
+              ],
+              "pivotX": 81.0,
+              "pivotY": 216,
+              "bodyHeight": 169.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "76502234a6dbc8367742cf0d0244682ccfdccd4681116799d62bea3823cd991a",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1660,
+                1113,
+                337,
+                243
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                993,
+                612,
+                1237,
+                708
+              ],
+              "crop": [
+                982,
+                493,
+                1244,
+                716
+              ],
+              "pivotX": 133.0,
+              "pivotY": 214,
+              "bodyHeight": 169.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "009b8e0a843c7df1e3b055c1ac4ce044cbb90cedb5a8ad75df660335fbfeaa8d",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                320,
+                2348,
+                262,
+                223
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "ne",
+          "bodyHeight": 176.5,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                58,
+                767,
+                226,
+                942
+              ],
+              "crop": [
+                43,
+                723,
+                283,
+                967
+              ],
+              "pivotX": 111.0,
+              "pivotY": 218,
+              "bodyHeight": 176.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "34f913e987e6da65aea9f3b49b59c090f7673e835d48f11977b5d5e3388829b5",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                266,
+                1113,
+                240,
+                244
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                302,
+                769,
+                476,
+                947
+              ],
+              "crop": [
+                264,
+                726,
+                517,
+                967
+              ],
+              "pivotX": 127.0,
+              "pivotY": 220,
+              "bodyHeight": 176.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "19cd397cb30419ddbb0c5e344b2bdb53f6b64d2625afcc08f40a4aeb357b0e08",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1697,
+                1365,
+                253,
+                241
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                539,
+                794,
+                733,
+                937
+              ],
+              "crop": [
+                495,
+                723,
+                756,
+                967
+              ],
+              "pivotX": 144.0,
+              "pivotY": 213,
+              "bodyHeight": 176.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "4e4557dd2b08be762a4191272ad7823f1b37a85e7145f6c29482060ac6b4b12c",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                514,
+                1113,
+                261,
+                244
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                773,
+                746,
+                945,
+                943
+              ],
+              "crop": [
+                718,
+                723,
+                1065,
+                967
+              ],
+              "pivotX": 149.0,
+              "pivotY": 219,
+              "bodyHeight": 176.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "48444220ef4c127268f7d3f3af12547158e632418b480d6c2ceac64b763ea72d",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                783,
+                1113,
+                347,
+                244
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                1005,
+                837,
+                1237,
+                936
+              ],
+              "crop": [
+                960,
+                726,
+                1244,
+                967
+              ],
+              "pivotX": 161.0,
+              "pivotY": 209,
+              "bodyHeight": 176.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "2576e57a835e010f9e9c63cfdb5ce0a61d06a64d1d2e061806f9889d6d24901c",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                4,
+                1616,
+                284,
+                241
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "n",
+          "bodyHeight": 182.5,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                58,
+                1004,
+                232,
+                1187
+              ],
+              "crop": [
+                0,
+                960,
+                269,
+                1254
+              ],
+              "pivotX": 146.0,
+              "pivotY": 226,
+              "bodyHeight": 182.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "92a4d720209c04ad0fd26d8226800915ce8d298abf45b3627d6919b6d70c4e30",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                517,
+                4,
+                269,
+                294
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                300,
+                1003,
+                473,
+                1185
+              ],
+              "crop": [
+                262,
+                959,
+                502,
+                1254
+              ],
+              "pivotX": 115.0,
+              "pivotY": 225,
+              "bodyHeight": 182.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "f8287d770a94a01e6f327be66b3c64a28fb60a639b1ecf9500d0f9af270a5690",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                269,
+                4,
+                240,
+                295
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                536,
+                1025,
+                715,
+                1181
+              ],
+              "crop": [
+                485,
+                960,
+                753,
+                1234
+              ],
+              "pivotX": 140.0,
+              "pivotY": 220,
+              "bodyHeight": 182.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "f4915fdcd1790f2e48b1255fa38fe56c59dbd378f665842f2cb2d4f694b1844a",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                277,
+                310,
+                268,
+                274
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                778,
+                995,
+                964,
+                1178
+              ],
+              "crop": [
+                700,
+                959,
+                1081,
+                1238
+              ],
+              "pivotX": 165.0,
+              "pivotY": 218,
+              "bodyHeight": 182.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "75f56ffb407a270716b58596c7b1dc2d0d52f8089d456f8d67ab502b2e686d0f",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1557,
+                4,
+                381,
+                279
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                999,
+                1079,
+                1232,
+                1179
+              ],
+              "crop": [
+                988,
+                984,
+                1243,
+                1232
+              ],
+              "pivotX": 127.5,
+              "pivotY": 194,
+              "bodyHeight": 182.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "4a2915bcc1ac29b9633717b1bf8fcba07cd302a4d75823f6a63543cef8f17156",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1107,
+                856,
+                255,
+                248
+              ]
+            }
+          ]
+        }
+      ],
+      "frames": 25
+    },
+    "forest_devourer": {
+      "source": "art/monsters065/forest_devourer.png",
+      "sha256": "39379502f8656f24d91d1174a800d2163c4af837d9cf7c2f63dbb7bff4a392f7",
+      "width": 1254,
+      "height": 1254,
+      "transparentFraction": 0.508832,
+      "bodyCores": 25,
+      "independentComponentsOver1500px": 25,
+      "rowBands": null,
+      "directions": [
+        {
+          "direction": "s",
+          "bodyHeight": 210.0,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                35,
+                29,
+                257,
+                239
+              ],
+              "crop": [
+                26,
+                21,
+                265,
+                247
+              ],
+              "pivotX": 115.0,
+              "pivotY": 217,
+              "bodyHeight": 210.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "4f611f278149b896f4de0bd5c921ed8f4d9da55d4162b8d16df4b383de1a5ba0",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1031,
+                2109,
+                239,
+                226
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                290,
+                30,
+                496,
+                240
+              ],
+              "crop": [
+                274,
+                23,
+                504,
+                247
+              ],
+              "pivotX": 107.0,
+              "pivotY": 216,
+              "bodyHeight": 210.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "e5d99ee5af35b0f0a838ae9ed7b3e950a110411e330f929b1c42326691159eec",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1584,
+                2109,
+                230,
+                224
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                523,
+                20,
+                739,
+                239
+              ],
+              "crop": [
+                509,
+                12,
+                748,
+                247
+              ],
+              "pivotX": 115.0,
+              "pivotY": 226,
+              "bodyHeight": 210.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "dc4ed331726303551044861fd07b06b3a123afeddb27876816ca56328149393c",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1010,
+                1865,
+                239,
+                235
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                762,
+                58,
+                1012,
+                242
+              ],
+              "crop": [
+                751,
+                47,
+                1067,
+                259
+              ],
+              "pivotX": 114.0,
+              "pivotY": 194,
+              "bodyHeight": 210.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "0fea0c3fdede92debb94a22200c57038d82c1d1cfa722929e306f6b7c8aa7f76",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                847,
+                2348,
+                316,
+                212
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                987,
+                128,
+                1251,
+                247
+              ],
+              "crop": [
+                978,
+                61,
+                1254,
+                316
+              ],
+              "pivotX": 141.0,
+              "pivotY": 185,
+              "bodyHeight": 210.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "ab422a39862319adcea1b24abab07c021aa6c10f837200ccaf462b543ddd09b9",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                580,
+                592,
+                276,
+                255
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "se",
+          "bodyHeight": 208.5,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                46,
+                262,
+                249,
+                471
+              ],
+              "crop": [
+                0,
+                252,
+                262,
+                482
+              ],
+              "pivotX": 121.0,
+              "pivotY": 218,
+              "bodyHeight": 208.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "a9df9e78a607c95364132b891dc05f7d71e76ca5ea99f2a3058267626efabfd4",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                531,
+                2109,
+                262,
+                230
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                282,
+                265,
+                485,
+                473
+              ],
+              "crop": [
+                270,
+                254,
+                492,
+                484
+              ],
+              "pivotX": 111.0,
+              "pivotY": 218,
+              "bodyHeight": 208.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "11d03f4477a6f1f06c2906b1f5bec9c14b678e05ceccf8777679cf209cd5d313",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                801,
+                2109,
+                222,
+                230
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                518,
+                257,
+                738,
+                471
+              ],
+              "crop": [
+                507,
+                251,
+                750,
+                482
+              ],
+              "pivotX": 96.0,
+              "pivotY": 219,
+              "bodyHeight": 208.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "18ebb396bb1e77aaa946afbc3e2e27f7e5b53fe9c27cca646b06c369afcd2f3e",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                280,
+                2109,
+                243,
+                231
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                750,
+                283,
+                993,
+                472
+              ],
+              "crop": [
+                738,
+                272,
+                1004,
+                484
+              ],
+              "pivotX": 127.0,
+              "pivotY": 199,
+              "bodyHeight": 208.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "790843fb66695b18cfb8521c74c35d7f463e660dd3c0ba2850ec5654bd296e91",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1171,
+                2348,
+                266,
+                212
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                987,
+                375,
+                1250,
+                473
+              ],
+              "crop": [
+                973,
+                355,
+                1254,
+                543
+              ],
+              "pivotX": 145.5,
+              "pivotY": 117,
+              "bodyHeight": 208.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "55e385dc585c6806f8d8ce147d1ddfa3485c85deb3ba473570280c12e56accaf",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                284,
+                2579,
+                281,
+                188
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "e",
+          "bodyHeight": 215.0,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                39,
+                496,
+                263,
+                710
+              ],
+              "crop": [
+                29,
+                488,
+                277,
+                722
+              ],
+              "pivotX": 95.0,
+              "pivotY": 221,
+              "bodyHeight": 215.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "69515d0376524d223499710f87281a0490d80acc5328b1dc0d44492f87d9d2ce",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1257,
+                1865,
+                248,
+                234
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                288,
+                503,
+                498,
+                719
+              ],
+              "crop": [
+                244,
+                495,
+                513,
+                732
+              ],
+              "pivotX": 119.0,
+              "pivotY": 223,
+              "bodyHeight": 215.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "245469037e03eae414efae03d2f0656ce069bff5d17ef2f101210ea9f0f4a12e",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1020,
+                1616,
+                269,
+                237
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                531,
+                486,
+                740,
+                711
+              ],
+              "crop": [
+                522,
+                477,
+                750,
+                720
+              ],
+              "pivotX": 109.0,
+              "pivotY": 233,
+              "bodyHeight": 215.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "03f61c2a1f8cefc5fa9276ce47233a982895e36e488f1405ca9132dbbb3fa127",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                4,
+                1365,
+                228,
+                243
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                761,
+                526,
+                1021,
+                716
+              ],
+              "crop": [
+                751,
+                516,
+                1033,
+                728
+              ],
+              "pivotX": 115.0,
+              "pivotY": 199,
+              "bodyHeight": 215.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "327121bcd91158c978f536a2c0b85f4968f5516be5b49f42ef5390a96995818b",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1445,
+                2348,
+                282,
+                212
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                993,
+                616,
+                1248,
+                716
+              ],
+              "crop": [
+                974,
+                550,
+                1254,
+                798
+              ],
+              "pivotX": 146.5,
+              "pivotY": 165,
+              "bodyHeight": 215.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "308cdcbe310b2afc17357457c06fff73e1e308a5ac3e75de996fc5faf85022b3",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1370,
+                856,
+                280,
+                248
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "ne",
+          "bodyHeight": 218.0,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                41,
+                742,
+                266,
+                962
+              ],
+              "crop": [
+                33,
+                735,
+                275,
+                972
+              ],
+              "pivotX": 109.0,
+              "pivotY": 226,
+              "bodyHeight": 218.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "10813abbae3cfa9a8fd52046109abdb21edb8f7e5dab2c71cd097edc6a281d6c",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1297,
+                1616,
+                242,
+                237
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                304,
+                747,
+                497,
+                963
+              ],
+              "crop": [
+                296,
+                738,
+                505,
+                971
+              ],
+              "pivotX": 93.0,
+              "pivotY": 224,
+              "bodyHeight": 218.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "d5b2a05546f0eed91bbcce1a03536d5c5e9df6431dbcd03e6162b21cbab850fc",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1513,
+                1865,
+                209,
+                233
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                515,
+                736,
+                745,
+                966
+              ],
+              "crop": [
+                493,
+                720,
+                770,
+                989
+              ],
+              "pivotX": 141.0,
+              "pivotY": 245,
+              "bodyHeight": 218.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "9ddb413658d8840a09df09b4b0310622eceba120cac758919a468a197c733b8c",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                553,
+                310,
+                277,
+                269
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                776,
+                760,
+                1025,
+                963
+              ],
+              "crop": [
+                763,
+                752,
+                1034,
+                995
+              ],
+              "pivotX": 121.0,
+              "pivotY": 210,
+              "bodyHeight": 218.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "e5d58b9f69ceee9efc08baa7d01293977a4540b7ee620ba96b49ab3aaebddbfe",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                240,
+                1365,
+                271,
+                243
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                990,
+                864,
+                1252,
+                967
+              ],
+              "crop": [
+                982,
+                790,
+                1254,
+                981
+              ],
+              "pivotX": 139.0,
+              "pivotY": 176,
+              "bodyHeight": 218.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "ff666e9fdf94bdd2f623f9769a15a526320d8c04acc324f9fb883811dbe44bd4",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                4,
+                2579,
+                272,
+                191
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "n",
+          "bodyHeight": 217.5,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                37,
+                992,
+                252,
+                1204
+              ],
+              "crop": [
+                29,
+                980,
+                277,
+                1212
+              ],
+              "pivotX": 99.0,
+              "pivotY": 223,
+              "bodyHeight": 217.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "fcd1b7af198f9c2bb809e8ba799cff8b36a30f37237a9755b4c7568673c32148",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1730,
+                1865,
+                248,
+                232
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                290,
+                986,
+                498,
+                1209
+              ],
+              "crop": [
+                277,
+                978,
+                505,
+                1218
+              ],
+              "pivotX": 144.0,
+              "pivotY": 230,
+              "bodyHeight": 217.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "33348f47cc325462cc5b2ff18575478c734c0759f188771ce0b1d76e0f5b98a3",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                296,
+                1616,
+                228,
+                240
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                528,
+                976,
+                732,
+                1206
+              ],
+              "crop": [
+                503,
+                969,
+                742,
+                1254
+              ],
+              "pivotX": 147.0,
+              "pivotY": 236,
+              "bodyHeight": 217.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "0d9e63334e4276e4708127c24e950dbf7fcddf0e14cefd9c9d49234b3694b3a3",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1048,
+                4,
+                239,
+                285
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                760,
+                989,
+                994,
+                1204
+              ],
+              "crop": [
+                751,
+                979,
+                1043,
+                1224
+              ],
+              "pivotX": 104.0,
+              "pivotY": 224,
+              "bodyHeight": 217.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "fe295dbcb26ecf2b1c1a29eac61b49b88a7a32fe1e2eabad8005615958d3ecc3",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                1658,
+                856,
+                292,
+                245
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                985,
+                1106,
+                1247,
+                1208
+              ],
+              "crop": [
+                978,
+                1100,
+                1254,
+                1248
+              ],
+              "pivotX": 138.0,
+              "pivotY": 107,
+              "bodyHeight": 217.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "31775c85eb4bf4358d2b9becac5d73c50bf6ff365b06874f7eba3e719129b8cb",
+              "atlas": "monsters-forest-v065.png",
+              "atlasRect": [
+                811,
+                2579,
+                276,
+                148
+              ]
+            }
+          ]
+        }
+      ],
+      "frames": 25
+    },
+    "ruins_bat": {
+      "source": "art/monsters065/ruins_bat.png",
+      "sha256": "f43778c39f7e72f6fe69ab73c20cf2da113a687b9827791419014d157682583c",
+      "width": 1254,
+      "height": 1254,
+      "transparentFraction": 0.597227,
+      "bodyCores": 25,
+      "independentComponentsOver1500px": 25,
+      "rowBands": null,
+      "directions": [
+        {
+          "direction": "s",
+          "bodyHeight": 167.0,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                18,
+                79,
+                267,
+                254
+              ],
+              "crop": [
+                0,
+                3,
+                288,
+                283
+              ],
+              "pivotX": 143.0,
+              "pivotY": 250,
+              "bodyHeight": 167.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "02173bb48513e0d8d4e217068d2303519b7c23b4ae6fb101d27d2610c78940bc",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                4,
+                337,
+                288,
+                280
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                264,
+                99,
+                511,
+                258
+              ],
+              "crop": [
+                232,
+                35,
+                524,
+                269
+              ],
+              "pivotX": 157.0,
+              "pivotY": 222,
+              "bodyHeight": 167.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "2e085b577f92d3f0d7dbd028f07028f408f31fef9202c726c8006e977bb4f2c1",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                878,
+                2237,
+                292,
+                234
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                522,
+                99,
+                720,
+                267
+              ],
+              "crop": [
+                507,
+                23,
+                755,
+                301
+              ],
+              "pivotX": 111.0,
+              "pivotY": 243,
+              "bodyHeight": 167.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "1829934aa07e472af04a08ece92de3677b725c2520afc9402d18bc8f8cdee62b",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                600,
+                337,
+                248,
+                278
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                709,
+                86,
+                1011,
+                254
+              ],
+              "crop": [
+                700,
+                10,
+                1156,
+                285
+              ],
+              "pivotX": 169.0,
+              "pivotY": 243,
+              "bodyHeight": 167.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "31b5040bb73cf0efe6bd796baf5d5e58b58203a40bd6248effc10d832deefe1b",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1099,
+                337,
+                456,
+                275
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                997,
+                182,
+                1240,
+                271
+              ],
+              "crop": [
+                974,
+                15,
+                1254,
+                340
+              ],
+              "pivotX": 144.5,
+              "pivotY": 255,
+              "bodyHeight": 167.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "1a44b55fb638b4a5cc59c766661521445eca2d5851b41343b7aa6e8ee2da3591",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                4,
+                4,
+                280,
+                325
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "se",
+          "bodyHeight": 174.0,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                24,
+                302,
+                250,
+                475
+              ],
+              "crop": [
+                16,
+                272,
+                265,
+                494
+              ],
+              "pivotX": 164.0,
+              "pivotY": 202,
+              "bodyHeight": 174.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "512168cbce5db0fb5190bae9b62d10a62e5a2eb84b0e379f376d8e26adb21c34",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                4,
+                2722,
+                249,
+                222
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                267,
+                302,
+                491,
+                477
+              ],
+              "crop": [
+                255,
+                282,
+                534,
+                515
+              ],
+              "pivotX": 167.0,
+              "pivotY": 194,
+              "bodyHeight": 174.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "3b744f892541ba597bbd3c760b73ea1f1446e9fc3c3393bcf91881c7e0169c57",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1402,
+                2237,
+                279,
+                233
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                526,
+                318,
+                730,
+                481
+              ],
+              "crop": [
+                513,
+                276,
+                766,
+                507
+              ],
+              "pivotX": 144.0,
+              "pivotY": 204,
+              "bodyHeight": 174.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "67c9265c2decf71ee8f9ea2ab8ca9429a7dbc2309ecaabf095cb779a383aa77b",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1689,
+                2237,
+                253,
+                231
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                740,
+                306,
+                1040,
+                489
+              ],
+              "crop": [
+                719,
+                260,
+                1097,
+                504
+              ],
+              "pivotX": 195.0,
+              "pivotY": 228,
+              "bodyHeight": 174.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "2b32d71e051051147e5ac6ae04db20b7cd6b9c2eb2e3e79cb693b159aa484dbd",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                539,
+                1982,
+                378,
+                244
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                995,
+                406,
+                1239,
+                502
+              ],
+              "crop": [
+                976,
+                335,
+                1247,
+                547
+              ],
+              "pivotX": 141.0,
+              "pivotY": 166,
+              "bodyHeight": 174.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "41d145192e9cc1c4ad86db051efff2bff4d078a75777864b0f470c05c87a6e98",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                744,
+                2722,
+                271,
+                212
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "e",
+          "bodyHeight": 176.0,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                25,
+                525,
+                268,
+                705
+              ],
+              "crop": [
+                13,
+                511,
+                309,
+                738
+              ],
+              "pivotX": 169.0,
+              "pivotY": 193,
+              "bodyHeight": 176.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "0ce0ead50e81a0aa6b41dfac76b80d4803c6dbe24b4a2c0d9c5c7177f8df09d8",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                861,
+                2485,
+                296,
+                227
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                290,
+                533,
+                517,
+                705
+              ],
+              "crop": [
+                282,
+                493,
+                535,
+                751
+              ],
+              "pivotX": 153.0,
+              "pivotY": 211,
+              "bodyHeight": 176.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "643e022fc354230c685d56ebbf6e90a82bd469203fce67997e94b3689f97e896",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                232,
+                1451,
+                253,
+                258
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                533,
+                539,
+                770,
+                706
+              ],
+              "crop": [
+                524,
+                498,
+                806,
+                743
+              ],
+              "pivotX": 161.0,
+              "pivotY": 207,
+              "bodyHeight": 176.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "5b6fb84d289946bd4bc4cbe6d6eef173f3c76bc8e4a86062b34da86907d4670e",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                249,
+                1982,
+                282,
+                245
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                765,
+                528,
+                1028,
+                702
+              ],
+              "crop": [
+                751,
+                501,
+                1071,
+                726
+              ],
+              "pivotX": 199.0,
+              "pivotY": 200,
+              "bodyHeight": 176.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "aa2e9d1510a8f52dafcbc519ce0b0678abb6b8707d65eab6a3dfba9cf104ae78",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1165,
+                2485,
+                320,
+                225
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                1008,
+                648,
+                1240,
+                745
+              ],
+              "crop": [
+                970,
+                580,
+                1246,
+                790
+              ],
+              "pivotX": 154.0,
+              "pivotY": 164,
+              "bodyHeight": 176.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "a303ea45d454b7ee5fdbd011a6dd17376abb23da7b0f34a2bfcb7278438a5aa4",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1023,
+                2722,
+                276,
+                210
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "ne",
+          "bodyHeight": 177.0,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                24,
+                763,
+                263,
+                942
+              ],
+              "crop": [
+                0,
+                718,
+                277,
+                977
+              ],
+              "pivotX": 154.0,
+              "pivotY": 223,
+              "bodyHeight": 177.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "2a83f8156994d17a713f2962f72dd6ad50ddc604a8785da72a61d5aac76d504e",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1431,
+                1181,
+                277,
+                259
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                267,
+                768,
+                514,
+                943
+              ],
+              "crop": [
+                247,
+                724,
+                549,
+                983
+              ],
+              "pivotX": 157.0,
+              "pivotY": 218,
+              "bodyHeight": 177.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "0b975a61ad5f43f531470f74cc7bbc4684c086921edaab31291323c1e177b542",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1716,
+                1181,
+                302,
+                259
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                526,
+                773,
+                745,
+                944
+              ],
+              "crop": [
+                515,
+                726,
+                761,
+                982
+              ],
+              "pivotX": 121.0,
+              "pivotY": 217,
+              "bodyHeight": 177.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "5f417bba4216e3c7218cfdea46b65e561d2942d6a2eaa762f53e814c1afa2d3a",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                4,
+                1718,
+                246,
+                256
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                755,
+                764,
+                1027,
+                939
+              ],
+              "crop": [
+                744,
+                750,
+                1053,
+                979
+              ],
+              "pivotX": 148.0,
+              "pivotY": 188,
+              "bodyHeight": 177.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "c269e947b741b35939f39c7bfe7f04ebd80155693059229ed9fa24089ed4a3ec",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                4,
+                2485,
+                309,
+                229
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                1007,
+                871,
+                1240,
+                969
+              ],
+              "crop": [
+                994,
+                859,
+                1254,
+                1055
+              ],
+              "pivotX": 129.5,
+              "pivotY": 109,
+              "bodyHeight": 177.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "41b84e844fa5bb4d808f9462bad58e0bdea807361f0e9b4c06776529385b42ea",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                4,
+                2952,
+                260,
+                196
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "n",
+          "bodyHeight": 157.5,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                13,
+                1005,
+                274,
+                1167
+              ],
+              "crop": [
+                0,
+                950,
+                285,
+                1254
+              ],
+              "pivotX": 145.0,
+              "pivotY": 216,
+              "bodyHeight": 157.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "232ce4725804c659a803a430810654483ed2f46edd1e71c236316c3cdd272825",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                602,
+                4,
+                285,
+                304
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                271,
+                1022,
+                516,
+                1175
+              ],
+              "crop": [
+                236,
+                966,
+                532,
+                1254
+              ],
+              "pivotX": 156.0,
+              "pivotY": 208,
+              "bodyHeight": 157.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "2b43f83d9aec301848148bf03006a570f1fedc706832dde895ad5ea0f810e220",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1165,
+                4,
+                296,
+                288
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                534,
+                1014,
+                721,
+                1180
+              ],
+              "crop": [
+                512,
+                962,
+                768,
+                1234
+              ],
+              "pivotX": 111.0,
+              "pivotY": 217,
+              "bodyHeight": 157.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "1f9268312fafa67aabc52dfcfab0baab81740f5a6c7ea339c1e868edaa15cfc4",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                4,
+                625,
+                256,
+                272
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                722,
+                1012,
+                1039,
+                1176
+              ],
+              "crop": [
+                704,
+                971,
+                1093,
+                1234
+              ],
+              "pivotX": 172.0,
+              "pivotY": 204,
+              "bodyHeight": 157.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "b8c9cd62abebbf42b6d433691549ab559920a385ce408d554f2b3fa5de71df21",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1451,
+                905,
+                389,
+                263
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                1001,
+                1107,
+                1241,
+                1202
+              ],
+              "crop": [
+                994,
+                1050,
+                1248,
+                1215
+              ],
+              "pivotX": 127.0,
+              "pivotY": 151,
+              "bodyHeight": 157.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "05fcdc1cadd263e243d2b0a38f5eb0ddd82644a8ac9a01038d76b500fdc1ff16",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                272,
+                2952,
+                254,
+                165
+              ]
+            }
+          ]
+        }
+      ],
+      "frames": 25
+    },
+    "ruins_wraith": {
+      "source": "art/monsters065/ruins_wraith.png",
+      "sha256": "572fb0903519afd497966ff08f5f6d722fcf61af714a066baf19730e89b2719a",
+      "width": 1254,
+      "height": 1254,
+      "transparentFraction": 0.465888,
+      "bodyCores": 25,
+      "independentComponentsOver1500px": 25,
+      "rowBands": null,
+      "directions": [
+        {
+          "direction": "s",
+          "bodyHeight": 234.0,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                35,
+                27,
+                216,
+                261
+              ],
+              "crop": [
+                25,
+                17,
+                253,
+                274
+              ],
+              "pivotX": 106.0,
+              "pivotY": 243,
+              "bodyHeight": 234.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "11a22b3dd98689951331705f9dd4cfa8f0000e0cd01ca711f7fc5c3986947f8e",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1317,
+                1451,
+                228,
+                257
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                279,
+                25,
+                465,
+                259
+              ],
+              "crop": [
+                254,
+                18,
+                474,
+                277
+              ],
+              "pivotX": 112.0,
+              "pivotY": 240,
+              "bodyHeight": 234.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "b232a17b22641066c28b0d4b3e0c570ff88875dc8e6a16f9bac357e6ef830c8a",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                4,
+                1451,
+                220,
+                259
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                510,
+                24,
+                727,
+                261
+              ],
+              "crop": [
+                483,
+                13,
+                752,
+                280
+              ],
+              "pivotX": 152.0,
+              "pivotY": 247,
+              "bodyHeight": 234.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "f94c637b3ba463c54d68a796ab76424c0e9dc904781595188176cf1a5f836393",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                532,
+                905,
+                269,
+                267
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                757,
+                34,
+                973,
+                262
+              ],
+              "crop": [
+                744,
+                22,
+                1051,
+                280
+              ],
+              "pivotX": 116.0,
+              "pivotY": 239,
+              "bodyHeight": 234.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "a93bf73f0dcf0d0f05f8ce8a1cf4f9b8d2128a309fd5507f5df46543d07fa6d0",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                493,
+                1451,
+                307,
+                258
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                984,
+                161,
+                1245,
+                270
+              ],
+              "crop": [
+                952,
+                13,
+                1254,
+                334
+              ],
+              "pivotX": 162.5,
+              "pivotY": 256,
+              "bodyHeight": 234.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "527d92777a41f71064123e797119176848b2f11f60cdb347f6f360419278c78f",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                292,
+                4,
+                302,
+                321
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "se",
+          "bodyHeight": 229.0,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                27,
+                276,
+                214,
+                505
+              ],
+              "crop": [
+                0,
+                260,
+                255,
+                531
+              ],
+              "pivotX": 131.0,
+              "pivotY": 244,
+              "bodyHeight": 229.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "b28555f5c45625a665fdff6777443b2dbd13950a37102b2d5aabfc6d6b556290",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1114,
+                625,
+                255,
+                271
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                267,
+                276,
+                460,
+                505
+              ],
+              "crop": [
+                250,
+                262,
+                480,
+                523
+              ],
+              "pivotX": 126.0,
+              "pivotY": 242,
+              "bodyHeight": 229.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "bbef424988f9f18565745ff3569ea0731779f2aff0b9a1f9e3c63df04b5f0745",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                596,
+                1181,
+                230,
+                261
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                507,
+                277,
+                730,
+                504
+              ],
+              "crop": [
+                485,
+                260,
+                759,
+                522
+              ],
+              "pivotX": 116.0,
+              "pivotY": 243,
+              "bodyHeight": 229.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "4abdf8861220f9a9289455c0b3c8f85674a653555885e60953245156220dc12c",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                4,
+                1181,
+                274,
+                262
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                745,
+                285,
+                1003,
+                506
+              ],
+              "crop": [
+                720,
+                268,
+                1073,
+                535
+              ],
+              "pivotX": 136.0,
+              "pivotY": 237,
+              "bodyHeight": 229.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "1d7b30ba41955e46d0cbed1ffd26f8a62044bc1394d5d63c92219acd7faed0b6",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                809,
+                905,
+                353,
+                267
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                969,
+                405,
+                1245,
+                517
+              ],
+              "crop": [
+                934,
+                339,
+                1254,
+                589
+              ],
+              "pivotX": 173.0,
+              "pivotY": 177,
+              "bodyHeight": 229.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "78d7aec64a7065b18dc5c7f43524daeb3cc57dfe29b9aaf3e0af610094c5490e",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                515,
+                1718,
+                320,
+                250
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "e",
+          "bodyHeight": 222.5,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                24,
+                520,
+                214,
+                744
+              ],
+              "crop": [
+                0,
+                500,
+                241,
+                757
+              ],
+              "pivotX": 124.0,
+              "pivotY": 243,
+              "bodyHeight": 222.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "d20b1ffaad9f7840a9120c9635770a78d9e3ebe36be3e0ceba4c219aac1680b3",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1553,
+                1451,
+                241,
+                257
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                260,
+                522,
+                458,
+                743
+              ],
+              "crop": [
+                224,
+                505,
+                517,
+                786
+              ],
+              "pivotX": 148.0,
+              "pivotY": 237,
+              "bodyHeight": 222.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "8d1db2cc77fc5d48e6bc3d4bee1b167228db83849a1d1c392fe70a8bcb4f7c13",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1469,
+                4,
+                293,
+                281
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                500,
+                524,
+                722,
+                744
+              ],
+              "crop": [
+                471,
+                499,
+                731,
+                774
+              ],
+              "pivotX": 124.0,
+              "pivotY": 244,
+              "bodyHeight": 222.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "c5a35c1aee6fc51f04af960bfd7ae5646274762e7cc45d851c915f8d9f44ae37",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1563,
+                337,
+                260,
+                275
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                736,
+                525,
+                1029,
+                747
+              ],
+              "crop": [
+                712,
+                500,
+                1073,
+                770
+              ],
+              "pivotX": 141.0,
+              "pivotY": 246,
+              "bodyHeight": 222.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "c61f118e731ed09f73a9def0817bc0a7353286bbb28e97e2bf823b7c7a2e0444",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1377,
+                625,
+                361,
+                270
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                962,
+                652,
+                1245,
+                759
+              ],
+              "crop": [
+                924,
+                592,
+                1254,
+                834
+              ],
+              "pivotX": 179.5,
+              "pivotY": 166,
+              "bodyHeight": 222.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "e9c2b495f60ed972bb6da4737c4f36aa14ae45a80fbc66db91de366437be52d4",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                925,
+                1982,
+                330,
+                242
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "ne",
+          "bodyHeight": 224.0,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                26,
+                755,
+                209,
+                981
+              ],
+              "crop": [
+                0,
+                741,
+                250,
+                1011
+              ],
+              "pivotX": 114.0,
+              "pivotY": 239,
+              "bodyHeight": 224.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "0cdb91a617ab6cf9a333adad85a2e2b7b90cb4b4902ed56fcf2f28219adfaa90",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1746,
+                625,
+                250,
+                270
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                278,
+                755,
+                476,
+                977
+              ],
+              "crop": [
+                220,
+                738,
+                500,
+                1010
+              ],
+              "pivotX": 143.0,
+              "pivotY": 238,
+              "bodyHeight": 224.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "de6978fea7422687fb0dc10cad2e6fbfb9754ce239ea3492a0851207c476cc85",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                268,
+                625,
+                280,
+                272
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                505,
+                756,
+                723,
+                981
+              ],
+              "crop": [
+                479,
+                738,
+                752,
+                1003
+              ],
+              "pivotX": 129.0,
+              "pivotY": 242,
+              "bodyHeight": 224.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "2dab19c5baa2c9046e83cd48c892d533686227d345681ab990ffbef992c2df35",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1170,
+                905,
+                273,
+                265
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                754,
+                760,
+                995,
+                977
+              ],
+              "crop": [
+                724,
+                744,
+                1055,
+                1005
+              ],
+              "pivotX": 127.0,
+              "pivotY": 232,
+              "bodyHeight": 224.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "904e0de0e43955c5aa8b4af2b57a41817c55b4d591c1c513ca6143a2a2a3e01c",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                834,
+                1181,
+                331,
+                261
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                978,
+                878,
+                1244,
+                994
+              ],
+              "crop": [
+                940,
+                824,
+                1254,
+                1065
+              ],
+              "pivotX": 171.0,
+              "pivotY": 169,
+              "bodyHeight": 224.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "0eced4fcf6d007ce673e22e61323c924f603eecd39fef803934b58159ec6a423",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1263,
+                1982,
+                314,
+                241
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "n",
+          "bodyHeight": 229.0,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                36,
+                993,
+                218,
+                1222
+              ],
+              "crop": [
+                0,
+                977,
+                235,
+                1254
+              ],
+              "pivotX": 137.0,
+              "pivotY": 244,
+              "bodyHeight": 229.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "d3d7e1c843e2abf1d21211d9f46f1e4d396479f988d2e177832538d688406846",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                856,
+                337,
+                235,
+                277
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                291,
+                993,
+                473,
+                1222
+              ],
+              "crop": [
+                252,
+                977,
+                502,
+                1237
+              ],
+              "pivotX": 115.0,
+              "pivotY": 244,
+              "bodyHeight": 229.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "a250b64a0fbc85dd33c487d175b90f409f157388e58b24460b6f5f2085dd6c76",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1173,
+                1181,
+                250,
+                260
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                527,
+                993,
+                734,
+                1222
+              ],
+              "crop": [
+                491,
+                974,
+                757,
+                1242
+              ],
+              "pivotX": 131.0,
+              "pivotY": 247,
+              "bodyHeight": 229.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "a63ac22e3d4be194d5082b66c86851d9827c60831f0357fd810e7e0eedcc0aad",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                4,
+                905,
+                266,
+                268
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                762,
+                992,
+                968,
+                1222
+              ],
+              "crop": [
+                747,
+                975,
+                1039,
+                1254
+              ],
+              "pivotX": 124.0,
+              "pivotY": 246,
+              "bodyHeight": 229.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "abcb719824da1e2636c0958ec16b65144c9bc589593945b98b944a2aad7f1ff6",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                300,
+                337,
+                292,
+                279
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                981,
+                1116,
+                1236,
+                1228
+              ],
+              "crop": [
+                940,
+                1055,
+                1246,
+                1254
+              ],
+              "pivotX": 168.5,
+              "pivotY": 172,
+              "bodyHeight": 229.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "c93ba88cf2ec23538408a39015dfe97cec5be963c6ae18902ce41537db575039",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1593,
+                2722,
+                306,
+                199
+              ]
+            }
+          ]
+        }
+      ],
+      "frames": 25
+    },
+    "ruins_mimic": {
+      "source": "art/monsters065/ruins_mimic.png",
+      "sha256": "a797a47fe5565db3d0c4b404a884b5578ee4c0b79751ae7ca1b8eb60680ed4da",
+      "width": 1254,
+      "height": 1254,
+      "transparentFraction": 0.551189,
+      "bodyCores": 25,
+      "independentComponentsOver1500px": 25,
+      "rowBands": null,
+      "directions": [
+        {
+          "direction": "s",
+          "bodyHeight": 156.5,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                57,
+                85,
+                227,
+                241
+              ],
+              "crop": [
+                43,
+                44,
+                241,
+                285
+              ],
+              "pivotX": 57.0,
+              "pivotY": 196,
+              "bodyHeight": 156.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "084661742ff2c492f00f8f7e34c70480ad182cf10811859058f006809723818b",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1585,
+                1982,
+                198,
+                241
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                298,
+                85,
+                477,
+                242
+              ],
+              "crop": [
+                270,
+                43,
+                486,
+                277
+              ],
+              "pivotX": 163.0,
+              "pivotY": 198,
+              "bodyHeight": 156.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "3646b09e67f705f92fd13b10d5e95d298ea310aeac3f4da3498de3187ce13ee0",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1178,
+                2237,
+                216,
+                234
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                520,
+                41,
+                722,
+                242
+              ],
+              "crop": [
+                491,
+                28,
+                730,
+                249
+              ],
+              "pivotX": 156.0,
+              "pivotY": 213,
+              "bodyHeight": 156.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "7fe58c0a7e11c3a4034736e78183a823e065addd29ad974614d4ceaee44be1c9",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                261,
+                2722,
+                239,
+                221
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                755,
+                56,
+                977,
+                243
+              ],
+              "crop": [
+                746,
+                19,
+                1027,
+                269
+              ],
+              "pivotX": 109.0,
+              "pivotY": 223,
+              "bodyHeight": 156.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "2912655e3da48595d52496877947872abd57562dc297033f0dd962478c9d20c8",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                843,
+                1718,
+                281,
+                250
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                1003,
+                128,
+                1237,
+                245
+              ],
+              "crop": [
+                992,
+                6,
+                1254,
+                304
+              ],
+              "pivotX": 128.0,
+              "pivotY": 238,
+              "bodyHeight": 156.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "ae3082c3990efa158a8e005eb7430ee02350c24ea60591bd66a9353acf29af8b",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                895,
+                4,
+                262,
+                298
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "se",
+          "bodyHeight": 174.0,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                49,
+                304,
+                233,
+                478
+              ],
+              "crop": [
+                40,
+                272,
+                277,
+                519
+              ],
+              "pivotX": 76.0,
+              "pivotY": 205,
+              "bodyHeight": 174.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "8526c3780d5376759e68d8a099d454e818ff748313b880307a4418346c0291be",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                4,
+                1982,
+                237,
+                247
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                300,
+                306,
+                484,
+                480
+              ],
+              "crop": [
+                270,
+                299,
+                498,
+                517
+              ],
+              "pivotX": 101.0,
+              "pivotY": 180,
+              "bodyHeight": 174.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "789c9aaf7befbd884e9850b62c60737e87feb10ffbcfbe48f8936dd2e73e5288",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                508,
+                2722,
+                228,
+                218
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                524,
+                277,
+                714,
+                473
+              ],
+              "crop": [
+                505,
+                267,
+                740,
+                506
+              ],
+              "pivotX": 132.0,
+              "pivotY": 205,
+              "bodyHeight": 174.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "785ed1e6ea0b29d86f2a87c3454c16b2c3c274f6f4c24cd6402d4a1e71a646eb",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                347,
+                2237,
+                235,
+                239
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                754,
+                291,
+                1003,
+                476
+              ],
+              "crop": [
+                736,
+                257,
+                1032,
+                529
+              ],
+              "pivotX": 117.0,
+              "pivotY": 218,
+              "bodyHeight": 174.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "648b7deb2ebac0edd5c822af27771bbd5a75b018c84f85a117652169e072904e",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                556,
+                625,
+                296,
+                272
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                999,
+                352,
+                1241,
+                479
+              ],
+              "crop": [
+                991,
+                295,
+                1254,
+                543
+              ],
+              "pivotX": 129.0,
+              "pivotY": 183,
+              "bodyHeight": 174.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "f33e2eb95ea00dc0424dd1db1ab8ba7cb642ad9e6ab41fb4ed791c57a55b6398",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1604,
+                1718,
+                263,
+                248
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "e",
+          "bodyHeight": 171.0,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                45,
+                546,
+                230,
+                716
+              ],
+              "crop": [
+                0,
+                525,
+                273,
+                754
+              ],
+              "pivotX": 149.0,
+              "pivotY": 190,
+              "bodyHeight": 171.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "2da4bd33a5c27bcd6bca9ddc0f82fe83ec8ba701d0a2fb0c96ca1780691e34f0",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                321,
+                2485,
+                273,
+                229
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                298,
+                544,
+                478,
+                716
+              ],
+              "crop": [
+                250,
+                501,
+                499,
+                757
+              ],
+              "pivotX": 164.0,
+              "pivotY": 214,
+              "bodyHeight": 171.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "fb99a50e1cf7e58518f11c34755a43cfdf318b6488379df51f59f4f922ff18db",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                258,
+                1718,
+                249,
+                256
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                528,
+                514,
+                727,
+                717
+              ],
+              "crop": [
+                485,
+                506,
+                736,
+                735
+              ],
+              "pivotX": 160.0,
+              "pivotY": 210,
+              "bodyHeight": 171.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "777a7a9a5459d418f26347b3b936e926342b58c385203c374348e1a7418b7565",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                602,
+                2485,
+                251,
+                229
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                737,
+                531,
+                1003,
+                715
+              ],
+              "crop": [
+                716,
+                494,
+                1018,
+                756
+              ],
+              "pivotX": 134.0,
+              "pivotY": 220,
+              "bodyHeight": 171.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "02c983ab92bbd419879279a6633f36d5b7e5414ba7f40bfe1e2728d9c9cc5125",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                286,
+                1181,
+                302,
+                262
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                997,
+                596,
+                1238,
+                718
+              ],
+              "crop": [
+                965,
+                558,
+                1245,
+                794
+              ],
+              "pivotX": 152.5,
+              "pivotY": 159,
+              "bodyHeight": 171.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "573691924b782dd536e198a46a97aaaf8605850d70831cacf4c0f8dc39a60d57",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                590,
+                2237,
+                280,
+                236
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "ne",
+          "bodyHeight": 171.5,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                47,
+                784,
+                229,
+                958
+              ],
+              "crop": [
+                21,
+                739,
+                269,
+                997
+              ],
+              "pivotX": 151.0,
+              "pivotY": 218,
+              "bodyHeight": 171.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "d08e33ffaf0c042f73d7053588db560463149b435a72e7d1c40d090c878433ac",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                808,
+                1451,
+                248,
+                258
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                295,
+                788,
+                481,
+                957
+              ],
+              "crop": [
+                280,
+                742,
+                488,
+                991
+              ],
+              "pivotX": 140.0,
+              "pivotY": 214,
+              "bodyHeight": 171.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "ecb726dcfed41c0699c209eed7136f3c1c146ca6b114c3bd123f22d05f399040",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1132,
+                1718,
+                208,
+                249
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                515,
+                758,
+                722,
+                956
+              ],
+              "crop": [
+                485,
+                727,
+                730,
+                985
+              ],
+              "pivotX": 169.0,
+              "pivotY": 228,
+              "bodyHeight": 171.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "4d95211c048c40415584b8eec48253b83454b576ac64aa34cb23ef153d5be208",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1064,
+                1451,
+                245,
+                258
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                737,
+                774,
+                993,
+                963
+              ],
+              "crop": [
+                720,
+                749,
+                1055,
+                989
+              ],
+              "pivotX": 161.0,
+              "pivotY": 213,
+              "bodyHeight": 171.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "d8670001ed7bd084f5b5a6eae5deb275e8f22586d3442b9badd494dbd1ab97a5",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                4,
+                2237,
+                335,
+                240
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                988,
+                845,
+                1245,
+                964
+              ],
+              "crop": [
+                976,
+                777,
+                1254,
+                1001
+              ],
+              "pivotX": 140.5,
+              "pivotY": 186,
+              "bodyHeight": 171.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "4bd0e3f9d4df0e401eb6bc65075ca65d66d5d2ce3e31c23a2a40b69d8324e51d",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1740,
+                2485,
+                278,
+                224
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "n",
+          "bodyHeight": 166.5,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                48,
+                1029,
+                236,
+                1200
+              ],
+              "crop": [
+                0,
+                989,
+                248,
+                1238
+              ],
+              "pivotX": 174.0,
+              "pivotY": 210,
+              "bodyHeight": 166.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "4fac1a3c25f801c5d40e89eb6214f2031663f5ec287ab9cd90616ac9dba79102",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1348,
+                1718,
+                248,
+                249
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                298,
+                1030,
+                482,
+                1192
+              ],
+              "crop": [
+                254,
+                986,
+                500,
+                1254
+              ],
+              "pivotX": 85.0,
+              "pivotY": 205,
+              "bodyHeight": 166.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "87c2b6551b3cb00218369076545e4fb131051b59c112187ead9b59beb598924f",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                278,
+                905,
+                246,
+                268
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                523,
+                996,
+                711,
+                1206
+              ],
+              "crop": [
+                493,
+                988,
+                732,
+                1213
+              ],
+              "pivotX": 167.0,
+              "pivotY": 217,
+              "bodyHeight": 166.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "d38a8766ee6ff0f8a85bf5c56691bcce06ab5db1ac1c0469ffb221e947a6fd74",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1493,
+                2485,
+                239,
+                225
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                754,
+                1008,
+                970,
+                1199
+              ],
+              "crop": [
+                745,
+                976,
+                991,
+                1248
+              ],
+              "pivotX": 83.0,
+              "pivotY": 222,
+              "bodyHeight": 166.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "9ddd7b270f2fe3f0914c56b45d87628849d7b4f552c374960e692b1fe1ea50c5",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                860,
+                625,
+                246,
+                272
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                986,
+                1086,
+                1235,
+                1206
+              ],
+              "crop": [
+                964,
+                1024,
+                1242,
+                1234
+              ],
+              "pivotX": 146.5,
+              "pivotY": 181,
+              "bodyHeight": 166.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "96de141efff0d244dd3d559b78ff55fd1584f9a99bb8bc2a74cdef0cf4cda22c",
+              "atlas": "monsters-ruins-v065.png",
+              "atlasRect": [
+                1307,
+                2722,
+                278,
+                210
+              ]
+            }
+          ]
+        }
+      ],
+      "frames": 25
+    },
+    "frost_leopard": {
+      "source": "art/monsters065/frost_leopard.png",
+      "sha256": "84caff947e4c3c050b760477d08c3f27a807e2dc7f64002e55263518bf5dddfa",
+      "width": 1254,
+      "height": 1254,
+      "transparentFraction": 0.604014,
+      "bodyCores": 25,
+      "independentComponentsOver1500px": 25,
+      "rowBands": null,
+      "directions": [
+        {
+          "direction": "s",
+          "bodyHeight": 177.0,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                45,
+                74,
+                196,
+                252
+              ],
+              "crop": [
+                13,
+                57,
+                239,
+                285
+              ],
+              "pivotX": 138.0,
+              "pivotY": 194,
+              "bodyHeight": 177.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "de94b77fc0fea2a77524867afff6d18c88721482fb90e8bb3bd5dd95979988db",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                536,
+                2419,
+                226,
+                228
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                279,
+                74,
+                433,
+                250
+              ],
+              "crop": [
+                262,
+                32,
+                444,
+                264
+              ],
+              "pivotX": 117.0,
+              "pivotY": 217,
+              "bodyHeight": 177.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "cd184b7cdec7244468f3e83891adf9a737022bd5c39b36932112ef8f7b9f3355",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1813,
+                2172,
+                182,
+                232
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                529,
+                73,
+                695,
+                251
+              ],
+              "crop": [
+                489,
+                47,
+                742,
+                269
+              ],
+              "pivotX": 168.0,
+              "pivotY": 203,
+              "bodyHeight": 177.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "b4df3625268d51dd9d2f610bdea464695324dd662f17eaf28c1363bd529f3f75",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1038,
+                2419,
+                253,
+                222
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                739,
+                71,
+                923,
+                251
+              ],
+              "crop": [
+                720,
+                59,
+                939,
+                263
+              ],
+              "pivotX": 171.0,
+              "pivotY": 191,
+              "bodyHeight": 177.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "a924092ede932821d0520f52c8ecb5a0c8b04f9c99918118b5d7663e1b7f923d",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                807,
+                2658,
+                219,
+                204
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                958,
+                155,
+                1225,
+                251
+              ],
+              "crop": [
+                941,
+                83,
+                1234,
+                318
+              ],
+              "pivotX": 150.5,
+              "pivotY": 167,
+              "bodyHeight": 177.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "2eb6d76bc39975631504243ddfaac41724bd3bcf9b50efeedbd44d0582dd13c3",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                748,
+                2172,
+                293,
+                235
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "se",
+          "bodyHeight": 192.5,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                39,
+                294,
+                211,
+                489
+              ],
+              "crop": [
+                27,
+                283,
+                255,
+                529
+              ],
+              "pivotX": 113.0,
+              "pivotY": 205,
+              "bodyHeight": 192.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "fef33de12e18c29fabc4dc14a3734b2140777ad9612eb85f3b398a0e8bc1450f",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1078,
+                1407,
+                228,
+                246
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                290,
+                301,
+                463,
+                491
+              ],
+              "crop": [
+                246,
+                276,
+                504,
+                509
+              ],
+              "pivotX": 144.0,
+              "pivotY": 214,
+              "bodyHeight": 192.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "c655ea43f8651c7f32056bfd3a7900fc2702f1dba3868e952aa70b7e32d90d1a",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1547,
+                2172,
+                258,
+                233
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                515,
+                297,
+                714,
+                487
+              ],
+              "crop": [
+                471,
+                264,
+                746,
+                533
+              ],
+              "pivotX": 207.0,
+              "pivotY": 222,
+              "bodyHeight": 192.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "d03cf35eca9ace0c87e192e4b1cecacee86b1a80da4d0b225ade40526cddfdaf",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1623,
+                306,
+                275,
+                269
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                751,
+                294,
+                954,
+                490
+              ],
+              "crop": [
+                732,
+                258,
+                1009,
+                502
+              ],
+              "pivotX": 188.0,
+              "pivotY": 231,
+              "bodyHeight": 192.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "964a2a024798376ee1b4a5177659fbf3889e5d11fb0b399b302338d76f56be29",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1030,
+                1919,
+                277,
+                244
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                969,
+                395,
+                1223,
+                490
+              ],
+              "crop": [
+                955,
+                316,
+                1230,
+                569
+              ],
+              "pivotX": 141.0,
+              "pivotY": 173,
+              "bodyHeight": 192.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "e14bf646efdbeddaa93f96620b8d4841f651e6662361004260685d7e224f65ba",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1469,
+                1142,
+                275,
+                253
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "e",
+          "bodyHeight": 155.5,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                22,
+                561,
+                246,
+                719
+              ],
+              "crop": [
+                9,
+                549,
+                260,
+                751
+              ],
+              "pivotX": 147.0,
+              "pivotY": 169,
+              "bodyHeight": 155.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "70b4b6b02edbe6f0ee5f0c3d6836c4b42d064c0ee4ab7f3ce36b290b264042fa",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1323,
+                2658,
+                251,
+                202
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                265,
+                558,
+                498,
+                711
+              ],
+              "crop": [
+                248,
+                542,
+                506,
+                726
+              ],
+              "pivotX": 141.0,
+              "pivotY": 168,
+              "bodyHeight": 155.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "e5db12e1c37a29763265ea6d168af934a995550472e42d05f8fc8847219ac1a2",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1582,
+                2658,
+                258,
+                184
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                520,
+                539,
+                739,
+                716
+              ],
+              "crop": [
+                477,
+                515,
+                748,
+                746
+              ],
+              "pivotX": 154.0,
+              "pivotY": 200,
+              "bodyHeight": 155.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "a7e71a54ecb6ce42c62428dbcb8b85d00bbe2bddd25468f7e8a14ee1aaa9b2ba",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                4,
+                2419,
+                271,
+                231
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                751,
+                548,
+                986,
+                720
+              ],
+              "crop": [
+                734,
+                513,
+                1015,
+                760
+              ],
+              "pivotX": 206.0,
+              "pivotY": 206,
+              "bodyHeight": 155.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "e47300b2f91705e4f6afddc9c406c9d1d712cb764008d06eeb4d889647a48414",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                520,
+                1407,
+                281,
+                247
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                987,
+                629,
+                1240,
+                721
+              ],
+              "crop": [
+                967,
+                560,
+                1248,
+                764
+              ],
+              "pivotX": 146.5,
+              "pivotY": 160,
+              "bodyHeight": 155.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "06394d72ec9a04155d75b9b65c1c0ac9ffd4cb9c4e74f43db824427bc2b8e876",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1034,
+                2658,
+                281,
+                204
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "ne",
+          "bodyHeight": 193.5,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                37,
+                771,
+                221,
+                964
+              ],
+              "crop": [
+                27,
+                764,
+                287,
+                972
+              ],
+              "pivotX": 108.0,
+              "pivotY": 199,
+              "bodyHeight": 193.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "12e52a8f8c89be4640fc600090e2f579c18c54dc0f1666b2899dff44de01acd2",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                539,
+                2658,
+                260,
+                208
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                279,
+                771,
+                465,
+                965
+              ],
+              "crop": [
+                242,
+                760,
+                502,
+                985
+              ],
+              "pivotX": 136.0,
+              "pivotY": 204,
+              "bodyHeight": 193.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "a4257fa09b76493840d42085fc84735e015c73008149f4464a1b6def6f79bfe3",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                770,
+                2419,
+                260,
+                225
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                524,
+                789,
+                721,
+                968
+              ],
+              "crop": [
+                507,
+                751,
+                730,
+                985
+              ],
+              "pivotX": 104.0,
+              "pivotY": 216,
+              "bodyHeight": 193.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "40ed093f23f05a535d049455d3b841a76d6c981197cd3434c6639332eda6a0bb",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1049,
+                2172,
+                223,
+                234
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                759,
+                770,
+                979,
+                965
+              ],
+              "crop": [
+                744,
+                751,
+                989,
+                982
+              ],
+              "pivotX": 110.0,
+              "pivotY": 213,
+              "bodyHeight": 193.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "55516fe4deac0343acce97068b79eb14a3bd1815999bb18c1242663da668312f",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                283,
+                2419,
+                245,
+                231
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                965,
+                868,
+                1231,
+                969
+              ],
+              "crop": [
+                922,
+                797,
+                1244,
+                1051
+              ],
+              "pivotX": 176.0,
+              "pivotY": 171,
+              "bodyHeight": 193.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "4d2d7324209cb9cb4f69a9f0d0f0c6bf09a667f9820a4f3b255aa96327074b6c",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1139,
+                1142,
+                322,
+                254
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "n",
+          "bodyHeight": 204.0,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                55,
+                998,
+                204,
+                1198
+              ],
+              "crop": [
+                41,
+                974,
+                255,
+                1210
+              ],
+              "pivotX": 91.0,
+              "pivotY": 223,
+              "bodyHeight": 204.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "55bced11cd4ab26357c4a9fe6f98c763bf2f7add0f6dc840b297483749143deb",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                526,
+                2172,
+                214,
+                236
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                300,
+                1000,
+                446,
+                1208
+              ],
+              "crop": [
+                256,
+                992,
+                488,
+                1214
+              ],
+              "pivotX": 135.0,
+              "pivotY": 215,
+              "bodyHeight": 204.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "b816f4238f9e12145ac6de14eee86f89823c70ef22a41b8a0d6e01c845b6b0b9",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1299,
+                2419,
+                232,
+                222
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                534,
+                1015,
+                718,
+                1202
+              ],
+              "crop": [
+                499,
+                1008,
+                733,
+                1218
+              ],
+              "pivotX": 162.0,
+              "pivotY": 193,
+              "bodyHeight": 204.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "7c398652ec1cab449e7a783389b66dfe4f625bafbd7436c77a50edfe17532d16",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                297,
+                2658,
+                234,
+                210
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                782,
+                1002,
+                934,
+                1204
+              ],
+              "crop": [
+                765,
+                974,
+                943,
+                1236
+              ],
+              "pivotX": 86.0,
+              "pivotY": 229,
+              "bodyHeight": 204.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "566dfbb51871383768344d7ca5f75559eb3599eb15c872e7cd18a59a6e50755a",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1185,
+                597,
+                178,
+                262
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                970,
+                1103,
+                1235,
+                1203
+              ],
+              "crop": [
+                959,
+                1043,
+                1244,
+                1214
+              ],
+              "pivotX": 143.5,
+              "pivotY": 159,
+              "bodyHeight": 204.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "e5d30c2ea7d13561313810fc5d5619e65da0d18f73a9fd81ce57e7d81fe00f65",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                288,
+                2887,
+                285,
+                171
+              ]
+            }
+          ]
+        }
+      ],
+      "frames": 25
+    },
+    "frost_wisp": {
+      "source": "art/monsters065/frost_wisp.png",
+      "sha256": "73458a662fc190c7f435f9d0ef3f7efc4ed2201159255eaacc2894a4b284dcc2",
+      "width": 1254,
+      "height": 1254,
+      "transparentFraction": 0.563725,
+      "bodyCores": 25,
+      "independentComponentsOver1500px": 33,
+      "rowBands": [
+        0,
+        252,
+        501,
+        738,
+        975,
+        1254
+      ],
+      "directions": [
+        {
+          "direction": "s",
+          "bodyHeight": 197.5,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                50,
+                33,
+                206,
+                231
+              ],
+              "crop": [
+                11,
+                4,
+                253,
+                255
+              ],
+              "pivotX": 116.0,
+              "pivotY": 226,
+              "bodyHeight": 197.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "aa14ae4bc83e5b29b8fca7969cdbe4247e8f786b4772a6d82910346a1f280564",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                4,
+                1407,
+                242,
+                251
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                297,
+                35,
+                456,
+                232
+              ],
+              "crop": [
+                242,
+                11,
+                508,
+                256
+              ],
+              "pivotX": 132.0,
+              "pivotY": 220,
+              "bodyHeight": 197.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "54043280ee7f3844f9fc80a9001c8dccc07806da59873d13540aa755aabb26d5",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1314,
+                1407,
+                266,
+                245
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                547,
+                33,
+                700,
+                231
+              ],
+              "crop": [
+                495,
+                17,
+                745,
+                256
+              ],
+              "pivotX": 127.0,
+              "pivotY": 213,
+              "bodyHeight": 197.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "632e14e54f22fe83c12021c0ed8fea457525d7d7421767c64510c7f4e7604347",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                4,
+                2172,
+                250,
+                239
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                754,
+                33,
+                1035,
+                231
+              ],
+              "crop": [
+                720,
+                0,
+                1121,
+                256
+              ],
+              "pivotX": 139.0,
+              "pivotY": 230,
+              "bodyHeight": 197.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "e3642680a39796be560a22385628edc9ae2524d7297835ae95c3cbcb6a728a11",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                730,
+                1142,
+                401,
+                256
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                1012,
+                155,
+                1238,
+                242
+              ],
+              "crop": [
+                960,
+                35,
+                1245,
+                256
+              ],
+              "pivotX": 165.0,
+              "pivotY": 206,
+              "bodyHeight": 197.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "29f4734cfd22a9bb1e4fb89001f2e516866233e6e7e547a8a31b1515b300d9c2",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                4,
+                2658,
+                285,
+                221
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "se",
+          "bodyHeight": 195.5,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                53,
+                274,
+                222,
+                473
+              ],
+              "crop": [
+                0,
+                248,
+                266,
+                505
+              ],
+              "pivotX": 128.0,
+              "pivotY": 224,
+              "bodyHeight": 195.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "30fb378a00b8da307dab51a952b4df060af17a08a6f576669aa7c569c6cd4c70",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1088,
+                874,
+                266,
+                257
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                299,
+                278,
+                456,
+                470
+              ],
+              "crop": [
+                248,
+                248,
+                528,
+                505
+              ],
+              "pivotX": 128.0,
+              "pivotY": 221,
+              "bodyHeight": 195.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "c8650d669e35354e71084cdf3536d68a970e3bcdb60bb49e8e827b9121c3e076",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1362,
+                874,
+                280,
+                257
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                560,
+                283,
+                716,
+                474
+              ],
+              "crop": [
+                491,
+                248,
+                776,
+                505
+              ],
+              "pivotX": 137.0,
+              "pivotY": 225,
+              "bodyHeight": 195.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "e8baff56849ff65682e12ec7fb6657062cf11a61e16ba5d0fc1545f2c4ba6a3f",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1650,
+                874,
+                285,
+                257
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                769,
+                277,
+                1048,
+                473
+              ],
+              "crop": [
+                729,
+                248,
+                1123,
+                505
+              ],
+              "pivotX": 127.0,
+              "pivotY": 224,
+              "bodyHeight": 195.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "ea5272078315da592c997d663f127615c2d0789cce6ffc7be6e2269867aebcad",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                4,
+                1142,
+                394,
+                257
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                1040,
+                397,
+                1235,
+                489
+              ],
+              "crop": [
+                934,
+                248,
+                1250,
+                505
+              ],
+              "pivotX": 203.5,
+              "pivotY": 240,
+              "bodyHeight": 195.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "42458c5d4ecaf42918e77aeb45b401f9a4fc67a3fcd095a28a5ba168af242656",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                406,
+                1142,
+                316,
+                257
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "e",
+          "bodyHeight": 198.5,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                80,
+                518,
+                201,
+                717
+              ],
+              "crop": [
+                0,
+                497,
+                283,
+                742
+              ],
+              "pivotX": 133.0,
+              "pivotY": 219,
+              "bodyHeight": 198.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "266841096c7fc926103151dc4aebe44ac601f6540c25e25f84b312c8faef011a",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1588,
+                1407,
+                283,
+                245
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                334,
+                518,
+                450,
+                716
+              ],
+              "crop": [
+                252,
+                497,
+                535,
+                742
+              ],
+              "pivotX": 127.0,
+              "pivotY": 218,
+              "bodyHeight": 198.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "64030389938e6d048b16cc0bd4209310dcf65ece54c04f37c7b77fd4988e4e78",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                4,
+                1666,
+                283,
+                245
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                576,
+                520,
+                703,
+                715
+              ],
+              "crop": [
+                497,
+                497,
+                764,
+                742
+              ],
+              "pivotX": 134.0,
+              "pivotY": 217,
+              "bodyHeight": 198.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "452dc1925de049c7e4b37bc0944db2ae584cecea046b08fe38026fd89124ff09",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                295,
+                1666,
+                267,
+                245
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                801,
+                517,
+                924,
+                716
+              ],
+              "crop": [
+                735,
+                497,
+                1156,
+                742
+              ],
+              "pivotX": 109.0,
+              "pivotY": 218,
+              "bodyHeight": 198.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "8b936787591d9253723b59a3f09e5cb47de9db98581115f7bfaacfdea9ee306a",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                570,
+                1666,
+                421,
+                245
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                1010,
+                638,
+                1238,
+                727
+              ],
+              "crop": [
+                938,
+                497,
+                1254,
+                742
+              ],
+              "pivotX": 186.0,
+              "pivotY": 229,
+              "bodyHeight": 198.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "c3a83e96106f5e4a9046dcb62216967f4cbfb34860d257f25032051c0a1c8217",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                999,
+                1666,
+                316,
+                245
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "ne",
+          "bodyHeight": 193.5,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                54,
+                751,
+                211,
+                945
+              ],
+              "crop": [
+                11,
+                734,
+                287,
+                979
+              ],
+              "pivotX": 120.0,
+              "pivotY": 210,
+              "bodyHeight": 193.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "9f4e9b7f71c08f042c196cc071b48f1f80318190a9136de7752651a6e955b896",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1323,
+                1666,
+                276,
+                245
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                308,
+                753,
+                466,
+                946
+              ],
+              "crop": [
+                237,
+                734,
+                529,
+                979
+              ],
+              "pivotX": 143.0,
+              "pivotY": 211,
+              "bodyHeight": 193.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "fb527d117c19e071fb299db01d8f9b7423aff0e3b3c069f3e988f7ba4db4a3cf",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1607,
+                1666,
+                292,
+                245
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                546,
+                752,
+                719,
+                943
+              ],
+              "crop": [
+                488,
+                734,
+                778,
+                979
+              ],
+              "pivotX": 134.0,
+              "pivotY": 208,
+              "bodyHeight": 193.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "9a9cf1aafa5b7cfa5bc58ccf1bec9d5fee9b922c129fa08391ff33f6ad268366",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                4,
+                1919,
+                290,
+                245
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                807,
+                749,
+                1085,
+                945
+              ],
+              "crop": [
+                728,
+                734,
+                1169,
+                979
+              ],
+              "pivotX": 130.0,
+              "pivotY": 210,
+              "bodyHeight": 193.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "ee908146f52ba388b2d3c69b9d98851450c2e9588853a90570b539f8862db652",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                302,
+                1919,
+                441,
+                245
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                1007,
+                871,
+                1238,
+                961
+              ],
+              "crop": [
+                974,
+                734,
+                1245,
+                979
+              ],
+              "pivotX": 148.5,
+              "pivotY": 226,
+              "bodyHeight": 193.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "4b01700b06b0f38fd79804c7323e0c58c6a0c2b30a66d2a2765be2a0143f44d5",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                751,
+                1919,
+                271,
+                245
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "n",
+          "bodyHeight": 192.0,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                55,
+                990,
+                222,
+                1183
+              ],
+              "crop": [
+                13,
+                971,
+                275,
+                1254
+              ],
+              "pivotX": 115.0,
+              "pivotY": 211,
+              "bodyHeight": 192.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "7b52d72832ab4eff914ecd02e9d600bd0ec120b330f3667a5407630ade9b46d0",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                858,
+                4,
+                262,
+                283
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                298,
+                989,
+                459,
+                1180
+              ],
+              "crop": [
+                250,
+                971,
+                517,
+                1254
+              ],
+              "pivotX": 128.0,
+              "pivotY": 208,
+              "bodyHeight": 192.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "1be71557cb915c28247d2f912a8dab2c650f151f693e0da0694030b87e5c4206",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1128,
+                4,
+                267,
+                283
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                561,
+                988,
+                698,
+                1183
+              ],
+              "crop": [
+                499,
+                971,
+                770,
+                1254
+              ],
+              "pivotX": 125.0,
+              "pivotY": 211,
+              "bodyHeight": 192.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "4ea07c64987631987bb80f1ec5fc541114ae3c0eb73651b7f8a6d04142cbb6ff",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1403,
+                4,
+                271,
+                283
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                762,
+                988,
+                933,
+                1182
+              ],
+              "crop": [
+                736,
+                971,
+                1189,
+                1254
+              ],
+              "pivotX": 126.0,
+              "pivotY": 210,
+              "bodyHeight": 192.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "9014d6e19023672cf1e3a6cefb4bc866aa56acfc1477b37a693c2bbf34cf4ca9",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                4,
+                306,
+                453,
+                283
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                1031,
+                1124,
+                1238,
+                1207
+              ],
+              "crop": [
+                935,
+                992,
+                1248,
+                1254
+              ],
+              "pivotX": 199.5,
+              "pivotY": 214,
+              "bodyHeight": 192.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "7155acf58fa9d5c5945e9c17d3a5aa1e133aae620f791a1f47dbb44302b9a673",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1371,
+                597,
+                313,
+                262
+              ]
+            }
+          ]
+        }
+      ],
+      "frames": 25
+    },
+    "frost_yeti": {
+      "source": "art/monsters065/frost_yeti.png",
+      "sha256": "f3a253c7b6432370112dad131f910fec8169778b36bbb220d4c779d6bea1e453",
+      "width": 1254,
+      "height": 1254,
+      "transparentFraction": 0.509947,
+      "bodyCores": 25,
+      "independentComponentsOver1500px": 25,
+      "rowBands": null,
+      "directions": [
+        {
+          "direction": "s",
+          "bodyHeight": 198.5,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                48,
+                55,
+                218,
+                254
+              ],
+              "crop": [
+                33,
+                33,
+                265,
+                291
+              ],
+              "pivotX": 89.0,
+              "pivotY": 220,
+              "bodyHeight": 198.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "34436c16035b00dbeac81698d17e7123800fcb395c6d82bc82d9ce5677b52b80",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                549,
+                874,
+                232,
+                258
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                297,
+                55,
+                463,
+                253
+              ],
+              "crop": [
+                258,
+                17,
+                500,
+                277
+              ],
+              "pivotX": 106.0,
+              "pivotY": 235,
+              "bodyHeight": 198.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "41ff38907dc4aefcd69ddd339f810d7974a8da585ac27666cc68a04bcf3bcfa9",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                4,
+                874,
+                242,
+                260
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                518,
+                14,
+                730,
+                248
+              ],
+              "crop": [
+                505,
+                1,
+                784,
+                264
+              ],
+              "pivotX": 139.0,
+              "pivotY": 246,
+              "bodyHeight": 198.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "19f82185ed0de4f1d207bf3f15e8629ce7949a0bfe0568310e140c213988632b",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                898,
+                597,
+                279,
+                263
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                772,
+                72,
+                971,
+                255
+              ],
+              "crop": [
+                728,
+                17,
+                997,
+                311
+              ],
+              "pivotX": 129.0,
+              "pivotY": 237,
+              "bodyHeight": 198.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "30a7a5494187d821378af45577848576dbe65a435ba814ee5689a7a6d79e747c",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                4,
+                4,
+                269,
+                294
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                997,
+                145,
+                1247,
+                249
+              ],
+              "crop": [
+                977,
+                47,
+                1254,
+                326
+              ],
+              "pivotX": 145.0,
+              "pivotY": 201,
+              "bodyHeight": 198.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "056152f352eaa9661221e946181165012f36c0edd4bfc22a83deeefb2a48790b",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                748,
+                306,
+                277,
+                279
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "se",
+          "bodyHeight": 189.0,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                37,
+                299,
+                221,
+                489
+              ],
+              "crop": [
+                0,
+                276,
+                259,
+                510
+              ],
+              "pivotX": 140.0,
+              "pivotY": 212,
+              "bodyHeight": 189.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "dc3c1e34d054fd7bbddc764626c484449b3df211ab5011dde6976203f8685c26",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1280,
+                2172,
+                259,
+                234
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                282,
+                299,
+                496,
+                487
+              ],
+              "crop": [
+                266,
+                274,
+                507,
+                527
+              ],
+              "pivotX": 121.0,
+              "pivotY": 212,
+              "bodyHeight": 189.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "54a996657c47d62c03071582b0be21a3ca08ecc49e87ea5bb56c0590226c7c75",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1752,
+                1142,
+                241,
+                253
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                529,
+                251,
+                737,
+                485
+              ],
+              "crop": [
+                493,
+                234,
+                776,
+                521
+              ],
+              "pivotX": 83.0,
+              "pivotY": 250,
+              "bodyHeight": 189.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "df6c99cd68e380bf9dfe0fd59f3d4a1742093108ca66400a8c5a5d6750536068",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                281,
+                4,
+                283,
+                287
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                747,
+                314,
+                980,
+                492
+              ],
+              "crop": [
+                708,
+                286,
+                1023,
+                553
+              ],
+              "pivotX": 181.0,
+              "pivotY": 205,
+              "bodyHeight": 189.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "009515f7c44b10c9dce69efc343b2f1654f1ead1d536de75acae52ef93f9332a",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                288,
+                597,
+                315,
+                267
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                986,
+                371,
+                1247,
+                484
+              ],
+              "crop": [
+                976,
+                321,
+                1254,
+                543
+              ],
+              "pivotX": 140.5,
+              "pivotY": 162,
+              "bodyHeight": 189.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "28a01412956472c9982d8a0f65f26fd099a1ee64844bf8bdfd02a1fa55c55e18",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1539,
+                2419,
+                278,
+                222
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "e",
+          "bodyHeight": 179.5,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                16,
+                538,
+                253,
+                721
+              ],
+              "crop": [
+                0,
+                501,
+                287,
+                763
+              ],
+              "pivotX": 175.0,
+              "pivotY": 219,
+              "bodyHeight": 179.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "b1c41a605c97b9e7a0a184e350877422e51400cbbe01a95210d9fbeb567e0a16",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1692,
+                597,
+                287,
+                262
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                276,
+                539,
+                506,
+                715
+              ],
+              "crop": [
+                260,
+                511,
+                521,
+                758
+              ],
+              "pivotX": 159.0,
+              "pivotY": 203,
+              "bodyHeight": 179.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "c864c612564af70801c2b9a762c8e1c500fe8525622f2c338bb9b4d3a7082f7e",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                809,
+                1407,
+                261,
+                247
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                530,
+                486,
+                722,
+                721
+              ],
+              "crop": [
+                502,
+                467,
+                780,
+                752
+              ],
+              "pivotX": 68.0,
+              "pivotY": 253,
+              "bodyHeight": 179.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "26a0ea5c27dd07d7c02f479034fe6ab6b1168781db232977837934923ab836c1",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                572,
+                4,
+                278,
+                285
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                737,
+                551,
+                986,
+                725
+              ],
+              "crop": [
+                698,
+                517,
+                1013,
+                792
+              ],
+              "pivotX": 198.0,
+              "pivotY": 207,
+              "bodyHeight": 179.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "bf25829f1c790f3c2757d0f83444909371d01328263cf96004ad84af7612f503",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1033,
+                306,
+                315,
+                275
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                995,
+                608,
+                1247,
+                709
+              ],
+              "crop": [
+                979,
+                542,
+                1254,
+                786
+              ],
+              "pivotX": 142.0,
+              "pivotY": 166,
+              "bodyHeight": 179.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "90d8f8349b44d8e01853a875f3c3e44dc77519d25b81e9d6cf30ba118367abde",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1315,
+                1919,
+                275,
+                244
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "ne",
+          "bodyHeight": 202.5,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                53,
+                759,
+                240,
+                962
+              ],
+              "crop": [
+                0,
+                730,
+                279,
+                995
+              ],
+              "pivotX": 112.0,
+              "pivotY": 231,
+              "bodyHeight": 202.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "f492194855d07667aeb6f7ec1f34c238c2c9789c8acf7ae9fece3bef5d4bd7b4",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                611,
+                597,
+                279,
+                265
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                287,
+                760,
+                500,
+                962
+              ],
+              "crop": [
+                256,
+                750,
+                514,
+                999
+              ],
+              "pivotX": 127.0,
+              "pivotY": 211,
+              "bodyHeight": 202.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "95c09fd5590d7fb9d19dbb9e4263dcf98c56074b5dd44a9af71ea84ddca45680",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                254,
+                1407,
+                258,
+                249
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                529,
+                732,
+                741,
+                962
+              ],
+              "crop": [
+                513,
+                692,
+                788,
+                975
+              ],
+              "pivotX": 119.0,
+              "pivotY": 269,
+              "bodyHeight": 202.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "ec27c3d075347559e129f264b4c50e898c0dc2144d251b930b5155975a1430a9",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                465,
+                306,
+                275,
+                283
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                737,
+                783,
+                980,
+                962
+              ],
+              "crop": [
+                720,
+                767,
+                1011,
+                1025
+              ],
+              "pivotX": 144.0,
+              "pivotY": 194,
+              "bodyHeight": 202.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "568c64557b30e4e1d59b4e743dd23c6d9664926e811d63e97f225841164be4d3",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                789,
+                874,
+                291,
+                258
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                986,
+                849,
+                1244,
+                966
+              ],
+              "crop": [
+                978,
+                777,
+                1254,
+                1046
+              ],
+              "pivotX": 137.0,
+              "pivotY": 188,
+              "bodyHeight": 202.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "31fdb26290b69ec186628e6ce92497937b99e457952a20c049c495ace1286375",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                4,
+                597,
+                276,
+                269
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "n",
+          "bodyHeight": 207.0,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                49,
+                1000,
+                226,
+                1210
+              ],
+              "crop": [
+                0,
+                984,
+                259,
+                1254
+              ],
+              "pivotX": 109.0,
+              "pivotY": 225,
+              "bodyHeight": 207.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "b6e19bbc61e717e40c8c2d6a6519247a7a24cc5c6aba744061fce3e389463840",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1356,
+                306,
+                259,
+                270
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                276,
+                1002,
+                466,
+                1206
+              ],
+              "crop": [
+                252,
+                978,
+                508,
+                1216
+              ],
+              "pivotX": 131.0,
+              "pivotY": 227,
+              "bodyHeight": 207.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "297a4b47358d8124828cdf9cdf1847d353594fdf3dca69747fb279c8ab2dce27",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                262,
+                2172,
+                256,
+                238
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                521,
+                968,
+                724,
+                1208
+              ],
+              "crop": [
+                475,
+                955,
+                762,
+                1214
+              ],
+              "pivotX": 169.0,
+              "pivotY": 252,
+              "bodyHeight": 207.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "6e1ed874c9be9c33b7ecc258c6733f5d4a9ded1c1c4d17c7eec50feab43a531e",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                254,
+                874,
+                287,
+                259
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                755,
+                1030,
+                968,
+                1204
+              ],
+              "crop": [
+                718,
+                992,
+                1003,
+                1234
+              ],
+              "pivotX": 120.0,
+              "pivotY": 211,
+              "bodyHeight": 207.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "122a2b9ff8a0286d5d162e0687fbe8e09363699b94213c765c052123074cfda5",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                1598,
+                1919,
+                285,
+                242
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                993,
+                1087,
+                1239,
+                1200
+              ],
+              "crop": [
+                978,
+                1028,
+                1254,
+                1211
+              ],
+              "pivotX": 138.0,
+              "pivotY": 171,
+              "bodyHeight": 207.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "a3387efeb1755e70c691b5d0ee6fcb690be2e4520ddd20984afc46f4e33aeff8",
+              "atlas": "monsters-frost-v065.png",
+              "atlasRect": [
+                4,
+                2887,
+                276,
+                183
+              ]
+            }
+          ]
+        }
+      ],
+      "frames": 25
+    }
+  },
+  "atlases": [
+    {
+      "image": "monsters-forest-v065.png",
+      "delivery": "monsters-forest-v065.webp",
+      "width": 2048,
+      "height": 2774,
+      "frames": 75,
+      "sha256WebP": "6ece384723a9846af569bbcc31c556d6a0817d83ba2853dd00682982244f2db8",
+      "sha256RGBA": "d82246f66dc2dfc86100bfebe342b1d990fc4db08b98683c4d8bf641ae090c2a",
+      "decodedRGBABytes": 22724608,
+      "webpBytes": 4726380,
+      "pixelExact": true
+    },
+    {
+      "image": "monsters-ruins-v065.png",
+      "delivery": "monsters-ruins-v065.webp",
+      "width": 2048,
+      "height": 3152,
+      "frames": 75,
+      "sha256WebP": "ab765f86c17b6f3a7dab19c689c02190ab503ce7042db5723e49810fb85225bf",
+      "sha256RGBA": "d2efe250d357aeb627fa0d03e5fe3f1e7cae1f8b1427964bd61de875b31cb134",
+      "decodedRGBABytes": 25821184,
+      "webpBytes": 4544388,
+      "pixelExact": true
+    },
+    {
+      "image": "monsters-frost-v065.png",
+      "delivery": "monsters-frost-v065.webp",
+      "width": 2048,
+      "height": 3074,
+      "frames": 75,
+      "sha256WebP": "ca9e2ead8efaab80c125b5596af5aabb27fcb382780e63548225b5b93ebae194",
+      "sha256RGBA": "c95dc3237e9b2a03519e42d806d53312ec76dc4eca596b16b4e7ddb6a71bbc4b",
+      "decodedRGBABytes": 25182208,
+      "webpBytes": 4023298,
+      "pixelExact": true
+    }
+  ],
+  "method": "25 largest body cores; validated row bands for detached spores/shards; whole opaque parts assigned to closest body connection, then nearest-part edge alpha; no resampling or repainting"
+}

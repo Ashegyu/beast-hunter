@@ -1,0 +1,104 @@
+{
+  "source": {
+    "path": "art/skills053/video-source.mp4",
+    "sha256": "fbdd0f449cad843c6dea5570c04de9a45603bfb8672c5fddbf48f5bda987c7d5",
+    "bytes": 2709948,
+    "durationSeconds": 6.016,
+    "videoDurationSeconds": 6.0,
+    "width": 1280,
+    "height": 720,
+    "frames": 144,
+    "fps": 24,
+    "provenance": "User-uploaded gemini_generated_video_86c369c7.mp4; preserved byte-for-byte"
+  },
+  "inspection": {
+    "contactIntervalSeconds": 0.25,
+    "frameBoundsZeroBased": true,
+    "excludedCrossfadeFramesInclusive": [
+      [
+        61,
+        67
+      ],
+      [
+        114,
+        118
+      ]
+    ],
+    "method": "Low-threshold ffmpeg scene detector plus quarter-second contact sheet and individual transition-frame visual review. Crossfades are deliberately excluded."
+  },
+  "clips": {
+    "bloodmoon": {
+      "path": "dist/assets/ultimate-bloodmoon-v053.mp4",
+      "sha256": "b17c46528f9f7dc78cf9213dd55e3b04e309536f0e366d35c9c6f11ab1cafe24",
+      "bytes": 700103,
+      "sourceStartFrameInclusive": 0,
+      "sourceEndFrameExclusive": 61,
+      "sourceLastFrameInclusive": 60,
+      "sourceStartSeconds": 0.0,
+      "sourceEndSecondsExclusive": 2.5416666666666665,
+      "durationSeconds": 2.541667,
+      "frames": 61,
+      "fps": 24,
+      "width": 960,
+      "height": 540,
+      "codec": "h264",
+      "profile": "Main",
+      "pixelFormat": "yuv420p",
+      "startTime": 0.0,
+      "audio": false,
+      "faststart": true,
+      "composition": "Entire 1280x720 source scaled proportionally; no cropping",
+      "gameDurationSeconds": 1.35,
+      "suggestedPlaybackRate": 1.8827160493827158
+    },
+    "eclipse": {
+      "path": "dist/assets/ultimate-eclipse-v053.mp4",
+      "sha256": "c8cdaea778b66415e70229dae39c4ef498563ed7bc033fef7a503f4b4d3b7059",
+      "bytes": 351954,
+      "sourceStartFrameInclusive": 68,
+      "sourceEndFrameExclusive": 114,
+      "sourceLastFrameInclusive": 113,
+      "sourceStartSeconds": 2.8333333333333335,
+      "sourceEndSecondsExclusive": 4.75,
+      "durationSeconds": 1.916667,
+      "frames": 46,
+      "fps": 24,
+      "width": 960,
+      "height": 540,
+      "codec": "h264",
+      "profile": "Main",
+      "pixelFormat": "yuv420p",
+      "startTime": 0.0,
+      "audio": false,
+      "faststart": true,
+      "composition": "Entire 1280x720 source scaled proportionally; no cropping",
+      "gameDurationSeconds": 1.35,
+      "suggestedPlaybackRate": 1.419753086419753
+    },
+    "phantoms": {
+      "path": "dist/assets/ultimate-phantoms-v053.mp4",
+      "sha256": "89659a820bc83283267299d9bb7c8e8452390381743ee10386ad0e5664982529",
+      "bytes": 215064,
+      "sourceStartFrameInclusive": 119,
+      "sourceEndFrameExclusive": 144,
+      "sourceLastFrameInclusive": 143,
+      "sourceStartSeconds": 4.958333333333333,
+      "sourceEndSecondsExclusive": 6.0,
+      "durationSeconds": 1.041667,
+      "frames": 25,
+      "fps": 24,
+      "width": 960,
+      "height": 540,
+      "codec": "h264",
+      "profile": "Main",
+      "pixelFormat": "yuv420p",
+      "startTime": 0.0,
+      "audio": false,
+      "faststart": true,
+      "composition": "Entire 1280x720 source scaled proportionally; no cropping",
+      "gameDurationSeconds": 1.35,
+      "suggestedPlaybackRate": 0.7716049382716049
+    }
+  },
+  "totalRuntimeBytes": 1267121
+}

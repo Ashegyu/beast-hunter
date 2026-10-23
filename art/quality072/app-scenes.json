@@ -1,0 +1,29 @@
+[
+  {
+    "chapter": 1,
+    "before": 32,
+    "kills": 31,
+    "alive": 6,
+    "queued": 0,
+    "area": 1.2,
+    "cooldown": 58.850000000000065
+  },
+  {
+    "chapter": 2,
+    "before": 32,
+    "kills": 33,
+    "alive": 4,
+    "queued": 0,
+    "area": 1.2,
+    "cooldown": 58.850000000000065
+  },
+  {
+    "chapter": 3,
+    "before": 32,
+    "kills": 28,
+    "alive": 9,
+    "queued": 0,
+    "area": 1.2,
+    "cooldown": 58.850000000000065
+  }
+]

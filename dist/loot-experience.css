@@ -1,0 +1,16 @@
+/* Result loot is separate from the small, text-only combat receipt. */
+#game-shell .result-loot-gallery{min-width:0;margin:14px 0;padding:12px 0;border-block:1px solid #ad976d3d}
+#game-shell .result-loot-gallery>header{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:10px}
+#game-shell .result-loot-gallery>header strong{font:600 14px/1.5 var(--ui-font,sans-serif);color:#e3d3b2}
+#game-shell .result-loot-gallery>header small,#game-shell #result-loot-empty{font:11px/1.5 var(--ui-font,sans-serif);color:#a6b0a8}
+#game-shell .result-loot-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(48px,1fr));gap:7px;min-width:0}
+#game-shell .result-loot-grid figure{min-width:0;margin:0;padding:4px 2px;border:1px solid #a48f6a;border-radius:3px;background:#172027;text-align:center}
+#game-shell .result-loot-grid .equipment-icon{display:block;width:40px;height:40px;max-width:none;margin:auto;border:0;border-radius:0;background-color:transparent;box-shadow:none;transform:none}
+#game-shell .result-loot-grid figcaption{display:block;min-width:0;margin-top:3px;font:10px/14px var(--ui-font,sans-serif)}
+#game-shell .result-loot-grid figcaption>span{display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:#d4cebc}
+#game-shell .result-loot-grid figcaption>small{display:block;font:9px/13px var(--ui-font,sans-serif)}
+#game-shell .result-loot-grid figure[data-kept="false"]{background:#121a20}
+#game-shell .result-loot-pager{display:flex;justify-content:center;align-items:center;gap:14px;margin-top:8px;font:11px var(--ui-font,sans-serif);color:#c3b492}
+#game-shell .result-loot-pager button{width:44px;min-height:44px;padding:0;border:1px solid #ac956a55;border-radius:3px;background:#1c262b;color:#e0c99d;font-size:22px;box-shadow:none}
+#game-shell .result-loot-pager button:disabled{opacity:.35}
+@media(max-width:360px){#game-shell .result-loot-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}

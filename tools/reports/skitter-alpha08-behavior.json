@@ -1,0 +1,37 @@
+{
+  "baselineCommit": "b7a2972e8bb56d213b109d99459599ad49cb9fdb",
+  "scope": "three assisted hunts with camp equipment/training/forge between stages; excludes visual/audio effects, their nextId counter and transient projectile/pickup IDs",
+  "matchedFrames": 2902,
+  "stages": [
+    {
+      "stage": 1,
+      "frames": 911,
+      "phase": "victory",
+      "kills": 24,
+      "rooms": 4,
+      "gold": 292,
+      "cores": 6,
+      "items": 5
+    },
+    {
+      "stage": 2,
+      "frames": 1017,
+      "phase": "victory",
+      "kills": 24,
+      "rooms": 4,
+      "gold": 377,
+      "cores": 8,
+      "items": 5
+    },
+    {
+      "stage": 3,
+      "frames": 974,
+      "phase": "victory",
+      "kills": 24,
+      "rooms": 4,
+      "gold": 466,
+      "cores": 8,
+      "items": 5
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+✔ 35 definitions have unique images, complete rank values and reachable level gates (77.541537ms)
+✔ restore preserves legacy progress and repairs hostile allocations, identities, duplicates and over-spend (9.786418ms)
+✔ unlock, rank, camp-only edits, swap, reset and presets use separate training budget (21.529644ms)
+✔ level milestones match actual slot boundaries, include ultimates and awakening, and do not mutate builds (2.237895ms)
+✔ all direct damage skills resolve on actual enemies, charge once and keep bounded pending work (96.571599ms)
+✔ multi-hit damage does not accelerate ultimate cooldown (2.655904ms)
+✔ cooldowns and jobs freeze on pause; dodge cancels committed windup without refund; stage exit clears deferred damage (7.747571ms)
+✔ buffs and mark are functional, and mark proc cannot recursively count itself (6.552575ms)
+✔ last stand respects internal cooldown and parry excludes area explosion without a source (1.455594ms)
+✔ ultimate level gates and 60 second cooldown cannot be bypassed (1.458004ms)
+✔ passive timing, combo preparation, reduction cap and kill cooldown do not recursively amplify (4.311075ms)
+✔ returning and phantom skills have bounded hit counts and deferred attacks never retarget dead identities (6.15153ms)
+✔ saved skill presets include auto policy and restore atomically at camp (1.692047ms)
+✔ auto policies preserve safety reserve, honor manual ultimate and mark the actual boss identity (6.746029ms)
+✔ wave breaks discard elapsed pulses instead of replaying them in a burst on the next wave (4.548756ms)
+✔ surrounded passive uses its declared240 range rather than the lone-target400 range (4.608527ms)
+✔ ultimate cooldown freezes on pause, survives cancellation and wave breaks, then resets on a fresh hunt (12.717881ms)
+✔ kills and perfect defense cannot shorten the fixed ultimate cooldown; auto policy waits for it (5.123657ms)
+✖ A baseline saves migrate without resetting identity, currencies, progression, enhancements or old skill presets (15.22177ms)
+✔ five unified presets share owned IDs and atomically swap skills, order, passives and awakening (19.810829ms)
+✔ missing references empty only those positions, warn, and reject duplicate identities without partial application (12.394939ms)
+✔ inscription replaces exactly one optional effect, preserves innate identity/base/enhancement and charges atomically (4.97924ms)
+✔ craft plus inscription checks combined costs before allocating or charging, and saved art stays the same (3.318801ms)
+✔ new stage types preserve ten stages and difficulty, while failed special rewards and new refresh rewards are not owned (19.25045ms)
+✔ durable stage settlement freezes until acknowledged, exposes candidate only to save, and commits exactly once (32.78202ms)
+✔ boss completion remains unpublished until one durable write, timeout never unlocks, and no replay of the settlement ID pays twice (13.373314ms)
+✔ chain chooses nearby targets, caps at five, adds duplicate magnitude and never chains recursively (4.5974ms)
+✔ explosion kills have depth one, fury refreshes and stops increasing after expiry (4.695326ms)
+✔ bleed stacks and expires, shred caps at forty percent, leech caps at ten percent (12.698722ms)
+✔ all inscription damage shares a fifty-proc advance budget and bounded visual list under dense contact (8.478191ms)
+✔ three boss decisions are real: timed defense/weakness, regeneration, and bounded threshold summons (17.561086ms)
+✔ a committed skill keeps its inscription snapshot after a paused ownership swap (7.115751ms)
+✔ defense weakening penetrates the boss defense stance, respects the cap and expires (3.567447ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 32
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 644.999282
+
+✖ failing tests:
+
+test at tests/stage-b.test.mjs:11:1
+✖ A baseline saves migrate without resetting identity, currencies, progression, enhancements or old skill presets (15.22177ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  13 !== 12
+  
+      at TestContext.<anonymous> (file:///workspace/sites/beast-hunter-motion/tests/stage-b.test.mjs:12:229)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 13,
+    expected: 12,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,17 @@
+(node:11) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ equipment and bag are distinct screens and cold camp renders the real hunter without battle downloads (78.976023ms)
+✔ equipment scene reads real levels, slots and synergies while its camp links preserve ownership (153.922486ms)
+✔ worn item details find the 48th identity and return to the correct equipment slot (75.235193ms)
+✔ armory slot icons and statistics follow equips and saved builds without a character weapon overlay (76.311188ms)
+✔ build UI saves names and complete equipment, updates synergy preview, applies in camp and restores (158.913856ms)
+✔ equipment synergy recipe updates on equip, persists and renders payoff at target coordinates (136.283116ms)
+✔ equipped items retain slot icons, statistics and saved ownership while character poses have no weapon overlay (155.31157ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1019.776233

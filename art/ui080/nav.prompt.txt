@@ -1,0 +1,6 @@
+Use case: stylized-concept
+Asset type: production navigation icon atlas for a dark fantasy action RPG.
+Primary request: six refined hand-painted game menu icons in antique champagne-brass, blackened steel and tiny muted crimson accents, real tactile materials, legible silhouettes at 28 pixels, matching ornate bronze and dark charcoal game panels.
+Composition: landscape 3:2 atlas, EXACTLY 3 columns by 2 rows of equal square cells, one isolated icon centered in each cell. Large transparent gutters, each icon fits inside the central 65 percent of its cell. No visible grid. Upper row left to right: 1) small hunter's lodge/roof with a crescent moon, meaning home, 2) folded parchment map with a compass needle, meaning hunt, 3) crossed sword and small shield, meaning equipment. Lower row left to right: 4) anvil and short hammer, meaning crafting, 5) cluster of four small diamond seals, meaning more options, 6) open grimoire with a crescent above it, meaning skills.
+Style: premium 2D hand-painted dark fantasy RPG UI, front-facing readable icons, no enclosing badge or round disc, low-key metallic highlights, no exaggerated glow, consistent scale and light direction.
+Constraints: genuine transparent alpha background and empty gutters, exactly six icons, no text, no labels, no letters, no numbers, no character, no scene, no mockup, no frame, no opaque rectangle.

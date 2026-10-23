@@ -1,0 +1,435 @@
+{
+  "species": {
+    "forest_wolf": [
+      {
+        "direction": "s",
+        "bodyHeight": 187.5,
+        "previousBodyHeight": 59,
+        "nativeResolutionGain": 3.18
+      },
+      {
+        "direction": "se",
+        "bodyHeight": 181.5,
+        "previousBodyHeight": 53,
+        "nativeResolutionGain": 3.42
+      },
+      {
+        "direction": "e",
+        "bodyHeight": 153.0,
+        "previousBodyHeight": 59,
+        "nativeResolutionGain": 2.59
+      },
+      {
+        "direction": "ne",
+        "bodyHeight": 194.5,
+        "previousBodyHeight": 62,
+        "nativeResolutionGain": 3.14
+      },
+      {
+        "direction": "n",
+        "bodyHeight": 203.0,
+        "previousBodyHeight": 62,
+        "nativeResolutionGain": 3.27
+      }
+    ],
+    "forest_goblin": [
+      {
+        "direction": "s",
+        "bodyHeight": 182.5,
+        "previousBodyHeight": 54,
+        "nativeResolutionGain": 3.38
+      },
+      {
+        "direction": "se",
+        "bodyHeight": 184.0,
+        "previousBodyHeight": 52,
+        "nativeResolutionGain": 3.54
+      },
+      {
+        "direction": "e",
+        "bodyHeight": 184.0,
+        "previousBodyHeight": 53,
+        "nativeResolutionGain": 3.47
+      },
+      {
+        "direction": "ne",
+        "bodyHeight": 182.0,
+        "previousBodyHeight": 58,
+        "nativeResolutionGain": 3.14
+      },
+      {
+        "direction": "n",
+        "bodyHeight": 190.0,
+        "previousBodyHeight": 59,
+        "nativeResolutionGain": 3.22
+      }
+    ],
+    "forest_orc": [
+      {
+        "direction": "s",
+        "bodyHeight": 156.5,
+        "previousBodyHeight": 69,
+        "nativeResolutionGain": 2.27
+      },
+      {
+        "direction": "se",
+        "bodyHeight": 170.0,
+        "previousBodyHeight": 66,
+        "nativeResolutionGain": 2.58
+      },
+      {
+        "direction": "e",
+        "bodyHeight": 170.5,
+        "previousBodyHeight": 64,
+        "nativeResolutionGain": 2.66
+      },
+      {
+        "direction": "ne",
+        "bodyHeight": 180.5,
+        "previousBodyHeight": 68,
+        "nativeResolutionGain": 2.65
+      },
+      {
+        "direction": "n",
+        "bodyHeight": 179.0,
+        "previousBodyHeight": 69,
+        "nativeResolutionGain": 2.59
+      }
+    ],
+    "forest_guardian": [
+      {
+        "direction": "s",
+        "bodyHeight": 193.5,
+        "previousBodyHeight": 90,
+        "nativeResolutionGain": 2.15
+      },
+      {
+        "direction": "se",
+        "bodyHeight": 208.0,
+        "previousBodyHeight": 80,
+        "nativeResolutionGain": 2.6
+      },
+      {
+        "direction": "e",
+        "bodyHeight": 204.5,
+        "previousBodyHeight": 75,
+        "nativeResolutionGain": 2.73
+      },
+      {
+        "direction": "ne",
+        "bodyHeight": 205.0,
+        "previousBodyHeight": 102,
+        "nativeResolutionGain": 2.01
+      },
+      {
+        "direction": "n",
+        "bodyHeight": 211.5,
+        "previousBodyHeight": 138,
+        "nativeResolutionGain": 1.53
+      }
+    ],
+    "ruins_skeleton": [
+      {
+        "direction": "s",
+        "bodyHeight": 172.0,
+        "previousBodyHeight": 61,
+        "nativeResolutionGain": 2.82
+      },
+      {
+        "direction": "se",
+        "bodyHeight": 178.0,
+        "previousBodyHeight": 63,
+        "nativeResolutionGain": 2.83
+      },
+      {
+        "direction": "e",
+        "bodyHeight": 181.0,
+        "previousBodyHeight": 64,
+        "nativeResolutionGain": 2.83
+      },
+      {
+        "direction": "ne",
+        "bodyHeight": 180.5,
+        "previousBodyHeight": 64,
+        "nativeResolutionGain": 2.82
+      },
+      {
+        "direction": "n",
+        "bodyHeight": 186.5,
+        "previousBodyHeight": 63,
+        "nativeResolutionGain": 2.96
+      }
+    ],
+    "ruins_mage": [
+      {
+        "direction": "s",
+        "bodyHeight": 176.5,
+        "previousBodyHeight": 64,
+        "nativeResolutionGain": 2.76
+      },
+      {
+        "direction": "se",
+        "bodyHeight": 178.0,
+        "previousBodyHeight": 67,
+        "nativeResolutionGain": 2.66
+      },
+      {
+        "direction": "e",
+        "bodyHeight": 179.0,
+        "previousBodyHeight": 67,
+        "nativeResolutionGain": 2.67
+      },
+      {
+        "direction": "ne",
+        "bodyHeight": 177.0,
+        "previousBodyHeight": 68,
+        "nativeResolutionGain": 2.6
+      },
+      {
+        "direction": "n",
+        "bodyHeight": 186.0,
+        "previousBodyHeight": 66,
+        "nativeResolutionGain": 2.82
+      }
+    ],
+    "ruins_knight": [
+      {
+        "direction": "s",
+        "bodyHeight": 198.5,
+        "previousBodyHeight": 71,
+        "nativeResolutionGain": 2.8
+      },
+      {
+        "direction": "se",
+        "bodyHeight": 193.0,
+        "previousBodyHeight": 69,
+        "nativeResolutionGain": 2.8
+      },
+      {
+        "direction": "e",
+        "bodyHeight": 198.0,
+        "previousBodyHeight": 70,
+        "nativeResolutionGain": 2.83
+      },
+      {
+        "direction": "ne",
+        "bodyHeight": 197.0,
+        "previousBodyHeight": 70,
+        "nativeResolutionGain": 2.81
+      },
+      {
+        "direction": "n",
+        "bodyHeight": 206.5,
+        "previousBodyHeight": 67,
+        "nativeResolutionGain": 3.08
+      }
+    ],
+    "ruins_king": [
+      {
+        "direction": "s",
+        "bodyHeight": 221.5,
+        "previousBodyHeight": 70,
+        "nativeResolutionGain": 3.16
+      },
+      {
+        "direction": "se",
+        "bodyHeight": 219.0,
+        "previousBodyHeight": 68,
+        "nativeResolutionGain": 3.22
+      },
+      {
+        "direction": "e",
+        "bodyHeight": 226.5,
+        "previousBodyHeight": 71,
+        "nativeResolutionGain": 3.19
+      },
+      {
+        "direction": "ne",
+        "bodyHeight": 224.5,
+        "previousBodyHeight": 63,
+        "nativeResolutionGain": 3.56
+      },
+      {
+        "direction": "n",
+        "bodyHeight": 232.5,
+        "previousBodyHeight": 56,
+        "nativeResolutionGain": 4.15
+      }
+    ],
+    "frost_wolf": [
+      {
+        "direction": "s",
+        "bodyHeight": 184.5,
+        "previousBodyHeight": 61,
+        "nativeResolutionGain": 3.02
+      },
+      {
+        "direction": "se",
+        "bodyHeight": 184.5,
+        "previousBodyHeight": 61,
+        "nativeResolutionGain": 3.02
+      },
+      {
+        "direction": "e",
+        "bodyHeight": 159.0,
+        "previousBodyHeight": 89,
+        "nativeResolutionGain": 1.79
+      },
+      {
+        "direction": "ne",
+        "bodyHeight": 183.0,
+        "previousBodyHeight": 66,
+        "nativeResolutionGain": 2.77
+      },
+      {
+        "direction": "n",
+        "bodyHeight": 202.0,
+        "previousBodyHeight": 69,
+        "nativeResolutionGain": 2.93
+      }
+    ],
+    "frost_mage": [
+      {
+        "direction": "s",
+        "bodyHeight": 149.5,
+        "previousBodyHeight": 67,
+        "nativeResolutionGain": 2.23
+      },
+      {
+        "direction": "se",
+        "bodyHeight": 164.0,
+        "previousBodyHeight": 66,
+        "nativeResolutionGain": 2.48
+      },
+      {
+        "direction": "e",
+        "bodyHeight": 166.5,
+        "previousBodyHeight": 66,
+        "nativeResolutionGain": 2.52
+      },
+      {
+        "direction": "ne",
+        "bodyHeight": 168.5,
+        "previousBodyHeight": 71,
+        "nativeResolutionGain": 2.37
+      },
+      {
+        "direction": "n",
+        "bodyHeight": 175.0,
+        "previousBodyHeight": 133,
+        "nativeResolutionGain": 1.32
+      }
+    ],
+    "frost_golem": [
+      {
+        "direction": "s",
+        "bodyHeight": 192.5,
+        "previousBodyHeight": 78,
+        "nativeResolutionGain": 2.47
+      },
+      {
+        "direction": "se",
+        "bodyHeight": 201.5,
+        "previousBodyHeight": 75,
+        "nativeResolutionGain": 2.69
+      },
+      {
+        "direction": "e",
+        "bodyHeight": 202.5,
+        "previousBodyHeight": 79,
+        "nativeResolutionGain": 2.56
+      },
+      {
+        "direction": "ne",
+        "bodyHeight": 205.0,
+        "previousBodyHeight": 74,
+        "nativeResolutionGain": 2.77
+      },
+      {
+        "direction": "n",
+        "bodyHeight": 212.5,
+        "previousBodyHeight": 67,
+        "nativeResolutionGain": 3.17
+      }
+    ],
+    "frost_king": [
+      {
+        "direction": "s",
+        "bodyHeight": 189.0,
+        "previousBodyHeight": 69,
+        "nativeResolutionGain": 2.74
+      },
+      {
+        "direction": "se",
+        "bodyHeight": 196.0,
+        "previousBodyHeight": 66,
+        "nativeResolutionGain": 2.97
+      },
+      {
+        "direction": "e",
+        "bodyHeight": 199.5,
+        "previousBodyHeight": 67,
+        "nativeResolutionGain": 2.98
+      },
+      {
+        "direction": "ne",
+        "bodyHeight": 197.0,
+        "previousBodyHeight": 77,
+        "nativeResolutionGain": 2.56
+      },
+      {
+        "direction": "n",
+        "bodyHeight": 198.5,
+        "previousBodyHeight": 149,
+        "nativeResolutionGain": 1.33
+      }
+    ]
+  },
+  "atlases": [
+    {
+      "image": "monsters-forest-v045.png",
+      "width": 2048,
+      "height": 1952,
+      "sha256": "dd497f516a449f59f6d26c84aa478497a6822e6819836f6c8fe4aed7c0fcae4c",
+      "decodedRGBABytes": 15990784,
+      "webpBytes": 4812754,
+      "pixelExact": true,
+      "frames": 100
+    },
+    {
+      "image": "monsters-ruins-v045.png",
+      "width": 2048,
+      "height": 2038,
+      "sha256": "7a80f415a3d3487b173d067464e018b02c03f30ec3381777d0efe5433c1760a9",
+      "decodedRGBABytes": 16695296,
+      "webpBytes": 4175792,
+      "pixelExact": true,
+      "frames": 100
+    },
+    {
+      "image": "monsters-frost-v045.png",
+      "width": 2048,
+      "height": 2094,
+      "sha256": "0a40fef76e77509deee31601f28ee69a2fbc5d7525b8b72d0b47a4256713d5ab",
+      "decodedRGBABytes": 17154048,
+      "webpBytes": 4951548,
+      "pixelExact": true,
+      "frames": 100
+    }
+  ],
+  "scope": "Native source pixel geometry and encoded size, not measured GPU memory or network latency",
+  "sources": {
+    "forest_wolf": "1a86901508e419eb74e4fd293707ee06201fae3c60c2bee289dba5131ecfaf6f",
+    "forest_goblin": "f42dd075a1fc09a0db3ed0e0287e7b3ddcbec990d9aa2b11c7f1d493b175dd99",
+    "forest_orc": "bcb9ca6b8da27638d418d2c9958bb5f4c1acef8d19eb6fc9a6b3b11bda5805d0",
+    "forest_guardian": "af81fe95b1b5c0dc8fd66c025fc2622383b8cadf2bf91b9f781c784c4c3f5f6d",
+    "ruins_skeleton": "777881d13353cfa0c1186a78c34b8c7553f7739c3722d8d0dd75f725944f5e9b",
+    "ruins_mage": "d7bba05ae91ac53f3d331d1526e53bdb9a5cf9d8a01c1d41ceef385a757eea7c",
+    "ruins_knight": "46cc462a5ee1e9c5d93612799e3af182e9e948e40ec5a2be3a83bfd34e1a48ca",
+    "ruins_king": "6aa73a10e6df868f882fdafd228007e2c315d83660e55162c3dcfbd8f5b27842",
+    "frost_wolf": "bc8ebef4e5847158bd8be18e72ef3a9a5d73ce15343be0fba02a9f4798ebc887",
+    "frost_mage": "b9f69d0c79daa753626818ff4e6157b24c8a904c538584f4fcddfb95f3728ec1",
+    "frost_golem": "72a8dc6f093173dc6cbbb0dd8379bbed33aaa962525a86051dad56dcc4d0c5b9",
+    "frost_king": "7de9944f87f1decb3560a036665351687197e688e04ce32b1759e41560fce3ec"
+  }
+}

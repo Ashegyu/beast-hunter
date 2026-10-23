@@ -1,0 +1,15 @@
+(node:13) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ all ten stage buttons preserve selected identity through redraws, repeated chapter taps and navigation (119.416476ms)
+✔ map difficulty remains visible before boss clearance and locked activation preserves progress (51.664183ms)
+✔ map difficulty applies chapter-specific unlocks and launches the selected difficulty from stage one (148.079ms)
+✔ changing map difficulty cancels a pending cold launch and a fresh click uses the new mode (27.3514ms)
+✔ compact HUD keeps tactics and equipment reachable through a paused menu without stale movement (107.698344ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 624.206463

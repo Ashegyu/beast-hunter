@@ -1,0 +1,738 @@
+{
+  "scope": "Nine deterministic engine-driven automatic campaigns, real earned gear and camp budgets only. Not browser rendering, device FPS, player playtime, or a statistical balance survey.",
+  "encounters": [
+    {
+      "stage": 1,
+      "name": "추격전",
+      "formation": "hunt",
+      "waves": [
+        8,
+        9,
+        10
+      ],
+      "interval": 0.18,
+      "boss": false
+    },
+    {
+      "stage": 2,
+      "name": "교차 사격",
+      "formation": "crossfire",
+      "waves": [
+        9,
+        10,
+        10
+      ],
+      "interval": 0.16,
+      "boss": false
+    },
+    {
+      "stage": 3,
+      "name": "갑각 돌파",
+      "formation": "front",
+      "waves": [
+        10,
+        11,
+        12
+      ],
+      "interval": 0.18,
+      "boss": false
+    },
+    {
+      "stage": 4,
+      "name": "포위 생존",
+      "formation": "ring",
+      "waves": [
+        11,
+        12,
+        12
+      ],
+      "interval": 0.14,
+      "boss": false
+    },
+    {
+      "stage": 5,
+      "name": "양면 협공",
+      "formation": "pincer",
+      "waves": [
+        12,
+        12,
+        13
+      ],
+      "interval": 0.14,
+      "boss": false
+    },
+    {
+      "stage": 6,
+      "name": "탄막 돌파",
+      "formation": "barrage",
+      "waves": [
+        12,
+        13,
+        14
+      ],
+      "interval": 0.13,
+      "boss": false
+    },
+    {
+      "stage": 7,
+      "name": "정예 사냥",
+      "formation": "front",
+      "waves": [
+        13,
+        14,
+        15
+      ],
+      "interval": 0.14,
+      "boss": false
+    },
+    {
+      "stage": 8,
+      "name": "혼돈의 포위망",
+      "formation": "ring",
+      "waves": [
+        14,
+        15,
+        16
+      ],
+      "interval": 0.12,
+      "boss": false
+    },
+    {
+      "stage": 9,
+      "name": "최후의 공세",
+      "formation": "surge",
+      "waves": [
+        16,
+        17,
+        18
+      ],
+      "interval": 0.1,
+      "boss": false
+    },
+    {
+      "stage": 10,
+      "name": "수문장 결전",
+      "formation": "boss",
+      "waves": [
+        1
+      ],
+      "interval": 0,
+      "boss": true
+    }
+  ],
+  "expectedKills": 339,
+  "runs": [
+    {
+      "route": "balanced",
+      "seed": 0,
+      "unlock": {
+        "chapter": 1,
+        "stage": 5,
+        "time": 191.09
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "stage": 10,
+          "level": 25,
+          "time": 429.53,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 256,
+          "maxHp": 294,
+          "peak": {
+            "live": 18,
+            "actors": 21,
+            "shots": 5,
+            "effects": 36,
+            "pickups": 17,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "stage": 10,
+          "level": 33,
+          "time": 274.51,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 539,
+          "maxHp": 539,
+          "peak": {
+            "live": 15,
+            "actors": 21,
+            "shots": 15,
+            "effects": 33,
+            "pickups": 9,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "stage": 10,
+          "level": 39,
+          "time": 300.7,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 622,
+          "maxHp": 622,
+          "peak": {
+            "live": 15,
+            "actors": 20,
+            "shots": 17,
+            "effects": 40,
+            "pickups": 11,
+            "pending": 18
+          }
+        }
+      ]
+    },
+    {
+      "route": "balanced",
+      "seed": 4,
+      "unlock": {
+        "chapter": 1,
+        "stage": 5,
+        "time": 188.24
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "stage": 10,
+          "level": 25,
+          "time": 437.91,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 256,
+          "maxHp": 294,
+          "peak": {
+            "live": 16,
+            "actors": 20,
+            "shots": 5,
+            "effects": 32,
+            "pickups": 15,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "stage": 10,
+          "level": 33,
+          "time": 276.36,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 530,
+          "maxHp": 530,
+          "peak": {
+            "live": 15,
+            "actors": 19,
+            "shots": 12,
+            "effects": 37,
+            "pickups": 12,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "stage": 10,
+          "level": 39,
+          "time": 260.42,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 628,
+          "maxHp": 629,
+          "peak": {
+            "live": 14,
+            "actors": 22,
+            "shots": 12,
+            "effects": 41,
+            "pickups": 13,
+            "pending": 18
+          }
+        }
+      ]
+    },
+    {
+      "route": "balanced",
+      "seed": 9,
+      "unlock": {
+        "chapter": 1,
+        "stage": 5,
+        "time": 184.17
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "stage": 10,
+          "level": 25,
+          "time": 422.16,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 268,
+          "maxHp": 294,
+          "peak": {
+            "live": 15,
+            "actors": 20,
+            "shots": 5,
+            "effects": 36,
+            "pickups": 17,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "stage": 10,
+          "level": 33,
+          "time": 272.91,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 542,
+          "maxHp": 542,
+          "peak": {
+            "live": 16,
+            "actors": 20,
+            "shots": 12,
+            "effects": 37,
+            "pickups": 10,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "stage": 10,
+          "level": 39,
+          "time": 287.62,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 644,
+          "maxHp": 645,
+          "peak": {
+            "live": 17,
+            "actors": 19,
+            "shots": 15,
+            "effects": 33,
+            "pickups": 8,
+            "pending": 18
+          }
+        }
+      ]
+    },
+    {
+      "route": "farm",
+      "seed": 0,
+      "unlock": {
+        "chapter": 1,
+        "stage": 5,
+        "time": 181.1
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "stage": 10,
+          "level": 25,
+          "time": 455.35,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 268,
+          "maxHp": 294,
+          "peak": {
+            "live": 16,
+            "actors": 20,
+            "shots": 6,
+            "effects": 33,
+            "pickups": 15,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "stage": 10,
+          "level": 33,
+          "time": 284.34,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 516,
+          "maxHp": 520,
+          "peak": {
+            "live": 15,
+            "actors": 19,
+            "shots": 15,
+            "effects": 35,
+            "pickups": 10,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "stage": 10,
+          "level": 39,
+          "time": 295.58,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 644,
+          "maxHp": 644,
+          "peak": {
+            "live": 18,
+            "actors": 20,
+            "shots": 13,
+            "effects": 39,
+            "pickups": 9,
+            "pending": 18
+          }
+        }
+      ]
+    },
+    {
+      "route": "farm",
+      "seed": 4,
+      "unlock": {
+        "chapter": 1,
+        "stage": 5,
+        "time": 166
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "stage": 10,
+          "level": 25,
+          "time": 428.01,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 256,
+          "maxHp": 294,
+          "peak": {
+            "live": 17,
+            "actors": 19,
+            "shots": 5,
+            "effects": 46,
+            "pickups": 17,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "stage": 10,
+          "level": 33,
+          "time": 287.67,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 512,
+          "maxHp": 529,
+          "peak": {
+            "live": 15,
+            "actors": 20,
+            "shots": 12,
+            "effects": 40,
+            "pickups": 11,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "stage": 10,
+          "level": 39,
+          "time": 317.3,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 577,
+          "maxHp": 586,
+          "peak": {
+            "live": 16,
+            "actors": 19,
+            "shots": 15,
+            "effects": 51,
+            "pickups": 13,
+            "pending": 18
+          }
+        }
+      ]
+    },
+    {
+      "route": "farm",
+      "seed": 9,
+      "unlock": {
+        "chapter": 1,
+        "stage": 5,
+        "time": 188.91
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "stage": 10,
+          "level": 25,
+          "time": 426.09,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 256,
+          "maxHp": 294,
+          "peak": {
+            "live": 17,
+            "actors": 19,
+            "shots": 6,
+            "effects": 39,
+            "pickups": 15,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "stage": 10,
+          "level": 33,
+          "time": 270.05,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 540,
+          "maxHp": 540,
+          "peak": {
+            "live": 13,
+            "actors": 20,
+            "shots": 9,
+            "effects": 32,
+            "pickups": 12,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "stage": 10,
+          "level": 39,
+          "time": 298.66,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 599,
+          "maxHp": 599,
+          "peak": {
+            "live": 16,
+            "actors": 20,
+            "shots": 18,
+            "effects": 49,
+            "pickups": 11,
+            "pending": 18
+          }
+        }
+      ]
+    },
+    {
+      "route": "safe",
+      "seed": 0,
+      "unlock": {
+        "chapter": 1,
+        "stage": 5,
+        "time": 187.34
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "stage": 10,
+          "level": 25,
+          "time": 422.79,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 256,
+          "maxHp": 294,
+          "peak": {
+            "live": 16,
+            "actors": 20,
+            "shots": 6,
+            "effects": 36,
+            "pickups": 13,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "stage": 10,
+          "level": 33,
+          "time": 293.13,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 551,
+          "maxHp": 551,
+          "peak": {
+            "live": 16,
+            "actors": 19,
+            "shots": 13,
+            "effects": 40,
+            "pickups": 10,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "stage": 10,
+          "level": 39,
+          "time": 284.98,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 621,
+          "maxHp": 621,
+          "peak": {
+            "live": 16,
+            "actors": 20,
+            "shots": 12,
+            "effects": 41,
+            "pickups": 16,
+            "pending": 18
+          }
+        }
+      ]
+    },
+    {
+      "route": "safe",
+      "seed": 4,
+      "unlock": {
+        "chapter": 1,
+        "stage": 5,
+        "time": 190.01
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "stage": 10,
+          "level": 25,
+          "time": 423.78,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 268,
+          "maxHp": 294,
+          "peak": {
+            "live": 18,
+            "actors": 19,
+            "shots": 5,
+            "effects": 31,
+            "pickups": 12,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "stage": 10,
+          "level": 33,
+          "time": 297.47,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 544,
+          "maxHp": 544,
+          "peak": {
+            "live": 17,
+            "actors": 19,
+            "shots": 15,
+            "effects": 46,
+            "pickups": 12,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "stage": 10,
+          "level": 39,
+          "time": 317.26,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 627,
+          "maxHp": 632,
+          "peak": {
+            "live": 16,
+            "actors": 19,
+            "shots": 15,
+            "effects": 48,
+            "pickups": 11,
+            "pending": 18
+          }
+        }
+      ]
+    },
+    {
+      "route": "safe",
+      "seed": 9,
+      "unlock": {
+        "chapter": 1,
+        "stage": 5,
+        "time": 184
+      },
+      "chapters": [
+        {
+          "chapter": 1,
+          "phase": "victory",
+          "stage": 10,
+          "level": 25,
+          "time": 422.9,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 256,
+          "maxHp": 294,
+          "peak": {
+            "live": 17,
+            "actors": 22,
+            "shots": 6,
+            "effects": 31,
+            "pickups": 11,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 2,
+          "phase": "victory",
+          "stage": 10,
+          "level": 33,
+          "time": 285.66,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 522,
+          "maxHp": 522,
+          "peak": {
+            "live": 15,
+            "actors": 22,
+            "shots": 12,
+            "effects": 43,
+            "pickups": 9,
+            "pending": 18
+          }
+        },
+        {
+          "chapter": 3,
+          "phase": "victory",
+          "stage": 10,
+          "level": 39,
+          "time": 305.34,
+          "kills": 339,
+          "rooms": 10,
+          "hp": 594,
+          "maxHp": 603,
+          "peak": {
+            "live": 15,
+            "actors": 19,
+            "shots": 15,
+            "effects": 40,
+            "pickups": 10,
+            "pending": 18
+          }
+        }
+      ]
+    }
+  ]
+}

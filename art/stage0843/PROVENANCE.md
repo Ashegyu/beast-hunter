@@ -1,0 +1,14 @@
+# Expedition seals: production image record
+
+- Mode: built-in `image_gen.imagegen`, `transparent_background: true`.
+- Purpose: one bitmap sprite atlas of six coordinated stage-button states for the existing game.
+- Generated source: `art/stage0843/seals-source.png`, 1536×1024 RGBA. The original generated file was copied intact from `/workspace/scratch/b9640f78719a/generated_images/exec-4611d73d-e087-48e6-b2d4-560272c25d32.png`.
+- Production asset: `dist/assets/ui-stage-v0843/seals.webp`. Lossless WebP conversion with Sharp, preserving alpha and all nontransparent RGBA samples; no crop, recoloring, retouch, synthetic painting or image rescale.
+- Layout: 3 columns × 2 rows, six equal 512px cells. Reading order: locked, available, completed, selected, boss locked, boss available. Runtime numbers and labels are native DOM text, not generated lettering.
+- Exact pixel hashes, dimensions and sizes: asset-check.json.
+
+## Final generation prompt
+
+```text
+Use case: ui-mockup. Asset type: a single production sprite atlas for a mobile dark-fantasy hack-and-slash stage selector, six coordinated hand-painted UI medallions. Canvas landscape 1536x1024, exact 3 columns by 2 rows, equal square cells 512x512, no cell separators. One centered standalone medallion per cell with identical bounding-box, 48px transparent padding inside every cell. All six are upright near-circular octagonal expedition seals made of dark charcoal slate with restrained antique silver/bronze metal rims and very small red fabric tabs. Rich painted game asset texture, crisp readable silhouette, not baroque, no giant spikes, not app dashboard graphics. Every medallion has a large clean dark empty central area for a runtime stage number; leave the center and middle completely blank. Decorations only on outer rim. State sequence in reading order: top-left LOCKED: darkened cold steel with a tiny closed padlock engraved ONLY on the bottom rim. top-center AVAILABLE: bright silver rim with a subtle muted amber guiding point at the top. top-right CLEARED: aged warm gold rim with a tiny gold check-shaped laurel emblem ONLY on bottom rim. bottom-left SELECTED: lit crimson inner rim, silver metal outer rim and a small ruby tip at top, brightest frame. bottom-center BOSS LOCKED: dark iron rim with a small restrained horned skull crest ONLY on top rim and a dark red cloth tip at bottom. bottom-right BOSS AVAILABLE: same skull-crest frame in silver with deep red ember inlay and a subtle warm red glow, readable not gaudy. Orthographic flat UI render, no perspective, no cast shadows outside each asset, no background scene, no checkerboard painting, genuinely transparent around each medallion. Text: none. No letters, no digits, no labels, no sample UI, no watermarks. Critical: exact aligned 3x2 grid, matching scale across all six, centers empty, clean isolated transparency, all ornament fully inside its cell.
+```

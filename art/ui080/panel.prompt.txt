@@ -1,0 +1,6 @@
+Use case: stylized-concept
+Asset type: production nine-slice UI panel background for a dark fantasy action RPG.
+Primary request: one elegant SQUARE blank inventory/dialog panel, front-on orthographic, filling the canvas edge to edge, with a charcoal-black hammered steel center and a slim aged champagne-brass frame. Sharply crafted bevels, restrained filigree at four clipped corners, subtle burgundy shadow in the inner rim. The center 78 percent is nearly uniform dark slate, very low contrast, empty and suitable for readable text on top.
+Style: premium hand-painted dark fantasy game interface, grounded metal and fine etched lines, matching ornate crimson velvet and antique bronze game buttons. Quiet and refined, no cartoon plastic.
+Composition: strict square, perfectly symmetric straight sides, horizontal/vertical border strips uniform and repeatable, corner ornamentation contained within the outer 12 percent. Outer silhouette meets the canvas edges with no padding; center is an opaque dark panel, transparent only outside the clipped corner silhouette. No protruding objects.
+Constraints: no letters, no text, no numbers, no icons, no skulls, no weapons, no characters, no image of a game screen, no screen mockup, no multiple panels, no perspective, no glow or bright center. Actual transparent alpha outside the panel.
