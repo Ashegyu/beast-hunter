@@ -15,7 +15,9 @@ test('nine new identities have distinct chapter membership and frozen attack def
 test('stages introduce mobility at 2, casters at 3, heavies at 4 while retaining original roles',()=>{
  for(const c of CHAPTERS)for(let stage=1;stage<=9;stage++){
   const s=prepared(c.id,stage),ids=new Set(s.spawns.map(q=>q.species));assert.ok(s.spawns.every(q=>c.roster.includes(q.species)&&MONSTERS[q.species].role===q.type&&(MONSTERS[q.species].unlockStage??1)<=stage));
-  for(const role of ['skitter','spitter','bulwark']){const pool=chapterMonsterPool(c.id,stage,role);assert.equal(pool.length,stage>=({skitter:2,spitter:3,bulwark:4}[role])?2:1);assert.ok(pool.every(id=>ids.has(id)));}
+  // Stage 9 is the special swarm: every slot becomes a skitter, so ranged/heavy pools stay defined but unused.
+  const swarm=stage===9;if(swarm)assert.ok(s.spawns.every(q=>q.type==='skitter'));
+  for(const role of ['skitter','spitter','bulwark']){const pool=chapterMonsterPool(c.id,stage,role);assert.equal(pool.length,stage>=({skitter:2,spitter:3,bulwark:4}[role])?2:1);if(!swarm||role==='skitter')assert.ok(pool.every(id=>ids.has(id)));}
   assert.equal(s.spawns.some(q=>q.boss),false);assert.ok(s.spawns.length<=40);
  }
  assert.deepEqual(chapterMonsterPool(99,1,'skitter'),[]);

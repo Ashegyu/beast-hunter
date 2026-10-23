@@ -34,7 +34,8 @@ test('level area thresholds are capped, leave single targets alone and snapshot 
  assert.ok(g.useSkill(s,'crescent',{x:1,y:0}));step(s,.2);assert.ok(e.hp<1000);assert.ok(s.effects.some(f=>f.type==='skillImpact'&&f.skillId==='crescent'&&f.areaScale===1.4));
 });
 test('bulk drops remain reserved exactly once and higher-quality receipts last four seconds',()=>{
- const s=arena(20);pack(s);s.profile.skillBook.ranks.crescent=4;assert.ok(g.useSkill(s,'crescent',{x:1,y:0}));step(s,.2);
+ // Stage 3 is a normal stage; strict stages (4, 8, 9, 10) forfeit kills and loot on retreat by design.
+ const s=arena(20,3);pack(s);s.profile.skillBook.ranks.crescent=4;assert.ok(g.useSkill(s,'crescent',{x:1,y:0}));step(s,.2);
  const item={id:999,slot:'weapon',tier:1,rarity:3,name:'시험 전설',catalogId:'1-weapon-1',artId:'forest_blade',affixes:{damage:10}};
  s.profile.pendingLoot.push(item);s.pickups.push({id:s.nextId++,kind:'equipment',item,x:s.player.x,y:s.player.y,age:1});step(s,.025);assert.ok(s.effects.some(f=>f.type==='loot'&&f.rarity===3&&f.maxTtl===4));
  const before=s.profile.totalKills,owned=s.profile.pendingLoot.map(i=>i.id);g.returnToCamp(s);assert.equal(s.profile.totalKills,before);assert.equal(s.profile.pendingLoot.length,0);

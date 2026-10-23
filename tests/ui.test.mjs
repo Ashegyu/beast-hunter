@@ -94,6 +94,7 @@ async function host({ badManifest = false, failedImage = false, canvasBox } = {}
   const terrainModule = new vm.SyntheticModule(Object.keys(terrain), function () { for (const [key, value] of Object.entries(terrain)) this.setExport(key, value); }, { context });
   const chapterModule=new vm.SyntheticModule(Object.keys(chapters),function(){for(const [key,value]of Object.entries(chapters))this.setExport(key,value);},{context});
   await module.link(specifier => {
+    specifier = specifier.split('?')[0];
     if(specifier==='./chapters.js')return chapterModule;
     if (specifier === './engine.js') return engineModule;
     if (specifier === './world.js') return worldModule;
@@ -135,7 +136,8 @@ test('boot loads every delivered image and draws actual atlas rectangles', async
   assert.ok(draw);
   const f = manifest.clips.hunter_walk.frames[0];
   assert.deepEqual(draw.args.slice(0, 4), [f.x, f.y, f.w, f.h]);
-  assert.equal(draw.x, 300); assert.equal(draw.y, 200);
+  // The camera keeps the player 60% down the 380px canvas.
+  assert.equal(draw.x, 300); assert.equal(draw.y, 380 * .6);
 });
 
 test('inspect pause, scrubbing and stepping select real source frames', async () => {
@@ -236,8 +238,9 @@ test('scaled letterboxed touch coordinates include the scrolled world offset', a
   ui.emit('document', 'keydown', { key: 'd', target: ui.nodes.get('arena') }); ui.run(1);
   ui.emit('document', 'keyup', { key: 'd' });
   const before = ui.state.player.x;
-  // Scale .5; picture top=65. Screen point (900,400) is 300 world pixels ahead.
-  ui.emit('arena', 'pointerdown', { clientX: 470, clientY: 265 }); ui.run(1.5);
+  // Scale .5; picture top=65. The player stands 60% down the 760px view (y=456),
+  // so screen point (900,456) is 300 world pixels ahead on the same row.
+  ui.emit('arena', 'pointerdown', { clientX: 470, clientY: 65 + 456 / 2 }); ui.run(1.5);
   assert.ok(ui.state.player.x > before + 292 && ui.state.player.x <= before + 300);
   assert.equal(ui.state.player.y, 1160);
 });
@@ -251,7 +254,7 @@ test('terrain and actors share the same pixel grid and receive lighting together
   assert.equal(floor.smoothing, false);
   const hunter = ui.latest('hunter_walk.png');
   assert.equal(hunter.smoothing, false);
-  assert.equal(hunter.x, 300); assert.equal(hunter.y, 200);
+  assert.equal(hunter.x, 300); assert.equal(hunter.y, 380 * .6);
   const ambientIndex = ui.operations.findIndex(op => op.kind === 'fillRect' && op.color === '#d6c29a0c');
   const actorIndex = ui.operations.indexOf(hunter);
   const minimapIndex = ui.operations.findIndex(op => op.kind === 'fillRect' && op.color === '#4b5149');

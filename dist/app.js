@@ -5,7 +5,7 @@ import { createCombatAudio } from './sound.js?v=0.76.0';
 import * as game from './game-engine.js?v=0.99.0';
 import {FrameMetrics} from './frame-metrics.js?v=0.98.1';
 import { frameIndex, frameRect, validateClip } from './engine.js';
-import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.103.1';
+import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
 import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.103.1';
 import { visibleTiles, createDecorations } from './terrain.js';
 import { MONSTERS, equipmentArt } from './chapters.js?v=0.97.0';
@@ -18,6 +18,7 @@ const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
 const DROP_BEAMS=Object.freeze([0,48,72,100,124,150,176]);
 const DROP_PETALS=Object.freeze([0,1,2,3,4,6,8]);
 const $=id=>document.getElementById(id), canvas=$('arena'),ctx=canvas.getContext('2d');
+const combatSkillIcons=[];
 const viewport={width:1200,height:760},joystick=$('joystick'),stickThumb=$('stick-thumb');
 let renderScaleX=1,renderScaleY=1,renderDpr=0,wideLayout=false,orientationBlocked=true;
 const STORAGE_KEY='beast-hunter:profile:v1';
@@ -33,7 +34,7 @@ let saved=null,storageBlocked=false,recoveredSave=false,storageReadFailed=false;
 let restoreCommitted=false,backupCandidate=null,backupReading=false,backupRevision=0,previousBackup=null;
 try{saved=localStorage.getItem(STORAGE_KEY);previousBackup=localStorage.getItem(STORAGE_KEY+':before-restore');}catch{storageBlocked=true;storageReadFailed=true;}
 if(saved){
-  let valid=false;try{valid=Number.isInteger(JSON.parse(saved)?.version)&&JSON.parse(saved).version>=1&&JSON.parse(saved).version<=game.PROFILE_VERSION;}catch{}
+  let valid=false;try{const version=JSON.parse(saved)?.version;valid=Number.isInteger(version)&&version>=1&&version<=game.PROFILE_VERSION;}catch{}
   if(!valid){try{localStorage.setItem(STORAGE_KEY+':recovery',saved);recoveredSave=true;}catch{storageBlocked=true;storageReadFailed=true;}}
 }
 const profile=game.restoreProfile(saved,Date.now());
@@ -136,7 +137,7 @@ $('backup-confirm').addEventListener('click',()=>{
  $('save-retry').focus({preventScroll:true});window.location.reload();
 });
 showSaveState();
-function loadImage(path){return new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>reject(new Error('어셋을 불러오지 못했어: '+path));img.src='assets/'+(manifest.delivery?.[path]??path);});}
+function loadImage(path){return new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);const file=manifest.delivery?.[path]??path;img.onerror=()=>reject(new Error('어셋을 불러오지 못했어: '+file));img.src='assets/'+file;});}
 async function boot(){
   if(bootInFlight)return;bootInFlight=true;$('region-status').hidden=true;$('loading').textContent='사냥터를 준비하는 중…';
   const began=clockMs();let bootFailed=false;
@@ -250,7 +251,7 @@ for(const id of ['blade','armor','core'])$('forge-'+id).addEventListener('click'
 for(const stage of game.STAGES)$('stage-'+stage.id).addEventListener('click',()=>{if(ready&&state.phase==='camp'&&stage.id<=profile.unlockedStage&&stage.id!==selectedStage){launchRevision++;selectedStage=stage.id;if(!game.stageLimit(profile,selectedStage,selectedDifficulty))selectedDifficulty=0;selectedRunStage=game.stageLimit(profile,stage.id,selectedDifficulty);updateHud();}});
 for(let i=0;i<6;i++)$('choice-'+i).addEventListener('click',()=>{if(game.chooseUpgrade(state,choiceIds[i])){if(!profile.skillPoints)campChoices=false;save();updateHud();}});
 $('choice-back').addEventListener('click',()=>{campChoices=false;updateHud();});
-$('inventory').addEventListener('click',openInventory);$('camp-inventory').addEventListener('click',openInventory);
+$('inventory').addEventListener('click',()=>openInventory());$('camp-inventory').addEventListener('click',()=>openInventory());
 $('loot-filter').addEventListener('change',event=>{const value=Number(event.target.value);rarityFilter=Number.isInteger(value)&&value>=0&&value<=6?value:0;bagReviewIds=null;updateHud();});
 $('bag-part').addEventListener('change',e=>{bagPart=Object.hasOwn(game.SLOTS,e.target.value)?e.target.value:'all';if(bagPart!=='all')bagSlot=game.equipmentCategory(bagPart);bagSelectedId=null;bagReviewIds=null;updateHud();resizeBagGrids();});
 $('bag-slot').addEventListener('change',e=>setBagCategory(e.target.value));
@@ -1377,7 +1378,7 @@ function useCombatSkill(index){const id=index<2?profile.skillBook.loadout.active
 for(let i=0;i<3;i++){const action=()=>useCombatSkill(i),button=$('combat-skill-'+i);button.addEventListener('pointerdown',combatPress(action));button.addEventListener('click',combatClick(action));}
 function refreshCombatSkills(){
  const ids=[...profile.skillBook.loadout.active,profile.skillBook.loadout.ultimate[0]],r=state.skillRuntime;
- for(let i=0;i<3;i++){const id=ids[i],node=$('combat-skill-'+i),d=game.SKILL_BY_ID[id];node.hidden=!d;if(!d)continue;const cd=r.cooldowns[id]??0,usable=game.skillReady(state,id);$('combat-skill-icon-'+i).src=d.icon;hudText($('combat-skill-name-'+i),d.name);hudText($('combat-skill-state-'+i),cd>0?(i===2?Math.ceil(cd):Math.max(.1,cd).toFixed(1))+'초':state.player.stamina<d.cost?'기력 부족':'준비');node.disabled=!usable;node.setAttribute('data-ultimate',String(i===2));node.setAttribute('data-ready',String(usable));node.setAttribute('data-cooldown',String(cd>0));node.setAttribute('aria-label',d.name+' · '+$('combat-skill-state-'+i).textContent);}
+ for(let i=0;i<3;i++){const id=ids[i],node=$('combat-skill-'+i),d=game.SKILL_BY_ID[id];node.hidden=!d;if(!d)continue;const cd=r.cooldowns[id]??0,usable=game.skillReady(state,id);if(combatSkillIcons[i]!==d.icon){combatSkillIcons[i]=d.icon;$('combat-skill-icon-'+i).src=d.icon;}hudText($('combat-skill-name-'+i),d.name);hudText($('combat-skill-state-'+i),cd>0?(i===2?Math.ceil(cd):Math.max(.1,cd).toFixed(1))+'초':state.player.stamina<d.cost?'기력 부족':'준비');node.disabled=!usable;node.setAttribute('data-ultimate',String(i===2));node.setAttribute('data-ready',String(usable));node.setAttribute('data-cooldown',String(cd>0));node.setAttribute('aria-label',d.name+' · '+$('combat-skill-state-'+i).textContent);}
 }
 
 

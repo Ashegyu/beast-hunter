@@ -41,6 +41,16 @@ const html=fs.readFileSync(new URL('index.html',root),'utf8'),source=fs.readFile
 const manifest=JSON.parse(fs.readFileSync(new URL('assets/manifest.json',root),'utf8'));
 const alignment=JSON.parse(fs.readFileSync(new URL('../tools/reports/lirian-alpha081-alignment.json',root),'utf8'));
 const KEY='beast-hunter:profile:v1';
+// The landscape app shows a wider logical view (view-controls.js viewportFor) and scales it onto the canvas.
+// These helpers mirror app.js: logical screen = (client - box origin) * view / box, drawing = logical * scale.
+const APP_BOX={left:0,top:0,width:1200,height:760};
+const appView=(box=APP_BOX)=>viewControls.viewportFor(box.width,box.height);
+const appScale=(box=APP_BOX)=>box.width/appView(box).width;
+const appCamera=(ui,box=APP_BOX)=>world.cameraFor(ui.state.player,ui.state.bounds,appView(box),world.GROUND_DEPTH_SCALE);
+// Upright actors also grow toward the bottom of the view (app.js sceneDepthScale); 1.0 at the player's 60% row.
+const appDepth=(ui,y,box=APP_BOX)=>{const camera=appCamera(ui,box);return Math.max(.86,Math.min(1.1,.88+.2*((y-camera.y)*world.GROUND_DEPTH_SCALE/appView(box).height)));};
+const appActorScale=(ui,y,box=APP_BOX)=>appScale(box)*appDepth(ui,y,box);
+const clientAt=(screen,box=APP_BOX)=>({clientX:(box.left??0)+screen.x*box.width/appView(box).width,clientY:(box.top??0)+screen.y*box.height/appView(box).height});
 const hostDisposals=[];
 // Each host is one closed test tab; do not retain its DOM and Canvas recording through the whole suite.
 test.afterEach(async()=>{await new Promise(resolve=>setImmediate(resolve));for(const dispose of hostDisposals.splice(0))dispose();});
@@ -722,8 +732,9 @@ test('actual auto button takes a hunt through content, victory, saved rewards an
   ui.emit('result-camp','click');ui.tick();assert.equal(ui.state.phase,'camp');assert.equal(ui.nodes.get('stage-2').disabled,false);assert.ok(ui.state.profile.gold>100);
 });
 test('responsive canvas clicks use world coordinates and joystick inputs have pointer ownership',async()=>{
-  const ui=await host({box:{left:20,top:30,width:600,height:450}});ui.emit('start','click');ui.tick();ui.state.enemies=[];ui.state.spawnTimer=999;
-  ui.emit('arena','pointerdown',{clientX:470,clientY:265});ui.run(2.2);assert.ok(ui.state.player.x>890&&ui.state.player.x<=900);assert.equal(ui.state.player.y,1160);
+  const box={left:20,top:30,width:600,height:450},ui=await host({box});ui.emit('start','click');ui.tick();ui.state.enemies=[];ui.state.spawnTimer=999;
+  const p=ui.state.player,start={x:p.x,y:p.y},ahead=world.worldToScreen({x:start.x+300,y:start.y},appCamera(ui,box));
+  ui.emit('arena','pointerdown',clientAt(ahead,box));ui.run(2.2);assert.ok(p.x>start.x+290&&p.x<=start.x+300+1e-6);assert.ok(Math.abs(p.y-start.y)<1e-6);
   ui.stick(1,0,1);ui.stick(-1,0,2);ui.emit('joystick','pointerup',{pointerId:2});const x=ui.state.player.x;ui.run(.1);assert.ok(ui.state.player.x>x);ui.emit('joystick','pointerup',{pointerId:1});
 });
 test('blocked storage stays explicit and failed assets never enable a broken hunt',async()=>{
@@ -928,7 +939,8 @@ test('held keyboard combos turn the next strike while keeping the current strike
 });
 test('stationary cursor aim is recomputed when the player moves at a clamped camera edge',async()=>{
   const ui=await host();ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.tick();
-  ui.emit('document','keydown',{key:'d',target:ui.nodes.get('arena')});ui.emit('arena','pointermove',{clientX:450,clientY:400});ui.run(.6);ui.emit('document','keyup',{key:'d'});
+  const cursor=clientAt(world.worldToScreen({x:450,y:ui.state.player.y},appCamera(ui)));
+  ui.emit('document','keydown',{key:'d',target:ui.nodes.get('arena')});ui.emit('arena','pointermove',cursor);ui.run(.6);ui.emit('document','keyup',{key:'d'});
   assert.ok(ui.state.player.x>450&&ui.state.player.x<600);ui.emit('attack','click');assert.equal(ui.state.player.heading,4);assert.ok(ui.state.player.swing.x<0);
 });
 test('new keyboard movement replaces old mouse aim, and a fresh mouse move can aim while moving',async()=>{
@@ -980,10 +992,11 @@ test('real 45-degree drawing keeps measured head position stable across walking,
       // Source landmark through the actual destination rectangle and affine matrix,
       // relative to the projected world foot; includes camera tracking and mirroring.
       const localX=call.args[4]+pose.headX-frame.x,localY=call.args[5]+pose.headY-frame.y;
-      heads.push(call.a*localX+call.c*localY);
-      assert.ok(Math.abs(frame.bodyHeight*Math.abs(call.a)-126)<1e-9);
+      const scale=appActorScale(ui,p.y);
+      heads.push((call.a*localX+call.c*localY)/scale);
+      assert.ok(Math.abs(frame.bodyHeight*Math.abs(call.a)-126*scale)<1e-9);
       assert.equal(call.rotation,0);assert.ok(Math.abs(call.b)+Math.abs(call.c)<1e-9);
-      assert.ok(Math.abs((call.b*localX+call.d*localY)-(pose.headY-measure.footLine)*126/measure.bodyHeight)<.01);
+      assert.ok(Math.abs((call.b*localX+call.d*localY)/scale-(pose.headY-measure.footLine)*126/measure.bodyHeight)<.01);
       if(family==='walk')seen.add(index);
     };
     for(const key of directions[heading])ui.emit('document','keydown',{key,target:ui.nodes.get('arena')});
@@ -1029,27 +1042,28 @@ test('dash follows movement over mouse aim and idle facing over stale released m
 const near=(actual,expected,epsilon=1e-8)=>assert.ok(Math.abs(actual-expected)<epsilon,`${actual} != ${expected}`);
 const renderedPoint=(call,x,y)=>({x:call.a*x+call.c*y+call.x,y:call.b*x+call.d*y+call.y});
 
-test('45-degree terrain keeps upright art, foot anchors, depth order and minimap independent of ground scale',async()=>{
+test('45-degree terrain keeps upright art, foot anchors and depth order independent of ground scale without a battle minimap',async()=>{
   const ui=await host({recordGeometry:true});ui.emit('start','click');const p=ui.state.player;p.x=1800;p.y=1160;
   const template=ui.state.enemies[0];ui.state.enemies=[{...template,id:900,type:'bulwark',species:undefined,x:1900,y:1280,action:'idle'},{...template,id:901,type:'spitter',species:undefined,x:2000,y:1080,action:'idle'}];ui.state.barrels=[];ui.state.paused=true;ui.calls.length=0;ui.geometry.length=0;ui.tick(0);
-  const camera=world.cameraFor(p,ui.state.bounds,world.VIEWPORT,world.GROUND_DEPTH_SCALE),foot=world.worldToScreen(p,camera);
+  const S=appScale(),camera=appCamera(ui),foot=world.worldToScreen(p,camera);
   const player=ui.calls.find(c=>c.image.endsWith('lirian_locomotion-v05.png')),clip=manifest.clips.lirian_idle_s_v05,frame=clip.frames[0];
-  near(player.x,foot.x);near(player.y,foot.y);near(Math.abs(player.a),player.d);near(player.d*frame.bodyHeight,126);assert.equal(player.b,0);assert.equal(player.c,0);
-  const ground=ui.calls.filter(c=>c.image==='assets/'+manifest.chapters[1].environment);assert.ok(ground.length>0&&ground.length<=16);
-  for(const tile of ground){near(Math.abs(tile.d/tile.a),world.GROUND_DEPTH_SCALE);near(tile.args[2],512+1/world.GROUND_DEPTH_SCALE);near(tile.args[3],512+1/world.GROUND_DEPTH_SCALE);}
+  near(player.x,foot.x*S);near(player.y,foot.y*S);near(Math.abs(player.a),player.d);near(player.d*frame.bodyHeight,126*S);assert.equal(player.b,0);assert.equal(player.c,0);
+  const ground=ui.calls.filter(c=>c.image==='assets/'+manifest.chapters[1].environment),maxTiles=(Math.ceil(camera.width/512)+1)*(Math.ceil(camera.height/512)+1);assert.ok(ground.length>0&&ground.length<=maxTiles,ground.length+' > '+maxTiles);
+  for(const tile of ground){near(Math.abs(tile.d/tile.a),world.GROUND_DEPTH_SCALE);near(tile.args[2],512+1/(S*world.GROUND_DEPTH_SCALE));near(tile.args[3],512+1/(S*world.GROUND_DEPTH_SCALE));}
   for(const prop of ui.calls.filter(c=>c.image==='assets/'+manifest.chapterProps.image))near(Math.abs(prop.a),prop.d);
   const actors=ui.calls.filter(c=>/spitter_directions|lirian_locomotion|bulwark_directions/.test(c.image));assert.deepEqual(actors.map(c=>c.image.split('/').at(-1)),['spitter_directions-v04.png','lirian_locomotion-v05.png','bulwark_directions-v04.png']);
-  const marker=ui.geometry.find(c=>c.kind==='strokeRect'&&c.args[0]>=1034&&c.args[0]<1180&&c.args[1]>=134&&c.args[1]<226);assert.ok(marker);near(marker.a,1);near(marker.d,1);near(marker.args[3],camera.height*92/ui.state.bounds.height);
+  // The battle minimap was removed from app.js, so no camera marker is drawn any more.
+  assert.equal(ui.geometry.some(c=>c.kind==='strokeRect'),false);
 });
 
 test('letterboxed projected clicks keep a fixed world destination and all eight mouse strikes invert the ground projection',async()=>{
   const ui=await host({box:{left:20,top:30,width:600,height:450}});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];const p=ui.state.player;p.x=1500;p.y=1000;ui.tick(0);
-  const camera=world.cameraFor(p,ui.state.bounds,world.VIEWPORT,world.GROUND_DEPTH_SCALE),destination=world.screenToWorld({x:800,y:520},camera,ui.state.bounds);
-  ui.emit('arena','pointerdown',{clientX:420,clientY:325});ui.run(2);assert.ok(Math.hypot(p.x-destination.x,p.y-destination.y)<8);assert.ok(p.y>1100);const reached={x:p.x,y:p.y};ui.run(.3);near(p.x,reached.x);near(p.y,reached.y);
+  const box={left:20,top:30,width:600,height:450},camera=appCamera(ui,box),foot=world.worldToScreen(p,camera),point={x:foot.x+200,y:foot.y+140},destination=world.screenToWorld(point,camera,ui.state.bounds);
+  ui.emit('arena','pointerdown',clientAt(point,box));ui.run(2);assert.ok(Math.hypot(p.x-destination.x,p.y-destination.y)<8);assert.ok(p.y>1100);const reached={x:p.x,y:p.y};ui.run(.3);near(p.x,reached.x);near(p.y,reached.y);
   for(let heading=0;heading<8;heading++){
-    const angle=heading*Math.PI/4,n={x:Math.cos(angle),y:Math.sin(angle)},camera=world.cameraFor(p,ui.state.bounds,world.VIEWPORT,world.GROUND_DEPTH_SCALE),target=world.worldToScreen({x:p.x+n.x*200,y:p.y+n.y*200},camera);
-    ui.emit('arena','pointermove',{clientX:20+target.x*.5,clientY:65+target.y*.5});ui.emit('attack','click');assert.equal(p.heading,heading);near(p.swing.x,n.x);near(p.swing.y,n.y);ui.run(.7);
-    p.thunderCooldown=0;p.stamina=100;ui.emit('arena','pointermove',{clientX:20+target.x*.5,clientY:65+target.y*.5});ui.emit('thunder','click');assert.equal(p.action,'heavy');near(p.swing.x,n.x);near(p.swing.y,n.y);ui.run(.8);
+    const angle=heading*Math.PI/4,n={x:Math.cos(angle),y:Math.sin(angle)},camera=appCamera(ui,box),target=world.worldToScreen({x:p.x+n.x*200,y:p.y+n.y*200},camera);
+    ui.emit('arena','pointermove',clientAt(target,box));ui.emit('attack','click');assert.equal(p.heading,heading);near(p.swing.x,n.x);near(p.swing.y,n.y);ui.run(.7);
+    p.thunderCooldown=0;p.stamina=100;ui.emit('arena','pointermove',clientAt(target,box));ui.emit('thunder','click');assert.equal(p.action,'heavy');near(p.swing.x,n.x);near(p.swing.y,n.y);ui.run(.8);
   }
 });
 
@@ -1058,27 +1072,27 @@ test('clicking the projected upright head or overlapping bodies selects the visu
     const ui=await host();ui.emit('start','click');const p=ui.state.player;p.x=1800;p.y=1160;const template=ui.state.enemies[0];
     const front={...template,id:900,type:'bulwark',species:undefined,x:p.x+70,y:p.y+70,homeX:p.x+70,homeY:p.y+70,aggro:true,speed:0,cooldown:999,action:'idle',guard:0};
     ui.state.enemies=overlap?[{...front,id:901,y:p.y+40,homeY:p.y+40},front]:[front];ui.state.barrels=[];ui.tick(0);
-    const foot=world.worldToScreen(front,world.cameraFor(p,ui.state.bounds,world.VIEWPORT,world.GROUND_DEPTH_SCALE));ui.emit('arena','pointerdown',{clientX:foot.x,clientY:foot.y-(overlap?60:150)});ui.tick(.025);
+    const foot=world.worldToScreen(front,appCamera(ui));ui.emit('arena','pointerdown',clientAt({x:foot.x,y:foot.y-(overlap?60:150)}));ui.tick(.025);
     assert.equal(p.action,'attack');near(p.swing.x,Math.SQRT1_2);near(p.swing.y,Math.SQRT1_2);
   }
 });
 
 test('hidden area warnings preserve airborne projection and visible boss heads at the bottom edge',async()=>{
   const ui=await host({recordGeometry:true});ui.emit('start','click');const p=ui.state.player;p.x=1800;p.y=1200;
-  const camera=world.cameraFor(p,ui.state.bounds,world.VIEWPORT,world.GROUND_DEPTH_SCALE),template=ui.state.enemies[0],enemy={...template,id:900,x:2000,y:1200,action:'windup',actionTime:.2,windup:1,targetX:1880,targetY:1260};
+  const S=appScale(),camera=appCamera(ui),template=ui.state.enemies[0],enemy={...template,id:900,x:2000,y:1200,action:'windup',actionTime:.2,windup:1,targetX:1880,targetY:1260};
   const boss={...template,id:901,type:'bulwark',species:undefined,boss:true,x:1800,y:camera.y+camera.height+260/world.GROUND_DEPTH_SCALE,action:'idle'};
   ui.state.enemies=[enemy,boss];ui.state.barrels=[];ui.state.projectiles=[{id:902,x:1900,y:1100,vx:0,vy:200,friendly:true}];ui.state.paused=true;ui.calls.length=0;ui.geometry.length=0;ui.tick(0);
   assert.equal(ui.geometry.some(c=>c.kind==='ellipse'&&c.args[0]===enemy.targetX&&c.args[1]===enemy.targetY&&[enemy.radius,enemy.radius+16].includes(c.args[2])),false);
-  const q=ui.state.projectiles[0],shot=ui.geometry.find(c=>c.kind==='fillRect'&&c.args[0]===q.x-5&&c.args[1]===q.y-40),pixel=renderedPoint(shot,q.x,q.y-35),ground=world.worldToScreen(q,camera);near(pixel.x,ground.x);near(pixel.y,ground.y-35);near(shot.a,shot.d);
-  const trail=ui.geometry.find(c=>c.kind==='moveTo'&&c.args[0]===q.x&&c.args[1]<q.y-35&&c.args[1]>q.y-70),tail=renderedPoint(trail,...trail.args);near(pixel.y-tail.y,28*world.GROUND_DEPTH_SCALE);
-  const bossDraw=ui.calls.find(c=>c.image.endsWith('bulwark_directions-v04.png'));assert.ok(bossDraw);near(bossDraw.y,1020);
+  const q=ui.state.projectiles[0],shot=ui.geometry.find(c=>c.kind==='fillRect'&&c.args[0]===q.x-5&&c.args[1]===q.y-40),pixel=renderedPoint(shot,q.x,q.y-35),ground=world.worldToScreen(q,camera);near(pixel.x,ground.x*S);near(pixel.y,(ground.y-35)*S);near(shot.a,shot.d);
+  const trail=ui.geometry.find(c=>c.kind==='moveTo'&&c.args[0]===q.x&&c.args[1]<q.y-35&&c.args[1]>q.y-70),tail=renderedPoint(trail,...trail.args);near(pixel.y-tail.y,28*world.GROUND_DEPTH_SCALE*S);
+  const bossDraw=ui.calls.find(c=>c.image.endsWith('bulwark_directions-v04.png'));assert.ok(bossDraw);near(bossDraw.y,(appView().height+260)*S);
 });
 
 test('boosted near-destination clicks stop without reversing at either frame rate in every direction',async()=>{
   for(const dt of [1/60,.05])for(let heading=0;heading<8;heading++){
     const ui=await host();ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.state.profile.skills.haste=3;ui.state.profile.inventory=[{id:99,slot:'charm',affixes:{speed:20}}];ui.state.profile.equipment.charm=99;
-    const p=ui.state.player;p.x=1800;p.y=1160;ui.tick(0);const angle=heading*Math.PI/4,start={x:p.x,y:p.y},n={x:Math.cos(angle),y:Math.sin(angle)},target={x:p.x+n.x*10,y:p.y+n.y*10},screen=world.worldToScreen(target,world.cameraFor(p,ui.state.bounds,world.VIEWPORT,world.GROUND_DEPTH_SCALE));
-    ui.emit('arena','pointerdown',{clientX:screen.x,clientY:screen.y});let progress=0;for(let i=0;i<20;i++){ui.tick(dt);const next=(p.x-start.x)*n.x+(p.y-start.y)*n.y;assert.ok(next>=progress-1e-8&&next<=10+1e-8);progress=next;}
+    const p=ui.state.player;p.x=1800;p.y=1160;ui.tick(0);const angle=heading*Math.PI/4,start={x:p.x,y:p.y},n={x:Math.cos(angle),y:Math.sin(angle)},target={x:p.x+n.x*10,y:p.y+n.y*10},screen=world.worldToScreen(target,appCamera(ui));
+    ui.emit('arena','pointerdown',clientAt(screen));let progress=0;for(let i=0;i<20;i++){ui.tick(dt);const next=(p.x-start.x)*n.x+(p.y-start.y)*n.y;assert.ok(next>=progress-1e-8&&next<=10+1e-8);progress=next;}
     assert.ok(Math.hypot(p.x-target.x,p.y-target.y)<8);assert.equal(p.action,'idle');const x=p.x,y=p.y;ui.run(.3);near(p.x,x);near(p.y,y);
     ui.emit('document','keydown',{key:'w',target:ui.nodes.get('arena')});ui.tick(dt);assert.ok(p.y<y);assert.equal(p.heading,6);
   }
@@ -1095,7 +1109,7 @@ test('click pursuit uses a wider restart distance and yields immediately to dire
 
 test('successful manual dodge cancels old click travel while a rejected dodge preserves it',async()=>{
   for(const rejected of [false,true]){
-    const ui=await host();ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];const p=ui.state.player;p.x=1800;p.y=1160;ui.tick(0);ui.emit('arena','pointerdown',{clientX:700,clientY:400});
+    const ui=await host();ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];const p=ui.state.player;p.x=1800;p.y=1160;ui.tick(0);ui.emit('arena','pointerdown',clientAt(world.worldToScreen({x:1900,y:1160},appCamera(ui))));
     if(rejected)p.dashCooldown=2;ui.emit('dash','click');ui.run(.3);const x=p.x;ui.run(.4);
     if(rejected){assert.ok(p.x>1800&&p.x<=1900);assert.ok(p.x>=x);assert.ok(1900-p.x<8);}else{assert.ok(x>1900);near(p.x,x);assert.equal(p.action,'idle');}
   }
@@ -1156,8 +1170,8 @@ test('all twenty-one creatures render locked windup/contact, hurt and fixed-scal
       const check=(family,index)=>{
         ui.calls.length=0;ui.tick(0);const clip=manifest.clips[motion.directionalClipId(manifest,species,family,heading)],frame=clip.frames[index],draw=ui.calls.filter(c=>c.image==='assets/'+clip.image&&c.args.length===8).at(-1);
         assert.ok(draw,species+'/'+heading+'/'+family);assert.deepEqual(draw.args.slice(0,4),[frame.x,frame.y,frame.w,frame.h]);assert.equal(draw.rotation,0);
-        near(Math.abs(draw.a),draw.d);near(frame.bodyHeight*draw.d,chapters.MONSTERS[species].height);assert.equal(Math.sign(draw.a),motion.DIRECTION_VIEWS[heading].mirror);
-        const foot=world.worldToScreen(e,world.cameraFor(p,ui.state.bounds,world.VIEWPORT,world.GROUND_DEPTH_SCALE));near(draw.x,foot.x);near(draw.y,foot.y);
+        near(Math.abs(draw.a),draw.d);near(frame.bodyHeight*draw.d,chapters.MONSTERS[species].height*appActorScale(ui,e.y));assert.equal(Math.sign(draw.a),motion.DIRECTION_VIEWS[heading].mirror);
+        const foot=world.worldToScreen(e,appCamera(ui));near(draw.x,foot.x*appScale());near(draw.y,foot.y*appScale());
       };
       e.action='windup';e.actionTime=0;e.windup=1;e.targetX=p.x;e.targetY=p.y;check('attack',0);
       e.action='attack';e.actionTime=0;check('attack',1);e.actionTime=.13;check('walk',0);

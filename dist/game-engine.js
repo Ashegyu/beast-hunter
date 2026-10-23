@@ -771,7 +771,7 @@ function updateProjectiles(s,dt){
     if(q.friendly){for(const e of s.enemies){if(!eligible(s,e))continue;const t=segmentHit(ax,ay,q.x,q.y,e.x,e.y,e.boss?65:28);if(t!==null&&t<best){target=e;best=t;}}}
     else{const t=segmentHit(ax,ay,q.x,q.y,s.player.x,s.player.y,26);if(t!==null&&t<best){target=s.player;best=t;}}
     if(!target)continue;
-    if(target.kind==='barrel')armBarrel(s,target);else if(target===s.player)hurtPlayer(s,q.damage,{x:ax,y:ay});else {const result=damageEnemy(s,target,q.damage,false,q.ancientSpec?'proc':'reflected',{x:ax,y:ay});if(q.ancientSpec&&result!=='miss')ancientStatus(s,target,q.ancientSpec.ancient.signature,q.ancientAttack);}
+    if(target.kind==='barrel')armBarrel(s,target);else if(target===s.player)hurtPlayer(s,q.damage,{x:ax,y:ay});else {const result=damageEnemy(s,target,q.damage,false,q.ancientSpec?'proc':'reflected',{x:ax,y:ay});if(q.ancientSpec&&result!=='miss')ancientStatus(s,target,(q.ancientSpec.ancient??q.ancientSpec.crafted).signature,q.ancientAttack);}
     effect(s,'acidImpact',{x:ax+(q.x-ax)*best,y:ay+(q.y-ay)*best,friendly:q.friendly,fxChapter:q.fxChapter},.3);s.projectiles.splice(i,1);if(s.phase!=='playing')return;
   }
 }

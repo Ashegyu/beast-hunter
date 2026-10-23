@@ -4,6 +4,8 @@ import { WORLD_BOUNDS, GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWor
 import { makeState, advance, resetState } from '../dist/engine.js';
 
 const viewport = { width: 1200, height: 760 };
+// The camera keeps the player 60% down the screen (world.js cameraFor).
+const playerScreenY = viewport.height * .6;
 
 test('world has nine viewport areas and seven separate enemy camps', () => {
   const state = makeState(WORLD_BOUNDS);
@@ -25,7 +27,7 @@ test('world has nine viewport areas and seven separate enemy camps', () => {
 test('camera tracks both axes and stops at all four world edges', () => {
   const state = makeState(WORLD_BOUNDS);
   const initial = cameraFor(state.player, state.bounds, viewport);
-  assert.deepEqual(initial, { x: 1200, y: 760, width: 1200, height: 760 });
+  assert.deepEqual(initial, { x: 1200, y: state.player.y - playerScreenY, width: 1200, height: 760 });
   for (let i = 0; i < 100; i++) advance(state, .05, { movementX: 1, movementY: 1 });
   const moved = cameraFor(state.player, state.bounds, viewport);
   assert.ok(moved.x > initial.x && moved.y > initial.y);
@@ -37,8 +39,8 @@ test('camera tracks both axes and stops at all four world edges', () => {
 test('pointer conversion includes camera offset and clamps to reachable world bounds', () => {
   const state = makeState(WORLD_BOUNDS);
   const camera = cameraFor(state.player, state.bounds, viewport);
-  assert.deepEqual(screenToWorld({ x: 600, y: 400 }, camera, state.bounds), { x: state.player.x, y: state.player.y });
-  assert.deepEqual(screenToWorld({ x: 1100, y: 500 }, camera, state.bounds), { x: 2300, y: 1260 });
+  assert.deepEqual(screenToWorld({ x: 600, y: playerScreenY }, camera, state.bounds), { x: state.player.x, y: state.player.y });
+  assert.deepEqual(screenToWorld({ x: 1100, y: 500 }, camera, state.bounds), { x: 2300, y: camera.y + 500 });
   assert.deepEqual(screenToWorld({ x: 1200, y: 760 }, { x: 2400, y: 1520 }, state.bounds), { x: 3540, y: 2220 });
   assert.deepEqual(screenToWorld({ x: 0, y: 0 }, { x: 0, y: 0 }, state.bounds), { x: 60, y: 60 });
 });
@@ -62,7 +64,7 @@ test('45-degree ground projection round-trips points and centers the feet throug
     }
   }
   const p={x:1800,y:1160},camera=cameraFor(p,bounds,viewport,GROUND_DEPTH_SCALE),foot=worldToScreen(p,camera);
-  assert.ok(Math.abs(foot.x-600)<1e-9&&Math.abs(foot.y-400)<1e-9);
+  assert.ok(Math.abs(foot.x-600)<1e-9&&Math.abs(foot.y-playerScreenY)<1e-9);
   const bottom=cameraFor({x:3540,y:2220},bounds,viewport,GROUND_DEPTH_SCALE);
   assert.ok(Math.abs(worldToScreen({x:bounds.width,y:bounds.height},bottom).y-760)<1e-9);
   assert.deepEqual(screenToWorld({x:99999,y:99999},bottom,bounds),{x:3540,y:2220});
