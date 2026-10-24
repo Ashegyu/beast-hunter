@@ -13,10 +13,10 @@ function kill(s,{elite=false,boss=false}={}){
 }
 function advance(s,seconds){for(let i=0;i<Math.ceil(seconds/.025);i++)g.advanceGame(s,.025);}
 test('108 immutable item families cover all three slots in every chapter using valid art',()=>{
- // 123 original identities plus 48 region set pieces (Alpha 0.108: 4 sets × 4 weapons and 2 per armor part).
- assert.equal(ITEM_CATALOG.length,123+48);assert.equal(new Set(ITEM_CATALOG.map(i=>i.id)).size,171);
+ // 123 original identities plus 360 chapter set pieces (Alpha 0.109: 30 sets × 4 weapons and 2 per armor part).
+ assert.equal(ITEM_CATALOG.length,123+360);assert.equal(new Set(ITEM_CATALOG.map(i=>i.id)).size,483);assert.equal(new Set(ITEM_CATALOG.map(i=>i.name)).size,483);
  for(const tier of [1,2,3])for(const slot of ['weapon','armor','charm'])assert.equal(ITEM_CATALOG.filter(i=>!i.set&&i.tier===tier&&i.slot===slot).length,12);
- for(const set of ['forest','fire','frost','ruins'])assert.deepEqual([...new Set(ITEM_CATALOG.filter(i=>i.set===set).map(i=>i.slot))],['weapon','helmet','armor','pants','boots']);
+ for(const set of Object.keys(g.EQUIPMENT_SETS))assert.deepEqual([...new Set(ITEM_CATALOG.filter(i=>i.set===set).map(i=>i.slot))],['weapon','helmet','armor','pants','boots']);
  for(const row of ITEM_CATALOG)assert.ok([...EQUIPMENT_ART,...SET_ART].some(a=>a.id===row.artId&&a.slot===g.equipmentFamily(row.slot)&&a.tier===row.tier));
  assert.throws(()=>{ITEM_CATALOG[0].base.damage=999;},TypeError);
 });
@@ -90,4 +90,24 @@ test('all chapter and difficulty boss receipts match the actual once-only payout
   assert.deepEqual(receipt,expected);assert.equal(p.gold,expected.gold);assert.equal(s.run.gold,expected.gold);assert.equal(p.cores,expected.cores);
   const saved=g.encodeProfile(p,1000);advance(s,2);assert.equal(g.encodeProfile(p,1000),saved);
  }
+});
+
+test('every chapter drops its own set and the new set bonuses reach player stats (Alpha 0.109)',()=>{
+ assert.equal(new Set(g.STAGES.map(c=>c.set)).size,30);
+ for(const chapter of [2,13,24,30]){
+  const p=g.createProfile(1000);p.unlockedStage=30;p.clearedStage=29;p.stageProgress=g.STAGES.map(()=>10);
+  const s=g.createGame(p);g.launch(s,chapter);freezeCombat(s);s.enemies=[];s.player.invulnerable=999;
+  for(let n=0;n<40&&s.profile.pendingLoot.length<3;n++){s.lootRng=n*7919+1;kill(s,{elite:true});}
+  assert.ok(s.profile.pendingLoot.length>0);
+  for(const item of s.profile.pendingLoot)assert.equal(g.itemSet(item),g.STAGES[chapter-1].set);
+ }
+ const wear=(set,slots)=>{const p=g.createProfile(1000);let seed=3;const rng=()=>(seed=(seed*1103515245+12345)%2147483648)/2147483648;
+  for(const slot of slots){const row=g.SET_CATALOG.find(r=>r.set===set&&r.slot===slot),item={id:p.nextItemId++,slot,tier:row.tier,rarity:0,name:row.name,catalogId:row.id,artId:row.artId,affixes:{hp:1}};p.inventory.push(item);p.equipment[slot]=item.id;}
+  return g.playerStats(p);};
+ const bare=g.playerStats(g.createProfile(1000));
+ assert.ok(Math.abs(wear('wolf',['weapon','helmet']).attackSpeed-bare.attackSpeed-.06)<1e-9);
+ assert.equal(wear('mimic',['weapon','helmet']).collection-bare.collection,100);
+ assert.ok(Math.abs(wear('ghoul',['weapon','helmet']).regeneration-bare.regeneration-2)<1e-9);
+ assert.ok(Math.abs(wear('necro',['weapon','helmet']).range/bare.range-1.10)<1e-9);
+ assert.equal(wear('wolf',['weapon']).attackSpeed,bare.attackSpeed);
 });

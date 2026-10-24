@@ -1,0 +1,29 @@
+{
+  "id": "set-mandrake",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing equipment sheet: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting, scale and the exact diagonal orientation of its swords (hilt at bottom-left, tip at top-right). Create ONE transparent RGBA square image with exactly SIX separate items of ONE matching equipment set in an invisible 3 columns x 2 rows grid, each centered in its own cell with wide transparent margins, never touching each other or the canvas edge: row 1: (1) a one-handed sword, (2) a different second weapon of the same set: a curved vine blade, (3) a helmet; row 2: (4) a chest armor, (5) leg armor pants, (6) a pair of boots. All six share one design language: MANDRAKE QUEEN set: pink and crimson carnivorous flower petals, twisted root wood, leaf blades, golden pollen. Each item clearly readable at small icon size. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "referenceImages": [
+    {
+      "path": "dist/assets/equipment_chapters-v09.webp",
+      "sha256": "99f0495a7004767706f9fe38dad276fea039d514d886e08f3363661b67bb0929"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": 0.558,
+      "parts": 6,
+      "seconds": 67,
+      "sha256": "a1b31245768dd631b5b6fe65543eb2ef5b098efe512ebde8c150ba14472ed568"
+    }
+  ],
+  "final": {
+    "path": "art/equipment0109/set-mandrake.png",
+    "sha256": "a1b31245768dd631b5b6fe65543eb2ef5b098efe512ebde8c150ba14472ed568"
+  }
+}

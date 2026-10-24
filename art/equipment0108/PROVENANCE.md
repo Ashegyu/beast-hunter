@@ -12,3 +12,5 @@
 네 장 모두 첫 생성에서 자동 검사(투명도, 분리된 물체 6개 이상)를 통과했고 눈으로 검수해 채택했습니다.
 
 포장: `python3 tools/pack-equipment0108.py` — 시트마다 큰 물체 6개를 잘라(투명도 8 이하의 옅은 번짐은 제외) 0.9 장비 원화와 같은 최대 340px로 줄이고, 0.9 장비 아틀라스를 그대로 복사한 아래에 붙여 `equipment_chapters-v0108`을 만듭니다. `manifest.equipment.designIds`에 `set_<세트>_<sword|blade2|helmet|armor|pants|boots>` 24개가 더해집니다. 다시 실행해도 항상 0.9 아틀라스에서 시작합니다. 측정값 `tools/reports/alpha0108-equipment.json`.
+
+0.109부터 이 네 세트는 1·11·16·21장 세트로 쓰이며, 포장은 `tools/pack-equipment0109.py`가 30세트를 지역별 페이지로 묶습니다(`pack-equipment0108.py`와 `equipment_chapters-v0108` 아틀라스는 0.109에서 지움).

@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.108.0';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.109.0';
 import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js';
 import { createCombatAudio } from './sound.js?v=0.76.0';
-import * as game from './game-engine.js?v=0.108.0';
+import * as game from './game-engine.js?v=0.109.0';
 import {FrameMetrics} from './frame-metrics.js?v=0.98.1';
 import { frameIndex, frameRect, validateClip } from './engine.js';
 import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
 import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.103.1';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.108.0';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.108.0';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.108.0';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.108.0';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.109.0';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.109.0';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.109.0';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.109.0';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -514,9 +514,9 @@ function refreshMapScene(selected,plan,species,completed,limit){
  $('map-boss-cores').textContent='+'+game.bossCores(selected.id,selectedDifficulty);
  for(let n=1;n<game.STAGES_PER_CHAPTER;n++)$('map-path-'+n).setAttribute('data-open',String(n<limit));
  for(const slot of ['weapon','armor','charm']){
-  const rewardSlot=slot==='charm'?'helmet':slot;const row=game.ITEM_CATALOG.find(r=>r.tier===selected.theme&&r.slot===rewardSlot);
-  gearThumbnail($('map-reward-'+slot),{...row,rarity:0},48,true);
-  $('map-reward-'+slot).setAttribute('title',game.SLOTS[rewardSlot]+' · '+row.name+' · 일반 등급 드롭');
+  const rewardSlot=slot==='charm'?'helmet':slot;const row=game.ITEM_CATALOG.find(r=>r.set===selected.set&&r.slot===rewardSlot),set=game.EQUIPMENT_SETS[selected.set];
+  gearThumbnail($('map-reward-'+slot),{...row,catalogId:row.id,rarity:0},48,true);
+  $('map-reward-'+slot).setAttribute('title',set.name+' 세트 · '+game.SLOTS[rewardSlot]+' · '+row.name+' · 일반 등급 드롭');
  }
 }
 function refreshCampScene(selected){
@@ -759,8 +759,8 @@ function groundLoot(item,x,y,age,showName=false,body=true){
    if(rank>=5){ctx.strokeStyle=info.color+'88';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x-7,y-12);ctx.lineTo(x-7,y-beam*.72);ctx.moveTo(x+7,y-12);ctx.lineTo(x+7,y-beam*.72);ctx.stroke();}
    dropSeal(x,y-beam*.72,rank,rank>=5?13:8,info.color);
   }
-  const design=visualDesign(item),source=gearFrame(manifest.equipment,design,manifest.equipmentRarities),frame=source.frame,size=rank>=3?44:34,scale=size/Math.max(frame.w,frame.h);
-  ctx.drawImage(images.get(source.image),frame.x,frame.y,frame.w,frame.h,x-frame.w*scale/2,y-frame.h*scale-10-rise,frame.w*scale,frame.h*scale);ctx.restore();
+  const design=visualDesign(item),source=gearFrame(manifest.equipment,design,manifest.equipmentRarities),frame=source.frame,size=rank>=3?44:34,scale=size/Math.max(frame.w,frame.h),art=images.get(source.image);
+  if(art)ctx.drawImage(art,frame.x,frame.y,frame.w,frame.h,x-frame.w*scale/2,y-frame.h*scale-10-rise,frame.w*scale,frame.h*scale);ctx.restore();
  }
  if(body&&item.perfect){uprightAt(x,y);const cy=y-beam*.72,r=7+Math.sin(age*5)*2;ctx.strokeStyle='#fff6d8';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x,cy-r);ctx.lineTo(x+r,cy);ctx.lineTo(x,cy+r);ctx.lineTo(x-r,cy);ctx.closePath();ctx.stroke();ctx.restore();}
  if(showName){const text=(item.perfect?'극옵 · ':'')+game.RARITIES[rank]+' '+item.name;ctx.font='bold 20px "Hunter UI", sans-serif';let half=ctx.measureText(text).width/2;if(half*2>camera.width-32){ctx.font='bold '+(20*(camera.width-32)/(half*2))+'px "Hunter UI", sans-serif';half=(camera.width-32)/2;}const lx=clamp(x,camera.x+half+16,camera.x+camera.width-half-16),ly=y+Math.min(32,viewport.height-12-(y-camera.y)*GROUND_DEPTH_SCALE);uprightAt(lx,y);ctx.fillStyle='#211322df';ctx.fillRect(lx-half-7,ly-21,half*2+14,29);ctx.fillStyle=info.color;ctx.fillRect(lx-half-7,ly-21,2,29);ctx.textAlign='center';ctx.fillText(text,lx,ly);ctx.restore();}

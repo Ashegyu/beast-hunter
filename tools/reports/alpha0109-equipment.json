@@ -1,0 +1,204 @@
+{
+  "sources": [
+    {
+      "set": "forest",
+      "chapter": 1,
+      "source": "art/equipment0108/set-forest.png",
+      "sha256": "cba54b1b6d2b3bbae05a281363942acd603a3bc34058dc7356a458e1d7a92ad3"
+    },
+    {
+      "set": "wolf",
+      "chapter": 2,
+      "source": "art/equipment0109/set-wolf.png",
+      "sha256": "33165521bbba3eb6a10c1d80e1c8a25db25d2e89aa0c3e510013d1ce4c6b7853"
+    },
+    {
+      "set": "goblin",
+      "chapter": 3,
+      "source": "art/equipment0109/set-goblin.png",
+      "sha256": "f7ff304107b61872bd04ecc2c6d28f10d321963f5fbd753d22e58830f577edea"
+    },
+    {
+      "set": "thorn",
+      "chapter": 4,
+      "source": "art/equipment0109/set-thorn.png",
+      "sha256": "3456f4b17d080321274ee35fc10f7352c559fa5ed0ade5fa5ddc76fd72e8c998"
+    },
+    {
+      "set": "spore",
+      "chapter": 5,
+      "source": "art/equipment0109/set-spore.png",
+      "sha256": "c43b9c8da80229591546a2659fcc420f9dfafd2bace68800349a44875b9ddeef"
+    },
+    {
+      "set": "orc",
+      "chapter": 6,
+      "source": "art/equipment0109/set-orc.png",
+      "sha256": "e4fa4db7dec43d486542069db5ec278aedb64e9c4408641d2dd1373717fd16e5"
+    },
+    {
+      "set": "mandrake",
+      "chapter": 7,
+      "source": "art/equipment0109/set-mandrake.png",
+      "sha256": "a1b31245768dd631b5b6fe65543eb2ef5b098efe512ebde8c150ba14472ed568"
+    },
+    {
+      "set": "spider",
+      "chapter": 8,
+      "source": "art/equipment0109/set-spider.png",
+      "sha256": "7c11c38c53a864eafa87ee432f009f754684a6f27da9e4a2e65167612f8095b1"
+    },
+    {
+      "set": "bloodbear",
+      "chapter": 9,
+      "source": "art/equipment0109/set-bloodbear.png",
+      "sha256": "bcff432ed188972eed7cc9d4e1b28c66c3a8f5de44f839754167da542aa8af8e"
+    },
+    {
+      "set": "worldtree",
+      "chapter": 10,
+      "source": "art/equipment0109/set-worldtree.png",
+      "sha256": "05db05254dc0fa66821a6e9cc7f3d08401b5259b2d6f91799e4dcb28ddc18381"
+    },
+    {
+      "set": "fire",
+      "chapter": 11,
+      "source": "art/equipment0108/set-fire.png",
+      "sha256": "47ff994c522f73538948e185d6997fb1fa49288cd3a1b4f718aeba3b87713b24"
+    },
+    {
+      "set": "ifrit",
+      "chapter": 12,
+      "source": "art/equipment0109/set-ifrit.png",
+      "sha256": "ca8a31378f5a0c62e5b61756e292806b914ca78403a073ac80ac00c80bbcc2d4"
+    },
+    {
+      "set": "lavagiant",
+      "chapter": 13,
+      "source": "art/equipment0109/set-lavagiant.png",
+      "sha256": "af493240efc612f965c3b540da180fd7a4f1bd1b88a803aea61c3ef3cf2a4e24"
+    },
+    {
+      "set": "phoenix",
+      "chapter": 14,
+      "source": "art/equipment0109/set-phoenix.png",
+      "sha256": "7fd90b03ce643e0718ad1c099584dc250bc4c59a70b4500ff16ece01d132ba9c"
+    },
+    {
+      "set": "minotaur",
+      "chapter": 15,
+      "source": "art/equipment0109/set-minotaur.png",
+      "sha256": "aab705a517198680ee99105b620a0d100841bc0a2ac0d218b17b7ea6573ae737"
+    },
+    {
+      "set": "frost",
+      "chapter": 16,
+      "source": "art/equipment0108/set-frost.png",
+      "sha256": "df515051b4738248f58c791839d05d976e6823457d4b3fb993427042ccbc1443"
+    },
+    {
+      "set": "seadragon",
+      "chapter": 17,
+      "source": "art/equipment0109/set-seadragon.png",
+      "sha256": "6a96137d711cb56832d5ae93149b7b55808e19eb90c10c9d487d8c47c5970efb"
+    },
+    {
+      "set": "blizzard",
+      "chapter": 18,
+      "source": "art/equipment0109/set-blizzard.png",
+      "sha256": "8d839354eba522ce057dff440431eaee1dd7e3256246d4f0c20a8054cef2ac15"
+    },
+    {
+      "set": "glacierturtle",
+      "chapter": 19,
+      "source": "art/equipment0109/set-glacierturtle.png",
+      "sha256": "78b5f9ecfc839bee7e9c82db47673b340524cfcb4563cb1d51dcfb6687908172"
+    },
+    {
+      "set": "twindragon",
+      "chapter": 20,
+      "source": "art/equipment0109/set-twindragon.png",
+      "sha256": "aaa8c6d709a7abb20d61560e29887aa8db461e18bb167e17fbef655d35e777c4"
+    },
+    {
+      "set": "ruins",
+      "chapter": 21,
+      "source": "art/equipment0108/set-ruins.png",
+      "sha256": "918d5c3e47e5861cdf1993ba3c0bc93e839a1dbf22fc229f21f6b74a7964be73"
+    },
+    {
+      "set": "ghoul",
+      "chapter": 22,
+      "source": "art/equipment0109/set-ghoul.png",
+      "sha256": "45460db4150455578d50eca9c25c95b98295fd1c74d9187e5b06a9bf4864a109"
+    },
+    {
+      "set": "vampire",
+      "chapter": 23,
+      "source": "art/equipment0109/set-vampire.png",
+      "sha256": "60ac40e1f359920ba18f98cae552435974892b040040d372eb1205d1cea368cd"
+    },
+    {
+      "set": "necro",
+      "chapter": 24,
+      "source": "art/equipment0109/set-necro.png",
+      "sha256": "2a99170f764b59c55f8ee6d2c28e7e7e3d841f35b7f4f0902ea9628e081e3589"
+    },
+    {
+      "set": "cursedknight",
+      "chapter": 25,
+      "source": "art/equipment0109/set-cursedknight.png",
+      "sha256": "1b5fe17a0dbbddf9498e01861c7e4a8c6fc2031aaf1dd8f3ab68354b2af60047"
+    },
+    {
+      "set": "banshee",
+      "chapter": 26,
+      "source": "art/equipment0109/set-banshee.png",
+      "sha256": "569e0da87eb1366de6e60b4ee089ee3ef3d3c10c27facce87ee3fbd2547fb1bb"
+    },
+    {
+      "set": "mimic",
+      "chapter": 27,
+      "source": "art/equipment0109/set-mimic.png",
+      "sha256": "2929696846b7fb22194ff96a2f0e9ea55edf9a1d5169e37c18e555873ba0449b"
+    },
+    {
+      "set": "mummy",
+      "chapter": 28,
+      "source": "art/equipment0109/set-mummy.png",
+      "sha256": "d728b6cf1c52fb120b856b1a50d55072afd1825381ffc701b31917386adab0be"
+    },
+    {
+      "set": "royalguard",
+      "chapter": 29,
+      "source": "art/equipment0109/set-royalguard.png",
+      "sha256": "afb65fc2df168d20aef8dab6928da892ead6a013ad1d7beba069c133b136de4d"
+    },
+    {
+      "set": "abyss",
+      "chapter": 30,
+      "source": "art/equipment0109/set-abyss.png",
+      "sha256": "7aa7db213193a25891573d3e2bd0664ea3a1215c923a786221d0fbe1522da213"
+    }
+  ],
+  "pages": {
+    "equipment-sets-r1-v0109.png": {
+      "width": 1214,
+      "height": 2488
+    },
+    "equipment-sets-r2-v0109.png": {
+      "width": 1264,
+      "height": 2488
+    },
+    "equipment-sets-r3-v0109.png": {
+      "width": 1216,
+      "height": 2488
+    }
+  },
+  "setFrames": 180,
+  "webpBytes": {
+    "equipment-sets-r1-v0109.png": 3535624,
+    "equipment-sets-r2-v0109.png": 3833394,
+    "equipment-sets-r3-v0109.png": 3489320
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "set-blizzard",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing equipment sheet: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting, scale and the exact diagonal orientation of its swords (hilt at bottom-left, tip at top-right). Create ONE transparent RGBA square image with exactly SIX separate items of ONE matching equipment set in an invisible 3 columns x 2 rows grid, each centered in its own cell with wide transparent margins, never touching each other or the canvas edge: row 1: (1) a one-handed sword, (2) a different second weapon of the same set: a crystal arcane sword, (3) a helmet; row 2: (4) a chest armor, (5) leg armor pants, (6) a pair of boots. All six share one design language: BLIZZARD WITCH set: pale lavender and white, swirling snow sigils, floating ice crystal shards, silk and silver, arcane. Each item clearly readable at small icon size. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "referenceImages": [
+    {
+      "path": "dist/assets/equipment_chapters-v09.webp",
+      "sha256": "99f0495a7004767706f9fe38dad276fea039d514d886e08f3363661b67bb0929"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": 0.528,
+      "parts": 10,
+      "seconds": 52,
+      "sha256": "8d839354eba522ce057dff440431eaee1dd7e3256246d4f0c20a8054cef2ac15"
+    }
+  ],
+  "final": {
+    "path": "art/equipment0109/set-blizzard.png",
+    "sha256": "8d839354eba522ce057dff440431eaee1dd7e3256246d4f0c20a8054cef2ac15"
+  }
+}

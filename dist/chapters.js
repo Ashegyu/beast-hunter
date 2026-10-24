@@ -1,5 +1,5 @@
 import {equipmentFamily} from './equipment-slots.js?v=0.98.0';
-import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.108.0';
+import {EQUIPMENT_SETS,SET_SLOTS,CHAPTER_SETS,setArtId} from './equipment-sets.js?v=0.109.0';
 // Thirty chapters in three regions of ten (Alpha 0.107): 1–10 forest, 11–20 fire and
 // ice (11–15 fire, 16–20 ice), 21–30 darkness. A region drives the map tabs, item and
 // material tiers; a biome drives ground art, props, attack effects, boss rule and the
@@ -89,7 +89,7 @@ export const CHAPTERS = CHAPTER_ROWS.map(([name,biomeKey,bossSpecies,midBoss=nul
   return {id,theme:theme.id,key:biome.key,biome:biomeKey,region:theme.name,name,number,finale,special:!!boss.special,environment:'c'+id,effects:biome.effects,props:biome.props,bossRule:biome.bossRule,
     subtitle:biome.subtitle+(finale?` 지역의 끝에서 특수 보스 ${boss.name}${josa(boss.name,'이','가')} 기다린다.`:` 열 스테이지 끝에서 ${boss.name}${josa(boss.name,'을','를')} 사냥해.`),
     multiplier,bossHp:Math.round(780*multiplier*theme.bossScale*(finale?1.15:1)),reward:Math.round(90*multiplier),
-    color:biome.color,shotColor:biome.shotColor,pathColor:biome.pathColor,bossName:boss.name,bossSpecies,midBoss,midBossName:midBoss?MID_BOSSES[midBoss].name:null,bossPosition:biome.bossPosition,bossCycle:biome.bossCycle,
+    color:biome.color,shotColor:biome.shotColor,pathColor:biome.pathColor,bossName:boss.name,bossSpecies,midBoss,midBossName:midBoss?MID_BOSSES[midBoss].name:null,set:CHAPTER_SETS[id],bossPosition:biome.bossPosition,bossCycle:biome.bossCycle,
     roster:Object.freeze(roster),stages:Object.freeze(stages),encounters:biome.encounters,formations:FORMATIONS,caches:biome.caches,tactic:biome.tactic};
 });
 export const chapterTheme=id=>THEMES[(CHAPTERS[id-1]?.theme??1)-1];

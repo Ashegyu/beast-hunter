@@ -15,7 +15,9 @@ export function regionAssetPlan(manifest, chapters) {
     }
     const clips = [...ids].map(id => manifest.clips[id]);
     const theme=chapter.theme??chapter.id,effects=manifest.monsterEffects?.[chapter.effects??theme];
-    regions.set(chapter.id, { clips, effects, paths: new Set([manifest.chapters[chapter.environment??theme].environment, ...clips.map(c => c.image),...(effects?[effects.image]:[])]) });
+    // The atlas page with the chapter's set items, which drop on the battlefield (Alpha 0.109).
+    const setPage=manifest.equipment.setFrames?.[`set_${chapter.set}_sword`]?.image;
+    regions.set(chapter.id, { clips, effects, paths: new Set([manifest.chapters[chapter.environment??theme].environment, ...clips.map(c => c.image),...(effects?[effects.image]:[]),...(setPage?[setPage]:[])]) });
   }
   // Monster species (ids like forest_wolf, boss_fire_drake) load only with a chapter that
   // uses them; species no chapter uses (e.g. retired region bosses) are never downloaded.

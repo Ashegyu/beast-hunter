@@ -33,7 +33,7 @@ test('hunting map scene follows real checkpoint limits and boss rewards without 
  pickChapter(ui,21);ui.emit('map-mode-0','click');ui.emit('run-stage-10','click');
  assert.equal(ui.nodes.get('map-boss-gold').textContent,'+'+game.STAGES[20].reward);
  assert.equal(ui.nodes.get('map-boss-cores').textContent,'+'+game.bossCores(21));
- for(const [node,slot]of [['weapon','weapon'],['armor','armor'],['charm','helmet']])assert.equal(ui.nodes.get('map-reward-'+node).attributes['data-art-id'],slot==='helmet'?'part-helmet':game.ITEM_CATALOG.find(r=>r.tier===3&&r.slot===slot).artId);
+ for(const [node,slot]of [['weapon','weapon'],['armor','armor'],['charm','helmet']])assert.equal(ui.nodes.get('map-reward-'+node).attributes['data-art-id'],game.ITEM_CATALOG.find(r=>r.set===game.STAGES[20].set&&r.slot===slot).artId);
  assert.deepEqual(ui.profile(),before);
 });
 const root=new URL('../dist/',import.meta.url);
@@ -150,7 +150,7 @@ test('first hunt waits for validated images, reuses pending work and starts its 
  ui.emit('start','click');ui.emit('start','click');await ui.settle();ui.run(2);
  assert.equal(ui.state.phase,'camp');assert.equal(ui.state.profile.hunts,0);assert.equal(ui.state.run.time,0);assert.equal(ui.nodes.get('start').disabled,true);
  assert.equal(ui.requestedImages.filter(p=>p==='assets/lirian_death-v06.webp').length,1);
- await ui.completeDeferredAssets();assert.equal(ui.state.phase,'playing');assert.equal(ui.state.profile.hunts,1);assert.equal(ui.state.run.timeRemaining,60);assert.equal(ui.requestedImages.length,25);
+ await ui.completeDeferredAssets();assert.equal(ui.state.phase,'playing');assert.equal(ui.state.profile.hunts,1);assert.equal(ui.state.run.timeRemaining,60);assert.equal(ui.requestedImages.length,26);
  ui.tick(.05);assert.ok(ui.state.run.timeRemaining<60);
 });
 test('leaving and returning to cold-launch origin cancels intent but keeps the finished image cache',async()=>{
@@ -161,7 +161,7 @@ test('leaving and returning to cold-launch origin cancels intent but keeps the f
 test('a partial battle load failure keeps the camp usable and retry never launches an abandoned hunt',async()=>{
  const failures=new Set(['assets/lirian_death-v06.webp']),ui=await host({coldStart:true,failedAssets:failures});ui.emit('start','click');await ui.settle();
  assert.equal(ui.state.phase,'camp');assert.equal(ui.state.profile.hunts,0);assert.equal(ui.nodes.get('game-shell').attributes['data-combat-ready'],'false');
- assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'10','three camp and seven chapter-1 images (terrain, attack effects, boss, four species atlases), no partial shared commit');
+ assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'11','three camp and eight chapter-1 images (terrain, attack effects, boss, four species atlases, set equipment page), no partial shared commit');
  ui.emit('nav-bag','click');assert.equal(ui.nodes.get('inventory-content').hidden,false);failures.clear();ui.emit('region-retry','click');ui.emit('region-retry','click');await ui.settle();
  assert.equal(ui.state.phase,'camp');assert.equal(ui.state.profile.hunts,0);assert.equal(ui.nodes.get('game-shell').attributes['data-combat-ready'],'true');ui.emit('nav-home','click');ui.emit('start','click');assert.equal(ui.state.phase,'playing');
 });
@@ -250,7 +250,7 @@ test('equipment thumbnails contain the full frame at small slot sizes without ch
   }
   const child=art;ui.tick(0);assert.equal(node.atlasImage,child,'reuse the image when the frame is unchanged');
  }
- assert.deepEqual(ui.profile(),before);assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'25');
+ assert.deepEqual(ui.profile(),before);assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'26');
 });
 test('equipped and crafting thumbnails reuse a responsive image when their actual item source changes',async()=>{
  const p=bagFixture(),ancient=game.ANCIENT_CATALOG.find(r=>r.slot==='weapon');p.inventory.push({...ancient,id:6,catalogId:ancient.id,rarity:5,affixes:{...ancient.base}});
@@ -513,7 +513,7 @@ test('armory empty and paused states stay truthful and detail back never resumes
 test('armory display atlas covers every base identity without adding combat boot images or replacing ancient art',async()=>{
  const display=manifest.equipmentPresentation;assert.deepEqual(display.designIds,chapters.EQUIPMENT_ART.map(r=>r.id));assert.ok(fs.existsSync(new URL('assets/'+manifest.delivery[display.image],root)));
  for(const id of display.designIds){const f=display.frames[id];assert.ok(f.x>=0&&f.y>=0&&f.w>0&&f.h>0&&f.x+f.w<=display.width&&f.y+f.h<=display.height);if(display.weaponAnchors[id]){const a=display.weaponAnchors[id];for(const k of ['gripX','gripY','tipX','tipY'])assert.ok(Number.isFinite(a[k]));assert.ok(a.gripX>=0&&a.gripX<f.w&&a.tipX>=0&&a.tipX<f.w&&a.gripY>=0&&a.gripY<f.h&&a.tipY>=0&&a.tipY<f.h);}}
- const p=bagFixture(),ancient=game.ANCIENT_CATALOG[0];p.inventory.push({...ancient,id:6,catalogId:ancient.id,rarity:5,affixes:{...ancient.base}});const ui=await host({saved:p});ui.emit('nav-bag','click');assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'25');assert.match(ui.nodes.get('bag-art-0').atlasImage.src,/armory-equipment-v040.webp/);assert.match(ui.nodes.get('bag-art-5').atlasImage.src,/ancient-individual-v019.webp/);assert.equal(ui.nodes.has('equipment-hero-weapon'),false);const before=ui.profile();ui.emit('bag-5','click');ui.emit('equip-5','click');assert.match(ui.nodes.get('equipped-art-weapon').atlasImage.src,/ancient-individual-v019.webp/);assert.equal(ui.profile().inventory.length,before.inventory.length);
+ const p=bagFixture(),ancient=game.ANCIENT_CATALOG[0];p.inventory.push({...ancient,id:6,catalogId:ancient.id,rarity:5,affixes:{...ancient.base}});const ui=await host({saved:p});ui.emit('nav-bag','click');assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'26');assert.match(ui.nodes.get('bag-art-0').atlasImage.src,/armory-equipment-v040.webp/);assert.match(ui.nodes.get('bag-art-5').atlasImage.src,/ancient-individual-v019.webp/);assert.equal(ui.nodes.has('equipment-hero-weapon'),false);const before=ui.profile();ui.emit('bag-5','click');ui.emit('equip-5','click');assert.match(ui.nodes.get('equipped-art-weapon').atlasImage.src,/ancient-individual-v019.webp/);assert.equal(ui.profile().inventory.length,before.inventory.length);
 });
 
 test('live home panels mirror ownership and opening an item does not equip it',async()=>{
@@ -718,7 +718,7 @@ test('48-slot inventory filter keeps action identity after filtering and salvage
 test('real render draws dropped equipment and limits ordinary pickup HUD spam',async()=>{
  const ui=await host({recordGeometry:true});ui.emit('start','click');ui.tick();ui.state.enemies=[];ui.state.barrels=[];const item={id:90,slot:'weapon',tier:1,artId:'forest_blade',name:'전설 검',rarity:3,affixes:{damage:20}};
  ui.state.profile.pendingLoot=[item];ui.state.pickups=[{id:901,kind:'equipment',x:ui.state.player.x+250,y:ui.state.player.y,item,age:0,gold:0,xp:0,cores:0}];ui.state.effects.push({id:902,type:'gearDrop',x:ui.state.player.x+250,y:ui.state.player.y,item,rarity:3,ttl:1.2,maxTtl:1.2});ui.run(.1);
- assert.ok(ui.geometry.some(c=>c.kind==='fillRect'&&c.args[3]===100));assert.ok(ui.calls.some(c=>c.image.includes('equipment_chapters-v0108')));assert.ok(ui.geometry.some(c=>c.kind==='fillText'&&String(c.args[0]).includes('전설 검')));assert.ok(ui.audioDetails.some(e=>e.type==='gearDrop'&&e.details.rarity===3));
+ assert.ok(ui.geometry.some(c=>c.kind==='fillRect'&&c.args[3]===100));assert.ok(ui.calls.some(c=>c.image.includes('equipment_chapters-v09')));assert.ok(ui.geometry.some(c=>c.kind==='fillText'&&String(c.args[0]).includes('전설 검')));assert.ok(ui.audioDetails.some(e=>e.type==='gearDrop'&&e.details.rarity===3));
  ui.state.effects=[{id:903,type:'loot',name:'일반 검',rarity:0,origin:'monster',ttl:2,maxTtl:2}];ui.tick();assert.equal(ui.nodes.get('reward-toast').hidden,true);ui.state.effects=[{id:904,type:'loot',name:'전설 검',rarity:3,origin:'monster',ttl:2,maxTtl:2}];ui.tick();assert.equal(ui.nodes.get('reward-toast').hidden,false);assert.match(ui.nodes.get('reward-title').textContent,/전설/);
 });
 
@@ -1242,15 +1242,15 @@ test('a missing regional atlas leaves camp open but never starts a hunt or repla
 
 test('encoded delivery loads valid WebP bounds and omits unused original terrain and props',async()=>{
   const ui=await host();assert.equal(ui.nodes.get('loading').hidden,true);
-  assert.equal(ui.requestedImages.length,25);assert.ok(ui.requestedImages.every(path=>path.endsWith('.webp')));
+  assert.equal(ui.requestedImages.length,26);assert.ok(ui.requestedImages.every(path=>path.endsWith('.webp')));
   assert.ok(!ui.requestedImages.some(path=>path.includes('terrain_carapace')||path.includes('props_carapace')));
-  assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'25');
+  assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'26');
 });
 
 test('late battle assets cannot promote a partial failed bundle or enable combat',async()=>{
  const ui=await host({coldStart:true,failedAssets:'assets/fx_cleave_sequence.png',deferredAsset:'assets/lirian_death-v06.webp'});ui.emit('start','click');await ui.settle();
  assert.equal(ui.state.phase,'camp');assert.equal(ui.nodes.get('game-shell').attributes['data-combat-ready'],'false');
- await ui.completeDeferredAssets();assert.equal(ui.nodes.get('game-shell').attributes['data-combat-ready'],'false');assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'10');
+ await ui.completeDeferredAssets();assert.equal(ui.nodes.get('game-shell').attributes['data-combat-ready'],'false');assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'11');
  assert.equal(ui.nodes.get('start').disabled,true);assert.equal(ui.nodes.get('game-shell').attributes['data-region-status'],'error');assert.equal(ui.state.profile.hunts,0);
 });
 
@@ -1466,13 +1466,13 @@ test('unselected regional failures do not block startup and regional failure ret
  const p=game.createProfile(1_000_000);p.unlockedStage=3;p.clearedStage=2;p.stageProgress=[10,10,1];widen(p);
  // Startup opens chapter 21 (darkness); a fire chapter's ground tile fails until retried.
  const failures=new Set(['assets/terrain-c11-v0107.webp']);const ui=await host({saved:p,failedAssets:failures});
- assert.equal(ui.nodes.get('loading').hidden,true);assert.equal(ui.requestedImages.length,26);
+ assert.equal(ui.nodes.get('loading').hidden,true);assert.equal(ui.requestedImages.length,27);
  assert.ok(!ui.requestedImages.some(path=>/monsters-(forest|frost|fire|boss_fire|boss_forest)|terrain-(forest|frost)|terrain-c(0|1)/.test(path)));
  const before=ui.profile();pickChapter(ui,11);assert.equal(ui.nodes.get('start').disabled,true);ui.emit('start','click');assert.equal(ui.state.phase,'camp');
  await ui.settle();assert.equal(ui.nodes.get('game-shell').attributes['data-region-status'],'error');assert.equal(ui.nodes.get('region-retry').hidden,false);
  assert.equal(ui.nodes.get('roster-art-0').style.backgroundImage,'none');assert.equal(ui.nodes.get('roster-art-0').atlasImage?.hidden??true,true);assert.deepEqual(ui.profile(),before);
  failures.clear();ui.emit('region-retry','click');await ui.settle();assert.equal(ui.nodes.get('game-shell').attributes['data-resident-region'],'11');assert.equal(ui.nodes.get('start').disabled,false);
- assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'27');ui.emit('start','click');assert.equal(ui.state.stageId,11);assert.equal(ui.state.phase,'playing');ui.tick();
+ assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'28');ui.emit('start','click');assert.equal(ui.state.stageId,11);assert.equal(ui.state.phase,'playing');ui.tick();
 });
 
 test('rapid regional selection ignores an abandoned completion and evicted regions reload on demand',async()=>{
@@ -1483,7 +1483,7 @@ test('rapid regional selection ignores an abandoned completion and evicted regio
  await ui.completeDeferredAssets();assert.equal(ui.nodes.get('game-shell').attributes['data-resident-region'],'10');
  assert.equal(ui.nodes.get('chapter-preview-name').textContent,chapters.CHAPTERS[9].name);
  const before=ui.requestedImages.length;ui.emit('stage-3','click');assert.equal(ui.nodes.get('start').disabled,true);await ui.settle();
- assert.equal(ui.requestedImages.length,before+8);assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'26');
+ assert.equal(ui.requestedImages.length,before+9);assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'27');
  assert.equal(ui.nodes.get('game-shell').attributes['data-resident-region'],'21');ui.tick();
 });
 
@@ -1537,7 +1537,7 @@ test('ultimate buttons show world effects without video, portraits or full-scree
 });
 
 test('retired ultimate media failures do not block startup or request any decoder',async()=>{
- const failures=new Set(['assets/skill-bloodmoon-v052.webp','assets/skill-eclipse-v052.webp','assets/skill-phantoms-v052.webp']);const ui=await host({saved:game.createProfile(1_000_000),failedAssets:failures,videoMode:'error'});assert.equal(ui.nodes.get('loading').hidden,true);assert.equal(ui.mediaVideos.length,0);assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'25');ui.emit('start','click');assert.equal(ui.state.phase,'playing');
+ const failures=new Set(['assets/skill-bloodmoon-v052.webp','assets/skill-eclipse-v052.webp','assets/skill-phantoms-v052.webp']);const ui=await host({saved:game.createProfile(1_000_000),failedAssets:failures,videoMode:'error'});assert.equal(ui.nodes.get('loading').hidden,true);assert.equal(ui.mediaVideos.length,0);assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'26');ui.emit('start','click');assert.equal(ui.state.phase,'playing');
 });
 
 test('ultimate details and final fractional cooldown show seconds until truly ready',async()=>{

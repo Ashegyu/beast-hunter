@@ -1,11 +1,11 @@
 import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily} from './equipment-slots.js?v=0.98.0';
-import {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.108.0';
-export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.108.0';
+import {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.109.0';
+export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.109.0';
 import {huntMode,BOSS_DROP_TABLES} from './hunt-modes.js';
 import {UNIQUE_EFFECTS,EFFECT_ROWS,uniquePower} from './unique-effects.js?v=0.98.0';
 import {ANCIENT_POWER_BY_ID} from './ancient-powers.js';
-import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.108.0';
-export {EQUIPMENT_SETS,SET_SLOTS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.108.0';
+import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.109.0';
+export {EQUIPMENT_SETS,SET_SLOTS,SET_STATS,CHAPTER_SETS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.109.0';
 export {UNIQUE_EFFECTS,uniquePower} from './unique-effects.js?v=0.98.0';
 // Item definitions and pure rolls; the combat state owns identities and delivery.
 import {INVENTORY_LIMIT,MAX_PENDING_LOOT} from './inventory-rules.js?v=0.86.9';
@@ -34,17 +34,21 @@ const legacyCatalog=chapterNames.flatMap((groups,t)=>groups.flatMap((names,slotI
 }));
 const additionalParts=Object.keys(SLOTS).filter(slot=>!['weapon','armor','charm'].includes(slot));
 const BASE_CATALOG=Object.freeze([...legacyCatalog,...[1,2,3].flatMap(tier=>additionalParts.map(slot=>Object.freeze({id:`${tier}-${slot}-1`,name:slot==='special'?['리리안의 적월 인장','리리안의 망령 인장','리리안의 서리 인장'][tier-1]:['숲지기의 ','폐성 수호자의 ','서리결 '][tier-1]+SLOTS[slot],slot,tier,artId:artRows[tier-1][equipmentFamily(slot)==='armor'?2:3],base:Object.freeze(slot==='helmet'?{hp:12,reduction:1}:slot==='pants'?{hp:15,reduction:1}:slot==='boots'?{hp:8,speed:2}:slot==='earring'?{damage:3,crit:1}:{damage:5,hp:10}),effectId:null,signatureOnly:true,...(slot==='special'?{characterId:'lirian'}:{})}))) ]);
-// Region set pieces (Alpha 0.108): per set two weapon designs × two names and two names per armor part.
-// They carry `set` and drop only in their biome; ancient identities stay derived from the base catalog.
-const SET_BASE=Object.freeze({
- forest:{weapon:[{damage:7,speed:4},{damage:9,crit:2}],armor:{hp:22,speed:3},helmet:{hp:10,speed:2},pants:{hp:13,speed:2},boots:{hp:7,speed:3}},
- fire:{weapon:[{damage:11,crit:1},{damage:13}],armor:{hp:26,crit:2},helmet:{hp:11,crit:1},pants:{hp:14,crit:1},boots:{hp:8,crit:1}},
- frost:{weapon:[{damage:8,hp:14},{damage:10,hp:10}],armor:{hp:32,reduction:3},helmet:{hp:14,reduction:1},pants:{hp:17,reduction:1},boots:{hp:10,reduction:1}},
- ruins:{weapon:[{damage:8,crit:3},{damage:10,crit:2}],armor:{hp:24,crit:3},helmet:{hp:11,crit:2},pants:{hp:14,crit:1},boots:{hp:8,crit:2}},
+// Chapter set pieces (Alpha 0.108/0.109): per set two weapon designs × two names and two names per armor part.
+// They carry `set` and drop only in their chapter; ancient identities stay derived from the base catalog.
+// Base stats follow the set's style; `power` raises them slightly for later chapters of a region.
+const SET_STYLES=Object.freeze({
+ swift:{weapon:[{damage:7,speed:4},{damage:9,crit:2}],armor:{hp:22,speed:3},helmet:{hp:10,speed:2},pants:{hp:13,speed:2},boots:{hp:7,speed:3}},
+ fierce:{weapon:[{damage:11,crit:1},{damage:13}],armor:{hp:26,crit:2},helmet:{hp:11,crit:1},pants:{hp:14,crit:1},boots:{hp:8,crit:1}},
+ guard:{weapon:[{damage:8,hp:14},{damage:10,hp:10}],armor:{hp:32,reduction:3},helmet:{hp:14,reduction:1},pants:{hp:17,reduction:1},boots:{hp:10,reduction:1}},
+ keen:{weapon:[{damage:8,crit:3},{damage:10,crit:2}],armor:{hp:24,crit:3},helmet:{hp:11,crit:2},pants:{hp:14,crit:1},boots:{hp:8,crit:2}},
+ vital:{weapon:[{damage:8,hp:18},{damage:10,hp:12}],armor:{hp:38},helmet:{hp:17},pants:{hp:20},boots:{hp:12,speed:1}},
+ brute:{weapon:[{damage:13},{damage:15}],armor:{hp:24,damage:2},helmet:{hp:10,damage:1},pants:{hp:13,damage:1},boots:{hp:7,damage:1}},
 });
+const setBase=(set,stats)=>Object.freeze(Object.fromEntries(Object.entries(stats).map(([k,v])=>[k,Math.max(1,Math.round(v*set.power))])));
 export const SET_CATALOG=Object.freeze(Object.values(EQUIPMENT_SETS).flatMap(set=>SET_SLOTS.flatMap(slot=>slot==='weapon'
- ?set.names.weapon.flatMap((names,variant)=>names.map((name,i)=>Object.freeze({id:`set-${set.id}-weapon-${variant*2+i+1}`,name,slot,tier:set.tier,artId:setArtId(set.id,slot,variant),set:set.id,base:Object.freeze({...SET_BASE[set.id].weapon[variant]}),effectId:EFFECT_ROWS.weapon[(variant*2+i)%6]})))
- :set.names[slot].map((name,i)=>Object.freeze({id:`set-${set.id}-${slot}-${i+1}`,name,slot,tier:set.tier,artId:setArtId(set.id,slot),set:set.id,base:Object.freeze({...SET_BASE[set.id][slot]}),...(slot==='armor'?{effectId:EFFECT_ROWS.armor[i%6]}:{effectId:null,signatureOnly:true})})))));
+ ?set.names.weapon.flatMap((names,variant)=>names.map((name,i)=>Object.freeze({id:`set-${set.id}-weapon-${variant*2+i+1}`,name,slot,tier:set.tier,artId:setArtId(set.id,slot,variant),set:set.id,base:setBase(set,SET_STYLES[set.style].weapon[variant]),effectId:EFFECT_ROWS.weapon[(set.effectOffset+variant*2+i)%6]})))
+ :set.names[slot].map((name,i)=>Object.freeze({id:`set-${set.id}-${slot}-${i+1}`,name,slot,tier:set.tier,artId:setArtId(set.id,slot),set:set.id,base:setBase(set,SET_STYLES[set.style][slot]),...(slot==='armor'?{effectId:EFFECT_ROWS.armor[(set.effectOffset+i)%6]}:{effectId:null,signatureOnly:true})})))));
 export const ITEM_CATALOG=Object.freeze([...BASE_CATALOG,...SET_CATALOG]);
 // Ordinary identity and quality are independent. Ancient identities have no quality variants.
 const ancientKey=row=>[row.tier,row.slot,row.artId,row.effectId].join(':');

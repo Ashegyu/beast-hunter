@@ -22,9 +22,11 @@ test('startup plan excludes other regions without excluding shared animation ass
     const region = plan.regions.get(chapter.id);
     // Ground tile, attack effects, the boss atlas and only the atlases of the chapter's six species (Alpha 0.107).
     const expected = new Set([manifest.chapters[chapter.environment].environment, manifest.monsterEffects[chapter.effects].image,
-      ...[...chapter.roster, chapter.bossSpecies, ...(chapter.midBoss ? [chapter.midBoss] : [])].flatMap(id => Object.values(manifest.directions[id]).flatMap(v => Object.values(v)).map(c => manifest.clips[c].image))]);
+      ...[...chapter.roster, chapter.bossSpecies, ...(chapter.midBoss ? [chapter.midBoss] : [])].flatMap(id => Object.values(manifest.directions[id]).flatMap(v => Object.values(v)).map(c => manifest.clips[c].image)),
+      // The region's equipment page carries the chapter's set items that drop in battle (Alpha 0.109).
+      manifest.equipment.setFrames[`set_${chapter.set}_sword`].image]);
     assert.deepEqual(region.paths, expected);
-    assert.ok(region.paths.size <= 10);
+    assert.ok(region.paths.size <= 11);
     assert.equal(region.clips.length, chapter.midBoss ? 120 : 105);
     assert.ok(region.paths.has(manifest.chapters[chapter.environment].environment));
     for (const path of region.paths) assert.ok(!plan.paths.has(path));
@@ -93,4 +95,16 @@ test('every startup and chapter image resolves to a delivered file (Alpha 0.108)
     const file = manifest.delivery[path] ?? path;
     assert.ok(fs.existsSync(new URL('../dist/assets/' + file, import.meta.url)), path + ' → ' + file);
   }
+});
+
+test('every chapter set item has a frame inside its atlas page (Alpha 0.109)', () => {
+  const manifest = JSON.parse(fs.readFileSync(new URL('../dist/assets/manifest.json', import.meta.url)));
+  const { setFrames, pages } = manifest.equipment;
+  assert.equal(Object.keys(setFrames).length, 30 * 6);
+  for (const chapter of CHAPTERS) for (const part of ['sword', 'blade2', 'helmet', 'armor', 'pants', 'boots']) {
+    const f = setFrames[`set_${chapter.set}_${part}`], page = pages[f.image];
+    assert.ok(page && f.x >= 0 && f.y >= 0 && f.w > 0 && f.h > 0 && f.x + f.w <= page.width && f.y + f.h <= page.height, chapter.set + part);
+    assert.ok(Math.max(f.w, f.h) <= 240);
+  }
+  assert.equal(new Set(CHAPTERS.map(c => c.set)).size, 30);
 });
