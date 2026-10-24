@@ -2,7 +2,7 @@ import {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards
 export {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards};
 import {beginStageJournal,profileForSave,strictBattle,cancelStageJournal,prepareStageCommit,finishStageJournal,stageTransactionId,ownedAtStageStart} from './battle-progress.js?v=0.99.0';
 import {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_DROP_CHANCE,INSCRIPTION_COST} from './build-effects.js?v=0.98.1';
-import {stageRule,STAGE_TYPE_NAMES} from './battle-plans.js?v=0.98.0';
+import {stageRule,STAGE_TYPE_NAMES} from './battle-plans.js?v=0.104.2';
 export {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_COST,stageRule,STAGE_TYPE_NAMES};
 export const PROFILE_VERSION=13,BUILD_NAMES=Object.freeze(['일반 사냥','보스','광역','생존','실험']);
 import {SLOTS,EQUIPMENT_SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,equipmentFamily,emptyEquipment,restoreEquipment,equipmentAfterEquip,equippedPosition,isEquippedItem} from './equipment-slots.js?v=0.98.0';
@@ -15,8 +15,8 @@ export * from './monster-fx.js?v=0.70.0';
 export * from './combat-feedback.js';
 export * from './ultimate-video.js';
 export * from './skill-motion.js';
-import * as skills from './combat-skills.js?v=0.104.1';
-export * from './combat-skills.js?v=0.104.1';
+import * as skills from './combat-skills.js?v=0.104.2';
+export * from './combat-skills.js?v=0.104.2';
 import {MATERIALS,MATERIAL_BY_ID,MATERIAL_LIMIT,emptyMaterials,rollMaterials,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.99.0';
 export {MATERIALS,MATERIAL_BY_ID,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.99.0';
 import {equipmentSynergies} from './equipment-synergies.js?v=0.99.0';
@@ -29,10 +29,10 @@ export {HUNT_MODES} from './hunt-modes.js';
 import { directionIndex, recoilProgress, ACTION_DURATIONS } from './motion.js';
 import { WORLD_BOUNDS, GROUND_DEPTH_SCALE } from './world.js';
 import { CHAPTERS, MONSTERS, chapterMonsterPool, EQUIPMENT_ART, equipmentArt } from './chapters.js?v=0.97.0';
-import { STAGES_PER_CHAPTER, battlePlan, stageWaveCount, waveComposition } from './battle-plans.js?v=0.98.0';
+import { STAGES_PER_CHAPTER, battlePlan, stageWaveCount, waveComposition } from './battle-plans.js?v=0.104.2';
 import { INVENTORY_LIMIT, MAX_PENDING_LOOT, LEGENDARY_PITY_LIMIT, ITEM_CATALOG, ANCIENT_CATALOG, BOSS_LOOT, bossLootPool, discoverAncient, targetAncient, setAncientTarget, ancientDefinition, ancientForLegacy, effectiveAffix, RARITIES, RARITY_INFO, rollItem, rollStageItem, storeItem, salvageValue, uniqueEffect, uniqueLoadout, equippedUniqueEffect, UNIQUE_EFFECTS } from './loot.js?v=0.99.0';
 export { INVENTORY_LIMIT, LEGENDARY_PITY_LIMIT, ITEM_CATALOG, ANCIENT_CATALOG, BOSS_LOOT, RARITIES, RARITY_INFO, UNIQUE_EFFECTS, uniqueEffect, uniqueLoadout, targetAncient, setAncientTarget, ancientDefinition, gearDropPresentation, gearDropDuration } from './loot.js?v=0.99.0';
-export { STAGES_PER_CHAPTER, BATTLE_PLANS, battlePlan, stageWaveCount } from './battle-plans.js?v=0.98.0';
+export { STAGES_PER_CHAPTER, BATTLE_PLANS, battlePlan, stageWaveCount } from './battle-plans.js?v=0.104.2';
 export const ARRIVAL_EPSILON=.001;
 export const STAGES = CHAPTERS;
 export const WAVES_PER_STAGE=3,SPAWN_WARNING=.75,MAX_ACTIVE_ENEMIES=32;
@@ -87,7 +87,7 @@ export function equipmentSnapshot(profile){
 export const COMBOS=[
   {duration:.32,impact:.10,damage:1,range:1,dot:.38,push:22,step:25,name:'가로 베기'},
   {duration:.36,impact:.13,damage:1.15,range:1,dot:.3,push:30,step:30,name:'되베기'},
-  {duration:.52,impact:.22,damage:2.5,range:1.12,dot:.12,push:70,step:50,name:'파쇄 마무리'},
+  {duration:.52,impact:.22,damage:1.85,range:1.12,dot:.12,push:70,step:50,name:'파쇄 마무리'},
 ];
 const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
 const number=(x,fallback=0)=>Number.isFinite(x)?x:fallback;
@@ -587,14 +587,16 @@ function damageEnemy(s,e,value,critical=false,kind='normal',origin=s.player,pier
   if(direct&&inscriptions.execution&&e.hp/e.maxHp<=BUILD_EFFECTS.execution.threshold){const legacy=swing?.unique?.definition.id==='execution'&&e.hp/e.maxHp<=(e.boss?UNIQUE_EFFECTS.execution.bossThreshold:UNIQUE_EFFECTS.execution.threshold)?UNIQUE_EFFECTS.execution.bonus*swing.unique.power:0;value*=(1+legacy+BUILD_EFFECTS.execution.bonus*inscriptions.execution)/(1+legacy);}
   const shred=e.runeShredTime>0?e.runeShred:0,defending=e.boss&&s.stageId===2&&s.run.time%12<8;
   // A defense stance is armor too: weakening applies before its mitigation.
-  value*=(1-Math.max(0,(e.plate??0)+(defending?.7:0)-shred))*(1+shred*BUILD_EFFECTS.shred.vulnerability);
+  // Stage armor (철갑 진군) is countered by skills: 파갑참 strips it for a while and 마지막 검끝 lets combo strikes ignore it.
+  const armorIgnored=e.plateBrokenUntil>s.run.time||swing?.damage!=null&&skills.finisherGuardBonus(s)>0;
+  value*=(1-Math.max(0,(armorIgnored?0:e.plate??0)+(defending?.7:0)-shred))*(1+shred*BUILD_EFFECTS.shred.vulnerability);
   if(e.boss&&s.stageId===2&&!defending)value*=1.5;
   let guarded=false,broken=false;
   if(e.guard>0){
     const n=direction(origin.x-e.x,origin.y-e.y),front=n.x*e.guardX+n.y*e.guardY>.1;
     const breaker=kind==='heavy'||kind==='finisher'||kind==='blast'||kind==='reflected';
-    // Alpha 0.104: the heavy-strike button is gone, so the automatic finisher breaks guard as hard as it did.
-    if(front||breaker){e.guard=Math.max(0,e.guard-(piercing?25:0)-(kind==='finisher'?skills.finisherGuardBonus(s):0)-(kind==='blast'?100:kind==='heavy'||kind==='reflected'||kind==='finisher'?65:12));
+    // Alpha 0.104: 마지막 검끝 adds guard damage to the finisher (38 + 62 breaks a fresh guard).
+    if(front||breaker){e.guard=Math.max(0,e.guard-(piercing?25:0)-(kind==='finisher'?skills.finisherGuardBonus(s):0)-(kind==='blast'?100:kind==='heavy'||kind==='reflected'?65:kind==='finisher'?38:12));
       if(!e.guard){broken=true;e.exposed=2.8;setAction(e,'stagger');e.actionTime=0;s.run.guardBreaks++;effect(s,'guardBreak',{x:e.x,y:e.y},1);s.hitStop=Math.max(s.hitStop,.075);s.shake=9;}
       else if(front&&kind!=='blast'){guarded=true;value*=piercing?.75:.3;effect(s,'guardHit',{x:e.x,y:e.y-55},.2);}
     }

@@ -109,3 +109,12 @@ test('automatic skills open with 파갑참 when a guarded enemy is in reach',()=
  for(let i=0;i<80&&!(s.skillRuntime.cooldowns.breach>0);i++)g.advanceGame(s,.025);
  assert.ok(s.skillRuntime.cooldowns.breach>0);assert.ok(!(s.skillRuntime.cooldowns.crescent>0),'파갑참 goes before the other active');
 });
+test('철갑 진군 armor: 마지막 검끝 combo strikes ignore it and 파갑참 strips it around the target',()=>{
+ const strikeLoss=equipped=>{const {s,p,e}=fixture('finisher');if(!equipped)p.skillBook.loadout.passive=[null,null,null];Object.assign(e,{plate:.55,action:'idle',hp:1e6,maxHp:1e6});
+  assert.equal(g.attack(s,{x:0,y:1}),true);for(let t=0;t<.6&&s.player.action==='attack';t+=.025)g.advanceGame(s,.025);return 1e6-e.hp;};
+ const plain=strikeLoss(false),countered=strikeLoss(true);
+ assert.ok(plain>0&&countered>0);assert.ok(Math.abs(plain/countered-.45)<.02,'armor removes 55% of an uncountered strike: '+plain+' vs '+countered);
+ const {s,e}=fixture('breach');const near={...e,id:901,x:e.x+150,y:e.y,plate:.55},far={...e,id:902,x:e.x+900,y:e.y,plate:.55};Object.assign(e,{plate:.55});s.enemies.push(near,far);
+ assert.ok(g.useSkill(s,'breach',{x:0,y:1}));run(s,.6);
+ assert.ok(e.plateBrokenUntil>s.run.time&&near.plateBrokenUntil>s.run.time,'targets within 260 lose their armor');assert.ok(!(far.plateBrokenUntil>s.run.time));
+});

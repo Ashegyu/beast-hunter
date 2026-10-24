@@ -53,8 +53,7 @@ test('frost reduces movement only, expires, and bosses retain 85 percent speed',
 });
 test('piercing is limited to heavy and finisher, damages guard extra and does not create a projectile',()=>{
  for(const mode of [{},{heavy:true},{finisher:true}]){const {s,e}=arena('forest_fang');Object.assign(e,{type:'bulwark',guard:100,guardMax:100,guardX:-1,guardY:0,action:'windup',windup:99});hit(s,e,mode);
- const special=mode.heavy||mode.finisher;// Alpha 0.104: the automatic finisher breaks guard like the removed heavy strike (65 + 25 piercing).
- assert.equal(e.guard,100-(mode.heavy||mode.finisher?90:12));assert.equal(s.projectiles.length,0);assert.equal(e.bleedTicks,0);assert.equal(e.chillRemaining,0);
+ const special=mode.heavy||mode.finisher;assert.equal(e.guard,100-(mode.heavy?90:mode.finisher?63:12));assert.equal(s.projectiles.length,0);assert.equal(e.bleedTicks,0);assert.equal(e.chillRemaining,0);
  assert.ok(500-e.hp>(special?25:0));if(!special)assert.ok(500-e.hp<14);}
 });
 test('an unequipped or salvaged sword never grants traits to a basic weapon',()=>{

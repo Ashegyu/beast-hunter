@@ -2,7 +2,7 @@ let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
 import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.84.0';
 import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js';
 import { createCombatAudio } from './sound.js?v=0.76.0';
-import * as game from './game-engine.js?v=0.104.1';
+import * as game from './game-engine.js?v=0.104.2';
 import {FrameMetrics} from './frame-metrics.js?v=0.98.1';
 import { frameIndex, frameRect, validateClip } from './engine.js';
 import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
@@ -1049,7 +1049,7 @@ function updateHud(){
     hudText($('stage-board-count'),completed+' / '+game.STAGES_PER_CHAPTER);$('stage-board-progress').setAttribute('aria-valuenow',String(completed));$('stage-board-fill').style.width=completed/game.STAGES_PER_CHAPTER*100+'%';
     const selectedPlan=game.battlePlan(selectedRunStage),bossStage=selectedRunStage===game.STAGES_PER_CHAPTER,previewSpecies=bossStage?selected.bossSpecies:selected.roster.find(id=>(MONSTERS[id].unlockStage??1)<=selectedRunStage),previewClip=manifest.clips[manifest.directions[previewSpecies].walk.s];
     atlasThumbnail($('stage-preview-art'),previewClip.image,previewClip.frames[0],80);
-    hudText($('stage-preview-title'),selectedStage+'-'+selectedRunStage+' · '+selectedPlan.name);hudText($('stage-preview-kind'),game.HUNT_MODES[selectedDifficulty].name+' · '+(bossStage?'보스 단독전':game.stageWaveCount(selectedRunStage)+'웨이브'));const rule=game.stageRule(selectedStage,selectedRunStage);hudText($('stage-preview-kind'),game.HUNT_MODES[selectedDifficulty].name+' · '+game.STAGE_TYPE_NAMES[rule.type]);hudText($('stage-preview-description'),rule.rule+' — '+rule.hint+' 유리');
+    hudText($('stage-preview-title'),selectedStage+'-'+selectedRunStage+' · '+selectedPlan.name);hudText($('stage-preview-kind'),game.HUNT_MODES[selectedDifficulty].name+' · '+(bossStage?'보스 단독전':game.stageWaveCount(selectedRunStage)+'웨이브'));const rule=game.stageRule(selectedStage,selectedRunStage);hudText($('stage-preview-kind'),game.HUNT_MODES[selectedDifficulty].name+' · '+game.STAGE_TYPE_NAMES[rule.type]);hudText($('stage-preview-description'),rule.rule+' — '+rule.hint+(rule.required?' 필요':' 유리'));
     hudText($('stage-progress-note'),game.HUNT_MODES[selectedDifficulty].name+' · '+(selectedRunStage===limit&&completed<10?'현재 공략 지점':'선택한 출발 지점')+' '+selectedStage+'-'+selectedRunStage);
     const environment=manifest.chapters[selected.id].environment;
     $('chapter-banner').style.backgroundImage='linear-gradient(90deg,#101319a8,#10131925),url("assets/'+(manifest.delivery?.[environment]??environment)+'")';hudText($('chapter-label'),'CHAPTER '+String(selected.id).padStart(2,'0'));hudText($('chapter-preview-name'),selected.name);hudText($('chapter-preview-boss'),'지역 보스 · '+selected.bossName);hudText($('chapter-tactic'),selected.tactic);
@@ -1434,7 +1434,7 @@ $('result-skills').addEventListener('click',()=>{
 function refreshBuildSystem(){
  $('game-shell').setAttribute('data-settling',String(!!state.settlement));
  const rule=state.run.rule;$('stage-rule-hud').hidden=state.phase!=='playing'||!rule;
- const ruleText=state.settlement?'보상 저장 중 · 저장을 마치면 진행합니다':rule&&rule.type!=='normal'?(rule.type==='dungeon'?'성장 던전':game.STAGE_TYPE_NAMES[rule.type])+' · '+rule.name+' · '+rule.hint+' 유리':'';if($('stage-rule-hud').textContent!==ruleText)$('stage-rule-hud').textContent=ruleText;
+ const ruleText=state.settlement?'보상 저장 중 · 저장을 마치면 진행합니다':rule&&rule.type!=='normal'?(rule.type==='dungeon'?'성장 던전':game.STAGE_TYPE_NAMES[rule.type])+' · '+rule.name+' · '+rule.hint+(rule.required?' 필요':' 유리'):'';if($('stage-rule-hud').textContent!==ruleText)$('stage-rule-hud').textContent=ruleText;
 
  if(state.phase==='playing'&&!inventoryOpen)return;
  const uiKey=buildUiRevision+':'+state.phase+':'+buildTab+':'+inventoryOpen+':'+$('inscription-item').value+':'+$('inscription-effect').value+':'+!!retryPlan;if(uiKey===buildUiRendered)return;buildUiRendered=uiKey;

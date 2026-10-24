@@ -13,7 +13,7 @@
 ## 실행
 - 게임: `PORT=8090 node serve-local.mjs` 후 `http://127.0.0.1:8090/` (기본 포트 8080). file:// 로는 안 된다.
 - 헤드리스 확인: 전역 playwright(`/opt/node22/lib/node_modules/playwright`)를 createRequire로 불러 Chromium 실행. 844×390에서 거점 → 사냥터 → 전투 준비 → 전투까지 콘솔 오류·404 없이 동작 확인함.
-- 테스트: `npm test` = `node --experimental-vm-modules --test tests/*.test.mjs` (약 55초). **781/781 통과** (0.104 기준).
+- 테스트: `npm test` = `node --experimental-vm-modules --test tests/*.test.mjs` (약 55초). **782/782 통과** (0.104 기준).
 
 ## 테스트 작성 시 주의 (0.103.2에서 정리한 내용)
 - 고대 장비는 0.97부터 레이드 전용 → 스테이지 보스는 고대를 떨어뜨리지 않음. 고대 카탈로그는 75종(신규 부위 15종은 고대 전용 원화 없음).
@@ -40,7 +40,7 @@
 - 파일명 버전: 점 제거(063=0.63, 0844=0.84.4, v0970=0.97.0, v01002=0.100.2). 단 alpha09/alpha091은 0.9/0.9.1.
 
 ## 게임 규칙 요약
-- 전투(0.104): 이동·공격·회피는 항상 자동(engine `autoInput`). 파쇄(Q, `thunder`)는 UI·자동 전투에서 제거(엔진 함수는 남음). 스킬만 자동/수동 선택: 앱이 `input.skillMode`('auto'|'manual')를 넘기고, 수동이면 탭한 스킬을 `input.skillRequest`로 3초간 예약해 다음 공격 틈에 시전. 선택은 localStorage `beast-hunter:skill-mode`. 연격 3타는 방어 65 감소·피해 2.5배(파쇄 공백 보완). 중갑은 유지(사용자 결정). 중갑 대응 스킬: 파갑참은 맞힐 때 방어를 `breachGuardShatter(rank)`(30+5×랭크)만큼 먼저 깎아 강타 65와 합쳐 한 번에 부수고 autoSkill이 방어 중인 적에게 우선 사용, 마지막 검끝 패시브는 3타 방어 감소 +35(`FINISHER_GUARD_BONUS`).
+- 전투(0.104): 이동·공격·회피는 항상 자동(engine `autoInput`). 파쇄(Q, `thunder`)는 UI·자동 전투에서 제거(엔진 함수는 남음). 스킬만 자동/수동 선택: 앱이 `input.skillMode`('auto'|'manual')를 넘기고, 수동이면 탭한 스킬을 `input.skillRequest`로 3초간 예약해 다음 공격 틈에 시전. 선택은 localStorage `beast-hunter:skill-mode`. 연격 3타는 원래 수치(피해 1.85배, 방어 38). 중갑은 유지하고 4스테이지 장갑 55%로 **대응 스킬 필수 구간**(사용자 결정): 마지막 검끝 패시브 장착 시 연격(`swing.damage` 있는 타격)이 장갑 무시 + 3타 방어 +62(`FINISHER_GUARD_BONUS`), 파갑참은 방어를 `breachGuardShatter(rank)`만큼 먼저 깎아 강타 65와 합쳐 한 번에 부수고 주변 260 장갑 8초 해제(`BREACH_ARMOR`, `e.plateBrokenUntil`), autoSkill이 방어·장갑 남은 적에게 우선 사용. 스테이지 규칙 `required:true`면 힌트 뒤에 '필요'(아니면 '유리').
 - 캐릭터: 리리안 1명(검사, 엔진 역할 ID는 hunter). 3챕터(붉은 숲/망자의 폐성/서리 왕좌, 보스 780/1280/1900 HP) × 10스테이지 × 난이도 3(일반/정예/악몽: HP ×1/1.5/2.2).
 - 스테이지 60초 제한. 1~9는 웨이브 3개, 10은 보스 단독. 4·9 special, 8 elite, 10 boss. 동시 적 최대 32.
 - `advanceGame`: dt ≤0.1s, 0.025s 고정 서브스텝. RNG는 LCG 5개 스트림(전투·전리품·재료·재련·승급), `Math.random` 미사용 → 결정적.
@@ -65,7 +65,7 @@
 - 챕터 수 3이 여러 곳 하드코딩 (game-engine.js:117,123,579, battle-plans.js:30, terrain.js:18, profile-backup.js:12).
 - 궁극기 영상(mp4)·컷인은 테스트에서만 쓰이고 런타임에는 연결되지 않음. 신규 고대 15종 원화 없음.
 - 파쇄 제거(0.104)로 '파쇄 적중 시' 발동하는 고유 효과(파쇄 축전기 등)와 고대 각인이 더 이상 발동하지 않음. 연격 3타로 옮길지 밸런스 결정 필요.
-- 1장 4스테이지(철갑 진군)는 원본부터 60초 제한에 거의 붙어 있음(레벨 20 테스트 빌드 56~58초). 전투 수치를 바꿀 땐 tests/game-engine.test.mjs의 자동 빌드 완주 테스트로 확인.
+- 4스테이지(철갑 진군)는 원본부터 60초 제한에 붙어 있는 구간이고 단일 시드 시뮬레이션은 결과가 크게 흔들린다. 전투 수치를 바꿀 땐 챕터 3개 × 시드 여러 개로 4스테이지만 반복 측정해 클리어율로 비교하고, tests/game-engine.test.mjs의 자동 빌드 완주 테스트도 확인한다.
 - `updateHud`가 매 프레임 getElementById를 수백 회 호출(성능 여지). 테스트에선 profile-backup.js 경유로 game-engine.js가 이중 로드됨.
 - 0.103.2에서 고친 것: 스킬 아이콘 매 프레임 src 재대입, 로드 실패 문구 파일명, 제작 장비 투사체 null 접근, world.js 이중 로드, 가방 버튼 클릭 인자.
 

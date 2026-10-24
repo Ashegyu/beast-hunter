@@ -79,6 +79,7 @@
 #game-shell #camp-skills-panel .skill-presets[open] .skill-rules,#game-shell #camp-skills-panel .skill-presets[open]>p{display:none}
 #game-shell #camp-skills-panel .skill-presets[open]{padding:8px 10px}
 #game-shell #camp-skills-panel .skill-preset-rows>div{padding-block:4px}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel #stage-preview-description{-webkit-line-clamp:3}
 #game-shell #camp-more-panel:not([hidden]){overflow:hidden}
 #game-shell #camp-more-panel .more-intro p{display:none}
 #game-shell #camp-more-panel .more-menu>button{height:36px;min-height:36px}

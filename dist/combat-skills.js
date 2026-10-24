@@ -15,14 +15,14 @@ export const SKILL_CATALOG=Object.freeze([
  active('seeking','추적 검기',4,120,15,16,5,'seeking','사거리 460 안의 조준 대상에게 추적 검기를 보낸다. 대상이 죽으면 소멸.',{range:460,delay:.28}),
  active('returning','회귀월',12,170,20,20,7,'returning','전방 320의 검기를 던지고 0.6초 뒤 같은 경로로 회수. 왕복 각각 한 번 명중.',{range:320,width:70,hits:2,interval:.6,delay:.15}),
  active('field','잔월진',18,240,30,30,12,'field','조준 지점 반경 150에 3초간 검기 영역을 남겨 6회 공격. 적이 벗어나면 빗나감.',{range:280,radius:150,hits:6,interval:.5,delay:.2}),
- active('breach','파갑참',22,150,20,24,10,'cone','전방 180을 강타해 중갑의 방어를 단번에 부수고 5초 동안 받는 직접 검술 피해를 증가시킨다. 약화는 중첩 불가.',{range:180,dot:.6,delay:.28,poise:55}),
+ active('breach','파갑참',22,150,20,24,10,'cone','전방 180을 강타해 중갑의 방어를 단번에 부수고 주변 260의 장갑을 8초 동안 벗긴다. 5초 동안 받는 직접 검술 피해 증가, 약화는 중첩 불가.',{range:180,dot:.6,delay:.28,poise:55}),
  active('gather','월쇄',16,120,15,22,9,'gather','주변 240의 일반 괴수를 모아 벤다. 정예·보스는 이동시키지 않음.',{range:240,delay:.2,poise:20}),
  active('stance','수월의 자세',9,0,0,0,14,'stance','3초 동안 기력을 추가 회복하고 받는 피해를 줄인다. 공격·스킬을 사용하면 종료.',{range:0,delay:0}),
  active('mark','월영 표식',28,180,25,18,10,'mark','사거리 380 안 대상에게 8초 표식. 직접 타격 5회 후 추가 일격. 중첩 불가.',{range:380,delay:0}),
  active('bloodblade','혈월의 칼날',32,0,0,20,14,'bloodblade','6초 동안 기본 연격 피해 증가. 다른 액티브·궁극기를 사용하면 종료.',{range:0,delay:0}),
  passive('opening','찰나의 틈',18,15,5,'%','완벽 회피 후 3초 안에 쓰는 다음 발도의 준비 시간 감소.'),
  passive('flow','검무의 흐름',23,3,1,'기력','서로 다른 일반 액티브를 4초 안에 연계하면 기력 회복. 발동 간격 6초.'),
- passive('finisher','마지막 검끝',8,15,5,'%','연격 마지막 타격이 중갑 방어를 35 더 깎고, 적중 후 3초 안에 쓰는 다음 액티브의 경직 누적 증가.'),
+ passive('finisher','마지막 검끝',8,15,5,'%','장착하면 연격이 장갑을 무시하고 마지막 타격이 중갑 방어를 62 더 깎는다. 마지막 타격 적중 후 3초 안에 쓰는 다음 액티브의 경직 누적 증가.'),
  passive('footwork','사냥꾼의 발걸음',13,10,2,'%','완벽 회피 후 2초간 이동 속도 증가. 중첩 없이 갱신.'),
  passive('pursuit','잔상 추격',28,20,5,'%','질풍참·잔영참 후 3초 안의 다음 기본 공격에 공격력 비례 추가 피해와 짧은 전진.'),
  passive('imbalance','무너진 균형',40,10,3,'%','경직·노출 상태의 적에게 주는 직접 검술 스킬 피해 증가.'),
@@ -92,8 +92,10 @@ const live=e=>!e.dead;
 const capStamina=(s,n)=>{s.player.stamina=Math.min(100,s.player.stamina+n);};
 export function createSkillRuntime(){return {ultimatePresentation:null,motion:null,travel:null,fxReady:{},cooldowns:{},cooldownKeys:[],jobs:[],serial:0,token:0,casting:null,lastCast:null,flowReady:0,killReady:0,resolveReady:0,openingUntil:0,footworkUntil:0,finisherUntil:0,pursuitUntil:0,breathTime:0,stanceUntil:0,bloodbladeUntil:0,phantomUntil:0,phantomHits:0,phantomDamage:0,parryUntil:0,parryCast:null};}
 const pv=(s,id)=>s.profile.skillBook.loadout.passive.includes(id)?skillValue(s.profile,id):0;
-// Alpha 0.104 armor counters: 마지막 검끝 adds guard damage to the combo finisher, 파갑참 shatters a fresh guard.
-export const FINISHER_GUARD_BONUS=35;
+// Alpha 0.104 armor counters: 마지막 검끝 makes combo strikes ignore stage armor and adds finisher guard damage;
+// 파갑참 shatters a fresh guard and strips armor around its target.
+export const FINISHER_GUARD_BONUS=62;
+export const BREACH_ARMOR={radius:260,seconds:8};
 export const finisherGuardBonus=s=>pv(s,'finisher')?FINISHER_GUARD_BONUS:0;
 export const breachGuardShatter=rank=>30+5*rank;
 function passiveVisual(s,id,h,target=s.player){const r=s.skillRuntime;if(!h?.visual||!pv(s,id)||s.run.time<(r.fxReady[id]??-1))return;r.fxReady[id]=s.run.time+1.2;h.visual(s,'skillPassive',{skillId:id,x:target.x,y:target.y-130,radius:23},.65);}
@@ -158,7 +160,7 @@ function applyJob(s,j,h){const r=s.skillRuntime,root=j.root,d=SKILL_BY_ID[root.i
   if(root.id==='draw'&&e.skillScarUntil>s.run.time){value+=root.attack*pv(s,'scar')/100;e.skillScarUntil=0;passiveVisual(s,'scar',h,e);}
   if(root.id==='bloodmoon'&&j.index===6&&s.profile.level>=50&&s.profile.skillBook.awakening==='execution'&&targets.length===1)value*=1.5;
   if(boost)passiveVisual(s,'lone',h);if(e.exposed>0||e.action==='stagger')passiveVisual(s,'imbalance',h,e);
-  if(root.id==='breach'&&e.guard>0)e.guard=Math.max(1,e.guard-breachGuardShatter(root.rank));
+  if(root.id==='breach'){if(e.guard>0)e.guard=Math.max(1,e.guard-breachGuardShatter(root.rank));if(e.plate)for(const o of s.enemies)if(live(o)&&o.plate&&distance(o,e)<=BREACH_ARMOR.radius)o.plateBrokenUntil=s.run.time+BREACH_ARMOR.seconds;}
   const result=h.hit(s,e,value,false,root.poise>=35?'heavy':'normal',d.shape==='circle'||d.shape==='ultimateArea'?p:j.center,false,null,{inscriptions:root.inscriptions??s.buildEffects});
   if(result==='miss')continue;count++;
   if(root.id==='breach'&&!e.dead)e.skillBreach={until:s.run.time+5,value:10+root.rank*2};
@@ -202,8 +204,8 @@ export function incomingSkillDamage(s,value,source,h){const r=s.skillRuntime,p=s
 export function skillLastStand(s,h){const r=s.skillRuntime,cooldown=pv(s,'resolve');if(!cooldown||s.run.time<r.resolveReady)return false;r.resolveReady=s.run.time+cooldown;passiveVisual(s,'resolve',h);s.player.hp=1;s.player.invulnerable=.6;return true;}
 export function autoSkill(s,n,h){const p=s.player,r=s.skillRuntime,b=s.profile.skillBook,near=s.enemies.filter(e=>live(e)&&distance(e,p)<240),boss=near.some(e=>e.boss||e.elite);
  const ultimate=b.loadout.ultimate[0];if(ultimate&&b.auto.ultimate!=='off'&&(b.auto.ultimate==='any'||boss)&&castSkill(s,ultimate,n,h))return true;
- // An equipped 파갑참 goes first whenever a guarded enemy is within its reach.
- if(b.loadout.active.includes('breach')&&p.stamina>=SKILL_BY_ID.breach.cost+22){const reach=skillReach(s.profile,'breach'),shield=s.enemies.find(e=>live(e)&&e.guard>0&&distance(e,p)<=reach);if(shield&&castSkill(s,'breach',unit(shield.x-p.x,shield.y-p.y),h))return true;}
+ // An equipped 파갑참 goes first whenever a guarded or still-armored enemy is within its reach.
+ if(b.loadout.active.includes('breach')&&p.stamina>=SKILL_BY_ID.breach.cost+22){const reach=skillReach(s.profile,'breach'),shield=s.enemies.find(e=>live(e)&&(e.guard>0||e.plate>0&&!(e.plateBrokenUntil>s.run.time))&&distance(e,p)<=reach);if(shield&&castSkill(s,'breach',unit(shield.x-p.x,shield.y-p.y),h))return true;}
  for(const id of b.loadout.active){const d=SKILL_BY_ID[id];if(!d)continue;
   if(id==='stance'){if(p.stamina>45&&p.hp/p.maxHp>.5)continue;}else if(p.stamina<d.cost+(b.auto.mode==='safe'?35:22))continue;
   const reach=skillReach(s.profile,id);
