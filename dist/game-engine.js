@@ -1,39 +1,39 @@
-import {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonPlan,dungeonActors,emptyDungeonProgress} from './dungeons.js?v=0.112.0';
+import {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonPlan,dungeonActors,emptyDungeonProgress} from './dungeons.js?v=0.113.0';
 export {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards};
-import {beginStageJournal,profileForSave,strictBattle,cancelStageJournal,prepareStageCommit,finishStageJournal,stageTransactionId,ownedAtStageStart} from './battle-progress.js?v=0.112.0';
-import {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_DROP_CHANCE,INSCRIPTION_COST} from './build-effects.js?v=0.112.0';
-import {stageRule,STAGE_TYPE_NAMES} from './battle-plans.js?v=0.112.0';
+import {beginStageJournal,profileForSave,strictBattle,cancelStageJournal,prepareStageCommit,finishStageJournal,stageTransactionId,ownedAtStageStart} from './battle-progress.js?v=0.113.0';
+import {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_DROP_CHANCE,INSCRIPTION_COST} from './build-effects.js?v=0.113.0';
+import {stageRule,STAGE_TYPE_NAMES} from './battle-plans.js?v=0.113.0';
 export {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_COST,stageRule,STAGE_TYPE_NAMES};
 export const PROFILE_VERSION=15,MAX_LEVEL=100,BUILD_NAMES=Object.freeze(['일반 사냥','보스','광역','생존','실험']);
-import {SLOTS,EQUIPMENT_SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,equipmentFamily,emptyEquipment,restoreEquipment,equipmentAfterEquip,equippedPosition,isEquippedItem} from './equipment-slots.js?v=0.112.0';
-export * from './equipment-slots.js?v=0.112.0';
-import {enhanceOwned,promoteOwned,rerollOwned,resolveOwnedReroll,restoreEquipmentProgress} from './equipment-progression.js?v=0.112.0';
-export * from './equipment-progression.js?v=0.112.0';
+import {SLOTS,EQUIPMENT_SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,equipmentFamily,emptyEquipment,restoreEquipment,equipmentAfterEquip,equippedPosition,isEquippedItem} from './equipment-slots.js?v=0.113.0';
+export * from './equipment-slots.js?v=0.113.0';
+import {enhanceOwned,promoteOwned,rerollOwned,resolveOwnedReroll,restoreEquipmentProgress} from './equipment-progression.js?v=0.113.0';
+export * from './equipment-progression.js?v=0.113.0';
 export * from './skill-vfx.js?v=0.72.0';
 export * from './skill-image-fx.js?v=0.72.0';
 export * from './monster-fx.js?v=0.70.0';
 export * from './combat-feedback.js';
 export * from './ultimate-video.js';
 export * from './skill-motion.js';
-import * as skills from './combat-skills.js?v=0.112.0';
-export * from './combat-skills.js?v=0.112.0';
-import {MATERIALS,MATERIAL_BY_ID,MATERIAL_LIMIT,emptyMaterials,rollMaterials,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.112.0';
-export {MATERIALS,MATERIAL_BY_ID,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.112.0';
-import {equipmentSynergies} from './equipment-synergies.js?v=0.112.0';
-import {itemProtection} from './loot.js?v=0.112.0';
-export {itemProtection,salvageValue} from './loot.js?v=0.112.0';
-export {equipmentSynergies,EQUIPMENT_SYNERGIES} from './equipment-synergies.js?v=0.112.0';
+import * as skills from './combat-skills.js?v=0.113.0';
+export * from './combat-skills.js?v=0.113.0';
+import {MATERIALS,MATERIAL_BY_ID,MATERIAL_LIMIT,emptyMaterials,rollMaterials,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.113.0';
+export {MATERIALS,MATERIAL_BY_ID,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.113.0';
+import {equipmentSynergies} from './equipment-synergies.js?v=0.113.0';
+import {itemProtection} from './loot.js?v=0.113.0';
+export {itemProtection,salvageValue} from './loot.js?v=0.113.0';
+export {equipmentSynergies,EQUIPMENT_SYNERGIES} from './equipment-synergies.js?v=0.113.0';
 import {HUNT_MODES,huntMode,REPLAY_CYCLES} from './hunt-modes.js';
 export {HUNT_MODES} from './hunt-modes.js';
 // Pure combat, random waves and persistent RPG rules. No rendering or storage dependencies.
 import { directionIndex, recoilProgress, ACTION_DURATIONS } from './motion.js';
 import { WORLD_BOUNDS, GROUND_DEPTH_SCALE } from './world.js';
-import { CHAPTERS, CHAPTERS_PER_THEME, THEMES, chapterTheme, MONSTERS, chapterMonsterPool, EQUIPMENT_ART, ALL_EQUIPMENT_ART, equipmentArt } from './chapters.js?v=0.112.0';
-import { STAGES_PER_CHAPTER, battlePlan, stageWaveCount, waveComposition } from './battle-plans.js?v=0.112.0';
-import { INVENTORY_LIMIT, MAX_PENDING_LOOT, LEGENDARY_PITY_LIMIT, ITEM_CATALOG, ANCIENT_CATALOG, ancientIdOfBase, rollAncient, BOSS_LOOT, bossLootPool, discoverAncient, targetAncient, setAncientTarget, ancientDefinition, ancientForLegacy, effectiveAffix, RARITIES, RARITY_INFO, rollItem, rollStageItem, storeItem, salvageValue, uniqueEffect, uniqueLoadout, equippedUniqueEffect, UNIQUE_EFFECTS, itemSet, setBonusStats, EQUIPMENT_SETS, SET_SLOTS } from './loot.js?v=0.112.0';
-export { itemSet, setBonusStats, setBonusText, EQUIPMENT_SETS, SET_SLOTS, SET_STATS, CHAPTER_SETS, SET_CATALOG } from './loot.js?v=0.112.0';
-export { INVENTORY_LIMIT, LEGENDARY_PITY_LIMIT, ITEM_CATALOG, ANCIENT_CATALOG, BOSS_LOOT, RARITIES, RARITY_INFO, UNIQUE_EFFECTS, uniqueEffect, uniqueLoadout, targetAncient, setAncientTarget, ancientDefinition, gearDropPresentation, gearDropDuration } from './loot.js?v=0.112.0';
-export { STAGES_PER_CHAPTER, BATTLE_PLANS, battlePlan, stageWaveCount } from './battle-plans.js?v=0.112.0';
+import { CHAPTERS, CHAPTERS_PER_THEME, THEMES, chapterTheme, MONSTERS, chapterMonsterPool, EQUIPMENT_ART, ALL_EQUIPMENT_ART, equipmentArt } from './chapters.js?v=0.113.0';
+import { STAGES_PER_CHAPTER, battlePlan, stageWaveCount, waveComposition } from './battle-plans.js?v=0.113.0';
+import { INVENTORY_LIMIT, MAX_PENDING_LOOT, LEGENDARY_PITY_LIMIT, huntGrade, ITEM_CATALOG, ANCIENT_CATALOG, ancientIdOfBase, rollAncient, BOSS_LOOT, bossLootPool, discoverAncient, targetAncient, setAncientTarget, ancientDefinition, ancientForLegacy, effectiveAffix, RARITIES, RARITY_INFO, rollItem, rollStageItem, storeItem, salvageValue, uniqueEffect, uniqueLoadout, equippedUniqueEffect, UNIQUE_EFFECTS, itemSet, setBonusStats, EQUIPMENT_SETS, SET_SLOTS } from './loot.js?v=0.113.0';
+export { huntGrade, HUNT_POWER, HUNT_GRADE_TABLES, itemSet, setBonusStats, setBonusText, EQUIPMENT_SETS, SET_SLOTS, SET_STATS, CHAPTER_SETS, SET_CATALOG } from './loot.js?v=0.113.0';
+export { INVENTORY_LIMIT, LEGENDARY_PITY_LIMIT, ITEM_CATALOG, ANCIENT_CATALOG, BOSS_LOOT, RARITIES, RARITY_INFO, UNIQUE_EFFECTS, uniqueEffect, uniqueLoadout, targetAncient, setAncientTarget, ancientDefinition, gearDropPresentation, gearDropDuration } from './loot.js?v=0.113.0';
+export { STAGES_PER_CHAPTER, BATTLE_PLANS, battlePlan, stageWaveCount } from './battle-plans.js?v=0.113.0';
 export const ARRIVAL_EPSILON=.001;
 export const STAGES = CHAPTERS;
 export {THEMES,CHAPTERS_PER_THEME};
@@ -131,7 +131,7 @@ function cleanItem(item,version){
   // v15 (Alpha 0.112) renumbered ancients by region: old ancient-2 (ruins) is ancient-3, old ancient-3 (frost) is ancient-2.
   if(version<15&&typeof item.catalogId==='string'&&/^ancient-[23]-/.test(item.catalogId))item={...item,catalogId:ancientIdOfBase(item.catalogId),tier:{2:3,3:2}[item.tier]??item.tier};
   const affixes={};for(const id of Object.keys(AFFIXES)){const v=integer(item.affixes?.[id],0,id==='hp'?250:id==='damage'?80:25);if(v)affixes[id]=v;}
-  const clean={...(BUILD_EFFECTS[item.inscription]?{inscription:item.inscription}:{}),id:item.id,slot:item.slot,rarity:integer(item.rarity,0,6),tier:integer(item.tier,1,3,1),name:String(item.name??SLOTS[item.slot]).slice(0,32),affixes};
+  const clean={...(BUILD_EFFECTS[item.inscription]?{inscription:item.inscription}:{}),...(huntGrade(item)?{hunt:huntGrade(item)}:{}),id:item.id,slot:item.slot,rarity:integer(item.rarity,0,6),tier:integer(item.tier,1,3,1),name:String(item.name??SLOTS[item.slot]).slice(0,32),affixes};
   // An ancient keeps its family's base art id, whose tier can differ from the ancient's region tier (0.112).
   if(ALL_EQUIPMENT_ART.some(a=>a.id===item.artId&&a.slot===equipmentFamily(clean.slot)&&a.tier===clean.tier)||ancientDefinition({...clean,artId:item.artId,catalogId:item.catalogId}))clean.artId=item.artId;
   if(ITEM_CATALOG.some(a=>a.id===item.catalogId&&a.slot===clean.slot&&a.tier===clean.tier&&a.artId===clean.artId))clean.catalogId=item.catalogId;
@@ -491,7 +491,7 @@ function settleResources(s){
  for(const m of MATERIALS)claimResource(s,{kind:'material',materialId:m.id,amount:s.profile.pendingMaterials[m.id]},false);
  s.pickups=s.pickups.filter(drop=>!isResourcePickup(drop));
 }
-function makeItem(s,slot,source,minimum=0,bossId=null){const item=rollStageItem({id:allocateItemId(s),tier:themeOf(s),set:stageOf(s)?.set??null,slot:STAGE_SLOTS.includes(slot)?slot:null},()=>lootRandom(s));const chance=INSCRIPTION_DROP_CHANCE[s.run.stageType]??0;if(chance&&chance>lootRandom(s))item.inscription=BUILD_EFFECT_IDS[Math.min(BUILD_EFFECT_IDS.length-1,Math.floor(lootRandom(s)*BUILD_EFFECT_IDS.length))];return item;}
+function makeItem(s,slot,source,minimum=0,bossId=null){const item=rollStageItem({id:allocateItemId(s),tier:themeOf(s),set:stageOf(s)?.set??null,slot:STAGE_SLOTS.includes(slot)?slot:null,hunt:s.run.dungeonId?0:s.difficulty},()=>lootRandom(s));const chance=INSCRIPTION_DROP_CHANCE[s.run.stageType]??0;if(chance&&chance>lootRandom(s))item.inscription=BUILD_EFFECT_IDS[Math.min(BUILD_EFFECT_IDS.length-1,Math.floor(lootRandom(s)*BUILD_EFFECT_IDS.length))];return item;}
 function receiveItem(s,item,origin='monster',stageReward=null){
   const result=storeItem(s.profile,item);
   s.profile.pendingLoot=s.profile.pendingLoot.filter(i=>i.id!==item.id);
@@ -504,12 +504,12 @@ function receiveItem(s,item,origin='monster',stageReward=null){
 }
 function awardItem(s,slot,minimumRarity=0,stageReward=null){const item=makeItem(s,slot,'stage',minimumRarity);receiveItem(s,item,'stage',stageReward);if(s.run.bossKilled)effect(s,'gearDrop',{x:s.player.x,y:s.player.y,item,rarity:item.rarity},RARITY_INFO[item.rarity].ttl);return item;}
 // Alpha 0.110: chapter bosses rarely drop an ancient of their region (raid ancients come later; tier = region since 0.112).
-// legendaryPity counts boss kills without one; the LEGENDARY_PITY_LIMIT-th kill always drops.
-export const ANCIENT_BOSS_CHANCE=Object.freeze([.05,.08,.12]);
+// legendaryPity counts boss kills without one; the LEGENDARY_PITY_LIMIT-th kill always drops (0.113: 1/2/3%, 100 kills).
+export const ANCIENT_BOSS_CHANCE=Object.freeze([.01,.02,.03]);
 function dropBossAncient(s,e){
   const p=s.profile;if(++p.legendaryPity<LEGENDARY_PITY_LIMIT&&lootRandom(s)>=(ANCIENT_BOSS_CHANCE[s.difficulty]??ANCIENT_BOSS_CHANCE[0]))return null;
   p.legendaryPity=0;if(p.pendingLoot.length>=MAX_PENDING_LOOT)collectGear(s);
-  const item=rollAncient({id:allocateItemId(s),tier:themeOf(s),slot:null},lootRandom(s));
+  const item=rollAncient({id:allocateItemId(s),tier:themeOf(s),slot:null,hunt:s.difficulty},lootRandom(s));
   p.pendingLoot.push(item);s.run.bossAncients.push(item.catalogId);
   const x=clamp(e.x,s.bounds.padding,s.bounds.width-s.bounds.padding),y=e.y-50;
   s.pickups.push({id:s.nextId++,kind:'equipment',x,y,item,age:0,gold:0,xp:0,cores:0});

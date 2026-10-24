@@ -24,13 +24,13 @@ test('legacy legendary streak cannot elevate stage monster rewards',()=>{
  assert.equal(next.run.stage,2);assert.equal(next.profile.legendaryPity,9);assert.equal(next.run.stageItems,1);
 });
 test('drop protection restores bounded legacy defaults and a pending pickup keeps its already committed count',()=>{
- for(const [raw,want] of [[undefined,0],[-5,0],[NaN,0],[1e9,19],[7,7]]){const p=g.createProfile(1000);p.legendaryPity=raw;assert.equal(g.restoreProfile(p,1000).legendaryPity,want);}
+ for(const [raw,want] of [[undefined,0],[-5,0],[NaN,0],[1e9,g.LEGENDARY_PITY_LIMIT-1],[7,7]]){const p=g.createProfile(1000);p.legendaryPity=raw;assert.equal(g.restoreProfile(p,1000).legendaryPity,want);}
  const s=arena();s.lootRng=0;drop(s);const p=g.restoreProfile(g.encodeProfile(s.profile,1000),1000);assert.equal(p.legendaryPity,0);assert.equal(p.inventory.length,1);assert.equal(p.pendingLoot.length,0);
 });
-test('every chapter and boss difficulty grants common stage equipment without duplicating settlement',()=>{
+test('every chapter and boss difficulty grants graded stage equipment without duplicating settlement',()=>{
  for(let chapter=1;chapter<=3;chapter++)for(let mode=0;mode<=2;mode++){
   const p=g.createProfile();p.clearedStage=3;p.unlockedStage=3;p.stageProgress=[10,10,10];p.bossMastery=[2,2,2];p.difficultyProgress=[[9,9,9],[9,9,9]];const s=g.createGame(p);g.launch(s,chapter,10,null,mode);s.spawns=[];s.barrels=[];s.run.bossSpawned=true;s.lootRng=0;drop(s,true);
-  const receipts=s.effects.filter(f=>f.type==='loot'&&f.origin==='monster');assert.equal(receipts.length,2);assert.ok(receipts.every(r=>r.rarity===0));assert.equal(s.profile.pendingLoot.length,0);assert.equal(s.phase,'victory');assert.equal(s.run.items,3);
+  const receipts=s.effects.filter(f=>f.type==='loot'&&f.origin==='monster');assert.equal(receipts.length,2);assert.ok(receipts.every(r=>mode?r.rarity<=3:r.rarity===0));assert.ok(receipts.every(r=>g.huntGrade(r.item)===mode));assert.equal(s.profile.pendingLoot.length,0);assert.equal(s.phase,'victory');assert.equal(s.run.items,3);
   const owned=s.profile.inventory.map(i=>i.id),gold=p.gold;for(let n=0;n<80;n++)g.advanceGame(s,.05);assert.deepEqual(p.inventory.map(i=>i.id),owned);assert.equal(p.gold,gold);
  }
 });

@@ -1,5 +1,5 @@
-import {equipmentFamily} from './equipment-slots.js?v=0.112.0';
-import {EQUIPMENT_SETS,SET_SLOTS,CHAPTER_SETS,setArtId} from './equipment-sets.js?v=0.112.0';
+import {equipmentFamily} from './equipment-slots.js?v=0.113.0';
+import {EQUIPMENT_SETS,SET_SLOTS,CHAPTER_SETS,setArtId} from './equipment-sets.js?v=0.113.0';
 // Thirty chapters in three regions of ten (Alpha 0.107): 1–10 forest, 11–20 fire and
 // ice (11–15 fire, 16–20 ice), 21–30 darkness. A region drives the map tabs, item and
 // material tiers; a biome drives ground art, props, attack effects, boss rule and the

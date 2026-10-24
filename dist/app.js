@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.112.0';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.113.0';
 import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js';
 import { createCombatAudio } from './sound.js?v=0.76.0';
-import * as game from './game-engine.js?v=0.112.0';
+import * as game from './game-engine.js?v=0.113.0';
 import {FrameMetrics} from './frame-metrics.js?v=0.98.1';
 import { frameIndex, frameRect, validateClip } from './engine.js';
 import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
 import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.103.1';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.112.0';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.112.0';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.112.0';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.112.0';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.113.0';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.113.0';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.113.0';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.113.0';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -335,7 +335,7 @@ function refreshBagDetailReading(){
  const index=inventoryView.findIndex(item=>item.id===bagSelectedId);if(index<0)return;
  if(bagDetailReadId!==bagSelectedId){bagDetailReadId=bagSelectedId;bagDetailPage=0;bagDetailReadKey='';}
  $('item-stat-grid-'+index).hidden=false;$('item-read-title-'+index).textContent='특성 · 고유 효과';
- const item=inventoryView[index],trait=$('item-trait-'+index),unique=$('item-unique-'+index),parts=['획득처 · '+game.equipmentAcquisition(item)];
+ const item=inventoryView[index],trait=$('item-trait-'+index),unique=$('item-unique-'+index),parts=['획득처 · '+game.equipmentAcquisition(item)+(game.huntGrade(item)?'\n'+game.HUNT_MODES[game.huntGrade(item)].name+' 난이도 장비 · 기본 능력치 ×'+game.HUNT_POWER[game.huntGrade(item)]:'')];
  // Alpha 0.110: an ancient's special effect leads the reading text.
  const ancient=game.ancientDefinition(item);if(ancient)parts.unshift('고대 특수효과\n✦ '+ancient.signature.name+' · '+ancient.signature.description);
  if(item.perfect)parts.push('극옵 · 모든 기본 옵션 최댓값');
@@ -419,7 +419,7 @@ function refreshBag(){
       const crafted=game.craftedDefinition(item),ancient=game.ancientDefinition(item),unique=game.uniqueEffect(item);$('item-powers-'+i).hidden=!unique;$('item-power-title-'+i).textContent='✦ '+(crafted?.signature.name??ancient?.signature.name??unique?.name??'고유 효과');$('item-unique-'+i).hidden=!unique;$('item-unique-'+i).textContent=unique?'✦ '+unique.name+' · '+unique.description+(item.rarity>3&&unique.scales?(item.rarity===6?' · 고유 고정 위력 ':item.rarity===5?' · 고대 고정 위력 ':' · 등급 효과 위력 ')+(item.rarity===6?1.5:item.rarity===5?1.36:1.12).toFixed(2)+'배':'')+(crafted?'\n✦ '+crafted.signature.name+' · '+crafted.signature.description+'\n대장간 제작 전용 · 드롭되지 않음':''):'';$('item-unique-'+i).style.color=unique?.color??'';
       for(const [key]of ITEM_AFFIX_FIELDS){const present=Object.hasOwn(item.affixes,key);$('item-affix-row-'+key+'-'+i).hidden=!present;$('item-affix-value-'+key+'-'+i).textContent=present?'+'+game.effectiveAffix(item,key)+(['speed','crit','reduction'].includes(key)?'%':''):'';if(present)$('item-affix-value-'+key+'-'+i).setAttribute('title','기본 '+item.affixes[key]+' + 강화 '+game.enhancementBonus(item,key)+' = '+game.effectiveAffix(item,key));}
       const itemTrait=game.weaponTrait(item);$('item-trait-'+i).hidden=!itemTrait;$('item-trait-'+i).textContent=itemTrait?itemTrait.name+' · '+itemTrait.description:'';$('item-trait-'+i).style.color=itemTrait?.color??'';
-      $('item-meta-'+i).textContent=game.RARITIES[item.rarity]+' 등급 · '+game.SLOTS[item.slot]+' · '+game.equipmentAcquisition(item);$('item-status-'+i).textContent=[equipped?'착용 중':'',favorite?'즐겨찾기':'',reserved?'저장 빌드':''].filter(Boolean).join(' · ')||'보관 중';
+      $('item-meta-'+i).textContent=(game.huntGrade(item)?game.HUNT_MODES[game.huntGrade(item)].name+' · ':'')+game.RARITIES[item.rarity]+' 등급 · '+game.SLOTS[item.slot]+' · '+game.equipmentAcquisition(item);$('item-status-'+i).textContent=[equipped?'착용 중':'',favorite?'즐겨찾기':'',reserved?'저장 빌드':''].filter(Boolean).join(' · ')||'보관 중';
       if(item.id===bagSelectedId)$('bag-detail').setAttribute('aria-labelledby','item-name-'+i);
 
   $('earring-target-'+i).hidden=item.slot!=='earring';$('equip-position-'+i).value=earringPosition;const equippedHere=equipped&&(item.slot!=='earring'||game.equippedPosition(profile,item)===earringPosition);
@@ -1181,7 +1181,7 @@ function refreshFarmCamp(){
  $('farm-target-note').textContent=target?'파밍 목표 · '+target.name+' / '+ancientRegionChapters(target).join('~')+'장 보스'+(profile.discoveredAncients.includes(target.id)?' · 발견 완료':' · 미발견'):'도감에서 원하는 고대 유물을 파밍 목표로 지정해.';
  if(!game.stageLimit(profile,selectedStage,selectedDifficulty))selectedDifficulty=0;
  $('replay-panel').hidden=selectedStage>profile.clearedStage;$('replay-locked').hidden=selectedStage<=profile.clearedStage;const mode=game.HUNT_MODES[selectedDifficulty];
- const chapter=game.STAGES[selectedStage-1];$('replay-chapter').textContent=chapter.name+' · CHAPTER '+String(selectedStage).padStart(2,'0');$('replay-boss').textContent=chapter.bossName;$('tactics-launch-meta').textContent=mode.name+' · '+chapter.bossName;$('replay-rewards-title').textContent='주요 보상 · '+mode.name;$('replay-hp').textContent=mode.hp+'배';$('replay-damage').textContent=mode.damage+'배';$('replay-gold').textContent=mode.reward+'배';$('replay-ancient').textContent=Math.round(game.ANCIENT_BOSS_CHANCE[selectedDifficulty]*100)+'%';$('replay-combat-note').textContent=(mode.shots?'탄막 +'+mode.shots+'발 · 패턴 순환 변경':'기본 공격 패턴')+' · 추가 괴수 핵 +'+mode.extraCore;$('replay-prepare').disabled=!ready||state.phase!=='camp'||!game.stageLimit(profile,selectedStage,selectedDifficulty);
+ const chapter=game.STAGES[selectedStage-1];$('replay-chapter').textContent=chapter.name+' · CHAPTER '+String(selectedStage).padStart(2,'0');$('replay-boss').textContent=chapter.bossName;$('tactics-launch-meta').textContent=mode.name+' · '+chapter.bossName;$('replay-rewards-title').textContent='주요 보상 · '+mode.name;$('replay-hp').textContent=mode.hp+'배';$('replay-damage').textContent=mode.damage+'배';$('replay-gold').textContent=mode.reward+'배';$('replay-ancient').textContent=Math.round(game.ANCIENT_BOSS_CHANCE[selectedDifficulty]*100)+'%';$('replay-combat-note').textContent=(mode.shots?'탄막 +'+mode.shots+'발 · 패턴 순환 변경':'기본 공격 패턴')+' · 추가 괴수 핵 +'+mode.extraCore+(selectedDifficulty?' · 장비 능력치 ×'+game.HUNT_POWER[selectedDifficulty]+' · 희귀 이상 '+(100-game.HUNT_GRADE_TABLES[selectedDifficulty][0])+'%':'');$('replay-prepare').disabled=!ready||state.phase!=='camp'||!game.stageLimit(profile,selectedStage,selectedDifficulty);
  const mastery=profile.bossMastery[selectedStage-1],done=[selectedStage<=profile.clearedStage,game.bossModeAvailable(profile,selectedStage,1),mastery>=1,game.bossModeAvailable(profile,selectedStage,2)];for(let n=0;n<4;n++){$('replay-step-'+n).setAttribute('data-done',String(done[n]));$('replay-step-state-'+n).textContent=done[n]?'완료':'미완료';}
  for(const m of game.HUNT_MODES){
   const available=game.stageLimit(profile,selectedStage,m.id)>0,button=$('hunt-mode-'+m.id),mapButton=$('map-mode-'+m.id);

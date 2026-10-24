@@ -29,7 +29,7 @@ test('committed ancient snapshot retains item identity and theme through mutatio
 
 test('boss ancients drop their region tier: 1 forest, 2 frost, 3 ruined castle/abyss (Alpha 0.111/0.112)',()=>{
  for(const [chapter,tier,region]of [[1,1,1],[11,2,2],[21,3,3]]){
-  const p=g.createProfile(1000);p.unlockedStage=30;p.clearedStage=29;p.stageProgress=g.STAGES.map(()=>10);p.legendaryPity=19;
+  const p=g.createProfile(1000);p.unlockedStage=30;p.clearedStage=29;p.stageProgress=g.STAGES.map(()=>10);p.legendaryPity=g.LEGENDARY_PITY_LIMIT-1;
   const s=g.createGame(p);assert.equal(g.launch(s,chapter,10),true);s.spawns=[];s.barrels=[];s.run.bossSpawned=true;s.player.invulnerable=999;
   const e={id:s.nextId++,species:g.STAGES[chapter-1].bossSpecies,type:'bulwark',elite:false,boss:true,x:s.player.x+300,y:s.player.y,hp:1,maxHp:1,action:'walk',actionTime:0,speed:0,cooldown:999,aggro:true,guard:0,dead:false,wave:s.run.wave,runStage:s.run.stage,damage:8,radius:58};s.enemies=[e];
   s.projectiles.push({id:s.nextId++,x:e.x,y:e.y,vx:0,vy:0,damage:1e9,ttl:1,friendly:true});g.advanceGame(s,.025);
