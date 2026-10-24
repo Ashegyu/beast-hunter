@@ -1,14 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as g from '../dist/game-engine.js';
-import {CHAPTERS,MONSTERS,chapterMonsterPool} from '../dist/chapters.js';
+import {CHAPTERS,MONSTERS,CHAPTER_BOSSES,chapterMonsterPool} from '../dist/chapters.js';
 const NEW=Object.keys(MONSTERS).filter(id=>MONSTERS[id].unlockStage);
 const step=(s,t)=>{for(let i=0;i<Math.ceil(t/.025);i++)g.advanceGame(s,.025);};
 function prepared(chapter=1,stage=4){const p=g.createProfile(1000);p.clearedStage=g.STAGES.length;p.unlockedStage=g.STAGES.length;const s=g.createGame(p);assert.ok(g.launch(s,chapter,stage));return s;}
 function arena(id){const chapter=CHAPTERS.find(c=>c.roster.includes(id)),s=prepared(chapter.id),design=MONSTERS[id];s.enemies=[];s.spawns=[{id:s.nextId++,type:design.role,species:id,boss:false,elite:false,x:750,y:1160,delay:0,warning:1}];s.barrels=[];s.run.flow='combat';s.player.invulnerable=99;g.advanceGame(s,.001);s.run.flow='break';s.run.timer=1e6;assert.equal(s.enemies.length,1);return {s,e:s.enemies[0],design};}
 
 test('nine new identities have distinct chapter membership and frozen attack definitions',()=>{
- assert.equal(NEW.length,9);assert.equal(Object.keys(MONSTERS).length,21);
+ // 0.65 added nine specialists; 0.106 added nine more, nine new basics and the chapter bosses.
+ assert.equal(NEW.length,18);assert.equal(Object.keys(MONSTERS).length,21+18+Object.keys(CHAPTER_BOSSES).length);
  for(const c of CHAPTERS){assert.equal(c.roster.length,6);assert.equal(new Set(c.roster).size,6);for(const id of c.roster)assert.ok(id.startsWith(c.key+'_'));for(const type of ['skitter','spitter','bulwark'])assert.equal(c.roster.filter(id=>MONSTERS[id].role===type).length,2);}
  for(const id of NEW){const {e,design}=arena(id);assert.equal(e.species,id);assert.equal(e.name,design.name);assert.equal(e.type,design.role);assert.equal(e.guardMax,0);if(design.role==='spitter')assert.ok(e.shots>=2);if(design.attackCycle)assert.ok(Object.isFrozen(e.attackCycle));}
 });
@@ -23,7 +24,7 @@ test('stages introduce mobility at 2, casters at 3, heavies at 4 while retaining
  assert.deepEqual(chapterMonsterPool(99,1,'skitter'),[]);
 });
 test('factory rejects foreign or wrong-role skins and boss reservations cannot be reskinned',()=>{
- for(const [type,species,boss,expected]of [['skitter','ruins_bat',false,'forest_wolf'],['spitter','forest_spider',false,'forest_goblin'],['bulwark','unknown',false,'forest_orc'],['bulwark','forest_devourer',true,'forest_guardian']]){
+ for(const [type,species,boss,expected]of [['skitter','ruins_bat',false,'forest_wolf'],['spitter','forest_spider',false,'forest_goblin'],['bulwark','unknown',false,'forest_orc'],['bulwark','forest_devourer',true,CHAPTERS[0].bossSpecies]]){
   const s=prepared();s.enemies=[];s.spawns=[{id:s.nextId++,type,species,boss,x:750,y:1160,delay:0}];s.run.flow='combat';g.advanceGame(s,.001);assert.equal(s.enemies[0].species,expected);
  }
 });

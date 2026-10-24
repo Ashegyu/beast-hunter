@@ -1,0 +1,27 @@
+{
+  "id": "terrain-frost-2",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production seamless repeating GROUND ALBEDO TILE for a premium illustrated dark fantasy top-down action RPG, matching the style of the attached reference tile. One square2048x2048 texture fills every pixel edge to edge. Orthographic top-down flat GROUND ONLY; no perspective, no horizon, no vignette, no cast shadows, no directional lighting, no text. Seamlessly repeatable on all edges and also when alternating horizontally/vertically mirrored. Matte painterly hand-crafted broad material masses, soft restrained tonal transitions, medium low contrast, calm negative space for tiny characters and red attack telegraphs. Very sparse broad forms at scale, no crisp tiny flecks, no scattered micro-debris, no checker pattern, no high-frequency grit, no jagged pixel edges, no multicolored noise. It should remain visually calm and high-end at mobile resolution. Large forms have clear material structure without blur or sharpen halos. No trees,bushes,rocks standing above the ground,architecture,props,characters,items or UI: those are separate runtime sprites. Opaque background, no transparency. Image1 is the existing tile for this region: match its painterly material quality, scale of forms and darkness exactly, but depict the variant below. Region3 FROST THRONE, frozen lake: broad dark steel-blue ice sheet with soft matte snow drifts and faint wide pressure seams, mostly medium-dark. No dazzling white, no reflections. Make it CLEARLY DIFFERENT from the reference at a glance: a smooth dark teal-blue frozen lake surface with few seams, soft round snow patches only near edges, deep translucent ice look, not cracked flagstones.",
+  "referenceImages": [
+    {
+      "path": "dist/assets/terrain-frost-v044.webp",
+      "sha256": "c98665edd24addc561e4bd4a5656386053270d82ed28e56589e2918c19b75536"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "seconds": 48,
+      "sha256": "a5cadfb81113981f3e9e7216c9d4ae86fc333c43e4d91a2c9f11cdc2d251e1fa"
+    }
+  ],
+  "final": {
+    "path": "art/terrain0106/terrain-frost-2.png",
+    "sha256": "a5cadfb81113981f3e9e7216c9d4ae86fc333c43e4d91a2c9f11cdc2d251e1fa"
+  }
+}

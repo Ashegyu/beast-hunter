@@ -7,7 +7,8 @@ import {validateClip} from '../dist/engine.js';
 const root=new URL('../',import.meta.url);
 const manifest=JSON.parse(fs.readFileSync(new URL('dist/assets/manifest.json',root),'utf8'));
 const report=JSON.parse(fs.readFileSync(new URL('tools/reports/alpha065-monsters.json',root),'utf8'));
-const added=Object.keys(MONSTERS).filter(id=>MONSTERS[id].unlockStage);
+// The nine Alpha 0.65 species (0.106 specialists also have unlock stages but live in art/monsters0106).
+const added=Object.keys(report.species);
 function imageBounds(logical){const file=manifest.delivery[logical];assert.ok(file.endsWith('.webp'));const bytes=fs.readFileSync(new URL('dist/assets/'+file,root));assert.equal(bytes.toString('ascii',12,16),'VP8L');const bits=bytes.readUInt32LE(21);return {width:(bits&16383)+1,height:((bits>>>14)&16383)+1};}
 
 test('nine unique transparent source sheets bind every five-view walk/attack/death clip at a fixed body scale',()=>{

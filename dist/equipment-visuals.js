@@ -1,4 +1,4 @@
-import { equipmentArt, EQUIPMENT_ART } from './chapters.js?v=0.105.0';
+import { equipmentArt, EQUIPMENT_ART } from './chapters.js?v=0.106.0';
 import { ANCIENT_CATALOG, ancientDefinition, CRAFTED_CATALOG, craftedDefinition } from './loot.js?v=0.99.0';
 
 export function validEquipmentSocket(p){

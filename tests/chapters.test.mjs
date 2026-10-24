@@ -15,7 +15,7 @@ test('all twelve chapter identities remain distinct and definitions stay immutab
     for(const e of s.enemies){species.add(e.species);assert.equal(e.name,MONSTERS[e.species].name);assert.equal(e.chapterId,c.id);}
     s.enemies[0].hp=0;assert.ok(second.enemies[0].hp>0);assert.ok(createDecorations(s.bounds,c).length>10);
   }
-  assert.equal(species.size,12);assert.equal(JSON.stringify(CHAPTERS),definition);assert.throws(()=>{CHAPTERS[0].bossCycle[0]='volley';},TypeError);
+  assert.equal(species.size,new Set(CHAPTERS.flatMap(c=>[...c.roster.slice(0,3),c.bossSpecies])).size);assert.equal(JSON.stringify(CHAPTERS),definition);assert.throws(()=>{CHAPTERS[0].bossCycle[0]='volley';},TypeError);
 });
 test('boss attack plans drive actual contact and death/pause cancel uncommitted volleys',()=>{
   const initialKinds=[];

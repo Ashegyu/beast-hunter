@@ -15,7 +15,7 @@ export function regionAssetPlan(manifest, chapters) {
     }
     const clips = [...ids].map(id => manifest.clips[id]);
     const theme=chapter.theme??chapter.id,effects=manifest.monsterEffects?.[theme];
-    regions.set(chapter.id, { clips, effects, paths: new Set([manifest.chapters[theme].environment, ...clips.map(c => c.image),...(effects?[effects.image]:[])]) });
+    regions.set(chapter.id, { clips, effects, paths: new Set([manifest.chapters[chapter.environment??theme].environment, ...clips.map(c => c.image),...(effects?[effects.image]:[])]) });
   }
   const clips = runtimeClipIds(manifest).filter(id => !regionClips.has(id)).map(id => manifest.clips[id]);
   clips.push(manifest.chapterProps, manifest.equipment, manifest.equipmentRarities);

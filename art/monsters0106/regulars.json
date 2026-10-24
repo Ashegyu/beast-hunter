@@ -1,0 +1,182 @@
+{
+ "forest_hornet": {
+  "name": "독침 말벌",
+  "role": "skitter",
+  "tier": "basic",
+  "out": "art/monsters0106/forest_hornet.png",
+  "style": "art/monsters045/forest_wolf.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A giant forest hornet, yellow and black striped abdomen with a long stinger, translucent amber wings, red compound eyes, six thin legs; hovers low near the ground. Regular-enemy size. Windup crouches ready to spring; contact lunges forward biting or slashing. Distinct from the style reference subject."
+ },
+ "forest_dryad": {
+  "name": "덩굴 드라이어드",
+  "role": "spitter",
+  "tier": "basic",
+  "out": "art/monsters0106/forest_dryad.png",
+  "style": "art/monsters045/forest_wolf.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A small forest dryad caster, green leafy skin and hair, wooden mask face, flower crown, holds a thorny vine wand; slender humanoid. Regular-enemy size. Windup gathers energy or draws back; contact releases a ranged shot forward (show only a small muzzle flash attached to the body, no long projectile). Distinct from the style reference subject."
+ },
+ "forest_treant": {
+  "name": "이끼 나무 골렘",
+  "role": "bulwark",
+  "tier": "basic",
+  "out": "art/monsters0106/forest_treant.png",
+  "style": "art/monsters045/forest_wolf.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A stout moss-covered tree golem, thick bark body, mushrooms and moss on shoulders, glowing green eyes in a knot-hole face, heavy wooden fists, root feet. Regular-enemy size. Windup raises its heavy limb or weapon; contact smashes forward. Distinct from the style reference subject."
+ },
+ "forest_mantis": {
+  "name": "사마귀 전사",
+  "role": "skitter",
+  "tier": "adv",
+  "out": "art/monsters0106/forest_mantis.png",
+  "style": "art/monsters045/forest_wolf.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A green praying mantis warrior, tall slender insect, scythe-like forearms with serrated edges, triangular head with large eyes, leaf-patterned wings folded. Regular-enemy size. Windup crouches ready to spring; contact lunges forward biting or slashing. Distinct from the style reference subject."
+ },
+ "forest_shaman": {
+  "name": "고블린 주술사",
+  "role": "spitter",
+  "tier": "adv",
+  "out": "art/monsters0106/forest_shaman.png",
+  "style": "art/monsters045/forest_wolf.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A goblin shaman, green skin, skull mask with feathers, patchwork robe with bone charms, carries a staff with a burning red gem. Regular-enemy size. Windup gathers energy or draws back; contact releases a ranged shot forward (show only a small muzzle flash attached to the body, no long projectile). Distinct from the style reference subject."
+ },
+ "forest_beetle": {
+  "name": "갑각 장수풍뎅이",
+  "role": "bulwark",
+  "tier": "adv",
+  "out": "art/monsters0106/forest_beetle.png",
+  "style": "art/monsters045/forest_wolf.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A giant armored rhinoceros beetle, glossy dark bronze and moss-green shell, huge forked horn, six thick spiked legs. Regular-enemy size. Windup raises its heavy limb or weapon; contact smashes forward. Distinct from the style reference subject."
+ },
+ "ruins_hound": {
+  "name": "해골 사냥개",
+  "role": "skitter",
+  "tier": "basic",
+  "out": "art/monsters0106/ruins_hound.png",
+  "style": "art/monsters045/ruins_skeleton.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A skeletal hound, bare bones with scraps of dark fur, glowing purple eyes and flames in the ribcage, spiked iron collar, four legs. Regular-enemy size. Windup crouches ready to spring; contact lunges forward biting or slashing. Distinct from the style reference subject."
+ },
+ "ruins_archer": {
+  "name": "해골 궁수",
+  "role": "spitter",
+  "tier": "basic",
+  "out": "art/monsters0106/ruins_archer.png",
+  "style": "art/monsters045/ruins_skeleton.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A skeleton archer, ivory bones, tattered hood and cloak in dark purple, leather quiver, bone longbow. Regular-enemy size. Windup gathers energy or draws back; contact releases a ranged shot forward (show only a small muzzle flash attached to the body, no long projectile). Distinct from the style reference subject."
+ },
+ "ruins_gargoyle": {
+  "name": "석상 가고일",
+  "role": "bulwark",
+  "tier": "basic",
+  "out": "art/monsters0106/ruins_gargoyle.png",
+  "style": "art/monsters045/ruins_skeleton.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A stone gargoyle, cracked gray stone body, horned demonic head, folded stone bat wings, heavy clawed fists, walks hunched on two legs. Regular-enemy size. Windup raises its heavy limb or weapon; contact smashes forward. Distinct from the style reference subject."
+ },
+ "ruins_rat": {
+  "name": "역병 쥐",
+  "role": "skitter",
+  "tier": "adv",
+  "out": "art/monsters0106/ruins_rat.png",
+  "style": "art/monsters045/ruins_skeleton.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A giant plague rat, mangy gray-green fur, red glowing eyes, exposed ribs, long scaly tail, yellow teeth, sickly green drool. Regular-enemy size. Windup crouches ready to spring; contact lunges forward biting or slashing. Distinct from the style reference subject."
+ },
+ "ruins_eye": {
+  "name": "부유 눈알",
+  "role": "spitter",
+  "tier": "adv",
+  "out": "art/monsters0106/ruins_eye.png",
+  "style": "art/monsters045/ruins_skeleton.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A floating eyeball monster, one huge bloodshot purple eye, fleshy dark body with small tentacles below, hovers above the ground. Regular-enemy size. Windup gathers energy or draws back; contact releases a ranged shot forward (show only a small muzzle flash attached to the body, no long projectile). Distinct from the style reference subject."
+ },
+ "ruins_flesh": {
+  "name": "시체 거인",
+  "role": "bulwark",
+  "tier": "adv",
+  "out": "art/monsters0106/ruins_flesh.png",
+  "style": "art/monsters045/ruins_skeleton.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A hulking flesh golem made of stitched corpses, gray-purple patchwork skin with iron staples, chains around its body, one huge meat hook hand. Regular-enemy size. Windup raises its heavy limb or weapon; contact smashes forward. Distinct from the style reference subject."
+ },
+ "frost_fox": {
+  "name": "서리 여우",
+  "role": "skitter",
+  "tier": "basic",
+  "out": "art/monsters0106/frost_fox.png",
+  "style": "art/monsters045/frost_wolf.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A frost fox, white and pale-blue fur, ice crystal tips on its three fluffy tails, glowing blue eyes, four slender legs. Regular-enemy size. Windup crouches ready to spring; contact lunges forward biting or slashing. Distinct from the style reference subject."
+ },
+ "frost_archer": {
+  "name": "설원 궁수",
+  "role": "spitter",
+  "tier": "basic",
+  "out": "art/monsters0106/frost_archer.png",
+  "style": "art/monsters045/frost_wolf.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A frost elf archer, pale skin, white fur hood, blue leather armor, carries an ice-crystal bow. Regular-enemy size. Windup gathers energy or draws back; contact releases a ranged shot forward (show only a small muzzle flash attached to the body, no long projectile). Distinct from the style reference subject."
+ },
+ "frost_bear": {
+  "name": "빙판 곰",
+  "role": "bulwark",
+  "tier": "basic",
+  "out": "art/monsters0106/frost_bear.png",
+  "style": "art/monsters045/frost_wolf.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A huge polar bear with ice armor plates on its shoulders and back, white fur, blue eyes, heavy paws; walks on four legs. Regular-enemy size. Windup raises its heavy limb or weapon; contact smashes forward. Distinct from the style reference subject."
+ },
+ "frost_owl": {
+  "name": "서리 올빼미",
+  "role": "skitter",
+  "tier": "adv",
+  "out": "art/monsters0106/frost_owl.png",
+  "style": "art/monsters045/frost_wolf.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A giant frost owl, white and silver feathers with icy blue tips, glowing yellow eyes, sharp talons; hops and flies low near the ground. Regular-enemy size. Windup crouches ready to spring; contact lunges forward biting or slashing. Distinct from the style reference subject."
+ },
+ "frost_slime": {
+  "name": "얼음 슬라임",
+  "role": "spitter",
+  "tier": "adv",
+  "out": "art/monsters0106/frost_slime.png",
+  "style": "art/monsters045/frost_wolf.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "An ice slime, translucent pale-blue gelatinous blob with a frozen crystal core and small ice spikes on top, simple cute-angry face. Regular-enemy size. Windup gathers energy or draws back; contact releases a ranged shot forward (show only a small muzzle flash attached to the body, no long projectile). Distinct from the style reference subject."
+ },
+ "frost_knight": {
+  "name": "서리 기사",
+  "role": "bulwark",
+  "tier": "adv",
+  "out": "art/monsters0106/frost_knight.png",
+  "style": "art/monsters045/frost_wolf.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A frost knight, heavy pale-blue ice plate armor with frost spikes, horned helmet with glowing visor, ice tower shield and a short ice mace. Regular-enemy size. Windup raises its heavy limb or weapon; contact smashes forward. Distinct from the style reference subject."
+ }
+}

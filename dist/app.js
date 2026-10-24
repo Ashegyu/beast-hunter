@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.105.0';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.106.0';
 import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js';
 import { createCombatAudio } from './sound.js?v=0.76.0';
-import * as game from './game-engine.js?v=0.105.0';
+import * as game from './game-engine.js?v=0.106.0';
 import {FrameMetrics} from './frame-metrics.js?v=0.98.1';
 import { frameIndex, frameRect, validateClip } from './engine.js';
 import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
 import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.103.1';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.105.0';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.105.0';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.105.0';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.105.0';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.106.0';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.106.0';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.106.0';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.106.0';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -671,7 +671,7 @@ function cleaveVisual(a){
   drawEquipmentAttack(ctx,designsForSwing(swing),swing,v,x,y);
 }
 function displayChapter(){return game.STAGES[(state.phase==='camp'?selectedStage:state.stageId)-1];}
-function floor(){const chapter=displayChapter(),bleed=.5/Math.min(renderScaleX,renderScaleY*GROUND_DEPTH_SCALE);for(const tile of visibleTiles(camera,state.bounds,manifest.tileSize)){ctx.save();ctx.translate(tile.x-camera.x+tile.size/2,tile.y-camera.y+tile.size/2);ctx.scale(tile.flipX?-1:1,tile.flipY?-1:1);ctx.drawImage(images.get(manifest.chapters[chapter.theme].environment),-tile.size/2-bleed,-tile.size/2-bleed,tile.size+bleed*2,tile.size+bleed*2);ctx.restore();}
+function floor(){const chapter=displayChapter(),bleed=.5/Math.min(renderScaleX,renderScaleY*GROUND_DEPTH_SCALE);for(const tile of visibleTiles(camera,state.bounds,manifest.tileSize)){ctx.save();ctx.translate(tile.x-camera.x+tile.size/2,tile.y-camera.y+tile.size/2);ctx.scale(tile.flipX?-1:1,tile.flipY?-1:1);ctx.drawImage(images.get(manifest.chapters[chapter.environment].environment),-tile.size/2-bleed,-tile.size/2-bleed,tile.size+bleed*2,tile.size+bleed*2);ctx.restore();}
 }
 
 function prop(p){const clip=manifest.chapterProps,f=clip.frames[p.frame],scale=p.height*1.12*sceneDepthScale(p.y)/f.h;shadow(p.x,p.y,p.height*.22);uprightAt(p.x,p.y);ctx.translate(p.x,p.y);ctx.scale(p.facing*scale,scale);ctx.drawImage(images.get(clip.image),f.x,f.y,f.w,f.h,-f.pivotX,-f.pivotY,f.w,f.h);ctx.restore();}
@@ -1056,7 +1056,7 @@ function updateHud(){
     atlasThumbnail($('stage-preview-art'),previewClip.image,previewClip.frames[0],80);
     hudText($('stage-preview-title'),selectedStage+'-'+selectedRunStage+' · '+selectedPlan.name);hudText($('stage-preview-kind'),game.HUNT_MODES[selectedDifficulty].name+' · '+(bossStage?'보스 단독전':game.stageWaveCount(selectedRunStage)+'웨이브'));const rule=game.stageRule(selectedStage,selectedRunStage);hudText($('stage-preview-kind'),game.HUNT_MODES[selectedDifficulty].name+' · '+game.STAGE_TYPE_NAMES[rule.type]);hudText($('stage-preview-description'),rule.rule+' — '+rule.hint+(rule.required?' 필요':' 유리'));
     hudText($('stage-progress-note'),game.HUNT_MODES[selectedDifficulty].name+' · '+(selectedRunStage===limit&&completed<10?'현재 공략 지점':'선택한 출발 지점')+' '+selectedStage+'-'+selectedRunStage);
-    const environment=manifest.chapters[selected.theme].environment;
+    const environment=manifest.chapters[selected.environment].environment;
     $('chapter-banner').style.backgroundImage='linear-gradient(90deg,#101319a8,#10131925),url("assets/'+(manifest.delivery?.[environment]??environment)+'")';hudText($('chapter-label'),'CHAPTER '+String(selected.id).padStart(2,'0')+' · '+selected.region);$('chapter-prev').disabled=selected.id<=1;$('chapter-next').disabled=selected.id>=Math.min(game.STAGES.length,profile.unlockedStage);hudText($('chapter-preview-name'),selected.name);hudText($('chapter-preview-boss'),'지역 보스 · '+selected.bossName);hudText($('chapter-tactic'),selected.tactic);
     for(const [i,species] of [...selected.roster,selected.bossSpecies].entries()){const design=MONSTERS[species],clip=manifest.clips[manifest.directions[species].walk.s];atlasThumbnail($('roster-art-'+i),clip.image,clip.frames[0],72);hudText($('roster-name-'+i),design.name);hudText($('roster-detail-'+i),species===selected.bossSpecies?'STAGE 10 · 지역 보스':'STAGE '+(design.unlockStage??1)+' · '+(design.tactic??({skitter:'근접 추격',spitter:'원거리 사격',bulwark:'중갑 강타'}[design.role])));$('roster-art-'+i).setAttribute('aria-label',design.name);}
     for(const theme of game.THEMES){const b=$('stage-'+theme.id),first=regionChapters(theme.id)[0],on=theme.id===selected.theme,cleared=regionChapters(theme.id).filter(c=>c.id<=profile.clearedStage).length;b.disabled=first.id>profile.unlockedStage;b.classList.toggle('selected',on);b.setAttribute('aria-pressed',String(on));hudText($('stage-progress-'+theme.id),cleared+'/'+game.CHAPTERS_PER_THEME);}

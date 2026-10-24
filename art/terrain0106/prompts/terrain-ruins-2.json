@@ -1,0 +1,27 @@
+{
+  "id": "terrain-ruins-2",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production seamless repeating GROUND ALBEDO TILE for a premium illustrated dark fantasy top-down action RPG, matching the style of the attached reference tile. One square2048x2048 texture fills every pixel edge to edge. Orthographic top-down flat GROUND ONLY; no perspective, no horizon, no vignette, no cast shadows, no directional lighting, no text. Seamlessly repeatable on all edges and also when alternating horizontally/vertically mirrored. Matte painterly hand-crafted broad material masses, soft restrained tonal transitions, medium low contrast, calm negative space for tiny characters and red attack telegraphs. Very sparse broad forms at scale, no crisp tiny flecks, no scattered micro-debris, no checker pattern, no high-frequency grit, no jagged pixel edges, no multicolored noise. It should remain visually calm and high-end at mobile resolution. Large forms have clear material structure without blur or sharpen halos. No trees,bushes,rocks standing above the ground,architecture,props,characters,items or UI: those are separate runtime sprites. Opaque background, no transparency. Image1 is the existing tile for this region: match its painterly material quality, scale of forms and darkness exactly, but depict the variant below. Region2 RUINED NECROPOLIS, catacomb floor: large worn dark burial slabs with faint engraved borders, soft bone-ash dust, cold violet-gray tint. Calm, nearly flat lighting, no skulls standing up. Make it CLEARLY DIFFERENT from the reference at a glance: regular large rectangular burial slabs in a grid-like but worn layout, warm brown-gray sandstone tone, pale bone-dust drifts, no violet tint.",
+  "referenceImages": [
+    {
+      "path": "dist/assets/terrain-ruins-v044.webp",
+      "sha256": "79a950b5efaa95d24f912c10562598fda70731335e9de07a35733b231720ccfc"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "seconds": 38,
+      "sha256": "fdae9e932700d14a05a43c5d9bbe24b8c92af4c163c1aee0355a14d00eddfc20"
+    }
+  ],
+  "final": {
+    "path": "art/terrain0106/terrain-ruins-2.png",
+    "sha256": "fdae9e932700d14a05a43c5d9bbe24b8c92af4c163c1aee0355a14d00eddfc20"
+  }
+}

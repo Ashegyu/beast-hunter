@@ -1,0 +1,245 @@
+{
+ "boss_forest_boar": {
+  "chapter": 1,
+  "name": "붉은엄니 멧돼지",
+  "out": "art/monsters0106/boss_forest_boar.png",
+  "style": "art/monsters045/forest_guardian.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A huge armored forest boar boss, rust-red bristly mane, two long ivory tusks, scarred dark-brown hide, glowing amber eyes, tree-bark plates on its back. Four-legged and heavy. Windup lowers its head and paws the ground; contact gores forward with tusks. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from humanoid swordsmen and from the style reference subject."
+ },
+ "boss_forest_direwolf": {
+  "chapter": 2,
+  "name": "회색 늑대왕",
+  "out": "art/monsters0106/boss_forest_direwolf.png",
+  "style": "art/monsters045/forest_guardian.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A giant gray dire wolf alpha boss, shaggy silver-gray fur, scarred muzzle, red eyes, bone necklace and leaf-wrapped collar, much larger and heavier than a normal wolf. Windup crouches and bares fangs; contact lunges with open jaws. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from humanoid swordsmen and from the style reference subject."
+ },
+ "boss_forest_goblinchief": {
+  "chapter": 3,
+  "name": "고블린 족장",
+  "out": "art/monsters0106/boss_forest_goblinchief.png",
+  "style": "art/monsters045/forest_guardian.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A big goblin chieftain boss, green skin, feathered bone headdress, fur cloak, leather and bronze armor, wields a huge spiked wooden club. Upright humanoid. Windup raises the club overhead; contact smashes it down. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from humanoid swordsmen and from the style reference subject."
+ },
+ "boss_forest_thornbeast": {
+  "chapter": 4,
+  "name": "가시덩굴 괴수",
+  "out": "art/monsters0106/boss_forest_thornbeast.png",
+  "style": "art/monsters045/forest_guardian.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A walking thorn-vine beast boss, a hulking body woven from dark green vines and red thorns, blooming red flowers on its shoulders, glowing yellow eyes inside the vines, long whip-like vine arms. Windup coils its vine arms back; contact lashes them forward. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from humanoid swordsmen and from the style reference subject."
+ },
+ "boss_forest_mushroomking": {
+  "chapter": 5,
+  "name": "독버섯 왕",
+  "out": "art/monsters0106/boss_forest_mushroomking.png",
+  "style": "art/monsters045/forest_guardian.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A giant poison mushroom king boss, wide purple-red spotted cap like a crown, pale stalk body with stubby legs and arms, glowing green spore sacs, mean face under the cap. Windup inflates and leans back; contact slams forward releasing a spore puff. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from humanoid swordsmen and from the style reference subject."
+ },
+ "boss_forest_orcwarlord": {
+  "chapter": 6,
+  "name": "오크 대장군",
+  "out": "art/monsters0106/boss_forest_orcwarlord.png",
+  "style": "art/monsters045/forest_guardian.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A massive orc warlord boss, dark green skin, heavy black-iron plate armor with skull pauldrons, red war banner on the back, wields a huge double-bladed greataxe. Windup lifts the greataxe over the shoulder; contact cleaves down. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from humanoid swordsmen and from the style reference subject."
+ },
+ "boss_forest_mandrake": {
+  "chapter": 7,
+  "name": "맨드레이크 여왕",
+  "out": "art/monsters0106/boss_forest_mandrake.png",
+  "style": "art/monsters045/forest_guardian.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A mandrake queen boss, a tall walking root creature with a screaming root-face, a crown of pink and purple flowers, leafy hair, long root fingers, moves on many root legs. Windup spreads its root arms wide; contact claws forward screaming. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from humanoid swordsmen and from the style reference subject."
+ },
+ "boss_forest_spiderqueen": {
+  "chapter": 8,
+  "name": "거미 여왕",
+  "out": "art/monsters0106/boss_forest_spiderqueen.png",
+  "style": "art/monsters045/forest_guardian.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A giant spider queen boss, huge black and crimson body, glowing red eye cluster, bone-white armored carapace with thorn spikes, eight long jointed legs, large venom fangs. Windup rears up on hind legs raising front legs; contact stabs down with front legs and fangs. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from humanoid swordsmen and from the style reference subject."
+ },
+ "boss_forest_bloodbear": {
+  "chapter": 9,
+  "name": "핏빛 곰",
+  "out": "art/monsters0106/boss_forest_bloodbear.png",
+  "style": "art/monsters045/forest_guardian.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A blood-red giant bear boss, dark crimson fur, glowing red eyes, broken arrows stuck in its back, moss and red leaves on shoulders, massive claws. Walks on four legs. Windup rears up onto hind legs raising claws; contact swipes down. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from humanoid swordsmen and from the style reference subject."
+ },
+ "boss_ruins_bonegiant": {
+  "chapter": 11,
+  "name": "해골 거인",
+  "out": "art/monsters0106/boss_ruins_bonegiant.png",
+  "style": "art/monsters045/ruins_king.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A giant bone golem boss made of many fused skeletons, ribcage torso with a purple soul flame inside, large skull head with cracked crown fragment, huge bone fists, ragged dark cloth. Windup pulls a bone fist back; contact punches forward. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from humanoid swordsmen and from the style reference subject."
+ },
+ "boss_ruins_ghoullord": {
+  "chapter": 12,
+  "name": "구울 군주",
+  "out": "art/monsters0106/boss_ruins_ghoullord.png",
+  "style": "art/monsters045/ruins_king.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A ghoul lord boss, gaunt gray-green undead humanoid, long claws, torn purple noble robes, hunched predator posture, glowing yellow eyes, sharp teeth. Windup crouches with claws raised; contact lunges and slashes. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from humanoid swordsmen and from the style reference subject."
+ },
+ "boss_ruins_vampirebat": {
+  "chapter": 13,
+  "name": "흡혈 박쥐 군주",
+  "out": "art/monsters0106/boss_ruins_vampirebat.png",
+  "style": "art/monsters045/ruins_king.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A vampire bat lord boss, humanoid bat with huge leathery black-purple wings, red eyes, fangs, dark noble collar and gold chain, clawed feet. Windup spreads wings wide; contact dives forward slashing with claws. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from humanoid swordsmen and from the style reference subject."
+ },
+ "boss_ruins_lich": {
+  "chapter": 14,
+  "name": "대사령술사",
+  "out": "art/monsters0106/boss_ruins_lich.png",
+  "style": "art/monsters045/ruins_king.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A lich boss, skeletal sorcerer in tattered black and violet robes with gold trim, horned skull crown, floating green soul orbs, tall staff topped with a glowing skull. Windup raises the staff high; contact thrusts it forward casting. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from humanoid swordsmen and from the style reference subject."
+ },
+ "boss_ruins_cursedknight": {
+  "chapter": 15,
+  "name": "저주받은 기사단장",
+  "out": "art/monsters0106/boss_ruins_cursedknight.png",
+  "style": "art/monsters045/ruins_king.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A cursed knight commander boss, towering undead knight in rusted dark-steel plate armor with purple cursed cracks glowing, tattered red cape, holds a huge two-handed greatsword and no shield. Windup lifts the greatsword; contact swings it down. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from humanoid swordsmen and from the style reference subject."
+ },
+ "boss_ruins_banshee": {
+  "chapter": 16,
+  "name": "그림자 밴시",
+  "out": "art/monsters0106/boss_ruins_banshee.png",
+  "style": "art/monsters045/ruins_king.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A shadow banshee boss, floating spectral woman made of dark blue and black smoke, long flowing ghostly hair, glowing white eyes, chains on her wrists, tattered dress fading into mist near the ground. Windup draws arms back; contact screams forward with clawed hands. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from humanoid swordsmen and from the style reference subject."
+ },
+ "boss_ruins_mimicking": {
+  "chapter": 17,
+  "name": "거대 미믹",
+  "out": "art/monsters0106/boss_ruins_mimicking.png",
+  "style": "art/monsters045/ruins_king.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A giant mimic king boss, an enormous ornate treasure chest with gold trim and gems, a huge toothy mouth inside the lid, long purple tongue, spills of gold coins, walks on four stubby clawed legs. Windup opens the lid wide; contact snaps forward biting. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from humanoid swordsmen and from the style reference subject."
+ },
+ "boss_ruins_mummyking": {
+  "chapter": 18,
+  "name": "미라 왕",
+  "out": "art/monsters0106/boss_ruins_mummyking.png",
+  "style": "art/monsters045/ruins_king.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A mummy king boss, tall bandaged undead pharaoh with a gold and blue striped headdress, golden collar, glowing green eyes, loose bandages trailing, holds a golden crook staff. Windup raises the crook; contact strikes forward. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from humanoid swordsmen and from the style reference subject."
+ },
+ "boss_ruins_deathguard": {
+  "chapter": 19,
+  "name": "근위대장",
+  "out": "art/monsters0106/boss_ruins_deathguard.png",
+  "style": "art/monsters045/ruins_king.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A death guard captain boss, skeletal royal guard in black and gold armor with a tall plumed helmet, purple cape, wields a long halberd. Windup draws the halberd back; contact thrusts it forward. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from humanoid swordsmen and from the style reference subject."
+ },
+ "boss_frost_mammoth": {
+  "chapter": 21,
+  "name": "설원 매머드",
+  "out": "art/monsters0106/boss_frost_mammoth.png",
+  "style": "art/monsters045/frost_king.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A frost mammoth boss, huge shaggy white and pale-blue fur, long curved icy tusks, ice crystals growing on its back, small blue eyes, four thick legs. Windup raises its trunk and head; contact stomps and swings tusks forward. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from humanoid swordsmen and from the style reference subject."
+ },
+ "boss_frost_serpent": {
+  "chapter": 22,
+  "name": "얼음 해룡",
+  "out": "art/monsters0106/boss_frost_serpent.png",
+  "style": "art/monsters045/frost_king.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "An ice sea serpent boss slithering on land, long coiled body with pale blue scales and white belly, crystal fins, horned dragon-like head, glowing cyan eyes. Windup coils and rears its head; contact strikes forward with open jaws. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from humanoid swordsmen and from the style reference subject."
+ },
+ "boss_frost_griffin": {
+  "chapter": 23,
+  "name": "서리 그리폰",
+  "out": "art/monsters0106/boss_frost_griffin.png",
+  "style": "art/monsters045/frost_king.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A frost griffin boss, eagle head and wings with white and icy-blue feathers, lion body with pale fur, icicle-tipped feathers, walks on four legs with wings folded. Windup raises wings and rears up; contact pounces forward with talons. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from humanoid swordsmen and from the style reference subject."
+ },
+ "boss_frost_elemental": {
+  "chapter": 24,
+  "name": "얼음 정령왕",
+  "out": "art/monsters0106/boss_frost_elemental.png",
+  "style": "art/monsters045/frost_king.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "An ice elemental lord boss, a humanoid giant made of translucent blue ice crystals, glowing white core in the chest, crown of ice shards, floating crystal fragments around the shoulders, legs of solid ice. Windup gathers an ice fist back; contact punches forward. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from humanoid swordsmen and from the style reference subject."
+ },
+ "boss_frost_colossus": {
+  "chapter": 25,
+  "name": "수정 거신",
+  "out": "art/monsters0106/boss_frost_colossus.png",
+  "style": "art/monsters045/frost_king.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A crystal colossus boss, massive dark rock body with huge purple-blue crystal clusters growing from the back and arms, glowing cyan eyes, heavy rock fists. Windup lifts both fists; contact slams them down. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from humanoid swordsmen and from the style reference subject."
+ },
+ "boss_frost_yetichief": {
+  "chapter": 26,
+  "name": "설인 족장",
+  "out": "art/monsters0106/boss_frost_yetichief.png",
+  "style": "art/monsters045/frost_king.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A yeti chieftain boss, huge white-furred ape with blue face, bone and ice crown, wolf pelt cape, holds a giant ice club. Windup raises the club; contact smashes forward. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from humanoid swordsmen and from the style reference subject."
+ },
+ "boss_frost_tortoise": {
+  "chapter": 27,
+  "name": "빙하 거북",
+  "out": "art/monsters0106/boss_frost_tortoise.png",
+  "style": "art/monsters045/frost_king.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A glacier tortoise boss, enormous tortoise whose shell is a jagged glacier of blue ice spikes, gray-blue scaly legs, horned head, slow and heavy. Windup pulls its head back; contact snaps forward biting and stomping. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from humanoid swordsmen and from the style reference subject."
+ },
+ "boss_frost_witch": {
+  "chapter": 28,
+  "name": "눈보라 마녀",
+  "out": "art/monsters0106/boss_frost_witch.png",
+  "style": "art/monsters045/frost_king.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A blizzard witch boss, tall pale woman in a flowing white and deep blue fur-trimmed robe, ice crystal crown, long white hair blowing, holds a staff topped with a swirling snow orb. Windup raises the staff; contact casts forward with a burst of frost. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from humanoid swordsmen and from the style reference subject."
+ },
+ "boss_frost_wyvern": {
+  "chapter": 29,
+  "name": "서리 와이번",
+  "out": "art/monsters0106/boss_frost_wyvern.png",
+  "style": "art/monsters045/frost_king.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "An ice wyvern boss, pale blue scaled dragon with large membrane wings used as front legs, white frost spikes along the spine, long tail with ice blade tip, glowing blue eyes. Windup rears back with wings spread; contact lunges forward biting. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from humanoid swordsmen and from the style reference subject."
+ }
+}

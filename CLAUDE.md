@@ -13,7 +13,7 @@
 ## 실행
 - 게임: `PORT=8090 node serve-local.mjs` 후 `http://127.0.0.1:8090/` (기본 포트 8080). file:// 로는 안 된다.
 - 헤드리스 확인: 전역 playwright(`/opt/node22/lib/node_modules/playwright`)를 createRequire로 불러 Chromium 실행. 844×390에서 거점 → 사냥터 → 전투 준비 → 전투까지 콘솔 오류·404 없이 동작 확인함.
-- 테스트: `npm test` = `node --experimental-vm-modules --test tests/*.test.mjs` (약 70초). **782/782 통과** (0.105 기준).
+- 테스트: `npm test` = `node --experimental-vm-modules --test tests/*.test.mjs` (약 70초). **782/782 통과** (0.106 기준). 어셋 개수 단언(클립 415+45×15, 프레임 907+45×25, 챕터당 지역 이미지 5장, 시작 시 요청 이미지 23장)은 0.106 원화 기준.
 
 ## 테스트 작성 시 주의 (0.103.2에서 정리한 내용)
 - 고대 장비는 0.97부터 레이드 전용 → 스테이지 보스는 고대를 떨어뜨리지 않음. 고대 카탈로그는 75종(신규 부위 15종은 고대 전용 원화 없음).
@@ -33,18 +33,18 @@
 - 로직 모듈: loot, equipment-progression/slots/synergies, crafting, chapters, battle-plans, battle-progress(정산 저널), dungeons, hunt-modes(난이도), combat-skills(35종), skill-motion, ancient-powers, unique-effects, build-effects(각인), profile-backup, world(카메라·좌표), terrain, motion.
 - `engine.js` + `lab.html/lab.js`: 구형 모션 검사 도구(MOTION LAB). 실게임과 무관.
 - `sound.js`: 오디오 파일 없이 WebAudio로 효과음 합성 (동시 10음).
-- 어셋 로딩: `dist/assets/manifest.json`(클립 415개, png→webp `delivery` 매핑). 거점 3장 → 공유 전투 18장 → 지역별 4장(한 번에 한 지역만 상주). 폰트는 `dist/assets/fonts/`.
+- 어셋 로딩: `dist/assets/manifest.json`(클립 1090개, png→webp `delivery` 매핑). 거점 3장 → 공유 전투 18장 → 챕터별 5장(지형, 몬스터 아틀라스 2장, 공격 효과, 챕터 보스 아틀라스; 한 번에 한 챕터만 상주). 0.65 이후 아틀라스는 WebP만 있고 PNG 원본은 art/에 있다. 폰트는 `dist/assets/fonts/`.
 - CSS: 버전별로 파일을 뒤에 덧붙여 덮어쓰는 레이어 구조 → **로드 순서 = 우선순위**. 끝에서 두 번째는 `layout-fit.css`(0.103.2, 한 화면 맞춤 규칙 모음, 0.105 지도 챕터 넘김 버튼 포함), 마지막은 `combat-auto.css`(0.104, 자동 전투 HUD: 상태 창 9분할 테두리, 하단 스킬 줄, 스킬 자동/수동 버튼). 새 화면 맞춤 수정은 여기에 화면별 주석과 함께 추가한다. `#game-shell` 접두 + `data-panel`/`data-camp-view`/`data-phase` 속성 선택자. `!important` 약 900개 + index.html 인라인 474개(tools/apply-common-ui-v2.py가 주입). 세로용 규칙 다수는 가로 전용 전환 뒤 사실상 죽은 코드.
-- `art/`: 원화 원본, 생성 프롬프트, 검수 자료. `tools/reports/`: 버전별 측정·검수 결과(394개).
+- `art/`: 원화 원본, 생성 프롬프트, 검수 자료. 0.106 원화는 `art/monsters0106`(보스 27·일반 18, `bosses.json`/`regulars.json` 사양, `prompts/<id>.json` 기록)과 `art/terrain0106`(지형 6). 사용자 몬스터 백과 참고 이미지는 `art/monsters065/references/encyclopedia-1~5.png`. `tools/reports/`: 버전별 측정·검수 결과(394개).
 
 ## 버전 표기
-- README는 0.103.2부터 다시 최신(그 사이 0.98~0.103.1 기록은 없음), `index.html`은 `app.js?v=0.105.0`, 모듈 import 쿼리는 0.70~0.105 혼재(0.105에서 바꾼 모듈과 그 import 사슬은 `?v=0.105.0`), `PROFILE_VERSION=14`(0.105, 진행 배열 30칸). 코드가 문서보다 앞서 있다. README_LOCAL은 폴더 이름 때문에 "Alpha 0.45"라고 부른다.
+- README는 0.103.2부터 다시 최신(그 사이 0.98~0.103.1 기록은 없음), `index.html`은 `app.js?v=0.106.0`, 모듈 import 쿼리는 0.70~0.106 혼재(0.105~0.106에서 바꾼 모듈과 그 import 사슬은 `?v=0.106.0`), `PROFILE_VERSION=14`(0.105, 진행 배열 30칸). 코드가 문서보다 앞서 있다. README_LOCAL은 폴더 이름 때문에 "Alpha 0.45"라고 부른다.
 - 파일명 버전: 점 제거(063=0.63, 0844=0.84.4, v0970=0.97.0, v01002=0.100.2). 단 alpha09/alpha091은 0.9/0.9.1.
 
 ## 게임 규칙 요약
 - 전투(0.104): 이동·공격·회피는 항상 자동(engine `autoInput`). 파쇄(Q, `thunder`)는 UI·자동 전투에서 제거(엔진 함수는 남음). 스킬만 자동/수동 선택: 앱이 `input.skillMode`('auto'|'manual')를 넘기고, 수동이면 탭한 스킬을 `input.skillRequest`로 3초간 예약해 다음 공격 틈에 시전. 선택은 localStorage `beast-hunter:skill-mode`. 연격 3타는 원래 수치(피해 1.85배, 방어 38). 중갑은 유지하고 4스테이지 장갑 55%로 **대응 스킬 필수 구간**(사용자 결정): 마지막 검끝 패시브 장착 시 연격(`swing.damage` 있는 타격)이 장갑 무시 + 3타 방어 +62(`FINISHER_GUARD_BONUS`), 파갑참은 방어를 `breachGuardShatter(rank)`만큼 먼저 깎아 강타 65와 합쳐 한 번에 부수고 주변 260 장갑 8초 해제(`BREACH_ARMOR`, `e.plateBrokenUntil`), autoSkill이 방어·장갑 남은 적에게 우선 사용. 스테이지 규칙 `required:true`면 힌트 뒤에 '필요'(아니면 '유리').
-- 성장(0.105): 레벨 상한 `MAX_LEVEL=100`. `xpNeeded`=Lv.10 전 300+250×레벨, 이후 3000+6×(레벨-10). 일반 챕터 하나가 약 1만 경험치 → 정비 진행 시 챕터 끝 Lv.8~9(1장) / 37~38(10장) / 68~70(20장) / 99~100(30장). 적월난무 각성은 Lv.50, 마지막 검끝 해금 Lv.3. 레벨·수치 조정은 정비(강화·승급 포함)+체크포인트 재도전+막히면 앞 스테이지 1회 파밍을 흉내 낸 30챕터 시뮬레이션(시드 3개, 시드당 약 2분)으로 확인한다(strict 스테이지 실패는 경험치도 롤백되므로 같은 곳만 반복하면 레벨이 안 오른다). 현재 결과: 30장까지 클리어, 실패는 1~10장·24~30장의 4스테이지에 몰리고 11~23장은 거의 첫 도전 통과.
-- 캐릭터: 리리안 1명(검사, 엔진 역할 ID는 hunter). 30챕터(chapters.js `THEMES` 3개 × 10, 챕터마다 이름·보스 칭호) × 10스테이지 × 난이도 3(일반/정예/악몽: HP ×1/1.5/2.2). 적 배수 `chapterMultiplier`=1+0.13×(챕터-1)(30장 ×4.77), 보스 HP=780×배수×지역 보정(1/1.13/1.22)×지역 마지막 챕터 1.15, 보스 골드 90×배수, 보스 핵 `bossCores`=ceil(챕터/5)+난이도 보너스. 지형·몬스터·보스 규칙·장비/재료 티어·manifest의 chapters/monsterEffects 키는 챕터의 `theme`(1~3)을 쓴다. 지역 어셋 상주 단위는 챕터 id(같은 지역끼리는 이미 받은 그림을 재사용). 던전은 1·11·21장에 속한다.
+- 성장(0.105): 레벨 상한 `MAX_LEVEL=100`. `xpNeeded`=Lv.10 전 300+250×레벨, 이후 3000+6×(레벨-10). 일반 챕터 하나가 약 1만 경험치 → 정비 진행 시 챕터 끝 Lv.8~9(1장) / 35~37(10장) / 67~68(20장) / 98~99(30장). 적월난무 각성은 Lv.50, 마지막 검끝 해금 Lv.3. 레벨·수치 조정은 정비(강화·승급 포함)+체크포인트 재도전+막히면 앞 스테이지 1회 파밍을 흉내 낸 30챕터 시뮬레이션(시드 3개, 시드당 약 2분)으로 확인한다(strict 스테이지 실패는 경험치도 롤백되므로 같은 곳만 반복하면 레벨이 안 오른다). 현재 결과(0.106): 30장까지 클리어, 실패는 주로 1~3장 4스테이지, 4장 이후는 대부분 첫 도전 통과(중반 이후 난이도 상향 여지).
+- 캐릭터: 리리안 1명(검사, 엔진 역할 ID는 hunter). 30챕터(chapters.js `THEMES` 3개 × 10, 챕터마다 이름과 보스; 10·20·30장 외 27장은 `CHAPTER_BOSSES`의 고유 보스) × 10스테이지 × 난이도 3(일반/정예/악몽: HP ×1/1.5/2.2). 적 배수 `chapterMultiplier`=1+0.13×(챕터-1)(30장 ×4.77), 보스 HP=780×배수×지역 보정(1/1.13/1.22)×지역 마지막 챕터 1.15, 보스 골드 90×배수, 보스 핵 `bossCores`=ceil(챕터/5)+난이도 보너스. 지형·몬스터·보스 규칙·장비/재료 티어·manifest의 chapters/monsterEffects 키는 챕터의 `theme`(1~3)을 쓴다. 지역 어셋 상주 단위는 챕터 id(같은 지역끼리는 이미 받은 그림을 재사용). 던전은 1·11·21장에 속한다. 챕터 단계 `chapterPhase`: 지역의 1~3장 기존 로스터, 4~6장 기존 기본 3종 + 새 특수 3종(`lateRoster` 뒤쪽), 7~10장 `lateRoster` 6종, 지형도 단계별(`chapter.environment`).
 - 스테이지 60초 제한. 1~9는 웨이브 3개, 10은 보스 단독. 4·9 special, 8 elite, 10 boss. 동시 적 최대 32.
 - `advanceGame`: dt ≤0.1s, 0.025s 고정 서브스텝. RNG는 LCG 5개 스트림(전투·전리품·재료·재련·승급), `Math.random` 미사용 → 결정적.
 - 장비 9칸(무기, 헬멧·상의·하의·신발, 목걸이·귀걸이×2, 전용). 등급 0일반~4신화, 5고대, 6제작. 강화 상한 5/10/15/20/30/40/50, 구간별 보장(10/20/30회), 고대 +30 이상 실패 보정, 제작 +40 이상 보장 없음. 승급은 최대 강화 후 +0으로.
@@ -66,10 +66,18 @@
 - 제작 재료 `origin`(무명의 기원)이 보스 처치당 0.001%뿐 → README의 "현재 제작 가능"과 달리 제작이 사실상 불가능 (crafting.js:12).
 - `s.encounters/caches/nodes`를 채우는 코드 없음 → interact·상자·그룹 어그로 로직이 죽어 있음. `flow==='break'` 설정처 없음.
 - 궁극기 영상(mp4)·컷인은 테스트에서만 쓰이고 런타임에는 연결되지 않음. 신규 고대 15종 원화 없음.
+- 0.106 보스 중 독버섯 왕·얼음 정령왕·빙하 거북·대사령술사는 뒷모습 줄이 앞모습과 비슷하게 생성됨(사용 가능 수준이라 유지).
 - 파쇄 제거(0.104)로 '파쇄 적중 시' 발동하는 고유 효과(파쇄 축전기 등)와 고대 각인이 더 이상 발동하지 않음. 연격 3타로 옮길지 밸런스 결정 필요.
 - 4스테이지(철갑 진군)는 원본부터 60초 제한에 붙어 있는 구간이고 단일 시드 시뮬레이션은 결과가 크게 흔들린다. 전투 수치를 바꿀 땐 지역 3개(1·11·21장 등) × 시드 여러 개로 4스테이지만 반복 측정해 클리어율로 비교하고, tests/game-engine.test.mjs의 자동 빌드 완주 테스트도 확인한다.
 - `updateHud`가 매 프레임 getElementById를 수백 회 호출(성능 여지). 테스트에선 profile-backup.js 경유로 game-engine.js가 이중 로드됨.
 - 0.103.2에서 고친 것: 스킬 아이콘 매 프레임 src 재대입, 로드 실패 문구 파일명, 제작 장비 투사체 null 접근, world.js 이중 로드, 가방 버튼 클릭 인자.
+
+## 이미지 생성 (Codex CLI, 0.106)
+- 새 원화는 Codex CLI로 만든다(사용자 요청). `codex exec`(0.164, ChatGPT 로그인, `image_generation` 기능 켜짐)의 내장 `image_gen`이 `~/.codex/generated_images/`에 PNG를 만들고 지정 경로로 복사한다. 한 장에 약 2분, 6개까지 병렬로 돌려도 문제없었다.
+- 몬스터: `python3 tools/codex-monster-sheet.py art/monsters0106/<사양>.json <id>...` → 자동 검사(투명도·25포즈·5×5·가장자리) 불합격이면 재생성 → `python3 tools/pack-monsters0106.py`(art/monsters0106의 PNG 전체를 다시 포장, scipy 필요: `pip install scipy`) → chapters.js의 `CHAPTER_BOSSES`나 `MONSTERS`·로스터에 등록.
+- 지형: 같은 생성기에 `"kind":"terrain"` 사양 → `python3 tools/pack-terrain0106.py`. 챕터는 `chapter.environment`('1', '1.2', '1.3' …)로 `manifest.chapters`를 찾는다.
+- 생성본은 반드시 눈으로 검수한다(모아보기 이미지를 만들어 Read). 자동 검사는 배치만 본다. 실패 시도는 `art/*/.codex-work/`(gitignore).
+- 대기 루프에서 `pgrep -f "tools/codex-monster-sheet.py"`를 쓰면 루프 자신과 일치해 끝나지 않는다. `pkill -f`도 같은 이유로 셸을 죽일 수 있다.
 
 ## tools/
 - 63개 스크립트: benchmark-*, measure-*.mjs/.py, render-*, review-*, pack-*.py, optimize-*.py, create-*-report.py, simulate-*.

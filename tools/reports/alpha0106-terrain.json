@@ -1,0 +1,68 @@
+[
+  {
+    "source": "art/terrain0106/terrain-forest-2.png",
+    "sha256": "a3b8d824464f61367ba5b3f80462753defe70399267469dce4902de693b56618",
+    "size": [
+      1254,
+      1254
+    ],
+    "delivery": "terrain-forest-2-v0106.webp",
+    "webpBytes": 1650608,
+    "pixelExact": true
+  },
+  {
+    "source": "art/terrain0106/terrain-forest-3.png",
+    "sha256": "952b8b98ebf13e9219ca5b16bd3b679581f058bd77cc1a0f41b276916052b3d0",
+    "size": [
+      1254,
+      1254
+    ],
+    "delivery": "terrain-forest-3-v0106.webp",
+    "webpBytes": 1697718,
+    "pixelExact": true
+  },
+  {
+    "source": "art/terrain0106/terrain-frost-2.png",
+    "sha256": "a5cadfb81113981f3e9e7216c9d4ae86fc333c43e4d91a2c9f11cdc2d251e1fa",
+    "size": [
+      1254,
+      1254
+    ],
+    "delivery": "terrain-frost-2-v0106.webp",
+    "webpBytes": 1680064,
+    "pixelExact": true
+  },
+  {
+    "source": "art/terrain0106/terrain-frost-3.png",
+    "sha256": "43e1c1c0fa96dcf3c05f0ef326bfcc1c8bcf8066564c384dbd94b59750b17098",
+    "size": [
+      1254,
+      1254
+    ],
+    "delivery": "terrain-frost-3-v0106.webp",
+    "webpBytes": 1758118,
+    "pixelExact": true
+  },
+  {
+    "source": "art/terrain0106/terrain-ruins-2.png",
+    "sha256": "fdae9e932700d14a05a43c5d9bbe24b8c92af4c163c1aee0355a14d00eddfc20",
+    "size": [
+      1254,
+      1254
+    ],
+    "delivery": "terrain-ruins-2-v0106.webp",
+    "webpBytes": 1852884,
+    "pixelExact": true
+  },
+  {
+    "source": "art/terrain0106/terrain-ruins-3.png",
+    "sha256": "6e36e331a587112ff6dca91272fed9da440f0be0e98bcf4c42d8589aa75d5342",
+    "size": [
+      1254,
+      1254
+    ],
+    "delivery": "terrain-ruins-3-v0106.webp",
+    "webpBytes": 2115690,
+    "pixelExact": true
+  }
+]

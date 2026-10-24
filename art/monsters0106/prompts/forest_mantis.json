@@ -1,0 +1,33 @@
+{
+  "id": "forest_mantis",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production monster sprite animation sheet for an existing 2D action RPG.\nREFERENCE ROLES: Image1 is STYLE/LAYOUT reference ONLY: match its crisp finely detailed high-resolution pixel-illustrated fantasy sprites, dark ink outlines, 3/4 overhead RPG camera, shading and level of detail; never copy its subject. Image2 is SUBJECT CONCEPT reference only: pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only. Produce a brand-new single-species sheet.\nOUTPUT: genuinely transparent RGBA, no matte, no checkerboard, no background, no floor, no shadow oval. Square 2048x2048 or larger native pixels. Exactly 25 separate full-body monster silhouettes in a perfectly regular 5 columns x 5 rows invisible grid. Each cell same dimensions and clear padding; poses never touch each other or the canvas edge. No labels, text, frame borders, UI, grid lines, glow background, extra monsters or scenery.\nDIRECTIONS by ROW top-to-bottom: row1 front facing screen/down (south); row2 front-right three-quarter (southeast); row3 right profile (east); row4 back-right three-quarter (northeast); row5 back facing screen/up (north). Actually turn anatomy, faces and bodies in each row; do not repeat the front view.\nACTIONS by COLUMN left-to-right: 1 walk A planted left foot; 2 walk B visibly alternating limbs; 3 attack windup; 4 attack contact with a distinct forward action; 5 dead body lying flat on the ground. Keep each direction's body scale unchanged across actions. Feet or grounded contact point aligned near the cell bottom; full anatomy, no clipping. This is ONE creature repeated 25 times for animation, not a monster catalog.\nSUBJECT: A green praying mantis warrior, tall slender insect, scythe-like forearms with serrated edges, triangular head with large eyes, leaf-patterned wings folded. Regular-enemy size. Windup crouches ready to spring; contact lunges forward biting or slashing. Distinct from the style reference subject.",
+  "referenceImages": [
+    {
+      "path": "art/monsters045/forest_wolf.png",
+      "sha256": "1a86901508e419eb74e4fd293707ee06201fae3c60c2bee289dba5131ecfaf6f"
+    },
+    {
+      "path": "art/monsters065/references/encyclopedia-3.png",
+      "sha256": "20d80411c74413f468fcd2f500397cac563b8241ee2d9a3c9efab90266879911"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": 0.608,
+      "components": 25,
+      "seconds": 62,
+      "sha256": "841aee07c878b1ce631e603b48a2ffba27cb71eda2db6952aad7641b8e631244"
+    }
+  ],
+  "final": {
+    "path": "art/monsters0106/forest_mantis.png",
+    "sha256": "841aee07c878b1ce631e603b48a2ffba27cb71eda2db6952aad7641b8e631244"
+  }
+}
