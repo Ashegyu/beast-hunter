@@ -6,7 +6,7 @@ import * as game from '../dist/game-engine.js';
 import {freezeCombat} from './combat-fixture.mjs';
 import {CHAPTERS,MONSTERS,EQUIPMENT_ART,equipmentArt} from '../dist/chapters.js';
 import {createDecorations} from '../dist/terrain.js';
-function hunt(id){const p=game.createProfile(1000);p.clearedStage=2;p.unlockedStage=3;const s=game.createGame(p);assert.equal(game.launch(s,id),true);return freezeCombat(s);}
+function hunt(id){const p=game.createProfile(1000);p.clearedStage=game.STAGES.length-1;p.unlockedStage=game.STAGES.length;const s=game.createGame(p);assert.equal(game.launch(s,id),true);return freezeCombat(s);}
 function advance(s,time){for(let i=0;i<Math.ceil(time/.025);i++)game.advanceGame(s,.025);}
 
 test('all twelve chapter identities remain distinct and definitions stay immutable',()=>{
@@ -19,12 +19,12 @@ test('all twelve chapter identities remain distinct and definitions stay immutab
 });
 test('boss attack plans drive actual contact and death/pause cancel uncommitted volleys',()=>{
   const initialKinds=[];
-  for(const id of [1,2,3]){
+  for(const id of [1,11,21]){
     const s=hunt(id),boss=s.enemies.find(e=>e.boss);s.enemies=[boss];s.barrels=[];s.run.bossSpawned=true;
     s.player.invulnerable=99;boss.aggro=true;boss.action='windup';boss.actionTime=0;boss.windup=.1;boss.targetX=s.player.x;boss.targetY=s.player.y;boss.pattern=0;
     initialKinds.push(game.enemyAttackKind(boss));s.paused=true;const before=JSON.stringify(s);advance(s,.3);assert.equal(JSON.stringify(s),before);s.paused=false;
     advance(s,.1);assert.equal(boss.action,'attack');
-    if(id===2)assert.equal(s.projectiles.length,3);else assert.equal(s.projectiles.length,0);
+    if(id===11)assert.equal(s.projectiles.length,3);else assert.equal(s.projectiles.length,0);
     const dead=hunt(id),e=dead.enemies.find(e=>e.boss);dead.run.bossSpawned=true;dead.enemies=[e];dead.barrels=[];Object.assign(e,{dead:true,action:'death',actionTime:0,pattern:2,windup:.01});advance(dead,.2);assert.equal(dead.projectiles.length,0);
   }
   assert.deepEqual(initialKinds,['slam','volley','charge']);
@@ -35,7 +35,7 @@ test('forest wolf charge follows the locked target and stays inside world limits
   s.player.y=e.y+100;advance(s,.1);assert.ok(e.x>x);assert.equal(e.chargeY,0);assert.ok(e.x<=s.bounds.width-s.bounds.padding);
 });
 test('chapter caster volleys keep the projectile cap and target snapshot',()=>{
-  for(const id of [2,3]){
+  for(const id of [11,21]){
     const s=hunt(id),e=s.enemies.find(e=>e.type==='spitter');s.enemies=[e];s.barrels=[];s.player.invulnerable=99;
     Object.assign(e,{aggro:true,action:'windup',actionTime:0,windup:.1,targetX:e.x+200,targetY:e.y});
     s.player.y=e.y+100;advance(s,.1);assert.equal(s.projectiles.length,3);assert.ok(s.projectiles.every(p=>p.vx>0&&p.color===CHAPTERS[id-1].shotColor));

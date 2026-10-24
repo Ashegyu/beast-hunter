@@ -11,9 +11,9 @@ function gear(id,slot='weapon'){return{id,slot,rarity:1,tier:1,name:'시험 장�
 test('version one migrates without losing progress; unsafe equipment and malformed saves are rejected',()=>{
   for(const raw of [null,'broken','{}',{version:9},[]])assert.deepEqual(g.restoreProfile(raw,1000),g.createProfile(1000));
   const old=g.createProfile(1000);old.version=1;old.gold=80;old.level=7;old.skills.edge=2;old.clearedStage=1;old.unlockedStage=2;delete old.inventory;delete old.equipment;
-  const migrated=g.restoreProfile(old,1000);assert.equal(migrated.version,13);assert.equal(migrated.gold,80);assert.equal(migrated.level,7);assert.equal(migrated.skills.edge,2);assert.equal(migrated.unlockedStage,2);assert.deepEqual(migrated.inventory,[]);
+  const migrated=g.restoreProfile(old,1000);assert.equal(migrated.version,14);assert.equal(migrated.gold,80);assert.equal(migrated.level,7);assert.equal(migrated.skills.edge,2);assert.equal(migrated.unlockedStage,2);assert.deepEqual(migrated.inventory,[]);
   const p=g.restoreProfile({version:2,gold:Infinity,level:999,skills:{edge:99},forge:{blade:99},unlockedStage:3,lastSeenAt:1e9,inventory:[gear(5),gear(5),{...gear(9),slot:'bogus'}],equipment:{armor:5,weapon:5}},1000);
-  assert.equal(p.gold,0);assert.equal(p.level,50);assert.equal(p.skills.edge,4);assert.equal(p.forge.blade,8);assert.equal(p.unlockedStage,1);assert.equal(p.lastSeenAt,1000);assert.equal(p.inventory.length,1);assert.equal(p.equipment.weapon,5);assert.equal(p.equipment.armor,null);assert.equal(p.nextItemId,6);
+  assert.equal(p.gold,0);assert.equal(p.level,g.MAX_LEVEL);assert.equal(p.skills.edge,4);assert.equal(p.forge.blade,8);assert.equal(p.unlockedStage,1);assert.equal(p.lastSeenAt,1000);assert.equal(p.inventory.length,1);assert.equal(p.equipment.weapon,5);assert.equal(p.equipment.armor,null);assert.equal(p.nextItemId,6);
 });
 test('offline scouting requires a cleared boss, caps four hours, and claims once',()=>{
   const now=1e6,p=g.createProfile(now);assert.deepEqual(g.collectOffline(p,now+86400000),{minutes:0,gold:0,xp:0});p.clearedStage=1;p.lastSeenAt=now;

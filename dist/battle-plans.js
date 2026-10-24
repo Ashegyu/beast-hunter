@@ -1,3 +1,4 @@
+import {CHAPTERS} from './chapters.js?v=0.105.0';
 // Chapter art/AI varies independently; encounters own role mix and arrival pacing.
 const wave=(skitter,spitter,bulwark,elite=null)=>Object.freeze({skitter,spitter,bulwark,elite});
 export const BATTLE_PLANS=Object.freeze([
@@ -26,8 +27,8 @@ export function waveComposition(stage,waveNumber){
 
 export const STAGE_TYPE_NAMES=Object.freeze({normal:'일반 구간',special:'특수 구간',elite:'정예 구간',boss:'보스'});
 export function stageRule(chapter,stage){
- const type=battlePlan(stage).stageType;
- if(type==='boss')return Object.freeze({type,name:['수호령의 재생','망자의 방어 태세','빙원의 소환'][chapter-1],rule:['8초마다 보스가 최대 체력 2% 회복','8초 방어 → 4초 약점 노출 반복','체력 70%·35%에서 호위대 소환'][chapter-1],hint:['지속 화력·출혈·처형','방어 약화·출혈·약점 순간 화력','광역·제어·생존'][chapter-1]});
+ const type=battlePlan(stage).stageType,theme=CHAPTERS[chapter-1]?.theme??1;
+ if(type==='boss')return Object.freeze({type,name:['수호령의 재생','망자의 방어 태세','빙원의 소환'][theme-1],rule:['8초마다 보스가 최대 체력 2% 회복','8초 방어 → 4초 약점 노출 반복','체력 70%·35%에서 호위대 소환'][theme-1],hint:['지속 화력·출혈·처형','방어 약화·출혈·약점 순간 화력','광역·제어·생존'][theme-1]});
  if(stage===4)return Object.freeze({type,name:'철갑 진군',rule:'중장갑 · 피해 55% 감소',hint:'마지막 검끝·파갑참',required:true,armor:.55});
  if(stage===9)return Object.freeze({type,name:'밀집 공세',rule:'빠른 근접 무리 · 밀집 진형으로 연속 등장',hint:'번개 전이·처치 폭발·광폭화',swarm:true});
  if(type==='elite')return Object.freeze({type,name:'혼합 정예',rule:'각 웨이브 정예 출현 · 정예 체력 +20%',hint:'회복·반격·광역과 단일 화력의 균형',eliteHp:1.2});

@@ -110,7 +110,7 @@ test('keeping a roll retains old stats and spends no second fee; legendary rerol
  const low=profile(ordinary(3)),before=structuredClone(low);assert.equal(rerollOwned(low,1,()=>{throw Error('ineligible');}).ok,false);assert.deepEqual(low,before);
 });
 test('legacy stats survive migration and forged progression or candidates cannot exceed limits',()=>{
- const item=ordinary();delete item.rollVersion;item.affixes={damage:61,crit:24,hp:201};const old=profile(item);old.version=9;const migrated=g.restoreProfile(old,1000);assert.deepEqual(migrated.inventory[0].affixes,item.affixes);assert.equal(migrated.version,13);assert.equal(migrated.inventory[0].enhancement,undefined);
+ const item=ordinary();delete item.rollVersion;item.affixes={damage:61,crit:24,hp:201};const old=profile(item);old.version=9;const migrated=g.restoreProfile(old,1000);assert.deepEqual(migrated.inventory[0].affixes,item.affixes);assert.equal(migrated.version,14);assert.equal(migrated.inventory[0].enhancement,undefined);
  const p=profile();p.inventory[0].enhancement=900;p.inventory[0].enhanceFailures=999;p.inventory[0].rerollCandidate={affixes:{damage:1e9}};const r=g.restoreProfile(p,1000).inventory[0];assert.equal(r.enhancement,30);assert.equal(r.enhanceFailures,undefined);assert.equal(r.rerollCandidate,undefined);
 });
 test('upgraded and pending gear survive automatic full-bag cleanup while manual ownership rules stay explicit',()=>{

@@ -18,7 +18,7 @@ test('all six existing swords get immutable traits and legacy art fallback survi
  for(const art of EQUIPMENT_ART){const i=item(art.id);assert.equal(Boolean(g.weaponTrait(i)),art.slot==='weapon');}
  assert.equal(g.weaponTrait(null),null);assert.throws(()=>{g.WEAPON_TRAITS.bleed.name='bad';},TypeError);
  const p=g.createProfile();p.inventory=[item('frost_blade')];delete p.inventory[0].artId;p.equipment.weapon=1;
- const restored=g.restoreProfile(g.encodeProfile(p));assert.equal(restored.version,13);assert.equal(g.equippedWeaponTrait(restored).id,'frost');assert.equal(restored.inventory.length,1);
+ const restored=g.restoreProfile(g.encodeProfile(p));assert.equal(restored.version,14);assert.equal(g.equippedWeaponTrait(restored).id,'frost');assert.equal(restored.inventory.length,1);
 });
 test('bleed ticks exactly three times without stagger, extra drain or stacked instances',()=>{
  const {s,e}=arena();s.profile.skills.drain=1;s.player.hp=50;hit(s,e);assert.equal(e.bleedTicks,3);const hp=e.hp,playerHp=s.player.hp;
@@ -72,7 +72,7 @@ test('a final boss killed by bleed advances chapter and rewards once, and victor
  const gold=s.profile.gold,cores=s.profile.cores;advance(s,10);assert.equal(s.profile.gold,gold);assert.equal(s.profile.cores,cores);assert.equal(s.run.items,3);assert.equal(s.run.stageItems,1);assert.equal(s.run.monsterItems,2);
 });
 test('entry chapter and boss cues give reaction time while later melee retains its challenge',()=>{
- for(const chapter of [1,2]){const p=g.createProfile();p.clearedStage=1;p.unlockedStage=2;const s=g.createGame(p);g.launch(s,chapter);freezeCombat(s);const e=s.enemies[0];s.enemies=[e];Object.assign(e,{x:s.player.x+50,y:s.player.y,cooldown:0,aggro:true,speed:0});g.advanceGame(s,.025);assert.equal(e.action,'windup');assert.equal(e.windup,chapter===1?.58:.48);}
+ for(const chapter of [1,11]){const p=g.createProfile();p.clearedStage=10;p.unlockedStage=11;const s=g.createGame(p);g.launch(s,chapter);freezeCombat(s);const e=s.enemies[0];s.enemies=[e];Object.assign(e,{x:s.player.x+50,y:s.player.y,cooldown:0,aggro:true,speed:0});g.advanceGame(s,.025);assert.equal(e.action,'windup');assert.equal(e.windup,chapter===1?.58:.48);}
  const {s,e}=arena();Object.assign(e,{boss:true,chapterId:1,pattern:0,cooldown:0,action:'idle'});s.run.bossSpawned=true;g.advanceGame(s,.025);assert.equal(e.windup,1);
  Object.assign(e,{hp:100,maxHp:500,cooldown:0,action:'idle'});g.advanceGame(s,.025);assert.equal(e.windup,.8);
 });

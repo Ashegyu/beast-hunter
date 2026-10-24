@@ -45,10 +45,10 @@ test('new identity allocation skips both worn/inventory and reserved loot IDs',(
  const s=prepare();s.profile.inventory=[{id:1}];s.profile.pendingLoot=[{id:2}];s.profile.nextItemId=1;const result=g.craftItem(s,g.CRAFTED_CATALOG[1].id);assert.equal(result.item.id,3);assert.equal(s.profile.nextItemId,4);
 });
 test('version7 saves round-trip fixed crafted stats material balances identity and equipped ownership',()=>{
- const s=prepare();for(const row of g.CRAFTED_CATALOG){const result=g.craftItem(s,row.id);g.equipItem(s,result.item.id);}const p=g.restoreProfile(g.encodeProfile(s.profile,1000),1000);assert.equal(p.version,13);assert.deepEqual(p.materials,s.profile.materials);assert.deepEqual(p.equipment,s.profile.equipment);assert.deepEqual(p.inventory,s.profile.inventory);assert.deepEqual(g.restoreProfile(g.encodeProfile(p,1000),1000),p);assert.equal(p.discoveredAncients.length,0);
+ const s=prepare();for(const row of g.CRAFTED_CATALOG){const result=g.craftItem(s,row.id);g.equipItem(s,result.item.id);}const p=g.restoreProfile(g.encodeProfile(s.profile,1000),1000);assert.equal(p.version,14);assert.deepEqual(p.materials,s.profile.materials);assert.deepEqual(p.equipment,s.profile.equipment);assert.deepEqual(p.inventory,s.profile.inventory);assert.deepEqual(g.restoreProfile(g.encodeProfile(p,1000),1000),p);assert.equal(p.discoveredAncients.length,0);
 });
 test('older saves do not mint materials and legacy extreme grade keeps its ancient migration',()=>{
- for(let version=1;version<=6;version++){const p=prepare().profile;p.version=version;const restored=g.restoreProfile(p,1000);assert.equal(restored.version,13);assert.ok(Object.values(restored.materials).every(n=>n===0));assert.equal(restored.gold,p.gold);}
+ for(let version=1;version<=6;version++){const p=prepare().profile;p.version=version;const restored=g.restoreProfile(p,1000);assert.equal(restored.version,14);assert.ok(Object.values(restored.materials).every(n=>n===0));assert.equal(restored.gold,p.gold);}
  const row=ITEM_CATALOG[0],p=prepare().profile;p.version=4;p.inventory=[{id:1,catalogId:row.id,slot:row.slot,tier:row.tier,artId:row.artId,rarity:6,affixes:{damage:17}}];p.equipment.weapon=1;const restored=g.restoreProfile(p,1000);assert.equal(restored.inventory[0].rarity,5);assert.ok(g.ancientDefinition(restored.inventory[0]));assert.equal(restored.equipment.weapon,1);
 });
 test('untrusted counts are bounded and crafted rarity cannot borrow a legacy identity or slot',()=>{

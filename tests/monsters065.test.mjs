@@ -4,7 +4,7 @@ import * as g from '../dist/game-engine.js';
 import {CHAPTERS,MONSTERS,chapterMonsterPool} from '../dist/chapters.js';
 const NEW=Object.keys(MONSTERS).filter(id=>MONSTERS[id].unlockStage);
 const step=(s,t)=>{for(let i=0;i<Math.ceil(t/.025);i++)g.advanceGame(s,.025);};
-function prepared(chapter=1,stage=4){const p=g.createProfile(1000);p.clearedStage=3;p.unlockedStage=3;const s=g.createGame(p);assert.ok(g.launch(s,chapter,stage));return s;}
+function prepared(chapter=1,stage=4){const p=g.createProfile(1000);p.clearedStage=g.STAGES.length;p.unlockedStage=g.STAGES.length;const s=g.createGame(p);assert.ok(g.launch(s,chapter,stage));return s;}
 function arena(id){const chapter=CHAPTERS.find(c=>c.roster.includes(id)),s=prepared(chapter.id),design=MONSTERS[id];s.enemies=[];s.spawns=[{id:s.nextId++,type:design.role,species:id,boss:false,elite:false,x:750,y:1160,delay:0,warning:1}];s.barrels=[];s.run.flow='combat';s.player.invulnerable=99;g.advanceGame(s,.001);s.run.flow='break';s.run.timer=1e6;assert.equal(s.enemies.length,1);return {s,e:s.enemies[0],design};}
 
 test('nine new identities have distinct chapter membership and frozen attack definitions',()=>{
@@ -49,7 +49,7 @@ test('new charge species commit snapshot directions and cancel safely on death',
 
 test('all three normal/elite/nightmare finals stay one boss with no new species or barrels',()=>{
  for(const chapter of CHAPTERS)for(const mode of [0,1,2]){
-  const p=g.createProfile();p.clearedStage=3;p.unlockedStage=3;p.bossMastery=[2,2,2];p.difficultyProgress=[[9,9,9],[9,9,9]];const s=g.createGame(p);assert.ok(g.launch(s,chapter.id,10,null,mode));assert.equal(s.spawns.length,1);assert.equal(s.spawns[0].boss,true);assert.equal(s.barrels.length,0);s.player.invulnerable=100;step(s,1.5);assert.equal(s.enemies.length,1);assert.equal(s.enemies[0].species,chapter.bossSpecies);step(s,10);assert.equal(s.spawns.length,0);assert.equal(s.enemies.length,1);
+  const p=g.createProfile(),all=g.STAGES.length;p.clearedStage=all;p.unlockedStage=all;p.bossMastery=g.STAGES.map(()=>2);p.difficultyProgress=[g.STAGES.map(()=>9),g.STAGES.map(()=>9)];const s=g.createGame(p);assert.ok(g.launch(s,chapter.id,10,null,mode));assert.equal(s.spawns.length,1);assert.equal(s.spawns[0].boss,true);assert.equal(s.barrels.length,0);s.player.invulnerable=100;step(s,1.5);assert.equal(s.enemies.length,1);assert.equal(s.enemies[0].species,chapter.bossSpecies);step(s,10);assert.equal(s.spawns.length,0);assert.equal(s.enemies.length,1);
  }
 });
 

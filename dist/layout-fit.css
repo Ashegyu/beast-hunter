@@ -97,3 +97,19 @@
 #game-shell[data-panel=craft] #craft-content .craft-costs button b{font-size:10px;line-height:12px;margin:0}
 }
 }
+
+/* 0.105 · 30챕터 지도: 배너 오른쪽 챕터 넘김 버튼, 지역 탭의 챕터 진행 */
+#game-shell #chapter-banner{padding-right:84px}
+#game-shell #chapter-banner .chapter-pager{position:absolute;right:10px;top:50%;transform:translateY(-50%);display:flex;gap:6px;z-index:2}
+#game-shell #chapter-banner .chapter-pager button{position:relative;width:32px;height:32px;min-height:0;padding:0;border:1px solid #c9a35c;border-radius:50%;background:radial-gradient(circle at 50% 35%,#4a3a26,#1b1510);color:#f3dca8;font-size:22px;line-height:28px;text-align:center;box-shadow:0 0 0 1px #0008,inset 0 1px 0 #fff2;cursor:pointer}
+#game-shell #chapter-banner .chapter-pager button:disabled{opacity:.35;cursor:default}
+#game-shell #chapter-banner .chapter-pager button:not(:disabled):active{transform:scale(.94)}
+#game-shell .stage-tabs small b{font-weight:600;color:#e8c983}
+#game-shell .stage-tabs button:disabled small b{color:inherit}
+#game-shell .stage-tabs small{white-space:nowrap}
+#game-shell .stage-tabs small b{display:inline}
+@media(max-height:360px){
+#game-shell #chapter-banner{padding-right:68px}
+#game-shell #chapter-banner .chapter-pager{right:8px;gap:4px}
+#game-shell #chapter-banner .chapter-pager button{width:26px;height:26px;font-size:18px;line-height:22px}
+}

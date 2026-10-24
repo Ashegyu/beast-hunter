@@ -46,17 +46,17 @@ test('30 substages retain chapter identity and only final bosses unlock the next
       if(stage<g.STAGES_PER_CHAPTER){assert.equal(s.phase,'playing');assert.equal(s.profile.clearedStage,chapter-1);}
     }
     assert.equal(s.phase,'victory');assert.equal(s.run.kills,chapterKills);assert.equal(s.run.rooms,g.STAGES_PER_CHAPTER);assert.equal(s.run.stageItems,g.STAGES_PER_CHAPTER);assert.ok(s.run.monsterItems>=12);assert.equal(s.run.items,s.run.stageItems+s.run.monsterItems);assert.equal(s.profile.pendingLoot.length,0);assert.equal(s.profile.stageProgress[chapter-1],g.STAGES_PER_CHAPTER);
-    assert.equal(s.profile.unlockedStage,Math.min(3,chapter+1));assert.ok(s.enemies.length<20);
+    assert.equal(s.profile.unlockedStage,chapter+1);assert.ok(s.enemies.length<20);
     const reward=s.profile.gold;advance(s,5);assert.equal(s.profile.gold,reward);
   }
 });
 test('pending or living enemies cannot be skipped and death cancels stage advance',()=>{
   const s=g.createGame();g.launch(s);s.run.waveKills=4;advance(s,.1);assert.equal(s.run.flow,'combat');advance(s,3);assert.equal(s.run.flow,'combat');
-  s.player.hp=1;s.player.invulnerable=0;s.projectiles.push({id:s.nextId++,x:s.player.x,y:s.player.y,vx:0,vy:0,damage:999,ttl:1,friendly:false});advance(s,.1);assert.equal(s.phase,'defeat');advance(s,20);assert.equal(s.run.stage,1);assert.deepEqual(s.profile.stageProgress,[0,0,0]);
+  s.player.hp=1;s.player.invulnerable=0;s.projectiles.push({id:s.nextId++,x:s.player.x,y:s.player.y,vx:0,vy:0,damage:999,ttl:1,friendly:false});advance(s,.1);assert.equal(s.phase,'defeat');advance(s,20);assert.equal(s.run.stage,1);assert.deepEqual(s.profile.stageProgress,g.STAGES.map(()=>0));
 });
 test('v1/v2 migration and v3 sanitization preserve gear and cap forged checkpoints',()=>{
   for(const version of [1,2,3,4]){const p=g.createProfile(1000);p.version=version;p.clearedStage=1;p.unlockedStage=2;p.gold=73;p.stageProgress=[999,999,999];p.inventory=[{id:1,slot:'weapon',tier:1,rarity:0,name:'검',affixes:{damage:8}}];p.equipment.weapon=1;
-    const restored=g.restoreProfile(p,1000);assert.deepEqual(restored.stageProgress,[10,8,0]);assert.equal(restored.gold,73);assert.equal(restored.equipment.weapon,1);assert.equal(g.stageLimit(restored,3),0);}
+    const restored=g.restoreProfile(p,1000);assert.deepEqual(restored.stageProgress.slice(0,3),[10,8,0]);assert.equal(restored.gold,73);assert.equal(restored.equipment.weapon,1);assert.equal(g.stageLimit(restored,3),0);}
 });
 test('corner spawns stay reachable, safely spaced, and concurrency remains bounded',()=>{
   for(const [x,y] of [[80,80],[3520,80],[80,2200],[3520,2200]]){

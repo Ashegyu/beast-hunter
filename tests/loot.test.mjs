@@ -45,7 +45,7 @@ test('a drop reserves ownership, has a short landing time and claims exactly onc
 test('a reserved drop recovers after reload without resetting currencies, gear or grade',()=>{
  const s=arena();s.profile.gold=73;s.profile.lootPity=9;kill(s,{elite:true});const pending=s.profile.pendingLoot[0];
  const recovered=g.restoreProfile(g.encodeProfile(s.profile,1000),1000);assert.equal(recovered.gold,89);assert.equal(recovered.pendingLoot.length,0);assert.deepEqual(recovered.inventory[0],pending);
- const twice=g.restoreProfile(g.encodeProfile(recovered,1000),1000);assert.equal(twice.inventory.length,1);assert.equal(twice.gold,89);assert.equal(twice.version,13);
+ const twice=g.restoreProfile(g.encodeProfile(recovered,1000),1000);assert.equal(twice.inventory.length,1);assert.equal(twice.gold,89);assert.equal(twice.version,14);
 });
 test('a duplicate reserved ID already owned never duplicates the item or grants salvage gold',()=>{
  const p=g.createProfile();const a=item(1,4);p.inventory=[a];p.pendingLoot=[a,a,{...a,id:2,slot:'invalid'}];p.gold=42;
@@ -81,10 +81,10 @@ test('boss loot is guaranteed, settles before the reveal and result delay never 
  const gold=s.profile.gold,ids=s.profile.inventory.map(i=>i.id),time=s.run.time;advance(s,.5);assert.equal(g.resultReady(s),false);advance(s,.7);assert.equal(g.resultReady(s),true);advance(s,5);assert.deepEqual(s.profile.inventory.map(i=>i.id),ids);assert.equal(s.profile.gold,gold);assert.equal(s.run.time,time);
 });
 test('all chapter and difficulty boss receipts match the actual once-only payout',()=>{
- for(let chapter=1;chapter<=3;chapter++)for(let mode=0;mode<3;mode++){
-  const p=g.createProfile();p.clearedStage=3;p.unlockedStage=3;p.stageProgress=[10,10,10];p.bossMastery=[2,2,2];p.difficultyProgress=[[9,9,9],[9,9,9]];const s=g.createGame(p);assert.ok(g.launch(s,chapter,10,null,mode));
+ for(const chapter of [1,5,6,11,30])for(let mode=0;mode<3;mode++){
+  const p=g.createProfile(),all=g.STAGES.length;p.clearedStage=all;p.unlockedStage=all;p.stageProgress=g.STAGES.map(()=>10);p.bossMastery=g.STAGES.map(()=>2);p.difficultyProgress=[g.STAGES.map(()=>9),g.STAGES.map(()=>9)];const s=g.createGame(p);assert.ok(g.launch(s,chapter,10,null,mode));
   s.enemies=[];s.spawns=[];s.barrels=[];s.run.wave=1;s.run.waveQuota=1;s.run.bossSpawned=true;kill(s,{boss:true});
-  const receipt=s.effects.findLast(f=>f.type==='loot'&&f.origin==='stage').stageReward,expected={gold:Math.round(g.STAGES[chapter-1].reward*g.HUNT_MODES[mode].reward),cores:chapter+g.HUNT_MODES[mode].extraCore,healed:0};
+  const receipt=s.effects.findLast(f=>f.type==='loot'&&f.origin==='stage').stageReward,expected={gold:Math.round(g.STAGES[chapter-1].reward*g.HUNT_MODES[mode].reward),cores:Math.ceil(chapter/5)+g.HUNT_MODES[mode].extraCore,healed:0};
   assert.deepEqual(receipt,expected);assert.equal(p.gold,expected.gold);assert.equal(s.run.gold,expected.gold);assert.equal(p.cores,expected.cores);
   const saved=g.encodeProfile(p,1000);advance(s,2);assert.equal(g.encodeProfile(p,1000),saved);
  }

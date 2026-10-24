@@ -22,7 +22,7 @@ test('startup plan excludes other regions without excluding shared animation ass
     const region = plan.regions.get(chapter.id);
     assert.equal(region.paths.size, 4);
     assert.equal(region.clips.length, 105);
-    assert.ok(region.paths.has(manifest.chapters[chapter.id].environment));
+    assert.ok(region.paths.has(manifest.chapters[chapter.theme].environment));
     for (const path of region.paths) assert.ok(!plan.paths.has(path));
   }
 });

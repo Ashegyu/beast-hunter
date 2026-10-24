@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.84.0';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.105.0';
 import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js';
 import { createCombatAudio } from './sound.js?v=0.76.0';
-import * as game from './game-engine.js?v=0.104.3';
+import * as game from './game-engine.js?v=0.105.0';
 import {FrameMetrics} from './frame-metrics.js?v=0.98.1';
 import { frameIndex, frameRect, validateClip } from './engine.js';
 import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
 import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.103.1';
-import { visibleTiles, createDecorations } from './terrain.js';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.97.0';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.99.0';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.103.2';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.105.0';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.105.0';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.105.0';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.105.0';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -149,7 +149,7 @@ async function boot(){
   try{
     const response=await fetch('assets/manifest.json',{cache:'no-cache'});if(!response.ok)throw Error('어셋 목록을 불러오지 못했어.');manifest=await response.json();
     if(!validRarityAtlas(manifest.equipmentRarities))throw Error('상위 장비 외형 정보를 확인하지 못했어.');
-    if(!game.STAGES.every(c=>manifest.monsterEffects?.[c.id]))throw Error('몬스터 스킬 이미지 목록을 확인하지 못했어.');
+    if(!game.THEMES.every(t=>manifest.monsterEffects?.[t.id]))throw Error('몬스터 스킬 이미지 목록을 확인하지 못했어.');
     assetPlan=regionAssetPlan(manifest,game.STAGES);
     const paths=campAssetPaths(manifest);let loaded=0;
     const results=await Promise.allSettled([...paths].map(async p=>{const image=await loadImage(p);loaded++;if(!bootFailed)$('loading').textContent='거점을 준비하는 중… '+loaded+' / '+paths.size;return [p,image];}));
@@ -253,7 +253,12 @@ function togglePause(){if(state.settlement||orientationBlocked||state.phase!=='p
 $('sound').addEventListener('click',()=>{soundEnabled=!soundEnabled;audio.mute(!soundEnabled);if(soundEnabled)audio.unlock();try{localStorage.setItem(STORAGE_KEY+':sound',soundEnabled?'on':'off');}catch{}updateHud();});
 $('start').addEventListener('click',()=>start());
 for(const id of ['blade','armor','core'])$('forge-'+id).addEventListener('click',()=>{if(game.upgradeForge(state,id)){save();updateHud();$('growth-feedback').textContent=game.FORGE[id].name+' +'+profile.forge[id]+' 강화 완료';}});
-for(const stage of game.STAGES)$('stage-'+stage.id).addEventListener('click',()=>{if(ready&&state.phase==='camp'&&stage.id<=profile.unlockedStage&&stage.id!==selectedStage){launchRevision++;selectedStage=stage.id;if(!game.stageLimit(profile,selectedStage,selectedDifficulty))selectedDifficulty=0;selectedRunStage=game.stageLimit(profile,stage.id,selectedDifficulty);updateHud();}});
+// Regions group ten chapters; a region tab opens its furthest unlocked chapter.
+function regionChapters(theme){return game.STAGES.filter(c=>c.theme===theme);}
+function selectChapter(id){if(!ready||state.phase!=='camp'||id<1||id>profile.unlockedStage||id===selectedStage)return;launchRevision++;selectedStage=id;if(!game.stageLimit(profile,selectedStage,selectedDifficulty))selectedDifficulty=0;selectedRunStage=game.stageLimit(profile,id,selectedDifficulty);updateHud();}
+for(const theme of game.THEMES)$('stage-'+theme.id).addEventListener('click',()=>{const open=regionChapters(theme.id).filter(c=>c.id<=profile.unlockedStage).at(-1);if(open&&game.STAGES[selectedStage-1].theme!==theme.id)selectChapter(open.id);});
+$('chapter-prev').addEventListener('click',()=>selectChapter(selectedStage-1));
+$('chapter-next').addEventListener('click',()=>selectChapter(selectedStage+1));
 for(let i=0;i<6;i++)$('choice-'+i).addEventListener('click',()=>{if(game.chooseUpgrade(state,choiceIds[i])){if(!profile.skillPoints)campChoices=false;save();updateHud();}});
 $('choice-back').addEventListener('click',()=>{campChoices=false;updateHud();});
 $('inventory').addEventListener('click',()=>openInventory());$('camp-inventory').addEventListener('click',()=>openInventory());
@@ -376,7 +381,7 @@ function refreshBag(){
  $('bag-capacity').textContent=materials?'재료 '+game.MATERIALS.filter(m=>profile.materials[m.id]>0).length+' / '+game.MATERIALS.length+'종':profile.inventory.length+' / '+game.INVENTORY_LIMIT;
  $('bag-grid').hidden=materials;$('bag-materials').hidden=!materials;$('bag-material-actions').hidden=!materials;for(const id of ['bag-sort','bag-filter-toggle','bag-organize'])$(id).hidden=materials;
  let ownedMaterials=0;
- for(const m of game.MATERIALS){const count=profile.materials[m.id],node=$('bag-material-'+m.id);node.hidden=count<=0;if(count>0)ownedMaterials++;$('bag-material-count-'+m.id).textContent=String(count);node.setAttribute('data-owned',String(count>0));const label=m.name+' · '+count+'개 · '+m.where;node.setAttribute('aria-label',label);node.setAttribute('title',label);$('bag-material-source-'+m.id).textContent=m.id==='skillPage'?'스킬 던전':m.refining?'강화 던전 · 사냥터':m.promotion?'승급 던전 · 사냥터':m.tier?game.STAGES[m.tier-1].name:m.rare?'지역 보스':'모든 사냥터';}
+ for(const m of game.MATERIALS){const count=profile.materials[m.id],node=$('bag-material-'+m.id);node.hidden=count<=0;if(count>0)ownedMaterials++;$('bag-material-count-'+m.id).textContent=String(count);node.setAttribute('data-owned',String(count>0));const label=m.name+' · '+count+'개 · '+m.where;node.setAttribute('aria-label',label);node.setAttribute('title',label);$('bag-material-source-'+m.id).textContent=m.id==='skillPage'?'스킬 던전':m.refining?'강화 던전 · 사냥터':m.promotion?'승급 던전 · 사냥터':m.tier?game.THEMES[m.tier-1].name:m.rare?'지역 보스':'모든 사냥터';}
  for(let i=0;i<BAG_SLOT_COUNT;i++)$('bag-material-empty-'+i).hidden=i>=bagMaterialPageSize-ownedMaterials;
  $('bag-material-craft').disabled=state.phase!=='camp';$('bag-material-craft').textContent=state.phase==='camp'?'재료로 제작하기':'제작은 거점에서';
  $('bag-storage-note').textContent=materials?'수집한 재료 · 제작·강화에 사용하는 보유 수량':profile.inventory.length>=game.INVENTORY_LIMIT?'가방이 가득 찼어. 착용·즐겨찾기·저장 빌드는 보호하고 낮은 가치 장비를 골드로 정리해.':'남은 '+(game.INVENTORY_LIMIT-profile.inventory.length)+'칸 · 착용·즐겨찾기·저장 빌드는 자동 정리에서 보호돼.';
@@ -501,10 +506,10 @@ function refreshMapScene(selected,plan,species,completed,limit){
  const boss=selectedRunStage===game.STAGES_PER_CHAPTER,mode=game.HUNT_MODES[selectedDifficulty];
  $('camp-map-panel').setAttribute('data-boss',String(boss));$('map-boss-rewards').hidden=!boss;
  $('map-boss-gold').textContent='+'+Math.round(selected.reward*mode.reward).toLocaleString('ko-KR');
- $('map-boss-cores').textContent='+'+(selected.id+mode.extraCore);
+ $('map-boss-cores').textContent='+'+game.bossCores(selected.id,selectedDifficulty);
  for(let n=1;n<game.STAGES_PER_CHAPTER;n++)$('map-path-'+n).setAttribute('data-open',String(n<limit));
  for(const slot of ['weapon','armor','charm']){
-  const rewardSlot=slot==='charm'?'helmet':slot;const row=game.ITEM_CATALOG.find(r=>r.tier===selectedStage&&r.slot===rewardSlot);
+  const rewardSlot=slot==='charm'?'helmet':slot;const row=game.ITEM_CATALOG.find(r=>r.tier===selected.theme&&r.slot===rewardSlot);
   gearThumbnail($('map-reward-'+slot),{...row,rarity:0},48,true);
   $('map-reward-'+slot).setAttribute('title',game.SLOTS[rewardSlot]+' · '+row.name+' · 일반 등급 드롭');
  }
@@ -666,7 +671,7 @@ function cleaveVisual(a){
   drawEquipmentAttack(ctx,designsForSwing(swing),swing,v,x,y);
 }
 function displayChapter(){return game.STAGES[(state.phase==='camp'?selectedStage:state.stageId)-1];}
-function floor(){const chapter=displayChapter(),bleed=.5/Math.min(renderScaleX,renderScaleY*GROUND_DEPTH_SCALE);for(const tile of visibleTiles(camera,state.bounds,manifest.tileSize)){ctx.save();ctx.translate(tile.x-camera.x+tile.size/2,tile.y-camera.y+tile.size/2);ctx.scale(tile.flipX?-1:1,tile.flipY?-1:1);ctx.drawImage(images.get(manifest.chapters[chapter.id].environment),-tile.size/2-bleed,-tile.size/2-bleed,tile.size+bleed*2,tile.size+bleed*2);ctx.restore();}
+function floor(){const chapter=displayChapter(),bleed=.5/Math.min(renderScaleX,renderScaleY*GROUND_DEPTH_SCALE);for(const tile of visibleTiles(camera,state.bounds,manifest.tileSize)){ctx.save();ctx.translate(tile.x-camera.x+tile.size/2,tile.y-camera.y+tile.size/2);ctx.scale(tile.flipX?-1:1,tile.flipY?-1:1);ctx.drawImage(images.get(manifest.chapters[chapter.theme].environment),-tile.size/2-bleed,-tile.size/2-bleed,tile.size+bleed*2,tile.size+bleed*2);ctx.restore();}
 }
 
 function prop(p){const clip=manifest.chapterProps,f=clip.frames[p.frame],scale=p.height*1.12*sceneDepthScale(p.y)/f.h;shadow(p.x,p.y,p.height*.22);uprightAt(p.x,p.y);ctx.translate(p.x,p.y);ctx.scale(p.facing*scale,scale);ctx.drawImage(images.get(clip.image),f.x,f.y,f.w,f.h,-f.pivotX,-f.pivotY,f.w,f.h);ctx.restore();}
@@ -962,7 +967,7 @@ function updateHud(){
   hudText($('sound'),audio.available?'효과음 '+(soundEnabled?'ON':'OFF'):'효과음 미지원');$('sound').setAttribute('aria-pressed',String(soundEnabled));
   hudText($('gold'),String(profile.gold));hudText($('cores'),String(profile.cores));hudText($('level'),'Lv. '+profile.level);
   hudText($('hp-text'),Math.ceil(p.hp)+' / '+p.maxHp);$('hp-fill').style.width=clamp(p.hp/p.maxHp*100,0,100)+'%';
-  $('xp-fill').style.width=(profile.level===50?100:profile.xp/game.xpNeeded(profile.level)*100)+'%';hudText($('xp-text'),profile.level===50?'최고 레벨':'다음 성장까지 '+(game.xpNeeded(profile.level)-profile.xp));refreshGrowthProgress();
+  $('xp-fill').style.width=(profile.level===game.MAX_LEVEL?100:profile.xp/game.xpNeeded(profile.level)*100)+'%';hudText($('xp-text'),profile.level===game.MAX_LEVEL?'최고 레벨':'다음 성장까지 '+(game.xpNeeded(profile.level)-profile.xp));refreshGrowthProgress();
   refreshBuildSystem();
   const monsters=game.remainingMonsters(state),timeText=countdown(state.run.timeRemaining),timeRatio=state.run.timeLimit?clamp(state.run.timeRemaining/state.run.timeLimit,0,1):0;
   const stageText=state.run.dungeonId?game.dungeonDefinition(state.run.dungeonId).kind+' · '+state.run.stage+'단계':stage.name+' · '+state.stageId+'-'+state.run.stage+' 스테이지';
@@ -1039,7 +1044,7 @@ function updateHud(){
     for(let i=0;i<6;i++){const id=choiceIds[i],item=game.UPGRADES[id];$('choice-'+i).hidden=!item;if(item){hudText($('choice-'+i+'-icon'),item.icon);hudText($('choice-'+i+'-name'),item.name);hudText($('choice-'+i+'-description'),item.description);hudText($('choice-'+i+'-level'),(profile.skills[id]+1)+' / '+item.max);}}
   }else if(state.phase==='camp'){
     modal('camp',profile.hunts?'다음 사냥을 준비하자.':'첫 사냥을 준비하자.','포격충을 먼저 잡고 중갑의 갑각을 깨뜨려. 폭발핵에 적을 모아 터뜨리면 유리해.','HUNTER\'S CAMP');
-    const selected=game.STAGES[selectedStage-1];const bossLoot=game.BOSS_LOOT[selectedStage-1];hudText($('boss-loot-title'),bossLoot.name+' · 일반 장비 드롭');if($('boss-loot-list').dataset.boss!==bossLoot.id){$('boss-loot-list').dataset.boss=bossLoot.id;$('boss-loot-list').replaceChildren(...game.STAGE_SLOTS.map(slot=>{const li=document.createElement('li');li.textContent=game.SLOTS[slot]+' · 일반 등급 드롭 → 최대 강화 후 승급';return li;}));}hudText($('camp-stage-name'),selected.name);hudText($('camp-stage-description'),selected.subtitle);hudText($('camp-stage-goal'),game.battlePlan(selectedRunStage).tactic);
+    const selected=game.STAGES[selectedStage-1];const bossLoot=game.BOSS_LOOT[selected.theme-1];hudText($('boss-loot-title'),bossLoot.name+' · 일반 장비 드롭');if($('boss-loot-list').dataset.boss!==bossLoot.id){$('boss-loot-list').dataset.boss=bossLoot.id;$('boss-loot-list').replaceChildren(...game.STAGE_SLOTS.map(slot=>{const li=document.createElement('li');li.textContent=game.SLOTS[slot]+' · 일반 등급 드롭 → 최대 강화 후 승급';return li;}));}hudText($('camp-stage-name'),selected.name);hudText($('camp-stage-description'),selected.subtitle);hudText($('camp-stage-goal'),game.battlePlan(selectedRunStage).tactic);
     refreshFarmCamp();const limit=game.stageLimit(profile,selectedStage,selectedDifficulty),completed=game.completedStages(profile,selectedStage,selectedDifficulty);selectedRunStage=Math.min(selectedRunStage,limit);
     for(let n=1;n<=game.STAGES_PER_CHAPTER;n++){
       const button=$('run-stage-'+n),locked=n>limit,chosen=n===selectedRunStage,label=locked?'잠김':chosen?'선택':completed>=n?'완료':n===10?'보스':'도전';
@@ -1051,10 +1056,10 @@ function updateHud(){
     atlasThumbnail($('stage-preview-art'),previewClip.image,previewClip.frames[0],80);
     hudText($('stage-preview-title'),selectedStage+'-'+selectedRunStage+' · '+selectedPlan.name);hudText($('stage-preview-kind'),game.HUNT_MODES[selectedDifficulty].name+' · '+(bossStage?'보스 단독전':game.stageWaveCount(selectedRunStage)+'웨이브'));const rule=game.stageRule(selectedStage,selectedRunStage);hudText($('stage-preview-kind'),game.HUNT_MODES[selectedDifficulty].name+' · '+game.STAGE_TYPE_NAMES[rule.type]);hudText($('stage-preview-description'),rule.rule+' — '+rule.hint+(rule.required?' 필요':' 유리'));
     hudText($('stage-progress-note'),game.HUNT_MODES[selectedDifficulty].name+' · '+(selectedRunStage===limit&&completed<10?'현재 공략 지점':'선택한 출발 지점')+' '+selectedStage+'-'+selectedRunStage);
-    const environment=manifest.chapters[selected.id].environment;
-    $('chapter-banner').style.backgroundImage='linear-gradient(90deg,#101319a8,#10131925),url("assets/'+(manifest.delivery?.[environment]??environment)+'")';hudText($('chapter-label'),'CHAPTER '+String(selected.id).padStart(2,'0'));hudText($('chapter-preview-name'),selected.name);hudText($('chapter-preview-boss'),'지역 보스 · '+selected.bossName);hudText($('chapter-tactic'),selected.tactic);
+    const environment=manifest.chapters[selected.theme].environment;
+    $('chapter-banner').style.backgroundImage='linear-gradient(90deg,#101319a8,#10131925),url("assets/'+(manifest.delivery?.[environment]??environment)+'")';hudText($('chapter-label'),'CHAPTER '+String(selected.id).padStart(2,'0')+' · '+selected.region);$('chapter-prev').disabled=selected.id<=1;$('chapter-next').disabled=selected.id>=Math.min(game.STAGES.length,profile.unlockedStage);hudText($('chapter-preview-name'),selected.name);hudText($('chapter-preview-boss'),'지역 보스 · '+selected.bossName);hudText($('chapter-tactic'),selected.tactic);
     for(const [i,species] of [...selected.roster,selected.bossSpecies].entries()){const design=MONSTERS[species],clip=manifest.clips[manifest.directions[species].walk.s];atlasThumbnail($('roster-art-'+i),clip.image,clip.frames[0],72);hudText($('roster-name-'+i),design.name);hudText($('roster-detail-'+i),species===selected.bossSpecies?'STAGE 10 · 지역 보스':'STAGE '+(design.unlockStage??1)+' · '+(design.tactic??({skitter:'근접 추격',spitter:'원거리 사격',bulwark:'중갑 강타'}[design.role])));$('roster-art-'+i).setAttribute('aria-label',design.name);}
-    for(const st of game.STAGES){const b=$('stage-'+st.id);b.disabled=st.id>profile.unlockedStage;b.classList.toggle('selected',st.id===selectedStage);b.setAttribute('aria-pressed',String(st.id===selectedStage));}
+    for(const theme of game.THEMES){const b=$('stage-'+theme.id),first=regionChapters(theme.id)[0],on=theme.id===selected.theme,cleared=regionChapters(theme.id).filter(c=>c.id<=profile.clearedStage).length;b.disabled=first.id>profile.unlockedStage;b.classList.toggle('selected',on);b.setAttribute('aria-pressed',String(on));hudText($('stage-progress-'+theme.id),cleared+'/'+game.CHAPTERS_PER_THEME);}
     hudText($('stat-summary'),'공격 '+Math.round(stats.damage)+' · 체력 '+stats.maxHp);
     for(const [id,item] of Object.entries(game.FORGE)){const cost=game.forgeCost(profile,id),max=profile.forge[id]>=item.max;hudText($('forge-'+id+'-level'),'+'+profile.forge[id]);hudText($('forge-'+id+'-cost'),max?'최대 강화':cost.gold+' 골드'+(cost.cores?' · 핵 '+cost.cores:''));$('forge-'+id).disabled=max||profile.gold<cost.gold||profile.cores<cost.cores;hudText($('forge-'+id+'-state'),max?'최대 단계':profile.gold<cost.gold?'골드 부족':profile.cores<cost.cores?'괴수 핵 부족':'눌러서 강화');}
     $('camp-upgrade').hidden=!profile.skillPoints;hudText($('camp-upgrade'),'검술 정비 · 숙련 포인트 '+profile.skillPoints+'개');$('start').disabled=!ready;
@@ -1198,7 +1203,7 @@ function refreshCodex(){
  $('codex-filters').hidden=!codexFiltersOpen;$('codex-filter-toggle').setAttribute('aria-expanded',String(codexFiltersOpen));
  $('codex-chapter').value=codexChapter;$('codex-slot').value=codexSlot;$('codex-found').value=codexFound;$('codex-sort').value=codexSort;
  $('codex-filter-dot').hidden=codexChapter==='0'&&codexFound==='all'&&codexSort==='catalog';
- $('codex-filter-caption').textContent=codexChapter==='0'?'필터':game.STAGES[Number(codexChapter)-1].name;
+ $('codex-filter-caption').textContent=codexChapter==='0'?'필터':game.THEMES[Number(codexChapter)-1].name;
  for(const slot of ['all','weapon','armor','charm','special'])$('codex-tab-'+slot).setAttribute('aria-pressed',String(slot===codexSlot));
  for(const layout of ['grid','list'])$('codex-view-'+layout).setAttribute('aria-pressed',String(layout===codexLayout));
  $('codex-grid').setAttribute('data-layout',codexLayout);
@@ -1218,7 +1223,7 @@ function refreshCodex(){
  $('codex-count').textContent=found.size+' / '+catalog.length+' 발견';$('codex-percent').textContent=percent+'%';$('codex-progress').setAttribute('aria-valuenow',String(found.size));$('codex-progress-fill').style.width=percent+'%';$('codex-results').textContent=visible?visible+'종 표시':'검색 조건에 맞는 유물이 없어.';$('codex-empty').hidden=visible>0;
  const recentId=profile.discoveredAncients.filter(id=>catalog.some(r=>r.id===id)).at(-1),recent=catalog.find(r=>r.id===recentId);
  $('codex-feature').setAttribute('data-empty',String(!recent));$('codex-feature-open').hidden=!recent;$('codex-feature-empty').hidden=!!recent;$('codex-feature-art').hidden=!recent;
- $('codex-feature-kicker').textContent=recent?'최근 발견':'기록의 시작';$('codex-feature-name').textContent=recent?recent.name.replace(' ','\n'):'첫 고대 유물을 찾아서';$('codex-feature-meta').textContent=recent?game.STAGES[recent.tier-1].name+' · '+game.SLOTS[recent.slot]:'고대 장비는 레이드에서 획득 · 추후 추가';
+ $('codex-feature-kicker').textContent=recent?'최근 발견':'기록의 시작';$('codex-feature-name').textContent=recent?recent.name.replace(' ','\n'):'첫 고대 유물을 찾아서';$('codex-feature-meta').textContent=recent?game.THEMES[recent.tier-1].name+' · '+game.SLOTS[recent.slot]:'고대 장비는 레이드에서 획득 · 추후 추가';
  if(recent)gearThumbnail($('codex-feature-art'),{...recent,catalogId:recent.id,rarity:5},200);
  const row=catalog.find(r=>r.id===codexSelection),discovered=found.has(row.id),boss=game.BOSS_LOOT[row.tier-1];
  $('codex-detail').setAttribute('data-discovered',String(discovered));gearThumbnail($('codex-detail-art'),{...row,catalogId:row.id,rarity:5},200);if(!discovered)$('codex-detail-art').setAttribute('aria-label','미발견 유물 이미지');$('codex-detail-name').textContent=row.name;$('codex-detail-state').textContent=(discovered?'발견한 고대 유물':'미발견')+(profile.targetAncientId===row.id?' · 파밍 목표':'');$('codex-detail-boss').textContent='획득처 · 레이드 (추후 추가)';
@@ -1251,7 +1256,7 @@ $('craft-equip').addEventListener('click',()=>{const copies=profile.inventory.fi
 function currentCraftProgress(){
  if(!game.targetCraft(profile)){goalCache=null;return null;}
  let changed=!goalCache||goalCache.id!==profile.targetCraftId||goalCache.gold!==profile.gold||goalCache.inventory!==profile.inventory||goalCache.length!==profile.inventory.length||goalCache.unlocked!==profile.unlockedStage||goalCache.cleared!==profile.clearedStage;
- if(!changed){for(let n=0;n<game.MATERIALS.length;n++)if(goalCache.counts[n]!==profile.materials[game.MATERIALS[n].id]){changed=true;break;}for(let n=0;n<3;n++)if(goalCache.stages[n]!==profile.stageProgress[n])changed=true;}
+ if(!changed){for(let n=0;n<game.MATERIALS.length;n++)if(goalCache.counts[n]!==profile.materials[game.MATERIALS[n].id]){changed=true;break;}for(let n=0;n<game.STAGES.length;n++)if(goalCache.stages[n]!==profile.stageProgress[n])changed=true;}
  if(changed)goalCache={id:profile.targetCraftId,gold:profile.gold,inventory:profile.inventory,length:profile.inventory.length,unlocked:profile.unlockedStage,cleared:profile.clearedStage,stages:[...profile.stageProgress],counts:game.MATERIALS.map(m=>profile.materials[m.id]),progress:game.craftProgress(profile)};
  return goalCache.progress;
 }
@@ -1274,7 +1279,7 @@ function refreshTrack(){const recipe=trackedRecipe(),progress=recipe?.id===profi
  for(const m of game.MATERIALS){const cost=progress.rows.find(r=>r.material.id===m.id),button=$('track-material-'+m.id);button.hidden=!cost;if(!cost)continue;button.setAttribute('aria-pressed',String(m.id===trackMaterial));button.setAttribute('data-ready',String(cost.ready));$('track-count-'+m.id).textContent=cost.have+' / '+cost.need;$('track-missing-'+m.id).textContent=progress.owned?'제작에 사용 완료':cost.ready?'준비 완료':'부족 '+cost.missing+'개';}
  $('track-gold').textContent=progress.owned?'제작 완료':profile.gold+' / '+row.gold+' 골드 · 가방 '+profile.inventory.length+'/24';$('track-clear').hidden=row.id!==profile.targetCraftId;$('track-hide').hidden=row.id!==profile.targetCraftId;$('track-craft').disabled=state.phase!=='camp';$('track-hide').textContent=profile.craftTrackerVisible?'전투 표시 숨기기':'전투 표시 켜기';
  const material=game.MATERIAL_BY_ID[trackMaterial];$('track-route-title').textContent=material.name+' · 획득 사냥터';$('track-route-info').textContent=material.where;
- const routes=game.craftMaterialRoutes(profile,material.id);for(let n=1;n<=3;n++){const route=routes.find(r=>r.chapter===n),button=$('track-route-'+n);button.hidden=!route;if(!route)continue;button.disabled=state.phase!=='camp'||!route.available;$('track-route-name-'+n).textContent=route.name+' · STAGE '+route.stage+' '+({boss:'보스',elite:'정예',normal:'일반 괴수'}[route.source])+' / '+Number((route.chance*100).toFixed(3))+'%'+(route.quantity>1?' · '+route.quantity+'개':'')+(route.reason?' · '+route.reason:'')+(state.phase!=='camp'?' · 거점에서 이동':'');}
+ const routes=game.craftMaterialRoutes(profile,material.id);for(let n=1;n<=3;n++){const route=routes.find(r=>r.theme===n),button=$('track-route-'+n);button.hidden=!route;if(!route)continue;button.disabled=state.phase!=='camp'||!route.available;$('track-route-name-'+n).textContent=route.name+' · STAGE '+route.stage+' '+({boss:'보스',elite:'정예',normal:'일반 괴수'}[route.source])+' / '+Number((route.chance*100).toFixed(3))+'%'+(route.quantity>1?' · '+route.quantity+'개':'')+(route.reason?' · '+route.reason:'')+(state.phase!=='camp'?' · 거점에서 이동':'');}
  $('track-route-note').textContent='표시 확률은 해당 괴수 처치당 확률이야. 목표 지정으로 확률이 바뀌지 않아. '+(state.phase==='camp'?'사냥터를 누르면 출발 준비로 이동해.':'현재 전투는 멈춰 있어. 돌아가기 → 사냥 계속으로 재개해.');
 }
 for(const id of ['camp-track','result-track','craft-tracker'])$(id).addEventListener('click',openTrack);
@@ -1287,7 +1292,7 @@ $('track-clear').addEventListener('click',()=>{if(!trackOpen||trackedRecipe()?.i
 $('track-hide').addEventListener('click',()=>{if(!trackOpen||trackedRecipe()?.id!==profile.targetCraftId)return;profile.craftTrackerVisible=!profile.craftTrackerVisible;save();updateHud();});
 $('track-craft').addEventListener('click',()=>{const target=trackedRecipe();if(!target||state.phase!=='camp'||!trackOpen)return;if(trackReturnCraft){closeTrack();return;}trackOpen=false;trackRecipeId=null;craftOpen=true;craftSelected=target.id;if(craftSlot!=='all'&&craftSlot!==target.slot)craftSlot='all';craftFeedback='';craftRenderKey='';updateHud();window.hunterPages?.first($('craft-content'));$('craft-recipe-'+game.CRAFTED_CATALOG.indexOf(target)).focus({preventScroll:true});});
 for(const m of game.MATERIALS)$('track-material-'+m.id).addEventListener('click',()=>{if(!trackOpen)return;const goal=trackedRecipe();if(!goal||!Object.hasOwn(goal.cost,m.id))return;trackMaterial=m.id;updateHud();window.hunterPages?.reveal($('track-route'));$('track-materials-back').focus({preventScroll:true});});
-for(let n=1;n<=3;n++)$('track-route-'+n).addEventListener('click',()=>{if(!trackOpen||state.phase!=='camp')return;const goal=trackedRecipe();if(!goal||!Object.hasOwn(goal.cost,trackMaterial))return;const route=game.craftMaterialRoutes(profile,trackMaterial).find(r=>r.chapter===n&&r.available);if(!route)return;launchRevision++;selectedStage=n;selectedRunStage=route.stage;selectedDifficulty=0;trackOpen=false;craftOpen=false;updateHud();});
+for(let n=1;n<=3;n++)$('track-route-'+n).addEventListener('click',()=>{if(!trackOpen||state.phase!=='camp')return;const goal=trackedRecipe();if(!goal||!Object.hasOwn(goal.cost,trackMaterial))return;const route=game.craftMaterialRoutes(profile,trackMaterial).find(r=>r.theme===n&&r.available);if(!route)return;launchRevision++;selectedStage=route.chapter;selectedRunStage=route.stage;selectedDifficulty=0;trackOpen=false;craftOpen=false;updateHud();});
 
 // Alpha 0.36: home panels mirror the live profile; they never own equipment or progress.
 let homeDashboardKey='';
@@ -1295,9 +1300,9 @@ function refreshHomeDashboard(selected){
  const stats=game.playerStats(profile),weapon=profile.inventory.find(i=>i.id===profile.equipment.weapon&&i.slot==='weapon');
  const key=JSON.stringify([selectedStage,selectedRunStage,selectedDifficulty,profile.stageProgress,profile.difficultyProgress,profile.level,profile.xp,profile.skillPoints,profile.inventory,profile.equipment,profile.skills,profile.forge]);if(key===homeDashboardKey)return;homeDashboardKey=key;
  $('lobby-growth-badge').hidden=profile.skillPoints<=0;
- const xpPercent=profile.level===50?100:Math.floor(clamp(profile.xp/game.xpNeeded(profile.level)*100,0,100));
- $('home-xp-label').textContent=profile.level===50?'MAX':xpPercent+'%';$('home-xp-fill').style.width=xpPercent+'%';$('home-xp').setAttribute('aria-valuenow',String(xpPercent));
- $('home-route-chapter').textContent='CHAPTER '+String(selected.id).padStart(2,'0');$('home-route-title').textContent=selected.name;$('home-route-stage').textContent='STAGE '+String(selectedRunStage).padStart(2,'0')+' · '+game.HUNT_MODES[selectedDifficulty].name;$('home-route-description').textContent=selected.id===1?'붉은 달이 비추는 숲, 사방에서 괴수들이 몰려온다.':selected.id===2?'무너진 성문 너머, 잠들지 않는 망자들이 기다린다.':'얼어붙은 대지 위에, 끝나지 않는 사냥이 이어진다.';
+ const xpPercent=profile.level===game.MAX_LEVEL?100:Math.floor(clamp(profile.xp/game.xpNeeded(profile.level)*100,0,100));
+ $('home-xp-label').textContent=profile.level===game.MAX_LEVEL?'MAX':xpPercent+'%';$('home-xp-fill').style.width=xpPercent+'%';$('home-xp').setAttribute('aria-valuenow',String(xpPercent));
+ $('home-route-chapter').textContent='CHAPTER '+String(selected.id).padStart(2,'0');$('home-route-title').textContent=selected.name;$('home-route-stage').textContent='STAGE '+String(selectedRunStage).padStart(2,'0')+' · '+game.HUNT_MODES[selectedDifficulty].name;$('home-route-description').textContent=selected.theme===1?'붉은 달이 비추는 숲, 사방에서 괴수들이 몰려온다.':selected.theme===2?'무너진 성문 너머, 잠들지 않는 망자들이 기다린다.':'얼어붙은 대지 위에, 끝나지 않는 사냥이 이어진다.';
  $('hub-player-level').textContent='Lv. '+profile.level;$('hub-identity-chapter').textContent='CHAPTER '+String(selected.id).padStart(2,'0');$('hub-identity-name').textContent=selected.name;
  const completed=game.completedStages(profile,selected.id,selectedDifficulty);$('hub-progress-fill').style.width=completed/game.STAGES_PER_CHAPTER*100+'%';$('hub-progress-text').textContent=completed+' / '+game.STAGES_PER_CHAPTER;
  gearThumbnail($('dashboard-weapon-art'),weapon??{slot:'weapon',tier:1},172);$('dashboard-weapon-name').textContent=weapon?.name??'사냥꾼의 검';$('dashboard-weapon-grade').textContent=weapon?game.RARITIES[weapon.rarity]+' · 무기':'기본 무기';$('dashboard-weapon-trait').textContent=game.equippedWeaponTrait(profile)?.description??'첫 사냥을 준비하는 리리안의 검';
@@ -1325,8 +1330,8 @@ function refreshEquipmentScene(){
  if(inventoryPanel!=='equipment')return;
  const key=[profile.level,profile.xp,state.phase,...Object.values(profile.equipment),...state.synergies.map(row=>row.id)].join('|');
  if(key===equipmentSceneKey)return;equipmentSceneKey=key;
- const xp=profile.level===50?100:Math.floor(clamp(profile.xp/game.xpNeeded(profile.level)*100,0,100));
- $('equipment-xp-label').textContent=profile.level===50?'MAX':xp+'%';$('equipment-xp-fill').style.width=xp+'%';$('equipment-xp').setAttribute('aria-valuenow',String(xp));
+ const xp=profile.level===game.MAX_LEVEL?100:Math.floor(clamp(profile.xp/game.xpNeeded(profile.level)*100,0,100));
+ $('equipment-xp-label').textContent=profile.level===game.MAX_LEVEL?'MAX':xp+'%';$('equipment-xp-fill').style.width=xp+'%';$('equipment-xp').setAttribute('aria-valuenow',String(xp));
  const worn=Object.entries(game.EQUIPMENT_SLOTS).filter(([slot])=>profile.inventory.some(item=>item.id===profile.equipment[slot]&&item.slot===game.itemSlotForPosition(slot))).length;
  $('equipment-equipped-count').textContent='착용 '+worn+' / '+Object.keys(game.EQUIPMENT_SLOTS).length;
  for(const row of game.EQUIPMENT_SYNERGIES){
@@ -1418,7 +1423,7 @@ function refreshGrowthProgress(){
  for(const id of ['growth-next-skill','skill-next-unlock']){$(id).textContent=nextText;$(id).setAttribute('title',nextText);}
  $('growth-skill-budget').textContent='스킬 강화 '+points+' · 숙련 '+profile.skillPoints+' 포인트';
  const bandIndex=game.GROWTH_XP_BANDS.findIndex(row=>profile.level<row.until),band=game.GROWTH_XP_BANDS[bandIndex],nextBand=game.GROWTH_XP_BANDS[bandIndex+1];
- $('growth-xp-rate').textContent=profile.level===50?'최고 레벨 · 경험치 성장 완료':(game.growthXpMultiplier(profile.level)>1?'사냥·정찰 성장 경험치 '+game.growthXpMultiplier(profile.level)+'배 · ':'')+'다음 레벨까지 경험치 '+Math.max(0,game.xpNeeded(profile.level)-profile.xp)+(nextBand?' · Lv.'+band.until+'부터 '+nextBand.multiplier+'배':'');
+ $('growth-xp-rate').textContent=profile.level===game.MAX_LEVEL?'최고 레벨 · 경험치 성장 완료':(game.growthXpMultiplier(profile.level)>1?'사냥·정찰 성장 경험치 '+game.growthXpMultiplier(profile.level)+'배 · ':'')+'다음 레벨까지 경험치 '+Math.max(0,game.xpNeeded(profile.level)-profile.xp)+(nextBand?' · Lv.'+band.until+'부터 '+nextBand.multiplier+'배':'');
  $('result-level').textContent=start<profile.level?'Lv.'+start+' → Lv.'+profile.level:'Lv.'+profile.level;
  $('result-points').textContent='남은 스킬 강화 '+points+' · 숙련 '+profile.skillPoints+' 포인트';
  const unlocked=game.skillMilestones(start,profile.level),names=unlocked.map(row=>row.label),shown=names.slice(0,3).join(' · ')+(names.length>3?' 외 '+(names.length-3)+'개':'');

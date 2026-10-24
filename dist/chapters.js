@@ -1,28 +1,48 @@
 import {equipmentFamily} from './equipment-slots.js?v=0.98.0';
-// Authored chapter data. Each hunt clones mutable positions/progress from these definitions.
-export const CHAPTERS = [
-  {id:1,key:'forest',name:'붉은 숲',subtitle:'숲의 괴수들이 사방에서 몰려온다. 열 스테이지를 돌파하고 세계수의 수호령을 사냥해.',multiplier:1,bossHp:780,reward:90,
+// Authored region data. Every ten chapters share one region (art, roster, boss species);
+// chapters inside a region differ by name, boss title and stat multiplier.
+export const CHAPTERS_PER_THEME=10;
+export const THEMES = [
+  {id:1,key:'forest',name:'붉은 숲',subtitle:'숲의 괴수들이 사방에서 몰려온다.',bossScale:1,
     color:'#dbaa76',shotColor:'#dfbd68',pathColor:'#bc8964',bossName:'세계수의 수호령',bossSpecies:'forest_guardian',bossPosition:{x:1850,y:1920},bossCycle:['slam','charge','volley'],
     roster:['forest_wolf','forest_goblin','forest_orc','forest_spider','forest_mushroom','forest_devourer'],
     encounters:[[650,1160,'늑대의 사냥길'],[1550,650,'고블린 야영지'],[2530,870,'오크의 초소'],[2800,1670,'수호령의 뿌리']],
     formations:[['skitter','skitter','skitter','skitter','spitter'],['bulwark','skitter','skitter','skitter','spitter','spitter'],['bulwark','skitter','skitter','skitter','spitter','spitter'],['bulwark','skitter','skitter','skitter','spitter','spitter']],
     caches:[[1150,1550,'버려진 사냥꾼의 짐','charm'],[2200,410,'뿌리 속 보물','weapon']],
-    tactic:'늑대·거미의 도약 · 궁수·버섯의 탄막 · 오크·식인꽃의 압박'},
-  {id:2,key:'ruins',name:'망자의 폐성',subtitle:'망자의 무리가 불규칙하게 나타난다. 열 스테이지 끝에서 무덤의 왕에게 도전해.',multiplier:1.45,bossHp:1280,reward:145,
+    tactic:'늑대·거미의 도약 · 궁수·버섯의 탄막 · 오크·식인꽃의 압박',
+    chapters:[['숲의 초입','새싹 수호령'],['늑대의 사냥길','이끼 수호령'],['고블린 야영지','덩굴 수호령'],['가시덤불 골짜기','가시 수호령'],['포자의 늪','포자 수호령'],
+      ['오크의 초소','송곳니 수호령'],['식인꽃 군락','꽃잎 수호령'],['거미 둥지','거미줄 수호령'],['핏빛 수림','핏빛 수호령'],['세계수의 뿌리','세계수의 수호령']]},
+  {id:2,key:'ruins',name:'망자의 폐성',subtitle:'망자의 무리가 불규칙하게 나타난다.',bossScale:1.13,
     color:'#ba9cd8',shotColor:'#bc88e5',pathColor:'#a89da8',bossName:'무덤의 왕',bossSpecies:'ruins_king',bossPosition:{x:2950,y:1830},bossCycle:['volley','slam','volley'],
     roster:['ruins_skeleton','ruins_mage','ruins_knight','ruins_bat','ruins_wraith','ruins_mimic'],
     encounters:[[690,1160,'무너진 성문'],[1320,1690,'망자의 회랑'],[2020,1510,'사령술 제단'],[2690,1050,'왕의 근위대']],
     formations:[['skitter','bulwark','skitter','spitter','spitter'],['bulwark','skitter','bulwark','spitter','spitter','skitter'],['spitter','skitter','bulwark','spitter','spitter','skitter'],['bulwark','bulwark','skitter','skitter','spitter','spitter']],
     caches:[[1530,620,'봉인된 묘실','armor'],[2490,1980,'왕실의 유품','charm']],
-    tactic:'해골·박쥐의 습격 · 사령술사·망령의 사격 · 기사·미믹의 강타'},
-  {id:3,key:'frost',name:'서리 왕좌',subtitle:'눈보라 속에서 등장하는 늑대와 골렘을 상대해. 열 스테이지 끝에 서리 왕좌가 기다린다.',multiplier:2,bossHp:1900,reward:220,
+    tactic:'해골·박쥐의 습격 · 사령술사·망령의 사격 · 기사·미믹의 강타',
+    chapters:[['무너진 성문','성문의 망령왕'],['망자의 회랑','회랑의 망령왕'],['박쥐 종탑','종탑의 망령왕'],['사령술 제단','제단의 망령왕'],['기사단 묘역','묘역의 망령왕'],
+      ['망령의 서고','서고의 망령왕'],['미믹의 보물고','보물고의 망령왕'],['봉인된 지하묘','지하묘의 망령왕'],['왕의 근위대','근위대장 망령왕'],['무덤의 옥좌','무덤의 왕']]},
+  {id:3,key:'frost',name:'서리 왕좌',subtitle:'눈보라 속에서 늑대와 골렘이 나타난다.',bossScale:1.22,
     color:'#97d9ed',shotColor:'#93d9fa',pathColor:'#a3ccdb',bossName:'빙원의 지배자',bossSpecies:'frost_king',bossPosition:{x:2950,y:430},bossCycle:['charge','volley','slam'],
     roster:['frost_wolf','frost_mage','frost_golem','frost_leopard','frost_wisp','frost_yeti'],
     encounters:[[680,1180,'설원의 발자국'],[1330,590,'얼음 정령의 터'],[1960,1180,'골렘의 균열'],[2600,730,'왕좌의 문턱']],
     formations:[['skitter','skitter','bulwark','skitter','spitter'],['spitter','skitter','bulwark','skitter','spitter','spitter'],['bulwark','bulwark','skitter','skitter','spitter','skitter'],['bulwark','bulwark','skitter','spitter','spitter','skitter']],
     caches:[[1490,1850,'얼어붙은 원정대','weapon'],[2400,1550,'빙하의 보물','armor']],
-    tactic:'늑대·눈표범의 도약 · 마법사·정령의 얼음탄 · 골렘·설인의 강타'},
+    tactic:'늑대·눈표범의 도약 · 마법사·정령의 얼음탄 · 골렘·설인의 강타',
+    chapters:[['설원의 발자국','설원의 빙결왕'],['얼어붙은 호수','호수의 빙결왕'],['눈표범 능선','능선의 빙결왕'],['얼음 정령의 터','정령의 빙결왕'],['골렘의 균열','균열의 빙결왕'],
+      ['설인의 동굴','동굴의 빙결왕'],['빙하 협곡','협곡의 빙결왕'],['눈보라 고개','눈보라 빙결왕'],['왕좌의 문턱','문턱의 빙결왕'],['서리 왕좌','빙원의 지배자']]},
 ];
+const josa=(word,consonant,vowel)=>{const code=word.charCodeAt(word.length-1)-0xac00;return code>=0&&code<11172&&code%28?consonant:vowel;};
+// Enemy stats grow 13% of the first chapter per chapter (ch.30 = ×4.77).
+export const chapterMultiplier=id=>Math.round((1+(id-1)*.13)*100)/100;
+export const CHAPTERS = THEMES.flatMap(theme=>theme.chapters.map(([name,bossName],i)=>{
+  const id=(theme.id-1)*CHAPTERS_PER_THEME+i+1,multiplier=chapterMultiplier(id),finale=i===CHAPTERS_PER_THEME-1;
+  return {id,theme:theme.id,key:theme.key,region:theme.name,name,number:i+1,finale,
+    subtitle:theme.subtitle+(finale?` 지역의 끝에서 ${bossName}${josa(bossName,'이','가')} 기다린다.`:` 열 스테이지 끝에서 ${bossName}${josa(bossName,'을','를')} 사냥해.`),
+    multiplier,bossHp:Math.round(780*multiplier*theme.bossScale*(finale?1.15:1)),reward:Math.round(90*multiplier),
+    color:theme.color,shotColor:theme.shotColor,pathColor:theme.pathColor,bossName,bossSpecies:theme.bossSpecies,bossPosition:theme.bossPosition,bossCycle:theme.bossCycle,
+    roster:theme.roster,encounters:theme.encounters,formations:theme.formations,caches:theme.caches,tactic:theme.tactic};
+}));
+export const chapterTheme=id=>THEMES[(CHAPTERS[id-1]?.theme??1)-1];
 export const MONSTERS = {
   forest_wolf:{name:'늑대',role:'skitter',height:88,speed:122,chargeEvery:3,chargeSpeed:400,chargeDuration:.26},
   forest_goblin:{name:'고블린 궁수',role:'spitter',height:96,shots:1},
@@ -64,9 +84,10 @@ export function equipmentArt(item){
   const explicit=EQUIPMENT_ART.find(a=>a.id===item?.artId&&a.slot===equipmentFamily(item.slot)&&a.tier===item.tier);
   return explicit??EQUIPMENT_ART.find(a=>a.slot===equipmentFamily(item?.slot??'weapon')&&a.tier===(item?.tier??1));
 }
-for(const chapter of CHAPTERS){
-  chapter.route=[{x:350,y:1160},...chapter.encounters.map(([x,y])=>({x,y})),chapter.bossPosition];
-  for(const rows of [chapter.encounters,chapter.formations,chapter.caches]){rows.forEach(Object.freeze);Object.freeze(rows);}
-  chapter.route.forEach(Object.freeze);Object.freeze(chapter.route);Object.freeze(chapter.roster);Object.freeze(chapter.bossCycle);Object.freeze(chapter);
+for(const theme of THEMES){
+  theme.route=[{x:350,y:1160},...theme.encounters.map(([x,y])=>({x,y})),theme.bossPosition];
+  for(const rows of [theme.encounters,theme.formations,theme.caches,theme.chapters]){rows.forEach(Object.freeze);Object.freeze(rows);}
+  theme.route.forEach(Object.freeze);Object.freeze(theme.route);Object.freeze(theme.roster);Object.freeze(theme.bossCycle);Object.freeze(theme.bossPosition);Object.freeze(theme);
 }
-Object.freeze(CHAPTERS);Object.values(MONSTERS).forEach(m=>{if(m.attackCycle)Object.freeze(m.attackCycle);Object.freeze(m);});Object.freeze(MONSTERS);EQUIPMENT_ART.forEach(Object.freeze);Object.freeze(EQUIPMENT_ART);
+for(const chapter of CHAPTERS){chapter.route=THEMES[chapter.theme-1].route;Object.freeze(chapter);}
+Object.freeze(THEMES);Object.freeze(CHAPTERS);Object.values(MONSTERS).forEach(m=>{if(m.attackCycle)Object.freeze(m.attackCycle);Object.freeze(m);});Object.freeze(MONSTERS);EQUIPMENT_ART.forEach(Object.freeze);Object.freeze(EQUIPMENT_ART);
