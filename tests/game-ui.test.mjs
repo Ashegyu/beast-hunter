@@ -583,7 +583,7 @@ test('equipment synergy recipe updates on equip, persists and renders payoff at 
 const attrs=tag=>Object.fromEntries([...tag.matchAll(/([\w-]+)="([^"]*)"/g)].map(m=>[m[1],m[2]]));
 
 test('actual stage transition clears held controls, saves checkpoint and resumes it at camp',async()=>{
-  const ui=await host({campaign:true});ui.emit('start','click');ui.tick();ui.state.spawns=[];ui.state.enemies=[];ui.state.run.wave=3;ui.state.run.waveKills=ui.state.run.waveQuota;
+  const ui=await host({campaign:true});ui.emit('start','click');ui.tick();ui.state.lootRates={normal:1,elite:1,stage:1,boss:1};ui.state.spawns=[];ui.state.enemies=[];ui.state.run.wave=3;ui.state.run.waveKills=ui.state.run.waveQuota;
   ui.stick(1,0);ui.tick();assert.equal(ui.state.run.flow,'combat');assert.equal(ui.state.run.stage,2);assert.equal(ui.nodes.get('joystick').disabled,false);assert.equal(ui.profile().stageProgress[0],1);assert.equal(ui.nodes.get('stage-complete').hidden,false);assert.equal(ui.nodes.get('stage-complete').textContent,'1-1 스테이지 완료');assert.equal(ui.nodes.get('hunt-stage').textContent,game.STAGES[0].name+' · 1-2 스테이지');assert.equal(ui.nodes.has('notice'),false);assert.equal(ui.nodes.get('monsters-left').textContent,'64');assert.equal(ui.nodes.get('reward-toast').hidden,false);assert.match(ui.nodes.get('reward-meta').textContent,/핵 \+1/);
   ui.run(.1);assert.equal(ui.state.run.stage,2);assert.equal(ui.state.player.moving,false);assert.equal(ui.nodes.get('time-left').textContent,'01:00');assert.equal(ui.nodes.get('monsters-left').textContent,'64');
   ui.emit('camp-button','click');ui.emit('retreat','click');ui.tick();assert.equal(ui.nodes.get('run-stage-2').disabled,false);assert.equal(ui.nodes.get('run-stage-2').attributes['aria-pressed'],'true');assert.equal(ui.nodes.get('run-stage-3').disabled,true);
@@ -619,7 +619,7 @@ test('result images distinguish reused IDs by their actual item owner and update
  assert.equal(ui.nodes.get('result-loot-state-0').textContent,'분해됨');assert.equal(ui.nodes.get('result-loot-state-1').textContent,'보관');s.profile.inventory=[];ui.tick(0);assert.equal(ui.nodes.get('result-loot-state-1').textContent,'분해됨');
 });
 test('actual gold and material pickups save reservations before bank credit and play bounded collection effects',async()=>{
- const ui=await host({campaign:true,recordGeometry:true});ui.emit('start','click');const s=ui.state;s.enemies=[];s.spawns=[];s.barrels=[];s.run.waveQuota=1000;s.player.invulnerable=999;s.materialRng=2000;
+ const ui=await host({campaign:true,recordGeometry:true});ui.emit('start','click');const s=ui.state;s.lootRates={normal:1,elite:1,stage:1,boss:1};s.enemies=[];s.spawns=[];s.barrels=[];s.run.waveQuota=1000;s.player.invulnerable=999;s.materialRng=2000;
  const q={id:s.nextId++,type:'skitter',elite:true,boss:false,x:s.player.x+300,y:s.player.y,hp:1,maxHp:1,action:'walk',actionTime:0,speed:0,cooldown:999,aggro:true,guard:0,dead:false,wave:s.run.wave,runStage:s.run.stage,damage:8,radius:58};s.enemies=[q];s.projectiles.push({id:s.nextId++,x:q.x,y:q.y,vx:0,vy:0,damage:9999,ttl:1,friendly:true});ui.tick(.025);
  assert.equal(s.profile.gold,0);assert.equal(ui.profile().pendingGold,16);assert.ok(ui.profile().pendingMaterials.boneIron>0);ui.geometry.length=0;const rng=[s.rng,s.lootRng,s.materialRng];ui.tick(0);assert.ok(ui.geometry.some(c=>c.kind==='ellipse'&&c.args[2]===7&&c.args[3]===4.5));assert.deepEqual([s.rng,s.lootRng,s.materialRng],rng);
  for(const d of s.pickups){d.x=s.player.x;d.y=s.player.y;}ui.run(.8);assert.equal(ui.profile().pendingGold,0);assert.equal(ui.profile().gold,16);assert.ok(ui.profile().materials.boneIron>0);assert.ok(ui.audioDetails.some(e=>e.type==='resourceCollect'&&e.details.kind==='gold'));assert.ok(ui.audioDetails.some(e=>e.type==='lootPickup'));assert.equal(ui.nodes.has('reward-icon'),false);assert.ok(ui.geometry.some(c=>c.kind==='fillText'&&String(c.args[0]).includes(' G')));
@@ -1748,7 +1748,7 @@ test('missing pickup image and invalid dimensions block entry, keep earned resou
 
 
 test('real monster gear plays at its drop position before collection and never restarts the image on pickup',async()=>{
- const ui=await host({campaign:true});ui.emit('start','click');const s=ui.state,p=s.player;s.enemies=[];s.spawns=[];s.barrels=[];s.run.waveQuota=1000;p.invulnerable=999;s.profile.legendaryPity=19;
+ const ui=await host({campaign:true});ui.emit('start','click');const s=ui.state,p=s.player;s.lootRates={normal:1,elite:1,stage:1,boss:1};s.enemies=[];s.spawns=[];s.barrels=[];s.run.waveQuota=1000;p.invulnerable=999;
  s.spawns=[{id:9900,type:'bulwark',species:'forest_orc',elite:true,x:p.x+240,y:p.y+60,delay:0,warning:0,locked:true}];game.advanceGame(s,.001);const e=s.enemies[0];s.projectiles.push({id:9901,x:e.x,y:e.y,vx:0,vy:0,damage:1e9,ttl:1,friendly:true});ui.calls.length=0;ui.tick(.025);
  const flash=s.effects.find(f=>f.type==='gearDrop'),item=flash.item;assert.ok(s.profile.pendingLoot.includes(item));assert.ok(!s.profile.inventory.includes(item));assert.equal(s.run.items,0);
  const frames=()=>ui.calls.filter(c=>c.image.includes('loot-pickup-v077'));assert.ok(frames().length>0);

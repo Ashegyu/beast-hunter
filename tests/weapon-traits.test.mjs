@@ -66,7 +66,7 @@ test('expired bleed releases old damage; a later weaker hit snapshots its own st
  const {s,e}=arena();s.profile.forge.blade=8;hit(s,e);assert.equal(e.bleedDamage,7);advance(s,2.5);assert.equal(e.bleedTicks,0);s.profile.forge.blade=0;hit(s,e);assert.equal(e.bleedDamage,4);
 });
 test('a final boss killed by bleed advances chapter and rewards once, and victory freezes statuses',()=>{
- const p=g.createProfile();p.stageProgress[0]=9;p.inventory=[item('forest_blade')];p.equipment.weapon=1;const s=g.createGame(p);g.launch(s,1,10);
+ const p=g.createProfile();p.stageProgress[0]=9;p.inventory=[item('forest_blade')];p.equipment.weapon=1;const s=g.createGame(p);g.launch(s,1,10);s.lootRates={normal:1,elite:1,stage:1,boss:1};
  s.run.wave=1;s.run.waveQuota=1;s.run.bossSpawned=true;s.spawns=[{id:s.nextId++,type:'bulwark',boss:true,elite:false,x:s.player.x+80,y:s.player.y,delay:0}];s.barrels=[];g.advanceGame(s,.001);
  const e=s.enemies[0];e.cooldown=999;e.speed=0;hit(s,e);e.hp=4;advance(s,.8);assert.equal(s.phase,'victory');assert.equal(s.run.waveKills,1);assert.equal(s.run.kills,1);assert.equal(s.profile.unlockedStage,2);assert.equal(s.run.items,3);assert.equal(s.run.stageItems,1);assert.equal(s.run.monsterItems,2);
  const gold=s.profile.gold,cores=s.profile.cores;advance(s,10);assert.equal(s.profile.gold,gold);assert.equal(s.profile.cores,cores);assert.equal(s.run.items,3);assert.equal(s.run.stageItems,1);assert.equal(s.run.monsterItems,2);

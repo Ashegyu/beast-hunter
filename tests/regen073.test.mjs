@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as g from '../dist/game-engine.js';
-function arena(){const s=g.createGame(g.createProfile(1000));g.launch(s);s.enemies=[];s.barrels=[];s.player.invulnerable=999;return s;}
+const ALWAYS=Object.freeze({normal:1,elite:1,stage:1,boss:1});// Alpha 0.115: drops are rolls; force them where a test needs one.
+function arena(){const s=g.createGame(g.createProfile(1000));g.launch(s);s.enemies=[];s.barrels=[];s.player.invulnerable=999;s.lootRates=ALWAYS;return s;}
 function actor(s,delay=0){return {id:s.nextId++,type:'skitter',species:'forest_wolf',x:s.player.x+220,y:s.player.y,delay,warning:.75,locked:true};}
 function kill(s,e){s.projectiles.push({id:s.nextId++,x:e.x,y:e.y,vx:0,vy:0,damage:1e6,ttl:1,friendly:true});g.advanceGame(s,.025);}
 test('last live kill pulls a delayed reservation forward within the same update without changing the roster',()=>{

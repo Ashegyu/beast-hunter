@@ -13,10 +13,11 @@
 ## 실행
 - 게임: `PORT=8090 node serve-local.mjs` 후 `http://127.0.0.1:8090/` (기본 포트 8080). file:// 로는 안 된다.
 - 헤드리스 확인: 전역 playwright(`/opt/node22/lib/node_modules/playwright`)를 createRequire로 불러 Chromium 실행. 844×390에서 거점 → 사냥터 → 전투 준비 → 전투까지 콘솔 오류·404 없이 동작 확인함.
-- 테스트: `npm test` = `node --experimental-vm-modules --test tests/*.test.mjs` (약 70초). **788/788 통과** (0.114 기준). 어셋 개수 단언(클립 415+(45+26)×15, 프레임 907+(45+26)×25, 시작 시 요청 이미지 26장 = 공유 18 + 1장 8장(세트 장비 페이지 포함))은 0.109 기준. region-assets 테스트가 모든 챕터 이미지 경로가 `delivery`를 거쳐 실제 파일로 이어지는지 검사한다(0.107에서 재사용 지형 6장 연결이 빠져 5·9·17·18·28·29장 입장이 막혔었다).
+- 테스트: `npm test` = `node --experimental-vm-modules --test tests/*.test.mjs` (약 70초). **788/788 통과** (0.115 기준). 어셋 개수 단언(클립 415+(45+26)×15, 프레임 907+(45+26)×25, 시작 시 요청 이미지 26장 = 공유 18 + 1장 8장(세트 장비 페이지 포함))은 0.109 기준. region-assets 테스트가 모든 챕터 이미지 경로가 `delivery`를 거쳐 실제 파일로 이어지는지 검사한다(0.107에서 재사용 지형 6장 연결이 빠져 5·9·17·18·28·29장 입장이 막혔었다).
 
 ## 테스트 작성 시 주의 (0.103.2에서 정리한 내용)
 - 고대 장비(0.110): 보스 고대 = 챕터 10스테이지 보스가 그 지역 번호의 고대(0.112부터 번호 = 지역: 1 숲지기, 2 서리, 3 폐성·망자. 기본 카탈로그 티어 2가 폐성, 3이 서리라 `ancientIdOfBase`/`ANCIENT_TIER_OF_BASE`가 2↔3을 바꿔 고대 아이디·티어를 만든다. 고대는 계열의 기본 원화 아이디를 그대로 써서 원화 티어 ≠ 고대 티어일 수 있으므로 `equipmentArt`·`cleanItem`·`equipmentSnapshot`이 고대는 티어 비교를 건너뛴다. 저장 v15가 v14 이하의 고대 2·3번을 한 번 바꿔 옮긴다) 고대를 `ANCIENT_BOSS_CHANCE`(0.113: 일반 1%·정예 2%·악몽 3%, 사용자 요청 '진짜 잘 안 나와야')로 떨어뜨린다(`dropBossAncient`). 0.114부터 확정 드롭(천장) 없음(사용자 결정): 저장 필드 `legendaryPity`는 남아 있지만 쓰지 않는다. 레이드 고대는 레이드와 함께 추가 예정(미구현). 테스트에서 고대 드롭을 확인할 때는 `s.lootRng` 시드를 바꿔 가며 고대가 나오는 처치를 찾는다(tests/ancient-items.test.mjs).
+- 장비 확정 지급 없음(0.115, 사용자 결정. 강화 구간 보장만 유지): `DROP_CHANCE`(일반 몬스터 .16, 정예 .7, 스테이지 클리어 보상 .7, 보스 장비 3개 각 .75)로 매번 `lootRandom` 판정, 일반 몬스터 10마리 천장(`lootPity`) 제거(필드는 남음). 판 단위 덮어쓰기 `s.lootRates`(저장 안 함): **장비가 꼭 나와야 하는 테스트는 `s.lootRates={normal:1,elite:1,stage:1,boss:1}`을 둔다**(launch 뒤, UI 테스트는 start 뒤 `ui.state`). 보스 결과를 단언할 때는 고대가 섞일 수 있어 `s.run.bossAncients.length`만큼 더해 센다.
 - 난이도 장비(0.113): 장비의 `hunt`(1 정예, 2 악몽)가 기본 능력치 배율 `HUNT_POWER`(1/1.25/1.6)를 정한다(`affixRange`의 4번째 인자, `itemRollRanges`·승급·재련 모두 반영, `cleanItem`이 보존). 스테이지 드롭은 `rollStageItem({hunt})`가 `HUNT_GRADE_TABLES`로 등급을 정한다(일반 100 / 정예 55·35·10 / 악몽 20·40·30·10, **신화는 드롭 금지**(사용자 결정), 일반 난이도는 추가 난수를 쓰지 않음). 던전은 hunt 0. 보스 고대도 hunt 배율을 받는다. 고대 카탈로그는 75종(모두 개별 원화, 아틀라스 `ancient-individual-v0112` 75프레임, `numbering:'region'`), 능력치는 부위별 3종(`ANCIENT_STATS`)×(.76+.24×티어)×2.9.
 - 고대 특수효과(`ancient-powers.js`): 75종 모두 고유. 발동 조건 normal/finisher/skill/crit/kill/dash/perfect/hurt/lowHp/periodic/pickup(heavy·counter·idle은 자동 전투에서 발동하지 않아 0.110에서 없앰). 새 효과 fury/haste(시간제 버프, `s.uniqueState.ancientBuffs`, `ancientBuff(s,key)`가 damageEnemy·기본 공격 속도에 반영), invuln, cdr(스킬 재사용 감소), execute(비보스 처형). 'skill'은 `SKILL_HOOKS.cast`(combat-skills `castSkill`의 `h.cast`), 'kill'은 `kill()`, 'crit'은 연격 접촉 루프 뒤 `ancientAll`. tests/ancient-powers.test.mjs의 `fire()`가 조건별로 실제 전투 상황을 만들어 발동을 확인한다.
 - 9스테이지는 밀집 공세(전원 skitter), strict 스테이지(4·8·9·10)는 이탈 시 처치 수·전리품까지 롤백. 보스 규칙은 생태별(숲 재생, 불 화염 폭주, 얼음 호위 소환, 어둠 방어 태세), 특수 보스(10·20·30장)는 거기에 70%·35% 호위 4마리.
@@ -43,7 +44,7 @@
 - `art/`: 원화 원본, 생성 프롬프트, 검수 자료. Codex 생성 원화: `art/monsters0106`(보스 27·일반 18), `art/terrain0106`(지형 6), `art/monsters0107`(불 12·어둠 6·불 보스 5·특수 보스 3), `art/terrain0107`(지형 21), `art/fire0107`(불 장식물·공격 효과), `art/equipment0108`(지역 세트 4장), `art/equipment0109`(챕터 세트 26장, 장당 6점), `art/ancient0111`(고대 신규 부위 3장, 장당 5점). 각 폴더에 사양 JSON, `prompts/<id>.json`, PROVENANCE.md. 사용자 몬스터 백과 참고 이미지는 `art/monsters065/references/encyclopedia-1~5.png`. `tools/reports/`: 버전별 측정·검수 결과.
 
 ## 버전 표기
-- README는 0.103.2부터 다시 최신(그 사이 0.98~0.103.1 기록은 없음), `index.html`은 `app.js?v=0.114.0`, 모듈 import 쿼리는 0.70~0.114 혼재(0.105~0.114에서 바꾼 모듈과 그 import 사슬은 `?v=0.114.0`), `PROFILE_VERSION=15`(0.105 v14 진행 배열 30칸, 0.112 v15 고대 번호 재배정; 테스트의 복원 버전 단언은 15). 코드가 문서보다 앞서 있다. README_LOCAL은 폴더 이름 때문에 "Alpha 0.45"라고 부른다.
+- README는 0.103.2부터 다시 최신(그 사이 0.98~0.103.1 기록은 없음), `index.html`은 `app.js?v=0.115.0`, 모듈 import 쿼리는 0.70~0.115 혼재(0.105~0.115에서 바꾼 모듈과 그 import 사슬은 `?v=0.115.0`), `PROFILE_VERSION=15`(0.105 v14 진행 배열 30칸, 0.112 v15 고대 번호 재배정; 테스트의 복원 버전 단언은 15). 코드가 문서보다 앞서 있다. README_LOCAL은 폴더 이름 때문에 "Alpha 0.45"라고 부른다.
 - 파일명 버전: 점 제거(063=0.63, 0844=0.84.4, v0970=0.97.0, v01002=0.100.2). 단 alpha09/alpha091은 0.9/0.9.1.
 
 ## 게임 규칙 요약

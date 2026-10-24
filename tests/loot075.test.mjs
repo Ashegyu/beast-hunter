@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import * as g from '../dist/game-engine.js';
 import {ITEM_CATALOG,RARITY_INFO,PERFECT_ROLL_CHANCE,rollItem} from '../dist/loot.js';
 import {freezeCombat} from './combat-fixture.mjs';
-function arena(){const s=g.createGame(g.createProfile(1000));g.launch(s);freezeCombat(s);s.enemies=[];s.barrels=[];s.player.invulnerable=999;return s;}
+const ALWAYS=Object.freeze({normal:1,elite:1,stage:1,boss:1});// Alpha 0.115: drops are rolls; force them where a test needs one.
+function arena(){const s=g.createGame(g.createProfile(1000));g.launch(s);freezeCombat(s);s.enemies=[];s.barrels=[];s.player.invulnerable=999;s.lootRates=ALWAYS;return s;}
 function drop(s,boss=false){
  const e={id:s.nextId++,type:boss?'bulwark':'skitter',elite:!boss,boss,x:s.player.x+300,y:s.player.y,hp:1,maxHp:1,action:'walk',actionTime:0,speed:0,cooldown:999,aggro:true,guard:0,dead:false,wave:s.run.wave,runStage:s.run.stage,damage:8,radius:58};s.enemies=[e];
  s.projectiles.push({id:s.nextId++,x:e.x,y:e.y,vx:0,vy:0,damage:1e9,ttl:1,friendly:true});g.advanceGame(s,.025);assert.ok(e.dead);
@@ -20,7 +21,7 @@ test('legacy legendary streak cannot elevate stage monster rewards',()=>{
  // First family sample then an elite quality roll in its legendary interval.
  let seed=0;for(;seed<10000;seed++){let a=(Math.imul(1664525,seed)+1013904223)>>>0;a=(Math.imul(1664525,a)+1013904223)>>>0;const roll=a/4294967296;if(roll>.93&&roll<.99)break;}
  s.lootRng=seed;drop(s);assert.equal(s.profile.pendingLoot.at(-1).rarity,0);assert.equal(s.profile.legendaryPity,7,'monster drops leave the boss ancient pity alone (Alpha 0.110)');
- const next=g.createGame(s.profile);g.launch(next);next.enemies=[];next.spawns=[];next.barrels=[];next.run.wave=3;next.run.waveKills=next.run.waveQuota;next.profile.legendaryPity=9;g.advanceGame(next,.025);
+ const next=g.createGame(s.profile);g.launch(next);next.lootRates=ALWAYS;next.enemies=[];next.spawns=[];next.barrels=[];next.run.wave=3;next.run.waveKills=next.run.waveQuota;next.profile.legendaryPity=9;g.advanceGame(next,.025);
  assert.equal(next.run.stage,2);assert.equal(next.profile.legendaryPity,9);assert.equal(next.run.stageItems,1);
 });
 test('drop protection restores bounded legacy defaults and a pending pickup keeps its already committed count',()=>{
@@ -29,8 +30,8 @@ test('drop protection restores bounded legacy defaults and a pending pickup keep
 });
 test('every chapter and boss difficulty grants graded stage equipment without duplicating settlement',()=>{
  for(let chapter=1;chapter<=3;chapter++)for(let mode=0;mode<=2;mode++){
-  const p=g.createProfile();p.clearedStage=3;p.unlockedStage=3;p.stageProgress=[10,10,10];p.bossMastery=[2,2,2];p.difficultyProgress=[[9,9,9],[9,9,9]];const s=g.createGame(p);g.launch(s,chapter,10,null,mode);s.spawns=[];s.barrels=[];s.run.bossSpawned=true;s.lootRng=0;drop(s,true);
-  const receipts=s.effects.filter(f=>f.type==='loot'&&f.origin==='monster');assert.equal(receipts.length,2);assert.ok(receipts.every(r=>mode?r.rarity<=3:r.rarity===0));assert.ok(receipts.every(r=>g.huntGrade(r.item)===mode));assert.equal(s.profile.pendingLoot.length,0);assert.equal(s.phase,'victory');assert.equal(s.run.items,3);
+  const p=g.createProfile();p.clearedStage=3;p.unlockedStage=3;p.stageProgress=[10,10,10];p.bossMastery=[2,2,2];p.difficultyProgress=[[9,9,9],[9,9,9]];const s=g.createGame(p);g.launch(s,chapter,10,null,mode);s.lootRates=ALWAYS;s.spawns=[];s.barrels=[];s.run.bossSpawned=true;s.lootRng=0;drop(s,true);
+  const receipts=s.effects.filter(f=>f.type==='loot'&&f.origin==='monster'&&f.rarity!==5),ancients=s.run.bossAncients.length;assert.equal(receipts.length,2);assert.ok(receipts.every(r=>mode?r.rarity<=3:r.rarity===0));assert.ok(receipts.every(r=>g.huntGrade(r.item)===mode));assert.equal(s.profile.pendingLoot.length,0);assert.equal(s.phase,'victory');assert.equal(s.run.items,3+ancients);
   const owned=s.profile.inventory.map(i=>i.id),gold=p.gold;for(let n=0;n<80;n++)g.advanceGame(s,.05);assert.deepEqual(p.inventory.map(i=>i.id),owned);assert.equal(p.gold,gold);
  }
 });

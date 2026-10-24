@@ -33,7 +33,7 @@ test('three complete waves award exactly one checkpoint and pause freezes automa
   const p=g.restoreProfile(g.encodeProfile(s.profile));assert.equal(g.stageLimit(p,1),2);const retry=g.createGame(p);assert.equal(g.launch(retry,1,2),true);assert.equal(g.launch(g.createGame(p),1,3),false);
 });
 test('30 substages retain chapter identity and only final bosses unlock the next chapter',()=>{
-  const s=g.createGame();
+  const s=g.createGame();s.lootRates={normal:1,elite:1,stage:1,boss:1};
   for(let chapter=1;chapter<=3;chapter++){
     g.returnToCamp(s);assert.equal(g.launch(s,chapter),true);
     for(let stage=1;stage<=g.STAGES_PER_CHAPTER;stage++){

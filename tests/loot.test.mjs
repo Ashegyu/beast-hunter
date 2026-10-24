@@ -4,9 +4,10 @@ import * as g from '../dist/game-engine.js';
 import {ITEM_CATALOG,DROP_TABLES,rollRarity,rollItem,storeItem,salvageValue,MAX_PENDING_LOOT,INVENTORY_LIMIT} from '../dist/loot.js';
 import {EQUIPMENT_ART,SET_ART} from '../dist/chapters.js';
 import {freezeCombat} from './combat-fixture.mjs';
+const ALWAYS=Object.freeze({normal:1,elite:1,stage:1,boss:1});// Alpha 0.115: drops are rolls; force them where a test needs one.
 const generator=(seed=12345)=>()=>{seed=(Math.imul(1664525,seed)+1013904223)>>>0;return seed/4294967296;};
 function item(id,rarity=0,tier=1,slot='weapon'){return {id,rarity,tier,slot,name:'시험 '+id,affixes:slot==='weapon'?{damage:8}:{hp:20}};}
-function arena(){const s=g.createGame();g.launch(s);freezeCombat(s);s.enemies=[];s.player.invulnerable=999;return s;}
+function arena(){const s=g.createGame();g.launch(s);freezeCombat(s);s.enemies=[];s.player.invulnerable=999;s.lootRates=ALWAYS;return s;}
 function kill(s,{elite=false,boss=false}={}){
  const e={id:s.nextId++,type:boss?'bulwark':'skitter',elite,boss,x:s.player.x+300,y:s.player.y,hp:1,maxHp:1,action:'walk',actionTime:0,speed:0,cooldown:999,aggro:true,guard:0,dead:false,group:null,wave:s.run.wave,runStage:s.run.stage,damage:8,radius:58};s.enemies=[e];
  s.projectiles.push({id:s.nextId++,x:e.x,y:e.y,vx:0,vy:0,damage:99,ttl:1,friendly:true});g.advanceGame(s,.025);assert.equal(e.dead,true);return e;
@@ -35,9 +36,11 @@ test('rolled variants vary affixes, obey save limits and survive complete round 
  }
  assert.ok(catalog.size>=108);assert.equal(rarities.size>=5,true);assert.ok(names.size>100);
 });
-test('normal monsters guarantee an item by the tenth dry kill while loot uses an independent RNG',()=>{
- const s=arena();for(let n=0;n<35;n++){const before=s.profile.pendingLoot.length;s.lootRng=0x12345678;const combat=s.rng;kill(s);assert.equal(s.rng,combat);assert.ok(s.profile.lootPity<10);if(s.profile.lootPity===0)assert.ok(s.profile.pendingLoot.length>before);}
- const forced=arena();forced.profile.lootPity=9;kill(forced);assert.equal(forced.profile.pendingLoot.length,1);assert.equal(forced.profile.lootPity,0);
+test('normal monster drops are plain rolls with no pity, and loot uses an independent RNG (Alpha 0.115)',()=>{
+ // Real rates: about one normal kill in six drops, never guaranteed; the old ten-kill pity no longer exists.
+ const s=arena();s.lootRates=null;s.profile.lootPity=9;let drops=0;
+ for(let n=0;n<300;n++){const before=s.profile.pendingLoot.length+s.profile.inventory.length;s.lootRng=n*2654435761>>>0;const combat=s.rng;kill(s);assert.equal(s.rng,combat);if(s.profile.pendingLoot.length+s.profile.inventory.length>before)drops++;}
+ assert.equal(s.profile.lootPity,9);assert.ok(drops>20&&drops<80,'drops '+drops);assert.equal(g.DROP_CHANCE.normal,.16);
 });
 test('a drop reserves ownership, has a short landing time and claims exactly once on approach',()=>{
  const s=arena();s.profile.lootPity=9;kill(s);const drop=s.pickups.find(p=>p.kind==='equipment'),id=drop.item.id;
@@ -84,7 +87,7 @@ test('boss loot is guaranteed, settles before the reveal and result delay never 
 });
 test('all chapter and difficulty boss receipts match the actual once-only payout',()=>{
  for(const chapter of [1,5,6,11,30])for(let mode=0;mode<3;mode++){
-  const p=g.createProfile(),all=g.STAGES.length;p.clearedStage=all;p.unlockedStage=all;p.stageProgress=g.STAGES.map(()=>10);p.bossMastery=g.STAGES.map(()=>2);p.difficultyProgress=[g.STAGES.map(()=>9),g.STAGES.map(()=>9)];const s=g.createGame(p);assert.ok(g.launch(s,chapter,10,null,mode));
+  const p=g.createProfile(),all=g.STAGES.length;p.clearedStage=all;p.unlockedStage=all;p.stageProgress=g.STAGES.map(()=>10);p.bossMastery=g.STAGES.map(()=>2);p.difficultyProgress=[g.STAGES.map(()=>9),g.STAGES.map(()=>9)];const s=g.createGame(p);assert.ok(g.launch(s,chapter,10,null,mode));s.lootRates=ALWAYS;
   s.enemies=[];s.spawns=[];s.barrels=[];s.run.wave=1;s.run.waveQuota=1;s.run.bossSpawned=true;kill(s,{boss:true});
   const receipt=s.effects.findLast(f=>f.type==='loot'&&f.origin==='stage').stageReward,expected={gold:Math.round(g.STAGES[chapter-1].reward*g.HUNT_MODES[mode].reward),cores:Math.ceil(chapter/5)+g.HUNT_MODES[mode].extraCore,healed:0};
   assert.deepEqual(receipt,expected);assert.equal(p.gold,expected.gold);assert.equal(s.run.gold,expected.gold);assert.equal(p.cores,expected.cores);
