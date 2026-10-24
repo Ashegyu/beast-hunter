@@ -529,9 +529,9 @@ test('craft recipe can be targeted without selecting other recipes changing the 
  const again=await host({saved:ui.profile()});again.emit('camp-track','click');assert.equal(again.nodes.get('track-name').textContent,game.CRAFTED_CATALOG[1].name);again.emit('track-clear','click');assert.equal(again.profile().targetCraftId,null);assert.equal(again.profile().targetAncientId,p.targetAncientId);assert.equal(again.nodes.get('camp-track').hidden,true);
 });
 test('compact combat tracker pauses on detail, hides persistently, keeps routes inert while paused and clears held input',async()=>{
- const p=game.createProfile(1_000_000);p.targetCraftId=game.CRAFTED_CATALOG[1].id;const ui=await host({saved:p});ui.emit('start','click');ui.tick();assert.equal(ui.nodes.get('craft-tracker').hidden,false);ui.stick(1,0);ui.tick();ui.emit('craft-tracker','click');const time=ui.state.run.time,x=ui.state.player.x;assert.equal(ui.state.paused,true);assert.equal(ui.nodes.get('track-content').hidden,false);assert.equal(ui.nodes.get('track-route-1').disabled,true);ui.emit('track-route-1','click');ui.run(3);assert.equal(ui.state.run.time,time);assert.equal(ui.state.player.x,x);
+ const p=game.createProfile(1_000_000);p.targetCraftId=game.CRAFTED_CATALOG[1].id;const ui=await host({manual:true,saved:p});ui.emit('start','click');ui.tick();assert.equal(ui.nodes.get('craft-tracker').hidden,false);ui.stick(1,0);ui.tick();ui.emit('craft-tracker','click');const time=ui.state.run.time,x=ui.state.player.x;assert.equal(ui.state.paused,true);assert.equal(ui.nodes.get('track-content').hidden,false);assert.equal(ui.nodes.get('track-route-1').disabled,true);ui.emit('track-route-1','click');ui.run(3);assert.equal(ui.state.run.time,time);assert.equal(ui.state.player.x,x);
  ui.emit('track-hide','click');assert.equal(ui.profile().craftTrackerVisible,false);ui.emit('track-back','click');assert.equal(ui.nodes.get('pause-content').hidden,false);ui.emit('resume','click');ui.run(.15);assert.equal(ui.state.paused,false);assert.equal(ui.nodes.get('craft-tracker').hidden,true);assert.equal(ui.state.player.x,x);assert.ok(ui.state.run.time>time);ui.emit('pause','click');ui.emit('document','keydown',{key:'i'});assert.equal(ui.nodes.get('inventory-content').hidden,false);assert.equal(ui.nodes.get('track-content').hidden,true);ui.emit('inventory-back','click');assert.equal(ui.nodes.get('pause-content').hidden,false);
- const restored=await host({saved:ui.profile()});assert.equal(restored.profile().craftTrackerVisible,false);
+ const restored=await host({manual:true,saved:ui.profile()});assert.equal(restored.profile().craftTrackerVisible,false);
 });
 test('routes validate locked regional material and select real elite or boss stage without launching combat',async()=>{
  const p=game.createProfile(1_000_000);p.targetCraftId=game.CRAFTED_CATALOG[0].id;const ui=await host({saved:p});ui.emit('camp-track','click');ui.emit('track-material-tear','click');assert.equal(ui.nodes.get('track-route-1').hidden,true);assert.equal(ui.nodes.get('track-route-3').disabled,true);ui.emit('track-route-3','click');assert.equal(ui.nodes.get('track-content').hidden,false);assert.equal(ui.state.phase,'camp');
@@ -619,7 +619,7 @@ test('immediate wave replacement retains the whole encounter count and pause fre
  ui.emit('resume','click');ui.run(.2);assert.equal(ui.state.run.flow,'combat');assert.equal(ui.nodes.get('monsters-left').textContent,'55');assert.ok(ui.state.run.timeRemaining<budget);
 });
 
-async function host({coldStart=false,readBlocked=false,failWriteKey=null,videoMode='unsupported',campaign=false,saved,blocked=false,failedAssets=false,deferredAsset=null,invalidSocket=false,invalidPickup=false,motionReduced=false,recordGeometry=false,pixelRatio=1,detailBox={width:300,height:180},bagBox={width:216,height:216},box={left:0,top:0,width:1200,height:760}}={}){
+async function host({manual=false,coldStart=false,readBlocked=false,failWriteKey=null,videoMode='unsupported',campaign=false,saved,blocked=false,failedAssets=false,deferredAsset=null,invalidSocket=false,invalidPickup=false,motionReduced=false,recordGeometry=false,pixelRatio=1,detailBox={width:300,height:180},bagBox={width:216,height:216},box={left:0,top:0,width:1200,height:760}}={}){
   const downloads=[],objectURLs=new Map(),revokedURLs=[],timers=[],resizeObservers=new Map();let reloads=0;
   const nodes=new Map(),events=new Map(),frames=[],calls=[],storage=new Map(saved?[[KEY,typeof saved==='string'?saved:JSON.stringify(saved)]]:[]);
   let scene,clock=1_000_000,rafTime=100;const audioEvents=[],audioDetails=[],mediaVideos=[];
@@ -655,6 +655,9 @@ async function host({coldStart=false,readBlocked=false,failWriteKey=null,videoMo
   const app=new vm.SourceTextModule(source+'\nexport {ensureCombatAssets,prepareRegion};',{context});await app.link(path=>{path=path.split('?')[0];assert.ok(modules.has(path));return modules.get(path);});await app.evaluate();await new Promise(resolve=>setImmediate(resolve));
   // Most existing behavior checks start with the battle cache warm. Cold-start tests exercise the real first-load UI separately.
   if(!coldStart){const warming=app.namespace.ensureCombatAssets().then(ok=>ok&&app.namespace.prepareRegion(scene.profile.unlockedStage));await Promise.race([warming,new Promise(resolve=>setImmediate(resolve))]);}
+  // Live hunts are always automatic (Alpha 0.104). manual:true re-enables the retained manual input
+  // path so render/engine QA tests can still steer the hunter directly.
+  if(manual)scene.auto=false;
   const api={resizeDetail(width,height){detailBox={width,height};for(let i=0;i<48;i++){const id='item-read-text-'+i;resizeObservers.get(id)?.([{target:nodes.get(id),contentRect:detailBox}]);}},resizeBag(width,height){bagBox={width,height};for(const id of ['bag-grid','bag-material-grid'])resizeObservers.get(id)?.([{target:nodes.get(id),contentRect:bagBox}]);},downloads,revokedURLs,get reloads(){return reloads;},flushTimers(){timers.splice(0).forEach(fn=>fn());},setStorageBlocked(value){blocked=value;},setReadBlocked(value){readBlocked=value;},setWriteFailure(key){failWriteKey=key;},async settle(){await new Promise(resolve=>setImmediate(resolve));},window:context.window,stick(x,y,pointerId=1,name='pointerdown'){this.emit('joystick',name,{pointerId,pointerType:'touch',clientX:61+x*45,clientY:61+y*45});},nodes,calls,geometry,storage,document,audioEvents,audioDetails,requestedImages,mediaVideos,async completeDeferredAssets(){deferredLoads.splice(0).forEach(fn=>fn());await new Promise(resolve=>setImmediate(resolve));},get state(){return scene;},emit(id,name,event={}){for(const fn of events.get(id+':'+name)||[])fn({target:nodes.get(id),preventDefault(){},...event});},tick(dt=.05){clock+=dt*1000;rafTime+=dt*1000;frames.shift()(rafTime);},run(seconds){for(let i=0;i<Math.ceil(seconds/.05);i++)this.tick();},profile(){return JSON.parse(storage.get(KEY));}};
   hostDisposals.push(()=>{nodes.clear();events.clear();resizeObservers.clear();frames.length=0;calls.length=0;geometry.length=0;storage.clear();deferredLoads.length=0;timers.length=0;downloads.length=0;objectURLs.clear();modules.clear();audioEvents.length=0;audioDetails.length=0;});
   api.tick(0);return api;
@@ -702,7 +705,7 @@ test('boot shows real camp, locked stages and a saved versioned profile',async()
   for(const call of ui.calls.filter(c=>c.args.length===8)){const bytes=fs.readFileSync(new URL(call.image,root));assert.ok(call.args[0]+call.args[2]<=bytes.readUInt32BE(16));assert.ok(call.args[1]+call.args[3]<=bytes.readUInt32BE(20));}
 });
 test('keyboard and action buttons operate real combat, movement and recovery',async()=>{
-  const ui=await host();ui.emit('start','click');ui.tick();ui.state.enemies=[];ui.state.spawnTimer=999;
+  const ui=await host({manual:true});ui.emit('start','click');ui.tick();ui.state.enemies=[];ui.state.spawnTimer=999;
   ui.emit('document','keydown',{key:'d',target:ui.nodes.get('arena')});ui.run(.2);ui.emit('document','keyup',{key:'d'});assert.ok(ui.state.player.x>350);
   ui.emit('attack','click');ui.tick();assert.equal(ui.state.player.action,'attack');ui.emit('dash','click');assert.equal(ui.state.player.action,'dash');assert.ok(ui.state.player.invulnerable>0);
   ui.state.enemies=[{id:99,type:'skitter',boss:false,x:ui.state.player.x+100,y:ui.state.player.y,hp:100,maxHp:100,action:'walk',actionTime:0,dead:false,facing:1,speed:0,cooldown:99,damage:9,radius:58,windup:.5,pattern:0}];
@@ -724,15 +727,37 @@ test('forge and unlocked stages survive loading another application instance',as
   const ui=await host({saved:p});ui.emit('forge-blade','click');assert.equal(ui.profile().forge.blade,1);assert.equal(ui.profile().gold,70);
   const reload=await host({saved:ui.profile()});assert.equal(reload.state.profile.forge.blade,1);assert.equal(reload.nodes.get('stage-2').disabled,false);reload.emit('stage-2','click');await reload.settle();reload.emit('start','click');reload.tick();assert.equal(reload.state.stageId,2);
 });
-test('actual auto button takes a hunt through content, victory, saved rewards and a camp return',async()=>{
+test('live hunts run automatically through content, victory, saved rewards and a camp return',async()=>{
   const p=game.createProfile(1_000_000);p.level=35;p.forge.blade=5;p.forge.armor=5;p.skillBook=game.restoreSkillBook(null,35);p.skillBook.loadout.active=['gather','dance'];p.skillBook.loadout.passive=['surrounded','finisher',null];p.skillBook.ranks.gather=1;p.skillBook.ranks.dance=3;p.skillBook.auto.ultimate='any';p.skills.edge=4;p.skills.haste=3;p.skills.chain=3;p.skillPoints=9;p.inventory=[{id:1,slot:'weapon',name:'성장 검',rarity:1,tier:1,artId:'forest_blade',affixes:{damage:12,crit:5}}];p.equipment.weapon=1;
-  const ui=await host({campaign:true,saved:p});ui.emit('auto','click');ui.emit('start','click');ui.tick();
+  const ui=await host({campaign:true,saved:p});ui.emit('start','click');ui.tick();assert.equal(ui.state.auto,true);
   for(let i=0;i<12000&&ui.state.phase!=='victory'&&ui.state.phase!=='defeat';i++){ui.tick();ui.calls.length=0;}
   assert.equal(ui.state.phase,'victory');assert.equal(ui.nodes.get('result-content').hidden,true);ui.run(1.2);assert.equal(ui.nodes.get('result-content').hidden,false,JSON.stringify({phase:ui.state.phase,resultDelay:ui.state.resultDelay,hitStop:ui.state.hitStop,paused:ui.state.paused}));assert.equal(ui.nodes.get('modal-eyebrow').textContent,'1-10 스테이지 완료');assert.equal(ui.state.run.rooms,10);assert.equal(ui.profile().unlockedStage,2);assert.ok(ui.profile().gold>100);assert.equal(ui.nodes.get('next-stage').hidden,false);
   ui.emit('result-camp','click');ui.tick();assert.equal(ui.state.phase,'camp');assert.equal(ui.nodes.get('stage-2').disabled,false);assert.ok(ui.state.profile.gold>100);
 });
+test('live hunts stay automatic: movement, attack, dodge, heavy strike and taps never take manual control',async()=>{
+  const ui=await host({campaign:true});ui.emit('start','click');await ui.settle();ui.tick();const s=ui.state,p=s.player;
+  assert.equal(s.auto,true);assert.equal(ui.nodes.get('joystick').hidden,true);assert.match(html,/<div class="abilities" hidden>/);
+  for(const key of ['d','w',' ','shift','q'])ui.emit('document','keydown',{key,target:ui.nodes.get('arena')});
+  ui.emit('arena','pointerdown',{clientX:300,clientY:200,button:0});ui.emit('arena','pointerdown',{clientX:300,clientY:200,button:2});
+  for(let i=0;i<40;i++)ui.tick(1/30);
+  for(const key of ['d','w',' ','shift','q'])ui.emit('document','keyup',{key});
+  assert.equal(s.auto,true);assert.equal(p.thunderCooldown,0);assert.notEqual(p.action,'heavy');assert.ok(s.run.time>1);
+});
+test('the skill switch chooses automatic or tapped casting and remembers the choice',async()=>{
+  const prof=game.createProfile(1_000_000);prof.level=35;prof.skillBook=game.restoreSkillBook(null,35);prof.skillBook.loadout.active=['gather','dance'];prof.skillBook.ranks.gather=1;prof.skillBook.ranks.dance=3;
+  const ui=await host({campaign:true,saved:prof});ui.emit('start','click');await ui.settle();const s=ui.state;s.player.invulnerable=999;
+  assert.equal(ui.nodes.get('auto-status').textContent,'자동');assert.equal(ui.nodes.get('auto').attributes['aria-pressed'],'true');
+  const cooling=()=>Object.values(s.skillRuntime.cooldowns).some(v=>v>0);
+  for(let i=0;i<600&&!cooling();i++)ui.tick(1/30);assert.ok(cooling(),'automatic mode casts skills');
+  ui.emit('auto','click');assert.equal(ui.nodes.get('auto-status').textContent,'수동');assert.equal(ui.nodes.get('auto').attributes['aria-pressed'],'false');assert.equal(ui.storage.get('beast-hunter:skill-mode'),'manual');
+  for(const id of Object.keys(s.skillRuntime.cooldowns))s.skillRuntime.cooldowns[id]=0;
+  for(let i=0;i<240;i++)ui.tick(1/30);assert.equal(cooling(),false,'manual mode leaves skills to the player');assert.equal(s.auto,true);
+  s.player.action='attack';s.player.actionTime=0;ui.tick(0);assert.equal(ui.nodes.get('combat-skill-0').disabled,false,'an automatic swing never disables the tap');
+  ui.emit('combat-skill-0','click');for(let i=0;i<90&&!cooling();i++)ui.tick(1/30);assert.ok(cooling(),'a tapped skill casts at the next gap between automatic swings');
+  ui.emit('auto','click');assert.equal(ui.storage.get('beast-hunter:skill-mode'),'auto');
+});
 test('responsive canvas clicks use world coordinates and joystick inputs have pointer ownership',async()=>{
-  const box={left:20,top:30,width:600,height:450},ui=await host({box});ui.emit('start','click');ui.tick();ui.state.enemies=[];ui.state.spawnTimer=999;
+  const box={left:20,top:30,width:600,height:450},ui=await host({manual:true,box});ui.emit('start','click');ui.tick();ui.state.enemies=[];ui.state.spawnTimer=999;
   const p=ui.state.player,start={x:p.x,y:p.y},ahead=world.worldToScreen({x:start.x+300,y:start.y},appCamera(ui,box));
   ui.emit('arena','pointerdown',clientAt(ahead,box));ui.run(2.2);assert.ok(p.x>start.x+290&&p.x<=start.x+300+1e-6);assert.ok(Math.abs(p.y-start.y)<1e-6);
   ui.stick(1,0,1);ui.stick(-1,0,2);ui.emit('joystick','pointerup',{pointerId:2});const x=ui.state.player.x;ui.run(.1);assert.ok(ui.state.player.x>x);ui.emit('joystick','pointerup',{pointerId:1});
@@ -743,7 +768,7 @@ test('blocked storage stays explicit and failed assets never enable a broken hun
 });
 
 test('joystick drag changes axes, preserves diagonal speed and releases on cancellation',async()=>{
-  const ui=await host();ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.state.spawnTimer=999;
+  const ui=await host({manual:true});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.state.spawnTimer=999;
   ui.stick(0,-1,11);ui.stick(1,-1,11,'pointermove');
   let {x,y}=ui.state.player;ui.run(.1);assert.ok(ui.state.player.x>x);assert.ok(ui.state.player.y<y);
   ui.stick(0,-1,11,'pointermove');({x,y}=ui.state.player);ui.run(.1);assert.equal(ui.state.player.x,x);assert.ok(ui.state.player.y<y);
@@ -752,7 +777,7 @@ test('joystick drag changes axes, preserves diagonal speed and releases on cance
 });
 
 test('mobile movement survives a second finger attack and stops on cancellation or pause',async()=>{
-  const ui=await host();ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.state.spawnTimer=999;
+  const ui=await host({manual:true});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.state.spawnTimer=999;
   ui.stick(1,0,1);ui.emit('attack','pointerdown',{pointerId:2});
   assert.equal(ui.state.player.swing.x,1);ui.emit('attack','pointercancel',{pointerId:2});ui.run(.6);
   const x=ui.state.player.x;ui.run(.1);assert.ok(ui.state.player.x>x);
@@ -763,7 +788,7 @@ test('mobile movement survives a second finger attack and stops on cancellation 
 });
 
 test('touching the battlefield does not discard a held mobile direction',async()=>{
-  const ui=await host();ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.state.spawnTimer=999;
+  const ui=await host({manual:true});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.state.spawnTimer=999;
   ui.stick(0,-1,1);
   ui.emit('arena','pointerdown',{pointerId:2,pointerType:'touch',clientX:1100,clientY:600});
   const {x,y}=ui.state.player;ui.run(.1);assert.equal(ui.state.player.x,x);assert.ok(ui.state.player.y<y);
@@ -779,7 +804,7 @@ test('mobile page cache transition pauses the hunt and releases every held contr
 });
 
 test('joystick rejects a second owner and ignores moves after capture loss',async()=>{
-  const ui=await host();ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.state.spawnTimer=999;
+  const ui=await host({manual:true});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.state.spawnTimer=999;
   ui.stick(-1,0,1);ui.stick(1,0,2);ui.stick(1,1,2,'pointermove');
   let x=ui.state.player.x;ui.run(.1);assert.ok(ui.state.player.x<x);
   ui.emit('joystick','pointerup',{pointerId:2});x=ui.state.player.x;ui.run(.1);assert.ok(ui.state.player.x<x);
@@ -820,7 +845,7 @@ test('portrait rotation cancels a pending asset-backed launch rather than starti
 });
 
 test('landscape camera uses the whole canvas, maps taps to world coordinates and releases input on resize',async()=>{
-  const box={left:10,top:20,width:667,height:375},ui=await host({box,recordGeometry:true});
+  const box={left:10,top:20,width:667,height:375},ui=await host({manual:true,box,recordGeometry:true});
   ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.state.spawnTimer=999;ui.tick();
   const v=viewControls.viewportFor(box.width,box.height),canvas=ui.nodes.get('arena');
   assert.equal(canvas.width,box.width);assert.equal(canvas.height,box.height);
@@ -834,7 +859,7 @@ test('landscape camera uses the whole canvas, maps taps to world coordinates and
 });
 
 test('DPI-only surface changes preserve held input, world state and the logical camera',async()=>{
- const box={left:0,top:0,width:844,height:390},ui=await host({box,pixelRatio:1});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.state.spawnTimer=999;ui.stick(1,0);const p=ui.state.player,x=p.x,viewport=ui.nodes.get('game-shell').attributes['data-viewport'];
+ const box={left:0,top:0,width:844,height:390},ui=await host({manual:true,box,pixelRatio:1});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.state.spawnTimer=999;ui.stick(1,0);const p=ui.state.player,x=p.x,viewport=ui.nodes.get('game-shell').attributes['data-viewport'];
  ui.window.devicePixelRatio=2;ui.tick(.025);assert.equal(ui.nodes.get('arena').width,1688);assert.equal(ui.nodes.get('arena').height,780);assert.equal(ui.nodes.get('game-shell').attributes['data-viewport'],viewport);assert.equal(ui.nodes.get('joystick').attributes['data-active'],'true');assert.ok(p.x>x);
  ui.window.devicePixelRatio=3;ui.tick(.025);assert.equal(ui.nodes.get('arena').width,1688);assert.equal(ui.nodes.get('arena').height,780);assert.equal(ui.state.phase,'playing');
  ui.emit('attack','pointerdown',{pointerId:2});ui.tick(.025);const swing=p.swing;assert.ok(swing);ui.window.devicePixelRatio=1.5;ui.tick(.025);assert.equal(p.swing,swing);assert.equal(ui.nodes.get('arena').width,1266);assert.equal(ui.nodes.get('arena').height,585);
@@ -868,14 +893,14 @@ test('equipment panel pauses combat, compares, equips and persists items without
   const legacy=game.createProfile(1_000_000);legacy.version=1;legacy.gold=73;delete legacy.inventory;delete legacy.equipment;const migrated=await host({saved:legacy});assert.equal(migrated.profile().version,13);assert.equal(migrated.profile().gold,73);assert.equal(migrated.storage.has(KEY+':recovery'),false);
 });
 test('mouse aiming drives directed attacks in the real app',async()=>{
-  const ui=await host();ui.emit('start','click');ui.tick();ui.state.enemies=[];
+  const ui=await host({manual:true});ui.emit('start','click');ui.tick();ui.state.enemies=[];
   ui.emit('arena','pointermove',{clientX:900,clientY:400});ui.emit('thunder','click');assert.equal(ui.state.player.action,'heavy');assert.ok(ui.state.player.swing.x>0);assert.ok(ui.state.player.stamina<100);
   ui.run(.8);ui.state.player.thunderCooldown=0;ui.state.player.stamina=100;ui.emit('arena','pointermove',{clientX:100,clientY:400});ui.emit('document','keydown',{key:'q',target:ui.nodes.get('arena')});assert.equal(ui.state.player.action,'heavy');assert.ok(ui.state.player.swing.x<0);
 });
 
 
 test('new ranged frames, danger cores, perfect counter UI and one-shot sound dispatch run in the real host',async()=>{
-  const ui=await host();ui.emit('start','click');ui.tick();assert.ok(ui.calls.some(c=>c.image.endsWith('monsters-forest-v045.png')));ui.state.enemies=[];ui.state.barrels=[];ui.state.effects=[];
+  const ui=await host({manual:true});ui.emit('start','click');ui.tick();assert.ok(ui.calls.some(c=>c.image.endsWith('monsters-forest-v045.png')));ui.state.enemies=[];ui.state.barrels=[];ui.state.effects=[];
   const e={id:99,type:'skitter',group:0,boss:false,x:ui.state.player.x+80,y:ui.state.player.y,hp:500,maxHp:500,action:'windup',actionTime:.9,windup:1,dead:false,facing:1,speed:0,cooldown:99,damage:9,radius:58,pattern:0,targetX:ui.state.player.x,targetY:ui.state.player.y,aggro:true};ui.state.enemies=[e];
   ui.emit('dash','click');ui.tick();assert.ok(ui.state.player.counterReady>0);assert.match(ui.nodes.get('combo').textContent,/Q 반격/);assert.equal(ui.nodes.get('thunder-status').textContent,'무료 반격');assert.match(ui.nodes.get('combat-tip').textContent,/파쇄 반격/);assert.equal(ui.nodes.get('thunder').attributes['data-counter'],'true');assert.equal(ui.audioEvents.filter(x=>x==='perfectDodge').length,1);
   ui.run(.25);ui.emit('thunder','click');ui.tick();assert.equal(ui.state.player.swing.counter,true);assert.equal(ui.audioEvents.filter(x=>x==='counterSlash').length,0);ui.tick();assert.equal(ui.audioEvents.filter(x=>x==='counterSlash').length,1);ui.tick();assert.equal(ui.audioEvents.filter(x=>x==='counterSlash').length,1);
@@ -885,7 +910,7 @@ test('new ranged frames, danger cores, perfect counter UI and one-shot sound dis
 
 
 test('movement renders all eight views including true front/back and never rotates the body sprite',async()=>{
-  const ui=await host();ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.tick();
+  const ui=await host({manual:true});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.tick();
   const directions=[['d'],['d','s'],['s'],['a','s'],['a'],['a','w'],['w'],['d','w']];
   for(let heading=0;heading<8;heading++){
     for(const key of directions[heading])ui.emit('document','keydown',{key,target:ui.nodes.get('arena')});ui.tick(.05);assert.equal(ui.state.player.heading,heading);
@@ -897,7 +922,7 @@ test('movement renders all eight views including true front/back and never rotat
   ui.emit('document','keyup',{key:'w'});ui.state.player.x=ui.state.bounds.width-ui.state.bounds.padding;const distance=ui.state.player.motionDistance;ui.emit('document','keydown',{key:'d',target:ui.nodes.get('arena')});ui.run(.2);assert.equal(ui.state.player.motionDistance,distance);assert.equal(ui.state.player.moving,false);
 });
 test('attack pose and slash FX start contact together, keep direction during the swing, and fresh mouse aim turns idle',async()=>{
-  const ui=await host();ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.tick();
+  const ui=await host({manual:true});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.tick();
   ui.emit('arena','pointermove',{clientX:ui.state.player.x,clientY:160});ui.tick();assert.equal(ui.state.player.heading,6);const before=ui.calls.length;ui.emit('attack','click');ui.tick(.05);
   assert.equal(ui.state.player.attackHit,false);assert.equal(ui.calls.slice(before).some(c=>c.image.endsWith('fx_cleave_sequence.png')),false);
   ui.tick(.05);assert.equal(ui.state.player.attackHit,true);const contact=ui.calls.filter(c=>c.image.endsWith('lirian_forehand-v05.png')).at(-1),frame=manifest.clips.lirian_forehand_n_v05.frames[3];assert.deepEqual(contact.args.slice(0,4),[frame.x,frame.y,frame.w,frame.h]);assert.ok(ui.calls.slice(before).some(c=>c.image.endsWith('fx_cleave_sequence.png')));
@@ -907,13 +932,13 @@ test('attack pose and slash FX start contact together, keep direction during the
 });
 
 test('first attack follows the visible idle direction instead of the initial east aim',async()=>{
-  const ui=await host();ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];
+  const ui=await host({manual:true});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];
   assert.equal(ui.state.player.heading,2);ui.emit('attack','click');assert.equal(ui.state.player.heading,2);assert.equal(ui.state.player.swing.x,0);assert.equal(ui.state.player.swing.y,1);
 });
 test('all eight attack-button directions work immediately after movement input, before a frame runs',async()=>{
   const directions=[['d'],['d','s'],['s'],['a','s'],['a'],['a','w'],['w'],['d','w']];
   for(let heading=0;heading<8;heading++){
-    const ui=await host();ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];
+    const ui=await host({manual:true});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];
     for(const key of directions[heading])ui.emit('document','keydown',{key,target:ui.nodes.get('arena')});
     ui.emit('attack','pointerdown',{pointerId:1});ui.emit('attack','pointerup',{pointerId:1});
     assert.equal(ui.state.player.heading,heading,'attack heading '+heading);const swing=ui.state.player.swing;
@@ -926,32 +951,32 @@ test('all eight attack-button directions work immediately after movement input, 
   }
 });
 test('leaving the arena clears old mouse aim for keyboard and touch attacks',async()=>{
-  const ui=await host();ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.tick();
+  const ui=await host({manual:true});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.tick();
   ui.emit('arena','pointermove',{clientX:900,clientY:400});ui.tick();assert.equal(ui.state.player.heading,0);ui.emit('arena','pointerleave');
   ui.emit('document','keydown',{key:'w',target:ui.nodes.get('arena')});ui.run(.1);ui.emit('document','keyup',{key:'w'});ui.emit('attack','click');assert.equal(ui.state.player.heading,6);
   ui.run(.5);ui.stick(0,1,7);ui.emit('thunder','click');assert.equal(ui.state.player.heading,2);assert.equal(ui.state.player.swing.y,1);
 });
 test('held keyboard combos turn the next strike while keeping the current strike locked',async()=>{
-  const ui=await host();ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];
+  const ui=await host({manual:true});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];
   for(const key of ['w',' '])ui.emit('document','keydown',{key,target:ui.nodes.get('arena')});ui.tick(.05);assert.equal(ui.state.player.heading,6);ui.run(.15);
   ui.emit('document','keyup',{key:'w'});ui.emit('document','keydown',{key:'s',target:ui.nodes.get('arena')});ui.tick(.05);assert.equal(ui.state.player.heading,6);assert.equal(ui.state.player.combo,1);
   for(let i=0;i<10&&ui.state.player.combo===1;i++)ui.tick(.025);assert.equal(ui.state.player.combo,2);assert.equal(ui.state.player.heading,2);assert.equal(ui.state.player.swing.y,1);
 });
 test('stationary cursor aim is recomputed when the player moves at a clamped camera edge',async()=>{
-  const ui=await host();ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.tick();
+  const ui=await host({manual:true});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.tick();
   const cursor=clientAt(world.worldToScreen({x:450,y:ui.state.player.y},appCamera(ui)));
   ui.emit('document','keydown',{key:'d',target:ui.nodes.get('arena')});ui.emit('arena','pointermove',cursor);ui.run(.6);ui.emit('document','keyup',{key:'d'});
   assert.ok(ui.state.player.x>450&&ui.state.player.x<600);ui.emit('attack','click');assert.equal(ui.state.player.heading,4);assert.ok(ui.state.player.swing.x<0);
 });
 test('new keyboard movement replaces old mouse aim, and a fresh mouse move can aim while moving',async()=>{
-  const ui=await host();ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.tick();
+  const ui=await host({manual:true});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.tick();
   ui.emit('arena','pointermove',{clientX:900,clientY:400});ui.tick();ui.emit('document','keydown',{key:'w',target:ui.nodes.get('arena')});ui.emit('attack','click');assert.equal(ui.state.player.heading,6);
   ui.run(.5);ui.emit('arena','pointermove',{clientX:900,clientY:400});ui.emit('document','keydown',{key:'w',repeat:true,target:ui.nodes.get('arena')});ui.emit('attack','click');assert.equal(ui.state.player.heading,0);
 });
 test('all eight Q directions follow movement input immediately without needing a mouse',async()=>{
   const directions=[['d'],['d','s'],['s'],['a','s'],['a'],['a','w'],['w'],['d','w']];
   for(let heading=0;heading<8;heading++){
-    const ui=await host();ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];
+    const ui=await host({manual:true});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];
     for(const key of directions[heading])ui.emit('document','keydown',{key,target:ui.nodes.get('arena')});ui.emit('document','keydown',{key:'q',target:ui.nodes.get('arena')});assert.equal(ui.state.player.heading,heading);assert.equal(ui.state.player.action,'heavy');
     ui.run(.31);const clip=manifest.clips[motion.directionalClipId(manifest,'hunter','finisher',heading)],frame=clip.frames[3],call=ui.calls.filter(c=>c.image.endsWith('lirian_finisher-v05.png')).at(-1);
     assert.deepEqual(call.args.slice(0,4),[frame.x,frame.y,frame.w,frame.h]);assert.equal(ui.state.player.attackHit,true);
@@ -960,7 +985,7 @@ test('all eight Q directions follow movement input immediately without needing a
 test('the actual held combo renders three distinct Lirian motions and reversed FX in all eight directions',async()=>{
   const directions=[['d'],['d','s'],['s'],['a','s'],['a'],['a','w'],['w'],['d','w']];
   for(let heading=0;heading<8;heading++){
-    const ui=await host();ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];
+    const ui=await host({manual:true});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];
     for(const key of directions[heading])ui.emit('document','keydown',{key,target:ui.nodes.get('arena')});ui.emit('attack','pointerdown',{pointerId:1});
     for(let combo=1;combo<=3;combo++){
       for(let i=0;i<50&&!(ui.state.player.combo===combo&&ui.state.player.attackHit);i++)ui.tick(.025);
@@ -981,7 +1006,7 @@ test('Lirian remains the player through idle, walk, dash, hit and death without 
 test('real 45-degree drawing keeps measured head position stable across walking, stopping and boosted speed in all eight views',async()=>{
   const directions=[['d'],['d','s'],['s'],['a','s'],['a'],['a','w'],['w'],['d','w']];
   for(const boosted of [false,true])for(let heading=0;heading<8;heading++){
-    const ui=await host();ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];
+    const ui=await host({manual:true});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];
     const p=ui.state.player;p.x=1800;p.y=1160;
     if(boosted){ui.state.profile.skills.haste=3;ui.state.profile.inventory=[{id:99,slot:'charm',affixes:{speed:20}}];ui.state.profile.equipment.charm=99;}
     const view=motion.DIRECTION_VIEWS[heading],measure=alignment.directions[view.key],heads=[],seen=new Set();
@@ -1019,7 +1044,7 @@ test('real hit rendering flashes only the enemy and smoothly catches up with aut
 test('dash, hurt and death render dedicated unrotated directional poses in all eight views',async()=>{
   const directions=[['d'],['d','s'],['s'],['a','s'],['a'],['a','w'],['w'],['d','w']];
   for(let heading=0;heading<8;heading++){
-    const ui=await host();ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];
+    const ui=await host({manual:true});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];
     for(const key of directions[heading])ui.emit('document','keydown',{key,target:ui.nodes.get('arena')});ui.emit('dash','click');ui.tick(.025);
     let clip=manifest.clips[motion.directionalClipId(manifest,'hunter','dash',heading)],frame=clip.frames[0],call=ui.calls.filter(c=>c.image.endsWith('lirian_actions-v06.png')&&c.alpha>=.6).at(-1);assert.deepEqual(call.args.slice(0,4),[frame.x,frame.y,frame.w,frame.h]);assert.equal(call.rotation,0);
     ui.run(.1);frame=clip.frames[motion.actionFrame('dash',ui.state.player.actionTime,4)];call=ui.calls.filter(c=>c.image.endsWith('lirian_actions-v06.png')&&c.alpha>=.6).at(-1);assert.deepEqual(call.args.slice(0,4),[frame.x,frame.y,frame.w,frame.h]);
@@ -1028,14 +1053,14 @@ test('dash, hurt and death render dedicated unrotated directional poses in all e
   }
 });
 test('death reveals results after the fall, ignores combat/inventory input and never skips on tab return',async()=>{
-  const ui=await host();ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.state.profile.gold=77;const p=ui.state.player;p.hp=1;
+  const ui=await host({manual:true});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.state.profile.gold=77;const p=ui.state.player;p.hp=1;
   ui.emit('document','keydown',{key:' ',target:ui.nodes.get('arena')});ui.state.projectiles=[{id:99,x:p.x+20,y:p.y,vx:-300,vy:0,damage:10,ttl:1,friendly:false}];ui.tick(.025);assert.equal(ui.state.phase,'defeat');assert.equal(ui.nodes.get('overlay').hidden,true);assert.equal(ui.profile().gold,77);assert.equal(ui.audioEvents.filter(t=>t==='playerDeath').length,1);
   ui.emit('document','keydown',{key:'i',target:ui.nodes.get('arena')});ui.emit('result-camp','click');ui.emit('attack','click');assert.equal(ui.state.phase,'defeat');assert.equal(ui.nodes.get('inventory-content').hidden,true);ui.run(.2);const time=p.actionTime,run=ui.state.run.time;
   ui.document.hidden=true;ui.emit('document','visibilitychange');ui.run(5);assert.equal(p.actionTime,time);ui.document.hidden=false;ui.emit('document','visibilitychange');ui.tick(5);assert.equal(p.actionTime,time);ui.run(.5);assert.equal(ui.nodes.get('result-content').hidden,false);assert.equal(ui.state.run.time,run);assert.equal(ui.state.profile.gold,77);
   let blocked=false;ui.emit('document','keydown',{key:' ',repeat:true,target:ui.nodes.get('result-camp'),preventDefault(){blocked=true;}});assert.equal(blocked,true);ui.emit('document','keyup',{key:' '});blocked=false;ui.emit('document','keydown',{key:' ',repeat:false,target:ui.nodes.get('result-camp'),preventDefault(){blocked=true;}});assert.equal(blocked,false);ui.emit('result-camp','click');ui.tick();assert.equal(ui.state.phase,'camp');assert.equal(ui.state.player.action,'idle');assert.equal(ui.state.player.actionTime,0);
 });
 test('dash follows movement over mouse aim and idle facing over stale released mouse aim',async()=>{
-  const ui=await host();ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.tick();
+  const ui=await host({manual:true});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.tick();
   ui.emit('document','keydown',{key:'w',target:ui.nodes.get('arena')});ui.emit('arena','pointermove',{clientX:900,clientY:400});ui.emit('dash','click');assert.equal(ui.state.player.heading,6);assert.equal(ui.state.player.dashY,-1);ui.emit('document','keyup',{key:'w'});ui.emit('arena','pointerleave');ui.run(.8);ui.emit('dash','click');assert.equal(ui.state.player.heading,6);assert.equal(ui.state.player.dashY,-1);
 });
 
@@ -1043,7 +1068,7 @@ const near=(actual,expected,epsilon=1e-8)=>assert.ok(Math.abs(actual-expected)<e
 const renderedPoint=(call,x,y)=>({x:call.a*x+call.c*y+call.x,y:call.b*x+call.d*y+call.y});
 
 test('45-degree terrain keeps upright art, foot anchors and depth order independent of ground scale without a battle minimap',async()=>{
-  const ui=await host({recordGeometry:true});ui.emit('start','click');const p=ui.state.player;p.x=1800;p.y=1160;
+  const ui=await host({manual:true,recordGeometry:true});ui.emit('start','click');const p=ui.state.player;p.x=1800;p.y=1160;
   const template=ui.state.enemies[0];ui.state.enemies=[{...template,id:900,type:'bulwark',species:undefined,x:1900,y:1280,action:'idle'},{...template,id:901,type:'spitter',species:undefined,x:2000,y:1080,action:'idle'}];ui.state.barrels=[];ui.state.paused=true;ui.calls.length=0;ui.geometry.length=0;ui.tick(0);
   const S=appScale(),camera=appCamera(ui),foot=world.worldToScreen(p,camera);
   const player=ui.calls.find(c=>c.image.endsWith('lirian_locomotion-v05.png')),clip=manifest.clips.lirian_idle_s_v05,frame=clip.frames[0];
@@ -1057,7 +1082,7 @@ test('45-degree terrain keeps upright art, foot anchors and depth order independ
 });
 
 test('letterboxed projected clicks keep a fixed world destination and all eight mouse strikes invert the ground projection',async()=>{
-  const ui=await host({box:{left:20,top:30,width:600,height:450}});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];const p=ui.state.player;p.x=1500;p.y=1000;ui.tick(0);
+  const ui=await host({manual:true,box:{left:20,top:30,width:600,height:450}});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];const p=ui.state.player;p.x=1500;p.y=1000;ui.tick(0);
   const box={left:20,top:30,width:600,height:450},camera=appCamera(ui,box),foot=world.worldToScreen(p,camera),point={x:foot.x+200,y:foot.y+140},destination=world.screenToWorld(point,camera,ui.state.bounds);
   ui.emit('arena','pointerdown',clientAt(point,box));ui.run(2);assert.ok(Math.hypot(p.x-destination.x,p.y-destination.y)<8);assert.ok(p.y>1100);const reached={x:p.x,y:p.y};ui.run(.3);near(p.x,reached.x);near(p.y,reached.y);
   for(let heading=0;heading<8;heading++){
@@ -1069,7 +1094,7 @@ test('letterboxed projected clicks keep a fixed world destination and all eight 
 
 test('clicking the projected upright head or overlapping bodies selects the visually front enemy',async()=>{
   for(const overlap of [false,true]){
-    const ui=await host();ui.emit('start','click');const p=ui.state.player;p.x=1800;p.y=1160;const template=ui.state.enemies[0];
+    const ui=await host({manual:true});ui.emit('start','click');const p=ui.state.player;p.x=1800;p.y=1160;const template=ui.state.enemies[0];
     const front={...template,id:900,type:'bulwark',species:undefined,x:p.x+70,y:p.y+70,homeX:p.x+70,homeY:p.y+70,aggro:true,speed:0,cooldown:999,action:'idle',guard:0};
     ui.state.enemies=overlap?[{...front,id:901,y:p.y+40,homeY:p.y+40},front]:[front];ui.state.barrels=[];ui.tick(0);
     const foot=world.worldToScreen(front,appCamera(ui));ui.emit('arena','pointerdown',clientAt({x:foot.x,y:foot.y-(overlap?60:150)}));ui.tick(.025);
@@ -1090,7 +1115,7 @@ test('hidden area warnings preserve airborne projection and visible boss heads a
 
 test('boosted near-destination clicks stop without reversing at either frame rate in every direction',async()=>{
   for(const dt of [1/60,.05])for(let heading=0;heading<8;heading++){
-    const ui=await host();ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.state.profile.skills.haste=3;ui.state.profile.inventory=[{id:99,slot:'charm',affixes:{speed:20}}];ui.state.profile.equipment.charm=99;
+    const ui=await host({manual:true});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.state.profile.skills.haste=3;ui.state.profile.inventory=[{id:99,slot:'charm',affixes:{speed:20}}];ui.state.profile.equipment.charm=99;
     const p=ui.state.player;p.x=1800;p.y=1160;ui.tick(0);const angle=heading*Math.PI/4,start={x:p.x,y:p.y},n={x:Math.cos(angle),y:Math.sin(angle)},target={x:p.x+n.x*10,y:p.y+n.y*10},screen=world.worldToScreen(target,appCamera(ui));
     ui.emit('arena','pointerdown',clientAt(screen));let progress=0;for(let i=0;i<20;i++){ui.tick(dt);const next=(p.x-start.x)*n.x+(p.y-start.y)*n.y;assert.ok(next>=progress-1e-8&&next<=10+1e-8);progress=next;}
     assert.ok(Math.hypot(p.x-target.x,p.y-target.y)<8);assert.equal(p.action,'idle');const x=p.x,y=p.y;ui.run(.3);near(p.x,x);near(p.y,y);
@@ -1099,7 +1124,7 @@ test('boosted near-destination clicks stop without reversing at either frame rat
 });
 
 test('click pursuit uses a wider restart distance and yields immediately to direct movement',async()=>{
-  const ui=await host();ui.emit('start','click');const p=ui.state.player;p.x=1800;p.y=1160;p.attackCooldown=999;const e={...ui.state.enemies[0],id:999,x:p.x+100,y:p.y,homeX:p.x+100,homeY:p.y,speed:0,cooldown:999};ui.state.enemies=[e];ui.state.barrels=[];ui.tick(0);
+  const ui=await host({manual:true});ui.emit('start','click');const p=ui.state.player;p.x=1800;p.y=1160;p.attackCooldown=999;const e={...ui.state.enemies[0],id:999,x:p.x+100,y:p.y,homeX:p.x+100,homeY:p.y,speed:0,cooldown:999};ui.state.enemies=[e];ui.state.barrels=[];ui.tick(0);
   const foot=world.worldToScreen(e,world.cameraFor(p,ui.state.bounds,world.VIEWPORT,world.GROUND_DEPTH_SCALE));ui.emit('arena','pointerdown',{clientX:foot.x,clientY:foot.y-45});ui.tick();const stopped=p.x;e.x=p.x+120;ui.run(.2);assert.equal(p.x,stopped);
   e.x=p.x+150;ui.tick();assert.ok(p.x>stopped);ui.run(.2);assert.ok(Math.abs(e.x-p.x-game.playerStats(ui.state.profile).range*.82)<1e-8);
   const x=p.x,y=p.y;ui.emit('document','keydown',{key:'w',target:ui.nodes.get('arena')});ui.tick();assert.equal(p.x,x);assert.ok(p.y<y);assert.equal(p.heading,6);
@@ -1109,7 +1134,7 @@ test('click pursuit uses a wider restart distance and yields immediately to dire
 
 test('successful manual dodge cancels old click travel while a rejected dodge preserves it',async()=>{
   for(const rejected of [false,true]){
-    const ui=await host();ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];const p=ui.state.player;p.x=1800;p.y=1160;ui.tick(0);ui.emit('arena','pointerdown',clientAt(world.worldToScreen({x:1900,y:1160},appCamera(ui))));
+    const ui=await host({manual:true});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];const p=ui.state.player;p.x=1800;p.y=1160;ui.tick(0);ui.emit('arena','pointerdown',clientAt(world.worldToScreen({x:1900,y:1160},appCamera(ui))));
     if(rejected)p.dashCooldown=2;ui.emit('dash','click');ui.run(.3);const x=p.x;ui.run(.4);
     if(rejected){assert.ok(p.x>1800&&p.x<=1900);assert.ok(p.x>=x);assert.ok(1900-p.x<8);}else{assert.ok(x>1900);near(p.x,x);assert.equal(p.action,'idle');}
   }
@@ -1117,7 +1142,7 @@ test('successful manual dodge cancels old click travel while a rejected dodge pr
 
 test('all eight skitter attacks show preparation, contact at damage time and locked recovery without body rotation',async()=>{
   for(let heading=0;heading<8;heading++){
-    const ui=await host();ui.emit('start','click');const p=ui.state.player;p.x=1800;p.y=1160;const angle=heading*Math.PI/4,n={x:Math.cos(angle),y:Math.sin(angle)},template=ui.state.enemies[0];
+    const ui=await host({manual:true});ui.emit('start','click');const p=ui.state.player;p.x=1800;p.y=1160;const angle=heading*Math.PI/4,n={x:Math.cos(angle),y:Math.sin(angle)},template=ui.state.enemies[0];
     const e={...template,id:999,species:undefined,x:p.x-n.x*55,y:p.y-n.y*55,homeX:p.x-n.x*55,homeY:p.y-n.y*55,speed:0,cooldown:0,aggro:true,hp:500,maxHp:500,action:'idle',actionTime:0};ui.state.enemies=[e];ui.state.barrels=[];ui.calls.length=0;ui.tick(.025);
     const clip=manifest.clips[motion.directionalClipId(manifest,'skitter','attack',heading)],latest=()=>ui.calls.filter(c=>c.image.endsWith('skitter_attack-v08.png')).at(-1),check=index=>{const frame=clip.frames[index],call=latest();assert.deepEqual(call.args.slice(0,4),[frame.x,frame.y,frame.w,frame.h]);assert.equal(call.rotation,0);near(Math.abs(call.a),call.d);assert.equal(Math.sign(call.a),motion.DIRECTION_VIEWS[heading].mirror*(clip.flipX?-1:1));};
     assert.equal(e.heading,heading);assert.equal(e.action,'windup');check(0);const hp=p.hp;
@@ -1245,7 +1270,7 @@ test('ancient slot icons and committed attack effects retain identity without ch
  const directions=[['d'],['d','s'],['s'],['a','s'],['a'],['a','w'],['w'],['d','w']];
  for(const weapon of game.ANCIENT_CATALOG.filter(r=>r.slot==='weapon'))for(let heading=0;heading<8;heading++){
   const saved=game.createProfile(1_000_000);saved.inventory=['weapon','armor','charm'].map((slot,i)=>{const row=slot==='weapon'?weapon:game.ANCIENT_CATALOG.filter(r=>r.slot===slot&&r.tier===weapon.tier)[game.ANCIENT_CATALOG.filter(r=>r.slot==='weapon'&&r.tier===weapon.tier).indexOf(weapon)%6];return {id:i+1,slot,rarity:5,tier:row.tier,artId:row.artId,catalogId:row.id,name:row.name,affixes:{}};});saved.equipment={weapon:1,armor:2,charm:3};
-  const ui=await host({saved,recordGeometry:true});ui.emit('camp-inventory','click');assert.match(ui.nodes.get('item-art-0').atlasImage.src,/ancient-individual-v019/);assert.equal(ui.nodes.get('equipped-art-armor').attributes['data-visual-id'],saved.inventory[1].catalogId);ui.emit('inventory-back','click');ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];for(const key of directions[heading])ui.emit('document','keydown',{key,target:ui.nodes.get('arena')});ui.emit('attack','click');ui.run(.15);
+  const ui=await host({manual:true,saved,recordGeometry:true});ui.emit('camp-inventory','click');assert.match(ui.nodes.get('item-art-0').atlasImage.src,/ancient-individual-v019/);assert.equal(ui.nodes.get('equipped-art-armor').attributes['data-visual-id'],saved.inventory[1].catalogId);ui.emit('inventory-back','click');ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];for(const key of directions[heading])ui.emit('document','keydown',{key,target:ui.nodes.get('arena')});ui.emit('attack','click');ui.run(.15);
   const draws=ui.calls.filter(c=>c.image.endsWith('ancient-individual-v019.png')||c.image.endsWith(manifest.equipment.image));assert.equal(draws.length,0);assert.equal(ui.state.player.heading,heading);assert.ok(ui.geometry.some(c=>c.kind==='lineTo'));assert.equal(ui.state.player.swing.equipmentAtStart.weapon.rarity,5);
   // Each direction is an independent virtual tab; release it before the next case.
   hostDisposals.pop()();
@@ -1391,7 +1416,7 @@ test('boss arrival and rage omit the text panel while retaining portal timing, a
 });
 
 test('stage clear is a short nonblocking notice and resets the minute clock without carrying held movement',async()=>{
- const ui=await host({campaign:true});ui.emit('start','click');ui.tick();ui.state.enemies=[];ui.state.spawns=[];ui.state.run.wave=3;ui.state.run.waveKills=ui.state.run.waveQuota;ui.stick(1,0);ui.tick();
+ const ui=await host({manual:true,campaign:true});ui.emit('start','click');ui.tick();ui.state.enemies=[];ui.state.spawns=[];ui.state.run.wave=3;ui.state.run.waveKills=ui.state.run.waveQuota;ui.stick(1,0);ui.tick();
  assert.equal(ui.state.run.stage,2);assert.equal(ui.state.run.flow,'combat');assert.ok(ui.state.enemies.some(e=>!e.dead));assert.equal(ui.nodes.has('notice'),false);assert.equal(ui.nodes.get('stage-complete').hidden,false);assert.equal(ui.nodes.get('stage-complete').textContent,'1-1 스테이지 완료');assert.equal(ui.nodes.get('hunt-stage').textContent,'붉은 숲 · 1-2 스테이지');assert.equal(ui.nodes.get('attack').disabled,false);assert.equal(ui.state.player.moving,false);assert.equal(ui.nodes.get('time-left').textContent,'01:00');const rewards=ui.state.profile.gold;
  ui.run(.8);assert.equal(ui.nodes.get('stage-complete').hidden,false);ui.emit('pause','click');const ttl=ui.state.effects.find(f=>f.type==='stageClear').ttl;ui.run(.5);assert.equal(ui.nodes.get('stage-complete').hidden,true);assert.equal(ui.state.effects.find(f=>f.type==='stageClear').ttl,ttl);ui.emit('resume','click');assert.equal(ui.nodes.get('stage-complete').hidden,false);ui.run(.9);assert.equal(ui.nodes.get('stage-complete').hidden,true);assert.equal(ui.state.profile.gold,rewards);assert.equal(ui.nodes.get('monsters-left').textContent,'64');assert.equal(ui.state.player.moving,false);
 });
@@ -1471,7 +1496,7 @@ test('actual skill controls spend resources, retain cooldown on pause and expose
 test('all nineteen actual skill buttons render authored body frames and finite VFX without the generic heavy cleave',async()=>{
  for(const d of game.SKILL_CATALOG.filter(d=>d.kind!=='passive')){
   const p=game.createProfile(1_000_000);p.level=50;p.skillBook=game.restoreSkillBook(null,50);p.skillBook.loadout={active:[null,null],passive:[null,null,null],ultimate:[null]};p.skillBook.loadout[d.kind][0]=d.id;
-  const ui=await host({saved:p,campaign:true,recordGeometry:true});ui.emit('start','click');ui.tick();const s=ui.state;s.spawns=[{id:s.nextId++,type:'bulwark',x:s.player.x+120,y:s.player.y,delay:0,warning:1}];game.advanceGame(s,.001);s.spawns=[];s.barrels=[];s.player.invulnerable=100;
+  const ui=await host({manual:true,saved:p,campaign:true,recordGeometry:true});ui.emit('start','click');ui.tick();const s=ui.state;s.spawns=[{id:s.nextId++,type:'bulwark',x:s.player.x+120,y:s.player.y,delay:0,warning:1}];game.advanceGame(s,.001);s.spawns=[];s.barrels=[];s.player.invulnerable=100;
   const e=s.enemies[0];Object.assign(e,{x:s.player.x+120,y:s.player.y,hp:100000,maxHp:100000,speed:0,cooldown:1000,guard:0});s.enemies=[e];ui.tick(0);
   ui.emit('combat-skill-'+(d.kind==='ultimate'?2:0),'click');assert.equal(s.skillRuntime.motion?.id,d.id);ui.calls.length=0;ui.geometry.length=0;
   ui.tick(.03);assert.ok(ui.calls.some(c=>/lirian_/.test(c.image)),d.id+' actor');assert.ok(ui.calls.some(c=>/skill-effects-v051/.test(c.image)),d.id+' bitmap VFX');assert.ok(!s.effects.some(f=>['heavySwing','counterSlash'].includes(f.type)),d.id+' shared cleave');
@@ -1507,7 +1532,7 @@ test('attack release after pause cannot restart an attack from an old pointer cl
 });
 test('one-shot combat controls act on primary press once while the joystick stays owned',async()=>{
  for(const [node,id] of [['combat-skill-0','crescent'],['combat-skill-1','seeking'],['combat-skill-2','bloodmoon'],['dash',null],['thunder',null]]){
-  const p=game.createProfile(1_000_000);p.level=50;p.skillBook=game.restoreSkillBook(null,50);p.skillBook.loadout.active=['crescent','seeking'];const ui=await host({saved:p,campaign:true});ui.emit('start','click');ui.tick();const s=ui.state;s.spawns=[{id:987,type:'bulwark',x:s.player.x+100,y:s.player.y,delay:0,warning:1}];game.advanceGame(s,.001);s.spawns=[];s.player.invulnerable=100;ui.stick(1,0,1);
+  const p=game.createProfile(1_000_000);p.level=50;p.skillBook=game.restoreSkillBook(null,50);p.skillBook.loadout.active=['crescent','seeking'];const ui=await host({manual:true,saved:p,campaign:true});ui.emit('start','click');ui.tick();const s=ui.state;s.spawns=[{id:987,type:'bulwark',x:s.player.x+100,y:s.player.y,delay:0,warning:1}];game.advanceGame(s,.001);s.spawns=[];s.player.invulnerable=100;ui.stick(1,0,1);
   ui.emit(node,'pointerdown',{pointerId:2,pointerType:'touch',button:0});assert.equal(ui.nodes.get('joystick').attributes['data-active'],'true');
   if(id){assert.equal(s.skillRuntime.serial,1,node);assert.ok(s.skillRuntime.cooldowns[id]>0,node);}else assert.equal(s.player.action,node==='dash'?'dash':'heavy',node);
   const stamina=s.player.stamina,serial=s.skillRuntime.serial;ui.emit(node,'click',{detail:1,pointerId:2});assert.equal(s.player.stamina,stamina);assert.equal(s.skillRuntime.serial,serial);
@@ -1532,7 +1557,7 @@ test('basic action cooldowns display their final fraction until zero',async()=>{
 
 test('held movement and attack survive a skill cast and dodge, then release cleanly at 30 and 60 frames per second',async()=>{
  for(const dt of [1/30,1/60]){
-  const p=game.createProfile(1_000_000);p.level=50;p.skillBook=game.restoreSkillBook(null,50);p.skillBook.loadout.active=['dance','crescent'];const ui=await host({saved:p,campaign:true});ui.emit('start','click');const s=ui.state;s.spawns=[{id:1987,type:'bulwark',x:s.player.x+100,y:s.player.y,delay:0,warning:1}];game.advanceGame(s,.001);s.spawns=[];s.barrels=[];s.player.invulnerable=100;Object.assign(s.enemies[0],{hp:100000,maxHp:100000,speed:0,cooldown:999,guard:0,guardMax:0});
+  const p=game.createProfile(1_000_000);p.level=50;p.skillBook=game.restoreSkillBook(null,50);p.skillBook.loadout.active=['dance','crescent'];const ui=await host({manual:true,saved:p,campaign:true});ui.emit('start','click');const s=ui.state;s.spawns=[{id:1987,type:'bulwark',x:s.player.x+100,y:s.player.y,delay:0,warning:1}];game.advanceGame(s,.001);s.spawns=[];s.barrels=[];s.player.invulnerable=100;Object.assign(s.enemies[0],{hp:100000,maxHp:100000,speed:0,cooldown:999,guard:0,guardMax:0});
   const run=seconds=>{for(let i=0;i<Math.ceil(seconds/dt);i++)ui.tick(dt);};ui.stick(1,0,1);const x=s.player.x;ui.emit('combat-skill-0','pointerdown',{pointerId:3,pointerType:'touch',button:0});ui.emit('attack','pointerdown',{pointerId:2,pointerType:'touch',button:0});assert.equal(s.skillRuntime.lastCast.id,'dance');run(1.5);assert.ok(s.player.x>x);assert.equal(s.player.action,'attack');const y=s.player.y;ui.emit('dash','pointerdown',{pointerId:3,pointerType:'touch',button:0});assert.equal(s.player.action,'dash');run(.5);assert.ok(s.player.x>x);assert.ok(Math.abs(s.player.y-y)<1e-6);assert.equal(ui.nodes.get('joystick').attributes['data-active'],'true');
   ui.emit('pause','click');ui.emit('resume','click');ui.emit('attack','pointerup',{pointerId:2});ui.emit('attack','click',{detail:1,pointerId:2});run(1);const stopped=s.player.x;run(.2);assert.equal(s.player.x,stopped);assert.equal(s.player.action,'idle');assert.equal(ui.nodes.get('joystick').attributes['data-active'],'false');
  }
@@ -1752,7 +1777,7 @@ test('stage B result loot keeps ownership by instance ID after durable settlemen
 });
 
 test('followup HUD writes preserve simulation, controls, pause and live diagnostics',async()=>{
- const ui=await host({campaign:true});ui.emit('start','click');await ui.settle();const s=ui.state;s.player.invulnerable=999;const remaining=s.run.timeRemaining;for(let i=0;i<120;i++)ui.tick(1/60);assert.ok(s.run.timeRemaining<remaining-1.9);const metrics=JSON.parse(ui.nodes.get('game-shell').attributes['data-frame-metrics']);assert.equal(metrics.samples,120);assert.equal(metrics.hudFrames,120);assert.equal(metrics.drawFrames,120);ui.emit('pause','click');assert.equal(s.paused,true);assert.equal(ui.nodes.get('pause-content').hidden,false);const time=s.run.timeRemaining;ui.run(.5);assert.equal(s.run.timeRemaining,time);ui.emit('resume','click');assert.equal(s.paused,false);ui.tick(.01);assert.ok(s.run.timeRemaining<time);ui.emit('auto','click');assert.equal(ui.nodes.get('auto-status').textContent,'ON');
+ const ui=await host({campaign:true});ui.emit('start','click');await ui.settle();const s=ui.state;s.player.invulnerable=999;const remaining=s.run.timeRemaining;for(let i=0;i<120;i++)ui.tick(1/60);assert.ok(s.run.timeRemaining<remaining-1.9);const metrics=JSON.parse(ui.nodes.get('game-shell').attributes['data-frame-metrics']);assert.equal(metrics.samples,120);assert.equal(metrics.hudFrames,120);assert.equal(metrics.drawFrames,120);ui.emit('pause','click');assert.equal(s.paused,true);assert.equal(ui.nodes.get('pause-content').hidden,false);const time=s.run.timeRemaining;ui.run(.5);assert.equal(s.run.timeRemaining,time);ui.emit('resume','click');assert.equal(s.paused,false);ui.tick(.01);assert.ok(s.run.timeRemaining<time);assert.equal(ui.nodes.get('auto-status').textContent,'자동');ui.emit('auto','click');assert.equal(ui.nodes.get('auto-status').textContent,'수동');assert.equal(s.auto,true);
 });
 
 

@@ -1,0 +1,22 @@
+/* Alpha 0.104.0 automatic hunt HUD: movement and attacks are automatic, so only the status panel,
+   the skill row and the skill auto/manual switch stay on screen. Loaded last. */
+
+/* Hunter status: the frame art (389x174) was stretched into a 176x43 box, pushing its corner gems
+   over the level, HP text and bar. Draw it as a 9-slice frame so the gems stay in the corners. */
+#game-shell .battle .top-hud .hunter-hud{box-sizing:border-box;width:200px;max-width:100%;height:auto;min-height:0;margin-top:2px;padding:0 3px 1px!important;background:none!important;border:12px solid transparent;border-image:url('assets/combat-hunter-v046.webp') 50 fill / 12px / 0 stretch}
+#game-shell .battle .top-hud .hunter-hud .hunter-caption{display:flex;align-items:baseline;justify-content:space-between;gap:6px;height:14px;line-height:14px;margin:0}
+#game-shell .battle .top-hud .hunter-hud .bar{margin:3px 0 0}
+#game-shell .battle .top-hud .hunter-hud .bar.stamina{margin-top:2px}
+
+/* No joystick, attack, dodge or heavy strike buttons. */
+#game-shell .battle #joystick,#game-shell .battle .abilities{display:none!important}
+
+/* Skills: one row centred along the bottom edge; empty slots collapse. */
+#game-shell .battle .bottom-hud .skill-combat{position:absolute;left:50%;right:auto;top:auto;bottom:calc(var(--dock-bottom,20px) + 4px);transform:translateX(-50%);display:flex;flex-direction:row;align-items:flex-end;gap:calc(var(--control,56px) * .45);width:auto;height:auto;pointer-events:none;z-index:4}
+#game-shell .battle .bottom-hud .skill-combat>.skill-combat-button{position:relative!important;inset:auto!important;transform:none!important;margin:0!important;pointer-events:auto}
+#game-shell .battle .bottom-hud .skill-combat>.skill-combat-button[hidden]{display:none}
+
+/* Skill auto/manual switch sits at the bottom-left corner. */
+#game-shell .battle .battle-actions{left:max(18px,env(safe-area-inset-left,0px));right:auto;top:auto;bottom:calc(var(--dock-bottom,20px) + 6px)}
+#game-shell .battle .battle-actions #auto{width:78px;min-width:78px}
+#game-shell .battle .battle-actions #auto[data-skill-mode=manual] span{color:#e9c27e}

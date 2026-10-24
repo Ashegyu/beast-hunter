@@ -87,7 +87,7 @@ export function equipmentSnapshot(profile){
 export const COMBOS=[
   {duration:.32,impact:.10,damage:1,range:1,dot:.38,push:22,step:25,name:'가로 베기'},
   {duration:.36,impact:.13,damage:1.15,range:1,dot:.3,push:30,step:30,name:'되베기'},
-  {duration:.52,impact:.22,damage:1.85,range:1.12,dot:.12,push:70,step:50,name:'파쇄 마무리'},
+  {duration:.52,impact:.22,damage:2.5,range:1.12,dot:.12,push:70,step:50,name:'파쇄 마무리'},
 ];
 const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
 const number=(x,fallback=0)=>Number.isFinite(x)?x:fallback;
@@ -593,7 +593,8 @@ function damageEnemy(s,e,value,critical=false,kind='normal',origin=s.player,pier
   if(e.guard>0){
     const n=direction(origin.x-e.x,origin.y-e.y),front=n.x*e.guardX+n.y*e.guardY>.1;
     const breaker=kind==='heavy'||kind==='finisher'||kind==='blast'||kind==='reflected';
-    if(front||breaker){e.guard=Math.max(0,e.guard-(piercing?25:0)-(kind==='blast'?100:kind==='heavy'||kind==='reflected'?65:kind==='finisher'?38:12));
+    // Alpha 0.104: the heavy-strike button is gone, so the automatic finisher breaks guard as hard as it did.
+    if(front||breaker){e.guard=Math.max(0,e.guard-(piercing?25:0)-(kind==='blast'?100:kind==='heavy'||kind==='reflected'||kind==='finisher'?65:12));
       if(!e.guard){broken=true;e.exposed=2.8;setAction(e,'stagger');e.actionTime=0;s.run.guardBreaks++;effect(s,'guardBreak',{x:e.x,y:e.y},1);s.hitStop=Math.max(s.hitStop,.075);s.shake=9;}
       else if(front&&kind!=='blast'){guarded=true;value*=piercing?.75:.3;effect(s,'guardHit',{x:e.x,y:e.y-55},.2);}
     }
@@ -840,14 +841,15 @@ function avoidEnemy(s,threat){
   if(length(p.x-threat.targetX,(p.y-threat.targetY)/.65)>=threat.radius+95)return{x:0,y:0,attack:false};
   const n=direction(p.x-threat.targetX,p.y-threat.targetY,direction(p.x-threat.x,p.y-threat.y));if(threat.actionTime>threat.windup*.7)dash(s,n);return{...n,attack:false};
 }
-function autoInput(s){
-  const p=s.player,held=s.assist.evade;
+// Hunts are always automatic (Alpha 0.104). input.skillMode==='manual' leaves skills to the player.
+function autoInput(s,input=null){
+  const p=s.player,held=s.assist.evade,autoSkills=input?.skillMode!=='manual';
   const core=s.barrels.find(b=>b.status==='armed'&&length(p.x-b.x,(p.y-b.y)/.65)<b.radius+30);
   if(core)return avoidCore(s,core);
   const shot=s.projectiles.find(q=>threatenedByShot(s,q,p,.24));
   if(shot){p.queued=false;p.queuedAim=null;const n=direction(-shot.vy,shot.vx);dash(s,n);return{...n,attack:false};}
   const threat=s.enemies.find(e=>eligible(s,e)&&enemyAttackKind(e)!=='volley'&&e.action==='windup'&&length(p.x-e.targetX,(p.y-e.targetY)/.65)<e.radius+65);
-  if(threat){if(threat.windup-threat.actionTime<=.24&&skills.castSkill(s,'parry',{x:threat.x-p.x,y:threat.y-p.y},SKILL_HOOKS))return {x:0,y:0,attack:false};return avoidEnemy(s,threat);}
+  if(threat){if(autoSkills&&threat.windup-threat.actionTime<=.24&&skills.castSkill(s,'parry',{x:threat.x-p.x,y:threat.y-p.y},SKILL_HOOKS))return {x:0,y:0,attack:false};return avoidEnemy(s,threat);}
   // Waiting outside one hazard never takes priority over a new immediate threat.
   if(held?.kind==='core'){const core=s.barrels.find(b=>b.id===held.id&&b.status==='armed');if(core)return avoidCore(s,core);}
   if(held?.kind==='enemy'){const enemy=s.enemies.find(e=>e.id===held.id&&eligible(s,e)&&e.action==='windup');if(enemy)return avoidEnemy(s,enemy);}
@@ -866,9 +868,10 @@ function autoInput(s){
   const n=direction(e.x-p.x,e.y-p.y),d=length(e.x-p.x,e.y-p.y),range=playerStats(s.profile).range,stop=range*.68;
   if(s.assist.approaching&&d<=stop+ARRIVAL_EPSILON)s.assist.approaching=false;else if(!s.assist.approaching&&d>range*.9)s.assist.approaching=true;
   if(!['attack','heavy'].includes(p.action)){p.aimX=n.x;p.aimY=n.y;}
-  if(skills.autoSkill(s,n,SKILL_HOOKS))return {x:0,y:0,attack:false,aim:n};
+  // A tapped skill waits for the gap between automatic swings, then fires at the current target.
+  if(input?.skillRequest&&skills.castSkill(s,input.skillRequest,n,SKILL_HOOKS))return {x:0,y:0,attack:false,aim:n};
+  if(autoSkills&&skills.autoSkill(s,n,SKILL_HOOKS))return {x:0,y:0,attack:false,aim:n};
   if(s.skillRuntime.stanceUntil>s.run.time&&(p.stamina<65||p.hp/p.maxHp<.5))return {x:-n.x,y:-n.y,attack:false,aim:n};
-  if(d<190&&s.skillRuntime.bloodbladeUntil<=s.run.time&&(p.counterReady>0||p.stamina>60&&!p.thunderCooldown))thunder(s,n);
   return{x:s.assist.approaching?n.x:0,y:s.assist.approaching?n.y:0,attack:d<range,aim:n,destination:s.assist.approaching?{x:e.x,y:e.y}:null,stopDistance:stop};
 }
 function updatePickups(s,dt,force=false){
@@ -921,7 +924,7 @@ export function advanceGame(s,elapsed,input={}){
     if(s.run.flow==='stageClear'){s.run.timer=Math.max(0,s.run.timer-step);if(!s.run.timer){s.run.stage++;prepareStage(s,true);}continue;}
     if(s.run.flow==='combat'){s.run.waveTime+=step;advanceSpawns(s,step);}
     if(!s.auto){s.assist.targetId=null;s.assist.approaching=false;s.assist.evade=null;}
-    const controls=s.auto?autoInput(s):{x:number(input.x),y:number(input.y),attack:!!input.attack,destination:input.destination,stopDistance:input.stopDistance};
+    const controls=s.auto?autoInput(s,input):{x:number(input.x),y:number(input.y),attack:!!input.attack,destination:input.destination,stopDistance:input.stopDistance};
     let remaining=Infinity;const destination=controls.destination;
     if(destination&&Number.isFinite(destination.x)&&Number.isFinite(destination.y)){
       const dx=destination.x-p.x,dy=destination.y-p.y,d=length(dx,dy);remaining=Math.max(0,d-Math.max(0,number(controls.stopDistance)));

@@ -13,7 +13,7 @@
 ## 실행
 - 게임: `PORT=8090 node serve-local.mjs` 후 `http://127.0.0.1:8090/` (기본 포트 8080). file:// 로는 안 된다.
 - 헤드리스 확인: 전역 playwright(`/opt/node22/lib/node_modules/playwright`)를 createRequire로 불러 Chromium 실행. 844×390에서 거점 → 사냥터 → 전투 준비 → 전투까지 콘솔 오류·404 없이 동작 확인함.
-- 테스트: `npm test` = `node --experimental-vm-modules --test tests/*.test.mjs` (약 55초). **776/776 통과** (Alpha 0.103.2에서 오래된 기대값 32건을 현재 규칙에 맞춤).
+- 테스트: `npm test` = `node --experimental-vm-modules --test tests/*.test.mjs` (약 55초). **778/778 통과** (0.104.0 기준).
 
 ## 테스트 작성 시 주의 (0.103.2에서 정리한 내용)
 - 고대 장비는 0.97부터 레이드 전용 → 스테이지 보스는 고대를 떨어뜨리지 않음. 고대 카탈로그는 75종(신규 부위 15종은 고대 전용 원화 없음).
@@ -22,6 +22,7 @@
 - 서 있는 캐릭터는 화면 세로 위치에 따라 0.86~1.1배(app.js `sceneDepthScale`, 플레이어 위치에서 1.0).
 - tests/game-ui.test.mjs 앞부분의 `appView/appScale/appCamera/appDepth/clientAt` 도우미가 app.js의 화면 변환을 그대로 재현한다. 화면 좌표 테스트는 이것을 쓴다.
 - lab 테스트 링커는 `?v=` 쿼리를 잘라 처리한다.
+- 0.104부터 실제 사냥은 항상 자동(`state.auto=true`). 이동·공격·마우스 조준으로 캐릭터를 조종해야 하는 그림/입력 테스트는 `host({manual:true})`로 검수용 수동 경로를 켠다. 실제 동작 검증은 manual 없이 쓴다.
 
 ## 구조
 - `dist/index.html` (389KB, 정적 DOM 3704 id, CSS 45개 순차 로드) → `menu-pages.js`, `app.js`.
@@ -31,7 +32,7 @@
 - `engine.js` + `lab.html/lab.js`: 구형 모션 검사 도구(MOTION LAB). 실게임과 무관.
 - `sound.js`: 오디오 파일 없이 WebAudio로 효과음 합성 (동시 10음).
 - 어셋 로딩: `dist/assets/manifest.json`(클립 415개, png→webp `delivery` 매핑). 거점 3장 → 공유 전투 18장 → 지역별 4장(한 번에 한 지역만 상주). 폰트는 `dist/assets/fonts/`.
-- CSS: 버전별로 파일을 뒤에 덧붙여 덮어쓰는 레이어 구조 → **로드 순서 = 우선순위**. 맨 마지막은 `layout-fit.css`(0.103.2, 한 화면 맞춤 규칙 모음). 새 화면 맞춤 수정은 여기에 화면별 주석과 함께 추가한다. `#game-shell` 접두 + `data-panel`/`data-camp-view`/`data-phase` 속성 선택자. `!important` 약 900개 + index.html 인라인 474개(tools/apply-common-ui-v2.py가 주입). 세로용 규칙 다수는 가로 전용 전환 뒤 사실상 죽은 코드.
+- CSS: 버전별로 파일을 뒤에 덧붙여 덮어쓰는 레이어 구조 → **로드 순서 = 우선순위**. 끝에서 두 번째는 `layout-fit.css`(0.103.2, 한 화면 맞춤 규칙 모음), 마지막은 `combat-auto.css`(0.104, 자동 전투 HUD: 상태 창 9분할 테두리, 하단 스킬 줄, 스킬 자동/수동 버튼). 새 화면 맞춤 수정은 여기에 화면별 주석과 함께 추가한다. `#game-shell` 접두 + `data-panel`/`data-camp-view`/`data-phase` 속성 선택자. `!important` 약 900개 + index.html 인라인 474개(tools/apply-common-ui-v2.py가 주입). 세로용 규칙 다수는 가로 전용 전환 뒤 사실상 죽은 코드.
 - `art/`: 원화 원본, 생성 프롬프트, 검수 자료. `tools/reports/`: 버전별 측정·검수 결과(394개).
 
 ## 버전 표기
@@ -39,6 +40,7 @@
 - 파일명 버전: 점 제거(063=0.63, 0844=0.84.4, v0970=0.97.0, v01002=0.100.2). 단 alpha09/alpha091은 0.9/0.9.1.
 
 ## 게임 규칙 요약
+- 전투(0.104): 이동·공격·회피는 항상 자동(engine `autoInput`). 파쇄(Q, `thunder`)는 UI·자동 전투에서 제거(엔진 함수는 남음). 스킬만 자동/수동 선택: 앱이 `input.skillMode`('auto'|'manual')를 넘기고, 수동이면 탭한 스킬을 `input.skillRequest`로 3초간 예약해 다음 공격 틈에 시전. 선택은 localStorage `beast-hunter:skill-mode`. 연격 3타는 방어 65 감소·피해 2.5배(파쇄 공백 보완).
 - 캐릭터: 리리안 1명(검사, 엔진 역할 ID는 hunter). 3챕터(붉은 숲/망자의 폐성/서리 왕좌, 보스 780/1280/1900 HP) × 10스테이지 × 난이도 3(일반/정예/악몽: HP ×1/1.5/2.2).
 - 스테이지 60초 제한. 1~9는 웨이브 3개, 10은 보스 단독. 4·9 special, 8 elite, 10 boss. 동시 적 최대 32.
 - `advanceGame`: dt ≤0.1s, 0.025s 고정 서브스텝. RNG는 LCG 5개 스트림(전투·전리품·재료·재련·승급), `Math.random` 미사용 → 결정적.
@@ -62,6 +64,8 @@
 - `s.encounters/caches/nodes`를 채우는 코드 없음 → interact·상자·그룹 어그로 로직이 죽어 있음. `flow==='break'` 설정처 없음.
 - 챕터 수 3이 여러 곳 하드코딩 (game-engine.js:117,123,579, battle-plans.js:30, terrain.js:18, profile-backup.js:12).
 - 궁극기 영상(mp4)·컷인은 테스트에서만 쓰이고 런타임에는 연결되지 않음. 신규 고대 15종 원화 없음.
+- 파쇄 제거(0.104)로 '파쇄 적중 시' 발동하는 고유 효과(파쇄 축전기 등)와 고대 각인이 더 이상 발동하지 않음. 연격 3타로 옮길지 밸런스 결정 필요.
+- 1장 4스테이지(철갑 진군)는 원본부터 60초 제한에 거의 붙어 있음(레벨 20 테스트 빌드 56~58초). 전투 수치를 바꿀 땐 tests/game-engine.test.mjs의 자동 빌드 완주 테스트로 확인.
 - `updateHud`가 매 프레임 getElementById를 수백 회 호출(성능 여지). 테스트에선 profile-backup.js 경유로 game-engine.js가 이중 로드됨.
 - 0.103.2에서 고친 것: 스킬 아이콘 매 프레임 src 재대입, 로드 실패 문구 파일명, 제작 장비 투사체 null 접근, world.js 이중 로드, 가방 버튼 클릭 인자.
 

@@ -2,7 +2,7 @@ let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
 import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.84.0';
 import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js';
 import { createCombatAudio } from './sound.js?v=0.76.0';
-import * as game from './game-engine.js?v=0.103.2';
+import * as game from './game-engine.js?v=0.104.0';
 import {FrameMetrics} from './frame-metrics.js?v=0.98.1';
 import { frameIndex, frameRect, validateClip } from './engine.js';
 import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
@@ -40,6 +40,11 @@ if(saved){
 const profile=game.restoreProfile(saved,Date.now());
 const offline=game.collectOffline(profile,Date.now());
 const state=game.createGame(profile,{durable:true}),decorationsByStage=new Map(game.STAGES.map(c=>[c.id,createDecorations(state.bounds,c)])),images=new Map(),keys=new Set();
+// Alpha 0.104: hunts always move and attack automatically. The player only chooses whether skills
+// are cast automatically or by tapping the skill row; the choice is a per-browser preference.
+const SKILL_MODE_KEY='beast-hunter:skill-mode';let skillMode='auto';try{if(localStorage.getItem(SKILL_MODE_KEY)==='manual')skillMode='manual';}catch{}
+state.auto=true;
+let skillRequest=null;
 let camera=cameraFor(state.player,state.bounds,viewport,GROUND_DEPTH_SCALE),manifest,ready=false,regionAssets,assetPlan,combatReady=false,combatWork=null,combatError='',bootInFlight=false,launchRevision=0,previous=0,saveClock=0;
 let selectedRunStage=game.stageLimit(profile,profile.unlockedStage)||1;
 let selectedStage=profile.unlockedStage,moveTarget=null,attackTarget=null,aim=null,touch=null,aimRevision=0;
@@ -217,7 +222,7 @@ function resizeViewport(){
   $('game-shell').setAttribute('data-render-surface',surface.width+'x'+surface.height);
   if(layoutChanged&&inventoryOpen){bagRenderKey='';refreshBag();resizeBagGrids();}
 }
-function manual(){state.auto=false;}
+function manual(){}
 function start(stage=selectedStage,substage=selectedRunStage,difficulty=selectedDifficulty){if(!ready||orientationBlocked)return;audio.unlock();
   if(!combatReady||!regionReady(stage)){
     if(state.phase!=='camp'&&!game.resultReady(state))return;
@@ -530,7 +535,7 @@ $('resume').addEventListener('click',()=>{if(!pauseMenuActive())return;audio.unl
 $('retreat').addEventListener('click',()=>{if(pauseMenuActive())returnCamp();});$('result-camp').addEventListener('click',()=>{if(game.resultReady(state))returnCamp();});
 $('next-stage').addEventListener('click',()=>state.run.dungeonId?startDungeon(state.run.dungeonId,state.run.stage):state.phase==='defeat'?start(state.stageId,state.run.stage,state.difficulty):state.difficulty?start(state.stageId,1,state.difficulty):start(Math.min(game.STAGES.length,state.stageId+1),1,0));
 for(let n=1;n<=game.STAGES_PER_CHAPTER;n++)$('run-stage-'+n).addEventListener('click',()=>{if(ready&&state.phase==='camp'&&n<=game.stageLimit(profile,selectedStage,selectedDifficulty)){launchRevision++;selectedRunStage=n;updateHud();}});
-$('auto').addEventListener('click',()=>{if(orientationBlocked)return;state.auto=!state.auto;clearInput();canvas.focus({preventScroll:true});updateHud();});
+$('auto').addEventListener('click',()=>{if(orientationBlocked)return;skillMode=skillMode==='auto'?'manual':'auto';try{localStorage.setItem(SKILL_MODE_KEY,skillMode);}catch{}canvas.focus({preventScroll:true});updateHud();});
 for(const id of ['attack']){
   const button=$(id);
   button.addEventListener('pointerdown',event=>{if(event.button>0)return;event.preventDefault();if(!ready||state.phase!=='playing'||state.paused)return;button.setPointerCapture(event.pointerId);audio.unlock();manual();heldAttacks.add(event.pointerId);game.attack(state,currentAim());});
@@ -556,7 +561,10 @@ document.addEventListener('keydown',event=>{
   if(event.key==='Escape'){event.preventDefault();if(campDrawer){closeCampDrawer();}else if(trackOpen){closeTrack();}else if(craftOpen){craftOpen=false;updateHud();}else if(codexOpen){if(codexDetailOpen)closeCodexDetail();else{codexOpen=false;updateHud();}}else if(inventoryOpen){if(bagSelectedId!==null)closeBagDetail();else if(inventoryPanel==='build')setInventoryPanel('gear');else{inventoryOpen=false;updateHud();}}else if(campChoices){campChoices=false;updateHud();}else togglePause();return;}
   if(event.key.toLowerCase()==='i'){event.preventDefault();openInventory();return;}
   if(['INPUT','SELECT','TEXTAREA','BUTTON'].includes(event.target?.tagName)||event.target?.isContentEditable)return;
-  const k=event.key.toLowerCase();if(!['w','a','s','d','arrowup','arrowleft','arrowdown','arrowright',' ','shift','q','f','e','r','t'].includes(k))return;
+  // Live hunts move, attack and dodge automatically, so only skills and pickup stay on keys.
+  // The manual path below remains for engine/render QA when state.auto is switched off.
+  const k=event.key.toLowerCase();if(state.auto&&!['f','e','r','t'].includes(k))return;
+  if(!['w','a','s','d','arrowup','arrowleft','arrowdown','arrowright',' ','shift','q','f','e','r','t'].includes(k))return;
   event.preventDefault();if(!ready||state.phase!=='playing'||state.paused)return;
   audio.unlock();manual();keys.add(k);moveTarget=null;attackTarget=null;
   if(!event.repeat&&['w','a','s','d','arrowup','arrowleft','arrowdown','arrowright'].includes(k))aim=null;
@@ -578,6 +586,7 @@ canvas.addEventListener('contextmenu',event=>event.preventDefault());
 canvas.addEventListener('pointermove',event=>{if(!ready||state.phase!=='playing'||state.paused||event.pointerType==='touch')return;const point=pointerPoint(event);if(point.x<0||point.y<0||point.x>viewport.width||point.y>viewport.height){aim=null;return;}aimRevision++;aim=point;});
 for(const name of ['pointerleave','pointercancel'])canvas.addEventListener(name,()=>{aim=null;});
 canvas.addEventListener('pointerdown',event=>{
+  if(state.auto){canvas.focus({preventScroll:true});return;}
   if(!ready||state.phase!=='playing'||state.paused)return;
   if(event.pointerType==='touch'&&joystickId!==null)return;
   const point=pointerPoint(event);if(point.x<0||point.y<0||point.x>viewport.width||point.y>viewport.height)return;
@@ -591,10 +600,10 @@ function input(){
   if(attackTarget){const e=state.enemies.find(e=>e.id===attackTarget&&!e.dead)??state.barrels.find(b=>b.id===attackTarget&&b.status==='idle');if(!e){attackTarget=null;moveTarget=null;aim=null;pursuitInRange=false;}else{
     moveTarget={x:e.x,y:e.y};const range=game.playerStats(profile).range,d=distance(e,state.player);stopDistance=range*.82;
     pursuitInRange=d<=stopDistance+game.ARRIVAL_EPSILON||pursuitInRange&&d<range*.98;
-    if(pursuitInRange){v={x:0,y:0};wantAttack=true;return{...v,attack:wantAttack,aim:currentAim(v),aimRevision};}
+    if(pursuitInRange){v={x:0,y:0};wantAttack=true;return{...v,attack:wantAttack,aim:currentAim(v),aimRevision,skillMode,skillRequest:skillRequest?.id};}
   }}
   if(!v.x&&!v.y&&moveTarget){const dx=moveTarget.x-state.player.x,dy=moveTarget.y-state.player.y,d=Math.hypot(dx,dy);if(d<8){moveTarget=null;}else{v={x:dx/d,y:dy/d};destination=moveTarget;}}
-  return {...v,viewportWidth:viewport.width,viewportHeight:viewport.height,attack:wantAttack,aim:state.auto?undefined:currentAim(v),aimRevision,destination,stopDistance};
+  return {...v,viewportWidth:viewport.width,viewportHeight:viewport.height,attack:wantAttack,aim:state.auto?undefined:currentAim(v),aimRevision,destination,stopDistance,skillMode,skillRequest:skillRequest?.id};
 }
 
 // Ground coordinates are projected once; upright art and labels keep their screen height.
@@ -968,7 +977,7 @@ function updateHud(){
   hudText($('combo'),p.counterReady>0?'Q 반격 '+p.counterReady.toFixed(1)+'초':['attack','heavy'].includes(p.action)?p.swing.name+(p.combo?' · '+p.combo+'/3':''):p.comboWindow>0?'다음 연격으로 연결':'방향 조준 · 3연격');
   const chest=game.interactionTarget(state);$('interact').hidden=!chest;$('interact').disabled=!chest||Math.hypot(p.x-chest.chestX,p.y-chest.chestY)>125||state.paused||state.run.flow==='stageClear';
   $('inventory').disabled=!ready||['victory','defeat'].includes(state.phase)&&!game.resultReady(state);$('auto').disabled=['victory','defeat'].includes(state.phase)&&!game.resultReady(state);
-  $('auto').setAttribute('aria-pressed',String(state.auto));hudText($('auto-status'),state.auto?'ON':'OFF');
+  $('auto').setAttribute('aria-pressed',String(skillMode==='auto'));$('auto').setAttribute('data-skill-mode',skillMode);hudText($('auto-status'),skillMode==='auto'?'자동':'수동');
   for(const [id,key] of [['attack','attackCooldown'],['dash','dashCooldown'],['thunder','thunderCooldown']]){
     const freeHeavy=id==='thunder'&&state.loadout.charm?.definition.id==='capacitor'&&state.uniqueState.capacitor>=2,cd=id==='thunder'&&p.counterReady>0?0:p[key];hudText($(id+'-status'),cd>0?Math.max(.1,cd).toFixed(1)+'초':id==='thunder'&&p.counterReady>0?'무료 반격':freeHeavy?'축전 · 기력 0':id==='attack'?'3연격':id==='dash'&&p.stamina<22||id==='thunder'&&!freeHeavy&&p.stamina<35?'기력 부족':'준비');$(id).disabled=!ready||state.phase!=='playing'||state.paused||state.run.flow==='stageClear';
   }
@@ -1084,6 +1093,7 @@ function tick(now){
     const oldPhase=state.phase,oldSubstage=state.run.stage,oldFlow=state.run.flow,oldLevel=profile.level,oldGold=profile.gold,oldCores=profile.cores,oldMaterials=state.run.materials,oldResources=state.run.resourceRevision,active=state.phase==='playing'&&!state.paused&&dt>0;
     if(metricHunt!==profile.hunts){metricHunt=profile.hunts;frameMetrics.reset();$('game-shell').setAttribute('data-frame-samples','0');}
     game.advanceGame(state,dt,input());const engineEnd=clockMs();
+    if(skillRequest&&((state.skillRuntime.cooldowns[skillRequest.id]??0)>0||state.run.time>skillRequest.until||state.phase!=='playing'))skillRequest=null;
     if(oldPhase==='playing'&&state.phase!=='playing'){suppressHeldSpace=keys.has(' ');clearInput();}if(oldSubstage!==state.run.stage||oldFlow!==state.run.flow&&state.run.flow==='stageClear')clearInput();processAudio();camera=cameraFor(state.player,state.bounds,viewport,GROUND_DEPTH_SCALE);
     // Camp is fully covered by its illustrated screens; avoid painting behind them.
     const drawRan=combatReady&&regionAssets.residentId===displayChapter().id&&state.phase!=='camp';if(drawRan)draw();const drawEnd=clockMs();
@@ -1392,11 +1402,11 @@ function refreshSkills(){
  for(let i=0;i<3;i++){const b=book.presets[i];$('skill-preset-load-'+i).disabled=!b;$('skill-preset-state-'+i).textContent=b?[...b.active,...b.ultimate].filter(Boolean).map(id=>game.SKILL_BY_ID[id].name).join(' · ')||'빈 구성':'비어 있음';}
  $('skill-auto-mode').value=book.auto.mode;$('skill-auto-ultimate').value=book.auto.ultimate;$('skill-awakening').value=book.awakening;$('skill-awakening-label').hidden=profile.level<50;
 }
-function useCombatSkill(index){const id=index<2?profile.skillBook.loadout.active[index]:profile.skillBook.loadout.ultimate[0];if(!ready||!id||state.phase!=='playing'||state.paused)return;audio.unlock();manual();game.useSkill(state,id,currentAim());canvas.focus({preventScroll:true});updateHud();}
+function useCombatSkill(index){const id=index<2?profile.skillBook.loadout.active[index]:profile.skillBook.loadout.ultimate[0];if(!ready||!id||state.phase!=='playing'||state.paused)return;audio.unlock();manual();if(!game.useSkill(state,id,state.auto?undefined:currentAim())&&state.auto&&!((state.skillRuntime.cooldowns[id]??0)>0)&&state.player.stamina>=game.SKILL_BY_ID[id].cost)skillRequest={id,until:state.run.time+3};canvas.focus({preventScroll:true});updateHud();}
 for(let i=0;i<3;i++){const action=()=>useCombatSkill(i),button=$('combat-skill-'+i);button.addEventListener('pointerdown',combatPress(action));button.addEventListener('click',combatClick(action));}
 function refreshCombatSkills(){
  const ids=[...profile.skillBook.loadout.active,profile.skillBook.loadout.ultimate[0]],r=state.skillRuntime;
- for(let i=0;i<3;i++){const id=ids[i],node=$('combat-skill-'+i),d=game.SKILL_BY_ID[id];node.hidden=!d;if(!d)continue;const cd=r.cooldowns[id]??0,usable=game.skillReady(state,id);if(combatSkillIcons[i]!==d.icon){combatSkillIcons[i]=d.icon;$('combat-skill-icon-'+i).src=d.icon;}hudText($('combat-skill-name-'+i),d.name);hudText($('combat-skill-state-'+i),cd>0?(i===2?Math.ceil(cd):Math.max(.1,cd).toFixed(1))+'초':state.player.stamina<d.cost?'기력 부족':'준비');node.disabled=!usable;node.setAttribute('data-ultimate',String(i===2));node.setAttribute('data-ready',String(usable));node.setAttribute('data-cooldown',String(cd>0));node.setAttribute('aria-label',d.name+' · '+$('combat-skill-state-'+i).textContent);}
+ for(let i=0;i<3;i++){const id=ids[i],node=$('combat-skill-'+i),d=game.SKILL_BY_ID[id];node.hidden=!d;if(!d)continue;const cd=r.cooldowns[id]??0,usable=state.auto?state.phase==='playing'&&!state.paused&&state.run.flow==='combat'&&cd<=0&&state.player.stamina>=d.cost:game.skillReady(state,id);if(combatSkillIcons[i]!==d.icon){combatSkillIcons[i]=d.icon;$('combat-skill-icon-'+i).src=d.icon;}hudText($('combat-skill-name-'+i),d.name);hudText($('combat-skill-state-'+i),cd>0?(i===2?Math.ceil(cd):Math.max(.1,cd).toFixed(1))+'초':state.player.stamina<d.cost?'기력 부족':'준비');node.disabled=!usable;node.setAttribute('data-ultimate',String(i===2));node.setAttribute('data-ready',String(usable));node.setAttribute('data-cooldown',String(cd>0));node.setAttribute('data-queued',String(skillRequest?.id===id));node.setAttribute('aria-label',d.name+' · '+$('combat-skill-state-'+i).textContent);}
 }
 
 
