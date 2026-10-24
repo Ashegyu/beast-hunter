@@ -63,12 +63,12 @@ test('crafted earrings can be created twice with distinct IDs, never a third; ev
 
 test('actual normal and elite kills, stage clears and every boss mode deliver only stage types graded by hunt mode, with once-only settlement',()=>{
  for(let tier=1;tier<=3;tier++)for(let mode=0;mode<=2;mode++){
-  const p=g.createProfile(1000);p.clearedStage=3;p.unlockedStage=3;p.stageProgress=[10,10,10];p.bossMastery=[2,2,2];p.difficultyProgress=[[9,9,9],[9,9,9]];p.legendaryPity=g.LEGENDARY_PITY_LIMIT-1;
+  const p=g.createProfile(1000);p.clearedStage=3;p.unlockedStage=3;p.stageProgress=[10,10,10];p.bossMastery=[2,2,2];p.difficultyProgress=[[9,9,9],[9,9,9]];
   const s=g.createGame(p);assert.equal(g.launch(s,tier,10,null,mode),true);s.spawns=[];s.barrels=[];s.run.bossSpawned=true;s.player.invulnerable=999;
   const e={id:s.nextId++,species:g.STAGES[tier-1].bossSpecies,type:'bulwark',elite:false,boss:true,x:s.player.x+300,y:s.player.y,hp:1,maxHp:1,action:'walk',actionTime:0,speed:0,cooldown:999,aggro:true,guard:0,dead:false,wave:s.run.wave,runStage:s.run.stage,damage:8,radius:58};s.enemies=[e];
   s.projectiles.push({id:s.nextId++,x:e.x,y:e.y,vx:0,vy:0,damage:1e9,ttl:1,friendly:true});g.advanceGame(s,.025);assert.equal(s.phase,'victory');
-  // Alpha 0.110/0.113: the LEGENDARY_PITY_LIMIT-th boss kill without an ancient always drops one of the region.
-  assert.equal(s.run.items,4);assert.equal(s.profile.pendingLoot.length,0);assert.equal(s.run.bossAncients.length,1);assert.equal(p.legendaryPity,0);
+  // Alpha 0.114: a boss ancient is only a rare roll (never guaranteed); the set pieces are always three.
+  assert.ok(s.run.bossAncients.length<=1);assert.equal(s.run.items,3+s.run.bossAncients.length);assert.equal(s.profile.pendingLoot.length,0);
   for(const i of p.inventory){assert.equal(g.huntGrade(i),mode);if(i.rarity===5){assert.ok(g.ancientDefinition(i));assert.equal(i.tier,1);continue;}assert.ok(mode?i.rarity<=3:i.rarity===0);assert.ok(g.STAGE_SLOTS.includes(i.slot));}const before=g.encodeProfile(p,1000);for(let n=0;n<100;n++)g.advanceGame(s,.025);assert.equal(g.encodeProfile(p,1000),before);
  }
  for(const elite of [false,true]){

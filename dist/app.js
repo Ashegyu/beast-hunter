@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.113.0';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.114.0';
 import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js';
 import { createCombatAudio } from './sound.js?v=0.76.0';
-import * as game from './game-engine.js?v=0.113.0';
+import * as game from './game-engine.js?v=0.114.0';
 import {FrameMetrics} from './frame-metrics.js?v=0.98.1';
 import { frameIndex, frameRect, validateClip } from './engine.js';
 import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
 import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.103.1';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.113.0';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.113.0';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.113.0';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.113.0';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.114.0';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.114.0';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.114.0';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.114.0';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -1238,7 +1238,7 @@ function refreshCodex(){
  const row=catalog.find(r=>r.id===codexSelection),discovered=found.has(row.id),boss=game.BOSS_LOOT[row.tier-1];
  $('codex-detail').setAttribute('data-discovered',String(discovered));gearThumbnail($('codex-detail-art'),{...row,catalogId:row.id,rarity:5},200);if(!discovered)$('codex-detail-art').setAttribute('aria-label','미발견 유물 이미지');$('codex-detail-name').textContent=row.name;$('codex-detail-state').textContent=(discovered?'발견한 고대 유물':'미발견')+(profile.targetAncientId===row.id?' · 파밍 목표':'');$('codex-detail-boss').textContent='획득처 · '+game.THEMES[row.region-1].name+' 챕터 보스';
  $('codex-signature').textContent=row.signature.name+' — '+row.signature.description;$('codex-affixes').textContent=Object.entries(row.base).map(([k,v])=>game.AFFIXES[k]+' +'+v+(['speed','crit','reduction'].includes(k)?'%':'')).join(' · ');$('codex-base-power').textContent=row.signatureOnly?'고대 장비 전용 각인':game.UNIQUE_EFFECTS[row.effectId].name+' — '+game.UNIQUE_EFFECTS[row.effectId].description+' · 고대 고정 위력 1.36배';$('codex-target').disabled=profile.targetAncientId===row.id;$('codex-target').textContent=profile.targetAncientId===row.id?'현재 파밍 목표':'파밍 목표 지정';$('codex-clear').hidden=!profile.targetAncientId;
- {const [lo,hi]=ancientRegionChapters(row);$('codex-route').disabled=profile.unlockedStage<lo;$('codex-route-note').textContent=lo+'~'+hi+'장 보스 희귀 드롭 · 일반 '+Math.round(game.ANCIENT_BOSS_CHANCE[0]*100)+'% · 정예 '+Math.round(game.ANCIENT_BOSS_CHANCE[1]*100)+'% · 악몽 '+Math.round(game.ANCIENT_BOSS_CHANCE[2]*100)+'% · 보스 '+game.LEGENDARY_PITY_LIMIT+'회 처치마다 확정';}
+ {const [lo,hi]=ancientRegionChapters(row);$('codex-route').disabled=profile.unlockedStage<lo;$('codex-route-note').textContent=lo+'~'+hi+'장 보스 희귀 드롭 · 일반 '+Math.round(game.ANCIENT_BOSS_CHANCE[0]*100)+'% · 정예 '+Math.round(game.ANCIENT_BOSS_CHANCE[1]*100)+'% · 악몽 '+Math.round(game.ANCIENT_BOSS_CHANCE[2]*100)+'%';}
 }
 
 function refreshCraft(){
