@@ -213,7 +213,7 @@ test('failed recovery copy keeps a damaged original instead of autosaving a defa
  ui.emit('nav-more','click');ui.emit('backup-export','click');assert.equal(ui.downloads.length,1);
  await selectBackup(ui,profileBackup.createBackup(game.createProfile(1_000_000),1_000_000));ui.emit('backup-confirm','click');assert.equal(ui.storage.get(KEY),damaged);assert.equal(ui.storage.has(KEY+':before-restore'),false);
  ui.setWriteFailure(null);ui.emit('save-retry','click');assert.equal(ui.reloads,1);assert.equal(ui.storage.get(KEY),damaged);
- const again=await host({saved:damaged});assert.equal(again.storage.get(KEY+':recovery'),damaged);assert.equal(again.profile().version,14);assert.equal(again.nodes.get('save-banner').hidden,true);
+ const again=await host({saved:damaged});assert.equal(again.storage.get(KEY+':recovery'),damaged);assert.equal(again.profile().version,15);assert.equal(again.nodes.get('save-banner').hidden,true);
 });
 test('backup restore previews, confirms once, preserves rollback and blocks stale page autosaves',async()=>{
  const ui=await host();ui.state.profile.gold=222;ui.emit('nav-more','click');const p=game.createProfile(1_000_000);p.level=20;p.gold=999;p.skillBook=game.restoreSkillBook(null,20);
@@ -255,7 +255,7 @@ test('equipment thumbnails contain the full frame at small slot sizes without ch
 test('equipped and crafting thumbnails reuse a responsive image when their actual item source changes',async()=>{
  const p=bagFixture(),ancient=game.ANCIENT_CATALOG.find(r=>r.slot==='weapon');p.inventory.push({...ancient,id:6,catalogId:ancient.id,rarity:5,affixes:{...ancient.base}});
  const ui=await host({saved:p}),slot=ui.nodes.get('equipped-art-weapon');ui.emit('nav-bag','click');const child=slot.atlasImage,firstId=slot.attributes['data-art-id'];ui.emit('bag-2','click');ui.emit('equip-2','click');assert.notEqual(slot.attributes['data-art-id'],firstId);assert.equal(slot.atlasImage,child);assert.deepEqual({...slot.atlasLayout.frame},{...manifest.equipmentPresentation.frames[slot.attributes['data-art-id']]});
- ui.emit('bag-5','click');ui.emit('equip-5','click');assert.equal(slot.atlasImage,child);assert.match(child.src,/ancient-individual-v0111/);assert.equal(child.hidden,false);assert.ok(child.style.width.endsWith('%'));assert.ok(slot.style.clipPath.includes('%'));
+ ui.emit('bag-5','click');ui.emit('equip-5','click');assert.equal(slot.atlasImage,child);assert.match(child.src,/ancient-individual-v0112/);assert.equal(child.hidden,false);assert.ok(child.style.width.endsWith('%'));assert.ok(slot.style.clipPath.includes('%'));
  ui.emit('nav-craft','click');const art=ui.nodes.get('craft-recipe-art-0');assert.ok(art.atlasImage.src.includes('craft-equipment-v041'));assert.ok(art.atlasImage.style.width.endsWith('%'));assert.ok(art.style.clipPath.includes('%'));
 });
 test('pause presents only resume and camp, traps focus, freezes the hunt and returns collected progress once',async()=>{
@@ -513,7 +513,7 @@ test('armory empty and paused states stay truthful and detail back never resumes
 test('armory display atlas covers every base identity without adding combat boot images or replacing ancient art',async()=>{
  const display=manifest.equipmentPresentation;assert.deepEqual(display.designIds,chapters.EQUIPMENT_ART.map(r=>r.id));assert.ok(fs.existsSync(new URL('assets/'+manifest.delivery[display.image],root)));
  for(const id of display.designIds){const f=display.frames[id];assert.ok(f.x>=0&&f.y>=0&&f.w>0&&f.h>0&&f.x+f.w<=display.width&&f.y+f.h<=display.height);if(display.weaponAnchors[id]){const a=display.weaponAnchors[id];for(const k of ['gripX','gripY','tipX','tipY'])assert.ok(Number.isFinite(a[k]));assert.ok(a.gripX>=0&&a.gripX<f.w&&a.tipX>=0&&a.tipX<f.w&&a.gripY>=0&&a.gripY<f.h&&a.tipY>=0&&a.tipY<f.h);}}
- const p=bagFixture(),ancient=game.ANCIENT_CATALOG[0];p.inventory.push({...ancient,id:6,catalogId:ancient.id,rarity:5,affixes:{...ancient.base}});const ui=await host({saved:p});ui.emit('nav-bag','click');assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'26');assert.match(ui.nodes.get('bag-art-0').atlasImage.src,/armory-equipment-v040.webp/);assert.match(ui.nodes.get('bag-art-5').atlasImage.src,/ancient-individual-v0111.webp/);assert.equal(ui.nodes.has('equipment-hero-weapon'),false);const before=ui.profile();ui.emit('bag-5','click');ui.emit('equip-5','click');assert.match(ui.nodes.get('equipped-art-weapon').atlasImage.src,/ancient-individual-v0111.webp/);assert.equal(ui.profile().inventory.length,before.inventory.length);
+ const p=bagFixture(),ancient=game.ANCIENT_CATALOG[0];p.inventory.push({...ancient,id:6,catalogId:ancient.id,rarity:5,affixes:{...ancient.base}});const ui=await host({saved:p});ui.emit('nav-bag','click');assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'26');assert.match(ui.nodes.get('bag-art-0').atlasImage.src,/armory-equipment-v040.webp/);assert.match(ui.nodes.get('bag-art-5').atlasImage.src,/ancient-individual-v0112.webp/);assert.equal(ui.nodes.has('equipment-hero-weapon'),false);const before=ui.profile();ui.emit('bag-5','click');ui.emit('equip-5','click');assert.match(ui.nodes.get('equipped-art-weapon').atlasImage.src,/ancient-individual-v0112.webp/);assert.equal(ui.profile().inventory.length,before.inventory.length);
 });
 
 test('live home panels mirror ownership and opening an item does not equip it',async()=>{
@@ -723,7 +723,7 @@ test('real render draws dropped equipment and limits ordinary pickup HUD spam',a
 });
 
 test('boot shows real camp, locked stages and a saved versioned profile',async()=>{
-  const ui=await host();assert.equal(ui.nodes.get('loading').hidden,true);assert.equal(ui.nodes.get('camp-content').hidden,false);assert.equal(ui.nodes.get('stage-2').disabled,true);assert.equal(ui.nodes.get('forge-blade').disabled,true);assert.equal(ui.profile().version,14);
+  const ui=await host();assert.equal(ui.nodes.get('loading').hidden,true);assert.equal(ui.nodes.get('camp-content').hidden,false);assert.equal(ui.nodes.get('stage-2').disabled,true);assert.equal(ui.nodes.get('forge-blade').disabled,true);assert.equal(ui.profile().version,15);
   ui.emit('start','click');ui.tick();assert.equal(ui.state.phase,'playing');assert.equal(ui.nodes.get('overlay').hidden,true);assert.equal(ui.state.enemies.length,4);assert.equal(ui.nodes.get('monsters-left').textContent,'56');
   for(const call of ui.calls.filter(c=>c.args.length===8)){const size=imageSize(call.image);assert.ok(call.args[0]+call.args[2]<=size.width);assert.ok(call.args[1]+call.args[3]<=size.height);}
 });
@@ -906,14 +906,14 @@ test('portrait rotation freezes a committed attack until landscape is restored a
 });
 
 test('unreadable saves are backed up before a fresh profile replaces the active slot',async()=>{
-  const ui=await host({saved:'not valid json'});assert.equal(ui.storage.get(KEY+':recovery'),'not valid json');assert.equal(ui.profile().version,14);assert.match(ui.nodes.get('save-status').textContent,/복구 사본/);
+  const ui=await host({saved:'not valid json'});assert.equal(ui.storage.get(KEY+':recovery'),'not valid json');assert.equal(ui.profile().version,15);assert.match(ui.nodes.get('save-status').textContent,/복구 사본/);
 });
 
 test('equipment panel pauses combat, compares, equips and persists items without deleting v1 progress',async()=>{
   const p=game.createProfile(1_000_000);p.gold=42;p.inventory=[{id:1,slot:'weapon',name:'갑각 대검',rarity:1,tier:1,affixes:{damage:12}}];
   const ui=await host({saved:p});ui.emit('camp-inventory','click');assert.equal(ui.nodes.get('inventory-content').hidden,false);assert.match(ui.nodes.get('item-compare-0').textContent,/공격 \+12/);ui.emit('equip-0','click');assert.equal(ui.profile().equipment.weapon,1);assert.equal(ui.nodes.get('salvage-0').disabled,true);
   ui.emit('inventory-back','click');ui.emit('start','click');ui.tick();ui.emit('document','keydown',{key:'i',target:ui.nodes.get('arena')});const time=ui.state.run.time;ui.run(.5);assert.equal(ui.state.run.time,time);assert.equal(ui.state.paused,true);ui.emit('inventory-back','click');ui.emit('resume','click');ui.tick();assert.ok(ui.state.run.time>time);
-  const legacy=game.createProfile(1_000_000);legacy.version=1;legacy.gold=73;delete legacy.inventory;delete legacy.equipment;const migrated=await host({saved:legacy});assert.equal(migrated.profile().version,14);assert.equal(migrated.profile().gold,73);assert.equal(migrated.storage.has(KEY+':recovery'),false);
+  const legacy=game.createProfile(1_000_000);legacy.version=1;legacy.gold=73;delete legacy.inventory;delete legacy.equipment;const migrated=await host({saved:legacy});assert.equal(migrated.profile().version,15);assert.equal(migrated.profile().gold,73);assert.equal(migrated.storage.has(KEY+':recovery'),false);
 });
 test('mouse aiming drives directed attacks in the real app',async()=>{
   const ui=await host({manual:true});ui.emit('start','click');ui.tick();ui.state.enemies=[];
@@ -1293,8 +1293,8 @@ test('ancient slot icons and committed attack effects retain identity without ch
  const directions=[['d'],['d','s'],['s'],['a','s'],['a'],['a','w'],['w'],['d','w']];
  for(const weapon of game.ANCIENT_CATALOG.filter(r=>r.slot==='weapon'))for(let heading=0;heading<8;heading++){
   const saved=game.createProfile(1_000_000);saved.inventory=['weapon','armor','charm'].map((slot,i)=>{const row=slot==='weapon'?weapon:game.ANCIENT_CATALOG.filter(r=>r.slot===slot&&r.tier===weapon.tier)[game.ANCIENT_CATALOG.filter(r=>r.slot==='weapon'&&r.tier===weapon.tier).indexOf(weapon)%6];return {id:i+1,slot,rarity:5,tier:row.tier,artId:row.artId,catalogId:row.id,name:row.name,affixes:{}};});saved.equipment={weapon:1,armor:2,charm:3};
-  const ui=await host({manual:true,saved,recordGeometry:true});ui.emit('camp-inventory','click');assert.match(ui.nodes.get('item-art-0').atlasImage.src,/ancient-individual-v0111/);assert.equal(ui.nodes.get('equipped-art-armor').attributes['data-visual-id'],saved.inventory[1].catalogId);ui.emit('inventory-back','click');ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];for(const key of directions[heading])ui.emit('document','keydown',{key,target:ui.nodes.get('arena')});ui.emit('attack','click');ui.run(.15);
-  const draws=ui.calls.filter(c=>c.image.endsWith('ancient-individual-v0111.png')||c.image.endsWith(manifest.equipment.image));assert.equal(draws.length,0);assert.equal(ui.state.player.heading,heading);assert.ok(ui.geometry.some(c=>c.kind==='lineTo'));assert.equal(ui.state.player.swing.equipmentAtStart.weapon.rarity,5);
+  const ui=await host({manual:true,saved,recordGeometry:true});ui.emit('camp-inventory','click');assert.match(ui.nodes.get('item-art-0').atlasImage.src,/ancient-individual-v0112/);assert.equal(ui.nodes.get('equipped-art-armor').attributes['data-visual-id'],saved.inventory[1].catalogId);ui.emit('inventory-back','click');ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];for(const key of directions[heading])ui.emit('document','keydown',{key,target:ui.nodes.get('arena')});ui.emit('attack','click');ui.run(.15);
+  const draws=ui.calls.filter(c=>c.image.endsWith('ancient-individual-v0112.png')||c.image.endsWith(manifest.equipment.image));assert.equal(draws.length,0);assert.equal(ui.state.player.heading,heading);assert.ok(ui.geometry.some(c=>c.kind==='lineTo'));assert.equal(ui.state.player.swing.equipmentAtStart.weapon.rarity,5);
   // Each direction is an independent virtual tab; release it before the next case.
   hostDisposals.pop()();
  }
@@ -1303,7 +1303,7 @@ test('paused equipment swap keeps the committed attack grade and next attack use
  const saved=game.createProfile(1_000_000);saved.inventory=[{id:1,slot:'weapon',rarity:3,tier:1,artId:'forest_blade',name:'검',affixes:{}},{id:2,...game.ANCIENT_CATALOG.find(r=>r.slot==='weapon'&&r.visualStyle===6),catalogId:game.ANCIENT_CATALOG.find(r=>r.slot==='weapon'&&r.visualStyle===6).id,rarity:5,affixes:{}}].map((r,i)=>({...r,id:i+1}));saved.equipment.weapon=1;const ui=await host({saved,recordGeometry:true});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.emit('attack','click');ui.tick(.025);ui.emit('pause','click');ui.emit('document','keydown',{key:'i'});ui.emit('equip-1','click');assert.equal(ui.state.profile.equipment.weapon,2);assert.equal(ui.state.player.swing.equipmentAtStart.weapon.rarity,3);ui.emit('inventory-back','click');ui.emit('resume','click');ui.run(.4);ui.emit('attack','click');assert.equal(ui.state.player.swing.equipmentAtStart.weapon.rarity,5);
 });
 test('missing rarity art fails closed and preserves saved high-grade ownership',async()=>{
- const row=game.ANCIENT_CATALOG.find(r=>r.slot==='weapon'),saved=game.createProfile(1_000_000);saved.inventory=[{id:9,slot:row.slot,tier:row.tier,rarity:5,artId:row.artId,catalogId:row.id,name:row.name,affixes:{damage:20}}];saved.equipment.weapon=9;const ui=await host({saved,failedAssets:'assets/ancient-individual-v0111.webp'});assert.equal(ui.nodes.get('start').disabled,true);assert.match(ui.nodes.get('loading').textContent,/ancient-individual-v0111/);ui.emit('start','click');ui.tick();assert.equal(ui.state.phase,'camp');assert.equal(ui.state.profile.equipment.weapon,9);assert.ok(game.ancientDefinition(ui.state.profile.inventory[0]));
+ const row=game.ANCIENT_CATALOG.find(r=>r.slot==='weapon'),saved=game.createProfile(1_000_000);saved.inventory=[{id:9,slot:row.slot,tier:row.tier,rarity:5,artId:row.artId,catalogId:row.id,name:row.name,affixes:{damage:20}}];saved.equipment.weapon=9;const ui=await host({saved,failedAssets:'assets/ancient-individual-v0112.webp'});assert.equal(ui.nodes.get('start').disabled,true);assert.match(ui.nodes.get('loading').textContent,/ancient-individual-v0112/);ui.emit('start','click');ui.tick();assert.equal(ui.state.phase,'camp');assert.equal(ui.state.profile.equipment.weapon,9);assert.ok(game.ancientDefinition(ui.state.profile.inventory[0]));
 });
 
 test('camp codex masks undiscovered art, filters, persists targets and prepares unlocked boss replays',async()=>{
@@ -1662,7 +1662,7 @@ test('scouting notice reports credited XP when an offline grant crosses level tw
 
 test('legacy five-stage saves reopen the proportional checkpoint and both maps expose ten stages',async()=>{
  const p=game.createProfile(1_000_000);p.version=7;p.gold=73;p.stageProgress=[4,0,0];const ui=await host({saved:p,campaign:true});
- assert.equal(ui.profile().version,14);assert.deepEqual(ui.profile().stageProgress,game.STAGES.map((_,i)=>i?0:8));assert.equal(ui.profile().gold,73);assert.equal(ui.storage.has(KEY+':recovery'),false);assert.equal(ui.nodes.get('hub-progress-text').textContent,'8 / 10');
+ assert.equal(ui.profile().version,15);assert.deepEqual(ui.profile().stageProgress,game.STAGES.map((_,i)=>i?0:8));assert.equal(ui.profile().gold,73);assert.equal(ui.storage.has(KEY+':recovery'),false);assert.equal(ui.nodes.get('hub-progress-text').textContent,'8 / 10');
  for(let n=1;n<=10;n++){assert.equal(ui.nodes.get('run-stage-'+n).disabled,n===10);assert.equal(ui.nodes.get('dashboard-stage-'+n).disabled,n===10);assert.equal(ui.nodes.get('dashboard-stage-number-'+n).textContent,'1–'+n);}
  ui.emit('run-stage-10','click');ui.emit('dashboard-stage-10','click');assert.equal(ui.nodes.get('run-stage-9').attributes['aria-pressed'],'true');
  ui.emit('start','click');assert.equal(ui.state.run.stage,9);assert.equal(ui.nodes.get('time-left').textContent,'01:00');assert.equal(ui.nodes.get('monsters-left').textContent,'116');assert.ok(ui.state.spawns.every(q=>!q.boss));
@@ -1789,7 +1789,7 @@ test('mobile lobby shortcuts preserve profile ownership and reject navigation du
 });
 
 test('stage B five presets save real gear and skill settings, expose two-tap entry selection and restore without a false recovery warning',async()=>{
- const p=bagFixture();p.version=11;p.level=30;p.gold=100000;const ui=await host({saved:p,campaign:true});assert.equal(ui.storage.has(KEY+':recovery'),false);assert.equal(ui.profile().version,14);ui.emit('lobby-equipment','click');ui.emit('loadout-build-open','click');ui.emit('build-tab-4','click');ui.nodes.get('build-name-4').value='실험 보스';ui.emit('build-name-4','input');ui.document.activeElement=ui.nodes.get('build-save-4');ui.tick(0);ui.emit('build-save-4','click');
+ const p=bagFixture();p.version=11;p.level=30;p.gold=100000;const ui=await host({saved:p,campaign:true});assert.equal(ui.storage.has(KEY+':recovery'),false);assert.equal(ui.profile().version,15);ui.emit('lobby-equipment','click');ui.emit('loadout-build-open','click');ui.emit('build-tab-4','click');ui.nodes.get('build-name-4').value='실험 보스';ui.emit('build-name-4','input');ui.document.activeElement=ui.nodes.get('build-save-4');ui.tick(0);ui.emit('build-save-4','click');
  const stored=ui.profile();assert.equal(stored.savedBuilds.length,5);assert.equal(stored.savedBuilds[4].name,'실험 보스');assert.deepEqual(stored.savedBuilds[4].skill.loadout,stored.skillBook.loadout);assert.equal(ui.nodes.get('build-card-4').hidden,false);assert.equal(ui.nodes.get('build-card-0').hidden,true);
  ui.emit('nav-home','click');ui.emit('hub-route','click');ui.nodes.get('entry-build').value='4';ui.emit('entry-build','change');assert.equal(ui.profile().selectedBuild,4);assert.equal(ui.nodes.get('entry-build-option-4').disabled,false);const restored=await host({saved:ui.profile()});assert.equal(restored.profile().savedBuilds[4].name,'실험 보스');assert.equal(restored.storage.has(KEY+':recovery'),false);
 });

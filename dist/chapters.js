@@ -1,5 +1,5 @@
-import {equipmentFamily} from './equipment-slots.js?v=0.111.0';
-import {EQUIPMENT_SETS,SET_SLOTS,CHAPTER_SETS,setArtId} from './equipment-sets.js?v=0.111.0';
+import {equipmentFamily} from './equipment-slots.js?v=0.112.0';
+import {EQUIPMENT_SETS,SET_SLOTS,CHAPTER_SETS,setArtId} from './equipment-sets.js?v=0.112.0';
 // Thirty chapters in three regions of ten (Alpha 0.107): 1–10 forest, 11–20 fire and
 // ice (11–15 fire, 16–20 ice), 21–30 darkness. A region drives the map tabs, item and
 // material tiers; a biome drives ground art, props, attack effects, boss rule and the
@@ -177,7 +177,8 @@ export const SET_ART = Object.values(EQUIPMENT_SETS).flatMap(set=>SET_SLOTS.flat
   name:set.name+' '+(slot==='weapon'?(variant?'대검':'장검'):PART_NAMES[slot])}))));
 export const ALL_EQUIPMENT_ART = [...EQUIPMENT_ART,...SET_ART];
 export function equipmentArt(item){
-  const explicit=ALL_EQUIPMENT_ART.find(a=>a.id===item?.artId&&a.slot===equipmentFamily(item.slot)&&a.tier===item.tier);
+  // Ancients keep their family's base art, whose tier differs from the region tier for tiers 2/3 (Alpha 0.112).
+  const explicit=ALL_EQUIPMENT_ART.find(a=>a.id===item?.artId&&a.slot===equipmentFamily(item.slot)&&(a.tier===item.tier||item.ancient||item.rarity===5));
   return explicit??EQUIPMENT_ART.find(a=>a.slot===equipmentFamily(item?.slot??'weapon')&&a.tier===(item?.tier??1));
 }
 for(const biome of Object.values(BIOMES)){

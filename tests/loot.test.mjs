@@ -47,7 +47,7 @@ test('a drop reserves ownership, has a short landing time and claims exactly onc
 test('a reserved drop recovers after reload without resetting currencies, gear or grade',()=>{
  const s=arena();s.profile.gold=73;s.profile.lootPity=9;kill(s,{elite:true});const pending=s.profile.pendingLoot[0];
  const recovered=g.restoreProfile(g.encodeProfile(s.profile,1000),1000);assert.equal(recovered.gold,89);assert.equal(recovered.pendingLoot.length,0);assert.deepEqual(recovered.inventory[0],pending);
- const twice=g.restoreProfile(g.encodeProfile(recovered,1000),1000);assert.equal(twice.inventory.length,1);assert.equal(twice.gold,89);assert.equal(twice.version,14);
+ const twice=g.restoreProfile(g.encodeProfile(recovered,1000),1000);assert.equal(twice.inventory.length,1);assert.equal(twice.gold,89);assert.equal(twice.version,15);
 });
 test('a duplicate reserved ID already owned never duplicates the item or grants salvage gold',()=>{
  const p=g.createProfile();const a=item(1,4);p.inventory=[a];p.pendingLoot=[a,a,{...a,id:2,slot:'invalid'}];p.gold=42;

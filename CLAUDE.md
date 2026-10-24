@@ -13,10 +13,10 @@
 ## 실행
 - 게임: `PORT=8090 node serve-local.mjs` 후 `http://127.0.0.1:8090/` (기본 포트 8080). file:// 로는 안 된다.
 - 헤드리스 확인: 전역 playwright(`/opt/node22/lib/node_modules/playwright`)를 createRequire로 불러 Chromium 실행. 844×390에서 거점 → 사냥터 → 전투 준비 → 전투까지 콘솔 오류·404 없이 동작 확인함.
-- 테스트: `npm test` = `node --experimental-vm-modules --test tests/*.test.mjs` (약 70초). **786/786 통과** (0.111 기준). 어셋 개수 단언(클립 415+(45+26)×15, 프레임 907+(45+26)×25, 시작 시 요청 이미지 26장 = 공유 18 + 1장 8장(세트 장비 페이지 포함))은 0.109 기준. region-assets 테스트가 모든 챕터 이미지 경로가 `delivery`를 거쳐 실제 파일로 이어지는지 검사한다(0.107에서 재사용 지형 6장 연결이 빠져 5·9·17·18·28·29장 입장이 막혔었다).
+- 테스트: `npm test` = `node --experimental-vm-modules --test tests/*.test.mjs` (약 70초). **787/787 통과** (0.112 기준). 어셋 개수 단언(클립 415+(45+26)×15, 프레임 907+(45+26)×25, 시작 시 요청 이미지 26장 = 공유 18 + 1장 8장(세트 장비 페이지 포함))은 0.109 기준. region-assets 테스트가 모든 챕터 이미지 경로가 `delivery`를 거쳐 실제 파일로 이어지는지 검사한다(0.107에서 재사용 지형 6장 연결이 빠져 5·9·17·18·28·29장 입장이 막혔었다).
 
 ## 테스트 작성 시 주의 (0.103.2에서 정리한 내용)
-- 고대 장비(0.110): 보스 고대 = 챕터 10스테이지 보스가 그 지역에 맞는 티어(0.111 `ANCIENT_REGION`: 1~10장 1티어 숲, 11~20장 3티어 서리, 21~30장 2티어 폐성·망자; 고대 행의 `region`이 떨어지는 지역이고 능력치·도감 필터·획득처는 `region` 기준) 고대를 `ANCIENT_BOSS_CHANCE`(일반 5%·정예 8%·악몽 12%)로 떨어뜨리고, `legendaryPity`가 보스 고대 천장(고대 없이 20회째 확정, `dropBossAncient`). 일반 몬스터 드롭은 천장을 건드리지 않는다. 레이드 고대는 레이드와 함께 추가 예정(미구현). 테스트에서 보스 처치 결과를 단언할 때 `legendaryPity`를 19로 두면 고대가 하나 더 나온다. 고대 카탈로그는 75종(모두 개별 원화, 아틀라스 `ancient-individual-v0111` 75프레임), 능력치는 부위별 3종(`ANCIENT_STATS`)×(.76+.24×region)×2.9.
+- 고대 장비(0.110): 보스 고대 = 챕터 10스테이지 보스가 그 지역 번호의 고대(0.112부터 번호 = 지역: 1 숲지기, 2 서리, 3 폐성·망자. 기본 카탈로그 티어 2가 폐성, 3이 서리라 `ancientIdOfBase`/`ANCIENT_TIER_OF_BASE`가 2↔3을 바꿔 고대 아이디·티어를 만든다. 고대는 계열의 기본 원화 아이디를 그대로 써서 원화 티어 ≠ 고대 티어일 수 있으므로 `equipmentArt`·`cleanItem`·`equipmentSnapshot`이 고대는 티어 비교를 건너뛴다. 저장 v15가 v14 이하의 고대 2·3번을 한 번 바꿔 옮긴다) 고대를 `ANCIENT_BOSS_CHANCE`(일반 5%·정예 8%·악몽 12%)로 떨어뜨리고, `legendaryPity`가 보스 고대 천장(고대 없이 20회째 확정, `dropBossAncient`). 일반 몬스터 드롭은 천장을 건드리지 않는다. 레이드 고대는 레이드와 함께 추가 예정(미구현). 테스트에서 보스 처치 결과를 단언할 때 `legendaryPity`를 19로 두면 고대가 하나 더 나온다. 고대 카탈로그는 75종(모두 개별 원화, 아틀라스 `ancient-individual-v0112` 75프레임, `numbering:'region'`), 능력치는 부위별 3종(`ANCIENT_STATS`)×(.76+.24×티어)×2.9.
 - 고대 특수효과(`ancient-powers.js`): 75종 모두 고유. 발동 조건 normal/finisher/skill/crit/kill/dash/perfect/hurt/lowHp/periodic/pickup(heavy·counter·idle은 자동 전투에서 발동하지 않아 0.110에서 없앰). 새 효과 fury/haste(시간제 버프, `s.uniqueState.ancientBuffs`, `ancientBuff(s,key)`가 damageEnemy·기본 공격 속도에 반영), invuln, cdr(스킬 재사용 감소), execute(비보스 처형). 'skill'은 `SKILL_HOOKS.cast`(combat-skills `castSkill`의 `h.cast`), 'kill'은 `kill()`, 'crit'은 연격 접촉 루프 뒤 `ancientAll`. tests/ancient-powers.test.mjs의 `fire()`가 조건별로 실제 전투 상황을 만들어 발동을 확인한다.
 - 9스테이지는 밀집 공세(전원 skitter), strict 스테이지(4·8·9·10)는 이탈 시 처치 수·전리품까지 롤백. 보스 규칙은 생태별(숲 재생, 불 화염 폭주, 얼음 호위 소환, 어둠 방어 태세), 특수 보스(10·20·30장)는 거기에 70%·35% 호위 4마리.
 - 카메라는 플레이어를 화면 높이 60%에 둠(world.js). 가로 화면 논리 폭은 1800(view-controls.js `viewportFor`)이고 캔버스에 축소해 그림.
@@ -42,7 +42,7 @@
 - `art/`: 원화 원본, 생성 프롬프트, 검수 자료. Codex 생성 원화: `art/monsters0106`(보스 27·일반 18), `art/terrain0106`(지형 6), `art/monsters0107`(불 12·어둠 6·불 보스 5·특수 보스 3), `art/terrain0107`(지형 21), `art/fire0107`(불 장식물·공격 효과), `art/equipment0108`(지역 세트 4장), `art/equipment0109`(챕터 세트 26장, 장당 6점), `art/ancient0111`(고대 신규 부위 3장, 장당 5점). 각 폴더에 사양 JSON, `prompts/<id>.json`, PROVENANCE.md. 사용자 몬스터 백과 참고 이미지는 `art/monsters065/references/encyclopedia-1~5.png`. `tools/reports/`: 버전별 측정·검수 결과.
 
 ## 버전 표기
-- README는 0.103.2부터 다시 최신(그 사이 0.98~0.103.1 기록은 없음), `index.html`은 `app.js?v=0.111.0`, 모듈 import 쿼리는 0.70~0.111 혼재(0.105~0.111에서 바꾼 모듈과 그 import 사슬은 `?v=0.111.0`), `PROFILE_VERSION=14`(0.105, 진행 배열 30칸). 코드가 문서보다 앞서 있다. README_LOCAL은 폴더 이름 때문에 "Alpha 0.45"라고 부른다.
+- README는 0.103.2부터 다시 최신(그 사이 0.98~0.103.1 기록은 없음), `index.html`은 `app.js?v=0.112.0`, 모듈 import 쿼리는 0.70~0.112 혼재(0.105~0.112에서 바꾼 모듈과 그 import 사슬은 `?v=0.112.0`), `PROFILE_VERSION=15`(0.105 v14 진행 배열 30칸, 0.112 v15 고대 번호 재배정; 테스트의 복원 버전 단언은 15). 코드가 문서보다 앞서 있다. README_LOCAL은 폴더 이름 때문에 "Alpha 0.45"라고 부른다.
 - 파일명 버전: 점 제거(063=0.63, 0844=0.84.4, v0970=0.97.0, v01002=0.100.2). 단 alpha09/alpha091은 0.9/0.9.1.
 
 ## 게임 규칙 요약
@@ -52,7 +52,7 @@
 - 스테이지 60초 제한. 1~9는 웨이브 3개, 10은 보스 단독. 4·9 special, 8 elite, 10 boss. 동시 적 최대 32.
 - `advanceGame`: dt ≤0.1s, 0.025s 고정 서브스텝. RNG는 LCG 5개 스트림(전투·전리품·재료·재련·승급), `Math.random` 미사용 → 결정적.
 - 장비 9칸(무기, 헬멧·상의·하의·신발, 목걸이·귀걸이×2, 전용). 등급 0일반~4신화, 5고대, 6제작. 강화 상한 5/10/15/20/30/40/50, 구간별 보장(10/20/30회), 고대 +30 이상 실패 보정, 제작 +40 이상 보장 없음. 승급은 최대 강화 후 +0으로.
-- 저장: localStorage `beast-hunter:profile:v1` (+ `:recovery`, `:before-restore`, `:sound`). 엔진은 v1~14 수용(v13 이하의 1~3장 진행은 새 1~3장으로), 범위 밖이면 새 프로필(앱이 원본을 :recovery에 보관). 백업 형식 `beast-hunter-backup` v1, FNV-1a, 256KB. 저장은 호스트·포트별이라 포트를 바꾸면 진행이 안 보인다.
+- 저장: localStorage `beast-hunter:profile:v1` (+ `:recovery`, `:before-restore`, `:sound`). 엔진은 v1~15 수용(v13 이하의 1~3장 진행은 새 1~3장으로, v14 이하의 고대 2·3번은 서로 바꿔 옮김), 백업 검증(profile-backup.js)은 v8~15, 범위 밖이면 새 프로필(앱이 원본을 :recovery에 보관). 백업 형식 `beast-hunter-backup` v1, FNV-1a, 256KB. 저장은 호스트·포트별이라 포트를 바꾸면 진행이 안 보인다.
 - strict(normal이 아닌) 스테이지는 체크포인트 → 실패/이탈 시 롤백, 클리어 시 `confirmSettlement`로 2단계 정산.
 
 ## UI 레이아웃 원칙과 함정
@@ -81,8 +81,8 @@
 - 몬스터: `python3 tools/codex-monster-sheet.py art/monsters0107/<사양>.json <id>...` → 자동 검사(투명도·25포즈·5×5·가장자리) 불합격이면 재생성 → `python3 tools/pack-monsters0106.py <폴더> <태그>`(폴더의 PNG 전체를 종별 아틀라스로 다시 포장, scipy 필요: `pip install scipy`) → chapters.js의 `CHAPTER_BOSSES`, `MONSTERS`, `BIOMES.pool`에 등록. 긴 브레스·무기가 옆 칸까지 뻗으면 검사에 떨어지므로 "짧게, 칸 안에"를 프롬프트에 넣는다.
 - 지형·장식물·효과: 같은 생성기에 `"kind":"terrain"`(불투명 정사각) 또는 `"kind":"sprite","minParts"`(투명, 물체 N개 이상) 사양 → `python3 tools/pack-environment0107.py`(지형 c1~c30, 장식물 아틀라스, 불 효과). 0.106의 `pack-terrain0106.py`는 옛 단계 키('1.2' 등)를 만들며 0.107 패커가 지운다. 0.107 패커는 재사용 지형의 `delivery`도 넣고, 장식물은 항상 `props_chapters-v09`에서 다시 만든다(재실행 안전).
 - 장비: `"kind":"sprite","minParts":6` 사양(`art/equipment0109/sets.json`, 3×2 배치, 기존 장비 아틀라스를 스타일 참고로) → `python3 tools/pack-equipment0109.py`(조각마다 중심점이 속한 칸으로 물건을 묶어 최대 240px로 줄이고 지역별 페이지에 세트당 한 줄로 배치. 신발 한 켤레는 조각 2개라 '큰 조각 6개' 방식은 틀린다). 새 세트는 `equipment-sets.js` `ROWS`에 줄을 더하고 시트를 만든 뒤 다시 포장한다. 26장을 6개 병렬로 약 15분에 모두 첫 시도 통과.
-- 고대 원화: `art/ancient0111/parts.json`(티어당 5점, 3×2에서 오른쪽 아래 칸 비움) → `python3 tools/pack-ancient0111.py`(0.19 고대 아틀라스 아래에 붙임).
-- 패커를 돌린 뒤 `git checkout dist/assets/manifest.json`을 하면 다른 패커의 결과까지 되돌아간다. 되돌렸다면 0106 몬스터 → 0107 몬스터 → environment0107 → equipment0109 → ancient0111 순으로 모두 다시 돌린다.
+- 고대 원화: `art/ancient0111/parts.json`(티어당 5점, 3×2에서 오른쪽 아래 칸 비움, 파일 번호는 0.112 지역 번호) → `python3 tools/pack-ancient0112.py`(0.19 고대 아틀라스 아래에 붙이고 0.19의 옛 번호를 지역 번호로 한 번 바꿈).
+- 패커를 돌린 뒤 `git checkout dist/assets/manifest.json`을 하면 다른 패커의 결과까지 되돌아간다. 되돌렸다면 0106 몬스터 → 0107 몬스터 → environment0107 → equipment0109 → ancient0112 순으로 모두 다시 돌린다.
 - 생성본은 반드시 눈으로 검수한다(모아보기 이미지를 만들어 Read). 자동 검사는 배치만 본다. 실패 시도는 `art/*/.codex-work/`(gitignore).
 - 대기 루프에서 `pgrep -f "tools/codex-monster-sheet.py"`를 쓰면 루프 자신과 일치해 끝나지 않는다. `pkill -f`도 같은 이유로 셸을 죽일 수 있다.
 

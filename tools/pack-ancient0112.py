@@ -6,6 +6,9 @@ holding its centroid (a pair of boots is two bodies), faint haze goes to the nea
 stray specks are dropped. Items are scaled to at most 200px like the 0.19 ancient art and
 placed below an exact copy of the 0.19 atlas; manifest.equipmentRarities gains the frames as
 ancient-<tier>-<part>-1. Re-running always starts again from the 0.19 atlas.
+
+Alpha 0.112 numbers ancients by region (1 forest, 2 frost, 3 ruined castle/abyss); the 0.19 atlas used
+the old order (2 ruins, 3 frost), so its design ids are renumbered once, recorded as numbering='region'.
 """
 from pathlib import Path
 import hashlib
@@ -18,6 +21,8 @@ from scipy.ndimage import distance_transform_edt, find_objects, label
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / 'dist/assets'
 BASE_IMAGE = 'ancient-individual-v019.png'
+OUT_IMAGE = 'ancient-individual-v0112.png'
+RENUMBER = {'1': '1', '2': '3', '3': '2'}
 PARTS = ['helmet', 'pants', 'boots', 'earring', 'special']
 MAX_SIDE = 200
 GAP = 12
@@ -78,21 +83,25 @@ def main():
     atlas.paste(base, (0, 0))
     frames = [old['frames'][i] for i in keep]
     design_ids = [old['designIds'][i] for i in keep]
+    if old.get('numbering') != 'region':
+        design_ids = [d[:8] + RENUMBER[d[8]] + d[9:] if d.startswith('ancient-') else d for d in design_ids]
     for design, part, crop, px, py in placed:
         atlas.paste(crop, (px, py))
         frames.append({'x': px, 'y': py, 'w': crop.width, 'h': crop.height, 'pivotX': round(crop.width / 2, 1),
                        'pivotY': crop.height, 'duration': 1, 'slot': part})
         design_ids.append(design)
     assert atlas.crop((0, 0, base.width, base.height)).tobytes() == base.tobytes()
-    logical = 'ancient-individual-v0111.png'
+    logical = OUT_IMAGE
+    manifest['delivery'].pop('ancient-individual-v0111.png', None)
+    (ASSETS / 'ancient-individual-v0111.webp').unlink(missing_ok=True)
     out = ASSETS / logical.replace('.png', '.webp')
     atlas.save(out, lossless=True, exact=True, method=6)
     with Image.open(out) as decoded:
         assert decoded.convert('RGBA').tobytes() == atlas.tobytes(), 'WebP pixels changed'
     manifest['delivery'][logical] = out.name
-    manifest['equipmentRarities'] = {**old, 'id': 'ancient_individual_v0111', 'image': logical, 'frames': frames, 'designIds': design_ids}
+    manifest['equipmentRarities'] = {**old, 'id': 'ancient_individual_v0112', 'image': logical, 'frames': frames, 'designIds': design_ids, 'numbering': 'region'}
     path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    (ROOT / 'tools/reports/alpha0111-ancient-parts.json').write_text(json.dumps({'sources': report, 'atlas': [atlas.width, atlas.height],
+    (ROOT / 'tools/reports/alpha0112-ancient-parts.json').write_text(json.dumps({'sources': report, 'atlas': [atlas.width, atlas.height],
         'frames': len(frames), 'webpBytes': out.stat().st_size}, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     print(atlas.size, len(frames), out.stat().st_size)
 

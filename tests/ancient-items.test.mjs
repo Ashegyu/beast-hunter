@@ -15,7 +15,7 @@ test('ordinary quality intervals never select ancient identity and ancient inter
 });
 test('every old ultra/extreme identity migrates once with ID stats trait effect and worn ownership intact',()=>{
  // Region set pieces (Alpha 0.108) are newer than these saves and have no ancient twin.
- for(const row of ITEM_CATALOG.filter(r=>!r.signatureOnly&&!r.set))for(const rarity of [5,6]){const p=g.createProfile(1000);p.version=4;p.gold=73;p.inventory=[owned(row,rarity,17)];p.equipment[row.slot]=17;p.lootPity=8;p.nextItemId=18;const a=g.restoreProfile(g.encodeProfile(p,1000),1000),item=a.inventory[0];assert.equal(a.version,14);assert.equal(item.id,17);assert.equal(item.rarity,5);assert.ok(ancientDefinition(item));assert.deepEqual(item.affixes,p.inventory[0].affixes);assert.equal(item.artId,row.artId);assert.equal(uniqueEffect(item).id,row.effectId);assert.equal(a.equipment[row.slot],17);assert.equal(a.gold,73);assert.equal(a.lootPity,8);assert.equal(a.nextItemId,18);const b=g.restoreProfile(g.encodeProfile(a,1000),1000);assert.deepEqual(b,a);}
+ for(const row of ITEM_CATALOG.filter(r=>!r.signatureOnly&&!r.set))for(const rarity of [5,6]){const p=g.createProfile(1000);p.version=4;p.gold=73;p.inventory=[owned(row,rarity,17)];p.equipment[row.slot]=17;p.lootPity=8;p.nextItemId=18;const a=g.restoreProfile(g.encodeProfile(p,1000),1000),item=a.inventory[0];assert.equal(a.version,15);assert.equal(item.id,17);assert.equal(item.rarity,5);assert.ok(ancientDefinition(item));assert.deepEqual(item.affixes,p.inventory[0].affixes);assert.equal(item.artId,row.artId);assert.equal(uniqueEffect(item).id,row.effectId);assert.equal(a.equipment[row.slot],17);assert.equal(a.gold,73);assert.equal(a.lootPity,8);assert.equal(a.nextItemId,18);const b=g.restoreProfile(g.encodeProfile(a,1000),1000);assert.deepEqual(b,a);}
 });
 test('legacy art fallback and pending migration settle duplicate drops once without granting extra gold',()=>{
  const p=g.createProfile(1000);p.version=4;p.inventory=[{id:1,slot:'weapon',tier:1,rarity:6,name:'예전 검',affixes:{damage:21}}];p.equipment.weapon=1;const row=ITEM_CATALOG.find(r=>r.slot==='charm');p.pendingLoot=[p.inventory[0],owned(row,5,2),owned(row,5,2)];p.gold=42;const a=g.restoreProfile(g.encodeProfile(p,1000),1000);assert.equal(a.inventory.length,2);assert.equal(a.gold,42);assert.equal(a.pendingLoot.length,0);assert.equal(a.equipment.weapon,1);assert.ok(a.inventory.every(i=>ancientDefinition(i)));assert.equal(a.nextItemId,3);
@@ -27,9 +27,8 @@ test('committed ancient snapshot retains item identity and theme through mutatio
  const p=g.createProfile(),row=ANCIENT_CATALOG.find(r=>r.slot==='weapon'&&r.visualStyle===6);p.inventory=[owned(row)];p.equipment.weapon=1;const snapshot=g.equipmentSnapshot(p);p.inventory[0].catalogId=ITEM_CATALOG[0].id;p.inventory[0].rarity=0;assert.equal(snapshot.weapon.catalogId,row.id);assert.equal(snapshotDesigns(snapshot).weapon.variant,row.id);assert.ok(Object.isFrozen(snapshot.weapon));
 });
 
-test('boss ancients drop where their identity fits the region and scale with that region (Alpha 0.111)',()=>{
- // Tier 1 forest art drops in 1~10, tier 3 frost in 11~20 (불과 얼음의 땅), tier 2 ruined-castle/abyss in 21~30.
- for(const [chapter,tier,region]of [[1,1,1],[11,3,2],[21,2,3]]){
+test('boss ancients drop their region tier: 1 forest, 2 frost, 3 ruined castle/abyss (Alpha 0.111/0.112)',()=>{
+ for(const [chapter,tier,region]of [[1,1,1],[11,2,2],[21,3,3]]){
   const p=g.createProfile(1000);p.unlockedStage=30;p.clearedStage=29;p.stageProgress=g.STAGES.map(()=>10);p.legendaryPity=19;
   const s=g.createGame(p);assert.equal(g.launch(s,chapter,10),true);s.spawns=[];s.barrels=[];s.run.bossSpawned=true;s.player.invulnerable=999;
   const e={id:s.nextId++,species:g.STAGES[chapter-1].bossSpecies,type:'bulwark',elite:false,boss:true,x:s.player.x+300,y:s.player.y,hp:1,maxHp:1,action:'walk',actionTime:0,speed:0,cooldown:999,aggro:true,guard:0,dead:false,wave:s.run.wave,runStage:s.run.stage,damage:8,radius:58};s.enemies=[e];
@@ -37,5 +36,16 @@ test('boss ancients drop where their identity fits the region and scale with tha
   assert.equal(s.run.bossAncients.length,1);const row=ANCIENT_CATALOG.find(r=>r.id===s.run.bossAncients[0]);assert.equal(row.tier,tier);assert.equal(row.region,region);
   assert.match(g.equipmentAcquisition({rarity:5,tier}),new RegExp('^'+((region-1)*10+1)+'~'+region*10+'장'));
  }
- const weapon=t=>ANCIENT_CATALOG.find(r=>r.tier===t&&r.slot==='weapon').base.damage;assert.ok(weapon(1)<weapon(3)&&weapon(3)<weapon(2));
+ const weapon=t=>ANCIENT_CATALOG.find(r=>r.tier===t&&r.slot==='weapon').base.damage;assert.ok(weapon(1)<weapon(2)&&weapon(2)<weapon(3));
+ assert.equal(ANCIENT_CATALOG.find(r=>r.id==='ancient-2-weapon-1').artId,'frost_blade');assert.equal(ANCIENT_CATALOG.find(r=>r.id==='ancient-3-weapon-1').artId,'ruins_blade');
+});
+
+test('v14 saves move ancients to the region numbering once (Alpha 0.112)',()=>{
+ const ruins=ANCIENT_CATALOG.find(r=>r.id==='ancient-3-weapon-1'),frost=ANCIENT_CATALOG.find(r=>r.id==='ancient-2-armor-1'),p=g.createProfile(1000);p.version=14;
+ p.inventory=[{id:1,slot:'weapon',tier:2,rarity:5,artId:ruins.artId,catalogId:'ancient-2-weapon-1',name:'옛 이름',affixes:{damage:50}},{id:2,slot:'armor',tier:3,rarity:5,artId:frost.artId,catalogId:'ancient-3-armor-1',name:'옛 이름',affixes:{hp:100}}];p.equipment.weapon=1;p.equipment.armor=2;
+ p.discoveredAncients=['ancient-2-weapon-1','ancient-3-armor-1'];p.targetAncientId='ancient-3-armor-1';
+ const r=g.restoreProfile(JSON.stringify(p),1000);assert.equal(r.version,15);
+ assert.deepEqual(r.inventory.map(i=>[i.catalogId,i.tier,i.name]),[[ruins.id,3,ruins.name],[frost.id,2,frost.name]]);assert.deepEqual([r.equipment.weapon,r.equipment.armor],[1,2]);
+ assert.deepEqual([...r.discoveredAncients].sort(),[frost.id,ruins.id].sort());assert.equal(r.targetAncientId,frost.id);
+ const again=g.restoreProfile(g.encodeProfile(r,1000),1000);assert.deepEqual(again.inventory.map(i=>i.catalogId),[ruins.id,frost.id]);
 });

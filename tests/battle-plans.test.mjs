@@ -55,7 +55,7 @@ test('all three chapters and all replay modes launch a boss with no adds or prop
 test('legacy checkpoints migrate once and current ten-stage saves retain gear, materials and progression',()=>{
  for(let version=1;version<=7;version++)for(let completed=0;completed<=4;completed++){
   const p=g.createProfile(1000);p.version=version;p.clearedStage=1;p.unlockedStage=2;p.stageProgress=[5,completed,0];p.gold=75;p.level=12;p.materials.root=4;
-  const a=g.restoreProfile(p,1000);assert.equal(a.version,14);assert.deepEqual(a.stageProgress.slice(0,3),[10,completed*2,0]);assert.equal(a.stageProgress.length,g.STAGES.length);assert.equal(a.gold,75);assert.equal(a.level,12);assert.equal(a.materials.root,version>=7?4:0);assert.equal(g.stageLimit(a,2),completed*2+1);assert.deepEqual(g.restoreProfile(g.encodeProfile(a,1000),1000),a);
+  const a=g.restoreProfile(p,1000);assert.equal(a.version,15);assert.deepEqual(a.stageProgress.slice(0,3),[10,completed*2,0]);assert.equal(a.stageProgress.length,g.STAGES.length);assert.equal(a.gold,75);assert.equal(a.level,12);assert.equal(a.materials.root,version>=7?4:0);assert.equal(g.stageLimit(a,2),completed*2+1);assert.deepEqual(g.restoreProfile(g.encodeProfile(a,1000),1000),a);
  }
  const p=g.createProfile(1000);p.stageProgress[0]=9;assert.equal(g.stageLimit(g.restoreProfile(p,1000),1),10);
 });

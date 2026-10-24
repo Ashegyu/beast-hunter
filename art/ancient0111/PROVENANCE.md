@@ -11,3 +11,5 @@
 세 장 모두 첫 생성에서 자동 검사를 통과했고 눈으로 검수해 채택했습니다.
 
 포장: `python3 tools/pack-ancient0111.py` — 단단한 조각마다 중심점이 속한 칸으로 물건을 묶고(신발 한 켤레는 조각 2개), 최대 200px로 줄여 0.19 고대 아틀라스를 그대로 복사한 아래에 붙여 `ancient-individual-v0111`을 만듭니다. `manifest.equipmentRarities`가 75프레임(`ancient-<티어>-<부위>-1` 15개 추가)이 됩니다. 측정값 `tools/reports/alpha0111-ancient-parts.json`.
+
+0.112 번호 정리: 고대 번호를 지역 순서(1 숲, 2 서리, 3 폐성·망자)로 다시 매기면서 시트 파일을 바꿔 불렀습니다. 처음 `ancient-2`로 생성한 폐성 시트는 `ancient-3-parts.png`, `ancient-3`으로 생성한 서리 시트는 `ancient-2-parts.png`입니다(`prompts/*.json`의 `note`에 기록). 위 표의 '티어'는 생성 당시 번호입니다. 포장 도구는 `tools/pack-ancient0112.py`로 이름이 바뀌었습니다.

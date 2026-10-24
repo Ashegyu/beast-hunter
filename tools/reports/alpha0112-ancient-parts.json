@@ -8,12 +8,12 @@
     {
       "tier": 2,
       "source": "art/ancient0111/ancient-2-parts.png",
-      "sha256": "9ab59d7f7d194ef65b1985b2c9542d8e20befc8ab5b8bc0cb383e24ec73f2024"
+      "sha256": "b05072a5bceac74da24cdb46eed736770ee8d06d91b6b47a45baf95fb7c27133"
     },
     {
       "tier": 3,
       "source": "art/ancient0111/ancient-3-parts.png",
-      "sha256": "b05072a5bceac74da24cdb46eed736770ee8d06d91b6b47a45baf95fb7c27133"
+      "sha256": "9ab59d7f7d194ef65b1985b2c9542d8e20befc8ab5b8bc0cb383e24ec73f2024"
     }
   ],
   "atlas": [
@@ -21,5 +21,5 @@
     1780
   ],
   "frames": 75,
-  "webpBytes": 2408348
+  "webpBytes": 2407794
 }

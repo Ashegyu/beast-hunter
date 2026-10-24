@@ -1,5 +1,5 @@
-import {SLOTS,EQUIPMENT_KEYS,itemSlotForPosition} from './equipment-slots.js?v=0.111.0';
-import {encodeProfile,restoreProfile,INVENTORY_LIMIT,MAX_LEVEL,STAGES} from './game-engine.js?v=0.111.0';
+import {SLOTS,EQUIPMENT_KEYS,itemSlotForPosition} from './equipment-slots.js?v=0.112.0';
+import {encodeProfile,restoreProfile,INVENTORY_LIMIT,MAX_LEVEL,STAGES} from './game-engine.js?v=0.112.0';
 
 export const MAX_BACKUP_BYTES=262144;
 const FORMAT='beast-hunter-backup',VERSION=1;
@@ -7,7 +7,7 @@ const plain=value=>value!==null&&typeof value==='object'&&!Array.isArray(value);
 // Detect accidental file changes; this is not an anti-cheat signature.
 function checksum(text){let value=2166136261;for(let i=0;i<text.length;i++){value^=text.charCodeAt(i);value=Math.imul(value,16777619);}return (value>>>0).toString(16).padStart(8,'0');}
 function validProfile(p){
- if(!plain(p)||![8,9,10,11,12,13,14].includes(p.version)||!Number.isInteger(p.level)||p.level<1||p.level>(p.version>=14?MAX_LEVEL:50))return false;
+ if(!plain(p)||![8,9,10,11,12,13,14,15].includes(p.version)||!Number.isInteger(p.level)||p.level<1||p.level>(p.version>=14?MAX_LEVEL:50))return false;
  // v14 holds one entry per chapter (30); older saves had three chapters.
  const chapters=p.version>=14?STAGES.length:3;
  for(const key of ['gold','cores','xp','skillPoints','unlockedStage','clearedStage','totalKills','hunts','lastSeenAt'])if(!Number.isFinite(p[key])||p[key]<0)return false;
