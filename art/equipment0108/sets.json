@@ -1,0 +1,30 @@
+{
+ "set-forest": {
+  "kind": "sprite",
+  "minParts": 6,
+  "out": "art/equipment0108/set-forest.png",
+  "style": "dist/assets/equipment_chapters-v09.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing equipment sheet: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting, scale and the exact diagonal orientation of its swords (hilt at bottom-left, tip at top-right). Create ONE transparent RGBA square image with exactly SIX separate items of ONE matching equipment set in an invisible 3 columns x 2 rows grid, each centered in its own cell with wide transparent margins, never touching each other or the canvas edge: row 1: (1) a one-handed sword, (2) a different second weapon of the same set (curved blade or greatsword), (3) a helmet; row 2: (4) a chest armor, (5) leg armor pants, (6) a pair of boots. All six share one design language: FOREST HUNTER set: dark wood, bark, braided leather, red maple leaves, amber gems, thorny vines. Each item clearly readable at small icon size. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters."
+ },
+ "set-fire": {
+  "kind": "sprite",
+  "minParts": 6,
+  "out": "art/equipment0108/set-fire.png",
+  "style": "dist/assets/equipment_chapters-v09.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing equipment sheet: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting, scale and the exact diagonal orientation of its swords (hilt at bottom-left, tip at top-right). Create ONE transparent RGBA square image with exactly SIX separate items of ONE matching equipment set in an invisible 3 columns x 2 rows grid, each centered in its own cell with wide transparent margins, never touching each other or the canvas edge: row 1: (1) a one-handed sword, (2) a different second weapon of the same set (curved blade or greatsword), (3) a helmet; row 2: (4) a chest armor, (5) leg armor pants, (6) a pair of boots. All six share one design language: FLAME LORD set: black obsidian, molten orange cracks, polished gold trim, ember red gems, small flame accents. Each item clearly readable at small icon size. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters."
+ },
+ "set-frost": {
+  "kind": "sprite",
+  "minParts": 6,
+  "out": "art/equipment0108/set-frost.png",
+  "style": "dist/assets/equipment_chapters-v09.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing equipment sheet: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting, scale and the exact diagonal orientation of its swords (hilt at bottom-left, tip at top-right). Create ONE transparent RGBA square image with exactly SIX separate items of ONE matching equipment set in an invisible 3 columns x 2 rows grid, each centered in its own cell with wide transparent margins, never touching each other or the canvas edge: row 1: (1) a one-handed sword, (2) a different second weapon of the same set (curved blade or greatsword), (3) a helmet; row 2: (4) a chest armor, (5) leg armor pants, (6) a pair of boots. All six share one design language: FROST WARDEN set: pale blue ice crystal, polished silver, white fur trim, sapphire gems, frost spikes. Each item clearly readable at small icon size. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters."
+ },
+ "set-ruins": {
+  "kind": "sprite",
+  "minParts": 6,
+  "out": "art/equipment0108/set-ruins.png",
+  "style": "dist/assets/equipment_chapters-v09.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing equipment sheet: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting, scale and the exact diagonal orientation of its swords (hilt at bottom-left, tip at top-right). Create ONE transparent RGBA square image with exactly SIX separate items of ONE matching equipment set in an invisible 3 columns x 2 rows grid, each centered in its own cell with wide transparent margins, never touching each other or the canvas edge: row 1: (1) a one-handed sword, (2) a different second weapon of the same set (curved blade or greatsword), (3) a helmet; row 2: (4) a chest armor, (5) leg armor pants, (6) a pair of boots. All six share one design language: ABYSS PACT set: blackened steel, bone, tattered dark purple cloth, glowing violet void gems, small skull motifs. Each item clearly readable at small icon size. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters."
+ }
+}

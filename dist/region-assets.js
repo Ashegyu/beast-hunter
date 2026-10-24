@@ -8,7 +8,7 @@ export function regionAssetPlan(manifest, chapters) {
   const regionClips = new Set(), regions = new Map();
   for (const chapter of chapters) {
     const ids = new Set();
-    for (const actor of [...chapter.roster, chapter.bossSpecies]) {
+    for (const actor of [...chapter.roster, chapter.bossSpecies, ...(chapter.midBoss ? [chapter.midBoss] : [])]) {
       for (const views of Object.values(manifest.directions[actor])) {
         for (const id of Object.values(views)) { ids.add(id); regionClips.add(id); }
       }

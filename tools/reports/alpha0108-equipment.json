@@ -1,0 +1,30 @@
+{
+  "sources": [
+    {
+      "set": "forest",
+      "source": "art/equipment0108/set-forest.png",
+      "sha256": "cba54b1b6d2b3bbae05a281363942acd603a3bc34058dc7356a458e1d7a92ad3"
+    },
+    {
+      "set": "fire",
+      "source": "art/equipment0108/set-fire.png",
+      "sha256": "47ff994c522f73538948e185d6997fb1fa49288cd3a1b4f718aeba3b87713b24"
+    },
+    {
+      "set": "frost",
+      "source": "art/equipment0108/set-frost.png",
+      "sha256": "df515051b4738248f58c791839d05d976e6823457d4b3fb993427042ccbc1443"
+    },
+    {
+      "set": "ruins",
+      "source": "art/equipment0108/set-ruins.png",
+      "sha256": "918d5c3e47e5861cdf1993ba3c0bc93e839a1dbf22fc229f21f6b74a7964be73"
+    }
+  ],
+  "atlas": [
+    1254,
+    3350
+  ],
+  "frames": 36,
+  "webpBytes": 3863118
+}

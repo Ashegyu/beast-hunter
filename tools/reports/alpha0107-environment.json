@@ -133,12 +133,12 @@
     {
       "chapter": 20,
       "source": "art/terrain0107/terrain-c20.png",
-      "sha256": "d817c514d026c32ef047f9fb2d13e29252358049165890ea08dfff1197f39be3",
+      "sha256": "14f502a1f865810a7acb2c1d86885d1c7dbd3995c23e75c574dd9667885eadb5",
       "size": [
         1254,
         1254
       ],
-      "webpBytes": 2142020
+      "webpBytes": 2284388
     },
     {
       "chapter": 22,

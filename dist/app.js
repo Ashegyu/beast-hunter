@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.107.0';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.108.0';
 import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js';
 import { createCombatAudio } from './sound.js?v=0.76.0';
-import * as game from './game-engine.js?v=0.107.0';
+import * as game from './game-engine.js?v=0.108.0';
 import {FrameMetrics} from './frame-metrics.js?v=0.98.1';
 import { frameIndex, frameRect, validateClip } from './engine.js';
 import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
 import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.103.1';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.107.0';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.107.0';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.107.0';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.107.0';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.108.0';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.108.0';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.108.0';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.108.0';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -284,6 +284,7 @@ $('bag-filter-reset').addEventListener('click',()=>{rarityFilter=0;bagSlot='all'
 function openEquipmentSynergies(){if(!inventoryOpen)return;setInventoryPanel('build');$('equipped-synergies').setAttribute('open','');window.hunterPages?.reveal($('bag-equipped'));$('equipped-synergies-title').focus({preventScroll:true});}
 $('equipment-synergy-open').addEventListener('click',openEquipmentSynergies);
 for(const row of game.EQUIPMENT_SYNERGIES)$('equipment-link-'+row.id).addEventListener('click',()=>{if(inventoryOpen&&inventoryPanel==='equipment')openEquipmentSynergies();});
+$('equipment-link-set').addEventListener('click',()=>{if(inventoryOpen&&inventoryPanel==='equipment')setInventoryPanel('gear');});
 $('bag-confirm').addEventListener('click',()=>{if(!bagReviewIds?.length)return;const result=game.bulkSalvage(state,bagReviewIds);bagFeedback=result.reason;bagReviewIds=null;bagSelectedIds.clear();if(result.ok)save();updateHud();});
 for(let n=0;n<5;n++){
  $('build-save-'+n).addEventListener('click',()=>{if(game.saveBuild(state,n,buildNameDrafts[n]??$('build-name-'+n).value)){buildNameDrafts[n]=null;bagFeedback='빌드 '+(n+1)+' 저장 완료';bagReviewIds=null;save();updateHud();}});
@@ -336,6 +337,7 @@ function refreshBagDetailReading(){
  $('item-stat-grid-'+index).hidden=false;$('item-read-title-'+index).textContent='특성 · 고유 효과';
  const item=inventoryView[index],trait=$('item-trait-'+index),unique=$('item-unique-'+index),parts=['획득처 · '+game.equipmentAcquisition(item)];
  if(item.perfect)parts.push('극옵 · 모든 기본 옵션 최댓값');
+ const setId=game.itemSet(item);if(setId){const worn=game.equippedSetCounts(profile)[setId]??0;parts.push('세트 · '+game.EQUIPMENT_SETS[setId].name+' (착용 '+worn+'/'+game.SET_SLOTS.length+')\n'+game.setBonusText(setId,worn));}
  const ranges=game.itemRollRanges(item);if(Object.keys(ranges).length)parts.push('기본 옵션 범위 (강화 보너스 제외)\n'+Object.entries(ranges).map(([k,r])=>game.AFFIXES[k]+' '+item.affixes[k]+' ['+r.min+'~'+r.max+']').join(' · '));
  if(item.inscription)parts.push('추가 각인 · '+game.BUILD_EFFECTS[item.inscription].name+'\n'+game.buildEffectText(item.inscription));
  if(game.enhancementLevel(item))parts.push('개별 강화 +'+game.enhancementLevel(item)+' · 옵션 +'+(game.enhancementLevel(item)*3)+'% · 자동 분해 보호');
@@ -933,7 +935,7 @@ function atlasThumbnail(node,imageName,frame,size=64,dimensions=null){
 const PART_FRAMES={helmet:{x:0,y:0,w:512,h:532},pants:{x:512,y:0,w:512,h:512},boots:{x:1024,y:0,w:512,h:512},earring:{x:512,y:512,w:512,h:512},special:{x:1024,y:512,w:512,h:512}};
 function gearThumbnail(node,item,size=64,illustrated=false){
 
-  if(PART_FRAMES[item?.slot]){const frame=PART_FRAMES[item.slot],image='equipment-parts-v0970.png';atlasThumbnail(node,image,frame,size,{width:1536,height:1024});node.setAttribute('aria-label',item.name??game.SLOTS[item.slot]);node.setAttribute('data-art-id','part-'+item.slot);node.setAttribute('data-visual-id',item.catalogId??item.slot);node.style.filter=item.rarity?'drop-shadow(0 0 2px '+game.RARITY_INFO[item.rarity].color+')':'';return {frame,image};}
+  if(PART_FRAMES[item?.slot]&&!game.itemSet(item)){const frame=PART_FRAMES[item.slot],image='equipment-parts-v0970.png';atlasThumbnail(node,image,frame,size,{width:1536,height:1024});node.setAttribute('aria-label',item.name??game.SLOTS[item.slot]);node.setAttribute('data-art-id','part-'+item.slot);node.setAttribute('data-visual-id',item.catalogId??item.slot);node.style.filter=item.rarity?'drop-shadow(0 0 2px '+game.RARITY_INFO[item.rarity].color+')':'';return {frame,image};}
   const design=visualDesign(item),craftedDisplay=illustrated&&design.craftId?manifest.craftedPresentation:null,display=craftedDisplay??(illustrated&&!design.variant?manifest.equipmentPresentation:null),displayId=craftedDisplay?design.craftId:design.id;
   const source=display?.frames[displayId]?{image:display.image,frame:display.frames[displayId],dimensions:display,grip:display.weaponAnchors?.[displayId]}:gearFrame(manifest.equipment,design,manifest.equipmentRarities);
   atlasThumbnail(node,source.image,source.frame,size,source.dimensions);node.setAttribute('aria-label',item?.name?game.RARITIES[item.rarity]+' '+item.name:design.name);node.style.filter=item?.rarity?'drop-shadow(0 0 2px '+game.RARITY_INFO[item.rarity].color+')':'';node.setAttribute('data-art-id',design.id);node.setAttribute('data-visual-id',design.variant??design.id);return source;
@@ -1342,6 +1344,12 @@ function refreshEquipmentScene(){
   button.setAttribute('data-active',String(active));button.setAttribute('aria-label',row.name+' · '+(active?'활성':'미완성')+' · 자세히 보기');
   $('equipment-link-name-'+row.id).textContent=row.name;$('equipment-link-state-'+row.id).textContent=active?'활성':'미완성';$('equipment-link-description-'+row.id).textContent=active?row.description:row.requirement;
  }
+ // Region set progress (Alpha 0.108): the set with the most worn pieces and its 2/4-piece bonuses.
+ const best=game.equippedSets(profile)[0],setButton=$('equipment-link-set');setButton.setAttribute('data-active',String(!!best?.active.length));
+ $('equipment-link-name-set').textContent=best?'세트 · '+best.set.name+' '+best.count+'/'+game.SET_SLOTS.length:'지역 장비 세트';
+ $('equipment-link-state-set').textContent=best?.active.length?best.active.at(-1).pieces+'세트 활성':'미완성';
+ $('equipment-link-description-set').textContent=best?best.set.bonuses.map(b=>b.pieces+'세트 '+b.text).join(' · '):'같은 지역 세트 2·4부위 착용 시 효과';
+ setButton.setAttribute('aria-label',$('equipment-link-name-set').textContent+' · '+$('equipment-link-state-set').textContent);
  for(const view of ['skills','growth','codex'])$('equipment-menu-'+view).disabled=state.phase!=='camp';
 }
 for(const view of ['skills','growth','codex'])$('equipment-menu-'+view).addEventListener('click',()=>{if(!inventoryOpen||inventoryPanel!=='equipment'||state.phase!=='camp')return;if(view==='skills')openSkills('lobby-skills');else{navigateCamp(view);if(view==='growth')campDrawerOrigin='hub-growth';}});

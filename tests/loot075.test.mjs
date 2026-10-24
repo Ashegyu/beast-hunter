@@ -37,8 +37,9 @@ test('every chapter and boss difficulty grants common stage equipment without du
 test('perfect rolls maximize each selected affix across every ordinary family and quality, preserving RNG calls',()=>{
  const extras={damage:3,hp:12,speed:2,crit:2,reduction:1};
  for(const row of ITEM_CATALOG)for(const rarity of [2,3,4]){
-  const choices=ITEM_CATALOG.filter(r=>r.tier===row.tier),index=choices.indexOf(row),threshold={2:.94,3:.985,4:.998}[rarity];
-  const roll=fraction=>{let n=0;const item=rollItem({id:1,tier:row.tier},()=>++n===1?(index+fraction)/choices.length:n===2?threshold:.3);return{item,n};};
+  // Set pieces roll from their own set; original identities roll by tier.
+  const choices=ITEM_CATALOG.filter(r=>row.set?r.set===row.set:!r.set&&r.tier===row.tier),index=choices.indexOf(row),threshold={2:.94,3:.985,4:.998}[rarity];
+  const roll=fraction=>{let n=0;const item=rollItem({id:1,tier:row.tier,set:row.set??null},()=>++n===1?(index+fraction)/choices.length:n===2?threshold:.3);return{item,n};};
   const a=roll(.02),b=roll(.5);assert.equal(a.item.rarity,rarity);assert.equal(a.item.perfect,true);assert.equal(b.item.perfect,undefined);assert.equal(a.n,b.n);assert.equal(a.item.catalogId,row.id);
   const scale=(.76+row.tier*.24)*RARITY_INFO[rarity].power;
   for(const [k,v]of Object.entries(a.item.affixes)){const expected=Math.min(k==='hp'?250:k==='damage'?80:25,Math.max(1,Math.round((row.base[k]??extras[k])*scale*(Object.hasOwn(row.base,k)?1.15:1.2))));assert.equal(v,expected);assert.ok(v>=b.item.affixes[k]);}

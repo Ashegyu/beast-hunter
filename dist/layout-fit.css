@@ -113,3 +113,15 @@
 #game-shell #chapter-banner .chapter-pager{right:8px;gap:4px}
 #game-shell #chapter-banner .chapter-pager button{width:26px;height:26px;font-size:18px;line-height:22px}
 }
+
+/* 0.108 · 장비 시너지 패널: 파쇄·처형에 세트 줄이 더해져 3줄. 설명은 한 줄로 줄인다 */
+#game-shell[data-panel=equipment] .equipment-synergy-panel .equipment-synergy-list{grid-template-rows:repeat(3,minmax(0,1fr))}
+#game-shell[data-panel=equipment] .equipment-synergy-panel .equipment-link{padding-block:1px;gap:5px;overflow:hidden}
+#game-shell[data-panel=equipment] .equipment-synergy-panel .equipment-link>span:not(.equipment-link-state){gap:1px}
+#game-shell[data-panel=equipment] .equipment-synergy-panel .equipment-link strong{font-size:clamp(10px,1.3cqw,14px);line-height:1.15;overflow:hidden;text-overflow:ellipsis}
+#game-shell[data-panel=equipment] .equipment-synergy-panel .equipment-link small{font-size:clamp(8px,.9cqw,10px);line-height:1.2;-webkit-line-clamp:1}
+#game-shell[data-panel=equipment] .equipment-synergy-panel .equipment-link svg{height:18px}
+#game-shell[data-panel=equipment] .equipment-synergy-panel .equipment-link-state{margin-top:0;align-self:center}
+@media(max-height:360px){
+#game-shell[data-panel=equipment] .equipment-synergy-panel .equipment-link small{display:none}
+}

@@ -48302,10 +48302,10 @@
     ]
   },
   "equipment": {
-    "id": "equipment_v09",
+    "id": "equipment_v0108",
     "actor": "equipment",
     "name": "equipment",
-    "image": "equipment_chapters-v09.png",
+    "image": "equipment_chapters-v0108.png",
     "fps": 1,
     "loop": false,
     "frames": [
@@ -48416,6 +48416,222 @@
         "pivotX": 123.5,
         "pivotY": 365,
         "bodyHeight": 364
+      },
+      {
+        "x": 8,
+        "y": 1262,
+        "w": 251,
+        "h": 340,
+        "pivotX": 125.5,
+        "pivotY": 337,
+        "bodyHeight": 336
+      },
+      {
+        "x": 267,
+        "y": 1262,
+        "w": 242,
+        "h": 340,
+        "pivotX": 121.0,
+        "pivotY": 337,
+        "bodyHeight": 336
+      },
+      {
+        "x": 517,
+        "y": 1262,
+        "w": 200,
+        "h": 340,
+        "pivotX": 100.0,
+        "pivotY": 337,
+        "bodyHeight": 336
+      },
+      {
+        "x": 725,
+        "y": 1262,
+        "w": 303,
+        "h": 340,
+        "pivotX": 151.5,
+        "pivotY": 337,
+        "bodyHeight": 336
+      },
+      {
+        "x": 8,
+        "y": 1610,
+        "w": 222,
+        "h": 340,
+        "pivotX": 111.0,
+        "pivotY": 337,
+        "bodyHeight": 336
+      },
+      {
+        "x": 238,
+        "y": 1610,
+        "w": 279,
+        "h": 340,
+        "pivotX": 139.5,
+        "pivotY": 337,
+        "bodyHeight": 336
+      },
+      {
+        "x": 525,
+        "y": 1610,
+        "w": 254,
+        "h": 340,
+        "pivotX": 127.0,
+        "pivotY": 337,
+        "bodyHeight": 336
+      },
+      {
+        "x": 787,
+        "y": 1610,
+        "w": 231,
+        "h": 340,
+        "pivotX": 115.5,
+        "pivotY": 337,
+        "bodyHeight": 336
+      },
+      {
+        "x": 1026,
+        "y": 1610,
+        "w": 180,
+        "h": 340,
+        "pivotX": 90.0,
+        "pivotY": 337,
+        "bodyHeight": 336
+      },
+      {
+        "x": 8,
+        "y": 1958,
+        "w": 340,
+        "h": 337,
+        "pivotX": 170.0,
+        "pivotY": 334,
+        "bodyHeight": 333
+      },
+      {
+        "x": 356,
+        "y": 1958,
+        "w": 322,
+        "h": 340,
+        "pivotX": 161.0,
+        "pivotY": 337,
+        "bodyHeight": 336
+      },
+      {
+        "x": 686,
+        "y": 1958,
+        "w": 222,
+        "h": 340,
+        "pivotX": 111.0,
+        "pivotY": 337,
+        "bodyHeight": 336
+      },
+      {
+        "x": 916,
+        "y": 1958,
+        "w": 256,
+        "h": 340,
+        "pivotX": 128.0,
+        "pivotY": 337,
+        "bodyHeight": 336
+      },
+      {
+        "x": 8,
+        "y": 2306,
+        "w": 260,
+        "h": 340,
+        "pivotX": 130.0,
+        "pivotY": 337,
+        "bodyHeight": 336
+      },
+      {
+        "x": 276,
+        "y": 2306,
+        "w": 279,
+        "h": 340,
+        "pivotX": 139.5,
+        "pivotY": 337,
+        "bodyHeight": 336
+      },
+      {
+        "x": 563,
+        "y": 2306,
+        "w": 307,
+        "h": 340,
+        "pivotX": 153.5,
+        "pivotY": 337,
+        "bodyHeight": 336
+      },
+      {
+        "x": 878,
+        "y": 2306,
+        "w": 209,
+        "h": 340,
+        "pivotX": 104.5,
+        "pivotY": 337,
+        "bodyHeight": 336
+      },
+      {
+        "x": 8,
+        "y": 2654,
+        "w": 336,
+        "h": 340,
+        "pivotX": 168.0,
+        "pivotY": 337,
+        "bodyHeight": 336
+      },
+      {
+        "x": 352,
+        "y": 2654,
+        "w": 219,
+        "h": 340,
+        "pivotX": 109.5,
+        "pivotY": 337,
+        "bodyHeight": 336
+      },
+      {
+        "x": 579,
+        "y": 2654,
+        "w": 234,
+        "h": 340,
+        "pivotX": 117.0,
+        "pivotY": 337,
+        "bodyHeight": 336
+      },
+      {
+        "x": 821,
+        "y": 2654,
+        "w": 217,
+        "h": 340,
+        "pivotX": 108.5,
+        "pivotY": 337,
+        "bodyHeight": 336
+      },
+      {
+        "x": 8,
+        "y": 3002,
+        "w": 291,
+        "h": 340,
+        "pivotX": 145.5,
+        "pivotY": 337,
+        "bodyHeight": 336
+      },
+      {
+        "x": 307,
+        "y": 3002,
+        "w": 287,
+        "h": 340,
+        "pivotX": 143.5,
+        "pivotY": 337,
+        "bodyHeight": 336
+      },
+      {
+        "x": 602,
+        "y": 3002,
+        "w": 217,
+        "h": 340,
+        "pivotX": 108.5,
+        "pivotY": 337,
+        "bodyHeight": 336
       }
     ],
     "designIds": [
@@ -48430,7 +48646,31 @@
       "frost_blade",
       "frost_fang",
       "frost_armor",
-      "frost_charm"
+      "frost_charm",
+      "set_forest_sword",
+      "set_forest_blade2",
+      "set_forest_helmet",
+      "set_forest_armor",
+      "set_forest_pants",
+      "set_forest_boots",
+      "set_fire_sword",
+      "set_fire_blade2",
+      "set_fire_helmet",
+      "set_fire_armor",
+      "set_fire_pants",
+      "set_fire_boots",
+      "set_frost_sword",
+      "set_frost_blade2",
+      "set_frost_helmet",
+      "set_frost_armor",
+      "set_frost_pants",
+      "set_frost_boots",
+      "set_ruins_sword",
+      "set_ruins_blade2",
+      "set_ruins_helmet",
+      "set_ruins_armor",
+      "set_ruins_pants",
+      "set_ruins_boots"
     ]
   },
   "chapters": {
@@ -48660,7 +48900,14 @@
     "terrain-c26-v0107.png": "terrain-c26-v0107.webp",
     "terrain-c27-v0107.png": "terrain-c27-v0107.webp",
     "terrain-c30-v0107.png": "terrain-c30-v0107.webp",
-    "props_chapters-v0107.png": "props_chapters-v0107.webp"
+    "props_chapters-v0107.png": "props_chapters-v0107.webp",
+    "equipment_chapters-v0108.png": "equipment_chapters-v0108.webp",
+    "terrain-forest-2-v0106.png": "terrain-forest-2-v0106.webp",
+    "terrain-forest-3-v0106.png": "terrain-forest-3-v0106.webp",
+    "terrain-frost-2-v0106.png": "terrain-frost-2-v0106.webp",
+    "terrain-frost-3-v0106.png": "terrain-frost-3-v0106.webp",
+    "terrain-ruins-2-v0106.png": "terrain-ruins-2-v0106.webp",
+    "terrain-ruins-3-v0106.png": "terrain-ruins-3-v0106.webp"
   },
   "equipmentSockets": {
     "lirian_idle_s_v05": [

@@ -18,6 +18,7 @@ from scipy.ndimage import distance_transform_edt, find_objects, label
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / 'dist/assets'
+BASE_PROPS = 'props_chapters-v09.png'
 # Chapters that reuse an existing tile; every other chapter has terrain-cNN.png.
 REUSED = {1: 'terrain-forest-v044.png', 5: 'terrain-forest-2-v0106.png', 9: 'terrain-forest-3-v0106.png',
           16: 'terrain-frost-v044.png', 17: 'terrain-frost-2-v0106.png', 18: 'terrain-frost-3-v0106.png',
@@ -44,6 +45,10 @@ def pack_terrain(manifest, report):
     for chapter in range(1, 31):
         if chapter in REUSED:
             logical = REUSED[chapter]
+            # Reused tiles are delivered as their existing lossless WebP.
+            webp = logical.replace('.png', '.webp')
+            assert (ASSETS / webp).exists(), (logical, 'missing WebP')
+            manifest['delivery'][logical] = webp
         else:
             source = ROOT / f'art/terrain0107/terrain-c{chapter:02d}.png'
             image = Image.open(source).convert('RGB')
@@ -56,7 +61,8 @@ def pack_terrain(manifest, report):
 
 def pack_props(manifest, report):
     old = manifest['chapterProps']
-    base = Image.open(ASSETS / manifest['delivery'].get(old['image'], old['image'])).convert('RGBA')
+    # Always start again from the Alpha 0.9 atlas so re-running never appends the fire props twice.
+    base = Image.open(ASSETS / manifest['delivery'].get(BASE_PROPS, BASE_PROPS)).convert('RGBA')
     source = ROOT / 'art/fire0107/props-fire.png'
     sheet = Image.open(source).convert('RGBA')
     rgba = np.array(sheet)
@@ -91,7 +97,8 @@ def pack_props(manifest, report):
         shelf = max(shelf, crop.height)
     atlas = Image.new('RGBA', (base.width, y + shelf + 8))
     atlas.paste(base, (0, 0))
-    frames = [dict(f) for f in old['frames']]
+    frames = [dict(f) for f in old['frames'] if f['y'] + f['h'] <= base.height]
+    assert len(frames) == 12, 'expected the twelve Alpha 0.9 props'
     for crop, ground, x, y in placed:
         atlas.paste(crop, (x, y))
         frames.append({'x': x, 'y': y, 'w': crop.width, 'h': crop.height, 'pivotX': round(crop.width / 2, 1),

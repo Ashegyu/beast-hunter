@@ -1,9 +1,11 @@
 import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily} from './equipment-slots.js?v=0.98.0';
-import {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.107.0';
-export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.107.0';
+import {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.108.0';
+export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.108.0';
 import {huntMode,BOSS_DROP_TABLES} from './hunt-modes.js';
 import {UNIQUE_EFFECTS,EFFECT_ROWS,uniquePower} from './unique-effects.js?v=0.98.0';
 import {ANCIENT_POWER_BY_ID} from './ancient-powers.js';
+import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.108.0';
+export {EQUIPMENT_SETS,SET_SLOTS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.108.0';
 export {UNIQUE_EFFECTS,uniquePower} from './unique-effects.js?v=0.98.0';
 // Item definitions and pure rolls; the combat state owns identities and delivery.
 import {INVENTORY_LIMIT,MAX_PENDING_LOOT} from './inventory-rules.js?v=0.86.9';
@@ -31,12 +33,24 @@ const legacyCatalog=chapterNames.flatMap((groups,t)=>groups.flatMap((names,slotI
  const slot=['weapon','armor','charm'][slotIndex];return names.map((name,i)=>Object.freeze({id:`${t+1}-${slot}-${i+1}`,name,slot,tier:t+1,artId:artRows[t][slotIndex===0?(i<4?(i<2?0:1):i%2):slotIndex+1],base:Object.freeze(patterns[slot][i%4]),effectId:EFFECT_ROWS[slot][i%6]}));
 }));
 const additionalParts=Object.keys(SLOTS).filter(slot=>!['weapon','armor','charm'].includes(slot));
-export const ITEM_CATALOG=Object.freeze([...legacyCatalog,...[1,2,3].flatMap(tier=>additionalParts.map(slot=>Object.freeze({id:`${tier}-${slot}-1`,name:slot==='special'?['리리안의 적월 인장','리리안의 망령 인장','리리안의 서리 인장'][tier-1]:['숲지기의 ','폐성 수호자의 ','서리결 '][tier-1]+SLOTS[slot],slot,tier,artId:artRows[tier-1][equipmentFamily(slot)==='armor'?2:3],base:Object.freeze(slot==='helmet'?{hp:12,reduction:1}:slot==='pants'?{hp:15,reduction:1}:slot==='boots'?{hp:8,speed:2}:slot==='earring'?{damage:3,crit:1}:{damage:5,hp:10}),effectId:null,signatureOnly:true,...(slot==='special'?{characterId:'lirian'}:{})}))) ]);
+const BASE_CATALOG=Object.freeze([...legacyCatalog,...[1,2,3].flatMap(tier=>additionalParts.map(slot=>Object.freeze({id:`${tier}-${slot}-1`,name:slot==='special'?['리리안의 적월 인장','리리안의 망령 인장','리리안의 서리 인장'][tier-1]:['숲지기의 ','폐성 수호자의 ','서리결 '][tier-1]+SLOTS[slot],slot,tier,artId:artRows[tier-1][equipmentFamily(slot)==='armor'?2:3],base:Object.freeze(slot==='helmet'?{hp:12,reduction:1}:slot==='pants'?{hp:15,reduction:1}:slot==='boots'?{hp:8,speed:2}:slot==='earring'?{damage:3,crit:1}:{damage:5,hp:10}),effectId:null,signatureOnly:true,...(slot==='special'?{characterId:'lirian'}:{})}))) ]);
+// Region set pieces (Alpha 0.108): per set two weapon designs × two names and two names per armor part.
+// They carry `set` and drop only in their biome; ancient identities stay derived from the base catalog.
+const SET_BASE=Object.freeze({
+ forest:{weapon:[{damage:7,speed:4},{damage:9,crit:2}],armor:{hp:22,speed:3},helmet:{hp:10,speed:2},pants:{hp:13,speed:2},boots:{hp:7,speed:3}},
+ fire:{weapon:[{damage:11,crit:1},{damage:13}],armor:{hp:26,crit:2},helmet:{hp:11,crit:1},pants:{hp:14,crit:1},boots:{hp:8,crit:1}},
+ frost:{weapon:[{damage:8,hp:14},{damage:10,hp:10}],armor:{hp:32,reduction:3},helmet:{hp:14,reduction:1},pants:{hp:17,reduction:1},boots:{hp:10,reduction:1}},
+ ruins:{weapon:[{damage:8,crit:3},{damage:10,crit:2}],armor:{hp:24,crit:3},helmet:{hp:11,crit:2},pants:{hp:14,crit:1},boots:{hp:8,crit:2}},
+});
+export const SET_CATALOG=Object.freeze(Object.values(EQUIPMENT_SETS).flatMap(set=>SET_SLOTS.flatMap(slot=>slot==='weapon'
+ ?set.names.weapon.flatMap((names,variant)=>names.map((name,i)=>Object.freeze({id:`set-${set.id}-weapon-${variant*2+i+1}`,name,slot,tier:set.tier,artId:setArtId(set.id,slot,variant),set:set.id,base:Object.freeze({...SET_BASE[set.id].weapon[variant]}),effectId:EFFECT_ROWS.weapon[(variant*2+i)%6]})))
+ :set.names[slot].map((name,i)=>Object.freeze({id:`set-${set.id}-${slot}-${i+1}`,name,slot,tier:set.tier,artId:setArtId(set.id,slot),set:set.id,base:Object.freeze({...SET_BASE[set.id][slot]}),...(slot==='armor'?{effectId:EFFECT_ROWS.armor[i%6]}:{effectId:null,signatureOnly:true})})))));
+export const ITEM_CATALOG=Object.freeze([...BASE_CATALOG,...SET_CATALOG]);
 // Ordinary identity and quality are independent. Ancient identities have no quality variants.
 const ancientKey=row=>[row.tier,row.slot,row.artId,row.effectId].join(':');
 const VISUAL_STYLE=Object.freeze({echo:3,storm:5,execution:6,blood:4,frostNova:5,whirlwind:6,barrier:3,thorns:4,pulse:6,frostWard:5,lastStand:6,recovery:3,momentum:3,focus:4,capacitor:5,hunter:4,orbit:6,magnet:5});
 const ancientRows=new Map();
-for(const row of ITEM_CATALOG){const key=ancientKey(row);if(ancientRows.has(key))continue;const base={},scale=(.76+row.tier*.24)*3.65,values={damage:row.slot==='weapon'?13:4,hp:row.slot==='armor'?38:equipmentFamily(row.slot)==='armor'?25:18,speed:4,crit:4,reduction:3};for(const [k,v]of Object.entries(values))base[k]=Math.round(v*scale);const ordinal=ancientRows.size;ancientRows.set(key,Object.freeze({...row,id:'ancient-'+row.id,name:'태초의 '+row.name,base:Object.freeze(base),visualStyle:VISUAL_STYLE[row.effectId]??3,ancient:true,ordinal,signature:ANCIENT_POWER_BY_ID['ancient-'+row.id]??Object.freeze({id:'ancient-'+row.id,index:60+ordinal,color:'#ffb66b',name:'태초의 맥동',trigger:row.slot==='special'?'periodic':'dash',cooldown:10,damage:.18,radius:140,description:row.slot==='special'?'전투 중 10초마다 주변에 기본 공격력 18% 피해.':'회피 시 주변에 기본 공격력 18% 피해. 재사용 10초.'}),bossId:['forest_guardian','ruins_king','frost_king'][row.tier-1]}));}
+for(const row of BASE_CATALOG){const key=ancientKey(row);if(ancientRows.has(key))continue;const base={},scale=(.76+row.tier*.24)*3.65,values={damage:row.slot==='weapon'?13:4,hp:row.slot==='armor'?38:equipmentFamily(row.slot)==='armor'?25:18,speed:4,crit:4,reduction:3};for(const [k,v]of Object.entries(values))base[k]=Math.round(v*scale);const ordinal=ancientRows.size;ancientRows.set(key,Object.freeze({...row,id:'ancient-'+row.id,name:'태초의 '+row.name,base:Object.freeze(base),visualStyle:VISUAL_STYLE[row.effectId]??3,ancient:true,ordinal,signature:ANCIENT_POWER_BY_ID['ancient-'+row.id]??Object.freeze({id:'ancient-'+row.id,index:60+ordinal,color:'#ffb66b',name:'태초의 맥동',trigger:row.slot==='special'?'periodic':'dash',cooldown:10,damage:.18,radius:140,description:row.slot==='special'?'전투 중 10초마다 주변에 기본 공격력 18% 피해.':'회피 시 주변에 기본 공격력 18% 피해. 재사용 10초.'}),bossId:['forest_guardian','ruins_king','frost_king'][row.tier-1]}));}
 export const ANCIENT_CATALOG=Object.freeze([...ancientRows.values()]);
 const ANCIENT_BY_ID=new Map(ANCIENT_CATALOG.map(r=>[r.id,r]));
 export const BOSS_LOOT=Object.freeze(['세계수의 수호령','무덤의 왕','빙원의 지배자'].map((name,i)=>Object.freeze({id:['forest_guardian','ruins_king','frost_king'][i],name,tier:i+1,items:Object.freeze(ANCIENT_CATALOG.filter(r=>r.tier===i+1))})));
@@ -51,9 +65,10 @@ export function rollAncient({id,tier,slot,bossId},pick,rng=null){
  if(isPerfectRoll(item))item.perfect=true;return item;
 }
 export function rollRarity(source,rng,minimum=0,difficulty=0){const mode=huntMode(difficulty);if(!mode)throw new RangeError('Unknown hunt mode');const weights=source==='boss'?BOSS_DROP_TABLES[mode.id]:DROP_TABLES[source]??DROP_TABLES.normal,floor=Number.isInteger(minimum)?Math.max(0,Math.min(5,minimum)):0;let value=rng()*100;for(let i=0;i<weights.length;i++){value-=weights[i];if(value<0)return Math.max(floor,i);}return weights.length-1;}
-export function rollItem({id,tier,slot,source='normal',minimum=0,bossId,difficulty=0,quality=null},rng){
+export function rollItem({id,tier,slot,set=null,source='normal',minimum=0,bossId,difficulty=0,quality=null},rng){
  if(!huntMode(difficulty))throw new RangeError('Unknown hunt mode');if(bossId)bossLootPool(bossId,tier);
- const choices=ITEM_CATALOG.filter(i=>i.tier===tier&&(!slot||i.slot===slot));
+ // A set asks for that set's pieces; otherwise only the original (pre-0.108) identities roll.
+ const choices=ITEM_CATALOG.filter(i=>(set?i.set===set:!i.set&&i.tier===tier)&&(!slot||i.slot===slot));
  const pick=rng(),base=choices[Math.min(choices.length-1,Math.floor(pick*choices.length))];
  if(!base)throw new RangeError('Unknown loot chapter/slot');
  const draw=rollRarity(source,rng,minimum,difficulty),rarity=quality===null?draw:quality;if(rarity===5)return rollAncient({id,tier,slot,bossId},pick,rng);
@@ -69,10 +84,10 @@ export function rollItem({id,tier,slot,source='normal',minimum=0,bossId,difficul
  const item={id,slot:base.slot,tier,rarity,name:prefix+base.name,catalogId:base.id,artId:base.artId,affixes,rollVersion:1,...(base.characterId?{characterId:base.characterId}:{})};if(isPerfectRoll(item)){item.perfect=true;item.name='완벽한 '+base.name;}return item;
 }
 // The stage delivery boundary cannot produce accessories, special, ancient or promoted gear.
-export function rollStageItem({id,tier,slot=null},rng){
+export function rollStageItem({id,tier,slot=null,set=null},rng){
  if(slot!==null&&!STAGE_SLOTS.includes(slot))throw new RangeError('Stage equipment type is not available');
  const type=slot??STAGE_SLOTS[Math.min(STAGE_SLOTS.length-1,Math.floor(rng()*STAGE_SLOTS.length))];
- return rollItem({id,tier,slot:type,source:'stage',quality:0},rng);
+ return rollItem({id,tier,slot:type,set,source:'stage',quality:0},rng);
 }
 const SCORE_WEIGHT=Object.freeze({damage:5,hp:.5,speed:3,crit:4,reduction:5});
 export function itemPower(item){let score=item.rarity*10000+item.tier*1000;for(const [k,v]of Object.entries(item.affixes))score+=(SCORE_WEIGHT[k]??0)*effectiveAffix(item,k);return score;}
@@ -166,3 +181,6 @@ export function discoverAncient(profile,item){
 }
 export function targetAncient(profile){return ANCIENT_BY_ID.get(profile.targetAncientId)??null;}
 export function setAncientTarget(profile,id){if(id!==null&&!ANCIENT_BY_ID.has(id))return false;profile.targetAncientId=id;return true;}
+
+// The set a worn item belongs to (undefined for original and ancient identities).
+export function itemSet(item){return CATALOG_BY_ID.get(item?.catalogId)?.set;}

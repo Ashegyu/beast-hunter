@@ -1,4 +1,5 @@
 import {equipmentFamily} from './equipment-slots.js?v=0.98.0';
+import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.108.0';
 // Thirty chapters in three regions of ten (Alpha 0.107): 1–10 forest, 11–20 fire and
 // ice (11–15 fire, 16–20 ice), 21–30 darkness. A region drives the map tabs, item and
 // material tiers; a biome drives ground art, props, attack effects, boss rule and the
@@ -38,12 +39,12 @@ export const BIOMES = {
     tactic:'망자와 악마의 습격 · 저주의 사격 · 거체의 강타'},
 };
 const FORMATIONS=[['skitter','skitter','skitter','skitter','spitter'],['bulwark','skitter','skitter','skitter','spitter','spitter'],['bulwark','skitter','skitter','skitter','spitter','spitter'],['bulwark','skitter','skitter','skitter','spitter','spitter']];
-// [name, biome, boss species, ground tile key in manifest.chapters]
+// [name, biome, boss species, mid-boss species for stage 8 (optional)]
 const CHAPTER_ROWS=[
   ['숲의 초입','forest','boss_forest_boar'],['늑대의 사냥길','forest','boss_forest_direwolf'],['고블린 야영지','forest','boss_forest_goblinchief'],['가시덤불 골짜기','forest','boss_forest_thornbeast'],['포자의 늪','forest','boss_forest_mushroomking'],
   ['오크의 초소','forest','boss_forest_orcwarlord'],['식인꽃 군락','forest','boss_forest_mandrake'],['거미 둥지','forest','boss_forest_spiderqueen'],['핏빛 수림','forest','boss_forest_bloodbear'],['세계수의 뿌리','forest','boss_special_worldtree'],
   ['화염 협곡','fire','boss_fire_drake'],['용암 강','fire','boss_fire_ifrit'],['잿빛 화산','fire','boss_fire_giant'],['불사조의 둥지','fire','boss_fire_phoenix'],['불타는 요새','fire','boss_fire_minotaur'],
-  ['설원의 발자국','frost','boss_frost_mammoth'],['얼어붙은 호수','frost','boss_frost_serpent'],['눈보라 고개','frost','boss_frost_witch'],['빙하 협곡','frost','boss_frost_tortoise'],['불과 얼음의 경계','frost','boss_special_twindragon'],
+  ['설원의 발자국','frost','boss_frost_mammoth','boss_frost_griffin'],['얼어붙은 호수','frost','boss_frost_serpent','boss_frost_elemental'],['눈보라 고개','frost','boss_frost_witch','boss_frost_colossus'],['빙하 협곡','frost','boss_frost_tortoise','boss_frost_yetichief'],['불과 얼음의 경계','frost','boss_special_twindragon','boss_frost_wyvern'],
   ['무너진 성문','ruins','boss_ruins_bonegiant'],['망자의 회랑','ruins','boss_ruins_ghoullord'],['박쥐 종탑','ruins','boss_ruins_vampirebat'],['사령술 제단','ruins','boss_ruins_lich'],['기사단 묘역','ruins','boss_ruins_cursedknight'],
   ['망령의 서고','ruins','boss_ruins_banshee'],['미믹의 보물고','ruins','boss_ruins_mimicking'],['봉인된 지하묘','ruins','boss_ruins_mummyking'],['왕의 근위대','ruins','boss_ruins_deathguard'],['심연의 옥좌','ruins','boss_special_abysslord'],
 ];
@@ -62,6 +63,11 @@ export const CHAPTER_BOSSES = {
   boss_ruins_mimicking:{name:'거대 미믹',height:200},boss_ruins_mummyking:{name:'미라 왕',height:240},boss_ruins_deathguard:{name:'근위대장',height:245},
   boss_special_abysslord:{name:'심연의 군주',height:310,special:true},
 };
+// Ice chapters field one of these as the stage-8 mid-boss (last wave's first elite).
+export const MID_BOSSES = {
+  boss_frost_griffin:{name:'서리 그리폰',height:190},boss_frost_elemental:{name:'얼음 정령왕',height:195},boss_frost_colossus:{name:'수정 거신',height:200},
+  boss_frost_yetichief:{name:'설인 족장',height:195},boss_frost_wyvern:{name:'서리 와이번',height:190},
+};
 const josa=(word,consonant,vowel)=>{const code=word.charCodeAt(word.length-1)-0xac00;return code>=0&&code<11172&&code%28?consonant:vowel;};
 // Enemy stats grow 16% of the first chapter per chapter (ch.30 = ×5.64).
 export const chapterMultiplier=id=>Math.round((1+(id-1)*.16)*100)/100;
@@ -77,13 +83,13 @@ function chapterLineups(biome,index){
   return {roster:pairs.flat(),stages};
 }
 const biomeIndex={};
-export const CHAPTERS = CHAPTER_ROWS.map(([name,biomeKey,bossSpecies],i)=>{
+export const CHAPTERS = CHAPTER_ROWS.map(([name,biomeKey,bossSpecies,midBoss=null],i)=>{
   const id=i+1,theme=THEMES[Math.floor(i/CHAPTERS_PER_THEME)],biome=BIOMES[biomeKey],number=i%CHAPTERS_PER_THEME+1,finale=number===CHAPTERS_PER_THEME;
   const boss=CHAPTER_BOSSES[bossSpecies],multiplier=chapterMultiplier(id),index=biomeIndex[biomeKey]=(biomeIndex[biomeKey]??-1)+1,{roster,stages}=chapterLineups(biome,index);
   return {id,theme:theme.id,key:biome.key,biome:biomeKey,region:theme.name,name,number,finale,special:!!boss.special,environment:'c'+id,effects:biome.effects,props:biome.props,bossRule:biome.bossRule,
     subtitle:biome.subtitle+(finale?` 지역의 끝에서 특수 보스 ${boss.name}${josa(boss.name,'이','가')} 기다린다.`:` 열 스테이지 끝에서 ${boss.name}${josa(boss.name,'을','를')} 사냥해.`),
     multiplier,bossHp:Math.round(780*multiplier*theme.bossScale*(finale?1.15:1)),reward:Math.round(90*multiplier),
-    color:biome.color,shotColor:biome.shotColor,pathColor:biome.pathColor,bossName:boss.name,bossSpecies,bossPosition:biome.bossPosition,bossCycle:biome.bossCycle,
+    color:biome.color,shotColor:biome.shotColor,pathColor:biome.pathColor,bossName:boss.name,bossSpecies,midBoss,midBossName:midBoss?MID_BOSSES[midBoss].name:null,bossPosition:biome.bossPosition,bossCycle:biome.bossCycle,
     roster:Object.freeze(roster),stages:Object.freeze(stages),encounters:biome.encounters,formations:FORMATIONS,caches:biome.caches,tactic:biome.tactic};
 });
 export const chapterTheme=id=>THEMES[(CHAPTERS[id-1]?.theme??1)-1];
@@ -151,6 +157,7 @@ Object.assign(MONSTERS,{
   dark_demon:{name:'지옥 악마 전사',role:'bulwark',height:160,guardMax:125,speed:72},
   dark_voidgolem:{name:'공허 골렘',role:'bulwark',height:166,speed:58,radius:115,attackRange:160,windup:1.05,attackCycle:['slam','charge'],chargeSpeed:300,chargeDuration:.34,guardMax:0,hpScale:1.25,attackInterval:1.8,tactic:'공허 주먹 강타와 육중한 돌진'},
 });
+for(const [id,mid] of Object.entries(MID_BOSSES))MONSTERS[id]={name:mid.name,role:'bulwark',height:mid.height,guardMax:0,midBoss:true};
 for(const [id,boss] of Object.entries(CHAPTER_BOSSES))MONSTERS[id]={name:boss.name,role:'bulwark',height:boss.height,...(boss.special?{special:true}:{})};
 // Only role-compatible, unlocked chapter identities can enter a normal wave.
 export function chapterMonsterPool(chapterId,stage,role){
@@ -164,8 +171,13 @@ export const EQUIPMENT_ART = [
   {id:'frost_blade',tier:3,slot:'weapon',name:'빙결 수정검'}, {id:'frost_fang',tier:3,slot:'weapon',name:'서리 송곳니 검'},
   {id:'frost_armor',tier:3,slot:'armor',name:'빙하 판금 흉갑'}, {id:'frost_charm',tier:3,slot:'charm',name:'눈꽃 룬'},
 ];
+// Region set art (Alpha 0.108): two weapons and four armor parts per set, all in the equipment atlas.
+const PART_NAMES={helmet:'투구',armor:'흉갑',pants:'각반',boots:'장화'};
+export const SET_ART = Object.values(EQUIPMENT_SETS).flatMap(set=>SET_SLOTS.flatMap(slot=>(slot==='weapon'?[0,1]:[0]).map(variant=>({id:setArtId(set.id,slot,variant),tier:set.tier,slot:equipmentFamily(slot),set:set.id,
+  name:set.name+' '+(slot==='weapon'?(variant?'대검':'장검'):PART_NAMES[slot])}))));
+export const ALL_EQUIPMENT_ART = [...EQUIPMENT_ART,...SET_ART];
 export function equipmentArt(item){
-  const explicit=EQUIPMENT_ART.find(a=>a.id===item?.artId&&a.slot===equipmentFamily(item.slot)&&a.tier===item.tier);
+  const explicit=ALL_EQUIPMENT_ART.find(a=>a.id===item?.artId&&a.slot===equipmentFamily(item.slot)&&a.tier===item.tier);
   return explicit??EQUIPMENT_ART.find(a=>a.slot===equipmentFamily(item?.slot??'weapon')&&a.tier===(item?.tier??1));
 }
 for(const biome of Object.values(BIOMES)){
@@ -175,4 +187,4 @@ for(const biome of Object.values(BIOMES)){
 }
 FORMATIONS.forEach(Object.freeze);Object.freeze(FORMATIONS);Object.freeze(BIOMES);THEMES.forEach(Object.freeze);
 for(const chapter of CHAPTERS){chapter.route=BIOMES[chapter.biome].route;Object.freeze(chapter);}
-Object.values(CHAPTER_BOSSES).forEach(Object.freeze);Object.freeze(CHAPTER_BOSSES);Object.freeze(THEMES);Object.freeze(CHAPTERS);Object.values(MONSTERS).forEach(m=>{if(m.attackCycle)Object.freeze(m.attackCycle);Object.freeze(m);});Object.freeze(MONSTERS);EQUIPMENT_ART.forEach(Object.freeze);Object.freeze(EQUIPMENT_ART);
+Object.values(CHAPTER_BOSSES).forEach(Object.freeze);Object.freeze(CHAPTER_BOSSES);Object.values(MID_BOSSES).forEach(Object.freeze);Object.freeze(MID_BOSSES);Object.freeze(THEMES);Object.freeze(CHAPTERS);Object.values(MONSTERS).forEach(m=>{if(m.attackCycle)Object.freeze(m.attackCycle);Object.freeze(m);});Object.freeze(MONSTERS);EQUIPMENT_ART.forEach(Object.freeze);Object.freeze(EQUIPMENT_ART);SET_ART.forEach(Object.freeze);Object.freeze(SET_ART);Object.freeze(ALL_EQUIPMENT_ART);

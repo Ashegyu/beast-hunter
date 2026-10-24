@@ -1,5 +1,5 @@
-import { equipmentArt, EQUIPMENT_ART } from './chapters.js?v=0.107.0';
-import { ANCIENT_CATALOG, ancientDefinition, CRAFTED_CATALOG, craftedDefinition } from './loot.js?v=0.107.0';
+import { equipmentArt, ALL_EQUIPMENT_ART } from './chapters.js?v=0.108.0';
+import { ANCIENT_CATALOG, ancientDefinition, CRAFTED_CATALOG, craftedDefinition } from './loot.js?v=0.108.0';
 
 export function validEquipmentSocket(p){
   return !!p && ['handX','handY','angle','bodyX','bodyY','tilt','side','bladeLength'].every(k=>Number.isFinite(p[k])) && Math.abs(p.handX)<=1.5 && Math.abs(p.handY)<=1.5 && Math.abs(p.bodyX)<=1.5 && Math.abs(p.bodyY)<=1.5 && p.side>0 && p.side<=1 && p.bladeLength>0 && p.bladeLength<=1.2 && typeof p.back==='boolean' && typeof p.weaponHidden==='boolean';
@@ -13,7 +13,7 @@ export const EQUIPMENT_GRADES=Object.freeze({
 });
 const CRAFTED_DESIGNS=new Map(CRAFTED_CATALOG.map(row=>[row.id,Object.freeze({...equipmentArt(row),rarity:6,craftId:row.id,rune:row.signature.index,color:row.signature.color,fxStyle:7,name:'고유 '+row.name})]));
 const SLOTS=Object.freeze(['weapon','armor','charm']);
-const GRADE_DESIGNS=new Map(EQUIPMENT_ART.flatMap(base=>[0,1,2,3,4].map(rarity=>[base.id+':'+rarity,Object.freeze({...base,rarity,name:(EQUIPMENT_GRADES[rarity]?.name?EQUIPMENT_GRADES[rarity].name+' ':'')+base.name})])));
+const GRADE_DESIGNS=new Map(ALL_EQUIPMENT_ART.flatMap(base=>[0,1,2,3,4].map(rarity=>[base.id+':'+rarity,Object.freeze({...base,rarity,name:(EQUIPMENT_GRADES[rarity]?.name?EQUIPMENT_GRADES[rarity].name+' ':'')+base.name})])));
 const ANCIENT_DESIGNS=new Map(ANCIENT_CATALOG.map(row=>[row.id,Object.freeze({...equipmentArt(row),rarity:5,variant:row.id,rune:row.signature.index,color:row.signature.color,fxStyle:row.visualStyle,name:'고대 '+row.name})]));
 const ATTACK_STYLES=Object.freeze({...EQUIPMENT_GRADES,5:Object.freeze({color:'#8ff8ed',accent:'#e7ffff'}),6:EQUIPMENT_GRADES[5],7:EQUIPMENT_GRADES[6]});
 export function visualDesign(item){const base=equipmentArt(item);if(!base)return null;const crafted=craftedDefinition(item);if(crafted)return CRAFTED_DESIGNS.get(crafted.id);const ancient=ancientDefinition(item);return ancient?ANCIENT_DESIGNS.get(ancient.id):GRADE_DESIGNS.get(base.id+':'+item?.rarity)??base;}

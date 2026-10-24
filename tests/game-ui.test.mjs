@@ -718,7 +718,7 @@ test('48-slot inventory filter keeps action identity after filtering and salvage
 test('real render draws dropped equipment and limits ordinary pickup HUD spam',async()=>{
  const ui=await host({recordGeometry:true});ui.emit('start','click');ui.tick();ui.state.enemies=[];ui.state.barrels=[];const item={id:90,slot:'weapon',tier:1,artId:'forest_blade',name:'전설 검',rarity:3,affixes:{damage:20}};
  ui.state.profile.pendingLoot=[item];ui.state.pickups=[{id:901,kind:'equipment',x:ui.state.player.x+250,y:ui.state.player.y,item,age:0,gold:0,xp:0,cores:0}];ui.state.effects.push({id:902,type:'gearDrop',x:ui.state.player.x+250,y:ui.state.player.y,item,rarity:3,ttl:1.2,maxTtl:1.2});ui.run(.1);
- assert.ok(ui.geometry.some(c=>c.kind==='fillRect'&&c.args[3]===100));assert.ok(ui.calls.some(c=>c.image.includes('equipment_chapters-v09')));assert.ok(ui.geometry.some(c=>c.kind==='fillText'&&String(c.args[0]).includes('전설 검')));assert.ok(ui.audioDetails.some(e=>e.type==='gearDrop'&&e.details.rarity===3));
+ assert.ok(ui.geometry.some(c=>c.kind==='fillRect'&&c.args[3]===100));assert.ok(ui.calls.some(c=>c.image.includes('equipment_chapters-v0108')));assert.ok(ui.geometry.some(c=>c.kind==='fillText'&&String(c.args[0]).includes('전설 검')));assert.ok(ui.audioDetails.some(e=>e.type==='gearDrop'&&e.details.rarity===3));
  ui.state.effects=[{id:903,type:'loot',name:'일반 검',rarity:0,origin:'monster',ttl:2,maxTtl:2}];ui.tick();assert.equal(ui.nodes.get('reward-toast').hidden,true);ui.state.effects=[{id:904,type:'loot',name:'전설 검',rarity:3,origin:'monster',ttl:2,maxTtl:2}];ui.tick();assert.equal(ui.nodes.get('reward-toast').hidden,false);assert.match(ui.nodes.get('reward-title').textContent,/전설/);
 });
 

@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as g from '../dist/game-engine.js';
 import {ITEM_CATALOG,DROP_TABLES,rollRarity,rollItem,storeItem,salvageValue,MAX_PENDING_LOOT,INVENTORY_LIMIT} from '../dist/loot.js';
-import {EQUIPMENT_ART} from '../dist/chapters.js';
+import {EQUIPMENT_ART,SET_ART} from '../dist/chapters.js';
 import {freezeCombat} from './combat-fixture.mjs';
 const generator=(seed=12345)=>()=>{seed=(Math.imul(1664525,seed)+1013904223)>>>0;return seed/4294967296;};
 function item(id,rarity=0,tier=1,slot='weapon'){return {id,rarity,tier,slot,name:'시험 '+id,affixes:slot==='weapon'?{damage:8}:{hp:20}};}
@@ -13,9 +13,11 @@ function kill(s,{elite=false,boss=false}={}){
 }
 function advance(s,seconds){for(let i=0;i<Math.ceil(seconds/.025);i++)g.advanceGame(s,.025);}
 test('108 immutable item families cover all three slots in every chapter using valid art',()=>{
- assert.equal(ITEM_CATALOG.length,123);assert.equal(new Set(ITEM_CATALOG.map(i=>i.id)).size,123);
- for(const tier of [1,2,3])for(const slot of ['weapon','armor','charm'])assert.equal(ITEM_CATALOG.filter(i=>i.tier===tier&&i.slot===slot).length,12);
- for(const row of ITEM_CATALOG)assert.ok(EQUIPMENT_ART.some(a=>a.id===row.artId&&a.slot===g.equipmentFamily(row.slot)&&a.tier===row.tier));
+ // 123 original identities plus 48 region set pieces (Alpha 0.108: 4 sets × 4 weapons and 2 per armor part).
+ assert.equal(ITEM_CATALOG.length,123+48);assert.equal(new Set(ITEM_CATALOG.map(i=>i.id)).size,171);
+ for(const tier of [1,2,3])for(const slot of ['weapon','armor','charm'])assert.equal(ITEM_CATALOG.filter(i=>!i.set&&i.tier===tier&&i.slot===slot).length,12);
+ for(const set of ['forest','fire','frost','ruins'])assert.deepEqual([...new Set(ITEM_CATALOG.filter(i=>i.set===set).map(i=>i.slot))],['weapon','helmet','armor','pants','boots']);
+ for(const row of ITEM_CATALOG)assert.ok([...EQUIPMENT_ART,...SET_ART].some(a=>a.id===row.artId&&a.slot===g.equipmentFamily(row.slot)&&a.tier===row.tier));
  assert.throws(()=>{ITEM_CATALOG[0].base.damage=999;},TypeError);
 });
 test('five qualities and ancient tables have measured frequencies and stronger enemies have higher quality floors',()=>{

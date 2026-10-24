@@ -1,14 +1,14 @@
-import {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonPlan,dungeonActors,emptyDungeonProgress} from './dungeons.js?v=0.107.0';
+import {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonPlan,dungeonActors,emptyDungeonProgress} from './dungeons.js?v=0.108.0';
 export {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards};
 import {beginStageJournal,profileForSave,strictBattle,cancelStageJournal,prepareStageCommit,finishStageJournal,stageTransactionId,ownedAtStageStart} from './battle-progress.js?v=0.99.0';
 import {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_DROP_CHANCE,INSCRIPTION_COST} from './build-effects.js?v=0.98.1';
-import {stageRule,STAGE_TYPE_NAMES} from './battle-plans.js?v=0.107.0';
+import {stageRule,STAGE_TYPE_NAMES} from './battle-plans.js?v=0.108.0';
 export {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_COST,stageRule,STAGE_TYPE_NAMES};
 export const PROFILE_VERSION=14,MAX_LEVEL=100,BUILD_NAMES=Object.freeze(['일반 사냥','보스','광역','생존','실험']);
 import {SLOTS,EQUIPMENT_SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,equipmentFamily,emptyEquipment,restoreEquipment,equipmentAfterEquip,equippedPosition,isEquippedItem} from './equipment-slots.js?v=0.98.0';
 export * from './equipment-slots.js?v=0.98.0';
-import {enhanceOwned,promoteOwned,rerollOwned,resolveOwnedReroll,restoreEquipmentProgress} from './equipment-progression.js?v=0.107.0';
-export * from './equipment-progression.js?v=0.107.0';
+import {enhanceOwned,promoteOwned,rerollOwned,resolveOwnedReroll,restoreEquipmentProgress} from './equipment-progression.js?v=0.108.0';
+export * from './equipment-progression.js?v=0.108.0';
 export * from './skill-vfx.js?v=0.72.0';
 export * from './skill-image-fx.js?v=0.72.0';
 export * from './monster-fx.js?v=0.70.0';
@@ -17,22 +17,23 @@ export * from './ultimate-video.js';
 export * from './skill-motion.js';
 import * as skills from './combat-skills.js?v=0.104.3';
 export * from './combat-skills.js?v=0.104.3';
-import {MATERIALS,MATERIAL_BY_ID,MATERIAL_LIMIT,emptyMaterials,rollMaterials,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.107.0';
-export {MATERIALS,MATERIAL_BY_ID,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.107.0';
-import {equipmentSynergies} from './equipment-synergies.js?v=0.107.0';
-import {itemProtection} from './loot.js?v=0.107.0';
-export {itemProtection,salvageValue} from './loot.js?v=0.107.0';
-export {equipmentSynergies,EQUIPMENT_SYNERGIES} from './equipment-synergies.js?v=0.107.0';
+import {MATERIALS,MATERIAL_BY_ID,MATERIAL_LIMIT,emptyMaterials,rollMaterials,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.108.0';
+export {MATERIALS,MATERIAL_BY_ID,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.108.0';
+import {equipmentSynergies} from './equipment-synergies.js?v=0.108.0';
+import {itemProtection} from './loot.js?v=0.108.0';
+export {itemProtection,salvageValue} from './loot.js?v=0.108.0';
+export {equipmentSynergies,EQUIPMENT_SYNERGIES} from './equipment-synergies.js?v=0.108.0';
 import {HUNT_MODES,huntMode,REPLAY_CYCLES} from './hunt-modes.js';
 export {HUNT_MODES} from './hunt-modes.js';
 // Pure combat, random waves and persistent RPG rules. No rendering or storage dependencies.
 import { directionIndex, recoilProgress, ACTION_DURATIONS } from './motion.js';
 import { WORLD_BOUNDS, GROUND_DEPTH_SCALE } from './world.js';
-import { CHAPTERS, CHAPTERS_PER_THEME, THEMES, chapterTheme, MONSTERS, chapterMonsterPool, EQUIPMENT_ART, equipmentArt } from './chapters.js?v=0.107.0';
-import { STAGES_PER_CHAPTER, battlePlan, stageWaveCount, waveComposition } from './battle-plans.js?v=0.107.0';
-import { INVENTORY_LIMIT, MAX_PENDING_LOOT, LEGENDARY_PITY_LIMIT, ITEM_CATALOG, ANCIENT_CATALOG, BOSS_LOOT, bossLootPool, discoverAncient, targetAncient, setAncientTarget, ancientDefinition, ancientForLegacy, effectiveAffix, RARITIES, RARITY_INFO, rollItem, rollStageItem, storeItem, salvageValue, uniqueEffect, uniqueLoadout, equippedUniqueEffect, UNIQUE_EFFECTS } from './loot.js?v=0.107.0';
-export { INVENTORY_LIMIT, LEGENDARY_PITY_LIMIT, ITEM_CATALOG, ANCIENT_CATALOG, BOSS_LOOT, RARITIES, RARITY_INFO, UNIQUE_EFFECTS, uniqueEffect, uniqueLoadout, targetAncient, setAncientTarget, ancientDefinition, gearDropPresentation, gearDropDuration } from './loot.js?v=0.107.0';
-export { STAGES_PER_CHAPTER, BATTLE_PLANS, battlePlan, stageWaveCount } from './battle-plans.js?v=0.107.0';
+import { CHAPTERS, CHAPTERS_PER_THEME, THEMES, chapterTheme, MONSTERS, chapterMonsterPool, EQUIPMENT_ART, ALL_EQUIPMENT_ART, equipmentArt } from './chapters.js?v=0.108.0';
+import { STAGES_PER_CHAPTER, battlePlan, stageWaveCount, waveComposition } from './battle-plans.js?v=0.108.0';
+import { INVENTORY_LIMIT, MAX_PENDING_LOOT, LEGENDARY_PITY_LIMIT, ITEM_CATALOG, ANCIENT_CATALOG, BOSS_LOOT, bossLootPool, discoverAncient, targetAncient, setAncientTarget, ancientDefinition, ancientForLegacy, effectiveAffix, RARITIES, RARITY_INFO, rollItem, rollStageItem, storeItem, salvageValue, uniqueEffect, uniqueLoadout, equippedUniqueEffect, UNIQUE_EFFECTS, itemSet, setBonusStats, EQUIPMENT_SETS, SET_SLOTS } from './loot.js?v=0.108.0';
+export { itemSet, setBonusStats, setBonusText, EQUIPMENT_SETS, SET_SLOTS, SET_CATALOG } from './loot.js?v=0.108.0';
+export { INVENTORY_LIMIT, LEGENDARY_PITY_LIMIT, ITEM_CATALOG, ANCIENT_CATALOG, BOSS_LOOT, RARITIES, RARITY_INFO, UNIQUE_EFFECTS, uniqueEffect, uniqueLoadout, targetAncient, setAncientTarget, ancientDefinition, gearDropPresentation, gearDropDuration } from './loot.js?v=0.108.0';
+export { STAGES_PER_CHAPTER, BATTLE_PLANS, battlePlan, stageWaveCount } from './battle-plans.js?v=0.108.0';
 export const ARRIVAL_EPSILON=.001;
 export const STAGES = CHAPTERS;
 export {THEMES,CHAPTERS_PER_THEME};
@@ -129,7 +130,7 @@ function cleanItem(item,version){
   if(!item||typeof item.slot!=='string'||!Object.hasOwn(SLOTS,item.slot)||!Number.isInteger(item.id)||item.id<1||item.id>1e9)return null;
   const affixes={};for(const id of Object.keys(AFFIXES)){const v=integer(item.affixes?.[id],0,id==='hp'?250:id==='damage'?80:25);if(v)affixes[id]=v;}
   const clean={...(BUILD_EFFECTS[item.inscription]?{inscription:item.inscription}:{}),id:item.id,slot:item.slot,rarity:integer(item.rarity,0,6),tier:integer(item.tier,1,3,1),name:String(item.name??SLOTS[item.slot]).slice(0,32),affixes};
-  if(EQUIPMENT_ART.some(a=>a.id===item.artId&&a.slot===equipmentFamily(clean.slot)&&a.tier===clean.tier))clean.artId=item.artId;
+  if(ALL_EQUIPMENT_ART.some(a=>a.id===item.artId&&a.slot===equipmentFamily(clean.slot)&&a.tier===clean.tier))clean.artId=item.artId;
   if(ITEM_CATALOG.some(a=>a.id===item.catalogId&&a.slot===clean.slot&&a.tier===clean.tier&&a.artId===clean.artId))clean.catalogId=item.catalogId;
   const candidateDefinition=EQUIPMENT_DEFINITIONS.get(item.catalogId),definition=candidateDefinition?.slot===clean.slot&&candidateDefinition.tier===clean.tier&&candidateDefinition.artId===clean.artId?candidateDefinition:null;
   if(clean.slot==='special'){if(!definition?.characterId)return null;clean.characterId=definition.characterId;}
@@ -192,10 +193,13 @@ export function collectOffline(p,now=Date.now()){
   const minutes=Math.floor(clamp((number(now)-p.lastSeenAt)/60000,0,240));p.lastSeenAt=number(now,p.lastSeenAt);
   if(!p.clearedStage||!minutes)return{minutes:0,gold:0,xp:0};const gold=minutes*2*p.clearedStage,xp=growthXp(p,minutes*p.clearedStage);p.gold+=gold;gainXp(p,xp);return{minutes,gold,xp};
 }
-export function equipmentBonuses(p){const result={damage:0,hp:0,speed:0,crit:0,reduction:0};for(const item of p.inventory??[]){if(!isEquippedItem(p,item))continue;for(const[k,v]of Object.entries(item.affixes))result[k]+=effectiveAffix(item,k);}return result;}
+export function equipmentBonuses(p){const result={damage:0,hp:0,speed:0,crit:0,reduction:0};for(const item of p.inventory??[]){if(!isEquippedItem(p,item))continue;for(const[k,v]of Object.entries(item.affixes))result[k]+=effectiveAffix(item,k);}const set=setBonusStats(equippedSetCounts(p));for(const k of ['speed','crit','reduction'])result[k]+=set[k];result.damagePct=set.damagePct;result.hpPct=set.hpPct;return result;}
+// Pieces worn per region set (Alpha 0.108), and each set's progress for the UI.
+export function equippedSetCounts(p){const counts={};for(const item of p.inventory??[]){const set=itemSet(item);if(set&&isEquippedItem(p,item))counts[set]=(counts[set]??0)+1;}return counts;}
+export function equippedSets(p){const counts=equippedSetCounts(p);return Object.entries(counts).map(([id,count])=>({set:EQUIPMENT_SETS[id],count,active:EQUIPMENT_SETS[id].bonuses.filter(b=>count>=b.pieces)})).sort((a,b)=>b.count-a.count);}
 export function playerStats(p){const b=equipmentBonuses(p);return{
-  maxHp:150+(p.level-1)*6+p.forge.armor*20+p.skills.guard*22+b.hp,
-  damage:24*(1+p.forge.blade*.12+(p.level-1)*.035+p.skills.edge*.10)+b.damage,
+  maxHp:(150+(p.level-1)*6+p.forge.armor*20+p.skills.guard*22+b.hp)*(1+b.hpPct),
+  damage:(24*(1+p.forge.blade*.12+(p.level-1)*.035+p.skills.edge*.10)+b.damage)*(1+b.damagePct),
   range:135*(1+p.skills.edge*.08),speed:280*(1+p.skills.haste*.06+b.speed/100),
   attackDuration:.32/(1+p.skills.haste*.1),attackSpeed:1+p.skills.haste*.1,
   thunderCooldown:Math.max(2.8,4.8-p.forge.core*.4),thunderDamage:62*(1+p.skills.chain*.18+p.forge.blade*.08)+b.damage*1.8,
@@ -266,8 +270,8 @@ function spawnEnemy(s,type,x,y,group,elite=false,boss=false,speciesId=null){
     speed:boss?80:type==='bulwark'?82:type==='spitter'?90:112,cooldown:1,damage:(boss?26:elite?20:type==='bulwark'?15:type==='spitter'?10:8)*st.multiplier,
     radius:boss?145:type==='bulwark'?90:type==='spitter'?16:58,windup:.5,pattern:0,targetX:0,targetY:0,chargeX:0,chargeY:0,
     guardMax:type==='bulwark'&&!boss?100:0,guard:type==='bulwark'&&!boss?100:0,guardX:-1,guardY:0,exposed:0,perfectDodged:false,enraged:false,lookX:0,lookY:1,heading:2,motionDistance:0,backpedal:false,moving:false,bleedTicks:0,bleedTimer:0,bleedDamage:0,chillRemaining:0};
-  const lineup=st.stages[clamp(s.run.stage,1,st.stages.length)-1],species=boss?st.bossSpecies:st.roster.includes(speciesId)&&MONSTERS[speciesId].role===type?speciesId:lineup[type],design=MONSTERS[species];
-  e.species=species;e.name=design.name;e.chapterId=st.id;if(boss&&design.special){e.special=true;e.radius+=25;}e.plate=s.run.rule?.armor??0;
+  const lineup=st.stages[clamp(s.run.stage,1,st.stages.length)-1],mid=elite&&speciesId&&speciesId===st.midBoss,species=boss?st.bossSpecies:mid||st.roster.includes(speciesId)&&MONSTERS[speciesId].role===type?speciesId:lineup[type],design=MONSTERS[species];
+  e.species=species;e.name=design.name;e.chapterId=st.id;if(boss&&design.special){e.special=true;e.radius+=25;}if(mid){e.midBoss=true;e.radius+=40;}e.plate=s.run.rule?.armor??0;
 
 
   for(const key of ['speed','radius','attackRange','chargeEvery','chargeSpeed','chargeDuration','shots','shotSpeed','shotSpread','shotColor','projectileStyle','attackCycle','attackInterval','standoffMin','standoffMax'])if(design[key]!=null&&!boss)e[key]=design[key];
@@ -275,6 +279,7 @@ function spawnEnemy(s,type,x,y,group,elite=false,boss=false,speciesId=null){
   if(!boss){const swarm=!elite&&type==='skitter';e.hp=e.maxHp=Math.round(hp*(design.hpScale??1)*(swarm?.72:1));e.damage*=(design.damageScale??1)*(swarm?.75:1);}
   if(s.run.rule?.swarm){e.speed*=1.15;e.hp=e.maxHp=Math.round(e.maxHp*.8);}
   if(elite&&s.run.rule?.eliteHp)e.hp=e.maxHp=Math.round(e.maxHp*s.run.rule.eliteHp);
+  if(e.midBoss){e.hp=e.maxHp=Math.round(e.maxHp*2.5);e.damage*=1.3;}
   if(design.windup)e.windupBase=design.windup;
   if(s.run.dungeonId){const plan=activePlan(s);e.hp=e.maxHp=Math.max(1,Math.round(e.maxHp*plan.hpScale/st.multiplier));e.damage*=plan.damageScale/st.multiplier;}
   if(s.difficulty>0){const mode=HUNT_MODES[s.difficulty];e.hp=e.maxHp=Math.round(e.maxHp*mode.hp);e.damage*=mode.damage;
@@ -325,10 +330,12 @@ function beginWave(s,immediate=false){
   // Shuffle arrivals while preserving the encounter's role mix and elite quota.
   for(let i=actors.length-1;i>0;i--){const j=Math.floor(random(s)*(i+1));[actors[i],actors[j]]=[actors[j],actors[i]];}
   const pools=Object.fromEntries(['skitter','spitter','bulwark'].map(type=>[type,chapterMonsterPool(s.stageId,s.run.stage,type)])),arrivals={skitter:0,spitter:0,bulwark:0};
-  let ranged=0;
+  let ranged=0,midBossPlaced=false;
   for(let i=0;i<actors.length;i++){
     const actor=actors[i],pool=pools[actor.type];
     if(!actor.boss)actor.species=pool[(s.profile.hunts+s.run.stage+s.run.wave+arrivals[actor.type]++)%pool.length];
+    // Ice chapters: the first elite of stage 8's last wave is the chapter's mid-boss.
+    if(actor.elite&&!midBossPlaced&&stageOf(s).midBoss&&!s.run.dungeonId&&s.run.stage===8&&s.run.wave===stageWaveCount(s.run.stage)){midBossPlaced=true;actor.type='bulwark';actor.species=stageOf(s).midBoss;}
     let heading=base,spread=1.8;
     if(plan.formation==='crossfire'&&actor.type==='spitter'){heading=base+(ranged++%2)*Math.PI;spread=.35;}
     else if(plan.formation==='front'){heading=base+(actor.type==='spitter'?Math.PI:.1*i);spread=.75;}
@@ -481,7 +488,7 @@ function settleResources(s){
  for(const m of MATERIALS)claimResource(s,{kind:'material',materialId:m.id,amount:s.profile.pendingMaterials[m.id]},false);
  s.pickups=s.pickups.filter(drop=>!isResourcePickup(drop));
 }
-function makeItem(s,slot,source,minimum=0,bossId=null){const item=rollStageItem({id:allocateItemId(s),tier:themeOf(s),slot:STAGE_SLOTS.includes(slot)?slot:null},()=>lootRandom(s));const chance=INSCRIPTION_DROP_CHANCE[s.run.stageType]??0;if(chance&&chance>lootRandom(s))item.inscription=BUILD_EFFECT_IDS[Math.min(BUILD_EFFECT_IDS.length-1,Math.floor(lootRandom(s)*BUILD_EFFECT_IDS.length))];return item;}
+function makeItem(s,slot,source,minimum=0,bossId=null){const item=rollStageItem({id:allocateItemId(s),tier:themeOf(s),set:stageOf(s)?.biome??null,slot:STAGE_SLOTS.includes(slot)?slot:null},()=>lootRandom(s));const chance=INSCRIPTION_DROP_CHANCE[s.run.stageType]??0;if(chance&&chance>lootRandom(s))item.inscription=BUILD_EFFECT_IDS[Math.min(BUILD_EFFECT_IDS.length-1,Math.floor(lootRandom(s)*BUILD_EFFECT_IDS.length))];return item;}
 function receiveItem(s,item,origin='monster',stageReward=null){
   const result=storeItem(s.profile,item);
   s.profile.pendingLoot=s.profile.pendingLoot.filter(i=>i.id!==item.id);

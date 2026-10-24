@@ -1,4 +1,4 @@
-import {CHAPTERS} from './chapters.js?v=0.107.0';
+import {CHAPTERS} from './chapters.js?v=0.108.0';
 // Chapter art/AI varies independently; encounters own role mix and arrival pacing.
 const wave=(skitter,spitter,bulwark,elite=null)=>Object.freeze({skitter,spitter,bulwark,elite});
 export const BATTLE_PLANS=Object.freeze([
@@ -42,6 +42,9 @@ export function stageRule(chapter,stage){
  }
  if(stage===4)return Object.freeze({type,name:'철갑 진군',rule:'중장갑 · 피해 55% 감소',hint:'마지막 검끝·파갑참',required:true,armor:.55});
  if(stage===9)return Object.freeze({type,name:'밀집 공세',rule:'빠른 근접 무리 · 밀집 진형으로 연속 등장',hint:'번개 전이·처치 폭발·광폭화',swarm:true});
- if(type==='elite')return Object.freeze({type,name:'혼합 정예',rule:'각 웨이브 정예 출현 · 정예 체력 +20%',hint:'회복·반격·광역과 단일 화력의 균형',eliteHp:1.2});
+ if(type==='elite'){
+  if(chapterRow?.midBoss)return Object.freeze({type,name:'중간 보스 · '+chapterRow.midBossName,rule:'각 웨이브 정예 출현 · 정예 체력 +20% · 마지막 웨이브에 '+chapterRow.midBossName+' 등장',hint:'단일 화력·회복·반격',eliteHp:1.2,midBoss:chapterRow.midBoss});
+  return Object.freeze({type,name:'혼합 정예',rule:'각 웨이브 정예 출현 · 정예 체력 +20%',hint:'회복·반격·광역과 단일 화력의 균형',eliteHp:1.2});
+ }
  return Object.freeze({type,name:battlePlan(stage).name,rule:battlePlan(stage).tactic,hint:'자유로운 장비·스킬 조합'});
 }

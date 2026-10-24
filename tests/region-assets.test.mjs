@@ -22,10 +22,10 @@ test('startup plan excludes other regions without excluding shared animation ass
     const region = plan.regions.get(chapter.id);
     // Ground tile, attack effects, the boss atlas and only the atlases of the chapter's six species (Alpha 0.107).
     const expected = new Set([manifest.chapters[chapter.environment].environment, manifest.monsterEffects[chapter.effects].image,
-      ...[...chapter.roster, chapter.bossSpecies].flatMap(id => Object.values(manifest.directions[id]).flatMap(v => Object.values(v)).map(c => manifest.clips[c].image))]);
+      ...[...chapter.roster, chapter.bossSpecies, ...(chapter.midBoss ? [chapter.midBoss] : [])].flatMap(id => Object.values(manifest.directions[id]).flatMap(v => Object.values(v)).map(c => manifest.clips[c].image))]);
     assert.deepEqual(region.paths, expected);
-    assert.ok(region.paths.size <= 9);
-    assert.equal(region.clips.length, 105);
+    assert.ok(region.paths.size <= 10);
+    assert.equal(region.clips.length, chapter.midBoss ? 120 : 105);
     assert.ok(region.paths.has(manifest.chapters[chapter.environment].environment));
     for (const path of region.paths) assert.ok(!plan.paths.has(path));
   }
@@ -82,4 +82,15 @@ test('A to B to A pending selections reuse work but only newest selection can pr
   const f = fixture(), old = f.loader.request(1), other = f.loader.request(2), newest = f.loader.request(1);
   f.finish(1); assert.equal(await old, false); assert.equal(await newest, true);
   f.finish(2); assert.equal(await other, false); assert.equal(f.loader.residentId, 1);
+});
+
+test('every startup and chapter image resolves to a delivered file (Alpha 0.108)', () => {
+  // A logical .png without a delivery entry is requested as-is and 404s (chapters 5·9·17·18·28·29 in 0.107).
+  const manifest = JSON.parse(fs.readFileSync(new URL('../dist/assets/manifest.json', import.meta.url)));
+  const plan = regionAssetPlan(manifest, CHAPTERS);
+  const paths = new Set([...campAssetPaths(manifest), ...plan.paths, ...[...plan.regions.values()].flatMap(r => [...r.paths])]);
+  for (const path of paths) {
+    const file = manifest.delivery[path] ?? path;
+    assert.ok(fs.existsSync(new URL('../dist/assets/' + file, import.meta.url)), path + ' → ' + file);
+  }
 });
