@@ -13,7 +13,7 @@
 ## 실행
 - 게임: `PORT=8090 node serve-local.mjs` 후 `http://127.0.0.1:8090/` (기본 포트 8080). file:// 로는 안 된다.
 - 헤드리스 확인: 전역 playwright(`/opt/node22/lib/node_modules/playwright`)를 createRequire로 불러 Chromium 실행. 844×390에서 거점 → 사냥터 → 전투 준비 → 전투까지 콘솔 오류·404 없이 동작 확인함.
-- 테스트: `npm test` = `node --experimental-vm-modules --test tests/*.test.mjs` (약 55초). **778/778 통과** (0.104.0 기준).
+- 테스트: `npm test` = `node --experimental-vm-modules --test tests/*.test.mjs` (약 55초). **781/781 통과** (0.104 기준).
 
 ## 테스트 작성 시 주의 (0.103.2에서 정리한 내용)
 - 고대 장비는 0.97부터 레이드 전용 → 스테이지 보스는 고대를 떨어뜨리지 않음. 고대 카탈로그는 75종(신규 부위 15종은 고대 전용 원화 없음).
@@ -40,7 +40,7 @@
 - 파일명 버전: 점 제거(063=0.63, 0844=0.84.4, v0970=0.97.0, v01002=0.100.2). 단 alpha09/alpha091은 0.9/0.9.1.
 
 ## 게임 규칙 요약
-- 전투(0.104): 이동·공격·회피는 항상 자동(engine `autoInput`). 파쇄(Q, `thunder`)는 UI·자동 전투에서 제거(엔진 함수는 남음). 스킬만 자동/수동 선택: 앱이 `input.skillMode`('auto'|'manual')를 넘기고, 수동이면 탭한 스킬을 `input.skillRequest`로 3초간 예약해 다음 공격 틈에 시전. 선택은 localStorage `beast-hunter:skill-mode`. 연격 3타는 방어 65 감소·피해 2.5배(파쇄 공백 보완).
+- 전투(0.104): 이동·공격·회피는 항상 자동(engine `autoInput`). 파쇄(Q, `thunder`)는 UI·자동 전투에서 제거(엔진 함수는 남음). 스킬만 자동/수동 선택: 앱이 `input.skillMode`('auto'|'manual')를 넘기고, 수동이면 탭한 스킬을 `input.skillRequest`로 3초간 예약해 다음 공격 틈에 시전. 선택은 localStorage `beast-hunter:skill-mode`. 연격 3타는 방어 65 감소·피해 2.5배(파쇄 공백 보완). 중갑은 유지(사용자 결정). 중갑 대응 스킬: 파갑참은 맞힐 때 방어를 `breachGuardShatter(rank)`(30+5×랭크)만큼 먼저 깎아 강타 65와 합쳐 한 번에 부수고 autoSkill이 방어 중인 적에게 우선 사용, 마지막 검끝 패시브는 3타 방어 감소 +35(`FINISHER_GUARD_BONUS`).
 - 캐릭터: 리리안 1명(검사, 엔진 역할 ID는 hunter). 3챕터(붉은 숲/망자의 폐성/서리 왕좌, 보스 780/1280/1900 HP) × 10스테이지 × 난이도 3(일반/정예/악몽: HP ×1/1.5/2.2).
 - 스테이지 60초 제한. 1~9는 웨이브 3개, 10은 보스 단독. 4·9 special, 8 elite, 10 boss. 동시 적 최대 32.
 - `advanceGame`: dt ≤0.1s, 0.025s 고정 서브스텝. RNG는 LCG 5개 스트림(전투·전리품·재료·재련·승급), `Math.random` 미사용 → 결정적.

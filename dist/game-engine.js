@@ -15,8 +15,8 @@ export * from './monster-fx.js?v=0.70.0';
 export * from './combat-feedback.js';
 export * from './ultimate-video.js';
 export * from './skill-motion.js';
-import * as skills from './combat-skills.js?v=0.99.0';
-export * from './combat-skills.js?v=0.99.0';
+import * as skills from './combat-skills.js?v=0.104.1';
+export * from './combat-skills.js?v=0.104.1';
 import {MATERIALS,MATERIAL_BY_ID,MATERIAL_LIMIT,emptyMaterials,rollMaterials,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.99.0';
 export {MATERIALS,MATERIAL_BY_ID,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.99.0';
 import {equipmentSynergies} from './equipment-synergies.js?v=0.99.0';
@@ -594,7 +594,7 @@ function damageEnemy(s,e,value,critical=false,kind='normal',origin=s.player,pier
     const n=direction(origin.x-e.x,origin.y-e.y),front=n.x*e.guardX+n.y*e.guardY>.1;
     const breaker=kind==='heavy'||kind==='finisher'||kind==='blast'||kind==='reflected';
     // Alpha 0.104: the heavy-strike button is gone, so the automatic finisher breaks guard as hard as it did.
-    if(front||breaker){e.guard=Math.max(0,e.guard-(piercing?25:0)-(kind==='blast'?100:kind==='heavy'||kind==='reflected'||kind==='finisher'?65:12));
+    if(front||breaker){e.guard=Math.max(0,e.guard-(piercing?25:0)-(kind==='finisher'?skills.finisherGuardBonus(s):0)-(kind==='blast'?100:kind==='heavy'||kind==='reflected'||kind==='finisher'?65:12));
       if(!e.guard){broken=true;e.exposed=2.8;setAction(e,'stagger');e.actionTime=0;s.run.guardBreaks++;effect(s,'guardBreak',{x:e.x,y:e.y},1);s.hitStop=Math.max(s.hitStop,.075);s.shake=9;}
       else if(front&&kind!=='blast'){guarded=true;value*=piercing?.75:.3;effect(s,'guardHit',{x:e.x,y:e.y-55},.2);}
     }

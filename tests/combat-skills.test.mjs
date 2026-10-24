@@ -90,3 +90,22 @@ test('ultimate cooldown freezes on pause, survives cancellation and wave breaks,
 test('kills and perfect defense cannot shorten the fixed ultimate cooldown; auto policy waits for it',()=>{
  const {s,p,e}=fixture('bloodmoon');p.skillBook.loadout.passive=['momentum',null,null];p.skillBook.auto.ultimate='any';assert.ok(g.useSkill(s,'bloodmoon'));g.skillKill(s);g.skillPerfect(s);assert.equal(s.skillRuntime.cooldowns.bloodmoon,60);run(s,2);s.player.action='idle';const h={stats:g.playerStats,visual(){},motion(){},clamp(){}};assert.equal(g.autoSkill(s,{x:0,y:1},h),false);s.skillRuntime.cooldowns.bloodmoon=0;assert.ok(g.autoSkill(s,{x:0,y:1},h));assert.equal(s.skillRuntime.cooldowns.bloodmoon,60);
 });
+// Alpha 0.104 armor counters: the heavy-strike button is gone, so skills can carry guard breaking.
+test('파갑참 shatters a fresh armored guard in one hit and still weakens the target',()=>{
+ const {s,e}=fixture('breach');Object.assign(e,{guard:100,guardMax:100,guardX:0,guardY:-1,action:'idle'});
+ assert.ok(g.useSkill(s,'breach',{x:0,y:1}));run(s,.6);
+ assert.equal(e.guard,0);assert.ok(e.exposed>0);assert.ok(e.skillBreach?.until>s.run.time);assert.equal(s.run.guardBreaks,1);
+});
+test('마지막 검끝 lets one full combo break a fresh guard that the plain combo leaves standing',()=>{
+ const combo=equipped=>{const {s,p,e}=fixture('finisher');if(!equipped)p.skillBook.loadout.passive=[null,null,null];Object.assign(e,{guard:100,guardMax:100,guardX:0,guardY:-1,action:'idle',hp:1e6,maxHp:1e6});
+  for(let swing=0;swing<3;swing++){assert.equal(g.attack(s,{x:0,y:1}),true);for(let t=0;t<.7&&s.player.action==='attack';t+=.025)g.advanceGame(s,.025);}
+  return e.guard;};
+ assert.ok(combo(false)>0,'plain combo: 12 + 12 + 65 leaves part of a 100 guard');
+ assert.equal(combo(true),0,'with 마지막 검끝 the finisher adds 35 and breaks it');
+});
+test('automatic skills open with 파갑참 when a guarded enemy is in reach',()=>{
+ const {s,p,e}=fixture('crescent');p.skillBook.loadout.active=['crescent','breach'];p.skillBook.ranks.breach=0;s.auto=true;s.player.invulnerable=100;
+ Object.assign(e,{guard:100,guardMax:100,guardX:0,guardY:-1});
+ for(let i=0;i<80&&!(s.skillRuntime.cooldowns.breach>0);i++)g.advanceGame(s,.025);
+ assert.ok(s.skillRuntime.cooldowns.breach>0);assert.ok(!(s.skillRuntime.cooldowns.crescent>0),'파갑참 goes before the other active');
+});
