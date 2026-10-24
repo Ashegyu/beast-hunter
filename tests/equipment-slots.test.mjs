@@ -66,8 +66,10 @@ test('actual normal and elite kills, stage clears and every boss mode deliver on
   const p=g.createProfile(1000);p.clearedStage=3;p.unlockedStage=3;p.stageProgress=[10,10,10];p.bossMastery=[2,2,2];p.difficultyProgress=[[9,9,9],[9,9,9]];p.legendaryPity=19;
   const s=g.createGame(p);assert.equal(g.launch(s,tier,10,null,mode),true);s.spawns=[];s.barrels=[];s.run.bossSpawned=true;s.player.invulnerable=999;
   const e={id:s.nextId++,species:g.STAGES[tier-1].bossSpecies,type:'bulwark',elite:false,boss:true,x:s.player.x+300,y:s.player.y,hp:1,maxHp:1,action:'walk',actionTime:0,speed:0,cooldown:999,aggro:true,guard:0,dead:false,wave:s.run.wave,runStage:s.run.stage,damage:8,radius:58};s.enemies=[e];
-  s.projectiles.push({id:s.nextId++,x:e.x,y:e.y,vx:0,vy:0,damage:1e9,ttl:1,friendly:true});g.advanceGame(s,.025);assert.equal(s.phase,'victory');assert.equal(s.run.items,3);assert.equal(s.profile.pendingLoot.length,0);assert.equal(s.run.bossAncients.length,0);
-  for(const i of p.inventory){assert.equal(i.rarity,0);assert.ok(g.STAGE_SLOTS.includes(i.slot));}const before=g.encodeProfile(p,1000);for(let n=0;n<100;n++)g.advanceGame(s,.025);assert.equal(g.encodeProfile(p,1000),before);
+  s.projectiles.push({id:s.nextId++,x:e.x,y:e.y,vx:0,vy:0,damage:1e9,ttl:1,friendly:true});g.advanceGame(s,.025);assert.equal(s.phase,'victory');
+  // Alpha 0.110: the twentieth boss kill without an ancient (legendaryPity 19) always drops one of the region.
+  assert.equal(s.run.items,4);assert.equal(s.profile.pendingLoot.length,0);assert.equal(s.run.bossAncients.length,1);assert.equal(p.legendaryPity,0);
+  for(const i of p.inventory){if(i.rarity===5){assert.ok(g.ancientDefinition(i));assert.equal(i.tier,1);continue;}assert.equal(i.rarity,0);assert.ok(g.STAGE_SLOTS.includes(i.slot));}const before=g.encodeProfile(p,1000);for(let n=0;n<100;n++)g.advanceGame(s,.025);assert.equal(g.encodeProfile(p,1000),before);
  }
  for(const elite of [false,true]){
   const s=g.createGame();g.launch(s);s.spawns=[];s.barrels=[];s.run.waveQuota=999;s.player.invulnerable=999;s.profile.lootPity=9;s.profile.legendaryPity=19;

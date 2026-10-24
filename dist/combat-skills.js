@@ -108,7 +108,7 @@ export function castSkill(s,id,aim,h){
  if(!skillReady(s,id))return false;const d=SKILL_BY_ID[id],r=s.skillRuntime,p=s.player,reach=skillReach(s.profile,id),areaScale=skillAreaScale(s.profile,id),n=unit(Number.isFinite(aim?.x)?aim.x:p.aimX,Number.isFinite(aim?.y)?aim.y:p.aimY),target=s.enemies.find(e=>e.id===aim?.targetId&&live(e)&&distance(e,p)<=reach)??nearestTarget(s,n,reach),rank=skillRank(s.profile,id),now=s.run.time;
  if(['mark','seeking'].includes(d.shape)&&!target||r.jobs.length+(d.hits??1)>64)return false;
  const attack=h.stats(s.profile).damage,root={id,serial:++r.serial,rank,attack,areaScale,range:reach,radius:d.radius?d.radius*areaScale:undefined,width:d.width?d.width*areaScale:undefined,equipmentAtStart:h.capture?.(s)??null,inscriptions:h.inscriptions?.(s)??null,damage:skillValue(s.profile,id)/100*attack,x:p.x,y:p.y,n,targetId:target?.id,token:r.token,recovered:false,poise:(d.poise??12)*(r.finisherUntil>now?1+pv(s,'finisher')/100:1),castX:p.x,castY:p.y};
- p.stamina-=d.cost;if(!Object.hasOwn(r.cooldowns,id))r.cooldownKeys.push(id);r.cooldowns[id]=d.cooldown;r.stanceUntil=0;if(id!=='bloodblade')r.bloodbladeUntil=0;
+ p.stamina-=d.cost;if(!Object.hasOwn(r.cooldowns,id))r.cooldownKeys.push(id);r.cooldowns[id]=d.cooldown;h.cast?.(s,id);r.stanceUntil=0;if(id!=='bloodblade')r.bloodbladeUntil=0;
  if(d.kind==='ultimate'){r.ultimatePresentation={id,startedAt:now,token:r.token,x:p.x,y:p.y,nx:n.x,ny:n.y};}
  if(d.kind==='active'){
   if(r.lastCast&&r.lastCast.id!==id&&now-r.lastCast.time<=4&&now>=r.flowReady&&pv(s,'flow')){capStamina(s,pv(s,'flow'));passiveVisual(s,'flow',h);r.flowReady=now+6;}

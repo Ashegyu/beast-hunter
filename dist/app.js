@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.109.0';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.110.0';
 import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js';
 import { createCombatAudio } from './sound.js?v=0.76.0';
-import * as game from './game-engine.js?v=0.109.0';
+import * as game from './game-engine.js?v=0.110.0';
 import {FrameMetrics} from './frame-metrics.js?v=0.98.1';
 import { frameIndex, frameRect, validateClip } from './engine.js';
 import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
 import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.103.1';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.109.0';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.109.0';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.109.0';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.109.0';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.110.0';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.110.0';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.110.0';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.110.0';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -336,13 +336,15 @@ function refreshBagDetailReading(){
  if(bagDetailReadId!==bagSelectedId){bagDetailReadId=bagSelectedId;bagDetailPage=0;bagDetailReadKey='';}
  $('item-stat-grid-'+index).hidden=false;$('item-read-title-'+index).textContent='특성 · 고유 효과';
  const item=inventoryView[index],trait=$('item-trait-'+index),unique=$('item-unique-'+index),parts=['획득처 · '+game.equipmentAcquisition(item)];
+ // Alpha 0.110: an ancient's special effect leads the reading text.
+ const ancient=game.ancientDefinition(item);if(ancient)parts.unshift('고대 특수효과\n✦ '+ancient.signature.name+' · '+ancient.signature.description);
  if(item.perfect)parts.push('극옵 · 모든 기본 옵션 최댓값');
  const setId=game.itemSet(item);if(setId){const worn=game.equippedSetCounts(profile)[setId]??0;parts.push('세트 · '+game.EQUIPMENT_SETS[setId].name+' (착용 '+worn+'/'+game.SET_SLOTS.length+')\n'+game.setBonusText(setId,worn));}
  const ranges=game.itemRollRanges(item);if(Object.keys(ranges).length)parts.push('기본 옵션 범위 (강화 보너스 제외)\n'+Object.entries(ranges).map(([k,r])=>game.AFFIXES[k]+' '+item.affixes[k]+' ['+r.min+'~'+r.max+']').join(' · '));
  if(item.inscription)parts.push('추가 각인 · '+game.BUILD_EFFECTS[item.inscription].name+'\n'+game.buildEffectText(item.inscription));
  if(game.enhancementLevel(item))parts.push('개별 강화 +'+game.enhancementLevel(item)+' · 옵션 +'+(game.enhancementLevel(item)*3)+'% · 자동 분해 보호');
  if(!trait.hidden)parts.push('무기 특성\n'+trait.textContent);
- if(!unique.hidden&&unique.textContent)parts.push('고유 효과\n'+unique.textContent);
+ if(!unique.hidden&&unique.textContent&&!(ancient&&unique.textContent.startsWith('✦ '+ancient.signature.name)))parts.push('고유 효과\n'+unique.textContent);
  const text=parts.join('\n\n')||'별도의 장비 효과가 없어.';
  const node=$('item-read-text-'+index),box=node.getBoundingClientRect(),style=window.getComputedStyle(node),lineHeight=parseFloat(style.lineHeight)||21;
  if(!Number.isFinite(box.width)||!Number.isFinite(box.height)||box.width<=0||box.height<lineHeight){node.textContent='';bagDetailReadKey='';return;}
@@ -414,7 +416,7 @@ function refreshBag(){
       $('item-'+i).setAttribute('data-rarity',String(item.rarity));$('item-'+i).setAttribute('data-kind',game.craftedDefinition(item)?'crafted':game.ancientDefinition(item)?'ancient':'ordinary');$('item-name-'+i).textContent=game.RARITIES[item.rarity]+' '+item.name+(game.enhancementLevel(item)?' +'+game.enhancementLevel(item):'');$('item-name-'+i).style.color=game.RARITY_INFO[item.rarity].color;
       gearThumbnail($('item-art-'+i),item,96,true);
       $('item-affixes-'+i).textContent=(item.perfect?'극옵 · 모든 옵션 최댓값\n':'')+Object.entries(item.affixes).map(([k,v])=>game.AFFIXES[k]+' +'+v+(['speed','crit','reduction'].includes(k)?'%':'')).join('\n');
-      const crafted=game.craftedDefinition(item),ancient=game.ancientDefinition(item),unique=game.uniqueEffect(item);$('item-powers-'+i).hidden=!unique;$('item-power-title-'+i).textContent='✦ '+(crafted?.signature.name??ancient?.signature.name??unique?.name??'고유 효과');$('item-unique-'+i).hidden=!unique;$('item-unique-'+i).textContent=unique?'✦ '+unique.name+' · '+unique.description+(item.rarity>3&&unique.scales?(item.rarity===6?' · 고유 고정 위력 ':item.rarity===5?' · 고대 고정 위력 ':' · 등급 효과 위력 ')+(item.rarity===6?1.5:item.rarity===5?1.36:1.12).toFixed(2)+'배':'')+(crafted?'\n✦ '+crafted.signature.name+' · '+crafted.signature.description+'\n대장간 제작 전용 · 드롭되지 않음':'')+(ancient?'\n✦ '+ancient.signature.name+' · '+ancient.signature.description+'\n레이드 전용 · 추후 추가':''):'';$('item-unique-'+i).style.color=unique?.color??'';
+      const crafted=game.craftedDefinition(item),ancient=game.ancientDefinition(item),unique=game.uniqueEffect(item);$('item-powers-'+i).hidden=!unique;$('item-power-title-'+i).textContent='✦ '+(crafted?.signature.name??ancient?.signature.name??unique?.name??'고유 효과');$('item-unique-'+i).hidden=!unique;$('item-unique-'+i).textContent=unique?'✦ '+unique.name+' · '+unique.description+(item.rarity>3&&unique.scales?(item.rarity===6?' · 고유 고정 위력 ':item.rarity===5?' · 고대 고정 위력 ':' · 등급 효과 위력 ')+(item.rarity===6?1.5:item.rarity===5?1.36:1.12).toFixed(2)+'배':'')+(crafted?'\n✦ '+crafted.signature.name+' · '+crafted.signature.description+'\n대장간 제작 전용 · 드롭되지 않음':''):'';$('item-unique-'+i).style.color=unique?.color??'';
       for(const [key]of ITEM_AFFIX_FIELDS){const present=Object.hasOwn(item.affixes,key);$('item-affix-row-'+key+'-'+i).hidden=!present;$('item-affix-value-'+key+'-'+i).textContent=present?'+'+game.effectiveAffix(item,key)+(['speed','crit','reduction'].includes(key)?'%':''):'';if(present)$('item-affix-value-'+key+'-'+i).setAttribute('title','기본 '+item.affixes[key]+' + 강화 '+game.enhancementBonus(item,key)+' = '+game.effectiveAffix(item,key));}
       const itemTrait=game.weaponTrait(item);$('item-trait-'+i).hidden=!itemTrait;$('item-trait-'+i).textContent=itemTrait?itemTrait.name+' · '+itemTrait.description:'';$('item-trait-'+i).style.color=itemTrait?.color??'';
       $('item-meta-'+i).textContent=game.RARITIES[item.rarity]+' 등급 · '+game.SLOTS[item.slot]+' · '+game.equipmentAcquisition(item);$('item-status-'+i).textContent=[equipped?'착용 중':'',favorite?'즐겨찾기':'',reserved?'저장 빌드':''].filter(Boolean).join(' · ')||'보관 중';
@@ -1025,7 +1027,7 @@ function updateHud(){
   refreshCraftGoalHud();
   if(trackOpen&&(state.phase==='camp'||state.phase==='playing'&&state.paused||game.resultReady(state))){modal('track','재료 수집 여정','재료를 눌러 사냥터를 찾아봐. 전투 중에는 일시정지돼.','CRAFTING JOURNEY');refreshTrack();
   }else if(craftOpen&&state.phase==='camp'){modal('craft','고유 장비 제작','재료를 모아 나만의 장비를 벼려. 제작은 확정 성공.','THE FORGE');refreshCraft();
-  }else if(codexOpen&&state.phase==='camp'){modal('codex','태초의 유물','고대 장비는 추후 추가될 레이드에서 획득할 수 있어.','ANCIENT CODEX');refreshCodex();
+  }else if(codexOpen&&state.phase==='camp'){modal('codex','태초의 유물','고대 장비는 챕터 보스가 드물게 떨어뜨려. 레이드 고대는 추후 추가.','ANCIENT CODEX');refreshCodex();
   }else if(inventoryOpen){
     modal(inventoryPanel==='equipment'?'equipment':'inventory',inventoryPanel==='equipment'?'리리안의 장비':'리리안의 가방','아이콘을 눌러 능력치와 시너지 변화를 비교해.','EQUIPMENT');
     if(previewAppearance!==BASE_APPEARANCE){
@@ -1139,7 +1141,9 @@ function closeCodexDetail(){
  if(!codexOpen||state.phase!=='camp')return;codexDetailOpen=false;updateHud();
  const origin=$(codexOrigin),button=origin.hidden?$('codex-search'):origin;window.hunterPages?.reveal(button);button.focus({preventScroll:true});
 }
-function prepareTarget(){return false;}
+// Alpha 0.110: ancients drop from chapter bosses of their region; route to the furthest unlocked chapter's boss.
+function ancientRegionChapters(row){const lo=(row.tier-1)*game.CHAPTERS_PER_THEME+1;return [lo,lo+game.CHAPTERS_PER_THEME-1];}
+function prepareTarget(row){if(!row||!ready||state.phase!=='camp')return false;const [lo,hi]=ancientRegionChapters(row),id=Math.min(hi,profile.unlockedStage);if(id<lo)return false;navigateCamp('hunt');selectedStage=0;selectChapter(id);selectedRunStage=game.stageLimit(profile,id,selectedDifficulty);updateHud();return true;}
 
 $('camp-codex').addEventListener('click',openCodex);
 $('codex-back').addEventListener('click',()=>{codexOpen=false;updateHud();});
@@ -1173,10 +1177,10 @@ $('replay-prepare').addEventListener('click',()=>{if(ready&&state.phase==='camp'
 }});
 function refreshFarmCamp(){
  const target=game.targetAncient(profile);$('camp-codex-count').textContent=profile.discoveredAncients.length+'/'+game.ANCIENT_CATALOG.length;$('target-hunt').hidden=!target;$('target-hunt').disabled=true;
- $('farm-target-note').textContent=target?'레이드 목표 · '+target.name+' / 추후 추가'+(profile.discoveredAncients.includes(target.id)?' · 발견 완료':' · 미발견'):'도감에서 원하는 고대 유물을 파밍 목표로 지정해.';
+ $('farm-target-note').textContent=target?'파밍 목표 · '+target.name+' / '+ancientRegionChapters(target).join('~')+'장 보스'+(profile.discoveredAncients.includes(target.id)?' · 발견 완료':' · 미발견'):'도감에서 원하는 고대 유물을 파밍 목표로 지정해.';
  if(!game.stageLimit(profile,selectedStage,selectedDifficulty))selectedDifficulty=0;
  $('replay-panel').hidden=selectedStage>profile.clearedStage;$('replay-locked').hidden=selectedStage<=profile.clearedStage;const mode=game.HUNT_MODES[selectedDifficulty];
- const chapter=game.STAGES[selectedStage-1];$('replay-chapter').textContent=chapter.name+' · CHAPTER '+String(selectedStage).padStart(2,'0');$('replay-boss').textContent=chapter.bossName;$('tactics-launch-meta').textContent=mode.name+' · '+chapter.bossName;$('replay-rewards-title').textContent='주요 보상 · '+mode.name;$('replay-hp').textContent=mode.hp+'배';$('replay-damage').textContent=mode.damage+'배';$('replay-gold').textContent=mode.reward+'배';$('replay-ancient').textContent='레이드 예정';$('replay-combat-note').textContent=(mode.shots?'탄막 +'+mode.shots+'발 · 패턴 순환 변경':'기본 공격 패턴')+' · 추가 괴수 핵 +'+mode.extraCore;$('replay-prepare').disabled=!ready||state.phase!=='camp'||!game.stageLimit(profile,selectedStage,selectedDifficulty);
+ const chapter=game.STAGES[selectedStage-1];$('replay-chapter').textContent=chapter.name+' · CHAPTER '+String(selectedStage).padStart(2,'0');$('replay-boss').textContent=chapter.bossName;$('tactics-launch-meta').textContent=mode.name+' · '+chapter.bossName;$('replay-rewards-title').textContent='주요 보상 · '+mode.name;$('replay-hp').textContent=mode.hp+'배';$('replay-damage').textContent=mode.damage+'배';$('replay-gold').textContent=mode.reward+'배';$('replay-ancient').textContent=Math.round(game.ANCIENT_BOSS_CHANCE[selectedDifficulty]*100)+'%';$('replay-combat-note').textContent=(mode.shots?'탄막 +'+mode.shots+'발 · 패턴 순환 변경':'기본 공격 패턴')+' · 추가 괴수 핵 +'+mode.extraCore;$('replay-prepare').disabled=!ready||state.phase!=='camp'||!game.stageLimit(profile,selectedStage,selectedDifficulty);
  const mastery=profile.bossMastery[selectedStage-1],done=[selectedStage<=profile.clearedStage,game.bossModeAvailable(profile,selectedStage,1),mastery>=1,game.bossModeAvailable(profile,selectedStage,2)];for(let n=0;n<4;n++){$('replay-step-'+n).setAttribute('data-done',String(done[n]));$('replay-step-state-'+n).textContent=done[n]?'완료':'미완료';}
  for(const m of game.HUNT_MODES){
   const available=game.stageLimit(profile,selectedStage,m.id)>0,button=$('hunt-mode-'+m.id),mapButton=$('map-mode-'+m.id);
@@ -1228,12 +1232,12 @@ function refreshCodex(){
  $('codex-count').textContent=found.size+' / '+catalog.length+' 발견';$('codex-percent').textContent=percent+'%';$('codex-progress').setAttribute('aria-valuenow',String(found.size));$('codex-progress-fill').style.width=percent+'%';$('codex-results').textContent=visible?visible+'종 표시':'검색 조건에 맞는 유물이 없어.';$('codex-empty').hidden=visible>0;
  const recentId=profile.discoveredAncients.filter(id=>catalog.some(r=>r.id===id)).at(-1),recent=catalog.find(r=>r.id===recentId);
  $('codex-feature').setAttribute('data-empty',String(!recent));$('codex-feature-open').hidden=!recent;$('codex-feature-empty').hidden=!!recent;$('codex-feature-art').hidden=!recent;
- $('codex-feature-kicker').textContent=recent?'최근 발견':'기록의 시작';$('codex-feature-name').textContent=recent?recent.name.replace(' ','\n'):'첫 고대 유물을 찾아서';$('codex-feature-meta').textContent=recent?game.THEMES[recent.tier-1].name+' · '+game.SLOTS[recent.slot]:'고대 장비는 레이드에서 획득 · 추후 추가';
+ $('codex-feature-kicker').textContent=recent?'최근 발견':'기록의 시작';$('codex-feature-name').textContent=recent?recent.name.replace(' ','\n'):'첫 고대 유물을 찾아서';$('codex-feature-meta').textContent=recent?game.THEMES[recent.tier-1].name+' · '+game.SLOTS[recent.slot]:'고대 장비는 챕터 보스 희귀 드롭 · 레이드 고대는 추후 추가';
  if(recent)gearThumbnail($('codex-feature-art'),{...recent,catalogId:recent.id,rarity:5},200);
  const row=catalog.find(r=>r.id===codexSelection),discovered=found.has(row.id),boss=game.BOSS_LOOT[row.tier-1];
- $('codex-detail').setAttribute('data-discovered',String(discovered));gearThumbnail($('codex-detail-art'),{...row,catalogId:row.id,rarity:5},200);if(!discovered)$('codex-detail-art').setAttribute('aria-label','미발견 유물 이미지');$('codex-detail-name').textContent=row.name;$('codex-detail-state').textContent=(discovered?'발견한 고대 유물':'미발견')+(profile.targetAncientId===row.id?' · 파밍 목표':'');$('codex-detail-boss').textContent='획득처 · 레이드 (추후 추가)';
+ $('codex-detail').setAttribute('data-discovered',String(discovered));gearThumbnail($('codex-detail-art'),{...row,catalogId:row.id,rarity:5},200);if(!discovered)$('codex-detail-art').setAttribute('aria-label','미발견 유물 이미지');$('codex-detail-name').textContent=row.name;$('codex-detail-state').textContent=(discovered?'발견한 고대 유물':'미발견')+(profile.targetAncientId===row.id?' · 파밍 목표':'');$('codex-detail-boss').textContent='획득처 · '+game.THEMES[row.tier-1].name+' 챕터 보스';
  $('codex-signature').textContent=row.signature.name+' — '+row.signature.description;$('codex-affixes').textContent=Object.entries(row.base).map(([k,v])=>game.AFFIXES[k]+' +'+v+(['speed','crit','reduction'].includes(k)?'%':'')).join(' · ');$('codex-base-power').textContent=row.signatureOnly?'고대 장비 전용 각인':game.UNIQUE_EFFECTS[row.effectId].name+' — '+game.UNIQUE_EFFECTS[row.effectId].description+' · 고대 고정 위력 1.36배';$('codex-target').disabled=profile.targetAncientId===row.id;$('codex-target').textContent=profile.targetAncientId===row.id?'현재 파밍 목표':'파밍 목표 지정';$('codex-clear').hidden=!profile.targetAncientId;
- $('codex-route').disabled=true;$('codex-route-note').textContent='레이드 출시 후 획득 가능 · 현재 스테이지에서는 드롭되지 않아.';
+ {const [lo,hi]=ancientRegionChapters(row);$('codex-route').disabled=profile.unlockedStage<lo;$('codex-route-note').textContent=lo+'~'+hi+'장 보스 희귀 드롭 · 일반 '+Math.round(game.ANCIENT_BOSS_CHANCE[0]*100)+'% · 정예 '+Math.round(game.ANCIENT_BOSS_CHANCE[1]*100)+'% · 악몽 '+Math.round(game.ANCIENT_BOSS_CHANCE[2]*100)+'% · 보스 '+game.LEGENDARY_PITY_LIMIT+'회 처치마다 확정';}
 }
 
 function refreshCraft(){

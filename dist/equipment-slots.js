@@ -27,7 +27,7 @@ export function restoreEquipment(raw,inventory,characterId='lirian'){
  }return result;
 }
 export function equipmentAcquisition(item){
- if(item?.rarity===5)return '레이드 전용 · 추후 추가';
+ if(item?.rarity===5)return ((item.tier-1)*10+1)+'~'+item.tier*10+'장 보스 희귀 드롭';
  if(item?.rarity===6)return '제작 전용';
  if(item?.slot==='special')return '던전 전용 · 낮은 획득 확률 · 추후 추가';
  if(item?.slot==='charm'||item?.slot==='earring')return '던전 전용 · 추후 추가';

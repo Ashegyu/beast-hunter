@@ -13,10 +13,11 @@
 ## 실행
 - 게임: `PORT=8090 node serve-local.mjs` 후 `http://127.0.0.1:8090/` (기본 포트 8080). file:// 로는 안 된다.
 - 헤드리스 확인: 전역 playwright(`/opt/node22/lib/node_modules/playwright`)를 createRequire로 불러 Chromium 실행. 844×390에서 거점 → 사냥터 → 전투 준비 → 전투까지 콘솔 오류·404 없이 동작 확인함.
-- 테스트: `npm test` = `node --experimental-vm-modules --test tests/*.test.mjs` (약 70초). **785/785 통과** (0.109 기준). 어셋 개수 단언(클립 415+(45+26)×15, 프레임 907+(45+26)×25, 시작 시 요청 이미지 26장 = 공유 18 + 1장 8장(세트 장비 페이지 포함))은 0.109 기준. region-assets 테스트가 모든 챕터 이미지 경로가 `delivery`를 거쳐 실제 파일로 이어지는지 검사한다(0.107에서 재사용 지형 6장 연결이 빠져 5·9·17·18·28·29장 입장이 막혔었다).
+- 테스트: `npm test` = `node --experimental-vm-modules --test tests/*.test.mjs` (약 70초). **785/785 통과** (0.110 기준). 어셋 개수 단언(클립 415+(45+26)×15, 프레임 907+(45+26)×25, 시작 시 요청 이미지 26장 = 공유 18 + 1장 8장(세트 장비 페이지 포함))은 0.109 기준. region-assets 테스트가 모든 챕터 이미지 경로가 `delivery`를 거쳐 실제 파일로 이어지는지 검사한다(0.107에서 재사용 지형 6장 연결이 빠져 5·9·17·18·28·29장 입장이 막혔었다).
 
 ## 테스트 작성 시 주의 (0.103.2에서 정리한 내용)
-- 고대 장비는 0.97부터 레이드 전용 → 스테이지 보스는 고대를 떨어뜨리지 않음. 고대 카탈로그는 75종(신규 부위 15종은 고대 전용 원화 없음).
+- 고대 장비(0.110): 보스 고대 = 챕터 10스테이지 보스가 그 지역 티어(1~10장 1, 11~20장 2, 21~30장 3) 고대를 `ANCIENT_BOSS_CHANCE`(일반 5%·정예 8%·악몽 12%)로 떨어뜨리고, `legendaryPity`가 보스 고대 천장(고대 없이 20회째 확정, `dropBossAncient`). 일반 몬스터 드롭은 천장을 건드리지 않는다. 레이드 고대는 레이드와 함께 추가 예정(미구현). 테스트에서 보스 처치 결과를 단언할 때 `legendaryPity`를 19로 두면 고대가 하나 더 나온다. 고대 카탈로그는 75종(신규 부위 15종은 고대 전용 원화 없음), 능력치는 부위별 3종(`ANCIENT_STATS`)×(.76+.24×티어)×2.9.
+- 고대 특수효과(`ancient-powers.js`): 75종 모두 고유. 발동 조건 normal/finisher/skill/crit/kill/dash/perfect/hurt/lowHp/periodic/pickup(heavy·counter·idle은 자동 전투에서 발동하지 않아 0.110에서 없앰). 새 효과 fury/haste(시간제 버프, `s.uniqueState.ancientBuffs`, `ancientBuff(s,key)`가 damageEnemy·기본 공격 속도에 반영), invuln, cdr(스킬 재사용 감소), execute(비보스 처형). 'skill'은 `SKILL_HOOKS.cast`(combat-skills `castSkill`의 `h.cast`), 'kill'은 `kill()`, 'crit'은 연격 접촉 루프 뒤 `ancientAll`. tests/ancient-powers.test.mjs의 `fire()`가 조건별로 실제 전투 상황을 만들어 발동을 확인한다.
 - 9스테이지는 밀집 공세(전원 skitter), strict 스테이지(4·8·9·10)는 이탈 시 처치 수·전리품까지 롤백. 보스 규칙은 생태별(숲 재생, 불 화염 폭주, 얼음 호위 소환, 어둠 방어 태세), 특수 보스(10·20·30장)는 거기에 70%·35% 호위 4마리.
 - 카메라는 플레이어를 화면 높이 60%에 둠(world.js). 가로 화면 논리 폭은 1800(view-controls.js `viewportFor`)이고 캔버스에 축소해 그림.
 - 서 있는 캐릭터는 화면 세로 위치에 따라 0.86~1.1배(app.js `sceneDepthScale`, 플레이어 위치에서 1.0).
@@ -41,7 +42,7 @@
 - `art/`: 원화 원본, 생성 프롬프트, 검수 자료. Codex 생성 원화: `art/monsters0106`(보스 27·일반 18), `art/terrain0106`(지형 6), `art/monsters0107`(불 12·어둠 6·불 보스 5·특수 보스 3), `art/terrain0107`(지형 21), `art/fire0107`(불 장식물·공격 효과), `art/equipment0108`(지역 세트 4장), `art/equipment0109`(챕터 세트 26장, 장당 6점). 각 폴더에 사양 JSON, `prompts/<id>.json`, PROVENANCE.md. 사용자 몬스터 백과 참고 이미지는 `art/monsters065/references/encyclopedia-1~5.png`. `tools/reports/`: 버전별 측정·검수 결과.
 
 ## 버전 표기
-- README는 0.103.2부터 다시 최신(그 사이 0.98~0.103.1 기록은 없음), `index.html`은 `app.js?v=0.109.0`, 모듈 import 쿼리는 0.70~0.109 혼재(0.105~0.109에서 바꾼 모듈과 그 import 사슬은 `?v=0.109.0`), `PROFILE_VERSION=14`(0.105, 진행 배열 30칸). 코드가 문서보다 앞서 있다. README_LOCAL은 폴더 이름 때문에 "Alpha 0.45"라고 부른다.
+- README는 0.103.2부터 다시 최신(그 사이 0.98~0.103.1 기록은 없음), `index.html`은 `app.js?v=0.110.0`, 모듈 import 쿼리는 0.70~0.110 혼재(0.105~0.110에서 바꾼 모듈과 그 import 사슬은 `?v=0.110.0`), `PROFILE_VERSION=14`(0.105, 진행 배열 30칸). 코드가 문서보다 앞서 있다. README_LOCAL은 폴더 이름 때문에 "Alpha 0.45"라고 부른다.
 - 파일명 버전: 점 제거(063=0.63, 0844=0.84.4, v0970=0.97.0, v01002=0.100.2). 단 alpha09/alpha091은 0.9/0.9.1.
 
 ## 게임 규칙 요약
@@ -65,12 +66,12 @@
 - 자동 레이아웃 점검: 저장 프로필을 만들어 localStorage에 넣고 Playwright로 각 화면을 돌며 화면 밖 버튼·가림·글자 잘림·스크롤 영역을 측정했다. 접힌 `<details>` 내용과 2px로 접어 둔 예전 버튼(#codex-back, #inventory-note)은 오탐이다.
 
 ## 알려진 문제 (코드에서 확인)
-- `makeItem`(game-engine.js:471)이 등급·출처·보스 인자를 무시하고 항상 일반 등급 생성 → DROP_TABLES, BOSS_DROP_TABLES, 고대 드롭, minimumRarity, legendaryPity가 사실상 죽은 코드. (README 0.97의 "스테이지는 일반만 드롭" 의도와는 일치)
+- `makeItem`이 등급·출처·보스 인자를 무시하고 항상 일반 등급 생성 → DROP_TABLES, BOSS_DROP_TABLES, minimumRarity가 사실상 죽은 코드("스테이지는 일반만 드롭" 의도와 일치). 고대는 0.110부터 `dropBossAncient`가 따로 떨어뜨린다.
 - 제작 재료 `origin`(무명의 기원)이 보스 처치당 0.001%뿐 → README의 "현재 제작 가능"과 달리 제작이 사실상 불가능 (crafting.js:12).
 - `s.encounters/caches/nodes`를 채우는 코드 없음 → interact·상자·그룹 어그로 로직이 죽어 있음. `flow==='break'` 설정처 없음.
 - 궁극기 영상(mp4)·컷인은 테스트에서만 쓰이고 런타임에는 연결되지 않음. 신규 고대 15종 원화 없음.
 - 0.106 보스 중 독버섯 왕·얼음 정령왕·빙하 거북·대사령술사는 뒷모습 줄이 앞모습과 비슷하게 생성됨(사용 가능 수준이라 유지). 0.109부터 스테이지 드롭은 챕터 세트 장비지만, 장신구·전용 칸과 던전·레이드·제작·고대 장비는 여전히 옛 티어 이름·원화(2티어 폐성, 3티어 서리)를 쓴다.
-- 파쇄 제거(0.104)로 '파쇄 적중 시' 발동하는 고유 효과(파쇄 축전기 등)와 고대 각인이 더 이상 발동하지 않음. 연격 3타로 옮길지 밸런스 결정 필요.
+- 파쇄 제거(0.104)로 '파쇄 적중 시' 발동하는 고유 효과(파쇄 축전기 등)가 더 이상 발동하지 않음(고대 특수효과는 0.110에서 스킬 시전 등으로 옮김). 연격 3타로 옮길지 밸런스 결정 필요.
 - 4스테이지(철갑 진군)는 원본부터 60초 제한에 붙어 있는 구간이고 단일 시드 시뮬레이션은 결과가 크게 흔들린다. 전투 수치를 바꿀 땐 지역 3개(1·11·21장 등) × 시드 여러 개로 4스테이지만 반복 측정해 클리어율로 비교하고, tests/game-engine.test.mjs의 자동 빌드 완주 테스트도 확인한다.
 - `updateHud`가 매 프레임 getElementById를 수백 회 호출(성능 여지). 테스트에선 profile-backup.js 경유로 game-engine.js가 이중 로드됨.
 - 0.103.2에서 고친 것: 스킬 아이콘 매 프레임 src 재대입, 로드 실패 문구 파일명, 제작 장비 투사체 null 접근, world.js 이중 로드, 가방 버튼 클릭 인자.

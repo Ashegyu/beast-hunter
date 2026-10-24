@@ -1,11 +1,11 @@
-import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily} from './equipment-slots.js?v=0.98.0';
-import {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.109.0';
-export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.109.0';
+import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily} from './equipment-slots.js?v=0.110.0';
+import {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.110.0';
+export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.110.0';
 import {huntMode,BOSS_DROP_TABLES} from './hunt-modes.js';
 import {UNIQUE_EFFECTS,EFFECT_ROWS,uniquePower} from './unique-effects.js?v=0.98.0';
-import {ANCIENT_POWER_BY_ID} from './ancient-powers.js';
-import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.109.0';
-export {EQUIPMENT_SETS,SET_SLOTS,SET_STATS,CHAPTER_SETS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.109.0';
+import {ANCIENT_POWER_BY_ID} from './ancient-powers.js?v=0.110.0';
+import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.110.0';
+export {EQUIPMENT_SETS,SET_SLOTS,SET_STATS,CHAPTER_SETS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.110.0';
 export {UNIQUE_EFFECTS,uniquePower} from './unique-effects.js?v=0.98.0';
 // Item definitions and pure rolls; the combat state owns identities and delivery.
 import {INVENTORY_LIMIT,MAX_PENDING_LOOT} from './inventory-rules.js?v=0.86.9';
@@ -53,8 +53,13 @@ export const ITEM_CATALOG=Object.freeze([...BASE_CATALOG,...SET_CATALOG]);
 // Ordinary identity and quality are independent. Ancient identities have no quality variants.
 const ancientKey=row=>[row.tier,row.slot,row.artId,row.effectId].join(':');
 const VISUAL_STYLE=Object.freeze({echo:3,storm:5,execution:6,blood:4,frostNova:5,whirlwind:6,barrier:3,thorns:4,pulse:6,frostWard:5,lastStand:6,recovery:3,momentum:3,focus:4,capacitor:5,hunter:4,orbit:6,magnet:5});
+// Alpha 0.110: three stats per slot instead of all five (several ancients used to cap crit and
+// reduction at 50%), at 2.9× instead of 3.65× — above a promoted mythic set piece, below the old values.
+const ANCIENT_POWER=2.9;
+const ANCIENT_STATS=Object.freeze({weapon:{damage:13,crit:3,speed:3},armor:{hp:38,reduction:3,crit:2},helmet:{hp:25,crit:3,reduction:2},pants:{hp:25,speed:3,reduction:2},
+ boots:{hp:18,speed:4,reduction:2},charm:{damage:5,hp:18,crit:3},earring:{damage:4,crit:3,speed:3},special:{damage:5,hp:18,reduction:3}});
 const ancientRows=new Map();
-for(const row of BASE_CATALOG){const key=ancientKey(row);if(ancientRows.has(key))continue;const base={},scale=(.76+row.tier*.24)*3.65,values={damage:row.slot==='weapon'?13:4,hp:row.slot==='armor'?38:equipmentFamily(row.slot)==='armor'?25:18,speed:4,crit:4,reduction:3};for(const [k,v]of Object.entries(values))base[k]=Math.round(v*scale);const ordinal=ancientRows.size;ancientRows.set(key,Object.freeze({...row,id:'ancient-'+row.id,name:'태초의 '+row.name,base:Object.freeze(base),visualStyle:VISUAL_STYLE[row.effectId]??3,ancient:true,ordinal,signature:ANCIENT_POWER_BY_ID['ancient-'+row.id]??Object.freeze({id:'ancient-'+row.id,index:60+ordinal,color:'#ffb66b',name:'태초의 맥동',trigger:row.slot==='special'?'periodic':'dash',cooldown:10,damage:.18,radius:140,description:row.slot==='special'?'전투 중 10초마다 주변에 기본 공격력 18% 피해.':'회피 시 주변에 기본 공격력 18% 피해. 재사용 10초.'}),bossId:['forest_guardian','ruins_king','frost_king'][row.tier-1]}));}
+for(const row of BASE_CATALOG){const key=ancientKey(row);if(ancientRows.has(key))continue;const base={},scale=(.76+row.tier*.24)*ANCIENT_POWER,values=ANCIENT_STATS[row.slot];for(const [k,v]of Object.entries(values))base[k]=Math.round(v*scale);const ordinal=ancientRows.size;ancientRows.set(key,Object.freeze({...row,id:'ancient-'+row.id,name:'태초의 '+row.name,base:Object.freeze(base),visualStyle:VISUAL_STYLE[row.effectId]??3,ancient:true,ordinal,signature:ANCIENT_POWER_BY_ID['ancient-'+row.id]??Object.freeze({id:'ancient-'+row.id,index:60+ordinal,color:'#ffb66b',name:'태초의 맥동',trigger:row.slot==='special'?'periodic':'dash',cooldown:10,damage:.18,radius:140,description:row.slot==='special'?'전투 중 10초마다 주변에 기본 공격력 18% 피해.':'회피 시 주변에 기본 공격력 18% 피해. 재사용 10초.'}),bossId:['forest_guardian','ruins_king','frost_king'][row.tier-1]}));}
 export const ANCIENT_CATALOG=Object.freeze([...ancientRows.values()]);
 const ANCIENT_BY_ID=new Map(ANCIENT_CATALOG.map(r=>[r.id,r]));
 export const BOSS_LOOT=Object.freeze(['세계수의 수호령','무덤의 왕','빙원의 지배자'].map((name,i)=>Object.freeze({id:['forest_guardian','ruins_king','frost_king'][i],name,tier:i+1,items:Object.freeze(ANCIENT_CATALOG.filter(r=>r.tier===i+1))})));
