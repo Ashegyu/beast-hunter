@@ -1,0 +1,29 @@
+{
+  "id": "ancient-3",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production ANCIENT (top-tier legendary) equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing ancient equipment sheet of this game: match its finely detailed pixel-illustrated painterly style, dark outlines, metallic shading, glow intensity and item scale exactly. Create ONE transparent RGBA square image with exactly FIVE separate items of ONE matching ancient set in an invisible 3 columns x 2 rows grid, each centered in its own cell with wide transparent margins, never touching each other or the canvas edge, and the bottom-right cell left completely EMPTY: row 1: (1) a helmet, (2) leg armor pants, (3) a pair of boots; row 2: (4) a single ornate dangling earring jewel, (5) a round signet seal medallion (a personal emblem of the heroine). All five share one design language: PRIMORDIAL FROST: luminous blue ice crystal, polished silver, white frost fur, pale cyan glow, snowflake motifs. The seal medallion bears a frozen snowflake moon. Each item clearly readable at small icon size, more ornate and precious than ordinary gear. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "referenceImages": [
+    {
+      "path": "dist/assets/ancient-individual-v019.webp",
+      "sha256": "b94f6ad7f4958e337a1aed40e86a429272e1c4400ead68bc9ed2a64969e12dcd"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1536,
+        1024
+      ],
+      "transparent": 0.601,
+      "parts": 5,
+      "seconds": 140,
+      "sha256": "b05072a5bceac74da24cdb46eed736770ee8d06d91b6b47a45baf95fb7c27133"
+    }
+  ],
+  "final": {
+    "path": "art/ancient0111/ancient-3-parts.png",
+    "sha256": "b05072a5bceac74da24cdb46eed736770ee8d06d91b6b47a45baf95fb7c27133"
+  }
+}

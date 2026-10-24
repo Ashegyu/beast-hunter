@@ -50485,7 +50485,8 @@
     "terrain-ruins-3-v0106.png": "terrain-ruins-3-v0106.webp",
     "equipment-sets-r1-v0109.png": "equipment-sets-r1-v0109.webp",
     "equipment-sets-r2-v0109.png": "equipment-sets-r2-v0109.webp",
-    "equipment-sets-r3-v0109.png": "equipment-sets-r3-v0109.webp"
+    "equipment-sets-r3-v0109.png": "equipment-sets-r3-v0109.webp",
+    "ancient-individual-v0111.png": "ancient-individual-v0111.webp"
   },
   "equipmentSockets": {
     "lirian_idle_s_v05": [
@@ -52610,10 +52611,10 @@
     ]
   },
   "equipmentRarities": {
-    "id": "ancient_individual_v019",
+    "id": "ancient_individual_v0111",
     "actor": "equipment",
     "name": "ancient_individual",
-    "image": "ancient-individual-v019.png",
+    "image": "ancient-individual-v0111.png",
     "fps": 1,
     "loop": false,
     "frames": [
@@ -53312,6 +53313,156 @@
         "pivotY": 200,
         "duration": 1,
         "slot": "charm"
+      },
+      {
+        "x": 12,
+        "y": 1356,
+        "w": 176,
+        "h": 200,
+        "pivotX": 88.0,
+        "pivotY": 200,
+        "duration": 1,
+        "slot": "helmet"
+      },
+      {
+        "x": 200,
+        "y": 1356,
+        "w": 154,
+        "h": 200,
+        "pivotX": 77.0,
+        "pivotY": 200,
+        "duration": 1,
+        "slot": "pants"
+      },
+      {
+        "x": 366,
+        "y": 1356,
+        "w": 181,
+        "h": 200,
+        "pivotX": 90.5,
+        "pivotY": 200,
+        "duration": 1,
+        "slot": "boots"
+      },
+      {
+        "x": 559,
+        "y": 1356,
+        "w": 79,
+        "h": 200,
+        "pivotX": 39.5,
+        "pivotY": 200,
+        "duration": 1,
+        "slot": "earring"
+      },
+      {
+        "x": 650,
+        "y": 1356,
+        "w": 155,
+        "h": 200,
+        "pivotX": 77.5,
+        "pivotY": 200,
+        "duration": 1,
+        "slot": "special"
+      },
+      {
+        "x": 817,
+        "y": 1356,
+        "w": 171,
+        "h": 200,
+        "pivotX": 85.5,
+        "pivotY": 200,
+        "duration": 1,
+        "slot": "helmet"
+      },
+      {
+        "x": 1000,
+        "y": 1356,
+        "w": 170,
+        "h": 200,
+        "pivotX": 85.0,
+        "pivotY": 200,
+        "duration": 1,
+        "slot": "pants"
+      },
+      {
+        "x": 1182,
+        "y": 1356,
+        "w": 177,
+        "h": 200,
+        "pivotX": 88.5,
+        "pivotY": 200,
+        "duration": 1,
+        "slot": "boots"
+      },
+      {
+        "x": 1371,
+        "y": 1356,
+        "w": 98,
+        "h": 200,
+        "pivotX": 49.0,
+        "pivotY": 200,
+        "duration": 1,
+        "slot": "earring"
+      },
+      {
+        "x": 1481,
+        "y": 1356,
+        "w": 163,
+        "h": 200,
+        "pivotX": 81.5,
+        "pivotY": 200,
+        "duration": 1,
+        "slot": "special"
+      },
+      {
+        "x": 1656,
+        "y": 1356,
+        "w": 187,
+        "h": 200,
+        "pivotX": 93.5,
+        "pivotY": 200,
+        "duration": 1,
+        "slot": "helmet"
+      },
+      {
+        "x": 1855,
+        "y": 1356,
+        "w": 161,
+        "h": 200,
+        "pivotX": 80.5,
+        "pivotY": 200,
+        "duration": 1,
+        "slot": "pants"
+      },
+      {
+        "x": 2028,
+        "y": 1356,
+        "w": 167,
+        "h": 200,
+        "pivotX": 83.5,
+        "pivotY": 200,
+        "duration": 1,
+        "slot": "boots"
+      },
+      {
+        "x": 12,
+        "y": 1568,
+        "w": 102,
+        "h": 200,
+        "pivotX": 51.0,
+        "pivotY": 200,
+        "duration": 1,
+        "slot": "earring"
+      },
+      {
+        "x": 126,
+        "y": 1568,
+        "w": 170,
+        "h": 200,
+        "pivotX": 85.0,
+        "pivotY": 200,
+        "duration": 1,
+        "slot": "special"
       }
     ],
     "designIds": [
@@ -53374,7 +53525,22 @@
       "ancient-3-charm-3",
       "ancient-3-charm-4",
       "ancient-3-charm-5",
-      "ancient-3-charm-6"
+      "ancient-3-charm-6",
+      "ancient-1-helmet-1",
+      "ancient-1-pants-1",
+      "ancient-1-boots-1",
+      "ancient-1-earring-1",
+      "ancient-1-special-1",
+      "ancient-2-helmet-1",
+      "ancient-2-pants-1",
+      "ancient-2-boots-1",
+      "ancient-2-earring-1",
+      "ancient-2-special-1",
+      "ancient-3-helmet-1",
+      "ancient-3-pants-1",
+      "ancient-3-boots-1",
+      "ancient-3-earring-1",
+      "ancient-3-special-1"
     ]
   },
   "equipmentPresentation": {

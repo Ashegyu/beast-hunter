@@ -26,3 +26,16 @@ test('forged ancient IDs or ordinary grade five cannot obtain ancient artwork or
 test('committed ancient snapshot retains item identity and theme through mutation and equip swap',()=>{
  const p=g.createProfile(),row=ANCIENT_CATALOG.find(r=>r.slot==='weapon'&&r.visualStyle===6);p.inventory=[owned(row)];p.equipment.weapon=1;const snapshot=g.equipmentSnapshot(p);p.inventory[0].catalogId=ITEM_CATALOG[0].id;p.inventory[0].rarity=0;assert.equal(snapshot.weapon.catalogId,row.id);assert.equal(snapshotDesigns(snapshot).weapon.variant,row.id);assert.ok(Object.isFrozen(snapshot.weapon));
 });
+
+test('boss ancients drop where their identity fits the region and scale with that region (Alpha 0.111)',()=>{
+ // Tier 1 forest art drops in 1~10, tier 3 frost in 11~20 (불과 얼음의 땅), tier 2 ruined-castle/abyss in 21~30.
+ for(const [chapter,tier,region]of [[1,1,1],[11,3,2],[21,2,3]]){
+  const p=g.createProfile(1000);p.unlockedStage=30;p.clearedStage=29;p.stageProgress=g.STAGES.map(()=>10);p.legendaryPity=19;
+  const s=g.createGame(p);assert.equal(g.launch(s,chapter,10),true);s.spawns=[];s.barrels=[];s.run.bossSpawned=true;s.player.invulnerable=999;
+  const e={id:s.nextId++,species:g.STAGES[chapter-1].bossSpecies,type:'bulwark',elite:false,boss:true,x:s.player.x+300,y:s.player.y,hp:1,maxHp:1,action:'walk',actionTime:0,speed:0,cooldown:999,aggro:true,guard:0,dead:false,wave:s.run.wave,runStage:s.run.stage,damage:8,radius:58};s.enemies=[e];
+  s.projectiles.push({id:s.nextId++,x:e.x,y:e.y,vx:0,vy:0,damage:1e9,ttl:1,friendly:true});g.advanceGame(s,.025);
+  assert.equal(s.run.bossAncients.length,1);const row=ANCIENT_CATALOG.find(r=>r.id===s.run.bossAncients[0]);assert.equal(row.tier,tier);assert.equal(row.region,region);
+  assert.match(g.equipmentAcquisition({rarity:5,tier}),new RegExp('^'+((region-1)*10+1)+'~'+region*10+'장'));
+ }
+ const weapon=t=>ANCIENT_CATALOG.find(r=>r.tier===t&&r.slot==='weapon').base.damage;assert.ok(weapon(1)<weapon(3)&&weapon(3)<weapon(2));
+});

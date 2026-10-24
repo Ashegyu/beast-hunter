@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.110.0';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.111.0';
 import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js';
 import { createCombatAudio } from './sound.js?v=0.76.0';
-import * as game from './game-engine.js?v=0.110.0';
+import * as game from './game-engine.js?v=0.111.0';
 import {FrameMetrics} from './frame-metrics.js?v=0.98.1';
 import { frameIndex, frameRect, validateClip } from './engine.js';
 import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
 import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.103.1';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.110.0';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.110.0';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.110.0';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.110.0';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.111.0';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.111.0';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.111.0';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.111.0';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -937,7 +937,8 @@ function atlasThumbnail(node,imageName,frame,size=64,dimensions=null){
 const PART_FRAMES={helmet:{x:0,y:0,w:512,h:532},pants:{x:512,y:0,w:512,h:512},boots:{x:1024,y:0,w:512,h:512},earring:{x:512,y:512,w:512,h:512},special:{x:1024,y:512,w:512,h:512}};
 function gearThumbnail(node,item,size=64,illustrated=false){
 
-  if(PART_FRAMES[item?.slot]&&!game.itemSet(item)){const frame=PART_FRAMES[item.slot],image='equipment-parts-v0970.png';atlasThumbnail(node,image,frame,size,{width:1536,height:1024});node.setAttribute('aria-label',item.name??game.SLOTS[item.slot]);node.setAttribute('data-art-id','part-'+item.slot);node.setAttribute('data-visual-id',item.catalogId??item.slot);node.style.filter=item.rarity?'drop-shadow(0 0 2px '+game.RARITY_INFO[item.rarity].color+')':'';return {frame,image};}
+  // Set pieces (0.109) and the 0.97-part ancients (0.111) have their own art; other parts use the shared part icons.
+  if(PART_FRAMES[item?.slot]&&!game.itemSet(item)&&!(item?.rarity===5&&manifest.equipmentRarities.designIds.includes(item.catalogId))){const frame=PART_FRAMES[item.slot],image='equipment-parts-v0970.png';atlasThumbnail(node,image,frame,size,{width:1536,height:1024});node.setAttribute('aria-label',item.name??game.SLOTS[item.slot]);node.setAttribute('data-art-id','part-'+item.slot);node.setAttribute('data-visual-id',item.catalogId??item.slot);node.style.filter=item.rarity?'drop-shadow(0 0 2px '+game.RARITY_INFO[item.rarity].color+')':'';return {frame,image};}
   const design=visualDesign(item),craftedDisplay=illustrated&&design.craftId?manifest.craftedPresentation:null,display=craftedDisplay??(illustrated&&!design.variant?manifest.equipmentPresentation:null),displayId=craftedDisplay?design.craftId:design.id;
   const source=display?.frames[displayId]?{image:display.image,frame:display.frames[displayId],dimensions:display,grip:display.weaponAnchors?.[displayId]}:gearFrame(manifest.equipment,design,manifest.equipmentRarities);
   atlasThumbnail(node,source.image,source.frame,size,source.dimensions);node.setAttribute('aria-label',item?.name?game.RARITIES[item.rarity]+' '+item.name:design.name);node.style.filter=item?.rarity?'drop-shadow(0 0 2px '+game.RARITY_INFO[item.rarity].color+')':'';node.setAttribute('data-art-id',design.id);node.setAttribute('data-visual-id',design.variant??design.id);return source;
@@ -1142,7 +1143,7 @@ function closeCodexDetail(){
  const origin=$(codexOrigin),button=origin.hidden?$('codex-search'):origin;window.hunterPages?.reveal(button);button.focus({preventScroll:true});
 }
 // Alpha 0.110: ancients drop from chapter bosses of their region; route to the furthest unlocked chapter's boss.
-function ancientRegionChapters(row){const lo=(row.tier-1)*game.CHAPTERS_PER_THEME+1;return [lo,lo+game.CHAPTERS_PER_THEME-1];}
+function ancientRegionChapters(row){const lo=(row.region-1)*game.CHAPTERS_PER_THEME+1;return [lo,lo+game.CHAPTERS_PER_THEME-1];}
 function prepareTarget(row){if(!row||!ready||state.phase!=='camp')return false;const [lo,hi]=ancientRegionChapters(row),id=Math.min(hi,profile.unlockedStage);if(id<lo)return false;navigateCamp('hunt');selectedStage=0;selectChapter(id);selectedRunStage=game.stageLimit(profile,id,selectedDifficulty);updateHud();return true;}
 
 $('camp-codex').addEventListener('click',openCodex);
@@ -1220,7 +1221,7 @@ function refreshCodex(){
  if(codexSort==='name')ordered.sort((a,b)=>a.row.name.localeCompare(b.row.name,'ko'));
  else if(codexSort==='found')ordered.sort((a,b)=>Number(found.has(b.row.id))-Number(found.has(a.row.id))||a.i-b.i);
  $('codex-grid').replaceChildren(...ordered.map(({i})=>$('codex-card-'+i)));
- const codexMatch=(row,discovered)=>(codexChapter==='0'||row.tier===Number(codexChapter))&&(codexSlot==='all'||game.matchesEquipmentCategory(row,codexSlot))&&(codexFound==='all'||discovered===(codexFound==='found'))&&(!codexSearch||(row.name+' '+row.signature.name+' '+row.signature.description).toLowerCase().includes(codexSearch));
+ const codexMatch=(row,discovered)=>(codexChapter==='0'||row.region===Number(codexChapter))&&(codexSlot==='all'||game.matchesEquipmentCategory(row,codexSlot))&&(codexFound==='all'||discovered===(codexFound==='found'))&&(!codexSearch||(row.name+' '+row.signature.name+' '+row.signature.description).toLowerCase().includes(codexSearch));
  const matches=ordered.filter(({row})=>codexMatch(row,found.has(row.id))),pages=Math.max(1,Math.ceil(matches.length/pageSize));codexPage=Math.max(0,Math.min(codexPage,pages-1));
  const shown=new Set(matches.slice(codexPage*pageSize,(codexPage+1)*pageSize).map(({i})=>i));
  $('codex-paging').hidden=pages<=1;$('codex-page-label').textContent=(codexPage+1)+' / '+pages;$('codex-page-prev').disabled=codexPage<=0;$('codex-page-next').disabled=codexPage>=pages-1;
@@ -1232,10 +1233,10 @@ function refreshCodex(){
  $('codex-count').textContent=found.size+' / '+catalog.length+' 발견';$('codex-percent').textContent=percent+'%';$('codex-progress').setAttribute('aria-valuenow',String(found.size));$('codex-progress-fill').style.width=percent+'%';$('codex-results').textContent=visible?visible+'종 표시':'검색 조건에 맞는 유물이 없어.';$('codex-empty').hidden=visible>0;
  const recentId=profile.discoveredAncients.filter(id=>catalog.some(r=>r.id===id)).at(-1),recent=catalog.find(r=>r.id===recentId);
  $('codex-feature').setAttribute('data-empty',String(!recent));$('codex-feature-open').hidden=!recent;$('codex-feature-empty').hidden=!!recent;$('codex-feature-art').hidden=!recent;
- $('codex-feature-kicker').textContent=recent?'최근 발견':'기록의 시작';$('codex-feature-name').textContent=recent?recent.name.replace(' ','\n'):'첫 고대 유물을 찾아서';$('codex-feature-meta').textContent=recent?game.THEMES[recent.tier-1].name+' · '+game.SLOTS[recent.slot]:'고대 장비는 챕터 보스 희귀 드롭 · 레이드 고대는 추후 추가';
+ $('codex-feature-kicker').textContent=recent?'최근 발견':'기록의 시작';$('codex-feature-name').textContent=recent?recent.name.replace(' ','\n'):'첫 고대 유물을 찾아서';$('codex-feature-meta').textContent=recent?game.THEMES[recent.region-1].name+' · '+game.SLOTS[recent.slot]:'고대 장비는 챕터 보스 희귀 드롭 · 레이드 고대는 추후 추가';
  if(recent)gearThumbnail($('codex-feature-art'),{...recent,catalogId:recent.id,rarity:5},200);
  const row=catalog.find(r=>r.id===codexSelection),discovered=found.has(row.id),boss=game.BOSS_LOOT[row.tier-1];
- $('codex-detail').setAttribute('data-discovered',String(discovered));gearThumbnail($('codex-detail-art'),{...row,catalogId:row.id,rarity:5},200);if(!discovered)$('codex-detail-art').setAttribute('aria-label','미발견 유물 이미지');$('codex-detail-name').textContent=row.name;$('codex-detail-state').textContent=(discovered?'발견한 고대 유물':'미발견')+(profile.targetAncientId===row.id?' · 파밍 목표':'');$('codex-detail-boss').textContent='획득처 · '+game.THEMES[row.tier-1].name+' 챕터 보스';
+ $('codex-detail').setAttribute('data-discovered',String(discovered));gearThumbnail($('codex-detail-art'),{...row,catalogId:row.id,rarity:5},200);if(!discovered)$('codex-detail-art').setAttribute('aria-label','미발견 유물 이미지');$('codex-detail-name').textContent=row.name;$('codex-detail-state').textContent=(discovered?'발견한 고대 유물':'미발견')+(profile.targetAncientId===row.id?' · 파밍 목표':'');$('codex-detail-boss').textContent='획득처 · '+game.THEMES[row.region-1].name+' 챕터 보스';
  $('codex-signature').textContent=row.signature.name+' — '+row.signature.description;$('codex-affixes').textContent=Object.entries(row.base).map(([k,v])=>game.AFFIXES[k]+' +'+v+(['speed','crit','reduction'].includes(k)?'%':'')).join(' · ');$('codex-base-power').textContent=row.signatureOnly?'고대 장비 전용 각인':game.UNIQUE_EFFECTS[row.effectId].name+' — '+game.UNIQUE_EFFECTS[row.effectId].description+' · 고대 고정 위력 1.36배';$('codex-target').disabled=profile.targetAncientId===row.id;$('codex-target').textContent=profile.targetAncientId===row.id?'현재 파밍 목표':'파밍 목표 지정';$('codex-clear').hidden=!profile.targetAncientId;
  {const [lo,hi]=ancientRegionChapters(row);$('codex-route').disabled=profile.unlockedStage<lo;$('codex-route-note').textContent=lo+'~'+hi+'장 보스 희귀 드롭 · 일반 '+Math.round(game.ANCIENT_BOSS_CHANCE[0]*100)+'% · 정예 '+Math.round(game.ANCIENT_BOSS_CHANCE[1]*100)+'% · 악몽 '+Math.round(game.ANCIENT_BOSS_CHANCE[2]*100)+'% · 보스 '+game.LEGENDARY_PITY_LIMIT+'회 처치마다 확정';}
 }

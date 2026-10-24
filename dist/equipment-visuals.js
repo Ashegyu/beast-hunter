@@ -1,5 +1,5 @@
-import { equipmentArt, ALL_EQUIPMENT_ART } from './chapters.js?v=0.110.0';
-import { ANCIENT_CATALOG, ancientDefinition, CRAFTED_CATALOG, craftedDefinition } from './loot.js?v=0.110.0';
+import { equipmentArt, ALL_EQUIPMENT_ART } from './chapters.js?v=0.111.0';
+import { ANCIENT_CATALOG, ancientDefinition, CRAFTED_CATALOG, craftedDefinition } from './loot.js?v=0.111.0';
 
 export function validEquipmentSocket(p){
   return !!p && ['handX','handY','angle','bodyX','bodyY','tilt','side','bladeLength'].every(k=>Number.isFinite(p[k])) && Math.abs(p.handX)<=1.5 && Math.abs(p.handY)<=1.5 && Math.abs(p.bodyX)<=1.5 && Math.abs(p.bodyY)<=1.5 && p.side>0 && p.side<=1 && p.bladeLength>0 && p.bladeLength<=1.2 && typeof p.back==='boolean' && typeof p.weaponHidden==='boolean';
@@ -24,8 +24,9 @@ export function snapshotDesigns(items){const result={weapon:null,armor:null,char
 export function gearFrame(atlas,design,rarityAtlas=null){if(design?.variant&&rarityAtlas){const frame=rarityAtlas.frames[rarityAtlas.designIds.indexOf(design.variant)];if(frame)return{frame,image:rarityAtlas.image,variant:true};}// Chapter set items live on extra atlas pages (Alpha 0.109): atlas.setFrames[id].image names the page, atlas.pages its size.
  const frame=atlas.frames[atlas.designIds.indexOf(design?.id)]??atlas.setFrames?.[design?.id],image=frame?.image??atlas.image;return{frame,image,dimensions:atlas.pages?.[image],variant:false};}
 export function validRarityAtlas(atlas){
- if(!atlas||typeof atlas.image!=='string'||!Array.isArray(atlas.designIds)||atlas.designIds.length!==ANCIENT_CATALOG.filter(r=>!r.signatureOnly).length||new Set(atlas.designIds).size!==ANCIENT_CATALOG.filter(r=>!r.signatureOnly).length||!Array.isArray(atlas.frames)||atlas.frames.length!==ANCIENT_CATALOG.filter(r=>!r.signatureOnly).length)return false;
- for(const row of ANCIENT_CATALOG.filter(r=>!r.signatureOnly)){const f=atlas.frames[atlas.designIds.indexOf(row.id)];if(!f||!['x','y','w','h'].every(k=>Number.isFinite(f[k]))||f.x<0||f.y<0||f.w<=0||f.h<=0)return false;if(row.slot==='weapon'&&(!['gripX','gripY','tipX','tipY'].every(k=>Number.isFinite(f[k]))||f.gripX<0||f.gripX>=f.w||f.gripY<0||f.gripY>=f.h||f.tipX<0||f.tipX>=f.w||f.tipY<0||f.tipY>=f.h||Math.hypot(f.tipX-f.gripX,f.tipY-f.gripY)<f.h*.3))return false;}return true;
+ // Alpha 0.111: every ancient, including the fifteen 0.97 parts, has its own frame.
+ if(!atlas||typeof atlas.image!=='string'||!Array.isArray(atlas.designIds)||atlas.designIds.length!==ANCIENT_CATALOG.length||new Set(atlas.designIds).size!==ANCIENT_CATALOG.length||!Array.isArray(atlas.frames)||atlas.frames.length!==ANCIENT_CATALOG.length)return false;
+ for(const row of ANCIENT_CATALOG){const f=atlas.frames[atlas.designIds.indexOf(row.id)];if(!f||!['x','y','w','h'].every(k=>Number.isFinite(f[k]))||f.x<0||f.y<0||f.w<=0||f.h<=0)return false;if(row.slot==='weapon'&&(!['gripX','gripY','tipX','tipY'].every(k=>Number.isFinite(f[k]))||f.gripX<0||f.gripX>=f.w||f.gripY<0||f.gripY>=f.h||f.tipX<0||f.tipX>=f.w||f.tipY<0||f.tipY>=f.h||Math.hypot(f.tipX-f.gripX,f.tipY-f.gripY)<f.h*.3))return false;}return true;
 }
 export function highestVisualGrade(designs){let rank=0;for(const slot of SLOTS)rank=Math.max(rank,designs[slot]?.rarity??0);return rank;}
 function diamond(ctx,x,y,r,color){ctx.strokeStyle=color;ctx.beginPath();ctx.moveTo(x,y-r);ctx.lineTo(x+r,y);ctx.lineTo(x,y+r);ctx.lineTo(x-r,y);ctx.closePath();ctx.stroke();}
