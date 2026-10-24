@@ -1,12 +1,14 @@
-"""Losslessly extract and shelf-pack the Alpha 0.106 Codex-generated monster sheets.
+"""Losslessly extract and shelf-pack Codex-generated monster sheets.
 
-Every PNG in art/monsters0106 is packed. Chapter bosses (boss_*) get one atlas
-each so a chapter loads only its own boss; regular species share one atlas per
-region. Re-running rebuilds every v0106 entry and leaves older assets untouched.
+Usage: python3 tools/pack-monsters0106.py [art/monsters0106 v0106 | art/monsters0107 v0107]
+
+Every PNG in the folder is packed, one atlas per species (a chapter loads only
+its six stage species and its boss). Re-running rebuilds every entry of that tag
+and leaves other assets untouched.
 
 Source RGBA is never resampled or repainted. Connected detached body parts and
 spores are assigned to their nearest large body silhouette before extraction.
-Only v0106 clips/directions/delivery entries are added to or replaced in manifest.
+Only clips/directions/delivery entries of the given tag are added or replaced.
 """
 from pathlib import Path
 import hashlib
@@ -17,10 +19,11 @@ from PIL import Image
 from scipy.ndimage import distance_transform_edt, find_objects, label
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / 'art/monsters0106'
+import sys
+SOURCE = ROOT / (sys.argv[1] if len(sys.argv) > 1 else 'art/monsters0106')
 ASSETS = ROOT / 'dist/assets'
 SPECIES = sorted(p.stem for p in SOURCE.glob('*.png'))
-TAG = 'v0106'
+TAG = sys.argv[2] if len(sys.argv) > 2 else 'v0106'
 DIRECTIONS = ['s', 'se', 'e', 'ne', 'n']
 ACTIONS = [('walk', [0, 1], 6, True), ('attack', [2, 3], 4, False), ('death', [4], 4, False)]
 # Source-measured empty row gaps for detached spores/crystal arms. Without row
@@ -29,16 +32,10 @@ ACTIONS = [('walk', [0, 1], 6, True), ('attack', [2, 3], 4, False), ('death', [4
 ROW_BANDS = {}
 
 
-REGULARS = json.loads((SOURCE / 'regulars.json').read_text(encoding='utf-8'))
-
-
 def atlas_group(species):
-    """Bosses get a private atlas. Regular species share one atlas per region and
-    tier: '<region>-a' for new basics, '<region>-b' for new specialists, so a
-    chapter that only uses the specialists never downloads the basics."""
-    if species.startswith('boss_'):
-        return species
-    return species.split('_')[0] + ('-a' if REGULARS[species]['tier'] == 'basic' else '-b')
+    """Every species gets its own atlas, so a chapter downloads only the six
+    species its stages use plus its boss (Alpha 0.107)."""
+    return species
 
 
 def sha256(path):
@@ -181,7 +178,7 @@ def pack():
                     'frames': [frames[c] for c in columns],
                 }
         report['species'][species] = {
-            'source': f'art/monsters0106/{species}.png', 'sha256': report['sources'][species],
+            'source': str((SOURCE / f'{species}.png').relative_to(ROOT)), 'sha256': report['sources'][species],
             'width': im.width, 'height': im.height,
             'transparentFraction': round(float((alpha == 0).mean()), 6),
             'bodyCores': 25, 'independentComponentsOver1500px': len(candidates),
@@ -233,7 +230,7 @@ def pack():
                          if value.get('actor') not in SPECIES}
     assert old_directions == {key: value for key, value in manifest['directions'].items() if key not in SPECIES}
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    report_path = ROOT / 'tools/reports/alpha0106-monsters.json'
+    report_path = ROOT / f'tools/reports/alpha{TAG[1:]}-monsters.json'
     report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     print(json.dumps({'report': str(report_path), 'species': len(SPECIES),
                       'atlases': report['atlases']}, ensure_ascii=False, indent=2))

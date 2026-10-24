@@ -14,10 +14,13 @@ export function regionAssetPlan(manifest, chapters) {
       }
     }
     const clips = [...ids].map(id => manifest.clips[id]);
-    const theme=chapter.theme??chapter.id,effects=manifest.monsterEffects?.[theme];
+    const theme=chapter.theme??chapter.id,effects=manifest.monsterEffects?.[chapter.effects??theme];
     regions.set(chapter.id, { clips, effects, paths: new Set([manifest.chapters[chapter.environment??theme].environment, ...clips.map(c => c.image),...(effects?[effects.image]:[])]) });
   }
-  const clips = runtimeClipIds(manifest).filter(id => !regionClips.has(id)).map(id => manifest.clips[id]);
+  // Monster species (ids like forest_wolf, boss_fire_drake) load only with a chapter that
+  // uses them; species no chapter uses (e.g. retired region bosses) are never downloaded.
+  const species = actor => actor.includes('_');
+  const clips = runtimeClipIds(manifest).filter(id => !regionClips.has(id) && !species(manifest.clips[id].actor ?? '')).map(id => manifest.clips[id]);
   clips.push(manifest.chapterProps, manifest.equipment, manifest.equipmentRarities);
   const presentation=manifest.skillPresentation,skillPaths=presentation?[presentation.effects.image]:[];
   return { regions, clips, paths: new Set([manifest.loot, ...clips.map(c => c.image),...skillPaths,...(manifest.pickupEffects?[manifest.pickupEffects.image]:[])]) };

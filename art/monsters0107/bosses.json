@@ -1,0 +1,82 @@
+{
+ "boss_fire_drake": {
+  "chapter": 11,
+  "name": "화염 드레이크",
+  "special": false,
+  "out": "art/monsters0107/boss_fire_drake.png",
+  "style": "art/monsters045/frost_king.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A fire drake boss, wingless red dragon with black horns, molten orange belly, smoke from nostrils, four clawed legs, spiked tail. Windup inhales with glowing throat; contact breathes a short burst of flame and bites. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from the style reference subject."
+ },
+ "boss_fire_ifrit": {
+  "chapter": 12,
+  "name": "이프리트",
+  "special": false,
+  "out": "art/monsters0107/boss_fire_ifrit.png",
+  "style": "art/monsters045/frost_king.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "An ifrit boss, a towering genie of fire with a muscular dark-bronze upper body wrapped in flames, curved horns, gold bracers, lower body a swirling column of fire, burning eyes. Windup raises a flaming fist; contact punches forward with a fire burst. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from the style reference subject."
+ },
+ "boss_fire_giant": {
+  "chapter": 13,
+  "name": "용암 거인",
+  "special": false,
+  "out": "art/monsters0107/boss_fire_giant.png",
+  "style": "art/monsters045/forest_guardian.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A lava giant boss, colossal humanoid of cracked black basalt with rivers of glowing magma, smoking volcanic crater on its back, huge stone fists. Windup lifts both fists; contact slams down. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from the style reference subject."
+ },
+ "boss_fire_phoenix": {
+  "chapter": 14,
+  "name": "불사조",
+  "special": false,
+  "out": "art/monsters0107/boss_fire_phoenix.png",
+  "style": "art/monsters045/frost_king.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A phoenix boss, huge firebird with gold and crimson flaming feathers, long flowing fire tail, bright yellow eyes, sharp talons; stands on the ground with wings half open. Windup spreads burning wings; contact dives forward with talons. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from the style reference subject."
+ },
+ "boss_fire_minotaur": {
+  "chapter": 15,
+  "name": "화염 미노타우로스 왕",
+  "special": false,
+  "out": "art/monsters0107/boss_fire_minotaur.png",
+  "style": "art/monsters045/forest_guardian.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A fire minotaur king boss, giant bull-headed warrior with blazing horns, molten armor plates, gold crown, wields a massive double axe glowing hot. Windup raises the axe; contact cleaves down. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from the style reference subject."
+ },
+ "boss_special_worldtree": {
+  "chapter": 10,
+  "name": "고대 세계수 엔트",
+  "special": true,
+  "out": "art/monsters0107/boss_special_worldtree.png",
+  "style": "art/monsters045/forest_guardian.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "SPECIAL WORLD BOSS: an ancient world-tree ent, gigantic walking tree titan with a massive trunk body, crown of red and gold leaves, glowing emerald runes and eyes, enormous root legs, moss and hanging vines. Much bigger and more majestic than a normal boss. Windup raises huge branch arms; contact slams them down with root spikes. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from the style reference subject."
+ },
+ "boss_special_twindragon": {
+  "chapter": 20,
+  "name": "화염과 서리의 쌍두룡",
+  "special": true,
+  "out": "art/monsters0107/boss_special_twindragon.png",
+  "style": "art/monsters045/frost_king.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "SPECIAL WORLD BOSS: a twin-headed dragon, one head and its side covered in burning red-orange scales and flames, the other head and side covered in icy blue crystal scales and frost, large wings folded, four clawed legs, long split tail of fire and ice. Much bigger and more majestic than a normal boss. Windup both heads rear back; contact both heads bite forward with only SHORT small flame and frost puffs attached at the mouths; NO long breath beams. Keep every pose compact inside its own cell with wide empty margins. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from the style reference subject."
+ },
+ "boss_special_abysslord": {
+  "chapter": 30,
+  "name": "심연의 군주",
+  "special": true,
+  "out": "art/monsters0107/boss_special_abysslord.png",
+  "style": "art/monsters045/ruins_king.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "SPECIAL WORLD BOSS: the abyss lord, a towering demon king with black obsidian armor, huge tattered dark wings, crown of black horns, glowing violet eyes and void flames, holds a massive dark greatsword. Much bigger and more majestic than a normal boss. Windup lifts the greatsword high; contact cleaves down with violet void energy. Boss-sized silhouette with an imposing presence. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Distinct from the style reference subject."
+ }
+}

@@ -4,7 +4,8 @@ Usage:
   python3 tools/codex-monster-sheet.py SPEC.json ID [ID ...] [--attempts N]
 
 SPEC.json maps an id to {"out", "style", "subject", "reference"?} for a 25-pose sheet,
-or {"kind": "terrain", "out", "style", "prompt"} for one opaque square ground tile.
+or {"kind": "terrain", "out", "style", "prompt"} for one opaque square ground tile,
+or {"kind": "sprite", "minParts", "out", "style", "prompt"} for a transparent props/effects sheet.
 Each run asks Codex to generate one sheet and copy the PNG to `out`. The sheet is
 accepted only when it has real transparency and 25 separate full-body poses in a
 5x5 layout; otherwise it is regenerated (up to --attempts). Prompts, reference
@@ -62,6 +63,24 @@ def validate_terrain(path):
     return True, {'size': im.size}
 
 
+def validate_sprite(path, min_parts):
+    """Transparent sheet with at least min_parts separate opaque objects (props, effects)."""
+    im = Image.open(path)
+    if im.mode != 'RGBA':
+        return False, {'reason': f'mode {im.mode}'}
+    alpha = np.array(im)[:, :, 3]
+    transparent = float((alpha == 0).mean())
+    labels, count = label(alpha > 127)
+    sizes = np.bincount(labels.ravel())[1:]
+    parts = int((sizes > 2000).sum())
+    details = {'size': im.size, 'transparent': round(transparent, 3), 'parts': parts}
+    if transparent < .3:
+        return False, {**details, 'reason': 'missing real transparency'}
+    if parts < min_parts:
+        return False, {**details, 'reason': f'fewer than {min_parts} separate objects'}
+    return True, details
+
+
 def validate(path):
     """Return (ok, details). Mirrors the core checks of tools/pack-monsters065.py."""
     im = Image.open(path)
@@ -105,7 +124,8 @@ def generate(species, spec, attempts):
     work.mkdir(exist_ok=True)
     images = [ROOT / spec['style']] + ([ROOT / spec['reference']] if spec.get('reference') else [])
     terrain = spec.get('kind') == 'terrain'
-    prompt = spec['prompt'] if terrain else build_prompt(spec)
+    sprite = spec.get('kind') == 'sprite'
+    prompt = spec['prompt'] if terrain or sprite else build_prompt(spec)
     log = []
     for attempt in range(1, attempts + 1):
         target = work / f'{species}-try{attempt}.png'
@@ -123,7 +143,7 @@ def generate(species, spec, attempts):
         if not target.exists():
             log.append({'attempt': attempt, 'ok': False, 'reason': 'no image produced', 'seconds': round(time.time() - started)})
             continue
-        ok, details = (validate_terrain if terrain else validate)(target)
+        ok, details = validate_terrain(target) if terrain else validate_sprite(target, spec['minParts']) if sprite else validate(target)
         log.append({'attempt': attempt, 'ok': ok, **details, 'seconds': round(time.time() - started), 'sha256': sha256(target)})
         print(species, attempt, ok, details, flush=True)
         if ok:

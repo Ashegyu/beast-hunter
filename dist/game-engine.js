@@ -1,14 +1,14 @@
-import {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonPlan,dungeonActors,emptyDungeonProgress} from './dungeons.js?v=0.106.0';
+import {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonPlan,dungeonActors,emptyDungeonProgress} from './dungeons.js?v=0.107.0';
 export {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards};
 import {beginStageJournal,profileForSave,strictBattle,cancelStageJournal,prepareStageCommit,finishStageJournal,stageTransactionId,ownedAtStageStart} from './battle-progress.js?v=0.99.0';
 import {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_DROP_CHANCE,INSCRIPTION_COST} from './build-effects.js?v=0.98.1';
-import {stageRule,STAGE_TYPE_NAMES} from './battle-plans.js?v=0.106.0';
+import {stageRule,STAGE_TYPE_NAMES} from './battle-plans.js?v=0.107.0';
 export {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_COST,stageRule,STAGE_TYPE_NAMES};
 export const PROFILE_VERSION=14,MAX_LEVEL=100,BUILD_NAMES=Object.freeze(['일반 사냥','보스','광역','생존','실험']);
 import {SLOTS,EQUIPMENT_SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,equipmentFamily,emptyEquipment,restoreEquipment,equipmentAfterEquip,equippedPosition,isEquippedItem} from './equipment-slots.js?v=0.98.0';
 export * from './equipment-slots.js?v=0.98.0';
-import {enhanceOwned,promoteOwned,rerollOwned,resolveOwnedReroll,restoreEquipmentProgress} from './equipment-progression.js?v=0.99.0';
-export * from './equipment-progression.js?v=0.99.0';
+import {enhanceOwned,promoteOwned,rerollOwned,resolveOwnedReroll,restoreEquipmentProgress} from './equipment-progression.js?v=0.107.0';
+export * from './equipment-progression.js?v=0.107.0';
 export * from './skill-vfx.js?v=0.72.0';
 export * from './skill-image-fx.js?v=0.72.0';
 export * from './monster-fx.js?v=0.70.0';
@@ -17,22 +17,22 @@ export * from './ultimate-video.js';
 export * from './skill-motion.js';
 import * as skills from './combat-skills.js?v=0.104.3';
 export * from './combat-skills.js?v=0.104.3';
-import {MATERIALS,MATERIAL_BY_ID,MATERIAL_LIMIT,emptyMaterials,rollMaterials,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.99.0';
-export {MATERIALS,MATERIAL_BY_ID,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.99.0';
-import {equipmentSynergies} from './equipment-synergies.js?v=0.106.0';
-import {itemProtection} from './loot.js?v=0.99.0';
-export {itemProtection,salvageValue} from './loot.js?v=0.99.0';
-export {equipmentSynergies,EQUIPMENT_SYNERGIES} from './equipment-synergies.js?v=0.106.0';
+import {MATERIALS,MATERIAL_BY_ID,MATERIAL_LIMIT,emptyMaterials,rollMaterials,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.107.0';
+export {MATERIALS,MATERIAL_BY_ID,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.107.0';
+import {equipmentSynergies} from './equipment-synergies.js?v=0.107.0';
+import {itemProtection} from './loot.js?v=0.107.0';
+export {itemProtection,salvageValue} from './loot.js?v=0.107.0';
+export {equipmentSynergies,EQUIPMENT_SYNERGIES} from './equipment-synergies.js?v=0.107.0';
 import {HUNT_MODES,huntMode,REPLAY_CYCLES} from './hunt-modes.js';
 export {HUNT_MODES} from './hunt-modes.js';
 // Pure combat, random waves and persistent RPG rules. No rendering or storage dependencies.
 import { directionIndex, recoilProgress, ACTION_DURATIONS } from './motion.js';
 import { WORLD_BOUNDS, GROUND_DEPTH_SCALE } from './world.js';
-import { CHAPTERS, CHAPTERS_PER_THEME, THEMES, chapterTheme, MONSTERS, chapterMonsterPool, EQUIPMENT_ART, equipmentArt } from './chapters.js?v=0.106.0';
-import { STAGES_PER_CHAPTER, battlePlan, stageWaveCount, waveComposition } from './battle-plans.js?v=0.106.0';
-import { INVENTORY_LIMIT, MAX_PENDING_LOOT, LEGENDARY_PITY_LIMIT, ITEM_CATALOG, ANCIENT_CATALOG, BOSS_LOOT, bossLootPool, discoverAncient, targetAncient, setAncientTarget, ancientDefinition, ancientForLegacy, effectiveAffix, RARITIES, RARITY_INFO, rollItem, rollStageItem, storeItem, salvageValue, uniqueEffect, uniqueLoadout, equippedUniqueEffect, UNIQUE_EFFECTS } from './loot.js?v=0.99.0';
-export { INVENTORY_LIMIT, LEGENDARY_PITY_LIMIT, ITEM_CATALOG, ANCIENT_CATALOG, BOSS_LOOT, RARITIES, RARITY_INFO, UNIQUE_EFFECTS, uniqueEffect, uniqueLoadout, targetAncient, setAncientTarget, ancientDefinition, gearDropPresentation, gearDropDuration } from './loot.js?v=0.99.0';
-export { STAGES_PER_CHAPTER, BATTLE_PLANS, battlePlan, stageWaveCount } from './battle-plans.js?v=0.106.0';
+import { CHAPTERS, CHAPTERS_PER_THEME, THEMES, chapterTheme, MONSTERS, chapterMonsterPool, EQUIPMENT_ART, equipmentArt } from './chapters.js?v=0.107.0';
+import { STAGES_PER_CHAPTER, battlePlan, stageWaveCount, waveComposition } from './battle-plans.js?v=0.107.0';
+import { INVENTORY_LIMIT, MAX_PENDING_LOOT, LEGENDARY_PITY_LIMIT, ITEM_CATALOG, ANCIENT_CATALOG, BOSS_LOOT, bossLootPool, discoverAncient, targetAncient, setAncientTarget, ancientDefinition, ancientForLegacy, effectiveAffix, RARITIES, RARITY_INFO, rollItem, rollStageItem, storeItem, salvageValue, uniqueEffect, uniqueLoadout, equippedUniqueEffect, UNIQUE_EFFECTS } from './loot.js?v=0.107.0';
+export { INVENTORY_LIMIT, LEGENDARY_PITY_LIMIT, ITEM_CATALOG, ANCIENT_CATALOG, BOSS_LOOT, RARITIES, RARITY_INFO, UNIQUE_EFFECTS, uniqueEffect, uniqueLoadout, targetAncient, setAncientTarget, ancientDefinition, gearDropPresentation, gearDropDuration } from './loot.js?v=0.107.0';
+export { STAGES_PER_CHAPTER, BATTLE_PLANS, battlePlan, stageWaveCount } from './battle-plans.js?v=0.107.0';
 export const ARRIVAL_EPSILON=.001;
 export const STAGES = CHAPTERS;
 export {THEMES,CHAPTERS_PER_THEME};
@@ -252,6 +252,10 @@ const random=s=>{s.rng=(Math.imul(1664525,s.rng)+1013904223)>>>0;return s.rng/42
 const lootRandom=s=>{s.lootRng=(Math.imul(1664525,s.lootRng)+1013904223)>>>0;return s.lootRng/4294967296;};
 const stageOf=s=>STAGES[s.stageId-1];
 const themeOf=s=>stageOf(s)?.theme??1;
+// Boss rule and attack-effect sheet follow the chapter biome (forest/fire/frost/ruins).
+// Elite/nightmare boss cycles were authored for forest, ruins and frost; fire opens with a charge like frost.
+const REPLAY_ROW={forest:0,ruins:1,frost:2,fire:2};
+const ruleOf=s=>stageOf(s)?.bossRule??'regen',fxOf=s=>stageOf(s)?.effects??1;
 function effect(s,type,data={},ttl=.6){if(s.effects.length>=400)return;s.effects.push({id:s.nextId++,type,ttl,maxTtl:ttl,...data});}
 function setLook(p,x,y,lock=false){if(Math.hypot(x,y)<.01)return;p.lookX=x;p.lookY=y;p.heading=directionIndex(x,y,lock?null:p.heading);}
 function setAction(p,action){if(p.action!==action){p.action=action;p.actionTime=0;}}
@@ -262,8 +266,8 @@ function spawnEnemy(s,type,x,y,group,elite=false,boss=false,speciesId=null){
     speed:boss?80:type==='bulwark'?82:type==='spitter'?90:112,cooldown:1,damage:(boss?26:elite?20:type==='bulwark'?15:type==='spitter'?10:8)*st.multiplier,
     radius:boss?145:type==='bulwark'?90:type==='spitter'?16:58,windup:.5,pattern:0,targetX:0,targetY:0,chargeX:0,chargeY:0,
     guardMax:type==='bulwark'&&!boss?100:0,guard:type==='bulwark'&&!boss?100:0,guardX:-1,guardY:0,exposed:0,perfectDodged:false,enraged:false,lookX:0,lookY:1,heading:2,motionDistance:0,backpedal:false,moving:false,bleedTicks:0,bleedTimer:0,bleedDamage:0,chillRemaining:0};
-  const species=boss?st.bossSpecies:st.roster.includes(speciesId)&&MONSTERS[speciesId].role===type?speciesId:st.roster[['skitter','spitter','bulwark'].indexOf(type)],design=MONSTERS[species];
-  e.species=species;e.name=design.name;e.chapterId=st.id;e.plate=s.run.rule?.armor??0;
+  const lineup=st.stages[clamp(s.run.stage,1,st.stages.length)-1],species=boss?st.bossSpecies:st.roster.includes(speciesId)&&MONSTERS[speciesId].role===type?speciesId:lineup[type],design=MONSTERS[species];
+  e.species=species;e.name=design.name;e.chapterId=st.id;if(boss&&design.special){e.special=true;e.radius+=25;}e.plate=s.run.rule?.armor??0;
 
 
   for(const key of ['speed','radius','attackRange','chargeEvery','chargeSpeed','chargeDuration','shots','shotSpeed','shotSpread','shotColor','projectileStyle','attackCycle','attackInterval','standoffMin','standoffMax'])if(design[key]!=null&&!boss)e[key]=design[key];
@@ -274,7 +278,7 @@ function spawnEnemy(s,type,x,y,group,elite=false,boss=false,speciesId=null){
   if(design.windup)e.windupBase=design.windup;
   if(s.run.dungeonId){const plan=activePlan(s);e.hp=e.maxHp=Math.max(1,Math.round(e.maxHp*plan.hpScale/st.multiplier));e.damage*=plan.damageScale/st.multiplier;}
   if(s.difficulty>0){const mode=HUNT_MODES[s.difficulty];e.hp=e.maxHp=Math.round(e.maxHp*mode.hp);e.damage*=mode.damage;
-   if(boss){e.radius+=s.difficulty*10;e.shotSpeed=420*mode.shotSpeed;e.projectileDamageScale=mode.damage;e.bossCycle=REPLAY_CYCLES[s.difficulty][st.theme-1];e.huntMode=s.difficulty;}}
+   if(boss){e.radius+=s.difficulty*10;e.shotSpeed=420*mode.shotSpeed;e.projectileDamageScale=mode.damage;e.bossCycle=REPLAY_CYCLES[s.difficulty][REPLAY_ROW[st.biome]??0];e.huntMode=s.difficulty;}}
   s.enemies.push(e);return e;
 }
 export function launch(s,chapterId=1,substage=1,view=null,difficulty=0){
@@ -594,12 +598,12 @@ function damageEnemy(s,e,value,critical=false,kind='normal',origin=s.player,pier
   if(!eligible(s,e)||s.phase!=='playing'||s.settlement)return 'miss';
   const direct=kind!=='proc'&&kind!=='inscription'&&kind!=='rune-dot'&&kind!=='blast',inscriptions=swing?.inscriptions??s.buildEffects;
   if(direct&&inscriptions.execution&&e.hp/e.maxHp<=BUILD_EFFECTS.execution.threshold){const legacy=swing?.unique?.definition.id==='execution'&&e.hp/e.maxHp<=(e.boss?UNIQUE_EFFECTS.execution.bossThreshold:UNIQUE_EFFECTS.execution.threshold)?UNIQUE_EFFECTS.execution.bonus*swing.unique.power:0;value*=(1+legacy+BUILD_EFFECTS.execution.bonus*inscriptions.execution)/(1+legacy);}
-  const shred=e.runeShredTime>0?e.runeShred:0,defending=e.boss&&themeOf(s)===2&&s.run.time%12<8;
+  const shred=e.runeShredTime>0?e.runeShred:0,defending=e.boss&&ruleOf(s)==='defense'&&s.run.time%12<8;
   // A defense stance is armor too: weakening applies before its mitigation.
   // Stage armor (철갑 진군) is countered by skills: 파갑참 strips it for a while and 마지막 검끝 lets combo strikes ignore it.
   const armorIgnored=e.plateBrokenUntil>s.run.time||swing?.damage!=null&&skills.finisherGuardBonus(s)>0;
   value*=(1-Math.max(0,(armorIgnored?0:e.plate??0)+(defending?.7:0)-shred))*(1+shred*BUILD_EFFECTS.shred.vulnerability);
-  if(e.boss&&themeOf(s)===2&&!defending)value*=1.5;
+  if(e.boss&&ruleOf(s)==='defense'&&!defending)value*=1.5;
   let guarded=false,broken=false;
   if(e.guard>0){
     const n=direction(origin.x-e.x,origin.y-e.y),front=n.x*e.guardX+n.y*e.guardY>.1;
@@ -770,8 +774,8 @@ function strike(s){
 function fireProjectiles(s,e,count=1){
   const n=direction(e.targetX-e.x,e.targetY-e.y),base=Math.atan2(n.y,n.x);
   for(let i=0;i<count;i++){if(s.projectiles.length>=64)break;const angle=base+(i-(count-1)/2)*(e.shotSpread??.2),dx=Math.cos(angle),dy=Math.sin(angle);
-    const speed=e.shotSpeed??(e.boss?420:360);s.projectiles.push({id:s.nextId++,x:e.x+dx*34,y:e.y+dy*34,vx:dx*speed,vy:dy*speed,damage:e.boss?12*stageOf(s).multiplier*(e.projectileDamageScale??1):e.damage,ttl:2.6,friendly:false,perfectDodged:false,color:e.shotColor??stageOf(s).shotColor,projectileStyle:e.projectileStyle,fxChapter:themeOf(s)});
-  }effect(s,'spit',{x:e.x,y:e.y,fxChapter:themeOf(s),nx:n.x,ny:n.y},.16);
+    const speed=e.shotSpeed??(e.boss?420:360);s.projectiles.push({id:s.nextId++,x:e.x+dx*34,y:e.y+dy*34,vx:dx*speed,vy:dy*speed,damage:e.boss?12*stageOf(s).multiplier*(e.projectileDamageScale??1)*(e.furyScale??1):e.damage,ttl:2.6,friendly:false,perfectDodged:false,color:e.shotColor??stageOf(s).shotColor,projectileStyle:e.projectileStyle,fxChapter:fxOf(s)});
+  }effect(s,'spit',{x:e.x,y:e.y,fxChapter:fxOf(s),nx:n.x,ny:n.y},.16);
 }
 function segmentHit(ax,ay,bx,by,x,y,r){const dx=bx-ax,dy=by-ay,d2=dx*dx+dy*dy,t=d2?clamp(((x-ax)*dx+(y-ay)*dy)/d2,0,1):0;return length(x-ax-dx*t,y-ay-dy*t)<=r?t:null;}
 function updateProjectiles(s,dt){
@@ -826,7 +830,7 @@ function updateEnemy(s,e,dt){
     if(e.actionTime<e.windup)return;setAction(e,'attack');
     if(enemyAttackKind(e)==='volley')fireProjectiles(s,e,projectileCount(e,stageOf(s).id));
     else if(enemyAttackKind(e)==='charge'){const charge=direction(e.targetX-e.x,e.targetY-e.y);e.chargeX=charge.x;e.chargeY=charge.y;}
-    else{effect(s,'slam',{x:e.targetX,y:e.targetY,radius:e.radius,fxChapter:themeOf(s),monsterKind:e.type,nx:e.targetX-e.x,ny:e.targetY-e.y},.35);if(e.type==='skitter')effect(s,'skitterStrike',{x:e.x,y:e.y},.18);if(length(p.x-e.targetX,(p.y-e.targetY)/.65)<e.radius+16)hurtPlayer(s,e.damage,e);}return;
+    else{effect(s,'slam',{x:e.targetX,y:e.targetY,radius:e.radius,fxChapter:fxOf(s),monsterKind:e.type,nx:e.targetX-e.x,ny:e.targetY-e.y},.35);if(e.type==='skitter')effect(s,'skitterStrike',{x:e.x,y:e.y},.18);if(length(p.x-e.targetX,(p.y-e.targetY)/.65)<e.radius+16)hurtPlayer(s,e.damage,e);}return;
   }
   if(e.action==='attack'){
     if(enemyAttackKind(e)==='charge'&&e.actionTime<(e.chargeDuration??.45)){e.x+=e.chargeX*(e.chargeSpeed??650)*moveDt;e.y+=e.chargeY*(e.chargeSpeed??650)*moveDt;clampPosition(e,s.bounds);if(length(p.x-e.x,p.y-e.y)<(e.boss?90:65))hurtPlayer(s,e.damage,e);}
@@ -1045,7 +1049,15 @@ function inscriptionCounter(s,source){
 }
 function updateBossRule(s,e,dt){
  if(s.run.flow!=='combat')return;
- if(themeOf(s)===1){e.recoveryClock=(e.recoveryClock??0)+dt;if(e.recoveryClock>=8){e.recoveryClock-=8;e.hp=Math.min(e.maxHp,e.hp+e.maxHp*.02);effect(s,'unique',{uniqueId:'recovery',x:e.x,y:e.y,radius:100},.6);}}
- if(themeOf(s)===3){const phase=e.hp/e.maxHp<=.35?2:e.hp/e.maxHp<=.7?1:0;if(phase>(e.summonPhase??0)){e.summonPhase=phase;for(let i=0;i<3&&s.enemies.filter(q=>!q.dead).length<MAX_ACTIVE_ENEMIES;i++){const add=spawnEnemy(s,'skitter',clamp(e.x+(i-1)*90,s.bounds.padding,s.bounds.width-s.bounds.padding),clamp(e.y+140,s.bounds.padding,s.bounds.height-s.bounds.padding),null);add.objective=false;add.aggro=true;}effect(s,'bossRage',{x:e.x,y:e.y},1.2);}}
+ const rule=ruleOf(s);
+ if(rule==='regen'){e.recoveryClock=(e.recoveryClock??0)+dt;if(e.recoveryClock>=8){e.recoveryClock-=8;e.hp=Math.min(e.maxHp,e.hp+e.maxHp*.02);effect(s,'unique',{uniqueId:'recovery',x:e.x,y:e.y,radius:100},.6);}}
+ // Fire: 4 of every 12 seconds the boss burns hotter (contact and volley damage +50%).
+ if(rule==='fury'){const active=s.run.time%12>=8;e.baseDamage??=e.damage;e.furyScale=active?1.5:1;e.damage=e.baseDamage*e.furyScale;if(active!==!!e.furyActive){e.furyActive=active;if(active)effect(s,'bossRage',{x:e.x,y:e.y},.8);}}
+ // Frost bosses and every special boss (chapters 10/20/30) call escorts at 70% and 35%.
+ if(rule==='summon'||e.special){const phase=e.hp/e.maxHp<=.35?2:e.hp/e.maxHp<=.7?1:0;if(phase>(e.summonPhase??0)){e.summonPhase=phase;for(let i=0;i<(e.special?4:3)&&s.enemies.filter(q=>!q.dead).length<MAX_ACTIVE_ENEMIES;i++){const add=spawnEnemy(s,'skitter',clamp(e.x+(i-1.5)*90,s.bounds.padding,s.bounds.width-s.bounds.padding),clamp(e.y+140,s.bounds.padding,s.bounds.height-s.bounds.padding),null);add.objective=false;add.aggro=true;}effect(s,'bossRage',{x:e.x,y:e.y},1.2);}}
 }
-export function bossRuleStatus(s){const e=s.enemies.find(e=>e.boss&&!e.dead);if(!e)return '';if(themeOf(s)===1)return '수호령 재생 · '+Math.ceil(8-(e.recoveryClock??0))+'초';if(themeOf(s)===2){const shred=e.runeShredTime>0?e.runeShred:0;return s.run.time%12<8?'방어 태세 · 피해 '+Math.round((.7-shred)*100)+'% 감소'+(shred?' · 약화 '+Math.round(shred*100)+'%p':''):'약점 노출 · 피해 50% 증가';}return '호위 소환 '+(e.summonPhase??0)+'/2';}
+export function bossRuleStatus(s){const e=s.enemies.find(e=>e.boss&&!e.dead);if(!e)return '';const rule=ruleOf(s),escort=e.special&&rule!=='summon'?' · 호위 '+(e.summonPhase??0)+'/2':'',prefix=e.special?'특수 보스 · ':'';
+ if(rule==='regen')return prefix+'재생 · '+Math.ceil(8-(e.recoveryClock??0))+'초'+escort;
+ if(rule==='defense'){const shred=e.runeShredTime>0?e.runeShred:0;return prefix+(s.run.time%12<8?'방어 태세 · 피해 '+Math.round((.7-shred)*100)+'% 감소'+(shred?' · 약화 '+Math.round(shred*100)+'%p':''):'약점 노출 · 피해 50% 증가')+escort;}
+ if(rule==='fury')return prefix+(s.run.time%12>=8?'화염 폭주 · 공격력 50% 증가':'폭주까지 '+Math.ceil(8-s.run.time%12)+'초')+escort;
+ return prefix+'호위 소환 '+(e.summonPhase??0)+'/2';}

@@ -150,7 +150,7 @@ test('first hunt waits for validated images, reuses pending work and starts its 
  ui.emit('start','click');ui.emit('start','click');await ui.settle();ui.run(2);
  assert.equal(ui.state.phase,'camp');assert.equal(ui.state.profile.hunts,0);assert.equal(ui.state.run.time,0);assert.equal(ui.nodes.get('start').disabled,true);
  assert.equal(ui.requestedImages.filter(p=>p==='assets/lirian_death-v06.webp').length,1);
- await ui.completeDeferredAssets();assert.equal(ui.state.phase,'playing');assert.equal(ui.state.profile.hunts,1);assert.equal(ui.state.run.timeRemaining,60);assert.equal(ui.requestedImages.length,23);
+ await ui.completeDeferredAssets();assert.equal(ui.state.phase,'playing');assert.equal(ui.state.profile.hunts,1);assert.equal(ui.state.run.timeRemaining,60);assert.equal(ui.requestedImages.length,25);
  ui.tick(.05);assert.ok(ui.state.run.timeRemaining<60);
 });
 test('leaving and returning to cold-launch origin cancels intent but keeps the finished image cache',async()=>{
@@ -161,7 +161,7 @@ test('leaving and returning to cold-launch origin cancels intent but keeps the f
 test('a partial battle load failure keeps the camp usable and retry never launches an abandoned hunt',async()=>{
  const failures=new Set(['assets/lirian_death-v06.webp']),ui=await host({coldStart:true,failedAssets:failures});ui.emit('start','click');await ui.settle();
  assert.equal(ui.state.phase,'camp');assert.equal(ui.state.profile.hunts,0);assert.equal(ui.nodes.get('game-shell').attributes['data-combat-ready'],'false');
- assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'8','three camp and five region images (terrain, two monster atlases, attack effects, chapter boss), no partial shared commit');
+ assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'10','three camp and seven chapter-1 images (terrain, attack effects, boss, four species atlases), no partial shared commit');
  ui.emit('nav-bag','click');assert.equal(ui.nodes.get('inventory-content').hidden,false);failures.clear();ui.emit('region-retry','click');ui.emit('region-retry','click');await ui.settle();
  assert.equal(ui.state.phase,'camp');assert.equal(ui.state.profile.hunts,0);assert.equal(ui.nodes.get('game-shell').attributes['data-combat-ready'],'true');ui.emit('nav-home','click');ui.emit('start','click');assert.equal(ui.state.phase,'playing');
 });
@@ -250,7 +250,7 @@ test('equipment thumbnails contain the full frame at small slot sizes without ch
   }
   const child=art;ui.tick(0);assert.equal(node.atlasImage,child,'reuse the image when the frame is unchanged');
  }
- assert.deepEqual(ui.profile(),before);assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'23');
+ assert.deepEqual(ui.profile(),before);assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'25');
 });
 test('equipped and crafting thumbnails reuse a responsive image when their actual item source changes',async()=>{
  const p=bagFixture(),ancient=game.ANCIENT_CATALOG.find(r=>r.slot==='weapon');p.inventory.push({...ancient,id:6,catalogId:ancient.id,rarity:5,affixes:{...ancient.base}});
@@ -513,7 +513,7 @@ test('armory empty and paused states stay truthful and detail back never resumes
 test('armory display atlas covers every base identity without adding combat boot images or replacing ancient art',async()=>{
  const display=manifest.equipmentPresentation;assert.deepEqual(display.designIds,chapters.EQUIPMENT_ART.map(r=>r.id));assert.ok(fs.existsSync(new URL('assets/'+manifest.delivery[display.image],root)));
  for(const id of display.designIds){const f=display.frames[id];assert.ok(f.x>=0&&f.y>=0&&f.w>0&&f.h>0&&f.x+f.w<=display.width&&f.y+f.h<=display.height);if(display.weaponAnchors[id]){const a=display.weaponAnchors[id];for(const k of ['gripX','gripY','tipX','tipY'])assert.ok(Number.isFinite(a[k]));assert.ok(a.gripX>=0&&a.gripX<f.w&&a.tipX>=0&&a.tipX<f.w&&a.gripY>=0&&a.gripY<f.h&&a.tipY>=0&&a.tipY<f.h);}}
- const p=bagFixture(),ancient=game.ANCIENT_CATALOG[0];p.inventory.push({...ancient,id:6,catalogId:ancient.id,rarity:5,affixes:{...ancient.base}});const ui=await host({saved:p});ui.emit('nav-bag','click');assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'23');assert.match(ui.nodes.get('bag-art-0').atlasImage.src,/armory-equipment-v040.webp/);assert.match(ui.nodes.get('bag-art-5').atlasImage.src,/ancient-individual-v019.webp/);assert.equal(ui.nodes.has('equipment-hero-weapon'),false);const before=ui.profile();ui.emit('bag-5','click');ui.emit('equip-5','click');assert.match(ui.nodes.get('equipped-art-weapon').atlasImage.src,/ancient-individual-v019.webp/);assert.equal(ui.profile().inventory.length,before.inventory.length);
+ const p=bagFixture(),ancient=game.ANCIENT_CATALOG[0];p.inventory.push({...ancient,id:6,catalogId:ancient.id,rarity:5,affixes:{...ancient.base}});const ui=await host({saved:p});ui.emit('nav-bag','click');assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'25');assert.match(ui.nodes.get('bag-art-0').atlasImage.src,/armory-equipment-v040.webp/);assert.match(ui.nodes.get('bag-art-5').atlasImage.src,/ancient-individual-v019.webp/);assert.equal(ui.nodes.has('equipment-hero-weapon'),false);const before=ui.profile();ui.emit('bag-5','click');ui.emit('equip-5','click');assert.match(ui.nodes.get('equipped-art-weapon').atlasImage.src,/ancient-individual-v019.webp/);assert.equal(ui.profile().inventory.length,before.inventory.length);
 });
 
 test('live home panels mirror ownership and opening an item does not equip it',async()=>{
@@ -557,8 +557,8 @@ test('compact combat tracker pauses on detail, hides persistently, keeps routes 
  const restored=await host({manual:true,saved:ui.profile()});assert.equal(restored.profile().craftTrackerVisible,false);
 });
 test('routes validate locked regional material and select real elite or boss stage without launching combat',async()=>{
- const p=game.createProfile(1_000_000);p.targetCraftId=game.CRAFTED_CATALOG[0].id;const ui=await host({saved:p});ui.emit('camp-track','click');ui.emit('track-material-tear','click');assert.equal(ui.nodes.get('track-route-1').hidden,true);assert.equal(ui.nodes.get('track-route-3').disabled,true);ui.emit('track-route-3','click');assert.equal(ui.nodes.get('track-content').hidden,false);assert.equal(ui.state.phase,'camp');
- const q=game.createProfile(1_000_000);q.clearedStage=1;q.unlockedStage=2;q.stageProgress=[10,2,0];widen(q);q.targetCraftId=game.CRAFTED_CATALOG[3].id;const other=await host({saved:q,campaign:true});other.emit('camp-track','click');other.emit('track-material-seal','click');assert.match(other.nodes.get('track-route-name-2').textContent,/STAGE 3 정예/);other.emit('track-route-2','click');assert.equal(other.state.phase,'camp');assert.equal(other.nodes.get('track-content').hidden,true);other.emit('start','click');assert.equal(other.state.stageId,11);assert.equal(other.state.run.stage,3);
+ const p=game.createProfile(1_000_000);p.targetCraftId=game.CRAFTED_CATALOG[0].id;const ui=await host({saved:p});ui.emit('camp-track','click');ui.emit('track-material-tear','click');assert.equal(ui.nodes.get('track-route-1').hidden,true);assert.equal(ui.nodes.get('track-route-2').disabled,true);ui.emit('track-route-2','click');assert.equal(ui.nodes.get('track-content').hidden,false);assert.equal(ui.state.phase,'camp');
+ const q=game.createProfile(1_000_000);q.clearedStage=1;q.unlockedStage=2;q.stageProgress=[10,2,0];widen(q);q.targetCraftId=game.CRAFTED_CATALOG[0].id;const other=await host({saved:q,campaign:true});other.emit('camp-track','click');other.emit('track-material-tear','click');assert.match(other.nodes.get('track-route-name-2').textContent,/STAGE 3 정예/);other.emit('track-route-2','click');assert.equal(other.state.phase,'camp');assert.equal(other.nodes.get('track-content').hidden,true);other.emit('start','click');assert.equal(other.state.stageId,11);assert.equal(other.state.run.stage,3);
 });
 test('goal progress reflects acquisition immediately and stays complete after craft consumes materials',async()=>{
  const p=game.createProfile(1_000_000);p.targetCraftId=game.CRAFTED_CATALOG[1].id;p.gold=10000;for(const m of game.MATERIALS)p.materials[m.id]=100;p.materials.origin=1;const ui=await host({saved:p});ui.emit('camp-track','click');assert.match(ui.nodes.get('track-progress').textContent,/6\/6종/);ui.emit('track-craft','click');ui.emit('craft-submit','click');assert.equal(ui.profile().materials.origin,0);ui.emit('craft-track','click');assert.match(ui.nodes.get('track-progress').textContent,/제작 완료/);assert.equal(ui.nodes.get('track-progress-fill').style.width,'100%');assert.equal(ui.nodes.get('track-progressbar').attributes['aria-valuenow'],'100');assert.equal(ui.nodes.get('track-missing-origin').textContent,'제작에 사용 완료');
@@ -1201,9 +1201,9 @@ test('chapter selection changes real terrain, creature previews and boss names w
     pickChapter(ui,chapter.id);await ui.settle();ui.calls.length=0;ui.tick(0);
     assert.equal(ui.nodes.get('chapter-preview-name').textContent,chapter.name);assert.match(ui.nodes.get('chapter-preview-boss').textContent,new RegExp(chapter.bossName));
     assert.equal(ui.nodes.get('game-shell').attributes['data-biome'],chapter.key);
-    assert.equal(ui.calls.some(c=>c.image==='assets/'+manifest.chapters[chapter.theme].environment),false,'covered camp does not paint the battlefield');
+    assert.equal(ui.calls.some(c=>c.image==='assets/'+manifest.chapters[chapter.environment].environment),false,'covered camp does not paint the battlefield');
     assert.equal(ui.nodes.get('roster-name-0').textContent,chapters.MONSTERS[chapter.roster[0]].name);
-    ui.emit('start','click');ui.state.run.bossSpawned=true;ui.tick(0);assert.ok(ui.calls.some(c=>c.image==='assets/'+manifest.chapters[chapter.theme].environment));assert.equal(ui.nodes.get('boss-name').textContent,chapter.bossName);
+    ui.emit('start','click');ui.state.run.bossSpawned=true;ui.tick(0);assert.ok(ui.calls.some(c=>c.image==='assets/'+manifest.chapters[chapter.environment].environment));assert.equal(ui.nodes.get('boss-name').textContent,chapter.bossName);
     ui.emit('camp-button','click');ui.emit('retreat','click');ui.tick(0);
   }
   const fresh=await host();fresh.emit('stage-3','click');assert.equal(fresh.nodes.get('chapter-preview-name').textContent,chapters.CHAPTERS[0].name);
@@ -1236,21 +1236,21 @@ test('equipment sprites, slot summaries and art identity survive equip and appli
 });
 test('a missing regional atlas leaves camp open but never starts a hunt or replaces saved gear',async()=>{
   const saved=game.createProfile(1000);saved.gold=42;saved.inventory=[{id:1,slot:'weapon',tier:1,rarity:1,name:'기존 검',affixes:{damage:9}}];saved.equipment.weapon=1;
-  saved.unlockedStage=3;saved.clearedStage=2;widen(saved);saved.lastSeenAt=1_000_000;const ui=await host({saved,failedAssets:'assets/monsters-frost-v045.png'});assert.equal(ui.nodes.get('loading').hidden,true);assert.equal(ui.nodes.get('region-status').hidden,false);assert.equal(ui.nodes.get('start').disabled,true);
+  saved.unlockedStage=3;saved.clearedStage=2;widen(saved);saved.lastSeenAt=1_000_000;const ui=await host({saved,failedAssets:'assets/monsters-ruins-v045.png'});assert.equal(ui.nodes.get('loading').hidden,true);assert.equal(ui.nodes.get('region-status').hidden,false);assert.equal(ui.nodes.get('start').disabled,true);
   ui.emit('start','click');await ui.settle();ui.run(.3);assert.equal(ui.state.phase,'camp');assert.equal(ui.state.profile.gold,42);assert.equal(ui.state.profile.equipment.weapon,1);assert.equal(ui.state.profile.inventory[0].name,'기존 검');
 });
 
 test('encoded delivery loads valid WebP bounds and omits unused original terrain and props',async()=>{
   const ui=await host();assert.equal(ui.nodes.get('loading').hidden,true);
-  assert.equal(ui.requestedImages.length,23);assert.ok(ui.requestedImages.every(path=>path.endsWith('.webp')));
+  assert.equal(ui.requestedImages.length,25);assert.ok(ui.requestedImages.every(path=>path.endsWith('.webp')));
   assert.ok(!ui.requestedImages.some(path=>path.includes('terrain_carapace')||path.includes('props_carapace')));
-  assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'23');
+  assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'25');
 });
 
 test('late battle assets cannot promote a partial failed bundle or enable combat',async()=>{
  const ui=await host({coldStart:true,failedAssets:'assets/fx_cleave_sequence.png',deferredAsset:'assets/lirian_death-v06.webp'});ui.emit('start','click');await ui.settle();
  assert.equal(ui.state.phase,'camp');assert.equal(ui.nodes.get('game-shell').attributes['data-combat-ready'],'false');
- await ui.completeDeferredAssets();assert.equal(ui.nodes.get('game-shell').attributes['data-combat-ready'],'false');assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'8');
+ await ui.completeDeferredAssets();assert.equal(ui.nodes.get('game-shell').attributes['data-combat-ready'],'false');assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'10');
  assert.equal(ui.nodes.get('start').disabled,true);assert.equal(ui.nodes.get('game-shell').attributes['data-region-status'],'error');assert.equal(ui.state.profile.hunts,0);
 });
 
@@ -1464,25 +1464,26 @@ test('menu drawers focus the visible page header and return to their real origin
 
 test('unselected regional failures do not block startup and regional failure retries without profile mutation',async()=>{
  const p=game.createProfile(1_000_000);p.unlockedStage=3;p.clearedStage=2;p.stageProgress=[10,10,1];widen(p);
- const failures=new Set(['assets/monsters-ruins-v045.webp']);const ui=await host({saved:p,failedAssets:failures});
- assert.equal(ui.nodes.get('loading').hidden,true);assert.equal(ui.requestedImages.length,23);
- assert.ok(!ui.requestedImages.some(path=>/monsters-(forest|ruins)|terrain-(forest|ruins)/.test(path)));
+ // Startup opens chapter 21 (darkness); a fire chapter's ground tile fails until retried.
+ const failures=new Set(['assets/terrain-c11-v0107.webp']);const ui=await host({saved:p,failedAssets:failures});
+ assert.equal(ui.nodes.get('loading').hidden,true);assert.equal(ui.requestedImages.length,26);
+ assert.ok(!ui.requestedImages.some(path=>/monsters-(forest|frost|fire|boss_fire|boss_forest)|terrain-(forest|frost)|terrain-c(0|1)/.test(path)));
  const before=ui.profile();pickChapter(ui,11);assert.equal(ui.nodes.get('start').disabled,true);ui.emit('start','click');assert.equal(ui.state.phase,'camp');
  await ui.settle();assert.equal(ui.nodes.get('game-shell').attributes['data-region-status'],'error');assert.equal(ui.nodes.get('region-retry').hidden,false);
  assert.equal(ui.nodes.get('roster-art-0').style.backgroundImage,'none');assert.equal(ui.nodes.get('roster-art-0').atlasImage?.hidden??true,true);assert.deepEqual(ui.profile(),before);
  failures.clear();ui.emit('region-retry','click');await ui.settle();assert.equal(ui.nodes.get('game-shell').attributes['data-resident-region'],'11');assert.equal(ui.nodes.get('start').disabled,false);
- assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'23');ui.emit('start','click');assert.equal(ui.state.stageId,11);assert.equal(ui.state.phase,'playing');ui.tick();
+ assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'27');ui.emit('start','click');assert.equal(ui.state.stageId,11);assert.equal(ui.state.phase,'playing');ui.tick();
 });
 
 test('rapid regional selection ignores an abandoned completion and evicted regions reload on demand',async()=>{
  const p=game.createProfile(1_000_000);p.unlockedStage=3;p.clearedStage=2;widen(p);
- const ui=await host({saved:p,deferredAsset:'assets/monsters-ruins-v045.webp'});
+ const ui=await host({saved:p,deferredAsset:'assets/terrain-c20-v0107.webp'});
  ui.emit('stage-2','click');ui.emit('stage-1','click');await ui.settle();
  assert.equal(ui.nodes.get('game-shell').attributes['data-resident-region'],'10');
  await ui.completeDeferredAssets();assert.equal(ui.nodes.get('game-shell').attributes['data-resident-region'],'10');
  assert.equal(ui.nodes.get('chapter-preview-name').textContent,chapters.CHAPTERS[9].name);
  const before=ui.requestedImages.length;ui.emit('stage-3','click');assert.equal(ui.nodes.get('start').disabled,true);await ui.settle();
- assert.equal(ui.requestedImages.length,before+5);assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'23');
+ assert.equal(ui.requestedImages.length,before+8);assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'26');
  assert.equal(ui.nodes.get('game-shell').attributes['data-resident-region'],'21');ui.tick();
 });
 
@@ -1498,8 +1499,8 @@ test('next chapter waits for validated assets, duplicate clicks launch once and 
  const ui=await host();ui.emit('start','click');ui.state.phase='victory';ui.state.resultDelay=0;ui.state.stageId=10;ui.state.profile.clearedStage=10;ui.state.profile.unlockedStage=11;ui.state.profile.stageProgress[10]=1;ui.tick(0);
  ui.emit('next-stage','click');ui.emit('next-stage','click');assert.equal(ui.state.phase,'victory');await ui.settle();
  assert.equal(ui.state.phase,'playing');assert.equal(ui.state.stageId,11);assert.equal(ui.nodes.get('game-shell').attributes['data-resident-region'],'11');
- assert.equal(ui.requestedImages.filter(path=>path==='assets/monsters-ruins-v045.webp').length,1);
- const canceled=await host({deferredAsset:'assets/monsters-ruins-v045.webp'});canceled.emit('start','click');canceled.state.phase='victory';canceled.state.resultDelay=0;canceled.state.stageId=10;canceled.state.profile.clearedStage=10;canceled.state.profile.unlockedStage=11;canceled.state.profile.stageProgress[10]=1;canceled.tick(0);
+ assert.equal(ui.requestedImages.filter(path=>path==='assets/terrain-c11-v0107.webp').length,1);
+ const canceled=await host({deferredAsset:'assets/terrain-c11-v0107.webp'});canceled.emit('start','click');canceled.state.phase='victory';canceled.state.resultDelay=0;canceled.state.stageId=10;canceled.state.profile.clearedStage=10;canceled.state.profile.unlockedStage=11;canceled.state.profile.stageProgress[10]=1;canceled.tick(0);
  canceled.emit('next-stage','click');canceled.emit('result-camp','click');await canceled.completeDeferredAssets();
  assert.equal(canceled.state.phase,'camp');assert.equal(canceled.nodes.get('game-shell').attributes['data-resident-region'],'1');
 });
@@ -1536,7 +1537,7 @@ test('ultimate buttons show world effects without video, portraits or full-scree
 });
 
 test('retired ultimate media failures do not block startup or request any decoder',async()=>{
- const failures=new Set(['assets/skill-bloodmoon-v052.webp','assets/skill-eclipse-v052.webp','assets/skill-phantoms-v052.webp']);const ui=await host({saved:game.createProfile(1_000_000),failedAssets:failures,videoMode:'error'});assert.equal(ui.nodes.get('loading').hidden,true);assert.equal(ui.mediaVideos.length,0);assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'23');ui.emit('start','click');assert.equal(ui.state.phase,'playing');
+ const failures=new Set(['assets/skill-bloodmoon-v052.webp','assets/skill-eclipse-v052.webp','assets/skill-phantoms-v052.webp']);const ui=await host({saved:game.createProfile(1_000_000),failedAssets:failures,videoMode:'error'});assert.equal(ui.nodes.get('loading').hidden,true);assert.equal(ui.mediaVideos.length,0);assert.equal(ui.nodes.get('game-shell').attributes['data-loaded-images'],'25');ui.emit('start','click');assert.equal(ui.state.phase,'playing');
 });
 
 test('ultimate details and final fractional cooldown show seconds until truly ready',async()=>{
@@ -1678,14 +1679,15 @@ test('ninth checkpoint transitions directly to a single-boss final with matching
 test('chapter dossiers include six normal species and one boss with real unlock notes and atlas thumbnails',async()=>{
  const p=game.createProfile(1_000_000);p.clearedStage=3;p.unlockedStage=3;widen(p);const ui=await host({saved:p});
  for(const c of chapters.CHAPTERS.filter(c=>c.number===1)){pickChapter(ui,c.id);await ui.settle();for(const [i,id]of [...c.roster,c.bossSpecies].entries()){
-  assert.equal(ui.nodes.get('roster-name-'+i).textContent,chapters.MONSTERS[id].name);assert.match(ui.nodes.get('roster-art-'+i).atlasImage.src,/monsters-/);assert.match(ui.nodes.get('roster-detail-'+i).textContent,new RegExp('STAGE '+(id===c.bossSpecies?10:chapters.MONSTERS[id].unlockStage??1)));
+  assert.equal(ui.nodes.get('roster-name-'+i).textContent,chapters.MONSTERS[id].name);assert.match(ui.nodes.get('roster-art-'+i).atlasImage.src,/monsters-/);assert.match(ui.nodes.get('roster-detail-'+i).textContent,new RegExp('STAGE '+(id===c.bossSpecies?'10':c.stages.map((l,n)=>Object.values(l).includes(id)?n+1:0).filter(Boolean).join('·'))));
  }}
 });
 test('a missing supplemental monster atlas blocks entry, while a real stage4 renders the new identities after retry',async()=>{
  const p=game.createProfile(1_000_000);p.stageProgress[0]=9;const failures=new Set(['assets/monsters-forest-v065.webp']),ui=await host({saved:p,campaign:true,failedAssets:failures});
  assert.equal(ui.nodes.get('start').disabled,true);ui.emit('start','click');assert.equal(ui.state.phase,'camp');assert.equal(ui.profile().stageProgress[0],9);assert.deepEqual(ui.profile().inventory,p.inventory);
  failures.clear();ui.emit('region-retry','click');await ui.settle();assert.equal(ui.nodes.get('start').disabled,false);ui.emit('run-stage-4','click');ui.emit('start','click');ui.state.player.invulnerable=100;ui.run(3.5);
- const seen=new Set(ui.state.enemies.map(e=>e.species));assert.ok(chapters.CHAPTERS[0].roster.every(id=>seen.has(id)));assert.ok(ui.calls.some(c=>c.image==='assets/monsters-forest-v065.png'));assert.equal(ui.state.enemies.some(e=>e.boss),false);
+ // Stage 4 fields its own three species (Alpha 0.107); each is drawn from its atlas.
+ const seen=new Set(ui.state.enemies.map(e=>e.species)),lineup=Object.values(chapters.CHAPTERS[0].stages[3]);assert.ok(lineup.every(id=>seen.has(id)));for(const id of lineup){const image='assets/'+manifest.clips[manifest.directions[id].walk.s].image;assert.ok(ui.calls.some(c=>c.image===image),id);}assert.equal(ui.state.enemies.some(e=>e.boss),false);
  ui.emit('pause','click');const combat=()=>JSON.stringify({...ui.state,profile:null}),snapshot=combat();ui.run(2);assert.equal(combat(),snapshot);
 });
 
@@ -1704,11 +1706,12 @@ test('time over ends held input, opens truthful result immediately and retries t
 });
 
 test('real app draws region-local monster attack bitmaps at contact, freezes them on pause and releases them on defeat',async()=>{
- for(const [chapter,species]of [[1,'forest_mushroom'],[11,'ruins_wraith'],[21,'frost_wisp']]){
+ // One chapter per attack-effect sheet (forest, fire, frost, ruins), using a caster from that chapter.
+ for(const chapter of [1,11,16,21]){const species=chapters.CHAPTERS[chapter-1].roster.find(id=>chapters.MONSTERS[id].role==='spitter');
   const p=game.createProfile(1_000_000);p.clearedStage=3;p.unlockedStage=3;p.stageProgress=[10,10,10];widen(p);
   const ui=await host({saved:p,campaign:true,recordGeometry:true});ui.emit('nav-hunt','click');pickChapter(ui,chapter);await ui.settle();ui.emit('run-stage-9','click');ui.emit('start','click');const s=ui.state;assert.equal(s.phase,'playing');ui.tick(.05);
   s.enemies=[];s.barrels=[];s.spawns=[{id:900,type:'spitter',species,x:s.player.x+150,y:s.player.y,delay:0}];game.advanceGame(s,.001);s.player.invulnerable=999;const e=s.enemies[0];Object.assign(e,{action:'windup',actionTime:0,windup:.075,targetX:s.player.x,targetY:s.player.y});
-  const file='assets/'+manifest.monsterEffects[game.STAGES[chapter-1].theme].image.replace(/\.webp$/,'.png');ui.calls.length=0;ui.tick(0);assert.equal(ui.calls.filter(c=>c.image===file).length,0);ui.run(.1);assert.ok(s.projectiles.length>0);assert.ok(ui.calls.some(c=>c.image===file));
+  const file='assets/'+manifest.monsterEffects[game.STAGES[chapter-1].effects].image.replace(/\.webp$/,'.png');ui.calls.length=0;ui.tick(0);assert.equal(ui.calls.filter(c=>c.image===file).length,0);ui.run(.1);assert.ok(s.projectiles.length>0);assert.ok(ui.calls.some(c=>c.image===file));
   ui.emit('pause','click');ui.calls.length=0;ui.tick(0);const before=ui.calls.filter(c=>c.image===file).map(c=>c.args);ui.calls.length=0;ui.run(.2);const after=ui.calls.filter(c=>c.image===file).slice(-before.length).map(c=>c.args);assert.deepEqual(after,before);ui.emit('resume','click');
   // A drawImage call alone did not catch the old orange shot painted on top.
   s.effects=[];s.projectiles=s.projectiles.slice(0,1);const q=s.projectiles[0];Object.assign(q,{x:s.player.x+100,y:s.player.y-80,vx:200,vy:0,ttl:2});ui.geometry.length=0;ui.calls.length=0;ui.tick(0);

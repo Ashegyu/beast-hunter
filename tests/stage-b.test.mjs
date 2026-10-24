@@ -62,16 +62,16 @@ test('all inscription damage shares a fifty-proc advance budget and bounded visu
 });
 
 test('three boss decisions are real: timed defense/weakness, regeneration, and bounded threshold summons',()=>{
- const defense=arena([],10,11);defense.run.bossSpawned=true;const a=actor(defense,80,0,10000,true);shot(defense,a,100);assert.equal(a.maxHp-a.hp,30);assert.match(g.bossRuleStatus(defense),/방어 태세/);defense.run.time=8;const hp=a.hp;shot(defense,a,100);assert.equal(hp-a.hp,150);assert.match(g.bossRuleStatus(defense),/약점 노출/);
+ const defense=arena([],10,21);defense.run.bossSpawned=true;const a=actor(defense,80,0,10000,true);shot(defense,a,100);assert.equal(a.maxHp-a.hp,30);assert.match(g.bossRuleStatus(defense),/방어 태세/);defense.run.time=8;const hp=a.hp;shot(defense,a,100);assert.equal(hp-a.hp,150);assert.match(g.bossRuleStatus(defense),/약점 노출/);
  const regen=arena([],10,1);regen.run.bossSpawned=true;const b=actor(regen,80,0,2000,true);b.hp=1000;for(let i=0;i<321;i++)g.advanceGame(regen,.025);assert.equal(b.hp,1040);
- const summons=arena([],10,21);summons.run.bossSpawned=true;const c=actor(summons,80,0,1000,true);c.hp=650;g.advanceGame(summons,.025);assert.equal(c.summonPhase,1);assert.equal(summons.enemies.filter(e=>e.objective===false).length,3);c.hp=300;g.advanceGame(summons,.025);assert.equal(c.summonPhase,2);assert.equal(summons.enemies.filter(e=>e.objective===false).length,6);for(let i=0;i<20;i++)g.advanceGame(summons,.025);assert.equal(summons.enemies.filter(e=>e.objective===false).length,6);
+ const summons=arena([],10,16);summons.run.bossSpawned=true;const c=actor(summons,80,0,1000,true);c.hp=650;g.advanceGame(summons,.025);assert.equal(c.summonPhase,1);assert.equal(summons.enemies.filter(e=>e.objective===false).length,3);c.hp=300;g.advanceGame(summons,.025);assert.equal(c.summonPhase,2);assert.equal(summons.enemies.filter(e=>e.objective===false).length,6);for(let i=0;i<20;i++)g.advanceGame(summons,.025);assert.equal(summons.enemies.filter(e=>e.objective===false).length,6);
 });
 test('a committed skill keeps its inscription snapshot after a paused ownership swap',()=>{
  const s=arena(['chain']),e=actor(s,95,0,10000),behind=actor(s,-90,0,10000),other=gear(s.profile,'weapon',20);assert.equal(g.useSkill(s,'crescent',{x:1,y:0,targetId:e.id}),true);s.paused=true;assert.equal(g.equipItem(s,other.id),true);assert.equal(s.buildEffects.chain,undefined);s.paused=false;for(let i=0;i<24;i++)g.advanceGame(s,.025);assert.ok(behind.hp<behind.maxHp);
 });
 
 test('defense weakening penetrates the boss defense stance, respects the cap and expires',()=>{
- const s=arena(['shred'],10,11);s.run.bossSpawned=true;const e=actor(s,80,0,10000,true);shot(s,e,100);assert.equal(e.maxHp-e.hp,30);let hp=e.hp;shot(s,e,100);assert.equal(hp-e.hp,55);assert.match(g.bossRuleStatus(s),/50%.*약화/);
+ const s=arena(["shred"],10,21);s.run.bossSpawned=true;const e=actor(s,80,0,10000,true);shot(s,e,100);assert.equal(e.maxHp-e.hp,30);let hp=e.hp;shot(s,e,100);assert.equal(hp-e.hp,55);assert.match(g.bossRuleStatus(s),/50%.*약화/);
  s.buildEffects=Object.freeze({shred:3});shot(s,e,100);hp=e.hp;shot(s,e,100);assert.equal(hp-e.hp,84);assert.equal(e.runeShred,.4);assert.match(g.bossRuleStatus(s),/30%/);
  s.buildEffects=Object.freeze({});for(let n=0;n<162;n++)g.advanceGame(s,.025);hp=e.hp;shot(s,e,100);assert.equal(hp-e.hp,30);assert.match(g.bossRuleStatus(s),/70%/);
  s.run.time=8;hp=e.hp;shot(s,e,100);assert.equal(hp-e.hp,150);assert.match(g.bossRuleStatus(s),/50% 증가/);

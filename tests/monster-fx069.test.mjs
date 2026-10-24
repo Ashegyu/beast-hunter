@@ -20,14 +20,15 @@ const directions=Array.from({length:8},(_,i)=>({x:Math.cos(i*Math.PI/4),y:Math.s
 const aligned=(x,y,n,sign=1)=>assert.ok((x*n.x+y*n.y)*sign/(Math.hypot(x,y)*Math.hypot(n.x,n.y))>.995);
 function shot(s,e){s.projectiles.push({id:s.nextId++,x:e.x,y:e.y,vx:0,vy:0,damage:1e9,ttl:1,friendly:true});}
 
-test('48 actual lossless frames are in bounds, transparent sheets are region-local and only one sheet is resident',async()=>{
+test('64 actual lossless frames are in bounds, transparent sheets are region-local and only one sheet is resident',async()=>{
  const plan=regionAssetPlan(manifest,CHAPTERS);let bytes=0;
- for(const chapter of CHAPTERS.filter(c=>c.number===1)){const a=atlases[chapter.theme];assert.equal(validMonsterEffects(a,images),true);assert.equal(plan.paths.has(a.image),false);assert.ok(plan.regions.get(chapter.id).paths.has(a.image));
+ // One chapter per attack-effect sheet: forest 1, fire 11, frost 16, ruins 21 (Alpha 0.107 adds the fire sheet).
+ for(const chapter of [1,11,16,21].map(id=>CHAPTERS[id-1])){const a=atlases[chapter.effects];assert.equal(validMonsterEffects(a,images),true);assert.equal(plan.paths.has(a.image),false);assert.ok(plan.regions.get(chapter.id).paths.has(a.image));
   const data=fs.readFileSync(new URL('../dist/assets/'+a.image,import.meta.url));assert.equal(data.toString('ascii',12,16),'VP8L');const bits=data.readUInt32LE(21);assert.equal((bits&16383)+1,a.width);assert.equal(((bits>>>14)&16383)+1,a.height);assert.ok((bits>>>28)&1,'alpha flag');bytes+=data.length;
  }
  assert.ok(bytes<10*1024*1024);
  const pool=new Map(),loader=createRegionAssets({images:pool,plan,loadImage:async path=>images.get(path)??{naturalWidth:1,naturalHeight:1},validateClip:()=>({valid:true})});
- assert.equal(await loader.request(1),true);assert.ok(pool.has(atlases[1].image));assert.equal(await loader.request(2),true);assert.ok(pool.has(atlases[1].image),'same region keeps its sheet');assert.equal(await loader.request(11),true);assert.ok(!pool.has(atlases[1].image));assert.ok(pool.has(atlases[2].image));assert.ok(!pool.has(atlases[3].image));
+ assert.equal(await loader.request(1),true);assert.ok(pool.has(atlases[1].image));assert.equal(await loader.request(2),true);assert.ok(pool.has(atlases[1].image),'same region keeps its sheet');assert.equal(await loader.request(21),true);assert.ok(!pool.has(atlases[1].image));assert.ok(pool.has(atlases[2].image));assert.ok(!pool.has(atlases[3].image));assert.ok(!pool.has(atlases[4].image));
 });
 test('malformed or missing effect atlas cannot partially promote a region and retry succeeds',async()=>{
  const a=atlases[1];for(const mutate of [a=>a.frames.slash[0].x=-1,a=>a.frames.bolt[1].pivotX=NaN,a=>a.frames.impact.pop(),a=>a.frames.charge[1]={...a.frames.charge[0]}]){const copy=structuredClone(a);mutate(copy);assert.equal(validMonsterEffects(copy,images),false);}
@@ -56,8 +57,8 @@ test('live shots loop sustained cores instead of dissolving and volumetric impac
  }
 });
 test('monster attacks publish only presentation metadata while respecting damage timing, pause and caps',()=>{
- for(const chapter of [1,11,21]){
-  const p=g.createProfile();p.clearedStage=20;p.unlockedStage=21;const s=g.createGame(p);g.launch(s,chapter);s.spawns=[{id:900,type:'spitter',x:s.player.x+200,y:s.player.y,delay:0}];g.advanceGame(s,.001);s.barrels=[];const e=s.enemies[0];e.action='windup';e.actionTime=0;e.windup=.1;e.targetX=s.player.x;e.targetY=s.player.y;s.player.invulnerable=999;const hp=s.player.hp;g.advanceGame(s,.075);assert.equal(s.projectiles.length,0);s.paused=true;const before=JSON.stringify(s);g.advanceGame(s,.1);assert.equal(JSON.stringify(s),before);s.paused=false;g.advanceGame(s,.05);assert.ok(s.projectiles.length>0);assert.ok(s.projectiles.every(q=>q.fxChapter===g.STAGES[chapter-1].theme));assert.equal(s.player.hp,hp);assert.ok(s.projectiles.length<=64);assert.ok(s.effects.some(f=>f.type==="spit"&&f.fxChapter===g.STAGES[chapter-1].theme));
+ for(const chapter of [1,11,16,21]){
+  const p=g.createProfile();p.clearedStage=20;p.unlockedStage=21;const s=g.createGame(p);g.launch(s,chapter);s.spawns=[{id:900,type:'spitter',x:s.player.x+200,y:s.player.y,delay:0}];g.advanceGame(s,.001);s.barrels=[];const e=s.enemies[0];e.action='windup';e.actionTime=0;e.windup=.1;e.targetX=s.player.x;e.targetY=s.player.y;s.player.invulnerable=999;const hp=s.player.hp;g.advanceGame(s,.075);assert.equal(s.projectiles.length,0);s.paused=true;const before=JSON.stringify(s);g.advanceGame(s,.1);assert.equal(JSON.stringify(s),before);s.paused=false;g.advanceGame(s,.05);assert.ok(s.projectiles.length>0);assert.ok(s.projectiles.every(q=>q.fxChapter===g.STAGES[chapter-1].effects));assert.equal(s.player.hp,hp);assert.ok(s.projectiles.length<=64);assert.ok(s.effects.some(f=>f.type==="spit"&&f.fxChapter===g.STAGES[chapter-1].effects));
  }
 });
 test('crescent native art is corrected locally in eight directions without moving the hit area behind the hunter',()=>{

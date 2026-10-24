@@ -1,0 +1,164 @@
+{
+ "fire_salamander": {
+  "name": "불도마뱀",
+  "role": "skitter",
+  "out": "art/monsters0107/fire_salamander.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A fire salamander, orange-red scaly lizard with glowing lava cracks along its back, flame-tipped tail, yellow eyes, four short legs. Regular-enemy size. Windup crouches ready to spring; contact lunges forward biting or slashing. Distinct from the style reference subject."
+ },
+ "fire_hellhound": {
+  "name": "지옥 사냥개",
+  "role": "skitter",
+  "out": "art/monsters0107/fire_hellhound.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A hellhound, black charred hound with molten orange cracks in its hide, flaming mane and tail, glowing red eyes. Regular-enemy size. Windup crouches ready to spring; contact lunges forward biting or slashing. Distinct from the style reference subject."
+ },
+ "fire_imp": {
+  "name": "불꽃 임프",
+  "role": "skitter",
+  "out": "art/monsters0107/fire_imp.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A small fire imp, red-orange devil with tiny bat wings, horns, flame hair, long pointed tail, sharp claws; hops low near the ground. Regular-enemy size. Windup crouches ready to spring; contact lunges forward biting or slashing. Distinct from the style reference subject."
+ },
+ "fire_phoenixling": {
+  "name": "어린 불새",
+  "role": "skitter",
+  "out": "art/monsters0107/fire_phoenixling.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A young phoenix chick, fiery orange and gold feathers, ember sparks, long flame tail feathers; runs and hops low near the ground. Regular-enemy size. Windup crouches ready to spring; contact lunges forward biting or slashing. Distinct from the style reference subject."
+ },
+ "fire_spirit": {
+  "name": "불의 정령",
+  "role": "spitter",
+  "out": "art/monsters0107/fire_spirit.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A fire spirit, a floating humanoid of living flame with a bright white-yellow core, orange and red fire body, ember eyes, no legs. Regular-enemy size. Windup gathers energy or draws back; contact releases a ranged shot forward (show only a small muzzle flash attached to the body, no long projectile). Distinct from the style reference subject."
+ },
+ "fire_cultist": {
+  "name": "화염 사교도",
+  "role": "spitter",
+  "out": "art/monsters0107/fire_cultist.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A fire cultist, hooded human in dark red and black robes with gold flame embroidery, horned mask, holds a burning brazier staff. Regular-enemy size. Windup gathers energy or draws back; contact releases a ranged shot forward (show only a small muzzle flash attached to the body, no long projectile). Distinct from the style reference subject."
+ },
+ "fire_slime": {
+  "name": "용암 슬라임",
+  "role": "spitter",
+  "out": "art/monsters0107/fire_slime.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A lava slime, glowing molten orange blob with a dark cooled-rock crust on top, bubbling surface, angry face. Regular-enemy size. Windup gathers energy or draws back; contact releases a ranged shot forward (show only a small muzzle flash attached to the body, no long projectile). Distinct from the style reference subject."
+ },
+ "fire_beetle": {
+  "name": "화염 딱정벌레",
+  "role": "spitter",
+  "out": "art/monsters0107/fire_beetle.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A fire bombardier beetle, black and crimson shell with glowing orange vents, six legs, large mandibles, spits fire from its rear-raised abdomen. Regular-enemy size. Windup gathers energy or draws back; contact releases a ranged shot forward (show only a small muzzle flash attached to the body, no long projectile). Distinct from the style reference subject."
+ },
+ "fire_golem": {
+  "name": "용암 골렘",
+  "role": "bulwark",
+  "out": "art/monsters0107/fire_golem.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A lava golem, hulking body of black volcanic rock with glowing orange magma seams, huge rock fists, fiery eyes. Regular-enemy size. Windup raises its heavy limb or weapon; contact smashes forward. Distinct from the style reference subject."
+ },
+ "fire_crab": {
+  "name": "흑요석 게",
+  "role": "bulwark",
+  "out": "art/monsters0107/fire_crab.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A giant obsidian crab, glossy black volcanic shell with glowing orange joints, massive pincers, six legs. Regular-enemy size. Windup raises its heavy limb or weapon; contact smashes forward. Distinct from the style reference subject."
+ },
+ "fire_salamanderknight": {
+  "name": "샐러맨더 전사",
+  "role": "bulwark",
+  "out": "art/monsters0107/fire_salamanderknight.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A salamander warrior, upright red-scaled lizardman in bronze armor with a round flame-emblem shield and a curved scimitar, burning tail. Regular-enemy size. Windup raises its heavy limb or weapon; contact smashes forward. Distinct from the style reference subject."
+ },
+ "fire_rhino": {
+  "name": "용암 코뿔소",
+  "role": "bulwark",
+  "out": "art/monsters0107/fire_rhino.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A lava rhinoceros, armored dark gray hide with glowing lava cracks, huge flaming horn, four heavy legs. Regular-enemy size. Windup raises its heavy limb or weapon; contact smashes forward. Distinct from the style reference subject."
+ },
+ "dark_imp": {
+  "name": "그림자 임프",
+  "role": "skitter",
+  "out": "art/monsters0107/dark_imp.png",
+  "style": "art/monsters045/ruins_skeleton.png",
+  "reference": "art/monsters065/references/encyclopedia-1.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A shadow imp, small purple-black demon with glowing violet eyes, bat wings, curved horns, long claws; hops low near the ground. Regular-enemy size. Windup crouches ready to spring; contact lunges forward biting or slashing. Distinct from the style reference subject."
+ },
+ "dark_spider": {
+  "name": "그림자 거미",
+  "role": "skitter",
+  "out": "art/monsters0107/dark_spider.png",
+  "style": "art/monsters045/ruins_skeleton.png",
+  "reference": "art/monsters065/references/encyclopedia-1.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A shadow spider, black and deep purple spider with glowing violet markings and many eyes, eight long thin legs. Regular-enemy size. Windup crouches ready to spring; contact lunges forward biting or slashing. Distinct from the style reference subject."
+ },
+ "dark_succubus": {
+  "name": "서큐버스",
+  "role": "spitter",
+  "out": "art/monsters0107/dark_succubus.png",
+  "style": "art/monsters045/ruins_skeleton.png",
+  "reference": "art/monsters065/references/encyclopedia-1.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A succubus caster, pale violet-skinned demon woman with dark leather armor, black bat wings, horns, casting violet magic from her hands. Regular-enemy size. Windup gathers energy or draws back; contact releases a ranged shot forward (show only a small muzzle flash attached to the body, no long projectile). Distinct from the style reference subject."
+ },
+ "dark_priest": {
+  "name": "어둠 사제",
+  "role": "spitter",
+  "out": "art/monsters0107/dark_priest.png",
+  "style": "art/monsters045/ruins_skeleton.png",
+  "reference": "art/monsters065/references/encyclopedia-1.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A dark priest, hooded figure in black robes with violet trim, skull mask, holds a staff with a floating dark purple orb. Regular-enemy size. Windup gathers energy or draws back; contact releases a ranged shot forward (show only a small muzzle flash attached to the body, no long projectile). Distinct from the style reference subject."
+ },
+ "dark_demon": {
+  "name": "지옥 악마 전사",
+  "role": "bulwark",
+  "out": "art/monsters0107/dark_demon.png",
+  "style": "art/monsters045/ruins_skeleton.png",
+  "reference": "art/monsters065/references/encyclopedia-1.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A demon warrior, muscular dark red demon with large horns, black spiked armor, wields a jagged cleaver sword. Regular-enemy size. Windup raises its heavy limb or weapon; contact smashes forward. Distinct from the style reference subject."
+ },
+ "dark_voidgolem": {
+  "name": "공허 골렘",
+  "role": "bulwark",
+  "out": "art/monsters0107/dark_voidgolem.png",
+  "style": "art/monsters045/ruins_skeleton.png",
+  "reference": "art/monsters065/references/encyclopedia-1.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A void golem, massive body of dark purple stone with a swirling black-violet void core, floating rock fragments, heavy fists. Regular-enemy size. Windup raises its heavy limb or weapon; contact smashes forward. Distinct from the style reference subject."
+ }
+}

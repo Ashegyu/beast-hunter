@@ -114,10 +114,10 @@ async function host({ badManifest = false, failedImage = false, canvasBox } = {}
   return api;
 }
 
-test('all 2032 frames use valid explicit source rectangles and local pivots', () => {
-  // Alpha 0.106 adds 45 species × 15 clips and 45 × 25 source poses.
-  assert.equal(Object.keys(manifest.clips).length, 415 + 45 * 15);
-  assert.equal(Object.values(manifest.clips).reduce((sum, clip) => sum + clip.frames.length, 0), 907 + 45 * 25);
+test('all 2682 frames use valid explicit source rectangles and local pivots', () => {
+  // Alpha 0.106 adds 45 species and 0.107 adds 26: 15 clips and 25 source poses each.
+  assert.equal(Object.keys(manifest.clips).length, 415 + (45 + 26) * 15);
+  assert.equal(Object.values(manifest.clips).reduce((sum, clip) => sum + clip.frames.length, 0), 907 + (45 + 26) * 25);
   for (const clip of Object.values(manifest.clips)) {
     const { width, height } = imageSize(clip.image);
     assert.deepEqual(engine.validateClip(clip, width, height), { valid: true, errors: [] });

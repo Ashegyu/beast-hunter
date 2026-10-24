@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.106.0';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.107.0';
 import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js';
 import { createCombatAudio } from './sound.js?v=0.76.0';
-import * as game from './game-engine.js?v=0.106.0';
+import * as game from './game-engine.js?v=0.107.0';
 import {FrameMetrics} from './frame-metrics.js?v=0.98.1';
 import { frameIndex, frameRect, validateClip } from './engine.js';
 import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
 import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.103.1';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.106.0';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.106.0';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.106.0';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.106.0';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.107.0';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.107.0';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.107.0';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.107.0';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -149,7 +149,7 @@ async function boot(){
   try{
     const response=await fetch('assets/manifest.json',{cache:'no-cache'});if(!response.ok)throw Error('어셋 목록을 불러오지 못했어.');manifest=await response.json();
     if(!validRarityAtlas(manifest.equipmentRarities))throw Error('상위 장비 외형 정보를 확인하지 못했어.');
-    if(!game.THEMES.every(t=>manifest.monsterEffects?.[t.id]))throw Error('몬스터 스킬 이미지 목록을 확인하지 못했어.');
+    if(!game.STAGES.every(c=>manifest.monsterEffects?.[c.effects]))throw Error('몬스터 스킬 이미지 목록을 확인하지 못했어.');
     assetPlan=regionAssetPlan(manifest,game.STAGES);
     const paths=campAssetPaths(manifest);let loaded=0;
     const results=await Promise.allSettled([...paths].map(async p=>{const image=await loadImage(p);loaded++;if(!bootFailed)$('loading').textContent='거점을 준비하는 중… '+loaded+' / '+paths.size;return [p,image];}));
@@ -254,6 +254,9 @@ $('sound').addEventListener('click',()=>{soundEnabled=!soundEnabled;audio.mute(!
 $('start').addEventListener('click',()=>start());
 for(const id of ['blade','armor','core'])$('forge-'+id).addEventListener('click',()=>{if(game.upgradeForge(state,id)){save();updateHud();$('growth-feedback').textContent=game.FORGE[id].name+' +'+profile.forge[id]+' 강화 완료';}});
 // Regions group ten chapters; a region tab opens its furthest unlocked chapter.
+// The species a stage is known by on the map (rotates skitter/spitter/bulwark), and the stages a species appears in.
+function stageHeadline(chapter,stage){const lineup=chapter.stages[Math.min(9,Math.max(1,stage))-1];return lineup[['skitter','spitter','bulwark'][(stage-1)%3]];}
+function stagesOf(chapter,species){return chapter.stages.map((l,i)=>Object.values(l).includes(species)?i+1:0).filter(Boolean);}
 function regionChapters(theme){return game.STAGES.filter(c=>c.theme===theme);}
 function selectChapter(id){if(!ready||state.phase!=='camp'||id<1||id>profile.unlockedStage||id===selectedStage)return;launchRevision++;selectedStage=id;if(!game.stageLimit(profile,selectedStage,selectedDifficulty))selectedDifficulty=0;selectedRunStage=game.stageLimit(profile,id,selectedDifficulty);updateHud();}
 for(const theme of game.THEMES)$('stage-'+theme.id).addEventListener('click',()=>{const open=regionChapters(theme.id).filter(c=>c.id<=profile.unlockedStage).at(-1);if(open&&game.STAGES[selectedStage-1].theme!==theme.id)selectChapter(open.id);});
@@ -1052,13 +1055,13 @@ function updateHud(){
       button.setAttribute('data-number',selectedStage+'–'+n);button.setAttribute('data-state',locked?'locked':completed>=n?'cleared':'open');button.setAttribute('data-mark',locked?'×':completed>=n?'✓':'');button.setAttribute('data-caption',label);button.setAttribute('aria-label',selectedStage+'-'+n+' · '+game.battlePlan(n).name+' · '+label);button.disabled=locked;button.classList.toggle('selected',chosen);button.setAttribute('aria-pressed',String(chosen));
     }
     hudText($('stage-board-count'),completed+' / '+game.STAGES_PER_CHAPTER);$('stage-board-progress').setAttribute('aria-valuenow',String(completed));$('stage-board-fill').style.width=completed/game.STAGES_PER_CHAPTER*100+'%';
-    const selectedPlan=game.battlePlan(selectedRunStage),bossStage=selectedRunStage===game.STAGES_PER_CHAPTER,previewSpecies=bossStage?selected.bossSpecies:selected.roster.find(id=>(MONSTERS[id].unlockStage??1)<=selectedRunStage),previewClip=manifest.clips[manifest.directions[previewSpecies].walk.s];
+    const selectedPlan=game.battlePlan(selectedRunStage),bossStage=selectedRunStage===game.STAGES_PER_CHAPTER,previewSpecies=bossStage?selected.bossSpecies:stageHeadline(selected,selectedRunStage),previewClip=manifest.clips[manifest.directions[previewSpecies].walk.s];
     atlasThumbnail($('stage-preview-art'),previewClip.image,previewClip.frames[0],80);
     hudText($('stage-preview-title'),selectedStage+'-'+selectedRunStage+' · '+selectedPlan.name);hudText($('stage-preview-kind'),game.HUNT_MODES[selectedDifficulty].name+' · '+(bossStage?'보스 단독전':game.stageWaveCount(selectedRunStage)+'웨이브'));const rule=game.stageRule(selectedStage,selectedRunStage);hudText($('stage-preview-kind'),game.HUNT_MODES[selectedDifficulty].name+' · '+game.STAGE_TYPE_NAMES[rule.type]);hudText($('stage-preview-description'),rule.rule+' — '+rule.hint+(rule.required?' 필요':' 유리'));
     hudText($('stage-progress-note'),game.HUNT_MODES[selectedDifficulty].name+' · '+(selectedRunStage===limit&&completed<10?'현재 공략 지점':'선택한 출발 지점')+' '+selectedStage+'-'+selectedRunStage);
     const environment=manifest.chapters[selected.environment].environment;
-    $('chapter-banner').style.backgroundImage='linear-gradient(90deg,#101319a8,#10131925),url("assets/'+(manifest.delivery?.[environment]??environment)+'")';hudText($('chapter-label'),'CHAPTER '+String(selected.id).padStart(2,'0')+' · '+selected.region);$('chapter-prev').disabled=selected.id<=1;$('chapter-next').disabled=selected.id>=Math.min(game.STAGES.length,profile.unlockedStage);hudText($('chapter-preview-name'),selected.name);hudText($('chapter-preview-boss'),'지역 보스 · '+selected.bossName);hudText($('chapter-tactic'),selected.tactic);
-    for(const [i,species] of [...selected.roster,selected.bossSpecies].entries()){const design=MONSTERS[species],clip=manifest.clips[manifest.directions[species].walk.s];atlasThumbnail($('roster-art-'+i),clip.image,clip.frames[0],72);hudText($('roster-name-'+i),design.name);hudText($('roster-detail-'+i),species===selected.bossSpecies?'STAGE 10 · 지역 보스':'STAGE '+(design.unlockStage??1)+' · '+(design.tactic??({skitter:'근접 추격',spitter:'원거리 사격',bulwark:'중갑 강타'}[design.role])));$('roster-art-'+i).setAttribute('aria-label',design.name);}
+    $('chapter-banner').style.backgroundImage='linear-gradient(90deg,#101319a8,#10131925),url("assets/'+(manifest.delivery?.[environment]??environment)+'")';hudText($('chapter-label'),'CHAPTER '+String(selected.id).padStart(2,'0')+' · '+selected.region);$('chapter-prev').disabled=selected.id<=1;$('chapter-next').disabled=selected.id>=Math.min(game.STAGES.length,profile.unlockedStage);hudText($('chapter-preview-name'),selected.name);hudText($('chapter-preview-boss'),(selected.special?'특수 보스 · ':'챕터 보스 · ')+selected.bossName);hudText($('chapter-tactic'),selected.tactic);
+    for(const [i,species] of [...selected.roster,selected.bossSpecies].entries()){const design=MONSTERS[species],clip=manifest.clips[manifest.directions[species].walk.s];atlasThumbnail($('roster-art-'+i),clip.image,clip.frames[0],72);hudText($('roster-name-'+i),design.name);hudText($('roster-detail-'+i),species===selected.bossSpecies?'STAGE 10 · '+(selected.special?'특수 보스':'챕터 보스'):'STAGE '+stagesOf(selected,species).join('·')+' · '+(design.tactic??({skitter:'근접 추격',spitter:'원거리 사격',bulwark:'중갑 강타'}[design.role])));$('roster-art-'+i).setAttribute('aria-label',design.name);}
     for(const theme of game.THEMES){const b=$('stage-'+theme.id),first=regionChapters(theme.id)[0],on=theme.id===selected.theme,cleared=regionChapters(theme.id).filter(c=>c.id<=profile.clearedStage).length;b.disabled=first.id>profile.unlockedStage;b.classList.toggle('selected',on);b.setAttribute('aria-pressed',String(on));hudText($('stage-progress-'+theme.id),cleared+'/'+game.CHAPTERS_PER_THEME);}
     hudText($('stat-summary'),'공격 '+Math.round(stats.damage)+' · 체력 '+stats.maxHp);
     for(const [id,item] of Object.entries(game.FORGE)){const cost=game.forgeCost(profile,id),max=profile.forge[id]>=item.max;hudText($('forge-'+id+'-level'),'+'+profile.forge[id]);hudText($('forge-'+id+'-cost'),max?'최대 강화':cost.gold+' 골드'+(cost.cores?' · 핵 '+cost.cores:''));$('forge-'+id).disabled=max||profile.gold<cost.gold||profile.cores<cost.cores;hudText($('forge-'+id+'-state'),max?'최대 단계':profile.gold<cost.gold?'골드 부족':profile.cores<cost.cores?'괴수 핵 부족':'눌러서 강화');}

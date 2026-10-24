@@ -1,0 +1,16 @@
+{
+ "fx-fire": {
+  "kind": "sprite",
+  "minParts": 4,
+  "out": "art/fire0107/fx-fire.png",
+  "style": "art/monster-effects069/forest-original.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D combat VFX sprite sheet for a dark fantasy pixel-art action RPG. Create ONE square transparent RGBA image, exactly 1024 by 1024 pixels, an evenly aligned 4 column by 4 row grid, sixteen equal 256x256 cells with invisible boundaries. Volcanic fire monster sorcery: molten orange and crimson flame with bright yellow-white cores, black ash and ember sparks. Row 1 three burning claw crescents sweeping RIGHT with luminous leading edge at right and thin trailing shards toward left. Row 2 compact fireball projectile travelling RIGHT, white-hot head at right, smoky flame tail to left. Row 3 a radial ground impact of erupting lava, cracked glowing earth and flying embers. Row 4 a directional pounce wake travelling RIGHT, rake-like flame streaks and ash streaming LEFT. Each row is ONE attack effect evolving across four animation frames, left to right: small formation, strong contact, expanding aftermath, sparse fading remnants. Every frame remains centered at the same pivot (cell center). Each individual effect fits within its cell with at least 24 pixels of fully transparent margin, never crosses into adjacent cells, no cropping. Front view ground-space effect, no perspective camera or tilted board. Rich hand-painted pixel clusters, sharp readable silhouette, restrained inner glow, intricate shards and sparks, premium dark fantasy game sprite quality, readable on dark forest stone and ice terrain. Actual alpha transparency: no black/white/color background, no checkerboard painted into the image. No characters, bodies, monsters, weapons held by hands, scenery, text, labels, numbers, logos, grid lines or UI. Directional effects must all have their HEAD / leading edge on the RIGHT, trail on the LEFT. Radial impact stays centered and symmetric. Image1 is the existing forest version of this exact sheet: copy its layout, cell positions and sizes exactly, only change the element to fire."
+ },
+ "props-fire": {
+  "kind": "sprite",
+  "minParts": 4,
+  "out": "art/fire0107/props-fire.png",
+  "style": "dist/assets/props_chapters-v09.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production environment prop sprites for a dark fantasy 2D action RPG, 3/4 overhead view. Image1 shows the existing prop sheet: match its painterly pixel-illustrated style, outline, lighting and scale. Create ONE transparent RGBA square image with exactly FOUR separate props in a 2x2 invisible grid, each centered in its cell with wide transparent margins, never touching each other or the canvas edge: 1 a charred burnt dead tree with glowing ember cracks; 2 a jagged black volcanic rock spire with lava veins; 3 a small smoking lava vent mound with molten glow; 4 a cluster of red-orange fire crystals on black rock. Grounded bottoms. Actual alpha transparency, no background, no floor, no shadow, no text, no characters."
+ }
+}

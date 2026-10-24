@@ -11,11 +11,11 @@ function advance(s,time){for(let i=0;i<Math.ceil(time/.025);i++)game.advanceGame
 
 test('all twelve chapter identities remain distinct and definitions stay immutable',()=>{
   const definition=JSON.stringify(CHAPTERS),species=new Set();
-  for(const c of CHAPTERS){const s=hunt(c.id),second=hunt(c.id);assert.equal(s.enemies.length,4);assert.deepEqual(new Set(s.enemies.map(e=>e.species)),new Set([...c.roster.slice(0,3),c.bossSpecies]));
+  for(const c of CHAPTERS){const s=hunt(c.id),second=hunt(c.id);assert.equal(s.enemies.length,4);assert.deepEqual(new Set(s.enemies.map(e=>e.species)),new Set([...Object.values(c.stages[0]),c.bossSpecies]));
     for(const e of s.enemies){species.add(e.species);assert.equal(e.name,MONSTERS[e.species].name);assert.equal(e.chapterId,c.id);}
     s.enemies[0].hp=0;assert.ok(second.enemies[0].hp>0);assert.ok(createDecorations(s.bounds,c).length>10);
   }
-  assert.equal(species.size,new Set(CHAPTERS.flatMap(c=>[...c.roster.slice(0,3),c.bossSpecies])).size);assert.equal(JSON.stringify(CHAPTERS),definition);assert.throws(()=>{CHAPTERS[0].bossCycle[0]='volley';},TypeError);
+  assert.equal(species.size,new Set(CHAPTERS.flatMap(c=>[...Object.values(c.stages[0]),c.bossSpecies])).size);assert.equal(JSON.stringify(CHAPTERS),definition);assert.throws(()=>{CHAPTERS[0].bossCycle[0]='volley';},TypeError);
 });
 test('boss attack plans drive actual contact and death/pause cancel uncommitted volleys',()=>{
   const initialKinds=[];
@@ -24,10 +24,11 @@ test('boss attack plans drive actual contact and death/pause cancel uncommitted 
     s.player.invulnerable=99;boss.aggro=true;boss.action='windup';boss.actionTime=0;boss.windup=.1;boss.targetX=s.player.x;boss.targetY=s.player.y;boss.pattern=0;
     initialKinds.push(game.enemyAttackKind(boss));s.paused=true;const before=JSON.stringify(s);advance(s,.3);assert.equal(JSON.stringify(s),before);s.paused=false;
     advance(s,.1);assert.equal(boss.action,'attack');
-    if(id===11)assert.equal(s.projectiles.length,3);else assert.equal(s.projectiles.length,0);
+    // Biome cycles open with slam (forest), charge (fire), volley (ruins).
+    if(id===21)assert.equal(s.projectiles.length,3);else assert.equal(s.projectiles.length,0);
     const dead=hunt(id),e=dead.enemies.find(e=>e.boss);dead.run.bossSpawned=true;dead.enemies=[e];dead.barrels=[];Object.assign(e,{dead:true,action:'death',actionTime:0,pattern:2,windup:.01});advance(dead,.2);assert.equal(dead.projectiles.length,0);
   }
-  assert.deepEqual(initialKinds,['slam','volley','charge']);
+  assert.deepEqual(initialKinds,['slam','charge','volley']);
 });
 test('forest wolf charge follows the locked target and stays inside world limits',()=>{
   const s=hunt(1),e=s.enemies.find(e=>e.species==='forest_wolf');s.enemies=[e];s.barrels=[];s.player.invulnerable=99;e.aggro=true;e.homeX=e.x;e.homeY=e.y;
@@ -38,7 +39,7 @@ test('chapter caster volleys keep the projectile cap and target snapshot',()=>{
   for(const id of [11,21]){
     const s=hunt(id),e=s.enemies.find(e=>e.type==='spitter');s.enemies=[e];s.barrels=[];s.player.invulnerable=99;
     Object.assign(e,{aggro:true,action:'windup',actionTime:0,windup:.1,targetX:e.x+200,targetY:e.y});
-    s.player.y=e.y+100;advance(s,.1);assert.equal(s.projectiles.length,3);assert.ok(s.projectiles.every(p=>p.vx>0&&p.color===CHAPTERS[id-1].shotColor));
+    const design=MONSTERS[e.species];s.player.y=e.y+100;advance(s,.1);assert.equal(s.projectiles.length,design.shots);assert.ok(s.projectiles.every(p=>p.vx>0&&p.color===(design.shotColor??CHAPTERS[id-1].shotColor)));
     e.action='windup';e.actionTime=0;e.windup=.1;s.projectiles=Array.from({length:63},(_,i)=>({id:900+i,x:50,y:50,vx:0,vy:0,damage:0,ttl:99,friendly:false}));advance(s,.1);assert.equal(s.projectiles.length,64);
   }
 });

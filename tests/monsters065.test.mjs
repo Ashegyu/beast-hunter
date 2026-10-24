@@ -1,30 +1,40 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as g from '../dist/game-engine.js';
-import {CHAPTERS,MONSTERS,CHAPTER_BOSSES,chapterMonsterPool} from '../dist/chapters.js';
+import {CHAPTERS,MONSTERS,CHAPTER_BOSSES,BIOMES,chapterMonsterPool} from '../dist/chapters.js';
 const NEW=Object.keys(MONSTERS).filter(id=>MONSTERS[id].unlockStage);
 const step=(s,t)=>{for(let i=0;i<Math.ceil(t/.025);i++)g.advanceGame(s,.025);};
 function prepared(chapter=1,stage=4){const p=g.createProfile(1000);p.clearedStage=g.STAGES.length;p.unlockedStage=g.STAGES.length;const s=g.createGame(p);assert.ok(g.launch(s,chapter,stage));return s;}
 function arena(id){const chapter=CHAPTERS.find(c=>c.roster.includes(id)),s=prepared(chapter.id),design=MONSTERS[id];s.enemies=[];s.spawns=[{id:s.nextId++,type:design.role,species:id,boss:false,elite:false,x:750,y:1160,delay:0,warning:1}];s.barrels=[];s.run.flow='combat';s.player.invulnerable=99;g.advanceGame(s,.001);s.run.flow='break';s.run.timer=1e6;assert.equal(s.enemies.length,1);return {s,e:s.enemies[0],design};}
 
 test('nine new identities have distinct chapter membership and frozen attack definitions',()=>{
- // 0.65 added nine specialists; 0.106 added nine more, nine new basics and the chapter bosses.
- assert.equal(NEW.length,18);assert.equal(Object.keys(MONSTERS).length,21+18+Object.keys(CHAPTER_BOSSES).length);
- for(const c of CHAPTERS){assert.equal(c.roster.length,6);assert.equal(new Set(c.roster).size,6);for(const id of c.roster)assert.ok(id.startsWith(c.key+'_'));for(const type of ['skitter','spitter','bulwark'])assert.equal(c.roster.filter(id=>MONSTERS[id].role===type).length,2);}
+ // 0.65 added nine specialists; 0.106 nine more plus nine basics; 0.107 eighteen fire/dark species; plus every chapter boss.
+ assert.equal(NEW.length,18);assert.equal(Object.keys(MONSTERS).length,21+18+18+Object.keys(CHAPTER_BOSSES).length);
+ for(const c of CHAPTERS){assert.equal(c.roster.length,6);assert.equal(new Set(c.roster).size,6);const pool=BIOMES[c.biome].pool;for(const type of ['skitter','spitter','bulwark'])assert.ok(c.roster.filter(id=>MONSTERS[id].role===type).length===2&&c.roster.filter(id=>MONSTERS[id].role===type).every(id=>pool[type].includes(id)));}
+ // Every species of every biome pool appears in at least one chapter.
+ const used=new Set(CHAPTERS.flatMap(c=>c.roster));for(const biome of Object.values(BIOMES))for(const id of Object.values(biome.pool).flat())assert.ok(used.has(id),id);
  for(const id of NEW){const {e,design}=arena(id);assert.equal(e.species,id);assert.equal(e.name,design.name);assert.equal(e.type,design.role);assert.equal(e.guardMax,0);if(design.role==='spitter')assert.ok(e.shots>=2);if(design.attackCycle)assert.ok(Object.isFrozen(e.attackCycle));}
 });
-test('stages introduce mobility at 2, casters at 3, heavies at 4 while retaining original roles',()=>{
- for(const c of CHAPTERS)for(let stage=1;stage<=9;stage++){
-  const s=prepared(c.id,stage),ids=new Set(s.spawns.map(q=>q.species));assert.ok(s.spawns.every(q=>c.roster.includes(q.species)&&MONSTERS[q.species].role===q.type&&(MONSTERS[q.species].unlockStage??1)<=stage));
-  // Stage 9 is the special swarm: every slot becomes a skitter, so ranged/heavy pools stay defined but unused.
-  const swarm=stage===9;if(swarm)assert.ok(s.spawns.every(q=>q.type==='skitter'));
-  for(const role of ['skitter','spitter','bulwark']){const pool=chapterMonsterPool(c.id,stage,role);assert.equal(pool.length,stage>=({skitter:2,spitter:3,bulwark:4}[role])?2:1);if(!swarm||role==='skitter')assert.ok(pool.every(id=>ids.has(id)));}
-  assert.equal(s.spawns.some(q=>q.boss),false);assert.ok(s.spawns.length<=40);
+test('every stage of a chapter fields its own monster lineup with the original roles',()=>{
+ for(const c of CHAPTERS){
+  // Stages 1–8 cover all eight role combinations of the chapter's six species; each stage changes at least two roles.
+  const keys=c.stages.slice(0,8).map(l=>[l.skitter,l.spitter,l.bulwark].join());assert.equal(new Set(keys).size,8);
+  for(let i=1;i<8;i++)assert.ok(['skitter','spitter','bulwark'].filter(r=>c.stages[i][r]!==c.stages[i-1][r]).length>=2);
+  assert.notEqual(c.stages[8].skitter,c.stages[7].skitter);
+  for(let stage=1;stage<=9;stage++){
+   const s=prepared(c.id,stage),lineup=c.stages[stage-1];
+   assert.ok(s.spawns.every(q=>q.species===lineup[q.type]&&MONSTERS[q.species].role===q.type));
+   // Stage 9 is the special swarm: every slot becomes a skitter.
+   if(stage===9)assert.ok(s.spawns.every(q=>q.type==='skitter'));
+   for(const role of ['skitter','spitter','bulwark'])assert.deepEqual(chapterMonsterPool(c.id,stage,role),[lineup[role]]);
+   assert.equal(s.spawns.some(q=>q.boss),false);assert.ok(s.spawns.length<=40);
+  }
  }
  assert.deepEqual(chapterMonsterPool(99,1,'skitter'),[]);
 });
 test('factory rejects foreign or wrong-role skins and boss reservations cannot be reskinned',()=>{
- for(const [type,species,boss,expected]of [['skitter','ruins_bat',false,'forest_wolf'],['spitter','forest_spider',false,'forest_goblin'],['bulwark','unknown',false,'forest_orc'],['bulwark','forest_devourer',true,CHAPTERS[0].bossSpecies]]){
+ const lineup=CHAPTERS[0].stages[3];// prepared() opens chapter 1 stage 4
+ for(const [type,species,boss,expected]of [['skitter','ruins_bat',false,lineup.skitter],['spitter','forest_spider',false,lineup.spitter],['bulwark','unknown',false,lineup.bulwark],['bulwark','forest_devourer',true,CHAPTERS[0].bossSpecies]]){
   const s=prepared();s.enemies=[];s.spawns=[{id:s.nextId++,type,species,boss,x:750,y:1160,delay:0}];s.run.flow='combat';g.advanceGame(s,.001);assert.equal(s.enemies[0].species,expected);
  }
 });

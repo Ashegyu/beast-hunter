@@ -20,8 +20,11 @@ test('startup plan excludes other regions without excluding shared animation ass
   for(const p of Object.values(manifest.skillPresentation.portraits))assert.equal(plan.paths.has(p.image),false);
   for (const chapter of CHAPTERS) {
     const region = plan.regions.get(chapter.id);
-    // Ground tile, two monster atlases, attack effects and the chapter boss atlas (Alpha 0.106).
-    assert.equal(region.paths.size, 5);
+    // Ground tile, attack effects, the boss atlas and only the atlases of the chapter's six species (Alpha 0.107).
+    const expected = new Set([manifest.chapters[chapter.environment].environment, manifest.monsterEffects[chapter.effects].image,
+      ...[...chapter.roster, chapter.bossSpecies].flatMap(id => Object.values(manifest.directions[id]).flatMap(v => Object.values(v)).map(c => manifest.clips[c].image))]);
+    assert.deepEqual(region.paths, expected);
+    assert.ok(region.paths.size <= 9);
     assert.equal(region.clips.length, 105);
     assert.ok(region.paths.has(manifest.chapters[chapter.environment].environment));
     for (const path of region.paths) assert.ok(!plan.paths.has(path));

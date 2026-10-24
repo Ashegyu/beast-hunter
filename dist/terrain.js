@@ -17,7 +17,8 @@ export function createDecorations(bounds, chapter = null) {
   const props = [];
   const add = (x, y, frame, height, facing = 1) => props.push({ id: 'prop-' + props.length, kind: 'decoration', x, y, frame, height, facing });
   if(chapter){
-    const theme=chapter.theme??chapter.id,base=(theme-1)*4,heights=[[170,76,88,52],[155,185,62,78],[180,105,160,62]][theme-1];
+    // Four props per biome set: forest, ruins, frost (Alpha 0.9) and fire (0.107).
+    const set=chapter.props??(chapter.theme??chapter.id)-1,base=set*4,heights=[[170,76,88,52],[155,185,62,78],[180,105,160,62],[160,150,70,90]][set];
     const route=[{x:350,y:1160},...chapter.encounters.map(([x,y])=>({x,y})),chapter.bossPosition];
     const nearRoute=(x,y)=>route.some((a,i)=>{if(!i)return false;const b=route[i-1],dx=a.x-b.x,dy=a.y-b.y,t=Math.max(0,Math.min(1,((x-b.x)*dx+(y-b.y)*dy)/(dx*dx+dy*dy)));return Math.hypot(x-b.x-dx*t,y-b.y-dy*t)<135;});
     for(let row=0;row<5;row++)for(let col=0;col<9;col++){

@@ -34,7 +34,8 @@ test('survival retry resets timer and reservations without granting a checkpoint
 test('immediate elite reinforcements preserve species and guard without a blocking warning',()=>{
  const s=stage(3);s.spawns=[];s.enemies=[];s.run.wave=2;s.run.waveKills=s.run.waveQuota;s.player.invulnerable=100;advance(s,.025);
  assert.equal(s.run.wave,3);assert.ok(s.enemies.some(e=>!e.dead));advance(s,4);
- const elite=s.enemies.find(e=>e.elite);assert.equal(elite.type,'bulwark');assert.equal(elite.species,'forest_orc');assert.ok(elite.guard>0);assert.ok(elite.maxHp>s.enemies.find(e=>e.type==='bulwark'&&!e.elite).maxHp);
+ const elite=s.enemies.find(e=>e.elite);assert.equal(elite.type,'bulwark');// Stage 3 of chapter 1 fields that stage's bulwark (Alpha 0.107 lineups); elites keep its own guard.
+ assert.equal(elite.species,g.STAGES[0].stages[2].bulwark);assert.equal(elite.guard,elite.guardMax);assert.ok(elite.maxHp>s.enemies.find(e=>e.type==='bulwark'&&!e.elite).maxHp);
 });
 test('dense reservations stay reachable and distinct on narrow views across 100 seeds',()=>{
   for(let seed=0;seed<100;seed++)for(const n of [3,6,9]){const s=stage(n,seed,{width:360,height:640});

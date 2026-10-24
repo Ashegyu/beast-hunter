@@ -19,8 +19,8 @@ test('all actors have canonical front/back/side/diagonal clips, constant frame s
     assert.deepEqual(Object.keys(directions),['s','se','e','ne','n']);for(let heading=0;heading<8;heading++){const clip=manifest.clips[m.directionalClipId(manifest,actor,action,heading)];assert.ok(clip);assert.ok(clip.frames.every(f=>f.bodyHeight===clip.bodyHeight));}
     assert.notDeepEqual(['x','y'].map(k=>manifest.clips[directions.n].frames[0][k]),['x','y'].map(k=>manifest.clips[directions.s].frames[0][k]));
   }
-  // Alpha 0.106 adds 45 species × 15 clips (5 views × walk/attack/death).
-  assert.equal(m.runtimeClipIds(manifest).length,396+45*15);assert.equal(m.runtimeClipIds(manifest).includes('hunter_walk'),false);assert.equal(m.runtimeClipIds(manifest).includes('fx_cleave_sequence'),true);
+  // Alpha 0.106 adds 45 species and 0.107 adds 26, each 15 clips (5 views × walk/attack/death).
+  assert.equal(m.runtimeClipIds(manifest).length,396+(45+26)*15);assert.equal(m.runtimeClipIds(manifest).includes('hunter_walk'),false);assert.equal(m.runtimeClipIds(manifest).includes('fx_cleave_sequence'),true);
 });
 test('gait is distance-based, handles reverse steps, and contact pose never precedes damage timing',()=>{
   assert.equal(m.walkingFrame(0),0);assert.equal(m.walkingFrame(19),1);assert.equal(m.walkingFrame(38),2);assert.equal(m.walkingFrame(76),0);assert.equal(m.walkingFrame(19,76,4,true),3);assert.equal(m.walkingFrame(NaN),0);
