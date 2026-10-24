@@ -2,7 +2,7 @@ let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
 import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.84.0';
 import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js';
 import { createCombatAudio } from './sound.js?v=0.76.0';
-import * as game from './game-engine.js?v=0.104.2';
+import * as game from './game-engine.js?v=0.104.3';
 import {FrameMetrics} from './frame-metrics.js?v=0.98.1';
 import { frameIndex, frameRect, validateClip } from './engine.js';
 import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
@@ -1418,7 +1418,7 @@ function refreshGrowthProgress(){
  for(const id of ['growth-next-skill','skill-next-unlock']){$(id).textContent=nextText;$(id).setAttribute('title',nextText);}
  $('growth-skill-budget').textContent='스킬 강화 '+points+' · 숙련 '+profile.skillPoints+' 포인트';
  const bandIndex=game.GROWTH_XP_BANDS.findIndex(row=>profile.level<row.until),band=game.GROWTH_XP_BANDS[bandIndex],nextBand=game.GROWTH_XP_BANDS[bandIndex+1];
- $('growth-xp-rate').textContent=profile.level===50?'최고 레벨 · 경험치 성장 완료':'사냥·정찰 성장 경험치 '+game.growthXpMultiplier(profile.level)+'배'+(nextBand?' · Lv.'+band.until+'부터 '+nextBand.multiplier+'배':'');
+ $('growth-xp-rate').textContent=profile.level===50?'최고 레벨 · 경험치 성장 완료':(game.growthXpMultiplier(profile.level)>1?'사냥·정찰 성장 경험치 '+game.growthXpMultiplier(profile.level)+'배 · ':'')+'다음 레벨까지 경험치 '+Math.max(0,game.xpNeeded(profile.level)-profile.xp)+(nextBand?' · Lv.'+band.until+'부터 '+nextBand.multiplier+'배':'');
  $('result-level').textContent=start<profile.level?'Lv.'+start+' → Lv.'+profile.level:'Lv.'+profile.level;
  $('result-points').textContent='남은 스킬 강화 '+points+' · 숙련 '+profile.skillPoints+' 포인트';
  const unlocked=game.skillMilestones(start,profile.level),names=unlocked.map(row=>row.label),shown=names.slice(0,3).join(' · ')+(names.length>3?' 외 '+(names.length-3)+'개':'');

@@ -1609,7 +1609,7 @@ test('level-up results show real XP and unlocked ultimate, then open the worksho
  const ui=await host({saved:p,campaign:true});ui.emit('hub-growth','click');assert.match(ui.nodes.get('growth-next-skill').textContent,/Lv.20.*적월난무.*궁극기 슬롯/);ui.emit('page-back','click');ui.emit('start','click');
  const s=ui.state;s.enemies=[];s.spawns=[];s.barrels=[];s.run.flow='break';s.run.timer=999;s.pickups=[{id:900,x:s.player.x,y:s.player.y,gold:0,xp:1,cores:0}];ui.tick(.025);assert.equal(s.profile.level,20);assert.equal(s.run.startLevel,19);assert.equal(s.profile.skillBook.loadout.ultimate[0],null);
  s.player.invulnerable=0;s.player.hp=1;s.projectiles=[{id:901,x:s.player.x,y:s.player.y,vx:1,vy:0,damage:999,ttl:1,friendly:false}];ui.tick(.025);ui.run(.7);
- assert.equal(s.phase,'defeat');assert.equal(ui.nodes.get('result-content').hidden,false);assert.equal(ui.nodes.get('result-xp').textContent,'경험치 +4');assert.equal(ui.nodes.get('result-level').textContent,'Lv.19 → Lv.20');assert.match(ui.nodes.get('result-unlocks').textContent,/적월난무.*궁극기 슬롯/);assert.equal(ui.nodes.get('result-skills').hidden,false);
+ assert.equal(s.phase,'defeat');assert.equal(ui.nodes.get('result-content').hidden,false);assert.equal(ui.nodes.get('result-xp').textContent,'경험치 +1');assert.equal(ui.nodes.get('result-level').textContent,'Lv.19 → Lv.20');assert.match(ui.nodes.get('result-unlocks').textContent,/적월난무.*궁극기 슬롯/);assert.equal(ui.nodes.get('result-skills').hidden,false);
  ui.emit('result-skills','click');assert.equal(s.phase,'camp');assert.equal(ui.nodes.get('camp-skills-panel').hidden,false);assert.equal(ui.nodes.get('skill-detail-name').textContent,'적월난무');assert.equal(s.profile.skillBook.loadout.ultimate[0],null);
  ui.emit('skill-equip-0','click');assert.equal(s.profile.skillBook.loadout.ultimate[0],'bloodmoon');const reloaded=await host({saved:ui.profile()});assert.equal(reloaded.state.profile.level,20);assert.equal(reloaded.state.profile.skillBook.loadout.ultimate[0],'bloodmoon');
 });
@@ -1621,16 +1621,16 @@ test('max-level growth caps XP, fills the bar and explains the final awakening w
  s.phase='victory';s.resultDelay=0;ui.tick(0);assert.equal(ui.nodes.get('result-unlocks').textContent,'새 해금 · 적월난무 각성');assert.equal(ui.nodes.get('result-xp').textContent,'경험치 +10000');ui.emit('result-camp','click');ui.emit('hub-growth','click');assert.equal(ui.nodes.get('growth-next-skill').textContent,'모든 검술과 슬롯 해금 완료');
 });
 
-test('growth panel and result receipt show the applied bonus after existing XP gear modifiers',async()=>{
- const p=game.createProfile(1_000_000);p.level=5;p.skills.magnet=2;p.skillBook=game.restoreSkillBook(null,5);const ui=await host({saved:p,campaign:true});ui.emit('hub-growth','click');assert.match(ui.nodes.get('growth-xp-rate').textContent,/경험치 4배.*Lv.20부터 2배/);ui.emit('page-back','click');ui.emit('start','click');const s=ui.state;
+test('growth panel and result receipt show unscaled XP after existing XP gear modifiers',async()=>{
+ const p=game.createProfile(1_000_000);p.level=5;p.skills.magnet=2;p.skillBook=game.restoreSkillBook(null,5);const ui=await host({saved:p,campaign:true});ui.emit('hub-growth','click');assert.match(ui.nodes.get('growth-xp-rate').textContent,/다음 레벨까지 경험치 \d+/);assert.doesNotMatch(ui.nodes.get('growth-xp-rate').textContent,/배/);ui.emit('page-back','click');ui.emit('start','click');const s=ui.state;
  s.enemies=[];s.spawns=[];s.barrels=[];s.run.flow='break';s.run.timer=999;s.pickups=[{id:900,x:s.player.x,y:s.player.y,gold:0,xp:9,cores:0}];ui.tick(.025);
- assert.equal(s.run.xp,44);assert.equal(s.run.xpBonus,33);assert.equal(s.profile.xp,44);s.phase='victory';s.resultDelay=0;ui.tick(0);assert.equal(ui.nodes.get('result-xp').textContent,'경험치 +44');assert.match(ui.nodes.get('result-xp').attributes.title,/기본 경험치 11.*성장 보너스 \+33/);
+ assert.equal(s.run.xp,11);assert.equal(s.run.xpBonus,0);assert.equal(s.profile.xp,11);s.phase='victory';s.resultDelay=0;ui.tick(0);assert.equal(ui.nodes.get('result-xp').textContent,'경험치 +11');assert.match(ui.nodes.get('result-xp').attributes.title,/기본 경험치 11.*성장 보너스 \+0/);
 });
 
 test('scouting notice reports credited XP when an offline grant crosses level twenty',async()=>{
  const p=game.createProfile(1_000_000-5*60000);p.level=19;p.xp=game.xpNeeded(19)-1;p.clearedStage=1;p.unlockedStage=2;p.stageProgress=[10,0,0];p.skillBook=game.restoreSkillBook(null,19);const ui=await host({saved:p});
- assert.equal(ui.state.profile.level,20);assert.equal(ui.state.profile.xp,11);assert.match(ui.nodes.get('offline-note').textContent,/경험치 12/);ui.emit('hub-growth','click');assert.match(ui.nodes.get('growth-xp-rate').textContent,/경험치 2배.*Lv.40부터 1배/);assert.equal(ui.state.profile.skillBook.loadout.ultimate[0],null);
- const again=await host({saved:ui.profile()});assert.equal(again.state.profile.xp,11);assert.doesNotMatch(again.nodes.get('offline-note').textContent,/정찰 보상:/);
+ assert.equal(ui.state.profile.level,20);assert.equal(ui.state.profile.xp,4);assert.match(ui.nodes.get('offline-note').textContent,/경험치 5/);ui.emit('hub-growth','click');assert.match(ui.nodes.get('growth-xp-rate').textContent,/다음 레벨까지 경험치 996/);assert.equal(ui.state.profile.skillBook.loadout.ultimate[0],null);
+ const again=await host({saved:ui.profile()});assert.equal(again.state.profile.xp,4);assert.doesNotMatch(again.nodes.get('offline-note').textContent,/정찰 보상:/);
 });
 
 test('legacy five-stage saves reopen the proportional checkpoint and both maps expose ten stages',async()=>{

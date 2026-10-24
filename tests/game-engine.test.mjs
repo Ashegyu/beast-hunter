@@ -17,7 +17,7 @@ test('version one migrates without losing progress; unsafe equipment and malform
 });
 test('offline scouting requires a cleared boss, caps four hours, and claims once',()=>{
   const now=1e6,p=g.createProfile(now);assert.deepEqual(g.collectOffline(p,now+86400000),{minutes:0,gold:0,xp:0});p.clearedStage=1;p.lastSeenAt=now;
-  assert.deepEqual(g.collectOffline(p,now+86400000),{minutes:240,gold:480,xp:240});assert.ok(p.level>1);assert.equal(p.cores,0);assert.equal(g.collectOffline(p,now+86400000).gold,0);
+  assert.deepEqual(g.collectOffline(p,now+86400000),{minutes:240,gold:480,xp:240});assert.equal(p.level,1);assert.equal(p.xp,240);assert.equal(p.cores,0);assert.equal(g.collectOffline(p,now+86400000).gold,0);
 });
 test('random hunts queue warning markers without authored rooms or caches',()=>{const s=g.createGame();g.launch(s);assert.equal(s.spawns.length,16);assert.equal(s.enemies.length,0);assert.equal(s.encounters.length,0);assert.equal(s.caches.length,0);assert.equal(s.run.bossSpawned,false);});
 test('three committed directional swings hit once, get stronger and reset after the chain window',()=>{
@@ -43,7 +43,7 @@ test('monster telegraphs resolve their marked ellipse and hurt causes a flinch',
   const away=hunt(),miss=dummy(away,50);away.enemies=[miss];miss.action='windup';miss.windup=.1;miss.targetX=away.player.x;miss.targetY=away.player.y-90;miss.radius=100;ticks(away,.125);assert.equal(away.player.hp,away.player.maxHp);
 });
 test('level ups continue combat; permanent skill allocation is an explicit camp activity',()=>{
-  const s=hunt();s.enemies=[];s.pickups=[{id:99,x:s.player.x,y:s.player.y,gold:4,xp:40,cores:1}];ticks(s,.05);
+  const s=hunt();s.enemies=[];s.pickups=[{id:99,x:s.player.x,y:s.player.y,gold:4,xp:g.xpNeeded(1)+5,cores:1}];ticks(s,.05);
   assert.equal(s.profile.level,2);assert.equal(s.profile.xp,5);assert.equal(s.profile.skillPoints,1);assert.equal(s.phase,'playing');assert.equal(s.pickups.length,0);assert.equal(s.profile.gold,4);
   const time=s.run.time;ticks(s,.2);assert.ok(s.run.time>time);assert.equal(g.chooseUpgrade(s,'edge'),false);g.returnToCamp(s);assert.equal(g.upgradeOptions(s).length,6);assert.equal(g.chooseUpgrade(s,'edge'),true);assert.equal(s.profile.skills.edge,1);
 });
@@ -61,7 +61,7 @@ test('forge spends currencies atomically and capped skills convert remaining poi
 test('in-hunt training point conversion is included in earned gold exactly once',()=>{
  const p=g.createProfile();p.level=21;for(const[id,d]of Object.entries(g.UPGRADES))p.skills[id]=d.max;
  const s=g.createGame(p);g.launch(s);s.enemies=[];s.spawns=[];s.barrels=[];s.run.flow='break';s.run.timer=999;
- s.pickups=[{id:99,x:s.player.x,y:s.player.y,gold:4,xp:400,cores:0}];const gold=p.gold;g.advanceGame(s,.025);
+ s.pickups=[{id:99,x:s.player.x,y:s.player.y,gold:4,xp:g.xpNeeded(21),cores:0}];const gold=p.gold;g.advanceGame(s,.025);
  assert.equal(p.level,22);assert.equal(p.gold-gold,39);assert.equal(s.run.gold,39);assert.equal(s.run.trainingGold,35);assert.equal(p.skillPoints,0);g.advanceGame(s,.1);assert.equal(s.run.gold,39);
 });
 test('pause freezes combat and defeat preserves collected progression',()=>{

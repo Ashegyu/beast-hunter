@@ -15,8 +15,8 @@ export * from './monster-fx.js?v=0.70.0';
 export * from './combat-feedback.js';
 export * from './ultimate-video.js';
 export * from './skill-motion.js';
-import * as skills from './combat-skills.js?v=0.104.2';
-export * from './combat-skills.js?v=0.104.2';
+import * as skills from './combat-skills.js?v=0.104.3';
+export * from './combat-skills.js?v=0.104.3';
 import {MATERIALS,MATERIAL_BY_ID,MATERIAL_LIMIT,emptyMaterials,rollMaterials,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.99.0';
 export {MATERIALS,MATERIAL_BY_ID,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.99.0';
 import {equipmentSynergies} from './equipment-synergies.js?v=0.99.0';
@@ -94,9 +94,11 @@ const number=(x,fallback=0)=>Number.isFinite(x)?x:fallback;
 const integer=(x,a,b,fallback=0)=>clamp(Math.floor(number(x,fallback)),a,b);
 const length=(x,y)=>Math.hypot(x,y);
 const direction=(x,y,fallback={x:1,y:0})=>{const d=length(x,y);return d>.0001?{x:x/d,y:y/d}:fallback;};
-export const xpNeeded=level=>Math.round(26+Math.pow(level,1.45)*9);
+// Alpha 0.104: slower growth. A normal chapter yields about 10,000 XP, so a flat 1,000 per level from Lv.8
+// puts chapter ends near Lv.11 / 20 / 30; early levels are cheaper for onboarding.
+export const xpNeeded=level=>Math.min(1000,300+90*level);
 export const GROWTH_XP_BANDS=Object.freeze([
- {until:5,multiplier:1},{until:20,multiplier:4},{until:40,multiplier:2},{until:50,multiplier:1},
+ {until:50,multiplier:1},
 ].map(Object.freeze));
 const XP_TOTALS=[0,0];for(let level=1;level<50;level++)XP_TOTALS[level+1]=XP_TOTALS[level]+xpNeeded(level);Object.freeze(XP_TOTALS);
 export function growthXpMultiplier(level){for(let i=0;i<GROWTH_XP_BANDS.length;i++){const band=GROWTH_XP_BANDS[i];if(level<band.until)return band.multiplier;}return 1;}
