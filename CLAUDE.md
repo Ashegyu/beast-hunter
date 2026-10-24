@@ -51,6 +51,7 @@
 - 검수 해상도: 844×390, 915×412, 667×375, 568×320, 900×405. 높이 360px 이하는 `@media(max-height:360px)` 블록에서 보조 문구를 숨기고 행 높이를 줄인다.
 - `common-ui-v2.css`가 `[data-common-skin][data-common-skin]`에 `position:relative`를 강제한다. 스킨 붙은 요소를 덮개(absolute)로 띄우려면 같은 이중 속성 선택자로 덮어써야 한다.
 - 스킨 붙은 버튼의 `:before` 장식은 절대 위치라서, 버튼을 `position:static`으로 바꾸면 장식이 부모 전체를 덮는다. 위치를 풀 때는 `relative`+`left/bottom:auto`를 쓴다.
+- 공통 스킨 테두리 원화(`assets/common-ui-v2/empty_skins/button_base_ornate_dark.png`)는 바깥에 투명 여백이 있다. 바탕색을 칠할 때는 테두리 안쪽(좌우 3px, 위아래 2px)으로 줄여야 테두리 밖으로 색이 새지 않는다(layout-fit.css의 빨간 스킨 규칙 참고).
 - 홈 왼쪽 메뉴 아이콘은 `lobby-reference-v0920.webp` 시안 전체에서 잘라 쓰며 원본에 글자가 박혀 있어 clip-path로 아래를 잘라야 한다.
 - 장비 화면 귀걸이 2 칸 옆 검은 모루는 배경 원화의 일부다(버그 아님).
 - 자동 레이아웃 점검: 저장 프로필을 만들어 localStorage에 넣고 Playwright로 각 화면을 돌며 화면 밖 버튼·가림·글자 잘림·스크롤 영역을 측정했다. 접힌 `<details>` 내용과 2px로 접어 둔 예전 버튼(#codex-back, #inventory-note)은 오탐이다.

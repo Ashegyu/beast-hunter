@@ -2,6 +2,13 @@
    Loaded last; each block names the screen it adjusts. */
 @media(orientation:landscape) and (min-width:560px){
 
+/* Red skins (primary buttons, selected tabs): the frame image has a transparent outer margin
+   (8px of its 19px side slice, about 3px on screen; about 2px top/bottom), but common-ui-v2 paints
+   the red gradient to the box edge, so a red band showed outside the gold frame. Keep the fill
+   inside the frame line. #game-shell#game-shell outranks common-ui-v2's !important rules. */
+#game-shell#game-shell [data-common-skin][data-common-skin][data-common-skin][data-common-skin=primary]::before,
+#game-shell#game-shell [data-common-skin][data-common-skin][data-common-skin][data-common-skin=tab][aria-pressed=true]::before{background-size:calc(100% - 6px) calc(100% - 4px)!important;background-position:center!important;background-repeat:no-repeat!important}
+
 /* Home side menu: icons are cut from the lobby reference sheet, whose baked labels sit right under
    each icon; trim the bottom edge so only the live HTML label shows. */
 #game-shell[data-panel=camp][data-camp-view=home] .lobby-side .lobby-icon{clip-path:polygon(0 0,75% 0,75% 30%,100% 30%,100% 80%,0 80%)}
