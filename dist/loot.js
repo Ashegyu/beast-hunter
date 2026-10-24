@@ -1,11 +1,11 @@
-import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily} from './equipment-slots.js?v=0.116.0';
-import {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.116.0';
-export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.116.0';
+import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily} from './equipment-slots.js?v=0.117.0';
+import {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.117.0';
+export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.117.0';
 import {huntMode,BOSS_DROP_TABLES} from './hunt-modes.js';
 import {UNIQUE_EFFECTS,EFFECT_ROWS,uniquePower} from './unique-effects.js?v=0.98.0';
-import {ANCIENT_POWER_BY_ID} from './ancient-powers.js?v=0.116.0';
-import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.116.0';
-export {EQUIPMENT_SETS,SET_SLOTS,SET_STATS,CHAPTER_SETS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.116.0';
+import {ANCIENT_POWER_BY_ID} from './ancient-powers.js?v=0.117.0';
+import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.117.0';
+export {EQUIPMENT_SETS,SET_SLOTS,SET_STATS,CHAPTER_SETS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.117.0';
 export {UNIQUE_EFFECTS,uniquePower} from './unique-effects.js?v=0.98.0';
 // Item definitions and pure rolls; the combat state owns identities and delivery.
 import {INVENTORY_LIMIT,MAX_PENDING_LOOT} from './inventory-rules.js?v=0.86.9';
