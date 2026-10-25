@@ -1,7 +1,7 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import * as g from '../dist/game-engine.js';import {BOSS_LOOT,bossLootPool,rollItem,rollAncient} from '../dist/loot.js';import {ANCIENT_POWERS} from '../dist/ancient-powers.js';import {freezeCombat} from './combat-fixture.mjs';
 const owned=(row,id=1)=>({id,slot:row.slot,tier:row.tier,catalogId:row.id,artId:row.artId,name:row.name,rarity:5,affixes:{}});
-function arena(row){const p=g.createProfile();p.inventory=[owned(row)];p.equipment[row.slot==='earring'?'earringLeft':row.slot]=1;const s=g.createGame(p);g.launch(s);freezeCombat(s);s.run.flow='combat';s.run.waveQuota=1e6;s.run.waveKills=0;s.enemies=[];s.barrels=[];s.uniqueState.cooldowns={};s.uniqueState.cooldownKeys=[];s.uniqueState.ancientZones=[];s.run.ancientProcs=0;s.effects=[];s.player.invulnerable=999;s.player.hp=s.player.maxHp*.5;return s;}
+function arena(row,extra={}){const p=g.createProfile();p.inventory=[{...owned(row),...extra}];p.equipment[row.slot==='earring'?'earringLeft':row.slot]=1;const s=g.createGame(p);g.launch(s);freezeCombat(s);s.run.flow='combat';s.run.waveQuota=1e6;s.run.waveKills=0;s.enemies=[];s.barrels=[];s.uniqueState.cooldowns={};s.uniqueState.cooldownKeys=[];s.uniqueState.ancientZones=[];s.run.ancientProcs=0;s.effects=[];s.player.invulnerable=999;s.player.hp=s.player.maxHp*.5;return s;}
 function enemy(s,x=80,y=0){const e={id:s.nextId++,type:'skitter',elite:false,boss:false,x:s.player.x+x,y:s.player.y+y,hp:10000,maxHp:10000,action:'walk',actionTime:0,speed:0,cooldown:999,aggro:true,guard:0,guardMax:0,dead:false,group:null,wave:s.run.wave,runStage:s.run.stage,damage:20,radius:58,lookX:0,lookY:1};s.enemies.push(e);return e;}
 function advance(s,time){for(let left=time;left>1e-8;left-=.025)g.advanceGame(s,Math.min(left,.025));}
 function fire(s,row){const r=row.signature,p=s.player;switch(r.trigger){
@@ -53,4 +53,23 @@ test('captured attack retains old signature after paused swap but cannot leave u
 });
 test('spatial ticks pause and terminate at stage boundary without resetting signature cooldown',()=>{
  const row=g.ANCIENT_CATALOG.find(r=>r.signature.ticks&&r.signature.trigger==='dash'),s=arena(row);enemy(s);fire(s,row);const timer=s.uniqueState.ancientZones[0].timer;s.paused=true;advance(s,10);assert.equal(s.uniqueState.ancientZones[0].timer,timer);s.paused=false;s.run.wave=3;s.run.waveKills=s.run.waveQuota;s.enemies=[];advance(s,.025);assert.equal(s.run.flow,'combat');assert.equal(s.run.stage,2);assert.equal(s.uniqueState.ancientZones.length,0);assert.ok(s.uniqueState.cooldowns['ancient:'+row.id]>0);
+});
+
+test('ancient powers grow with region tier and with the hunt mode they were earned on (Alpha 0.121)',async()=>{
+ const {ANCIENT_POWER_BY_ID,NIGHTMARE_POWERS}=await import('../dist/ancient-powers.js');
+ // Tier: amounts ×1.0 … ×1.5; triggers, cooldowns and radii stay as authored.
+ for(const row of g.ANCIENT_CATALOG){const base=ANCIENT_POWER_BY_ID[row.id],f=g.ANCIENT_TIER_POWER[row.tier-1];assert.equal(row.signature.trigger,base.trigger);assert.equal(row.signature.cooldown,base.cooldown);assert.equal(row.signature.radius,base.radius);
+  for(const k of ['damage','heal','shield','fury','haste'])if(base[k])assert.ok(Math.abs(row.signature[k]-base[k]*f)<.0011,row.id+' '+k);}
+ assert.deepEqual([...g.ANCIENT_TIER_POWER],[1,1.1,1.2,1.3,1.4,1.5]);
+ // Hunt mode: 정예 ×1.15, 악몽 ×1.3 and a second power by slot family.
+ const row=g.ANCIENT_CATALOG.find(r=>r.tier===6&&r.slot==='weapon'&&r.signature.damage),item=hunt=>({...owned(row),...(hunt?{hunt}:{})});
+ const [plain,elite,nightmare]=[0,1,2].map(h=>g.ancientSignatures(item(h)));
+ assert.deepEqual(plain.map(r=>r.id),[row.id]);assert.deepEqual(elite.map(r=>r.id),[row.id]);assert.deepEqual(nightmare.map(r=>r.id),[row.id,row.id+'-nightmare']);
+ assert.ok(Math.abs(elite[0].damage-row.signature.damage*1.15)<.0011);assert.ok(Math.abs(nightmare[0].damage-row.signature.damage*1.3)<.0011);
+ assert.equal(nightmare[1].trigger,NIGHTMARE_POWERS.weapon.trigger);assert.ok(Math.abs(nightmare[1].fury-NIGHTMARE_POWERS.weapon.fury*1.5*1.3)<.0011);assert.match(nightmare[1].description,/공격력 23% 증가/);
+ for(const [slot,family]of [['armor','armor'],['helmet','armor'],['charm','charm'],['special','charm']]){const r=g.ANCIENT_CATALOG.find(x=>x.slot===slot);assert.equal(g.ancientSignatures({...owned(r),hunt:2})[1].name,NIGHTMARE_POWERS[family].name);}
+ // The 악몽 weapon power fires in combat on a kill with its own cooldown, and the grade survives a save.
+ const s=arena(row,{hunt:2});const e=enemy(s,30,0);e.hp=1;Object.assign(s.player,{action:'idle',attackCooldown:0,stamina:100,combo:0,comboWindow:.5});g.attack(s,{x:1,y:0});advance(s,s.player.swing.impact);
+ assert.ok(e.dead);assert.ok(s.uniqueState.cooldowns['ancient:'+row.id+'-nightmare']>0);assert.ok(Math.abs(s.uniqueState.ancientBuffs.fury.value-nightmare[1].fury)<1e-9);
+ const restored=g.restoreProfile(g.encodeProfile(s.profile,1000),1000);assert.deepEqual(g.ancientSignatures(restored.inventory[0]).map(r=>r.id),[row.id,row.id+'-nightmare']);
 });

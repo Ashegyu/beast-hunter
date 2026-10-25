@@ -1,13 +1,13 @@
-import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily} from './equipment-slots.js?v=0.120.0';
-import {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.120.0';
-export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.120.0';
+import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily} from './equipment-slots.js?v=0.121.0';
+import {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.121.0';
+export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.121.0';
 import {huntMode,BOSS_DROP_TABLES} from './hunt-modes.js';
-import {UNIQUE_EFFECTS,EFFECT_ROWS,uniquePower} from './unique-effects.js?v=0.120.0';
-import {ANCIENT_POWER_BY_ID} from './ancient-powers.js?v=0.120.0';
-import {REGION_ANCIENTS,REGION_ANCIENT_BOSSES} from './ancient-regions.js?v=0.120.0';
-import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.120.0';
-export {EQUIPMENT_SETS,SET_SLOTS,SET_STATS,CHAPTER_SETS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.120.0';
-export {UNIQUE_EFFECTS,uniquePower} from './unique-effects.js?v=0.120.0';
+import {UNIQUE_EFFECTS,EFFECT_ROWS,uniquePower} from './unique-effects.js?v=0.121.0';
+import {ANCIENT_POWER_BY_ID,NIGHTMARE_POWERS,describePower} from './ancient-powers.js?v=0.121.0';
+import {REGION_ANCIENTS,REGION_ANCIENT_BOSSES} from './ancient-regions.js?v=0.121.0';
+import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.121.0';
+export {EQUIPMENT_SETS,SET_SLOTS,SET_STATS,CHAPTER_SETS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.121.0';
+export {UNIQUE_EFFECTS,uniquePower} from './unique-effects.js?v=0.121.0';
 // Item definitions and pure rolls; the combat state owns identities and delivery.
 import {INVENTORY_LIMIT,MAX_PENDING_LOOT} from './inventory-rules.js?v=0.86.9';
 export {INVENTORY_LIMIT,MAX_PENDING_LOOT} from './inventory-rules.js?v=0.86.9';
@@ -72,20 +72,39 @@ const ANCIENT_TIER_OF_BASE=Object.freeze({1:1,2:3,3:2});
 export const ancientIdOfBase=id=>id.replace(/^(ancient-)?([123])-/,(_,prefix,t)=>(prefix??'')+ANCIENT_TIER_OF_BASE[t]+'-');
 const ANCIENT_STATS=Object.freeze({weapon:{damage:13,crit:3,speed:3},armor:{hp:38,reduction:3,crit:2},helmet:{hp:25,crit:3,reduction:2},pants:{hp:25,speed:3,reduction:2},
  boots:{hp:18,speed:4,reduction:2},charm:{damage:5,hp:18,crit:3},earring:{damage:4,crit:3,speed:3},special:{damage:5,hp:18,reduction:3}});
+// Alpha 0.121: an ancient's power grows with its region tier (+10% per tier: 1.0 … 1.5) and with the hunt mode it
+// was earned on (정예 ×1.15, 악몽 ×1.3 plus a second power from NIGHTMARE_POWERS). Only amounts scale (damage, heal,
+// shield, fury, haste); triggers, cooldowns, radii and control effects stay as authored.
+export const ANCIENT_TIER_POWER=Object.freeze([1,1.1,1.2,1.3,1.4,1.5]);
+export const ANCIENT_HUNT_POWER=Object.freeze([1,1.15,1.3]);
+const SCALED_POWER_KEYS=['damage','heal','shield','fury','haste'];
+function scalePower(r,factor,extra={}){
+ const out={...r,...extra};for(const k of SCALED_POWER_KEYS)if(r[k])out[k]=Math.round(r[k]*factor*1000)/1000;
+ return Object.freeze({...out,description:describePower(out)});
+}
 const ancientRows=new Map(),ancientDrafts=[];
 for(const row of BASE_CATALOG){const key=ancientKey(row);if(ancientDrafts.some(d=>d.key===key))continue;ancientDrafts.push({key,row,tier:ANCIENT_TIER_OF_BASE[row.tier],part:!!row.signatureOnly,order:ancientDrafts.length});}
 // Catalog order: the 60 weapon/armor/charm ancients by tier, then the 0.97 parts by tier.
 ancientDrafts.sort((a,b)=>a.part-b.part||a.tier-b.tier||a.order-b.order);
-for(const {key,row,tier}of ancientDrafts){const id='ancient-'+tier+row.id.slice(String(row.tier).length),base={},scale=(.76+tier*.24)*ANCIENT_POWER,values=ANCIENT_STATS[row.slot];for(const [k,v]of Object.entries(values))base[k]=Math.round(v*scale);const ordinal=ancientRows.size;ancientRows.set(key,Object.freeze({...row,tier,region:tier,id,name:'태초의 '+row.name,base:Object.freeze(base),visualStyle:VISUAL_STYLE[row.effectId]??3,ancient:true,ordinal,signature:ANCIENT_POWER_BY_ID[id]??Object.freeze({id,index:60+ordinal,color:'#ffb66b',name:'태초의 맥동',trigger:row.slot==='special'?'periodic':'dash',cooldown:10,damage:.18,radius:140,description:row.slot==='special'?'전투 중 10초마다 주변에 기본 공격력 18% 피해.':'회피 시 주변에 기본 공격력 18% 피해. 재사용 10초.'}),bossId:['forest_guardian','frost_king','ruins_king'][tier-1]}));}
+for(const {key,row,tier}of ancientDrafts){const id='ancient-'+tier+row.id.slice(String(row.tier).length),base={},scale=(.76+tier*.24)*ANCIENT_POWER,values=ANCIENT_STATS[row.slot];for(const [k,v]of Object.entries(values))base[k]=Math.round(v*scale);const ordinal=ancientRows.size;ancientRows.set(key,Object.freeze({...row,tier,region:tier,id,name:'태초의 '+row.name,base:Object.freeze(base),visualStyle:VISUAL_STYLE[row.effectId]??3,ancient:true,ordinal,signature:ANCIENT_POWER_BY_ID[id]?scalePower(ANCIENT_POWER_BY_ID[id],ANCIENT_TIER_POWER[tier-1]):Object.freeze({id,index:60+ordinal,color:'#ffb66b',name:'태초의 맥동',trigger:row.slot==='special'?'periodic':'dash',cooldown:10,damage:.18,radius:140,description:row.slot==='special'?'전투 중 10초마다 주변에 기본 공격력 18% 피해.':'회피 시 주변에 기본 공격력 18% 피해. 재사용 10초.'}),bossId:['forest_guardian','frost_king','ruins_king'][tier-1]}));}
 // Alpha 0.119: regions 4-6 have authored ancients (ancient-regions.js) with the same stat rules, keyed by id.
 for(const row of REGION_ANCIENTS){const scale=(.76+row.tier*.24)*ANCIENT_POWER,base={};for(const [k,v]of Object.entries(ANCIENT_STATS[row.slot]))base[k]=Math.round(v*scale);const part=!['weapon','armor','charm'].includes(row.slot),ordinal=ancientRows.size;
- ancientRows.set(row.id,Object.freeze({...row,name:'태초의 '+row.name,region:row.tier,base:Object.freeze(base),effectId:row.effectId??null,...(part?{signatureOnly:true}:{}),...(row.slot==='special'?{characterId:'lirian'}:{}),visualStyle:VISUAL_STYLE[row.effectId]??3,ancient:true,ordinal,signature:ANCIENT_POWER_BY_ID[row.id],bossId:REGION_ANCIENT_BOSSES.find(b=>b.tier===row.tier).id}));}
+ ancientRows.set(row.id,Object.freeze({...row,name:'태초의 '+row.name,region:row.tier,base:Object.freeze(base),effectId:row.effectId??null,...(part?{signatureOnly:true}:{}),...(row.slot==='special'?{characterId:'lirian'}:{}),visualStyle:VISUAL_STYLE[row.effectId]??3,ancient:true,ordinal,signature:scalePower(ANCIENT_POWER_BY_ID[row.id],ANCIENT_TIER_POWER[row.tier-1]),bossId:REGION_ANCIENT_BOSSES.find(b=>b.tier===row.tier).id}));}
 export const ANCIENT_CATALOG=Object.freeze([...ancientRows.values()]);
 const ANCIENT_BY_ID=new Map(ANCIENT_CATALOG.map(r=>[r.id,r]));
 export const BOSS_LOOT=Object.freeze([...['세계수의 수호령','빙원의 지배자','무덤의 왕'].map((name,i)=>({id:['forest_guardian','frost_king','ruins_king'][i],name,tier:i+1})),...REGION_ANCIENT_BOSSES].map(b=>Object.freeze({id:b.id,name:b.name,tier:b.tier,items:Object.freeze(ANCIENT_CATALOG.filter(r=>r.tier===b.tier))})));
 export function bossLootPool(bossId,tier){const boss=BOSS_LOOT.find(b=>b.id===bossId&&b.tier===tier);if(!boss)throw new RangeError('Boss loot identity does not match chapter');return boss.items;}
 export function ancientDefinition(item){const row=ANCIENT_BY_ID.get(item?.catalogId);return row&&row.slot===item.slot&&row.tier===item.tier&&row.artId===item.artId?row:null;}
 export function ancientForLegacy(item){const row=CATALOG_BY_ID.get(item.catalogId),matching=row&&row.slot===item.slot&&row.tier===item.tier&&row.artId===item.artId;return ancientRows.get(ancientKey(matching?row:{...item,effectId:LEGACY_EFFECT[item.artId]}))??null;}
+// The powers an owned ancient actually carries: its tier-scaled signature, raised by the hunt mode it was earned on,
+// plus the 악몽 second power. Crafted gear keeps its fixed signature. Ids double as cooldown keys.
+export function ancientSignatures(item){
+ const crafted=item?.rarity===6?craftedDefinition(item):null;if(crafted)return [crafted.signature];
+ const row=ancientDefinition(item);if(!row)return [];const hunt=huntGrade(item);if(!hunt)return [row.signature];
+ const list=[scalePower(row.signature,ANCIENT_HUNT_POWER[hunt])];
+ if(hunt===2){const family=equipmentFamily(row.slot);list.push(scalePower(NIGHTMARE_POWERS[family],ANCIENT_TIER_POWER[row.tier-1]*ANCIENT_HUNT_POWER[hunt],{id:row.id+'-nightmare',color:NIGHTMARE_POWERS[family].color}));}
+ return list;
+}
 export function rollAncient({id,tier,slot,bossId,hunt=0},pick,rng=null){
  const pool=bossId?bossLootPool(bossId,tier):ANCIENT_CATALOG,choices=pool.filter(r=>r.tier===tier&&(!slot||r.slot===slot)),base=choices[Math.min(choices.length-1,Math.floor(pick*choices.length))];
  if(!base)throw new RangeError('Unknown ancient chapter/slot');
@@ -209,7 +228,7 @@ export function uniqueEffect(item){
  const definition=UNIQUE_EFFECTS[matching?row.effectId:LEGACY_EFFECT[item.artId]];
  return definition?.slot===item.slot?definition:null;
 }
-export function uniqueLoadout(profile){const result=Object.fromEntries(EQUIPMENT_KEYS.map(key=>[key,null]));for(const slot of EQUIPMENT_KEYS){const item=profile.inventory?.find(i=>i.id===profile.equipment?.[slot]&&i.slot===itemSlotForPosition(slot));if(!item)continue;const definition=uniqueEffect(item);if(definition)result[slot]=Object.freeze({definition,power:uniquePower(item.rarity),itemId:item.id,slot,ancient:ancientDefinition(item),crafted:craftedDefinition(item)});}return result;}
+export function uniqueLoadout(profile){const result=Object.fromEntries(EQUIPMENT_KEYS.map(key=>[key,null]));for(const slot of EQUIPMENT_KEYS){const item=profile.inventory?.find(i=>i.id===profile.equipment?.[slot]&&i.slot===itemSlotForPosition(slot));if(!item)continue;const definition=uniqueEffect(item);if(definition)result[slot]=Object.freeze({definition,power:uniquePower(item.rarity),itemId:item.id,slot,ancient:ancientDefinition(item),crafted:craftedDefinition(item),signatures:Object.freeze(ancientSignatures(item))});}return result;}
 
 export function equippedUniqueEffect(profile,slot){return uniqueEffect((profile.inventory??[]).find(item=>item.slot===itemSlotForPosition(slot)&&profile.equipment[slot]===item.id));}
 
