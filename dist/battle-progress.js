@@ -1,4 +1,4 @@
-import {restoreEquipment} from './equipment-slots.js?v=0.123.0';
+import {restoreEquipment} from './equipment-slots.js?v=0.124.0';
 // A stage owns uncommitted rewards. The profile identity stays stable for the UI.
 // Checkpoints are runtime-only; saves serialize the pre-stage state until settlement.
 const journals=new WeakMap();

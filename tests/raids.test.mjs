@@ -7,8 +7,9 @@ import {RAID_POWERS} from '../dist/ancient-powers.js';
 const MONDAY=Date.UTC(2026,9,25,15);// 2026-10-26 00:00 KST, a Monday
 const now=MONDAY+3*864e5;
 // No passives, so incoming damage is only the gear reduction; s.auto=false keeps the player still unless a test acts.
-function profile(cleared=44){const p=g.createProfile(1000);p.unlockedStage=cleared+1;p.clearedStage=cleared;p.stageProgress=g.STAGES.map(c=>c.id<=cleared?10:0);p.level=150;p.skillBook=g.restoreSkillBook(null,150);p.skillBook.loadout.passive=p.skillBook.loadout.passive.map(()=>null);return p;}
-function raid(id,{durable=false,cleared=44}={}){const s=g.createGame(profile(cleared),{durable});assert.equal(g.launchRaid(s,id,now),true);s.auto=false;s.player.invulnerable=0;return s;}
+// Every raid opens after clearing chapter 60 (user decision), so the default fixture has cleared all sixty.
+function profile(cleared=60){const p=g.createProfile(1000);p.unlockedStage=cleared+1;p.clearedStage=cleared;p.stageProgress=g.STAGES.map(c=>c.id<=cleared?10:0);p.level=150;p.skillBook=g.restoreSkillBook(null,150);p.skillBook.loadout.passive=p.skillBook.loadout.passive.map(()=>null);return p;}
+function raid(id,{durable=false,cleared=60}={}){const s=g.createGame(profile(cleared),{durable});assert.equal(g.launchRaid(s,id,now),true);s.auto=false;s.player.invulnerable=0;return s;}
 function boss(s){for(let i=0;i<200&&!s.enemies.some(e=>e.boss);i++)g.advanceGame(s,.025);return s.enemies.find(e=>e.boss);}
 const run=(s,seconds)=>{for(let t=0;t<seconds-1e-9;t+=.025)g.advanceGame(s,.025);};
 
@@ -20,13 +21,13 @@ test('weekly entries: three per raid, spent at entry, kept spent on failure and 
  // A retreat rolls the stage journal back, but the entry was spent before the checkpoint.
  const saved=g.restoreProfile(g.encodeProfile(s.profile,1000),1000);assert.equal(saved.raids.entries.colossus,3);assert.equal(g.raidEntriesLeft(saved,'colossus',now),0);
  assert.equal(g.raidEntriesLeft(saved,'colossus',MONDAY+7*864e5),3);assert.equal(g.launchRaid(g.createGame(saved),'colossus',MONDAY+7*864e5),true);
- // Locked until the raid's chapter is cleared; restore clamps hostile counts.
- assert.equal(g.launchRaid(g.createGame(profile(15)),'queen',now),false);assert.equal(g.launchRaid(g.createGame(profile(25)),'queen',now),true);
+ // Locked until chapter 60 is cleared; restore clamps hostile counts.
+ for(const r of g.RAIDS){assert.equal(r.unlock,60);assert.equal(g.launchRaid(g.createGame(profile(59)),r.id,now),false);}
  const hostile=g.restoreProfile({...JSON.parse(g.encodeProfile(profile(),1000)),raids:{week:'x',entries:{colossus:99,queen:-4},clears:{judge:1e9}}},1000);assert.deepEqual(hostile.raids,{week:-1,entries:{colossus:3,queen:0,judge:0},clears:{colossus:0,queen:0,judge:1e6}});
 });
 
 test('raid bosses scale with the furthest chapter and fight with their own species, cycle and pattern',()=>{
- for(const r of g.RAIDS){const s=raid(r.id),e=boss(s),st=g.STAGES[44];assert.equal(s.stageId,45);assert.equal(e.species,r.species);assert.equal(e.maxHp,Math.round(st.bossHp*r.hp*g.raidScale(45)));assert.deepEqual([...e.bossCycle],[...r.cycle]);assert.equal(e.special,undefined);assert.equal(s.run.timeLimit,g.RAID_TIME_LIMIT);assert.equal(s.run.rule.type,'raid');assert.match(g.bossRuleStatus(s),r.mechanic==='armor'?/강철 장갑/:r.mechanic==='swarm'?/군단 소환까지/:/심판까지/);}
+ for(const r of g.RAIDS){const s=raid(r.id),e=boss(s),st=g.STAGES[59];assert.equal(s.stageId,60);assert.equal(e.species,r.species);assert.equal(e.maxHp,Math.round(st.bossHp*r.hp*g.raidScale(60)));assert.deepEqual([...e.bossCycle],[...r.cycle]);assert.equal(e.special,undefined);assert.equal(s.run.timeLimit,g.RAID_TIME_LIMIT);assert.equal(s.run.rule.type,'raid');assert.match(g.bossRuleStatus(s),r.mechanic==='armor'?/강철 장갑/:r.mechanic==='swarm'?/군단 소환까지/:/심판까지/);}
  assert.ok(g.raidScale(20)>g.raidScale(60));assert.equal(g.raidScale(60),.7);
 });
 
@@ -44,7 +45,7 @@ test('군단의 여왕 calls a brood that shields her; killing her ends the raid
  // Even shielded, a lethal hit finishes her: the brood falls with her and the raid settles.
  s.player.x=e.x-120;s.player.y=e.y;s.player.action='idle';s.player.attackCooldown=0;s.player.invulnerable=99;g.attack(s,{x:1,y:0});run(s,.6);
  assert.ok(e.dead);assert.ok(s.enemies.every(q=>q.dead));assert.equal(s.run.flow,'settling');assert.ok(s.settlement.raid);
- const reward=g.raidRewards(45),item=s.run.dungeonReward.item;assert.equal(s.run.dungeonReward.gold,reward.gold);assert.equal(s.run.dungeonReward.cores,reward.cores);assert.deepEqual(s.run.dungeonReward.materials,reward.materials);
+ const reward=g.raidRewards(60),item=s.run.dungeonReward.item;assert.equal(s.run.dungeonReward.gold,reward.gold);assert.equal(s.run.dungeonReward.cores,reward.cores);assert.deepEqual(s.run.dungeonReward.materials,reward.materials);
  assert.ok(item&&item.rarity===5&&/^ancient-raid-queen-/.test(item.catalogId));assert.ok(s.profile.discoveredAncients.includes(item.catalogId));
  assert.equal(g.confirmSettlement(s,s.settlement.id),true);assert.equal(s.phase,'victory');assert.equal(s.profile.raids.clears.queen,1);
  const saved=g.restoreProfile(g.encodeProfile(s.profile,1000),1000);assert.deepEqual(saved.inventory.find(i=>i.id===item.id),item);assert.equal(saved.raids.clears.queen,1);assert.ok(kills<s.run.kills);
@@ -67,4 +68,19 @@ test('raid ancients: fifteen authored identities, never in chapter boss pools, f
  for(const hunt of [0,1,2])assert.deepEqual(g.ancientSignatures({...item,...(hunt?{hunt}:{})}),[row.signature]);
  assert.match(g.equipmentAcquisition(item),/레이드 전용/);
  const tier6=g.ANCIENT_CATALOG.find(a=>a.tier===6&&a.slot==='weapon'&&!a.raid);assert.ok(row.base.damage>tier6.base.damage);
+});
+
+test('raid ancient rolls are wide and skewed low: stats 60~125%, effect power 60~120%, top results rare (Alpha 0.123)',async()=>{
+ const L=await import('../dist/loot.js?v=0.124.0');let seed=99;const rng=()=>{seed=(Math.imul(1664525,seed)+1013904223)>>>0;return seed/4294967296;};
+ const row=g.ANCIENT_CATALOG.find(r=>r.raid==='judge'&&r.slot==='weapon'),N=4000,power=[];let high=0;
+ for(let i=0;i<N;i++){const it=L.rollAncient({id:1,tier:6,slot:'weapon',raid:'judge'},rng(),rng);power.push(it.powerRoll);const r=L.itemRollRanges(it);if(it.affixes.damage>=r.damage.min+(r.damage.max-r.damage.min)*.8)high++;}
+ const ranges=L.itemRollRanges({id:1,slot:'weapon',tier:6,rarity:5,catalogId:row.id,artId:row.artId,affixes:{...row.base}});assert.equal(ranges.damage.min,Math.round(row.base.damage*.6));assert.equal(ranges.damage.max,Math.round(row.base.damage*1.25));
+ power.sort((a,b)=>a-b);assert.ok(power[0]>=60&&power.at(-1)<=120);assert.ok(power[N/2]<=70,'median '+power[N/2]);const top=power.filter(v=>v>=110).length/N;assert.ok(top>.04&&top<.1,'≥110%: '+top);assert.ok(high/N<.12,'top-fifth damage '+high/N);
+ // Effect power scales the authored amounts; it survives save/restore and a 수치작 rerolls it.
+ const p=profile(),item={...L.rollAncient({id:7,tier:6,slot:'weapon',raid:'judge'},0,rng),powerRoll:75};p.inventory=[item];p.gold=1e6;p.cores=100;p.materials.boneIron=100;
+ assert.ok(Math.abs(g.ancientSignatures(item)[0].damage-row.signature.damage*.75)<.0011);assert.match(g.ancientSignatures(item)[0].description,/83% 피해/);
+ const saved=g.restoreProfile(g.encodeProfile(p,1000),1000);assert.equal(saved.inventory[0].powerRoll,75);
+ const s=g.createGame(saved);const res=g.rerollItem(s,7);assert.ok(res.ok,res.reason);const cand=s.profile.inventory[0].rerollCandidate;assert.ok(Number.isInteger(cand.powerRoll)&&cand.powerRoll>=60&&cand.powerRoll<=120);
+ const kept=g.restoreProfile(g.encodeProfile(s.profile,1000),1000).inventory[0].rerollCandidate;assert.equal(kept.powerRoll,cand.powerRoll);
+ assert.ok(g.resolveItemReroll(s,7,true).ok);assert.equal(s.profile.inventory[0].powerRoll,cand.powerRoll);
 });

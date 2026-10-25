@@ -1,14 +1,14 @@
-import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily} from './equipment-slots.js?v=0.123.0';
-import {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.123.0';
-export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.123.0';
+import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily} from './equipment-slots.js?v=0.124.0';
+import {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.124.0';
+export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.124.0';
 import {huntMode,BOSS_DROP_TABLES} from './hunt-modes.js';
-import {UNIQUE_EFFECTS,EFFECT_ROWS,uniquePower} from './unique-effects.js?v=0.123.0';
-import {ANCIENT_POWER_BY_ID,NIGHTMARE_POWERS,RAID_POWERS,describePower} from './ancient-powers.js?v=0.123.0';
-import {RAID_ANCIENTS,RAID_REGION,RAID_ANCIENT_STATS} from './raids.js?v=0.123.0';
-import {REGION_ANCIENTS,REGION_ANCIENT_BOSSES} from './ancient-regions.js?v=0.123.0';
-import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.123.0';
-export {EQUIPMENT_SETS,SET_SLOTS,SET_STATS,CHAPTER_SETS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.123.0';
-export {UNIQUE_EFFECTS,uniquePower} from './unique-effects.js?v=0.123.0';
+import {UNIQUE_EFFECTS,EFFECT_ROWS,uniquePower} from './unique-effects.js?v=0.124.0';
+import {ANCIENT_POWER_BY_ID,NIGHTMARE_POWERS,RAID_POWERS,describePower} from './ancient-powers.js?v=0.124.0';
+import {RAID_ANCIENTS,RAID_REGION,RAID_ANCIENT_STATS} from './raids.js?v=0.124.0';
+import {REGION_ANCIENTS,REGION_ANCIENT_BOSSES} from './ancient-regions.js?v=0.124.0';
+import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.124.0';
+export {EQUIPMENT_SETS,SET_SLOTS,SET_STATS,CHAPTER_SETS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.124.0';
+export {UNIQUE_EFFECTS,uniquePower} from './unique-effects.js?v=0.124.0';
 // Item definitions and pure rolls; the combat state owns identities and delivery.
 import {INVENTORY_LIMIT,MAX_PENDING_LOOT} from './inventory-rules.js?v=0.86.9';
 export {INVENTORY_LIMIT,MAX_PENDING_LOOT} from './inventory-rules.js?v=0.86.9';
@@ -114,9 +114,10 @@ export function ancientDefinition(item){const row=ANCIENT_BY_ID.get(item?.catalo
 export function ancientForLegacy(item){const row=CATALOG_BY_ID.get(item.catalogId),matching=row&&row.slot===item.slot&&row.tier===item.tier&&row.artId===item.artId;return ancientRows.get(ancientKey(matching?row:{...item,effectId:LEGACY_EFFECT[item.artId]}))??null;}
 // The powers an owned ancient actually carries: its tier-scaled signature, raised by the hunt mode it was earned on,
 // plus the 악몽 second power. Crafted gear keeps its fixed signature. Ids double as cooldown keys.
+export const raidPowerRoll=item=>Number.isInteger(item?.powerRoll)?Math.max(RAID_POWER_ROLL.min,Math.min(RAID_POWER_ROLL.max,item.powerRoll)):100;
 export function ancientSignatures(item){
  const crafted=item?.rarity===6?craftedDefinition(item):null;if(crafted)return [crafted.signature];
- const row=ancientDefinition(item);if(!row)return [];const hunt=huntGrade(item);if(!hunt||row.raid)return [row.signature];
+ const row=ancientDefinition(item);if(!row)return [];if(row.raid)return [scalePower(row.signature,raidPowerRoll(item)/100)];const hunt=huntGrade(item);if(!hunt)return [row.signature];
  const list=[scalePower(row.signature,ANCIENT_HUNT_POWER[hunt])];
  if(hunt===2){const family=equipmentFamily(row.slot);list.push(scalePower(NIGHTMARE_POWERS[family],ANCIENT_TIER_POWER[row.tier-1]*ANCIENT_HUNT_POWER[hunt],{id:row.id+'-nightmare',color:NIGHTMARE_POWERS[family].color}));}
  return list;
@@ -125,7 +126,8 @@ export function rollAncient({id,tier,slot,bossId,hunt=0,raid=null},pick,rng=null
  const pool=raid?ANCIENT_CATALOG.filter(r=>r.raid===raid):bossId?bossLootPool(bossId,tier):ANCIENT_CATALOG.filter(r=>!r.raid),choices=pool.filter(r=>r.tier===tier&&(!slot||r.slot===slot)),base=choices[Math.min(choices.length-1,Math.floor(pick*choices.length))];
  if(!base)throw new RangeError('Unknown ancient chapter/slot');
  const power=HUNT_POWER[hunt]??1,item={id,slot:base.slot,tier:base.tier,rarity:5,name:base.name,catalogId:base.id,artId:base.artId,affixes:Object.fromEntries(Object.entries(base.base).map(([k,v])=>[k,Math.min(affixCap(k),Math.round(v*power))])),rollVersion:1,...(hunt?{hunt}:{}),...(base.characterId?{characterId:base.characterId}:{})};
- if(rng){const forced=(pick*choices.length)%1<PERFECT_ROLL_CHANCE;for(const [key,range]of Object.entries(itemRollRanges(item))){const n=rng();item.affixes[key]=rollWithin(range,n,forced);}}
+ if(rng){const forced=(pick*choices.length)%1<PERFECT_ROLL_CHANCE;for(const [key,range]of Object.entries(itemRollRanges(item))){const n=skewed(item,rng());item.affixes[key]=rollWithin(range,n,forced);}if(base.raid)item.powerRoll=rollRaidPower(rng(),forced);}
+ else if(base.raid)item.powerRoll=100;
  if(isPerfectRoll(item))item.perfect=true;return item;
 }
 export function rollRarity(source,rng,minimum=0,difficulty=0){const mode=huntMode(difficulty);if(!mode)throw new RangeError('Unknown hunt mode');const weights=source==='boss'?BOSS_DROP_TABLES[mode.id]:DROP_TABLES[source]??DROP_TABLES.normal,floor=Number.isInteger(minimum)?Math.max(0,Math.min(5,minimum)):0;let value=rng()*100;for(let i=0;i<weights.length;i++){value-=weights[i];if(value<0)return Math.max(floor,i);}return weights.length-1;}
@@ -194,7 +196,7 @@ function affixRange(definition,rarity,key,hunt=0){
  const special=rarity>=5,primary=Object.hasOwn(definition.base,key),base=definition.base[key]??EXTRA_AFFIXES[key];
  // Alpha 0.120: wider spreads (base stats ±30%, added stats ±40%, ancient/crafted ±20%; was ±15/20/15%), and every
  // uncapped stat keeps at least two values so a maximum is never automatic.
- const scale=(special?1:(.76+definition.tier*.24)*RARITY_INFO[rarity].power)*HUNT_POWER[hunt],low=special?.8:primary?.7:.6,high=special?1.2:primary?1.3:1.4,cap=affixCap(key);
+ const raid=!!definition.raid,scale=(special?1:(.76+definition.tier*.24)*RARITY_INFO[rarity].power)*HUNT_POWER[hunt],low=raid?.6:special?.8:primary?.7:.6,high=raid?1.25:special?1.2:primary?1.3:1.4,cap=affixCap(key);
  const min=Math.min(cap-1,Math.max(1,Math.round(base*scale*low)));return {min,max:Math.min(cap,Math.max(min+1,Math.round(base*scale*high)))};
 }
 export function itemRollRanges(item){
@@ -205,12 +207,20 @@ export function itemRollRanges(item){
 }
 export function isPerfectRoll(item,affixes=item?.affixes){
  const ranges=itemRollRanges(item),keys=Object.keys(ranges),row=CATALOG_BY_ID.get(item?.catalogId),count=item?.rarity>=5?Object.keys(row?.base??{}).length:[2,2,3,4,5][item?.rarity];
- return !!count&&keys.length===count&&Object.keys(row.base).every(k=>Object.hasOwn(affixes??{},k))&&keys.every(k=>affixes?.[k]===ranges[k].max);
+ return !!count&&keys.length===count&&Object.keys(row.base).every(k=>Object.hasOwn(affixes??{},k))&&keys.every(k=>affixes?.[k]===ranges[k].max)&&(!row.raid||item.powerRoll===RAID_POWER_ROLL.max);
 }
+// Alpha 0.123: raid ancients roll wide (stats 60~125% of base, effect power 60~120%) and skewed low: each draw is
+// cubed, so a stat in the top fifth of its range comes about 7% of the time and full effect power only with 극옵.
+export const RAID_ROLL_SKEW=3,RAID_POWER_ROLL=Object.freeze({min:60,max:120});
+const raidRow=item=>item?.rarity===5&&ancientDefinition(item)?.raid?ancientDefinition(item):null;
+const skewed=(item,n)=>raidRow(item)?n**RAID_ROLL_SKEW:n;
+export function rollRaidPower(n,perfect){return perfect?RAID_POWER_ROLL.max:RAID_POWER_ROLL.min+Math.min(RAID_POWER_ROLL.max-RAID_POWER_ROLL.min-1,Math.floor(n**RAID_ROLL_SKEW*(RAID_POWER_ROLL.max-RAID_POWER_ROLL.min)));}
 export function rollItemAffixes(item,rng){
  const ranges=itemRollRanges(item),forced=rng()<PERFECT_ROLL_CHANCE,result={};
- for(const [key,range]of Object.entries(ranges)){const n=rng();result[key]=rollWithin(range,n,forced);}return result;
+ for(const [key,range]of Object.entries(ranges)){const n=skewed(item,rng());result[key]=rollWithin(range,n,forced);}return result;
 }
+// A raid ancient's 수치작 also rerolls its effect power with the same odds.
+export function rollRaidPowerFor(item,rng){return raidRow(item)?rollRaidPower(rng(),rng()<PERFECT_ROLL_CHANCE):null;}
 // Promotion keeps the item identity and its relative base-roll quality.
 export function promotionPreview(item){
  if(!item||item.rarity<0||item.rarity>=4||!Number.isInteger(item.rarity))return null;

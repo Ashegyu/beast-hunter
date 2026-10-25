@@ -1,6 +1,7 @@
 // Alpha 0.123 raids: one patterned boss per raid that a build has to answer, a weekly entry limit and raid-only ancients.
 // Pure data and rules; game-engine.js owns the battle, rewards and settlement. The boss scales with the furthest chapter
 // the player has opened and fights on that chapter's ground (its monsters are the swarm queen's brood).
+// Alpha 0.123: every raid opens after clearing chapter 60 (user decision), so raids are fought at the chapter 60 scale.
 export const RAID_WEEKLY_ENTRIES=3,RAID_TIME_LIMIT=120,RAID_ANCIENT_CHANCE=.1;
 // Raid boss damage against the opened chapter's boss; health is per raid (`hp`, × the chapter boss), tuned so the
 // matching build clears in roughly 60-100 seconds of the two minutes.
@@ -9,13 +10,13 @@ export const RAID_DAMAGE=1.2;
 // with depth: ×1.1 at chapter 20 down to ×0.7 at chapter 60, on both health and damage.
 export const raidScale=chapter=>Math.round(Math.max(.7,Math.min(1.1,1.1-.01*(chapter-20)))*100)/100;
 export const RAIDS=Object.freeze([
- {id:'colossus',name:'강철 거신',species:'raid_colossus',mechanic:'armor',unlock:10,hp:10,color:'#ff9a4d',
+ {id:'colossus',name:'강철 거신',species:'raid_colossus',mechanic:'armor',unlock:60,hp:10,color:'#ff9a4d',
   rule:'강철 장갑이 피해를 85% 막습니다. 파갑참으로 부수거나 마지막 검끝 연격으로 꿰뚫으세요.',
   build:'파갑참 · 마지막 검끝',cycle:['slam','charge','slam','slam','volley','charge'],armor:.85},
- {id:'queen',name:'군단의 여왕',species:'raid_queen',mechanic:'swarm',unlock:20,hp:5.5,broodHp:3,color:'#a6e05a',
+ {id:'queen',name:'군단의 여왕',species:'raid_queen',mechanic:'swarm',unlock:60,hp:5.5,broodHp:3,color:'#a6e05a',
   rule:'10초마다 군단 8마리를 부르고, 군단이 살아 있으면 피해를 85% 덜 받습니다. 광역으로 먼저 쓸어내세요.',
   build:'광역 스킬 · 처치 효과',cycle:['volley','slam','volley','charge','volley','slam'],broodEvery:10,broodSize:8,broodShield:.85},
- {id:'judge',name:'황혼의 심판자',species:'raid_judge',mechanic:'judgement',unlock:30,hp:7.5,color:'#c9a2ff',
+ {id:'judge',name:'황혼의 심판자',species:'raid_judge',mechanic:'judgement',unlock:60,hp:7.5,color:'#c9a2ff',
   rule:'12초마다 피할 수 없는 심판(최대 체력의 40%, 매번 +10%)을 내립니다. 피해 감소·보호막·회복으로 버티세요.',
   build:'체력 · 보호막 · 회복',cycle:['charge','slam','volley','slam','charge','volley'],judgementEvery:12,judgementWarning:2,judgementDamage:.4,judgementGrowth:.1},
 ].map(r=>Object.freeze({...r,cycle:Object.freeze(r.cycle)})));

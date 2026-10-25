@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.123.0';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.124.0';
 import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js';
 import { createCombatAudio } from './sound.js?v=0.76.0';
-import * as game from './game-engine.js?v=0.123.0';
+import * as game from './game-engine.js?v=0.124.0';
 import {FrameMetrics} from './frame-metrics.js?v=0.98.1';
 import { frameIndex, frameRect, validateClip } from './engine.js';
 import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
 import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.103.1';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.123.0';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.123.0';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.123.0';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.123.0';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.124.0';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.124.0';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.124.0';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.124.0';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -450,7 +450,7 @@ function refreshEquipmentWorkshop(){
  }
  const status=promoting?promotion:mode?reroll:enhance,cost=status.cost,percent=n=>Math.round(n*10000)/100;
  const chanceText=level===cap?'최대 강화 달성':enhance.mode==='incremental'?'고대 · 성공률 '+percent(enhance.chance)+'% · 보정 '+enhance.failures+'/'+enhance.maxBonusFailures:enhance.mode==='none'?'제작 · 성공률 '+percent(enhance.chance)+'% · 보정·보장 없음':(enhance.guaranteed?'이번 시도 확정 성공':(item.rarity===6?'제작':game.RARITIES[item.rarity])+' · 성공률 '+percent(enhance.chance)+'%')+' · 실패 '+enhance.failures+'회 · 보장까지 '+enhance.remaining+'회';
- $('workshop-chance').textContent=promoting?(preview?game.RARITIES[item.rarity]+' +'+cap+' → '+game.RARITIES[preview.rarity]+' +0 · 승급 100%':promotion.reason):mode?(pending?(game.isPerfectRoll(item,pending.affixes)?'새 수치: 모든 옵션 최댓값 · 극옵':'새 수치를 확인하고 적용 여부를 선택하세요.'):'기본 수치만 재설정 · 누적 강화 수치는 유지'):chanceText;
+ $('workshop-chance').textContent=promoting?(preview?game.RARITIES[item.rarity]+' +'+cap+' → '+game.RARITIES[preview.rarity]+' +0 · 승급 100%':promotion.reason):mode?(pending?(Number.isInteger(pending.powerRoll)?'효과 위력 '+game.raidPowerRoll(item)+'%→'+pending.powerRoll+'% · ':'')+(game.isPerfectRoll({...item,powerRoll:pending.powerRoll??item.powerRoll},pending.affixes)?'새 수치: 모든 옵션 최댓값 · 극옵':'새 수치를 확인하고 적용 여부를 선택하세요.'):'기본 수치만 재설정 · 누적 강화 수치는 유지'+(item.rarity===5&&game.ancientDefinition(item)?.raid?' · 효과 위력도 다시 굴림':'')):chanceText;
  $('workshop-cost').textContent=cost?(pending&&mode?'이미 지불한 비용 · ':'시도 비용 · ')+cost.gold+' 골드'+(cost.cores?' · 핵 '+cost.cores:'')+Object.entries(cost.materials).map(([k,v])=>' · '+game.MATERIAL_BY_ID[k].name+' '+v).join(''):'';
  $('workshop-cost').hidden=!mode;$('workshop-enhance-cost').hidden=mode||!cost;$('workshop-enhance-cost').setAttribute('aria-label',promoting?'1회 승급 비용':'1회 강화 비용');
  if(!mode&&cost){
@@ -967,8 +967,10 @@ for(const [id,step]of [['result-loot-prev',-1],['result-loot-next',1]])$(id).add
 });
 const HOME_ROUTE_TEXT=['붉은 달이 비추는 숲, 사방에서 괴수들이 몰려온다.','불길과 눈보라가 갈라 놓은 땅, 원소의 괴수들이 깨어난다.','무너진 성문 너머, 잠들지 않는 망자들이 기다린다.','가라앉은 왕국의 물결 아래, 바다의 괴수들이 떠오른다.','번개가 몰아치는 하늘섬에서, 폭풍의 괴수들이 내려온다.','무너진 신들의 땅에서, 타락한 신의 군세가 일어선다.'];
 // Alpha 0.121: an ancient's powers follow its tier and the hunt mode it was earned on (악몽 adds a second power).
-function ancientPowerText(item){const row=game.ancientDefinition(item);if(!row)return '';const hunt=game.huntGrade(item);
- return game.ancientSignatures(item).map(r=>'✦ '+r.name+' · '+r.description).join('\n')+'\n'+row.tier+'티어 위력 ×'+game.ANCIENT_TIER_POWER[row.tier-1].toFixed(1)+(hunt?' · '+game.HUNT_MODES[hunt].name+' 획득 ×'+game.ANCIENT_HUNT_POWER[hunt]+(hunt===2?' · 추가 특수효과':''):'');}
+function ancientPowerText(item){const row=game.ancientDefinition(item);if(!row)return '';const hunt=game.huntGrade(item),lines=game.ancientSignatures(item).map(r=>'✦ '+r.name+' · '+r.description).join('\n');
+ // Raid ancients roll their effect power (Alpha 0.123): shown against its 60~120% range.
+ if(row.raid)return lines+'\n레이드 고대 · 효과 위력 '+game.raidPowerRoll(item)+'% (범위 '+game.RAID_POWER_ROLL.min+'~'+game.RAID_POWER_ROLL.max+'%, 수치작으로 다시 굴림)';
+ return lines+'\n'+row.tier+'티어 위력 ×'+game.ANCIENT_TIER_POWER[row.tier-1].toFixed(1)+(hunt?' · '+game.HUNT_MODES[hunt].name+' 획득 ×'+game.ANCIENT_HUNT_POWER[hunt]+(hunt===2?' · 추가 특수효과':''):'');}
 function updateHud(){
   $('start').disabled=!ready;if(!ready)return;
   refreshCombatSkills();if(state.phase==='camp'||game.resultReady(state))refreshPreparation();

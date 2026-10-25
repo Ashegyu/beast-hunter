@@ -1,4 +1,4 @@
-import {itemRollRanges,isPerfectRoll,effectiveAffix,enhancementBonus,rollItemAffixes,promotionPreview,ENHANCEMENT_CAPS,MAX_ENHANCEMENT,enhancementCap,enhancementLevel} from './loot.js?v=0.123.0';
+import {itemRollRanges,isPerfectRoll,effectiveAffix,enhancementBonus,rollItemAffixes,rollRaidPowerFor,promotionPreview,ENHANCEMENT_CAPS,MAX_ENHANCEMENT,enhancementCap,enhancementLevel} from './loot.js?v=0.124.0';
 export {itemRollRanges,isPerfectRoll,effectiveAffix,enhancementBonus,ENHANCEMENT_CAPS,MAX_ENHANCEMENT,enhancementCap,enhancementLevel};
 const CHANCE_BANDS=[[[100,92]],[[95,77.9]],[[90,73.8],[54,46.8]],[[80,65.6],[48,33.6]],[[65,53.3],[39,27.3],[13,1]],[[60,49.2],[36,25.2],[12,3],[1.5,.5]],[[55,45.1],[33,23.1],[11,3],[2,.8],[.6,.3]]];
 const bounded=(n,min,max,fallback=0)=>Number.isInteger(n)?Math.max(min,Math.min(max,n)):fallback;
@@ -63,14 +63,14 @@ export function rerollStatus(p,id){
 }
 export function rerollOwned(p,id,rng){
  const status=rerollStatus(p,id);if(!status.ok)return status;
- const affixes=rollItemAffixes(status.item,()=>unit(rng));
+ const affixes=rollItemAffixes(status.item,()=>unit(rng)),powerRoll=rollRaidPowerFor(status.item,()=>unit(rng));
  const bonuses=enhancementLevel(status.item)?bonusData(status.item):null;
- spend(p,status.cost);if(bonuses)status.item.enhancementAffixes=bonuses;status.item.rerollCandidate={affixes};
+ spend(p,status.cost);if(bonuses)status.item.enhancementAffixes=bonuses;status.item.rerollCandidate={affixes,...(powerRoll!==null?{powerRoll}:{})};
  return {ok:true,item:status.item,cost:status.cost,reason:'새 수치 준비 완료 · 적용 또는 기존 유지 선택'};
 }
 export function resolveOwnedReroll(p,id,accept){
  const item=owned(p,id);if(!item?.rerollCandidate||typeof accept!=='boolean')return {ok:false,reason:'대기 중인 수치작 결과가 없어.'};
- if(accept){const bonuses=enhancementLevel(item)?bonusData(item):null;item.affixes={...item.rerollCandidate.affixes};if(bonuses)item.enhancementAffixes=bonuses;item.rollVersion=1;if(isPerfectRoll(item))item.perfect=true;else{delete item.perfect;item.name=item.name.replace(/^완벽한 /,'');}}
+ if(accept){const bonuses=enhancementLevel(item)?bonusData(item):null;item.affixes={...item.rerollCandidate.affixes};if(Number.isInteger(item.rerollCandidate.powerRoll))item.powerRoll=item.rerollCandidate.powerRoll;if(bonuses)item.enhancementAffixes=bonuses;item.rollVersion=1;if(isPerfectRoll(item))item.perfect=true;else{delete item.perfect;item.name=item.name.replace(/^완벽한 /,'');}}
  delete item.rerollCandidate;
  return {ok:true,item,applied:accept,reason:accept?'새 수치 적용 완료':'기존 수치 유지 · 작업 비용은 소비됨'};
 }
@@ -85,6 +85,6 @@ export function restoreEquipmentProgress(clean,raw,allowProgress){
  const level=bounded(raw.enhancement,0,enhancementCap(clean.rarity));if(level){clean.enhancement=level;clean.enhancementAffixes=bonusData({...clean,enhancementAffixes:raw.enhancementAffixes});}
  const rule=enhancementRule(level+1,clean.rarity),fails=rule?bounded(raw.enhanceFailures,0,failureLimit(rule)):0;if(fails)clean.enhanceFailures=fails;
  const candidate=raw.rerollCandidate?.affixes;
- if(clean.rarity>=4&&keys.length&&candidate&&typeof candidate==='object'&&!Array.isArray(candidate)&&Object.keys(candidate).length===keys.length&&keys.every(k=>Object.hasOwn(candidate,k)&&Number.isInteger(candidate[k])))clean.rerollCandidate={affixes:Object.fromEntries(keys.map(k=>[k,bounded(candidate[k],ranges[k].min,ranges[k].max,ranges[k].min)]))};// A paid candidate survives range changes (Alpha 0.120) by moving into the current range.
+ if(clean.rarity>=4&&keys.length&&candidate&&typeof candidate==='object'&&!Array.isArray(candidate)&&Object.keys(candidate).length===keys.length&&keys.every(k=>Object.hasOwn(candidate,k)&&Number.isInteger(candidate[k])))clean.rerollCandidate={affixes:Object.fromEntries(keys.map(k=>[k,bounded(candidate[k],ranges[k].min,ranges[k].max,ranges[k].min)])),...(Number.isInteger(clean.powerRoll)&&Number.isInteger(raw.rerollCandidate.powerRoll)?{powerRoll:bounded(raw.rerollCandidate.powerRoll,60,120,60)}:{})};// A paid candidate survives range changes (Alpha 0.120) by moving into the current range.
  return clean;
 }
