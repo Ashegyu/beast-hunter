@@ -11,7 +11,7 @@ class Context{
 }
 test('all nineteen skill casts have distinct bounded signatures and release scheduled notes on pause',async()=>{
  const ctx=new Context(),audio=createCombatAudio(()=>ctx),signatures=[];await audio.unlock();
- for(const skill of SKILL_CATALOG.filter(d=>d.kind!=='passive')){
+ for(const skill of SKILL_CATALOG.filter(d=>d.kind!=='passive'&&d.kind!=='beast')){
   const start=ctx.nodes.length;audio.play('skillCast',{skillId:skill.id});assert.ok(audio.activeVoices>=1&&audio.activeVoices<=3,skill.id);
   signatures.push(JSON.stringify(ctx.nodes.slice(start).flatMap(n=>n.frequency.events)));
   audio.suspend();assert.equal(audio.activeVoices,0);await audio.unlock();

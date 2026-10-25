@@ -1,9 +1,12 @@
 import {createSkillMotion} from './skill-motion.js';
+import {CHAPTERS,CHAPTER_BOSSES} from './chapters.js?v=0.125.0';
+import {beastTechniques,BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE,beastElementText} from './beast-techniques.js?v=0.125.0';
+export {BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE} from './beast-techniques.js?v=0.125.0';
 // Lirian skill rules: one catalog drives unlocks, rank values, UI and combat.
 const active=(id,name,unlock,damage,step,cost,cooldown,shape,description,extra={})=>({id,name,kind:'active',unlock,damage,step,cost,cooldown,shape,description,...extra});
 const passive=(id,name,unlock,value,step,unit,description)=>({id,name,kind:'passive',unlock,value,step,unit,description});
 const ultimate=(id,name,unlock,damage,step,shape,description,extra={})=>({id,name,kind:'ultimate',unlock,damage,step,cost:0,cooldown:60,shape,description,...extra});
-export const SKILL_CATALOG=Object.freeze([
+export const SKILL_CATALOG=Object.freeze([...[
  active('crescent','월아참',1,140,20,18,6,'line','사거리 300의 관통 검기. 적마다 한 번 명중.',{range:300,width:60,delay:.12}),
  active('gale','질풍참',5,110,15,20,7,'dash','전방 170만큼 돌진하며 경로를 벤다. 무적 없음.',{range:260,width:65,delay:.15}),
  active('dance','윤무',10,180,20,28,8,'circle','1.2초 동안 주변 175 범위를 4회 벤다. 사용 중 이동 속도 70%.',{range:175,hits:4,interval:.3,delay:.1}),
@@ -39,7 +42,10 @@ export const SKILL_CATALOG=Object.freeze([
  ultimate('bloodmoon','적월난무',20,520,80,'ultimateArea','주변 260을 6회 베고 마지막에 검기를 방출. 재사용 60초.',{range:260,hits:7,interval:.16,delay:.1}),
  ultimate('eclipse','일섬·월식',30,600,90,'line','0.65초 준비 후 길이 560의 좁은 직선에 강한 일격. 재사용 60초.',{range:560,width:55,delay:.65,poise:80}),
  ultimate('phantoms','월영군무',40,240,40,'phantoms','8초 동안 기본 공격에 잔상이 최대 8회 동행. 표의 피해는 8회 모두 적중한 합계. 재사용 60초.',{range:180,delay:0}),
-].map(row=>Object.freeze({...row,icon:'assets/skills/'+row.id+'.webp'})));
+].map(row=>Object.freeze({...row,icon:'assets/skills/'+row.id+'.webp'})),
+ // Alpha 0.125: one 괴수 기술 per chapter boss (beast-techniques.js), equipped in its own slot.
+ ...beastTechniques(CHAPTERS.map(c=>({...c,special:!!CHAPTER_BOSSES[c.bossSpecies]?.special})))]);
+export const BEAST_TECHNIQUES=Object.freeze(SKILL_CATALOG.filter(d=>d.kind==='beast'));
 export const SKILL_BY_ID=Object.freeze(Object.assign(Object.create(null),Object.fromEntries(SKILL_CATALOG.map(r=>[r.id,r]))));
 const AREA_SHAPES=new Set(['line','dash','circle','cone','targetArea','echo','returning','field','gather','ultimateArea']);
 const RADIAL_REACH=new Set(['circle','cone','echo','gather','ultimateArea']);
@@ -57,8 +63,8 @@ export const SKILL_SLOT_UNLOCKS=Object.freeze([
  {kind:'active',index:3,level:30,label:'일반 슬롯 4'},
 ].map(Object.freeze));
 // Alpha 0.119: four regular slots (Lv.1/5/15/30), three passives (Lv.1/10/25), one ultimate (Lv.20).
-export const MAX_SLOTS=Object.freeze({active:4,passive:3,ultimate:1});
-export const skillSlots=level=>{const slots={active:1,passive:1,ultimate:0};for(const row of SKILL_SLOT_UNLOCKS)if(level>=row.level)slots[row.kind]++;return slots;};
+export const MAX_SLOTS=Object.freeze({active:4,passive:3,ultimate:1,beast:1});
+export const skillSlots=level=>{const slots={active:1,passive:1,ultimate:0,beast:1};for(const row of SKILL_SLOT_UNLOCKS)if(level>=row.level)slots[row.kind]++;return slots;};
 // A read-only level interval; viewing progress never equips or spends points.
 export function skillMilestones(afterLevel,throughLevel=50){
  const rows=SKILL_CATALOG.filter(d=>d.unlock>afterLevel&&d.unlock<=throughLevel).map(d=>({level:d.unlock,label:d.name,id:d.id,kind:d.kind}));
@@ -66,22 +72,25 @@ export function skillMilestones(afterLevel,throughLevel=50){
  if(afterLevel<50&&throughLevel>=50)rows.push({level:50,label:'적월난무 각성',kind:'awakening'});
  return rows.sort((a,b)=>a.level-b.level);
 }
-export function skillLevelGate(id,rank){const d=SKILL_BY_ID[id];if(!d)return 51;return d.unlock+Math.ceil((Math.max(1,Math.min(5,rank))-1)*Math.min(d.kind==='ultimate'?7:3,(50-d.unlock)/4));}
-export function skillRank(profile,id){const d=SKILL_BY_ID[id];if(!d||profile.level<d.unlock)return 0;if(d.kind==='ultimate'){let rank=1;while(rank<5&&profile.level>=skillLevelGate(id,rank+1))rank++;return rank;}return 1+(profile.skillBook?.ranks?.[id]??0);}
-export function skillValue(profile,id){const d=SKILL_BY_ID[id],rank=skillRank(profile,id);return rank?(d.damage??d.value)+d.step*(rank-1):0;}
+export function skillLevelGate(id,rank){const d=SKILL_BY_ID[id];if(!d)return 51;if(d.kind==='beast')return 1;return d.unlock+Math.ceil((Math.max(1,Math.min(5,rank))-1)*Math.min(d.kind==='ultimate'?7:3,(50-d.unlock)/4));}
+// A 괴수 기술's rank is its learned grade (1 기본, 2 강화, 3 극); 0 until its boss is defeated.
+export const beastGrade=(profile,id)=>{const g=profile?.beastSkills?.[id];return Number.isInteger(g)&&g>=1&&g<=3?g:0;};
+export function skillRank(profile,id){const d=SKILL_BY_ID[id];if(!d)return 0;if(d.kind==='beast')return beastGrade(profile,id);if(profile.level<d.unlock)return 0;if(d.kind==='ultimate'){let rank=1;while(rank<5&&profile.level>=skillLevelGate(id,rank+1))rank++;return rank;}return 1+(profile.skillBook?.ranks?.[id]??0);}
+export function skillValue(profile,id){const d=SKILL_BY_ID[id],rank=skillRank(profile,id);if(d?.kind==='beast')return rank?Math.round(d.damage*BEAST_GRADES[rank].damage):0;return rank?(d.damage??d.value)+d.step*(rank-1):0;}
 export function skillPoints(profile){return Math.max(0,profile.level-1+(profile.skillBook?.trainingPoints??0)-Object.values(profile.skillBook?.ranks??{}).reduce((a,b)=>a+b,0));}
-function cleanLoadout(raw,level){const slots=skillSlots(level),used=new Set();const list=(kind,n)=>Array.from({length:n},(_,i)=>{const id=raw?.[kind]?.[i],d=SKILL_BY_ID[id];if(i>=slots[kind]||!d||d.kind!==kind||d.unlock>level||used.has(id))return null;used.add(id);return id;});return {active:list('active',MAX_SLOTS.active),passive:list('passive',MAX_SLOTS.passive),ultimate:list('ultimate',MAX_SLOTS.ultimate)};}
+function cleanLoadout(raw,level){const slots=skillSlots(level),used=new Set();const list=(kind,n)=>Array.from({length:n},(_,i)=>{const id=raw?.[kind]?.[i],d=SKILL_BY_ID[id];if(i>=slots[kind]||!d||d.kind!==kind||d.unlock>level||used.has(id))return null;used.add(id);return id;});return {active:list('active',MAX_SLOTS.active),passive:list('passive',MAX_SLOTS.passive),ultimate:list('ultimate',MAX_SLOTS.ultimate),beast:list('beast',MAX_SLOTS.beast)};}
 export function restoreSkillBook(raw,level){
  const ranks={},trainingPoints=int(raw?.trainingPoints,0,49,0);let budget=level-1+trainingPoints;
- for(const d of SKILL_CATALOG){if(d.kind==='ultimate'||d.unlock>level)continue;let maximum=0;while(maximum<4&&level>=skillLevelGate(d.id,maximum+2))maximum++;const n=int(raw?.ranks?.[d.id],0,maximum);ranks[d.id]=Math.min(n,budget);budget-=ranks[d.id];}
- const defaults={active:['crescent',level>=5?'gale':null,level>=15?'triple':null,level>=30?'returning':null],passive:[level>=3?'breath':null,level>=10?'finisher':null,level>=25?'reserve':null],ultimate:[level>=20?'bloodmoon':null]};
+ for(const d of SKILL_CATALOG){if(d.kind==='ultimate'||d.kind==='beast'||d.unlock>level)continue;let maximum=0;while(maximum<4&&level>=skillLevelGate(d.id,maximum+2))maximum++;const n=int(raw?.ranks?.[d.id],0,maximum);ranks[d.id]=Math.min(n,budget);budget-=ranks[d.id];}
+ const defaults={active:['crescent',level>=5?'gale':null,level>=15?'triple':null,level>=30?'returning':null],passive:[level>=3?'breath':null,level>=10?'finisher':null,level>=25?'reserve':null],ultimate:[level>=20?'bloodmoon':null],beast:[null]};
  return {ranks,trainingPoints,loadout:cleanLoadout(raw?.loadout??defaults,level),presets:Array.from({length:3},(_,i)=>raw?.presets?.[i]?{...cleanLoadout(raw.presets[i],level),auto:cleanAuto(raw.presets[i].auto)}:null),auto:cleanAuto(raw?.auto),awakening:raw?.awakening==='execution'?'execution':'area'};
 }
-export function upgradeSkill(s,id){const d=SKILL_BY_ID[id],p=s.profile;if(s.phase!=='camp'||!d||d.kind==='ultimate'||!skillRank(p,id)||skillRank(p,id)>=5||!skillPoints(p)||p.level<skillLevelGate(id,skillRank(p,id)+1))return false;p.skillBook.ranks[id]=(p.skillBook.ranks[id]??0)+1;return true;}
+export function upgradeSkill(s,id){const d=SKILL_BY_ID[id],p=s.profile;if(s.phase!=='camp'||!d||d.kind==='ultimate'||d.kind==='beast'||!skillRank(p,id)||skillRank(p,id)>=5||!skillPoints(p)||p.level<skillLevelGate(id,skillRank(p,id)+1))return false;p.skillBook.ranks[id]=(p.skillBook.ranks[id]??0)+1;return true;}
 export function equipSkill(s,id,slot){const p=s.profile,d=SKILL_BY_ID[id];if(s.phase!=='camp'||!d||!skillRank(p,id)||!Number.isInteger(slot)||slot<0||slot>=skillSlots(p.level)[d.kind])return false;const list=p.skillBook.loadout[d.kind],prior=list.indexOf(id);if(prior===slot){list[slot]=null;return true;}if(prior>=0)list[prior]=list[slot];list[slot]=id;return true;}
 export function resetSkills(s){if(s.phase!=='camp')return false;s.profile.skillBook.ranks={};return true;}
 export function skillPreset(s,index,action){if(s.phase!=='camp'||!Number.isInteger(index)||index<0||index>=3)return false;const b=s.profile.skillBook;if(action==='save'){b.presets[index]={...cleanLoadout(b.loadout,s.profile.level),auto:cleanAuto(b.auto)};return true;}if(action==='load'&&b.presets[index]){b.loadout=cleanLoadout(b.presets[index],s.profile.level);b.auto=cleanAuto(b.presets[index].auto);return true;}return false;}
-export function skillNumbers(p,id,rank=skillRank(p,id)){const d=SKILL_BY_ID[id];if(!d)return '';const v=(d.damage??d.value)+d.step*(Math.max(1,rank)-1);if(d.kind==='passive')return v+(d.unit==='%'?'%':d.unit==='초'?'초':d.unit==='회'?'회':' 기력');if(id==='stance')return '기력 +'+(9+rank*3)+'/초 · 피해 감소 '+(15+rank*3)+'%';if(id==='bloodblade')return '연격 피해 +'+(20+rank*5)+'%';if(id==='breach')return '피해 '+v+'% · 약화 '+(10+rank*2)+'%';return '총 피해 '+v+'%';}
+export function skillNumbers(p,id,rank=skillRank(p,id)){const d=SKILL_BY_ID[id];if(!d)return '';const v=(d.damage??d.value)+d.step*(Math.max(1,rank)-1);if(d.kind==='passive')return v+(d.unit==='%'?'%':d.unit==='초'?'초':d.unit==='회'?'회':' 기력');if(id==='stance')return '기력 +'+(9+rank*3)+'/초 · 피해 감소 '+(15+rank*3)+'%';if(id==='bloodblade')return '연격 피해 +'+(20+rank*5)+'%';if(id==='breach')return '피해 '+v+'% · 약화 '+(10+rank*2)+'%';if(d.kind==='beast'){const g=BEAST_GRADES[Math.max(1,Math.min(3,rank))],e=BEAST_ELEMENTS[d.element];return g.name+' · 총 피해 '+Math.round(d.damage*g.damage)+'%'+(g.area>1?' · 범위 +'+Math.round((g.area-1)*100)+'%':'')+(g.cooldown<1?' · 재사용 '+Math.round(d.cooldown*g.cooldown*10)/10+'초':'')+(g.hits?' · 타격 +'+g.hits:'')+' · '+beastElementText(scaleElement(e,g.element));}return '총 피해 '+v+'%';}
+export function scaleElement(e,f){const out={...e};for(const k of ['bleed','chill','push','breach','shield'])if(e[k])out[k]=k==='shield'?Math.round(e[k]*f*1000)/1000:Math.round(e[k]*f*10)/10;return out;}
 export const SKILL_BUILD_EXAMPLES=Object.freeze([
  {name:'보스 폭딜',active:['breach','draw','mark','plunge'],passive:['lone','scar','steady'],ultimate:['eclipse']},
  {name:'자동 광역',active:['gather','dance','field','echo'],passive:['surrounded','momentum','flow'],ultimate:['bloodmoon']},
@@ -109,10 +118,10 @@ export function skillMoveScale(s){const r=s.skillRuntime;return (r.footworkUntil
 function nearestTarget(s,n,range){let best=null,score=-Infinity;for(const e of s.enemies){if(!live(e))continue;const dx=e.x-s.player.x,dy=e.y-s.player.y,d=Math.hypot(dx,dy);if(d>range)continue;const facing=d>.001?(dx*n.x+dy*n.y)/d:1,v=facing*300-d;if(v>score){score=v;best=e;}}return best;}
 export function skillReady(s,id){const d=SKILL_BY_ID[id],r=s.skillRuntime;return !!d&&s.phase==='playing'&&!s.paused&&s.run.flow==='combat'&&s.player.hp>0&&!!skillRank(s.profile,id)&&s.profile.skillBook.loadout[d.kind]?.includes(id)&&!['attack','heavy','dash','hurt','death'].includes(s.player.action)&&!r.casting&&!(r.cooldowns[id]>0)&&s.player.stamina>=d.cost;}
 export function castSkill(s,id,aim,h){
- if(!skillReady(s,id))return false;const d=SKILL_BY_ID[id],r=s.skillRuntime,p=s.player,reach=skillReach(s.profile,id),areaScale=skillAreaScale(s.profile,id),n=unit(Number.isFinite(aim?.x)?aim.x:p.aimX,Number.isFinite(aim?.y)?aim.y:p.aimY),target=s.enemies.find(e=>e.id===aim?.targetId&&live(e)&&distance(e,p)<=reach)??nearestTarget(s,n,reach),rank=skillRank(s.profile,id),now=s.run.time;
+ if(!skillReady(s,id))return false;const d=SKILL_BY_ID[id],r=s.skillRuntime,p=s.player,beast=d.kind==='beast'?BEAST_GRADES[skillRank(s.profile,id)]:null,vid=d.visual??id,reach=skillReach(s.profile,id)*(beast&&RADIAL_REACH.has(d.shape)?beast.area:1),areaScale=skillAreaScale(s.profile,id)*(beast?.area??1),n=unit(Number.isFinite(aim?.x)?aim.x:p.aimX,Number.isFinite(aim?.y)?aim.y:p.aimY),target=s.enemies.find(e=>e.id===aim?.targetId&&live(e)&&distance(e,p)<=reach)??nearestTarget(s,n,reach),rank=skillRank(s.profile,id),now=s.run.time;
  if(['mark','seeking'].includes(d.shape)&&!target||r.jobs.length+(d.hits??1)>64)return false;
- const attack=h.stats(s.profile).damage,root={id,serial:++r.serial,rank,attack,areaScale,range:reach,radius:d.radius?d.radius*areaScale:undefined,width:d.width?d.width*areaScale:undefined,equipmentAtStart:h.capture?.(s)??null,inscriptions:h.inscriptions?.(s)??null,damage:skillValue(s.profile,id)/100*attack,x:p.x,y:p.y,n,targetId:target?.id,token:r.token,recovered:false,poise:(d.poise??12)*(r.finisherUntil>now?1+pv(s,'finisher')/100:1),castX:p.x,castY:p.y};
- p.stamina-=d.cost;if(!Object.hasOwn(r.cooldowns,id))r.cooldownKeys.push(id);r.cooldowns[id]=d.cooldown;h.cast?.(s,id);r.stanceUntil=0;if(id!=='bloodblade')r.bloodbladeUntil=0;
+ const attack=h.stats(s.profile).damage,root={id,serial:++r.serial,rank,attack,areaScale,range:reach,radius:d.radius?d.radius*areaScale:undefined,width:d.width?d.width*areaScale:undefined,equipmentAtStart:h.capture?.(s)??null,inscriptions:h.inscriptions?.(s)??null,damage:skillValue(s.profile,id)/100*attack,x:p.x,y:p.y,n,targetId:target?.id,token:r.token,recovered:false,poise:(d.poise??12)*(r.finisherUntil>now?1+pv(s,'finisher')/100:1),castX:p.x,castY:p.y,count:(d.hits??1)+(beast?.hits??0),...(beast?{beast:{element:scaleElement(BEAST_ELEMENTS[d.element],beast.element),color:d.color}}:{})};
+ p.stamina-=d.cost;if(!Object.hasOwn(r.cooldowns,id))r.cooldownKeys.push(id);r.cooldowns[id]=d.cooldown*(beast?.cooldown??1);h.cast?.(s,id);r.stanceUntil=0;if(id!=='bloodblade')r.bloodbladeUntil=0;
  if(d.kind==='ultimate'){r.ultimatePresentation={id,startedAt:now,token:r.token,x:p.x,y:p.y,nx:n.x,ny:n.y};}
  if(d.kind==='active'){
   if(r.lastCast&&r.lastCast.id!==id&&now-r.lastCast.time<=4&&now>=r.flowReady&&pv(s,'flow')){capStamina(s,pv(s,'flow'));passiveVisual(s,'flow',h);r.flowReady=now+6;}
@@ -121,13 +130,15 @@ export function castSkill(s,id,aim,h){
  if(r.finisherUntil>now){passiveVisual(s,'finisher',h);r.finisherUntil=0;}
  let delay=d.delay??.12;
  if(id==='draw'&&r.openingUntil>now){delay*=1-pv(s,'opening')/100;passiveVisual(s,'opening',h);r.openingUntil=0;}
- const count=d.hits??1,duration=delay+(count-1)*(d.interval??0)+.18,utility=['stance','bloodblade','mark','phantoms'].includes(id);
- r.motion=createSkillMotion(id,root,now,utility?.16:delay,count,d.interval??0,utility?.42:id==='parry'?.25:duration);
- if(id==='gale'||id==='echo'||id==='plunge'){
-  if(id!=='plunge')r.pursuitUntil=now+3;
-  const reach=id==='echo'?-95:id==='plunge'?Math.min(170,target?distance(p,target):170):170,end={x:p.x+n.x*reach,y:p.y+n.y*reach};h.clamp(end,s.bounds);
+ const count=root.count,interval=d.interval??(count>1?.25:0),duration=delay+(count-1)*interval+.18,utility=['stance','bloodblade','mark','phantoms'].includes(id);
+ // A 괴수 기술 borrows the motion, travel and effect art of the skill it is drawn like (`visual`).
+ r.motion=createSkillMotion(vid,root,now,utility?.16:delay,count,interval,utility?.42:id==='parry'?.25:duration);
+ if(root.beast?.element.shield){h.shield?.(s,root.beast.element.shield);}
+ if(vid==='gale'||vid==='echo'||vid==='plunge'){
+  if(vid!=='plunge'&&d.kind!=='beast')r.pursuitUntil=now+3;
+  const reach=vid==='echo'?-95:vid==='plunge'?Math.min(170,target?distance(p,target):170):170,end={x:p.x+n.x*reach,y:p.y+n.y*reach};h.clamp(end,s.bounds);
   r.travel={fromX:p.x,fromY:p.y,toX:end.x,toY:end.y,startedAt:now,duration:Math.max(.025,delay)};
-  if(id==='plunge'){root.x=end.x;root.y=end.y;}
+  if(vid==='plunge'){root.x=end.x;root.y=end.y;}
  }
 
  if(id==='stance'){r.stanceUntil=now+3;h.visual(s,'skillCast',{skillId:id,x:p.x,y:p.y,radius:100},.5);return true;}
@@ -135,11 +146,12 @@ export function castSkill(s,id,aim,h){
  if(id==='mark'){target.skillMark={root,count:0,expires:now+8};h.visual(s,'skillMark',{skillId:id,x:target.x,y:target.y,radius:45},.6);return true;}
  if(id==='phantoms'){r.phantomUntil=now+8;r.phantomHits=8;r.phantomDamage=root.damage/8;h.visual(s,'skillCast',{skillId:id,x:p.x,y:p.y,radius:160},.6);return true;}
  if(id==='parry'){r.parryUntil=now+.25;r.parryCast=root;h.motion(s,n,.25,id);h.visual(s,'skillCast',{skillId:id,x:p.x,y:p.y,radius:110,n},.25);return true;}
- h.motion(s,n,id==='dance'?.2:duration,id);r.casting={id,until:now+duration};
+ h.motion(s,n,vid==='dance'?.2:duration,vid);r.casting={id,until:now+duration};
  const center=d.shape==='field'?(target?{x:target.x,y:target.y}:{x:p.x+n.x*d.range,y:p.y+n.y*d.range}):{x:root.x,y:root.y};
  const interruptible=['draw','triple','dance','bloodmoon','eclipse'].includes(id);
- for(let i=0;i<count;i++)r.jobs.push({root,at:now+delay+i*(d.interval??0),index:i,center,interruptible,rootToken:r.token});
- h.visual(s,'skillCast',{skillId:id,x:center.x,y:center.y,radius:root.radius??root.range,areaScale,n,fromX:root.castX,fromY:root.castY,targetX:target?.x??center.x+n.x*d.range,targetY:target?.y??center.y+n.y*d.range,serial:root.serial,targetId:root.targetId},Math.max(.025,delay));return true;
+ for(let i=0;i<count;i++)r.jobs.push({root,at:now+delay+i*interval,index:i,center,interruptible,rootToken:r.token});
+ if(root.beast)h.visual(s,'ancientSig',{x:center.x,y:center.y,radius:root.radius??root.range,color:root.beast.color,rune:SKILL_CATALOG.indexOf(d)},.6);
+ h.visual(s,'skillCast',{skillId:vid,x:center.x,y:center.y,radius:root.radius??root.range,areaScale,n,fromX:root.castX,fromY:root.castY,targetX:target?.x??center.x+n.x*d.range,targetY:target?.y??center.y+n.y*d.range,serial:root.serial,targetId:root.targetId},Math.max(.025,delay));return true;
 }
 function shapeHits(s,e,j,d){const root=j.root,p=s.player,n=root.n;let origin=j.center;
  let reach=root.range??d.range;if(root.id==='bloodmoon'&&s.profile.level>=50&&s.profile.skillBook.awakening==='area'&&j.index===6)reach*=1.4;
@@ -155,7 +167,7 @@ function markHit(s,e,h,allow){const m=e.skillMark;if(!allow||!m||s.run.time>m.ex
 function applyJob(s,j,h){const r=s.skillRuntime,root=j.root,d=SKILL_BY_ID[root.id],p=s.player;let count=0,living=0,crowd=0;
  for(const e of s.enemies)if(live(e)){const range=distance(e,p);if(range<400)living++;if(range<240)crowd++;}
  const boost=(living===1?pv(s,'lone'):0),surrounded=crowd>=3?pv(s,'surrounded'):0;
- let scale=1/(d.hits??1);
+ let scale=1/(root.count??d.hits??1);
  if(root.id==='triple')scale=j.index===2?.5:.25;
  if(root.id==='echo')scale=j.index===0?(80+10*(root.rank-1))/(180+25*(root.rank-1)):(100+15*(root.rank-1))/(180+25*(root.rank-1));
  if(root.id==='bloodmoon')scale=j.index===6?(160+20*(root.rank-1))/(520+80*(root.rank-1)):(60+10*(root.rank-1))/(520+80*(root.rank-1));
@@ -168,7 +180,8 @@ function applyJob(s,j,h){const r=s.skillRuntime,root=j.root,d=SKILL_BY_ID[root.i
   const result=h.hit(s,e,value,false,root.poise>=35?'heavy':'normal',d.shape==='circle'||d.shape==='ultimateArea'?p:j.center,false,null,{inscriptions:root.inscriptions??s.buildEffects});
   if(result==='miss')continue;count++;
   if(root.id==='breach'&&!e.dead)e.skillBreach={until:s.run.time+5,value:10+root.rank*2};
-  if(root.id==='gather'&&!e.dead&&!e.boss&&!e.elite){e.x=p.x+(e.x-p.x)*.35;e.y=p.y+(e.y-p.y)*.35;h.clamp(e,s.bounds);}
+  if(root.beast&&!e.dead){const el=root.beast.element;h.status?.(s,e,el,root.attack);if(el.breach)e.skillBreach={until:s.run.time+5,value:Math.max(e.skillBreach?.until>s.run.time?e.skillBreach.value:0,el.breach)};}
+  if(d.shape==='gather'&&!e.dead&&!e.boss&&!e.elite){e.x=p.x+(e.x-p.x)*.35;e.y=p.y+(e.y-p.y)*.35;h.clamp(e,s.bounds);}
   if(!e.dead){let poise=root.poise;if(root.id==='draw'&&distance(p,{x:root.castX,y:root.castY})<4){poise*=1+pv(s,'steady')/100;passiveVisual(s,'steady',h);}if(['dance','gather'].includes(root.id)){poise*=1+surrounded/100;if(surrounded)passiveVisual(s,'surrounded',h);}if(root.id==='plunge'&&distance(e,j.center)<70)poise*=1.5;
    e.skillPoise=(e.skillPoise??0)+poise;if(e.skillPoise>=100){e.skillPoise=0;e.exposed=Math.max(e.exposed??0,1.5);e.action='stagger';e.actionTime=0;h.visual(s,'guardBreak',{x:e.x,y:e.y},.5);}
    markHit(s,e,h,root.id!=='echo'||j.index===0||!!pv(s,'resonance'));
@@ -177,7 +190,7 @@ function applyJob(s,j,h){const r=s.skillRuntime,root=j.root,d=SKILL_BY_ID[root.i
  if(count&&root.id==='returning'&&j.index===1&&!root.recovered){capStamina(s,pv(s,'recovery'));passiveVisual(s,'recovery',h);root.recovered=true;}
  let x=j.center.x,y=j.center.y;if(d.shape==='seeking'){const e=s.enemies.find(e=>e.id===root.targetId);if(e){x=e.x;y=e.y;}}else if(['circle','ultimateArea'].includes(d.shape)){x=p.x;y=p.y;}
  const visualReach=root.id==='bloodmoon'&&s.profile.level>=50&&s.profile.skillBook.awakening==='area'&&j.index===6?root.range*1.4:root.radius??root.range;
- h.visual(s,'skillImpact',{skillId:root.id,x,y,radius:visualReach,areaScale:root.areaScale,n:root.n,index:j.index,fromX:root.castX,fromY:root.castY,targetX:x,targetY:y,serial:root.serial},.3);
+ h.visual(s,'skillImpact',{skillId:d.visual??root.id,x,y,radius:visualReach,areaScale:root.areaScale,n:root.n,index:j.index,fromX:root.castX,fromY:root.castY,targetX:x,targetY:y,serial:root.serial},.3);
 }
 export function tickSkills(s,dt,h){const r=s.skillRuntime,p=s.player,now=s.run.time;
  if(r.ultimatePresentation&&now-r.ultimatePresentation.startedAt>=1.35)r.ultimatePresentation=null;
@@ -210,6 +223,8 @@ export function autoSkill(s,n,h){const p=s.player,r=s.skillRuntime,b=s.profile.s
  const ultimate=b.loadout.ultimate[0];if(ultimate&&b.auto.ultimate!=='off'&&(b.auto.ultimate==='any'||boss)&&castSkill(s,ultimate,n,h))return true;
  // An equipped 파갑참 goes first whenever a guarded or still-armored enemy is within its reach.
  if(b.loadout.active.includes('breach')&&p.stamina>=SKILL_BY_ID.breach.cost+22){const reach=skillReach(s.profile,'breach'),shield=s.enemies.find(e=>live(e)&&(e.guard>0||e.plate>0&&!(e.plateBrokenUntil>s.run.time))&&distance(e,p)<=reach);if(shield&&castSkill(s,'breach',unit(shield.x-p.x,shield.y-p.y),h))return true;}
+ // The 괴수 기술 goes whenever it is ready and something is in reach (it has its own slot and cooldown).
+ {const id=b.loadout.beast?.[0],d=SKILL_BY_ID[id];if(d&&p.stamina>=d.cost+15){const reach=skillReach(s.profile,id)*(RADIAL_REACH.has(d.shape)?BEAST_GRADES[skillRank(s.profile,id)]?.area??1:1),target=nearestTarget(s,n,reach);if(target&&castSkill(s,id,{x:n.x,y:n.y,targetId:target.id},h))return true;}}
  for(const id of b.loadout.active){const d=SKILL_BY_ID[id];if(!d)continue;
   if(id==='stance'){if(p.stamina>45&&p.hp/p.maxHp>.5)continue;}else if(p.stamina<d.cost+(b.auto.mode==='safe'?35:22))continue;
   const reach=skillReach(s.profile,id);

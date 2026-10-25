@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.124.0';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.125.0';
 import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js';
 import { createCombatAudio } from './sound.js?v=0.76.0';
-import * as game from './game-engine.js?v=0.124.0';
+import * as game from './game-engine.js?v=0.125.0';
 import {FrameMetrics} from './frame-metrics.js?v=0.98.1';
 import { frameIndex, frameRect, validateClip } from './engine.js';
 import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
 import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.103.1';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.124.0';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.124.0';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.124.0';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.124.0';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.125.0';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.125.0';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.125.0';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.125.0';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -69,7 +69,7 @@ let trackOpen=false,trackMaterial=null,trackViewKey='',goalCache=null;
 let campDrawer='',campDrawerOrigin='hub-map';
 let selectedDungeon='gold',selectedDungeonLevel=1,dungeonBusy=false,dungeonMode='growth',selectedRaid='colossus';
 let selectedSkill='crescent',skillTab='all',skillRenderKey='',skillFeedback='';
-const skillKinds={active:'일반 스킬',passive:'패시브',ultimate:'궁극기'};
+const skillKinds={active:'일반 스킬',passive:'패시브',ultimate:'궁극기',beast:'괴수 기술'};
 let craftSlot='all',trackRecipeId=null,trackReturnCraft=false,trackOrigin='craft-track';
 let craftOpen=false,craftSelected=game.CRAFTED_CATALOG[1].id,craftFeedback='',craftRenderKey='';
 let equipmentSceneKey='';
@@ -580,7 +580,7 @@ document.addEventListener('keydown',event=>{
   event.preventDefault();if(!ready||state.phase!=='playing'||state.paused)return;
   audio.unlock();manual();keys.add(k);moveTarget=null;attackTarget=null;
   if(!event.repeat&&['w','a','s','d','arrowup','arrowleft','arrowdown','arrowright'].includes(k))aim=null;
-  if(!event.repeat&&['e','r','t','f','g'].includes(k))useCombatSkill(['e','r','t','f','g'].indexOf(k));
+  if(!event.repeat&&['e','r','t','f','g','h'].includes(k))useCombatSkill(['e','r','t','f','g','h'].indexOf(k));
   if(!event.repeat&&k==='shift')doDash();if(!event.repeat&&k==='q')doThunder();if(!event.repeat&&k==='f'){game.interact(state);save();updateHud();}
 });
 document.addEventListener('keyup',event=>{keys.delete(event.key.toLowerCase());if(event.key===' '&&suppressHeldSpace){suppressHeldSpace=false;event.preventDefault();}});
@@ -1085,7 +1085,7 @@ function updateHud(){
   }else if(['victory','defeat'].includes(state.phase)){
     const raidRun=state.run.raidId?game.raidDefinition(state.run.raidId):null,dungeon=raidRun?{kind:'레이드',name:raidRun.name}:game.dungeonDefinition(state.run.dungeonId),victory=state.phase==='victory',timedOut=state.run.timedOut,unpaid=!victory&&state.run.stageType!=='normal';modal('result',victory?(state.difficulty?game.HUNT_MODES[state.difficulty].name+' 수문장 사냥 완료!':'수문장 사냥 완료!'):timedOut?'제한 시간이 끝났어.':'이번 사냥은 여기까지.',unpaid?'남은 몬스터 '+monsters+'마리 · 실패한 구간의 보상은 지급되지 않습니다. 이전에 완료한 구간의 보상은 유지됩니다.':timedOut?'남은 몬스터 '+monsters+'마리 · 수집한 재료와 성장은 유지돼.':'수집한 재료와 성장은 유지돼. 거점에서 장비를 강화해.',victory?state.stageId+'-'+state.run.stage+' 스테이지 완료':timedOut?'TIME OVER':'RETURN TO CAMP');
     $('dungeon-result-rewards').hidden=!dungeon;
-    $('result-boss-ancients').hidden=!state.run.bossAncients.length;hudText($('result-boss-ancients'),'보스 고대 유물 · '+state.run.bossAncients.map(id=>game.ANCIENT_CATALOG.find(r=>r.id===id).name).join(' / '));hudText($('result-loot'),'스테이지 보상 '+state.run.stageItems+' · 몬스터 드롭 '+state.run.monsterItems+' · 자동 분해 '+state.run.autoSalvaged);
+    const learned=state.run.beastLearned;$('result-boss-ancients').hidden=!state.run.bossAncients.length&&!learned;hudText($('result-boss-ancients'),[state.run.bossAncients.length?'보스 고대 유물 · '+state.run.bossAncients.map(id=>game.ANCIENT_CATALOG.find(r=>r.id===id).name).join(' / '):'',learned?'괴수 기술 '+(learned.before?'등급 상승':'획득')+' · '+game.SKILL_BY_ID[learned.id].name+' ('+game.BEAST_GRADES[learned.grade].name+')':''].filter(Boolean).join('\n'));hudText($('result-loot'),'스테이지 보상 '+state.run.stageItems+' · 몬스터 드롭 '+state.run.monsterItems+' · 자동 분해 '+state.run.autoSalvaged);
     hudText($('result-style'),'완벽 회피 '+state.run.perfectDodges+' · 갑각 파쇄 '+state.run.guardBreaks+' · 폭발 '+state.run.explosions+' · 빙결 파쇄 '+state.run.synergyProcs.shatter+' · 출혈 처형 '+state.run.synergyProcs.execute+' · 제작 각인 '+state.run.craftedProcs+' · 재료 '+state.run.materials+(state.run.trainingGold?' · 숙련 환전 +'+state.run.trainingGold+' 골드':''));
     refreshResultLoot();hudText($('result-items'),String(state.run.items));hudText($('result-kills'),String(state.run.kills));hudText($('result-gold'),String(state.run.gold));hudText($('result-cores'),String(state.run.cores));hudText($('result-time'),duration(state.run.time));hudText($('result-xp'),'경험치 +'+state.run.xp);$('result-xp').setAttribute('title','기본 경험치 '+(state.run.xp-state.run.xpBonus)+' · 성장 보너스 +'+state.run.xpBonus);
     hudText($('result-note'),victory&&state.difficulty?(state.difficulty===1?'정예 10스테이지 완료 · 악몽 1스테이지부터 도전할 수 있어.':'악몽 공략 완료 · 남은 유물을 찾아 다시 도전해.'):victory&&state.stageId<3?'챕터 완료! 다음 챕터가 열렸어.':victory?'세 챕터 완료! 원하는 스테이지에 다시 도전할 수 있어.':unpaid?'구간 실패 · 보상 없음. 장비·스킬이나 프리셋을 바꾸고 '+countdown(state.run.timeLimit)+'으로 재도전할 수 있습니다.':timedOut?'획득 장비를 착용하고 성장·광역 스킬을 정비해봐. 재도전은 '+countdown(state.run.timeLimit)+'으로 시작해.':'완료한 전투와 수집한 성장은 저장돼. 같은 전투에 다시 도전해.');
@@ -1398,7 +1398,7 @@ $('skill-list-back').addEventListener('click',()=>{if(state.phase!=='camp'||camp
 $('growth-skills').addEventListener('click',()=>openSkills('hub-growth'));
 function skillChanged(message){skillFeedback=message;skillRenderKey='';save();updateHud();}
 for(const row of game.SKILL_CATALOG)$('skill-card-'+row.id).addEventListener('click',()=>{if(state.phase!=='camp'||campDrawer!=='skills')return;selectedSkill=row.id;skillRenderKey='';refreshSkills();window.hunterPages?.reveal($('skill-detail'));});
-for(const tab of ['all','active','passive','ultimate'])$('skill-tab-'+tab).addEventListener('click',()=>{if(state.phase!=='camp')return;skillTab=tab;skillPage=0;skillRenderKey='';refreshSkills();});
+for(const tab of ['all','active','passive','ultimate','beast'])$('skill-tab-'+tab).addEventListener('click',()=>{if(state.phase!=='camp')return;skillTab=tab;skillPage=0;skillRenderKey='';refreshSkills();});
 for(const [kind,count]of Object.entries(game.MAX_SLOTS))for(let i=0;i<count;i++)$('skill-slot-'+kind+'-'+i).addEventListener('click',()=>{if(state.phase!=='camp')return;const id=profile.skillBook.loadout[kind][i];if(id){selectedSkill=id;skillRenderKey='';refreshSkills();window.hunterPages?.reveal($('skill-detail'));}});
 for(let i=0;i<4;i++)$('skill-equip-'+i).addEventListener('click',()=>{if(game.equipSkill(state,selectedSkill,i))skillChanged('장착 변경 · '+game.SKILL_BY_ID[selectedSkill].name);});
 $('skill-upgrade').addEventListener('click',()=>{if(game.upgradeSkill(state,selectedSkill))skillChanged(game.SKILL_BY_ID[selectedSkill].name+' Lv.'+game.skillRank(profile,selectedSkill)+' 강화 완료');});
@@ -1412,35 +1412,38 @@ function refreshSkills(){
  if(campDrawer!=='skills')return;const book=profile.skillBook,key=JSON.stringify([book,profile.level,selectedSkill,skillTab,skillPage,skillFeedback,profile.gold,profile.materials.skillPage]);if(key===skillRenderKey)return;skillRenderKey=key;
  const slots=game.skillSlots(profile.level),d=game.SKILL_BY_ID[selectedSkill],rank=game.skillRank(profile,d.id),equipped=book.loadout[d.kind].includes(d.id);
  $('skill-budget').textContent='리리안 Lv.'+profile.level+' · 강화 포인트 '+game.skillPoints(profile);$('skill-feedback').textContent=skillFeedback;
- for(const tab of ['all','active','passive','ultimate'])$('skill-tab-'+tab).setAttribute('aria-pressed',String(skillTab===tab));
- const visibleSkills=game.SKILL_CATALOG.filter(row=>skillTab==='all'||row.kind===skillTab),pageCount=Math.max(1,Math.ceil(visibleSkills.length/skillPageSize));skillPage=Math.max(0,Math.min(pageCount-1,skillPage));const pageIds=new Set(visibleSkills.slice(skillPage*skillPageSize,(skillPage+1)*skillPageSize).map(row=>row.id));$('skill-page-label').textContent=(skillPage+1)+' / '+pageCount+' · '+visibleSkills.length+'개';$('skill-page-prev').disabled=skillPage===0;$('skill-page-next').disabled=skillPage===pageCount-1;
- for(const row of game.SKILL_CATALOG){const r=game.skillRank(profile,row.id),node=$('skill-card-'+row.id),on=book.loadout[row.kind].includes(row.id);node.hidden=!pageIds.has(row.id);node.setAttribute('data-locked',String(!r));node.setAttribute('aria-pressed',String(row.id===selectedSkill));$('skill-state-'+row.id).textContent=r?'Lv.'+r+(on?' · 장착':''):'캐릭터 Lv.'+row.unlock;}
+ for(const tab of ['all','active','passive','ultimate','beast'])$('skill-tab-'+tab).setAttribute('aria-pressed',String(skillTab===tab));
+ // '전체' lists Lilian's own skills; the 60 괴수 기술 have their own tab (Alpha 0.125).
+ const visibleSkills=game.SKILL_CATALOG.filter(row=>skillTab==='all'?row.kind!=='beast':row.kind===skillTab),pageCount=Math.max(1,Math.ceil(visibleSkills.length/skillPageSize));skillPage=Math.max(0,Math.min(pageCount-1,skillPage));const pageIds=new Set(visibleSkills.slice(skillPage*skillPageSize,(skillPage+1)*skillPageSize).map(row=>row.id));$('skill-page-label').textContent=(skillPage+1)+' / '+pageCount+' · '+visibleSkills.length+'개';$('skill-page-prev').disabled=skillPage===0;$('skill-page-next').disabled=skillPage===pageCount-1;
+ for(const row of game.SKILL_CATALOG){const r=game.skillRank(profile,row.id),node=$('skill-card-'+row.id),on=book.loadout[row.kind].includes(row.id);node.hidden=!pageIds.has(row.id);node.setAttribute('data-locked',String(!r));node.setAttribute('aria-pressed',String(row.id===selectedSkill));$('skill-state-'+row.id).textContent=row.kind==='beast'?(r?game.BEAST_GRADES[r].name+(on?' · 장착':''):row.chapter+'장 보스'):r?'Lv.'+r+(on?' · 장착':''):'캐릭터 Lv.'+row.unlock;}
  for(const [kind,count]of Object.entries(game.MAX_SLOTS))for(let i=0;i<count;i++){
-  const id=book.loadout[kind][i],node=$('skill-slot-'+kind+'-'+i),art=$('skill-slot-art-'+kind+'-'+i),label=i>=slots[kind]?'Lv.'+game.SKILL_SLOT_UNLOCKS.find(row=>row.kind===kind&&row.index===i).level+' 해금':id?game.SKILL_BY_ID[id].name:'비어 있음';
+  const id=book.loadout[kind][i],node=$('skill-slot-'+kind+'-'+i),art=$('skill-slot-art-'+kind+'-'+i),label=i>=slots[kind]?'Lv.'+game.SKILL_SLOT_UNLOCKS.find(row=>row.kind===kind&&row.index===i).level+' 해금':id?game.SKILL_BY_ID[id].name+(kind==='beast'?' · '+game.BEAST_GRADES[game.skillRank(profile,id)].name:''):'비어 있음';
   node.setAttribute('data-kind',kind);node.disabled=i>=slots[kind];$('skill-slot-name-'+kind+'-'+i).textContent=label;
   art.hidden=!id;if(id)art.src=game.SKILL_BY_ID[id].icon;node.setAttribute('data-empty',String(!id));node.setAttribute('aria-label',skillKinds[kind]+' '+(i+1)+' · '+label);
  }
  $('skill-study').disabled=!!game.skillStudyStatus(profile);$('skill-study-cost').textContent='보유 검술서 '+profile.materials.skillPage+' · 연구 1회: 검술서 '+game.SKILL_STUDY_COST.pages+' + '+game.SKILL_STUDY_COST.gold+' 골드';$('skill-study-note').textContent='강화 포인트 +1 · 레벨 조건 유지 · 연구 '+book.trainingPoints+'/'+game.SKILL_STUDY_COST.max+(game.skillStudyStatus(profile)?' · '+game.skillStudyStatus(profile):'');
- $('skill-detail-icon').src=d.icon;$('skill-detail-name').textContent=d.name;$('skill-detail-kind').textContent=skillKinds[d.kind]+(equipped?' · 장착 중':'');$('skill-detail-unlock').textContent='캐릭터 Lv.'+d.unlock+' 해금'+(rank?' · 현재 Lv.'+rank:' · 아직 잠김');
+ $('skill-detail-icon').src=d.icon;$('skill-detail-name').textContent=d.name;$('skill-detail-kind').textContent=skillKinds[d.kind]+(equipped?' · 장착 중':'');const beast=d.kind==='beast';$('skill-detail-unlock').textContent=beast?d.chapter+'장 '+d.bossName+' 처치로 획득'+(rank?' · 현재 '+game.BEAST_GRADES[rank].name:' · 아직 미획득'):'캐릭터 Lv.'+d.unlock+' 해금'+(rank?' · 현재 Lv.'+rank:' · 아직 잠김');
  const areaScale=game.skillAreaScale(profile,d.id),growing=['line','dash','circle','cone','targetArea','echo','returning','field','gather','ultimateArea'].includes(d.shape);
  $('skill-detail-description').textContent=d.description+(growing?' 기본 범위 기준. 현재 광역 범위 +'+Math.round((areaScale-1)*100)+'% · 캐릭터 Lv.10마다 +10%, 최대 +40%.':'');
- $('skill-current-effect').textContent=(rank?'현재 Lv.'+rank+' · ':'미해금 · Lv.1 기준 · ')+game.skillNumbers(profile,d.id,rank||1);
- $('skill-detail-resource').textContent=d.kind==='passive'?'장착한 동안 조건에 따라 발동':d.kind==='ultimate'?'재사용 '+d.cooldown+'초 · 기력 소모 없음':'기력 '+d.cost+' · 재사용 '+d.cooldown+'초';
- for(let i=1;i<=5;i++){$('skill-rank-row-'+i).setAttribute('data-current',String(rank===i));$('skill-rank-value-'+i).textContent=game.skillNumbers(profile,d.id,i);$('skill-rank-gate-'+i).textContent='캐릭터 Lv.'+game.skillLevelGate(d.id,i);}
+ $('skill-current-effect').textContent=beast?(rank?'현재 ':'미획득 · 기본 기준 · ')+game.skillNumbers(profile,d.id,rank||1):(rank?'현재 Lv.'+rank+' · ':'미해금 · Lv.1 기준 · ')+game.skillNumbers(profile,d.id,rank||1);
+ $('skill-detail-resource').textContent=beast?'기력 '+d.cost+' · 재사용 '+Math.round(d.cooldown*(game.BEAST_GRADES[rank||1].cooldown)*10)/10+'초 · 자동 시전':d.kind==='passive'?'장착한 동안 조건에 따라 발동':d.kind==='ultimate'?'재사용 '+d.cooldown+'초 · 기력 소모 없음':'기력 '+d.cost+' · 재사용 '+d.cooldown+'초';
+ // 괴수 기술 grades: 기본 (first kill), 강화 (정예 chance), 극 (악몽 chance) instead of five skill-point ranks.
+ for(let i=1;i<=5;i++){$('skill-rank-row-'+i).hidden=beast&&i>3;$('skill-rank-row-'+i).setAttribute('data-current',String(rank===i));$('skill-rank-value-'+i).textContent=beast&&i>3?'':game.skillNumbers(profile,d.id,i);$('skill-rank-gate-'+i).textContent=beast?['첫 처치','정예 처치 '+Math.round(game.BEAST_GRADE_CHANCE[1]*100)+'%','악몽 처치 '+Math.round(game.BEAST_GRADE_CHANCE[2]*100)+'%',''][i-1]??'':'캐릭터 Lv.'+game.skillLevelGate(d.id,i);}
  const next=game.skillLevelGate(d.id,rank+1);
- $('skill-detail-note').textContent=d.kind==='ultimate'?'궁극기는 캐릭터 레벨에 따라 자동 강화됩니다. 사냥 시작 시 바로 사용하며, 사용 후 60초 동안 기다립니다. 일시정지 중에는 남은 시간도 멈춥니다.':'해금 시 Lv.1을 바로 사용합니다. 이후 단계당 강화 포인트 1개를 사용합니다.';
- $('skill-upgrade').hidden=d.kind==='ultimate';$('skill-upgrade').disabled=!rank||rank>=5||!game.skillPoints(profile)||profile.level<next;$('skill-upgrade').textContent=!rank?'캐릭터 Lv.'+d.unlock+' 필요':rank>=5?'최대 강화':profile.level<next?'다음 강화 · 캐릭터 Lv.'+next:game.skillPoints(profile)?'Lv.'+(rank+1)+' 강화 · 포인트 1':'강화 포인트 부족';
+ $('skill-detail-note').textContent=beast?'괴수 기술 칸 1개에 장착하며, 준비되면 자동으로 시전합니다. 보스를 처음 쓰러뜨리면 기본을 배우고, 정예·악몽에서 다시 쓰러뜨리면 확률로 강화·극을 배웁니다(낮은 등급으로 내려가지 않음).':d.kind==='ultimate'?'궁극기는 캐릭터 레벨에 따라 자동 강화됩니다. 사냥 시작 시 바로 사용하며, 사용 후 60초 동안 기다립니다. 일시정지 중에는 남은 시간도 멈춥니다.':'해금 시 Lv.1을 바로 사용합니다. 이후 단계당 강화 포인트 1개를 사용합니다.';
+ $('skill-upgrade').hidden=d.kind==='ultimate'||beast;$('skill-upgrade').disabled=!rank||rank>=5||!game.skillPoints(profile)||profile.level<next;$('skill-upgrade').textContent=!rank?'캐릭터 Lv.'+d.unlock+' 필요':rank>=5?'최대 강화':profile.level<next?'다음 강화 · 캐릭터 Lv.'+next:game.skillPoints(profile)?'Lv.'+(rank+1)+' 강화 · 포인트 1':'강화 포인트 부족';
  for(let i=0;i<4;i++){const node=$('skill-equip-'+i);node.hidden=i>=game.MAX_SLOTS[d.kind];node.disabled=!rank||i>=slots[d.kind];const action=book.loadout[d.kind][i]===d.id?'해제':'장착';node.textContent=(game.MAX_SLOTS[d.kind]>2?'':'슬롯 ')+(i+1)+' '+action;node.setAttribute('aria-label','슬롯 '+(i+1)+' '+action);}
  for(let i=0;i<3;i++){const b=book.presets[i];$('skill-preset-load-'+i).disabled=!b;$('skill-preset-state-'+i).textContent=b?[...b.active,...b.ultimate].filter(Boolean).map(id=>game.SKILL_BY_ID[id].name).join(' · ')||'빈 구성':'비어 있음';}
  $('skill-auto-mode').value=book.auto.mode;$('skill-auto-ultimate').value=book.auto.ultimate;$('skill-awakening').value=book.awakening;$('skill-awakening-label').hidden=profile.level<50;
 }
 // Combat buttons 0·1 and 3·4 are regular slots 1–4 (3·4 since Alpha 0.119); button 2 stays the ultimate.
-const combatSkillIds=()=>{const {active,ultimate}=profile.skillBook.loadout;return [active[0],active[1],ultimate[0],active[2],active[3]];};
+// Button 5 (key H) is the 괴수 기술 slot (Alpha 0.125).
+const combatSkillIds=()=>{const {active,ultimate,beast}=profile.skillBook.loadout;return [active[0],active[1],ultimate[0],active[2],active[3],beast?.[0]];};
 function useCombatSkill(index){const id=combatSkillIds()[index];if(!ready||!id||state.phase!=='playing'||state.paused)return;audio.unlock();manual();if(!game.useSkill(state,id,state.auto?undefined:currentAim())&&state.auto&&!((state.skillRuntime.cooldowns[id]??0)>0)&&state.player.stamina>=game.SKILL_BY_ID[id].cost)skillRequest={id,until:state.run.time+3};canvas.focus({preventScroll:true});updateHud();}
-for(let i=0;i<5;i++){const action=()=>useCombatSkill(i),button=$('combat-skill-'+i);button.addEventListener('pointerdown',combatPress(action));button.addEventListener('click',combatClick(action));}
+for(let i=0;i<6;i++){const action=()=>useCombatSkill(i),button=$('combat-skill-'+i);button.addEventListener('pointerdown',combatPress(action));button.addEventListener('click',combatClick(action));}
 function refreshCombatSkills(){
  const ids=combatSkillIds(),r=state.skillRuntime;
- for(let i=0;i<5;i++){const id=ids[i],node=$('combat-skill-'+i),d=game.SKILL_BY_ID[id];node.hidden=!d;if(!d)continue;const cd=r.cooldowns[id]??0,usable=state.auto?state.phase==='playing'&&!state.paused&&state.run.flow==='combat'&&cd<=0&&state.player.stamina>=d.cost:game.skillReady(state,id);if(combatSkillIcons[i]!==d.icon){combatSkillIcons[i]=d.icon;$('combat-skill-icon-'+i).src=d.icon;}hudText($('combat-skill-name-'+i),d.name);hudText($('combat-skill-state-'+i),cd>0?(i===2?Math.ceil(cd):Math.max(.1,cd).toFixed(1))+'초':state.player.stamina<d.cost?'기력 부족':'준비');node.disabled=!usable;node.setAttribute('data-ultimate',String(i===2));node.setAttribute('data-ready',String(usable));node.setAttribute('data-cooldown',String(cd>0));node.setAttribute('data-queued',String(skillRequest?.id===id));node.setAttribute('aria-label',d.name+' · '+$('combat-skill-state-'+i).textContent);}
+ for(let i=0;i<6;i++){const id=ids[i],node=$('combat-skill-'+i),d=game.SKILL_BY_ID[id];node.hidden=!d;if(!d)continue;const cd=r.cooldowns[id]??0,usable=state.auto?state.phase==='playing'&&!state.paused&&state.run.flow==='combat'&&cd<=0&&state.player.stamina>=d.cost:game.skillReady(state,id);if(combatSkillIcons[i]!==d.icon){combatSkillIcons[i]=d.icon;$('combat-skill-icon-'+i).src=d.icon;}hudText($('combat-skill-name-'+i),d.name);hudText($('combat-skill-state-'+i),cd>0?(i===2?Math.ceil(cd):Math.max(.1,cd).toFixed(1))+'초':state.player.stamina<d.cost?'기력 부족':'준비');node.disabled=!usable;node.setAttribute('data-ultimate',String(i===2));node.setAttribute('data-ready',String(usable));node.setAttribute('data-cooldown',String(cd>0));node.setAttribute('data-queued',String(skillRequest?.id===id));node.setAttribute('aria-label',d.name+' · '+$('combat-skill-state-'+i).textContent);}
 }
 
 

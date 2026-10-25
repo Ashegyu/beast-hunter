@@ -1529,7 +1529,7 @@ test('actual skill controls spend resources, retain cooldown on pause and expose
 });
 
 test('all nineteen actual skill buttons render authored body frames and finite VFX without the generic heavy cleave',async()=>{
- for(const d of game.SKILL_CATALOG.filter(d=>d.kind!=='passive')){
+ for(const d of game.SKILL_CATALOG.filter(d=>d.kind!=='passive'&&d.kind!=='beast')){
   const p=game.createProfile(1_000_000);p.level=50;p.skillBook=game.restoreSkillBook(null,50);p.skillBook.loadout={active:[null,null],passive:[null,null,null],ultimate:[null]};p.skillBook.loadout[d.kind][0]=d.id;
   const ui=await host({manual:true,saved:p,campaign:true,recordGeometry:true});ui.emit('start','click');ui.tick();const s=ui.state;s.spawns=[{id:s.nextId++,type:'bulwark',x:s.player.x+120,y:s.player.y,delay:0,warning:1}];game.advanceGame(s,.001);s.spawns=[];s.barrels=[];s.player.invulnerable=100;
   const e=s.enemies[0];Object.assign(e,{x:s.player.x+120,y:s.player.y,hp:100000,maxHp:100000,speed:0,cooldown:1000,guard:0});s.enemies=[e];ui.tick(0);
@@ -1862,9 +1862,9 @@ test('leaving a cold dungeon launch cancels its intent and keeps camp controls u
 
 test('skill library pages all 35 skills without changing the loadout and resets paging for category changes',async()=>{
  const ui=await host();ui.emit('nav-skills','click');const before=ui.profile();
- const visible=()=>game.SKILL_CATALOG.filter(r=>!ui.nodes.get('skill-card-'+r.id).hidden).map(r=>r.id);
+ const visible=()=>game.SKILL_CATALOG.filter(r=>r.kind!=='beast').filter(r=>!ui.nodes.get('skill-card-'+r.id).hidden).map(r=>r.id);
  const seen=[];for(let p=0;p<4;p++){const ids=visible();assert.ok(ids.length>0&&ids.length<=9);seen.push(...ids);assert.match(ui.nodes.get('skill-page-label').textContent,new RegExp('^'+(p+1)+' / 4'));if(p<3)ui.emit('skill-page-next','click');}
- assert.equal(ui.nodes.get('skill-page-next').disabled,true);assert.deepEqual(seen,game.SKILL_CATALOG.map(r=>r.id));
+ assert.equal(ui.nodes.get('skill-page-next').disabled,true);assert.deepEqual(seen,game.SKILL_CATALOG.filter(r=>r.kind!=='beast').map(r=>r.id));
  ui.emit('skill-tab-ultimate','click');assert.equal(ui.nodes.get('skill-tab-ultimate').attributes['aria-pressed'],'true');assert.equal(ui.nodes.get('skill-tab-all').attributes['aria-pressed'],'false');assert.equal(ui.nodes.get('skill-page-prev').disabled,true);assert.equal(ui.nodes.get('skill-page-next').disabled,true);assert.ok(visible().every(id=>game.SKILL_BY_ID[id].kind==='ultimate'));
- ui.emit('skill-tab-all','click');assert.equal(visible()[0],game.SKILL_CATALOG[0].id);assert.deepEqual(ui.profile(),before);
+ ui.emit('skill-tab-all','click');assert.equal(visible()[0],game.SKILL_CATALOG.filter(r=>r.kind!=='beast')[0].id);assert.deepEqual(ui.profile(),before);
 });

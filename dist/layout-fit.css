@@ -186,3 +186,6 @@
 #game-shell .raid-week em{font-size:10px;font-style:normal;color:#b6bcb5;line-height:1.4}
 #game-shell .raid-card[data-locked=true]{opacity:.55}
 @media(max-height:360px){#game-shell .dungeon-modes button{height:20px;padding:0 9px;font-size:10px}#game-shell #camp-dungeons-panel[data-mode=raid] #dungeon-rule{font-size:10px;line-height:1.35}#game-shell #camp-dungeons-panel[data-mode=raid] .dungeon-reward-preview>small{display:none}#game-shell .raid-week em{display:none}}
+/* 0.125 스킬 화면: 괴수 기술 탭까지 다섯 탭을 한 줄에 둔다(568px에서 두 줄로 접히지 않게). */
+#game-shell#game-shell #camp-skills-panel .skill-tabs{grid-template-columns:repeat(5,minmax(0,1fr))}
+#game-shell#game-shell #camp-skills-panel .skill-tabs>button{white-space:nowrap;letter-spacing:-.02em;padding-inline:2px}

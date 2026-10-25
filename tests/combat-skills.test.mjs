@@ -7,8 +7,8 @@ const profile=(level=50)=>{const p=g.createProfile();p.level=level;p.skillBook=g
 function fixture(id,rank=1){const p=profile(),d=g.SKILL_BY_ID[id];p.skillBook.loadout={active:[null,null],passive:[null,null,null],ultimate:[null]};p.skillBook.loadout[d.kind][0]=id;if(d.kind!=='ultimate')p.skillBook.ranks[id]=rank-1;const s=g.createGame(p);g.launch(s);s.spawns=[{id:800,type:'bulwark',x:s.player.x,y:s.player.y+110,delay:0,warning:1}];g.advanceGame(s,.001);s.spawns=[];s.barrels=[];s.player.invulnerable=100;const e=s.enemies[0];e.hp=e.maxHp=100000;e.guard=0;e.guardMax=0;e.cooldown=1000;e.speed=0;return {s,p,e};}
 const run=(s,seconds)=>{for(let t=0;t<seconds;t+=.025)g.advanceGame(s,.025);};
 test('35 definitions have unique images, complete rank values and reachable level gates',()=>{
- assert.deepEqual(['active','passive','ultimate'].map(k=>g.SKILL_CATALOG.filter(d=>d.kind===k).length),[16,16,3]);assert.equal(new Set(g.SKILL_CATALOG.map(d=>d.id)).size,35);
- for(const d of g.SKILL_CATALOG){assert.ok(fs.existsSync(new URL('../dist/'+d.icon,import.meta.url)),d.id);const bytes=fs.readFileSync(new URL('../dist/'+d.icon,import.meta.url));assert.equal(bytes.toString('ascii',8,12),'WEBP');assert.ok(d.description.length>10);let last=0;for(let rank=1;rank<=5;rank++){const gate=g.skillLevelGate(d.id,rank);assert.ok(gate>=last&&gate<=50,d.id);last=gate;assert.ok(g.skillNumbers(profile(),d.id,rank).length>1);}}
+ assert.deepEqual(['active','passive','ultimate'].map(k=>g.SKILL_CATALOG.filter(d=>d.kind===k).length),[16,16,3]);assert.equal(new Set(g.SKILL_CATALOG.map(d=>d.id)).size,95);assert.equal(g.SKILL_CATALOG.filter(d=>d.kind==='beast').length,60);// + 60 괴수 기술 (Alpha 0.125)
+ for(const d of g.SKILL_CATALOG.filter(d=>d.kind!=='beast')){assert.ok(fs.existsSync(new URL('../dist/'+d.icon,import.meta.url)),d.id);const bytes=fs.readFileSync(new URL('../dist/'+d.icon,import.meta.url));assert.equal(bytes.toString('ascii',8,12),'WEBP');assert.ok(d.description.length>10);let last=0;for(let rank=1;rank<=5;rank++){const gate=g.skillLevelGate(d.id,rank);assert.ok(gate>=last&&gate<=50,d.id);last=gate;assert.ok(g.skillNumbers(profile(),d.id,rank).length>1);}}
 });
 test('restore preserves legacy progress and repairs hostile allocations, identities, duplicates and over-spend',()=>{
  const p=profile(10);p.gold=223;p.skills.edge=2;p.skillPoints=3;p.skillBook.ranks=Object.fromEntries(g.SKILL_CATALOG.map(d=>[d.id,999]));p.skillBook.loadout={active:['bloodblade','crescent'],passive:['breath','breath','reserve'],ultimate:['eclipse']};p.skillBook.presets=[{active:['__proto__','crescent'],passive:['resolve'],ultimate:['eclipse']}];
@@ -21,14 +21,14 @@ test('unlock, rank, camp-only edits, swap, reset and presets use separate traini
 });
 test('level milestones match actual slot boundaries, include ultimates and awakening, and do not mutate builds',()=>{
  // Alpha 0.119: regular slots open at Lv.1/5/15/30.
- for(let level=1;level<=50;level++)assert.deepEqual(g.skillSlots(level),{active:level>=30?4:level>=15?3:level>=5?2:1,passive:level>=25?3:level>=10?2:1,ultimate:level>=20?1:0});
+ for(let level=1;level<=50;level++)assert.deepEqual(g.skillSlots(level),{active:level>=30?4:level>=15?3:level>=5?2:1,passive:level>=25?3:level>=10?2:1,ultimate:level>=20?1:0,beast:1});
  const p=profile(19),before=JSON.stringify(p),rows=g.skillMilestones(19,25);
  assert.ok(rows.some(r=>r.level===20&&r.id==='bloodmoon'));assert.ok(rows.some(r=>r.level===20&&r.kind==='slot'));assert.ok(rows.some(r=>r.level===25&&r.label==='패시브 슬롯 3'));
  assert.ok(rows.every(r=>r.level>19&&r.level<=25));assert.equal(rows.some(r=>r.id==='eclipse'),false);assert.deepEqual(rows.map(r=>r.level),rows.map(r=>r.level).sort((a,b)=>a-b));
  assert.deepEqual(g.skillMilestones(49),[{level:50,label:'적월난무 각성',kind:'awakening'}]);assert.deepEqual(g.skillMilestones(50),[]);assert.equal(JSON.stringify(p),before);
 });
 test('all direct damage skills resolve on actual enemies, charge once and keep bounded pending work',()=>{
- for(const d of g.SKILL_CATALOG.filter(d=>d.damage>0&&!['mark','parry','phantoms'].includes(d.shape))){const {s,e}=fixture(d.id);const hp=e.hp;assert.ok(g.useSkill(s,d.id,{x:0,y:1}),d.id);assert.equal(g.useSkill(s,d.id,{x:0,y:1}),false,d.id+' duplicate');run(s,3.5);assert.ok(e.hp<hp,d.id+' missed');assert.ok(s.skillRuntime.jobs.length<=64);assert.ok(s.skillRuntime.cooldowns[d.id]>0);}
+ for(const d of g.SKILL_CATALOG.filter(d=>d.kind!=='beast'&&d.damage>0&&!['mark','parry','phantoms'].includes(d.shape))){const {s,e}=fixture(d.id);const hp=e.hp;assert.ok(g.useSkill(s,d.id,{x:0,y:1}),d.id);assert.equal(g.useSkill(s,d.id,{x:0,y:1}),false,d.id+' duplicate');run(s,3.5);assert.ok(e.hp<hp,d.id+' missed');assert.ok(s.skillRuntime.jobs.length<=64);assert.ok(s.skillRuntime.cooldowns[d.id]>0);}
 });
 test('multi-hit damage does not accelerate ultimate cooldown',()=>{
  const {s,e}=fixture('dance');s.skillRuntime.cooldowns.bloodmoon=30;s.skillRuntime.cooldownKeys.push('bloodmoon');const start=s.run.time;const other={...e,id:900,x:e.x+10};s.enemies.push(other);assert.ok(g.useSkill(s,'dance',{x:0,y:1}));run(s,1.6);assert.ok(Math.abs(s.skillRuntime.cooldowns.bloodmoon-(30-(s.run.time-start)))<1e-9);assert.ok(e.hp<e.maxHp&&other.hp<other.maxHp);
@@ -121,7 +121,7 @@ test('철갑 진군 armor: 마지막 검끝 combo strikes ignore it and 파갑�
 });
 
 test('four regular skill slots open at Lv.1/5/15/30 and passives stay at three (Alpha 0.119)',()=>{
- assert.deepEqual(g.MAX_SLOTS,{active:4,passive:3,ultimate:1});
+ assert.deepEqual(g.MAX_SLOTS,{active:4,passive:3,ultimate:1,beast:1});
  for(const [level,open]of [[14,2],[15,3],[29,3],[30,4],[200,4]]){
   const p=profile(level),s=g.createGame(p);assert.equal(g.skillSlots(level).active,open);
   for(let slot=0;slot<4;slot++)assert.equal(g.equipSkill(s,['crescent','gale','triple','returning'][slot],slot),slot<open,level+'/'+slot);
