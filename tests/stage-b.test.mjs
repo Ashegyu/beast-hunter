@@ -16,7 +16,7 @@ test('five unified presets share owned IDs and atomically swap skills, order, pa
  const p=profile(),a=gear(p,'weapon',1,'chain'),b=gear(p,'helmet',2,'explosion'),s=g.createGame(p);g.equipItem(s,a.id);g.equipItem(s,b.id);p.skillBook.loadout.active=['gale','crescent'];p.skillBook.auto.mode='farm';p.skillBook.awakening='execution';
  for(let n=0;n<5;n++)assert.equal(g.saveBuild(s,n,''),true);assert.deepEqual(p.savedBuilds.map(x=>x.name),g.BUILD_NAMES);const count=p.inventory.length;
  p.skillBook.loadout.active=['crescent',null];p.skillBook.auto.mode='safe';p.skillBook.awakening='area';p.equipment.weapon=null;
- assert.equal(g.applyBuild(s,4).ok,true);assert.deepEqual(p.skillBook.loadout.active,['gale','crescent']);assert.equal(p.skillBook.auto.mode,'farm');assert.equal(p.skillBook.awakening,'execution');assert.equal(p.equipment.weapon,1);assert.equal(p.inventory.length,count);
+ assert.equal(g.applyBuild(s,4).ok,true);assert.deepEqual(p.skillBook.loadout.active,['gale','crescent',null,null]);assert.equal(p.skillBook.auto.mode,'farm');assert.equal(p.skillBook.awakening,'execution');assert.equal(p.equipment.weapon,1);assert.equal(p.inventory.length,count);
  a.enhancement=1;assert.equal(p.savedBuilds.every(x=>x.equipment.weapon===a.id),true);assert.equal(g.applyBuild(s,2).ok,true);assert.equal(p.inventory[0].enhancement,1);const loaded=g.restoreProfile(g.encodeProfile(p,1000),1000);assert.equal(loaded.savedBuilds.length,5);assert.equal(loaded.selectedBuild,2);
 });
 test('missing references empty only those positions, warn, and reject duplicate identities without partial application',()=>{

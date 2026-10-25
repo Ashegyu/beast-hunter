@@ -1,0 +1,212 @@
+{
+ "ancient-4-1": {
+  "kind": "sprite",
+  "minParts": 5,
+  "out": "art/ancient0119/ancient-4-1.png",
+  "style": "dist/assets/ancient-individual-v019.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production legendary (ancient grade) equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing ANCIENT equipment sheet of this game: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting and scale, and the exact diagonal orientation of its swords (hilt at bottom-left, tip at top-right). Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, row 1 cells 1-3, row 2 cells 4-5, and the sixth cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge: (1) a longsword whose blade is a flowing curl of sea water with a trident-shaped crossguard, (2) a serrated sword encrusted with pink and orange coral, (3) a heavy greatsword lined with anglerfish teeth and a small glowing cyan lure, (4) a curved sabre shaped like a breaking tidal wave, (5) a slender rapier with a large white pearl pommel and shell guard. All five share one design language: SUNKEN SEA KINGDOM ancient relics: deep teal, aquamarine and pearl white with gold filigree, wet sheen, faint cyan inner glow. They are rare ancient-grade treasures: more ornate than ordinary gear, each clearly distinct. Each item clearly readable at small icon size. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "items": [
+   "ancient-4-weapon-1",
+   "ancient-4-weapon-2",
+   "ancient-4-weapon-3",
+   "ancient-4-weapon-4",
+   "ancient-4-weapon-5"
+  ]
+ },
+ "ancient-4-2": {
+  "kind": "sprite",
+  "minParts": 5,
+  "out": "art/ancient0119/ancient-4-2.png",
+  "style": "dist/assets/ancient-individual-v019.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production legendary (ancient grade) equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing ANCIENT equipment sheet of this game: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting and scale, and the exact diagonal orientation of its swords (hilt at bottom-left, tip at top-right). Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, row 1 cells 1-3, row 2 cells 4-5, and the sixth cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge: (1) a blade wrapped by a dark crimson kraken tentacle with suckers, (2) a massive greatsword covered in deep blue sea-serpent scales, (3) an elegant sword with a spiral conch-shell guard and pale blue glow, (4) a regal breastplate of a sea king with a trident emblem and teal-gold trim, (5) a chest armor grown from pink and orange coral plates. All five share one design language: SUNKEN SEA KINGDOM ancient relics: deep teal, aquamarine and pearl white with gold filigree, wet sheen, faint cyan inner glow. They are rare ancient-grade treasures: more ornate than ordinary gear, each clearly distinct. Each item clearly readable at small icon size. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "items": [
+   "ancient-4-weapon-6",
+   "ancient-4-weapon-7",
+   "ancient-4-weapon-8",
+   "ancient-4-armor-1",
+   "ancient-4-armor-2"
+  ]
+ },
+ "ancient-4-3": {
+  "kind": "sprite",
+  "minParts": 5,
+  "out": "art/ancient0119/ancient-4-3.png",
+  "style": "dist/assets/ancient-individual-v019.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production legendary (ancient grade) equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing ANCIENT equipment sheet of this game: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting and scale, and the exact diagonal orientation of its swords (hilt at bottom-left, tip at top-right). Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, row 1 cells 1-3, row 2 cells 4-5, and the sixth cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge: (1) a chest armor of iridescent clam shells with pearls, (2) a flowing green kelp-woven witch robe with shells, (3) a chest armor of grey shark scales and fins, (4) a heavy dark navy deep-sea plate armor with glowing cyan seams, (5) a necklace with a large glowing deep-sea pearl. All five share one design language: SUNKEN SEA KINGDOM ancient relics: deep teal, aquamarine and pearl white with gold filigree, wet sheen, faint cyan inner glow. They are rare ancient-grade treasures: more ornate than ordinary gear, each clearly distinct. Each item clearly readable at small icon size. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "items": [
+   "ancient-4-armor-3",
+   "ancient-4-armor-4",
+   "ancient-4-armor-5",
+   "ancient-4-armor-6",
+   "ancient-4-charm-1"
+  ]
+ },
+ "ancient-4-4": {
+  "kind": "sprite",
+  "minParts": 5,
+  "out": "art/ancient0119/ancient-4-4.png",
+  "style": "dist/assets/ancient-individual-v019.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production legendary (ancient grade) equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing ANCIENT equipment sheet of this game: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting and scale, and the exact diagonal orientation of its swords (hilt at bottom-left, tip at top-right). Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, row 1 cells 1-3, row 2 cells 4-5, and the sixth cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge: (1) a conch-shell horn amulet on a cord, (2) a brass sea compass amulet with a swirling water needle, (3) an amulet holding a glowing anglerfish lure lantern, (4) an amulet of shimmering blue-violet siren scales, (5) a necklace with a single dark abyssal eye gem. All five share one design language: SUNKEN SEA KINGDOM ancient relics: deep teal, aquamarine and pearl white with gold filigree, wet sheen, faint cyan inner glow. They are rare ancient-grade treasures: more ornate than ordinary gear, each clearly distinct. Each item clearly readable at small icon size. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "items": [
+   "ancient-4-charm-2",
+   "ancient-4-charm-3",
+   "ancient-4-charm-4",
+   "ancient-4-charm-5",
+   "ancient-4-charm-6"
+  ]
+ },
+ "ancient-4-5": {
+  "kind": "sprite",
+  "minParts": 5,
+  "out": "art/ancient0119/ancient-4-5.png",
+  "style": "dist/assets/ancient-individual-v019.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production legendary (ancient grade) equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing ANCIENT equipment sheet of this game: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting and scale, and the exact diagonal orientation of its swords (hilt at bottom-left, tip at top-right). Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, row 1 cells 1-3, row 2 cells 4-5, and the sixth cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge: (1) a sea king crown-helmet with trident spikes and coral, (2) leg armor of overlapping teal fish scales, (3) boots with webbed fins and shell buckles, (4) an earring of a teardrop water pearl, (5) a round signet seal stamped with a swirling tide sigil. All five share one design language: SUNKEN SEA KINGDOM ancient relics: deep teal, aquamarine and pearl white with gold filigree, wet sheen, faint cyan inner glow. They are rare ancient-grade treasures: more ornate than ordinary gear, each clearly distinct. Each item clearly readable at small icon size. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "items": [
+   "ancient-4-helmet-1",
+   "ancient-4-pants-1",
+   "ancient-4-boots-1",
+   "ancient-4-earring-1",
+   "ancient-4-special-1"
+  ]
+ },
+ "ancient-5-1": {
+  "kind": "sprite",
+  "minParts": 5,
+  "out": "art/ancient0119/ancient-5-1.png",
+  "style": "dist/assets/ancient-individual-v019.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production legendary (ancient grade) equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing ANCIENT equipment sheet of this game: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting and scale, and the exact diagonal orientation of its swords (hilt at bottom-left, tip at top-right). Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, row 1 cells 1-3, row 2 cells 4-5, and the sixth cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge: (1) a longsword with a crackling white-blue lightning blade, (2) a curved storm sabre with swirling wind patterns, (3) a sword with golden griffin-feather blade and eagle pommel, (4) a heavy thunder greatsword with a copper core and sparks, (5) a slim rapier with a translucent wind-swirl blade. All five share one design language: STORM SKY ancient relics: storm blue, white and gold with crackling electric-blue lightning accents and feather motifs. They are rare ancient-grade treasures: more ornate than ordinary gear, each clearly distinct. Each item clearly readable at small icon size. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "items": [
+   "ancient-5-weapon-1",
+   "ancient-5-weapon-2",
+   "ancient-5-weapon-3",
+   "ancient-5-weapon-4",
+   "ancient-5-weapon-5"
+  ]
+ },
+ "ancient-5-2": {
+  "kind": "sprite",
+  "minParts": 5,
+  "out": "art/ancient0119/ancient-5-2.png",
+  "style": "dist/assets/ancient-individual-v019.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production legendary (ancient grade) equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing ANCIENT equipment sheet of this game: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting and scale, and the exact diagonal orientation of its swords (hilt at bottom-left, tip at top-right). Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, row 1 cells 1-3, row 2 cells 4-5, and the sixth cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge: (1) a dark magic sword with a storm-cloud blade and lightning veins, (2) a sword shaped like a golden thunderbird feather with blue sparks, (3) a regal dragon-king greatsword with a lightning crystal blade, (4) a storm knight breastplate with a lightning emblem and blue cape trim, (5) a lilac harpy-feather chest armor. All five share one design language: STORM SKY ancient relics: storm blue, white and gold with crackling electric-blue lightning accents and feather motifs. They are rare ancient-grade treasures: more ornate than ordinary gear, each clearly distinct. Each item clearly readable at small icon size. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "items": [
+   "ancient-5-weapon-6",
+   "ancient-5-weapon-7",
+   "ancient-5-weapon-8",
+   "ancient-5-armor-1",
+   "ancient-5-armor-2"
+  ]
+ },
+ "ancient-5-3": {
+  "kind": "sprite",
+  "minParts": 5,
+  "out": "art/ancient0119/ancient-5-3.png",
+  "style": "dist/assets/ancient-individual-v019.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production legendary (ancient grade) equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing ANCIENT equipment sheet of this game: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting and scale, and the exact diagonal orientation of its swords (hilt at bottom-left, tip at top-right). Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, row 1 cells 1-3, row 2 cells 4-5, and the sixth cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge: (1) a massive pale stone-and-cloud plate chest armor, (2) an electric copper-plated chest armor with glowing coils, (3) a black crow-feather general chest armor with red gems, (4) a white and gold sky plate chest armor with wing motifs, (5) a necklace holding a crackling ball of lightning. All five share one design language: STORM SKY ancient relics: storm blue, white and gold with crackling electric-blue lightning accents and feather motifs. They are rare ancient-grade treasures: more ornate than ordinary gear, each clearly distinct. Each item clearly readable at small icon size. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "items": [
+   "ancient-5-armor-3",
+   "ancient-5-armor-4",
+   "ancient-5-armor-5",
+   "ancient-5-armor-6",
+   "ancient-5-charm-1"
+  ]
+ },
+ "ancient-5-4": {
+  "kind": "sprite",
+  "minParts": 5,
+  "out": "art/ancient0119/ancient-5-4.png",
+  "style": "dist/assets/ancient-individual-v019.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production legendary (ancient grade) equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing ANCIENT equipment sheet of this game: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting and scale, and the exact diagonal orientation of its swords (hilt at bottom-left, tip at top-right). Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, row 1 cells 1-3, row 2 cells 4-5, and the sixth cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge: (1) an amulet of a golden griffin feather, (2) a small wooden pinwheel amulet spinning with wind, (3) an amulet of a dark storm-cloud crystal with sparks, (4) an amulet of a curved harpy talon, (5) a tiny thunder drum amulet with lightning marks. All five share one design language: STORM SKY ancient relics: storm blue, white and gold with crackling electric-blue lightning accents and feather motifs. They are rare ancient-grade treasures: more ornate than ordinary gear, each clearly distinct. Each item clearly readable at small icon size. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "items": [
+   "ancient-5-charm-2",
+   "ancient-5-charm-3",
+   "ancient-5-charm-4",
+   "ancient-5-charm-5",
+   "ancient-5-charm-6"
+  ]
+ },
+ "ancient-5-5": {
+  "kind": "sprite",
+  "minParts": 5,
+  "out": "art/ancient0119/ancient-5-5.png",
+  "style": "dist/assets/ancient-individual-v019.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production legendary (ancient grade) equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing ANCIENT equipment sheet of this game: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting and scale, and the exact diagonal orientation of its swords (hilt at bottom-left, tip at top-right). Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, row 1 cells 1-3, row 2 cells 4-5, and the sixth cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge: (1) a sky king winged helmet with lightning crest, (2) leg armor with storm-blue plates and wind swirls, (3) light boots with small wings and gust trails, (4) an earring shaped like a small lightning bolt, (5) a round signet seal stamped with a lightning-and-wind sigil. All five share one design language: STORM SKY ancient relics: storm blue, white and gold with crackling electric-blue lightning accents and feather motifs. They are rare ancient-grade treasures: more ornate than ordinary gear, each clearly distinct. Each item clearly readable at small icon size. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "items": [
+   "ancient-5-helmet-1",
+   "ancient-5-pants-1",
+   "ancient-5-boots-1",
+   "ancient-5-earring-1",
+   "ancient-5-special-1"
+  ]
+ },
+ "ancient-6-1": {
+  "kind": "sprite",
+  "minParts": 5,
+  "out": "art/ancient0119/ancient-6-1.png",
+  "style": "dist/assets/ancient-individual-v019.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production legendary (ancient grade) equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing ANCIENT equipment sheet of this game: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting and scale, and the exact diagonal orientation of its swords (hilt at bottom-left, tip at top-right). Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, row 1 cells 1-3, row 2 cells 4-5, and the sixth cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge: (1) a radiant golden longsword with a sunburst crossguard, (2) a holy greatsword glowing with white-gold light, (3) a slender rapier with a deep blue blade full of star points, (4) a stern judgment sword with a scale-of-justice guard, (5) a sword with a cracked black-and-white feather blade and pink glow. All five share one design language: TWILIGHT SANCTUM ancient relics: radiant gold, ivory and deep violet with star points and soft holy glow. They are rare ancient-grade treasures: more ornate than ordinary gear, each clearly distinct. Each item clearly readable at small icon size. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "items": [
+   "ancient-6-weapon-1",
+   "ancient-6-weapon-2",
+   "ancient-6-weapon-3",
+   "ancient-6-weapon-4",
+   "ancient-6-weapon-5"
+  ]
+ },
+ "ancient-6-2": {
+  "kind": "sprite",
+  "minParts": 5,
+  "out": "art/ancient0119/ancient-6-2.png",
+  "style": "dist/assets/ancient-individual-v019.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production legendary (ancient grade) equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing ANCIENT equipment sheet of this game: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting and scale, and the exact diagonal orientation of its swords (hilt at bottom-left, tip at top-right). Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, row 1 cells 1-3, row 2 cells 4-5, and the sixth cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge: (1) a greatsword shaped like a brass clock hand with gears, (2) a curved sabre with silver constellation lines, (3) a dark sword with an eclipse disc guard and fiery rim, (4) a radiant sun-god breastplate with sunburst rays, (5) a heavy holy paladin plate chest armor with a cross emblem. All five share one design language: TWILIGHT SANCTUM ancient relics: radiant gold, ivory and deep violet with star points and soft holy glow. They are rare ancient-grade treasures: more ornate than ordinary gear, each clearly distinct. Each item clearly readable at small icon size. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "items": [
+   "ancient-6-weapon-6",
+   "ancient-6-weapon-7",
+   "ancient-6-weapon-8",
+   "ancient-6-armor-1",
+   "ancient-6-armor-2"
+  ]
+ },
+ "ancient-6-3": {
+  "kind": "sprite",
+  "minParts": 5,
+  "out": "art/ancient0119/ancient-6-3.png",
+  "style": "dist/assets/ancient-individual-v019.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production legendary (ancient grade) equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing ANCIENT equipment sheet of this game: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting and scale, and the exact diagonal orientation of its swords (hilt at bottom-left, tip at top-right). Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, row 1 cells 1-3, row 2 cells 4-5, and the sixth cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge: (1) a chest armor with white angel wing pauldrons, (2) a deep navy chest armor with inlaid silver constellations, (3) an ivory-and-gold judge robe armor with scale emblems, (4) a massive lavender-stone gatekeeper plate chest armor with keyhole emblem, (5) a necklace holding a golden sun disc. All five share one design language: TWILIGHT SANCTUM ancient relics: radiant gold, ivory and deep violet with star points and soft holy glow. They are rare ancient-grade treasures: more ornate than ordinary gear, each clearly distinct. Each item clearly readable at small icon size. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "items": [
+   "ancient-6-armor-3",
+   "ancient-6-armor-4",
+   "ancient-6-armor-5",
+   "ancient-6-armor-6",
+   "ancient-6-charm-1"
+  ]
+ },
+ "ancient-6-4": {
+  "kind": "sprite",
+  "minParts": 5,
+  "out": "art/ancient0119/ancient-6-4.png",
+  "style": "dist/assets/ancient-individual-v019.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production legendary (ancient grade) equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing ANCIENT equipment sheet of this game: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting and scale, and the exact diagonal orientation of its swords (hilt at bottom-left, tip at top-right). Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, row 1 cells 1-3, row 2 cells 4-5, and the sixth cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge: (1) an amulet shaped like small golden balance scales, (2) an amulet of a small brass hourglass with glowing sand, (3) a necklace of a violet broken star shard, (4) an amulet shaped like a small golden halo, (5) an amulet of a golden all-seeing eye. All five share one design language: TWILIGHT SANCTUM ancient relics: radiant gold, ivory and deep violet with star points and soft holy glow. They are rare ancient-grade treasures: more ornate than ordinary gear, each clearly distinct. Each item clearly readable at small icon size. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "items": [
+   "ancient-6-charm-2",
+   "ancient-6-charm-3",
+   "ancient-6-charm-4",
+   "ancient-6-charm-5",
+   "ancient-6-charm-6"
+  ]
+ },
+ "ancient-6-5": {
+  "kind": "sprite",
+  "minParts": 5,
+  "out": "art/ancient0119/ancient-6-5.png",
+  "style": "dist/assets/ancient-individual-v019.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production legendary (ancient grade) equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing ANCIENT equipment sheet of this game: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting and scale, and the exact diagonal orientation of its swords (hilt at bottom-left, tip at top-right). Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, row 1 cells 1-3, row 2 cells 4-5, and the sixth cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge: (1) a sun crown helmet with golden rays, (2) leg armor of white-gold holy plates, (3) boots with small golden wings, (4) an earring of a small star, (5) a round signet seal stamped with a sunset-and-moon sigil. All five share one design language: TWILIGHT SANCTUM ancient relics: radiant gold, ivory and deep violet with star points and soft holy glow. They are rare ancient-grade treasures: more ornate than ordinary gear, each clearly distinct. Each item clearly readable at small icon size. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "items": [
+   "ancient-6-helmet-1",
+   "ancient-6-pants-1",
+   "ancient-6-boots-1",
+   "ancient-6-earring-1",
+   "ancient-6-special-1"
+  ]
+ }
+}

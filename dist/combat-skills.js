@@ -51,9 +51,13 @@ const int=(n,min,max,fallback=min)=>Number.isFinite(n)?Math.max(min,Math.min(max
 export const SKILL_SLOT_UNLOCKS=Object.freeze([
  {kind:'active',index:1,level:5,label:'일반 슬롯 2'},
  {kind:'passive',index:1,level:10,label:'패시브 슬롯 2'},
+ {kind:'active',index:2,level:15,label:'일반 슬롯 3'},
  {kind:'ultimate',index:0,level:20,label:'궁극기 슬롯'},
  {kind:'passive',index:2,level:25,label:'패시브 슬롯 3'},
+ {kind:'active',index:3,level:30,label:'일반 슬롯 4'},
 ].map(Object.freeze));
+// Alpha 0.119: four regular slots (Lv.1/5/15/30), three passives (Lv.1/10/25), one ultimate (Lv.20).
+export const MAX_SLOTS=Object.freeze({active:4,passive:3,ultimate:1});
 export const skillSlots=level=>{const slots={active:1,passive:1,ultimate:0};for(const row of SKILL_SLOT_UNLOCKS)if(level>=row.level)slots[row.kind]++;return slots;};
 // A read-only level interval; viewing progress never equips or spends points.
 export function skillMilestones(afterLevel,throughLevel=50){
@@ -66,11 +70,11 @@ export function skillLevelGate(id,rank){const d=SKILL_BY_ID[id];if(!d)return 51;
 export function skillRank(profile,id){const d=SKILL_BY_ID[id];if(!d||profile.level<d.unlock)return 0;if(d.kind==='ultimate'){let rank=1;while(rank<5&&profile.level>=skillLevelGate(id,rank+1))rank++;return rank;}return 1+(profile.skillBook?.ranks?.[id]??0);}
 export function skillValue(profile,id){const d=SKILL_BY_ID[id],rank=skillRank(profile,id);return rank?(d.damage??d.value)+d.step*(rank-1):0;}
 export function skillPoints(profile){return Math.max(0,profile.level-1+(profile.skillBook?.trainingPoints??0)-Object.values(profile.skillBook?.ranks??{}).reduce((a,b)=>a+b,0));}
-function cleanLoadout(raw,level){const slots=skillSlots(level),used=new Set();const list=(kind,n)=>Array.from({length:n},(_,i)=>{const id=raw?.[kind]?.[i],d=SKILL_BY_ID[id];if(i>=slots[kind]||!d||d.kind!==kind||d.unlock>level||used.has(id))return null;used.add(id);return id;});return {active:list('active',2),passive:list('passive',3),ultimate:list('ultimate',1)};}
+function cleanLoadout(raw,level){const slots=skillSlots(level),used=new Set();const list=(kind,n)=>Array.from({length:n},(_,i)=>{const id=raw?.[kind]?.[i],d=SKILL_BY_ID[id];if(i>=slots[kind]||!d||d.kind!==kind||d.unlock>level||used.has(id))return null;used.add(id);return id;});return {active:list('active',MAX_SLOTS.active),passive:list('passive',MAX_SLOTS.passive),ultimate:list('ultimate',MAX_SLOTS.ultimate)};}
 export function restoreSkillBook(raw,level){
  const ranks={},trainingPoints=int(raw?.trainingPoints,0,49,0);let budget=level-1+trainingPoints;
  for(const d of SKILL_CATALOG){if(d.kind==='ultimate'||d.unlock>level)continue;let maximum=0;while(maximum<4&&level>=skillLevelGate(d.id,maximum+2))maximum++;const n=int(raw?.ranks?.[d.id],0,maximum);ranks[d.id]=Math.min(n,budget);budget-=ranks[d.id];}
- const defaults={active:['crescent',level>=5?'gale':null],passive:[level>=3?'breath':null,level>=10?'finisher':null,level>=25?'reserve':null],ultimate:[level>=20?'bloodmoon':null]};
+ const defaults={active:['crescent',level>=5?'gale':null,level>=15?'triple':null,level>=30?'returning':null],passive:[level>=3?'breath':null,level>=10?'finisher':null,level>=25?'reserve':null],ultimate:[level>=20?'bloodmoon':null]};
  return {ranks,trainingPoints,loadout:cleanLoadout(raw?.loadout??defaults,level),presets:Array.from({length:3},(_,i)=>raw?.presets?.[i]?{...cleanLoadout(raw.presets[i],level),auto:cleanAuto(raw.presets[i].auto)}:null),auto:cleanAuto(raw?.auto),awakening:raw?.awakening==='execution'?'execution':'area'};
 }
 export function upgradeSkill(s,id){const d=SKILL_BY_ID[id],p=s.profile;if(s.phase!=='camp'||!d||d.kind==='ultimate'||!skillRank(p,id)||skillRank(p,id)>=5||!skillPoints(p)||p.level<skillLevelGate(id,skillRank(p,id)+1))return false;p.skillBook.ranks[id]=(p.skillBook.ranks[id]??0)+1;return true;}
@@ -79,10 +83,10 @@ export function resetSkills(s){if(s.phase!=='camp')return false;s.profile.skillB
 export function skillPreset(s,index,action){if(s.phase!=='camp'||!Number.isInteger(index)||index<0||index>=3)return false;const b=s.profile.skillBook;if(action==='save'){b.presets[index]={...cleanLoadout(b.loadout,s.profile.level),auto:cleanAuto(b.auto)};return true;}if(action==='load'&&b.presets[index]){b.loadout=cleanLoadout(b.presets[index],s.profile.level);b.auto=cleanAuto(b.presets[index].auto);return true;}return false;}
 export function skillNumbers(p,id,rank=skillRank(p,id)){const d=SKILL_BY_ID[id];if(!d)return '';const v=(d.damage??d.value)+d.step*(Math.max(1,rank)-1);if(d.kind==='passive')return v+(d.unit==='%'?'%':d.unit==='초'?'초':d.unit==='회'?'회':' 기력');if(id==='stance')return '기력 +'+(9+rank*3)+'/초 · 피해 감소 '+(15+rank*3)+'%';if(id==='bloodblade')return '연격 피해 +'+(20+rank*5)+'%';if(id==='breach')return '피해 '+v+'% · 약화 '+(10+rank*2)+'%';return '총 피해 '+v+'%';}
 export const SKILL_BUILD_EXAMPLES=Object.freeze([
- {name:'보스 폭딜',active:['breach','draw'],passive:['lone','scar','steady'],ultimate:['eclipse']},
- {name:'자동 광역',active:['gather','dance'],passive:['surrounded','momentum','flow'],ultimate:['bloodmoon']},
- {name:'자동 안정',active:['seeking','stance'],passive:['breath','reserve','resolve'],ultimate:['phantoms']},
- {name:'잔상 표식',active:['echo','mark'],passive:['resonance','pursuit','flow'],ultimate:['phantoms']},
+ {name:'보스 폭딜',active:['breach','draw','mark','plunge'],passive:['lone','scar','steady'],ultimate:['eclipse']},
+ {name:'자동 광역',active:['gather','dance','field','echo'],passive:['surrounded','momentum','flow'],ultimate:['bloodmoon']},
+ {name:'자동 안정',active:['seeking','stance','parry','returning'],passive:['breath','reserve','resolve'],ultimate:['phantoms']},
+ {name:'잔상 표식',active:['echo','mark','bloodblade','triple'],passive:['resonance','pursuit','flow'],ultimate:['phantoms']},
 ]);
 export function applySkillExample(s,index){const example=SKILL_BUILD_EXAMPLES[index];if(s.phase!=='camp'||!example)return false;const clean=cleanLoadout(example,s.profile.level);if(!clean.active.some(Boolean))return false;s.profile.skillBook.loadout=clean;return true;}
 

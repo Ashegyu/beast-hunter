@@ -1,11 +1,12 @@
-import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily} from './equipment-slots.js?v=0.118.0';
-import {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.118.0';
-export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.118.0';
+import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily} from './equipment-slots.js?v=0.119.0';
+import {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.119.0';
+export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.119.0';
 import {huntMode,BOSS_DROP_TABLES} from './hunt-modes.js';
 import {UNIQUE_EFFECTS,EFFECT_ROWS,uniquePower} from './unique-effects.js?v=0.98.0';
-import {ANCIENT_POWER_BY_ID} from './ancient-powers.js?v=0.118.0';
-import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.118.0';
-export {EQUIPMENT_SETS,SET_SLOTS,SET_STATS,CHAPTER_SETS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.118.0';
+import {ANCIENT_POWER_BY_ID} from './ancient-powers.js?v=0.119.0';
+import {REGION_ANCIENTS,REGION_ANCIENT_BOSSES} from './ancient-regions.js?v=0.119.0';
+import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.119.0';
+export {EQUIPMENT_SETS,SET_SLOTS,SET_STATS,CHAPTER_SETS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.119.0';
 export {UNIQUE_EFFECTS,uniquePower} from './unique-effects.js?v=0.98.0';
 // Item definitions and pure rolls; the combat state owns identities and delivery.
 import {INVENTORY_LIMIT,MAX_PENDING_LOOT} from './inventory-rules.js?v=0.86.9';
@@ -68,9 +69,12 @@ for(const row of BASE_CATALOG){const key=ancientKey(row);if(ancientDrafts.some(d
 // Catalog order: the 60 weapon/armor/charm ancients by tier, then the 0.97 parts by tier.
 ancientDrafts.sort((a,b)=>a.part-b.part||a.tier-b.tier||a.order-b.order);
 for(const {key,row,tier}of ancientDrafts){const id='ancient-'+tier+row.id.slice(String(row.tier).length),base={},scale=(.76+tier*.24)*ANCIENT_POWER,values=ANCIENT_STATS[row.slot];for(const [k,v]of Object.entries(values))base[k]=Math.round(v*scale);const ordinal=ancientRows.size;ancientRows.set(key,Object.freeze({...row,tier,region:tier,id,name:'태초의 '+row.name,base:Object.freeze(base),visualStyle:VISUAL_STYLE[row.effectId]??3,ancient:true,ordinal,signature:ANCIENT_POWER_BY_ID[id]??Object.freeze({id,index:60+ordinal,color:'#ffb66b',name:'태초의 맥동',trigger:row.slot==='special'?'periodic':'dash',cooldown:10,damage:.18,radius:140,description:row.slot==='special'?'전투 중 10초마다 주변에 기본 공격력 18% 피해.':'회피 시 주변에 기본 공격력 18% 피해. 재사용 10초.'}),bossId:['forest_guardian','frost_king','ruins_king'][tier-1]}));}
+// Alpha 0.119: regions 4-6 have authored ancients (ancient-regions.js) with the same stat rules, keyed by id.
+for(const row of REGION_ANCIENTS){const scale=(.76+row.tier*.24)*ANCIENT_POWER,base={};for(const [k,v]of Object.entries(ANCIENT_STATS[row.slot]))base[k]=Math.round(v*scale);const part=!['weapon','armor','charm'].includes(row.slot),ordinal=ancientRows.size;
+ ancientRows.set(row.id,Object.freeze({...row,name:'태초의 '+row.name,region:row.tier,base:Object.freeze(base),effectId:row.effectId??null,...(part?{signatureOnly:true}:{}),...(row.slot==='special'?{characterId:'lirian'}:{}),visualStyle:VISUAL_STYLE[row.effectId]??3,ancient:true,ordinal,signature:ANCIENT_POWER_BY_ID[row.id],bossId:REGION_ANCIENT_BOSSES.find(b=>b.tier===row.tier).id}));}
 export const ANCIENT_CATALOG=Object.freeze([...ancientRows.values()]);
 const ANCIENT_BY_ID=new Map(ANCIENT_CATALOG.map(r=>[r.id,r]));
-export const BOSS_LOOT=Object.freeze(['세계수의 수호령','빙원의 지배자','무덤의 왕'].map((name,i)=>Object.freeze({id:['forest_guardian','frost_king','ruins_king'][i],name,tier:i+1,items:Object.freeze(ANCIENT_CATALOG.filter(r=>r.tier===i+1))})));
+export const BOSS_LOOT=Object.freeze([...['세계수의 수호령','빙원의 지배자','무덤의 왕'].map((name,i)=>({id:['forest_guardian','frost_king','ruins_king'][i],name,tier:i+1})),...REGION_ANCIENT_BOSSES].map(b=>Object.freeze({id:b.id,name:b.name,tier:b.tier,items:Object.freeze(ANCIENT_CATALOG.filter(r=>r.tier===b.tier))})));
 export function bossLootPool(bossId,tier){const boss=BOSS_LOOT.find(b=>b.id===bossId&&b.tier===tier);if(!boss)throw new RangeError('Boss loot identity does not match chapter');return boss.items;}
 export function ancientDefinition(item){const row=ANCIENT_BY_ID.get(item?.catalogId);return row&&row.slot===item.slot&&row.tier===item.tier&&row.artId===item.artId?row:null;}
 export function ancientForLegacy(item){const row=CATALOG_BY_ID.get(item.catalogId),matching=row&&row.slot===item.slot&&row.tier===item.tier&&row.artId===item.artId;return ancientRows.get(ancientKey(matching?row:{...item,effectId:LEGACY_EFFECT[item.artId]}))??null;}

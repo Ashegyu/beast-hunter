@@ -18,12 +18,12 @@ function fire(s,row){const r=row.signature,p=s.player;switch(r.trigger){
  case 'pickup':s.pickups.push({id:s.nextId++,kind:'loot',x:p.x,y:p.y,age:1,gold:0,xp:0,cores:1});advance(s,.025);break;
  default:assert.fail(r.trigger);
 }}
-test('75 ancient identities have their own authored recipes and partitioned legacy source pools',()=>{
+test('150 ancient identities have their own authored recipes and partitioned region source pools',()=>{
  // Alpha 0.110: the fifteen 0.97 parts have authored powers too, and no recipe uses a manual-only trigger.
- assert.equal(ANCIENT_POWERS.length,75);assert.equal(new Set(ANCIENT_POWERS.map(r=>r.name)).size,75);assert.equal(new Set(ANCIENT_POWERS.map(({id,name,index,color,description,...recipe})=>JSON.stringify(recipe))).size,75);
- assert.equal(new Set(ANCIENT_POWERS.map(r=>r.index)).size,75);assert.ok(ANCIENT_POWERS.every(r=>!['heavy','counter','idle'].includes(r.trigger)&&!r.thunderRefund));
+ assert.equal(ANCIENT_POWERS.length,150);assert.equal(new Set(ANCIENT_POWERS.map(r=>r.name)).size,150);assert.equal(new Set(ANCIENT_POWERS.map(({id,name,index,color,description,...recipe})=>JSON.stringify(recipe))).size,150);
+ assert.equal(new Set(ANCIENT_POWERS.map(r=>r.index)).size,150);assert.ok(ANCIENT_POWERS.every(r=>!['heavy','counter','idle'].includes(r.trigger)&&!r.thunderRefund));
  for(const row of g.ANCIENT_CATALOG)assert.equal(row.signature.id,row.id);
- assert.equal(new Set(BOSS_LOOT.flatMap(b=>b.items.map(r=>r.id))).size,75);
+ assert.equal(new Set(BOSS_LOOT.flatMap(b=>b.items.map(r=>r.id))).size,150);assert.equal(BOSS_LOOT.length,6);
  for(const boss of BOSS_LOOT){assert.equal(boss.items.length,25);assert.equal(bossLootPool(boss.id,boss.tier),boss.items);for(const row of boss.items){assert.equal(row.signature.id,row.id);assert.equal(row.bossId,boss.id);assert.ok(Object.isFrozen(row.signature));const item=rollAncient({id:2,tier:boss.tier,bossId:boss.id},(boss.items.indexOf(row)+.5)/boss.items.length);assert.equal(item.catalogId,row.id);assert.equal(item.rarity,5);}}
  let calls=0;assert.throws(()=>rollItem({id:1,tier:1,bossId:'frost_king'},()=>++calls),RangeError);assert.equal(calls,0);assert.throws(()=>rollAncient({id:1,tier:2,bossId:'bad'},.5),RangeError);
 });

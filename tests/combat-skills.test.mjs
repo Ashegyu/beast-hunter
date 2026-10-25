@@ -12,7 +12,7 @@ test('35 definitions have unique images, complete rank values and reachable leve
 });
 test('restore preserves legacy progress and repairs hostile allocations, identities, duplicates and over-spend',()=>{
  const p=profile(10);p.gold=223;p.skills.edge=2;p.skillPoints=3;p.skillBook.ranks=Object.fromEntries(g.SKILL_CATALOG.map(d=>[d.id,999]));p.skillBook.loadout={active:['bloodblade','crescent'],passive:['breath','breath','reserve'],ultimate:['eclipse']};p.skillBook.presets=[{active:['__proto__','crescent'],passive:['resolve'],ultimate:['eclipse']}];
- const q=g.restoreProfile(g.encodeProfile(p));assert.equal(q.gold,223);assert.equal(q.skills.edge,2);assert.equal(q.skillPoints,3);assert.ok(g.skillPoints(q)>=0);assert.equal(q.skillBook.ranks.bloodblade,undefined);assert.deepEqual(q.skillBook.loadout.active,[null,'crescent']);assert.deepEqual(q.skillBook.loadout.passive,['breath',null,null]);assert.deepEqual(q.skillBook.loadout.ultimate,[null]);assert.deepEqual(q.skillBook.presets[0].active,[null,'crescent']);
+ const q=g.restoreProfile(g.encodeProfile(p));assert.equal(q.gold,223);assert.equal(q.skills.edge,2);assert.equal(q.skillPoints,3);assert.ok(g.skillPoints(q)>=0);assert.equal(q.skillBook.ranks.bloodblade,undefined);assert.deepEqual(q.skillBook.loadout.active,[null,'crescent',null,null]);assert.deepEqual(q.skillBook.loadout.passive,['breath',null,null]);assert.deepEqual(q.skillBook.loadout.ultimate,[null]);assert.deepEqual(q.skillBook.presets[0].active,[null,'crescent',null,null]);
  const old={...p};delete old.skillBook;const legacy=g.restoreProfile(old);assert.equal(legacy.gold,p.gold);assert.equal(legacy.skillBook.loadout.active[0],'crescent');
 });
 test('unlock, rank, camp-only edits, swap, reset and presets use separate training budget',()=>{
@@ -20,7 +20,8 @@ test('unlock, rank, camp-only edits, swap, reset and presets use separate traini
  assert.ok(g.skillPreset(s,0,'save'));assert.ok(g.equipSkill(s,'seeking',0));assert.ok(g.skillPreset(s,0,'load'));assert.equal(p.skillBook.loadout.active[0],'crescent');assert.ok(g.resetSkills(s));assert.equal(g.skillPoints(p),3);g.launch(s);const before=g.encodeProfile(p,1);assert.equal(g.equipSkill(s,'seeking',0),false);assert.equal(g.upgradeSkill(s,'crescent'),false);assert.equal(g.resetSkills(s),false);assert.equal(g.skillPreset(s,0,'load'),false);assert.equal(g.encodeProfile(p,1),before);
 });
 test('level milestones match actual slot boundaries, include ultimates and awakening, and do not mutate builds',()=>{
- for(let level=1;level<=50;level++)assert.deepEqual(g.skillSlots(level),{active:level>=5?2:1,passive:level>=25?3:level>=10?2:1,ultimate:level>=20?1:0});
+ // Alpha 0.119: regular slots open at Lv.1/5/15/30.
+ for(let level=1;level<=50;level++)assert.deepEqual(g.skillSlots(level),{active:level>=30?4:level>=15?3:level>=5?2:1,passive:level>=25?3:level>=10?2:1,ultimate:level>=20?1:0});
  const p=profile(19),before=JSON.stringify(p),rows=g.skillMilestones(19,25);
  assert.ok(rows.some(r=>r.level===20&&r.id==='bloodmoon'));assert.ok(rows.some(r=>r.level===20&&r.kind==='slot'));assert.ok(rows.some(r=>r.level===25&&r.label==='패시브 슬롯 3'));
  assert.ok(rows.every(r=>r.level>19&&r.level<=25));assert.equal(rows.some(r=>r.id==='eclipse'),false);assert.deepEqual(rows.map(r=>r.level),rows.map(r=>r.level).sort((a,b)=>a-b));
@@ -117,4 +118,16 @@ test('철갑 진군 armor: 마지막 검끝 combo strikes ignore it and 파갑�
  const {s,e}=fixture('breach');const near={...e,id:901,x:e.x+150,y:e.y,plate:.55},far={...e,id:902,x:e.x+900,y:e.y,plate:.55};Object.assign(e,{plate:.55});s.enemies.push(near,far);
  assert.ok(g.useSkill(s,'breach',{x:0,y:1}));run(s,.6);
  assert.ok(e.plateBrokenUntil>s.run.time&&near.plateBrokenUntil>s.run.time,'targets within 260 lose their armor');assert.ok(!(far.plateBrokenUntil>s.run.time));
+});
+
+test('four regular skill slots open at Lv.1/5/15/30 and passives stay at three (Alpha 0.119)',()=>{
+ assert.deepEqual(g.MAX_SLOTS,{active:4,passive:3,ultimate:1});
+ for(const [level,open]of [[14,2],[15,3],[29,3],[30,4],[200,4]]){
+  const p=profile(level),s=g.createGame(p);assert.equal(g.skillSlots(level).active,open);
+  for(let slot=0;slot<4;slot++)assert.equal(g.equipSkill(s,['crescent','gale','triple','returning'][slot],slot),slot<open,level+'/'+slot);
+  assert.equal(g.equipSkill(s,'breath',3),false);assert.equal(p.skillBook.loadout.active.length,4);assert.equal(p.skillBook.loadout.passive.length,3);
+  const q=g.restoreProfile(g.encodeProfile(p,1000),1000);assert.deepEqual(q.skillBook.loadout.active,p.skillBook.loadout.active);
+ }
+ // The camp milestone list announces the new slots.
+ assert.ok(g.skillMilestones(14,30).some(r=>r.kind==='slot'&&r.level===15&&r.label==='일반 슬롯 3'));assert.ok(g.skillMilestones(29,30).some(r=>r.kind==='slot'&&r.label==='일반 슬롯 4'));
 });

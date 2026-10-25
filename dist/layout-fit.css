@@ -155,3 +155,23 @@
 #game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .stage-tabs>button>span{gap:1px}
 #game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .stage-tabs>button small{font-size:clamp(7px,1cqw,11px);line-height:1.1}
 #game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .stage-tabs>button strong{font-size:clamp(8px,1.15cqw,12px);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+
+/* 0.119 · 스킬: 일반 스킬 칸이 4개(Lv.1·5·15·30 해금)가 되어 장착 칸이 8개(일반 4 · 패시브 3 · 궁극 1)다.
+   장착 목록은 2열 4줄. 상세의 장착 버튼은 칸 수만큼 한 줄에 놓고(일반 4 · 패시브 3, 글자는 '1 장착'),
+   두 줄로 쌓이면 667×375 이하에서 아래 메뉴에 가려지던 문제(패시브 3칸 때부터)도 함께 없앤다. */
+#game-shell #camp-skills-panel .skill-equipped{grid-template-rows:repeat(4,minmax(0,1fr))}
+#game-shell #camp-skills-panel .skill-detail-actions>#skill-upgrade{grid-column:1/-1}
+#game-shell #camp-skills-panel .skill-detail-actions:has(>#skill-equip-2:not([hidden])){grid-template-columns:repeat(3,minmax(0,1fr))}
+#game-shell #camp-skills-panel .skill-detail-actions:has(>#skill-equip-3:not([hidden])){grid-template-columns:repeat(4,minmax(0,1fr))}
+#game-shell #camp-skills-panel .skill-detail-actions>#skill-equip-2{grid-column:auto}
+#game-shell #camp-skills-panel .skill-detail-actions>[id^=skill-equip-]{padding-inline:2px;white-space:nowrap;overflow:hidden}
+@media(max-height:360px){
+/* 0.119 · 낮은 화면: 장착 칸 4줄은 높이가 낮아 이름을 두 줄까지 줄바꿈하고, 상세 장착 버튼 글자를 줄인다. */
+#game-shell #camp-skills-panel [id^=skill-slot-][data-kind] strong{white-space:normal;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-height:1.1;font-size:9px;text-overflow:clip}
+#game-shell #camp-skills-panel [id^=skill-slot-][data-kind] small{font-size:8px;line-height:1.1}
+#game-shell #camp-skills-panel .skill-detail-actions>[id^=skill-equip-]{font-size:8px}
+/* 자원·현재 효과 줄이 눌려 글자가 겹치던 문제(패시브 3칸 때부터): 두 줄은 줄지 않게 하고 설명만 줄인다. */
+#game-shell #camp-skills-panel #skill-detail-resource,#game-shell #camp-skills-panel #skill-current-effect{flex:none}
+#game-shell #camp-skills-panel #skill-detail-description{flex:0 1 auto;min-height:12px}
+#game-shell #camp-skills-panel .skill-detail{gap:2px;padding-block:6px}
+}

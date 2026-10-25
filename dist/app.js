@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.118.0';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.119.0';
 import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js';
 import { createCombatAudio } from './sound.js?v=0.76.0';
-import * as game from './game-engine.js?v=0.118.0';
+import * as game from './game-engine.js?v=0.119.0';
 import {FrameMetrics} from './frame-metrics.js?v=0.98.1';
 import { frameIndex, frameRect, validateClip } from './engine.js';
 import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
 import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.103.1';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.118.0';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.118.0';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.118.0';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.118.0';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.119.0';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.119.0';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.119.0';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.119.0';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -580,7 +580,7 @@ document.addEventListener('keydown',event=>{
   event.preventDefault();if(!ready||state.phase!=='playing'||state.paused)return;
   audio.unlock();manual();keys.add(k);moveTarget=null;attackTarget=null;
   if(!event.repeat&&['w','a','s','d','arrowup','arrowleft','arrowdown','arrowright'].includes(k))aim=null;
-  if(!event.repeat&&['e','r','t'].includes(k))useCombatSkill(['e','r','t'].indexOf(k));
+  if(!event.repeat&&['e','r','t','f','g'].includes(k))useCombatSkill(['e','r','t','f','g'].indexOf(k));
   if(!event.repeat&&k==='shift')doDash();if(!event.repeat&&k==='q')doThunder();if(!event.repeat&&k==='f'){game.interact(state);save();updateHud();}
 });
 document.addEventListener('keyup',event=>{keys.delete(event.key.toLowerCase());if(event.key===' '&&suppressHeldSpace){suppressHeldSpace=false;event.preventDefault();}});
@@ -1389,8 +1389,8 @@ $('growth-skills').addEventListener('click',()=>openSkills('hub-growth'));
 function skillChanged(message){skillFeedback=message;skillRenderKey='';save();updateHud();}
 for(const row of game.SKILL_CATALOG)$('skill-card-'+row.id).addEventListener('click',()=>{if(state.phase!=='camp'||campDrawer!=='skills')return;selectedSkill=row.id;skillRenderKey='';refreshSkills();window.hunterPages?.reveal($('skill-detail'));});
 for(const tab of ['all','active','passive','ultimate'])$('skill-tab-'+tab).addEventListener('click',()=>{if(state.phase!=='camp')return;skillTab=tab;skillPage=0;skillRenderKey='';refreshSkills();});
-for(const [kind,count]of [['active',2],['passive',3],['ultimate',1]])for(let i=0;i<count;i++)$('skill-slot-'+kind+'-'+i).addEventListener('click',()=>{if(state.phase!=='camp')return;const id=profile.skillBook.loadout[kind][i];if(id){selectedSkill=id;skillRenderKey='';refreshSkills();window.hunterPages?.reveal($('skill-detail'));}});
-for(let i=0;i<3;i++)$('skill-equip-'+i).addEventListener('click',()=>{if(game.equipSkill(state,selectedSkill,i))skillChanged('장착 변경 · '+game.SKILL_BY_ID[selectedSkill].name);});
+for(const [kind,count]of Object.entries(game.MAX_SLOTS))for(let i=0;i<count;i++)$('skill-slot-'+kind+'-'+i).addEventListener('click',()=>{if(state.phase!=='camp')return;const id=profile.skillBook.loadout[kind][i];if(id){selectedSkill=id;skillRenderKey='';refreshSkills();window.hunterPages?.reveal($('skill-detail'));}});
+for(let i=0;i<4;i++)$('skill-equip-'+i).addEventListener('click',()=>{if(game.equipSkill(state,selectedSkill,i))skillChanged('장착 변경 · '+game.SKILL_BY_ID[selectedSkill].name);});
 $('skill-upgrade').addEventListener('click',()=>{if(game.upgradeSkill(state,selectedSkill))skillChanged(game.SKILL_BY_ID[selectedSkill].name+' Lv.'+game.skillRank(profile,selectedSkill)+' 강화 완료');});
 $('skill-reset').addEventListener('click',()=>{if(game.resetSkills(state))skillChanged('강화 포인트를 모두 돌려받았어. 장착 구성은 유지돼.');});
 for(let i=0;i<3;i++)for(const action of ['save','load'])$('skill-preset-'+action+'-'+i).addEventListener('click',()=>{if(game.skillPreset(state,i,action))skillChanged(['보스','자동 사냥','실험'][i]+' 빌드 '+(action==='save'?'저장 완료':'불러오기 완료'));});
@@ -1405,7 +1405,7 @@ function refreshSkills(){
  for(const tab of ['all','active','passive','ultimate'])$('skill-tab-'+tab).setAttribute('aria-pressed',String(skillTab===tab));
  const visibleSkills=game.SKILL_CATALOG.filter(row=>skillTab==='all'||row.kind===skillTab),pageCount=Math.max(1,Math.ceil(visibleSkills.length/skillPageSize));skillPage=Math.max(0,Math.min(pageCount-1,skillPage));const pageIds=new Set(visibleSkills.slice(skillPage*skillPageSize,(skillPage+1)*skillPageSize).map(row=>row.id));$('skill-page-label').textContent=(skillPage+1)+' / '+pageCount+' · '+visibleSkills.length+'개';$('skill-page-prev').disabled=skillPage===0;$('skill-page-next').disabled=skillPage===pageCount-1;
  for(const row of game.SKILL_CATALOG){const r=game.skillRank(profile,row.id),node=$('skill-card-'+row.id),on=book.loadout[row.kind].includes(row.id);node.hidden=!pageIds.has(row.id);node.setAttribute('data-locked',String(!r));node.setAttribute('aria-pressed',String(row.id===selectedSkill));$('skill-state-'+row.id).textContent=r?'Lv.'+r+(on?' · 장착':''):'캐릭터 Lv.'+row.unlock;}
- for(const [kind,count]of [['active',2],['passive',3],['ultimate',1]])for(let i=0;i<count;i++){
+ for(const [kind,count]of Object.entries(game.MAX_SLOTS))for(let i=0;i<count;i++){
   const id=book.loadout[kind][i],node=$('skill-slot-'+kind+'-'+i),art=$('skill-slot-art-'+kind+'-'+i),label=i>=slots[kind]?'Lv.'+game.SKILL_SLOT_UNLOCKS.find(row=>row.kind===kind&&row.index===i).level+' 해금':id?game.SKILL_BY_ID[id].name:'비어 있음';
   node.setAttribute('data-kind',kind);node.disabled=i>=slots[kind];$('skill-slot-name-'+kind+'-'+i).textContent=label;
   art.hidden=!id;if(id)art.src=game.SKILL_BY_ID[id].icon;node.setAttribute('data-empty',String(!id));node.setAttribute('aria-label',skillKinds[kind]+' '+(i+1)+' · '+label);
@@ -1420,15 +1420,17 @@ function refreshSkills(){
  const next=game.skillLevelGate(d.id,rank+1);
  $('skill-detail-note').textContent=d.kind==='ultimate'?'궁극기는 캐릭터 레벨에 따라 자동 강화됩니다. 사냥 시작 시 바로 사용하며, 사용 후 60초 동안 기다립니다. 일시정지 중에는 남은 시간도 멈춥니다.':'해금 시 Lv.1을 바로 사용합니다. 이후 단계당 강화 포인트 1개를 사용합니다.';
  $('skill-upgrade').hidden=d.kind==='ultimate';$('skill-upgrade').disabled=!rank||rank>=5||!game.skillPoints(profile)||profile.level<next;$('skill-upgrade').textContent=!rank?'캐릭터 Lv.'+d.unlock+' 필요':rank>=5?'최대 강화':profile.level<next?'다음 강화 · 캐릭터 Lv.'+next:game.skillPoints(profile)?'Lv.'+(rank+1)+' 강화 · 포인트 1':'강화 포인트 부족';
- for(let i=0;i<3;i++){const node=$('skill-equip-'+i);node.hidden=i>=({active:2,passive:3,ultimate:1}[d.kind]);node.disabled=!rank||i>=slots[d.kind];node.textContent=book.loadout[d.kind][i]===d.id?'슬롯 '+(i+1)+' 해제':'슬롯 '+(i+1)+' 장착';}
+ for(let i=0;i<4;i++){const node=$('skill-equip-'+i);node.hidden=i>=game.MAX_SLOTS[d.kind];node.disabled=!rank||i>=slots[d.kind];const action=book.loadout[d.kind][i]===d.id?'해제':'장착';node.textContent=(game.MAX_SLOTS[d.kind]>2?'':'슬롯 ')+(i+1)+' '+action;node.setAttribute('aria-label','슬롯 '+(i+1)+' '+action);}
  for(let i=0;i<3;i++){const b=book.presets[i];$('skill-preset-load-'+i).disabled=!b;$('skill-preset-state-'+i).textContent=b?[...b.active,...b.ultimate].filter(Boolean).map(id=>game.SKILL_BY_ID[id].name).join(' · ')||'빈 구성':'비어 있음';}
  $('skill-auto-mode').value=book.auto.mode;$('skill-auto-ultimate').value=book.auto.ultimate;$('skill-awakening').value=book.awakening;$('skill-awakening-label').hidden=profile.level<50;
 }
-function useCombatSkill(index){const id=index<2?profile.skillBook.loadout.active[index]:profile.skillBook.loadout.ultimate[0];if(!ready||!id||state.phase!=='playing'||state.paused)return;audio.unlock();manual();if(!game.useSkill(state,id,state.auto?undefined:currentAim())&&state.auto&&!((state.skillRuntime.cooldowns[id]??0)>0)&&state.player.stamina>=game.SKILL_BY_ID[id].cost)skillRequest={id,until:state.run.time+3};canvas.focus({preventScroll:true});updateHud();}
-for(let i=0;i<3;i++){const action=()=>useCombatSkill(i),button=$('combat-skill-'+i);button.addEventListener('pointerdown',combatPress(action));button.addEventListener('click',combatClick(action));}
+// Combat buttons 0·1 and 3·4 are regular slots 1–4 (3·4 since Alpha 0.119); button 2 stays the ultimate.
+const combatSkillIds=()=>{const {active,ultimate}=profile.skillBook.loadout;return [active[0],active[1],ultimate[0],active[2],active[3]];};
+function useCombatSkill(index){const id=combatSkillIds()[index];if(!ready||!id||state.phase!=='playing'||state.paused)return;audio.unlock();manual();if(!game.useSkill(state,id,state.auto?undefined:currentAim())&&state.auto&&!((state.skillRuntime.cooldowns[id]??0)>0)&&state.player.stamina>=game.SKILL_BY_ID[id].cost)skillRequest={id,until:state.run.time+3};canvas.focus({preventScroll:true});updateHud();}
+for(let i=0;i<5;i++){const action=()=>useCombatSkill(i),button=$('combat-skill-'+i);button.addEventListener('pointerdown',combatPress(action));button.addEventListener('click',combatClick(action));}
 function refreshCombatSkills(){
- const ids=[...profile.skillBook.loadout.active,profile.skillBook.loadout.ultimate[0]],r=state.skillRuntime;
- for(let i=0;i<3;i++){const id=ids[i],node=$('combat-skill-'+i),d=game.SKILL_BY_ID[id];node.hidden=!d;if(!d)continue;const cd=r.cooldowns[id]??0,usable=state.auto?state.phase==='playing'&&!state.paused&&state.run.flow==='combat'&&cd<=0&&state.player.stamina>=d.cost:game.skillReady(state,id);if(combatSkillIcons[i]!==d.icon){combatSkillIcons[i]=d.icon;$('combat-skill-icon-'+i).src=d.icon;}hudText($('combat-skill-name-'+i),d.name);hudText($('combat-skill-state-'+i),cd>0?(i===2?Math.ceil(cd):Math.max(.1,cd).toFixed(1))+'초':state.player.stamina<d.cost?'기력 부족':'준비');node.disabled=!usable;node.setAttribute('data-ultimate',String(i===2));node.setAttribute('data-ready',String(usable));node.setAttribute('data-cooldown',String(cd>0));node.setAttribute('data-queued',String(skillRequest?.id===id));node.setAttribute('aria-label',d.name+' · '+$('combat-skill-state-'+i).textContent);}
+ const ids=combatSkillIds(),r=state.skillRuntime;
+ for(let i=0;i<5;i++){const id=ids[i],node=$('combat-skill-'+i),d=game.SKILL_BY_ID[id];node.hidden=!d;if(!d)continue;const cd=r.cooldowns[id]??0,usable=state.auto?state.phase==='playing'&&!state.paused&&state.run.flow==='combat'&&cd<=0&&state.player.stamina>=d.cost:game.skillReady(state,id);if(combatSkillIcons[i]!==d.icon){combatSkillIcons[i]=d.icon;$('combat-skill-icon-'+i).src=d.icon;}hudText($('combat-skill-name-'+i),d.name);hudText($('combat-skill-state-'+i),cd>0?(i===2?Math.ceil(cd):Math.max(.1,cd).toFixed(1))+'초':state.player.stamina<d.cost?'기력 부족':'준비');node.disabled=!usable;node.setAttribute('data-ultimate',String(i===2));node.setAttribute('data-ready',String(usable));node.setAttribute('data-cooldown',String(cd>0));node.setAttribute('data-queued',String(skillRequest?.id===id));node.setAttribute('aria-label',d.name+' · '+$('combat-skill-state-'+i).textContent);}
 }
 
 
