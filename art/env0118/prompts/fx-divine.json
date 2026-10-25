@@ -1,0 +1,42 @@
+{
+  "id": "fx-divine",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D combat VFX sprite sheet for a dark fantasy pixel-art action RPG. Create ONE square transparent RGBA image, exactly 1024 by 1024 pixels, an evenly aligned 4 column by 4 row grid, sixteen equal 256x256 cells with invisible boundaries. Fallen divine sorcery: radiant gold, warm white and soft violet holy light with bright white cores, feathers of light and star sparkles. Row 1 three luminous holy-blade crescents sweeping RIGHT with a radiant leading edge at right and thin golden shards toward left. Row 2 compact star-light orb projectile travelling RIGHT, white-gold head at right, sparkle tail to left. Row 3 a radial ground impact of a holy sigil burst with light rays and star sparkles. Row 4 a directional charge wake travelling RIGHT, golden light streaks and feathers streaming LEFT. Each row is ONE attack effect evolving across four animation frames, left to right: small formation, strong contact, expanding aftermath, sparse fading remnants. Every frame remains centered at the same pivot (cell center). Each individual effect fits within its cell with at least 24 pixels of fully transparent margin, never crosses into adjacent cells, no cropping. Front view ground-space effect, no perspective camera or tilted board. Rich hand-painted pixel clusters, sharp readable silhouette, restrained inner glow, intricate shards and sparks, premium dark fantasy game sprite quality, readable on dark forest stone and ice terrain. Actual alpha transparency: no black/white/color background, no checkerboard painted into the image. No characters, bodies, monsters, weapons held by hands, scenery, text, labels, numbers, logos, grid lines or UI. Directional effects must all have their HEAD / leading edge on the RIGHT, trail on the LEFT. Radial impact stays centered and symmetric. Image1 is the existing forest version of this exact sheet: copy its layout, cell positions and sizes exactly, only change the element to holy light.",
+  "referenceImages": [
+    {
+      "path": "art/monster-effects069/forest-original.png",
+      "sha256": "ebfb3a856c259689aea4c8603c7ebf667a80463a89c2d16ede77f73e3e2c2233"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": false,
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": 0.095,
+      "parts": 17,
+      "reason": "missing real transparency",
+      "seconds": 60,
+      "sha256": "ac9b58be807594e8c8a00954fe7dec0b0d4190884010d68cfe7ebac28679839c"
+    },
+    {
+      "attempt": 2,
+      "ok": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": 0.343,
+      "parts": 16,
+      "seconds": 47,
+      "sha256": "31c75603620a6a9671234040188cef09feedf93379ebe1681926138ed6961bec"
+    }
+  ],
+  "final": {
+    "path": "art/env0118/fx-divine.png",
+    "sha256": "31c75603620a6a9671234040188cef09feedf93379ebe1681926138ed6961bec"
+  }
+}

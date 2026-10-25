@@ -1,7 +1,8 @@
-import {equipmentFamily} from './equipment-slots.js?v=0.117.0';
-import {EQUIPMENT_SETS,SET_SLOTS,CHAPTER_SETS,setArtId} from './equipment-sets.js?v=0.117.0';
-// Thirty chapters in three regions of ten (Alpha 0.107): 1–10 forest, 11–20 fire and
-// ice (11–15 fire, 16–20 ice), 21–30 darkness. A region drives the map tabs, item and
+import {equipmentFamily} from './equipment-slots.js?v=0.118.0';
+import {EQUIPMENT_SETS,SET_SLOTS,CHAPTER_SETS,setArtId} from './equipment-sets.js?v=0.118.0';
+// Sixty chapters in six regions of ten: 1–10 forest, 11–20 fire and ice (11–15 fire,
+// 16–20 ice), 21–30 darkness (Alpha 0.107), 31–40 sunken kingdom, 41–50 storm sky isles,
+// 51–60 twilight sanctum (Alpha 0.118). A region drives the map tabs, item and
 // material tiers; a biome drives ground art, props, attack effects, boss rule and the
 // monster pool. Every chapter has its own ground tile and boss; 10/20/30 are special bosses.
 export const CHAPTERS_PER_THEME=10;
@@ -9,6 +10,9 @@ export const THEMES = [
   {id:1,key:'forest',name:'붉은 숲',bossScale:1},
   {id:2,key:'flame',name:'불과 얼음의 땅',bossScale:1.13},
   {id:3,key:'abyss',name:'어둠의 심연',bossScale:1.22},
+  {id:4,key:'sea',name:'가라앉은 왕국',bossScale:1.3},
+  {id:5,key:'sky',name:'폭풍의 하늘섬',bossScale:1.38},
+  {id:6,key:'divine',name:'황혼의 신역',bossScale:1.46},
 ];
 const ROLES=['skitter','spitter','bulwark'];
 // props: index of the four-frame set in manifest.chapterProps; effects: manifest.monsterEffects key.
@@ -37,6 +41,24 @@ export const BIOMES = {
     encounters:[[690,1160,'무너진 성문'],[1320,1690,'망자의 회랑'],[2020,1510,'사령술 제단'],[2690,1050,'왕의 근위대']],
     caches:[[1530,620,'봉인된 묘실','armor'],[2490,1980,'왕실의 유품','charm']],
     tactic:'망자와 악마의 습격 · 저주의 사격 · 거체의 강타'},
+  sea:{key:'sea',name:'바다',props:4,effects:5,bossRule:'summon',subtitle:'가라앉은 왕국의 바닥에서 바다의 괴수들이 떠오른다.',
+    color:'#7fd0e0',shotColor:'#7fe6f5',pathColor:'#8fb8c0',bossPosition:{x:2950,y:430},bossCycle:['charge','volley','slam'],
+    pool:{skitter:['sea_piranha','sea_eel','sea_shrimp','sea_crab'],spitter:['sea_mermaid','sea_puffer','sea_jelly','sea_coralwisp'],bulwark:['sea_crabknight','sea_turtle','sea_sharkman','sea_coralgolem']},
+    encounters:[[680,1180,'산호 여울'],[1330,590,'난파선 잔해'],[1960,1180,'해초 숲길'],[2600,730,'왕좌의 해류']],
+    caches:[[1490,1850,'가라앉은 보물 상자','weapon'],[2400,1550,'진주 조개','charm']],
+    tactic:'물살을 탄 돌진 · 물방울과 독침의 탄막 · 갑각 거체의 강타'},
+  sky:{key:'sky',name:'하늘',props:5,effects:6,bossRule:'fury',subtitle:'바람과 번개가 몰아치는 하늘섬에서 폭풍의 괴수들이 내려온다.',
+    color:'#b8c8ff',shotColor:'#a8c4ff',pathColor:'#b0b8c8',bossPosition:{x:2950,y:1830},bossCycle:['charge','slam','volley'],
+    pool:{skitter:['sky_harpy','sky_hawk','sky_cloudwolf','sky_sprite'],spitter:['sky_stormmage','sky_archer','sky_orb','sky_thunderjelly'],bulwark:['sky_rockgolem','sky_griffinrider','sky_stormknight','sky_cloudturtle']},
+    encounters:[[690,1160,'바람의 길목'],[1320,1690,'구름 다리'],[2020,1510,'번개 첨탑'],[2690,1050,'폭풍의 제단']],
+    caches:[[1530,620,'바람에 실린 보급품','armor'],[2490,1980,'천둥 대장간 유물','weapon']],
+    tactic:'급강하 습격 · 번개와 깃털의 탄막 · 부유석 거체의 강타'},
+  divine:{key:'divine',name:'신역',props:6,effects:7,bossRule:'defense',subtitle:'무너진 신들의 땅에서 타락한 신의 군세가 일어선다.',
+    color:'#f0d890',shotColor:'#ffe08a',pathColor:'#c8b890',bossPosition:{x:1850,y:1920},bossCycle:['volley','slam','volley'],
+    pool:{skitter:['divine_cherub','divine_hound','divine_lion','divine_wraith'],spitter:['divine_priest','divine_starmage','divine_archer','divine_eye'],bulwark:['divine_golem','divine_paladin','divine_statue','divine_clockwork']},
+    encounters:[[650,1160,'황금 계단'],[1550,650,'빛의 정원'],[2530,870,'심판의 회랑'],[2800,1670,'태양의 문']],
+    caches:[[1150,1550,'봉헌된 성물','charm'],[2200,410,'신전의 보고','weapon']],
+    tactic:'신성한 돌격 · 빛과 별의 탄막 · 석상과 성기사의 압박'},
 };
 const FORMATIONS=[['skitter','skitter','skitter','skitter','spitter'],['bulwark','skitter','skitter','skitter','spitter','spitter'],['bulwark','skitter','skitter','skitter','spitter','spitter'],['bulwark','skitter','skitter','skitter','spitter','spitter']];
 // [name, biome, boss species, mid-boss species for stage 8 (optional)]
@@ -47,8 +69,14 @@ const CHAPTER_ROWS=[
   ['설원의 발자국','frost','boss_frost_mammoth','boss_frost_griffin'],['얼어붙은 호수','frost','boss_frost_serpent','boss_frost_elemental'],['눈보라 고개','frost','boss_frost_witch','boss_frost_colossus'],['빙하 협곡','frost','boss_frost_tortoise','boss_frost_yetichief'],['불과 얼음의 경계','frost','boss_special_twindragon','boss_frost_wyvern'],
   ['무너진 성문','ruins','boss_ruins_bonegiant'],['망자의 회랑','ruins','boss_ruins_ghoullord'],['박쥐 종탑','ruins','boss_ruins_vampirebat'],['사령술 제단','ruins','boss_ruins_lich'],['기사단 묘역','ruins','boss_ruins_cursedknight'],
   ['망령의 서고','ruins','boss_ruins_banshee'],['미믹의 보물고','ruins','boss_ruins_mimicking'],['봉인된 지하묘','ruins','boss_ruins_mummyking'],['왕의 근위대','ruins','boss_ruins_deathguard'],['심연의 옥좌','ruins','boss_special_abysslord'],
+  ['산호초 해안','sea','boss_sea_crabking'],['침몰선의 묘지','sea','boss_sea_ghostcaptain'],['해초의 숲','sea','boss_sea_kelpwitch'],['진주 동굴','sea','boss_sea_giantclam'],['세이렌의 암초','sea','boss_sea_sirenqueen'],
+  ['심해 해구 입구','sea','boss_sea_anglerfish'],['해파리 군락','sea','boss_sea_jellyfish'],['가라앉은 신전','sea','boss_sea_merpriest'],['크라켄의 소굴','sea','boss_sea_kraken'],['심연의 해저 왕좌','sea','boss_special_leviathan'],
+  ['떠다니는 섬','sky','boss_sky_griffinking'],['바람의 협곡','sky','boss_sky_harpyqueen'],['구름 다리','sky','boss_sky_cloudgiant'],['깃털 신전','sky','boss_sky_crowgeneral'],['부서진 풍차섬','sky','boss_sky_windlord'],
+  ['번개 첨탑','sky','boss_sky_thunderwyvern'],['폭풍의 눈','sky','boss_sky_stormelemental'],['천둥 대장간','sky','boss_sky_thundersmith'],['낙뢰의 제단','sky','boss_sky_thunderbird'],['하늘 왕좌','sky','boss_special_stormdragon'],
+  ['황금 신전의 계단','divine','boss_divine_guardian'],['빛의 정원','divine','boss_divine_sphinx'],['별빛 회랑','divine','boss_divine_starknight'],['성가대의 폐허','divine','boss_divine_fallenangel'],['심판의 법정','divine','boss_divine_judge'],
+  ['무너지는 하늘','divine','boss_divine_chrono'],['깨진 별의 바다','divine','boss_divine_starserpent'],['영원의 문','divine','boss_divine_gatekeeper'],['신들의 묘역','divine','boss_divine_wargod'],['태양의 옥좌','divine','boss_special_sungod'],
 ];
-// Boss species drawn with Codex (art/monsters0106, art/monsters0107). special: 10/20/30.
+// Boss species drawn with Codex (art/monsters0106, art/monsters0107, art/monsters0118). special: every tenth chapter.
 export const CHAPTER_BOSSES = {
   boss_forest_boar:{name:'붉은엄니 멧돼지',height:215},boss_forest_direwolf:{name:'회색 늑대왕',height:210},boss_forest_goblinchief:{name:'고블린 족장',height:225},
   boss_forest_thornbeast:{name:'가시덩굴 괴수',height:240},boss_forest_mushroomking:{name:'독버섯 왕',height:230},boss_forest_orcwarlord:{name:'오크 대장군',height:240},
@@ -62,6 +90,18 @@ export const CHAPTER_BOSSES = {
   boss_ruins_lich:{name:'대사령술사',height:240},boss_ruins_cursedknight:{name:'저주받은 기사단장',height:245},boss_ruins_banshee:{name:'그림자 밴시',height:235},
   boss_ruins_mimicking:{name:'거대 미믹',height:200},boss_ruins_mummyking:{name:'미라 왕',height:240},boss_ruins_deathguard:{name:'근위대장',height:245},
   boss_special_abysslord:{name:'심연의 군주',height:310,special:true},
+  boss_sea_crabking:{name:'거대 집게 게왕',height:225},boss_sea_ghostcaptain:{name:'유령 선장',height:240},boss_sea_kelpwitch:{name:'해초 마녀',height:240},
+  boss_sea_giantclam:{name:'진주 대왕조개',height:205},boss_sea_sirenqueen:{name:'세이렌 여왕',height:245},boss_sea_anglerfish:{name:'심해 아귀',height:225},
+  boss_sea_jellyfish:{name:'거대 독해파리',height:250},boss_sea_merpriest:{name:'인어 대사제',height:245},boss_sea_kraken:{name:'크라켄',height:255},
+  boss_special_leviathan:{name:'심해의 리바이어던',height:310,special:true},
+  boss_sky_griffinking:{name:'그리폰 왕',height:240},boss_sky_harpyqueen:{name:'하피 여왕',height:235},boss_sky_cloudgiant:{name:'구름 거인',height:265},
+  boss_sky_crowgeneral:{name:'까마귀 장군',height:240},boss_sky_windlord:{name:'바람의 정령왕',height:250},boss_sky_thunderwyvern:{name:'번개 와이번',height:240},
+  boss_sky_stormelemental:{name:'폭풍의 정령',height:255},boss_sky_thundersmith:{name:'천둥 거인 대장장이',height:265},boss_sky_thunderbird:{name:'썬더버드',height:245},
+  boss_special_stormdragon:{name:'천둥의 용왕',height:310,special:true},
+  boss_divine_guardian:{name:'신전 수호 석상',height:255},boss_divine_sphinx:{name:'황금 스핑크스',height:235},boss_divine_starknight:{name:'성좌 기사',height:250},
+  boss_divine_fallenangel:{name:'타락 천사',height:250},boss_divine_judge:{name:'심판관',height:255},boss_divine_chrono:{name:'시간의 수호자',height:250},
+  boss_divine_starserpent:{name:'성좌 뱀',height:240},boss_divine_gatekeeper:{name:'문지기 거신',height:270},boss_divine_wargod:{name:'타락한 전쟁신',height:260},
+  boss_special_sungod:{name:'몰락한 태양신',height:315,special:true},
 };
 // Ice chapters field one of these as the stage-8 mid-boss (last wave's first elite).
 export const MID_BOSSES = {
@@ -156,6 +196,45 @@ Object.assign(MONSTERS,{
   dark_priest:{name:'어둠 사제',role:'spitter',height:108,shots:3,shotSpeed:300,shotColor:'#b07af0'},
   dark_demon:{name:'지옥 악마 전사',role:'bulwark',height:160,guardMax:125,speed:72},
   dark_voidgolem:{name:'공허 골렘',role:'bulwark',height:166,speed:58,radius:115,attackRange:160,windup:1.05,attackCycle:['slam','charge'],chargeSpeed:300,chargeDuration:.34,guardMax:0,hpScale:1.25,attackInterval:1.8,tactic:'공허 주먹 강타와 육중한 돌진'},
+});
+// Alpha 0.118 sea, sky and divine species (art/monsters0118).
+Object.assign(MONSTERS,{
+  sea_piranha:{name:'이빨 피라냐',role:'skitter',height:70,speed:165,radius:44,attackRange:140,windup:.55,attackCycle:['charge'],chargeSpeed:440,chargeDuration:.2,guardMax:0,hpScale:.7,damageScale:.85,attackInterval:1.05,tactic:'떼 지어 물살을 타고 물어뜯는 돌진'},
+  sea_eel:{name:'전기 뱀장어',role:'skitter',height:78,speed:135,chargeEvery:3,chargeSpeed:440,chargeDuration:.24},
+  sea_shrimp:{name:'갑옷 새우',role:'skitter',height:80,speed:145,radius:50,attackRange:130,windup:.6,attackCycle:['charge','slam'],chargeSpeed:400,chargeDuration:.22,guardMax:0,hpScale:.9,damageScale:.95,attackInterval:1.05,tactic:'튀어 오르는 돌진 뒤 집게 찌르기'},
+  sea_crab:{name:'해적 게',role:'skitter',height:82,speed:120,chargeEvery:3,chargeSpeed:400,chargeDuration:.26,hpScale:1.05},
+  sea_mermaid:{name:'인어 궁수',role:'spitter',height:108,shots:2,shotSpeed:340,shotColor:'#7fe6f5'},
+  sea_puffer:{name:'가시 복어',role:'spitter',height:84,speed:50,attackRange:440,windup:1,shots:5,shotSpeed:240,shotSpread:.24,shotColor:'#e8d77a',projectileStyle:'spore',attackInterval:3.1,damageScale:.75,tactic:'몸을 부풀려 다섯 갈래 독가시'},
+  sea_jelly:{name:'독 해파리',role:'spitter',height:100,speed:70,attackRange:490,windup:.95,shots:2,shotSpeed:260,shotSpread:.1,shotColor:'#d39cf5',projectileStyle:'spectral',standoffMin:150,standoffMax:290,attackInterval:2.6,tactic:'떠다니며 거리를 두고 두 갈래 독방울'},
+  sea_coralwisp:{name:'산호 정령',role:'spitter',height:96,speed:65,attackRange:500,windup:1,shots:4,shotSpeed:275,shotSpread:.22,shotColor:'#ff9ab0',projectileStyle:'ice',attackInterval:2.9,tactic:'부채꼴로 퍼지는 네 갈래 산호 조각'},
+  sea_crabknight:{name:'게 기사',role:'bulwark',height:140,guardMax:125,speed:66},
+  sea_turtle:{name:'바다거북 전사',role:'bulwark',height:150,speed:58,radius:110,attackRange:155,windup:1.05,attackCycle:['slam','charge'],chargeSpeed:300,chargeDuration:.34,guardMax:0,hpScale:1.3,attackInterval:1.8,tactic:'등껍질 돌진과 묵직한 내려치기'},
+  sea_sharkman:{name:'상어인 투사',role:'bulwark',height:156,guardMax:110,speed:74},
+  sea_coralgolem:{name:'산호 골렘',role:'bulwark',height:164,speed:60,radius:112,attackRange:150,windup:.95},
+  sky_harpy:{name:'하피',role:'skitter',height:90,speed:170,radius:48,attackRange:150,windup:.6,attackCycle:['charge','slam'],chargeSpeed:470,chargeDuration:.2,guardMax:0,hpScale:.85,damageScale:1,attackInterval:1,tactic:'높이 날아올랐다가 발톱 급강하'},
+  sky_hawk:{name:'폭풍 매',role:'skitter',height:78,speed:150,chargeEvery:3,chargeSpeed:460,chargeDuration:.22,hpScale:.85},
+  sky_cloudwolf:{name:'구름 늑대',role:'skitter',height:90,speed:130,chargeEvery:3,chargeSpeed:420,chargeDuration:.24},
+  sky_sprite:{name:'바람 요정',role:'skitter',height:72,speed:170,radius:44,attackRange:140,windup:.55,attackCycle:['charge'],chargeSpeed:450,chargeDuration:.2,guardMax:0,hpScale:.7,damageScale:.85,attackInterval:1.05,tactic:'돌풍을 타고 날아드는 할퀴기'},
+  sky_stormmage:{name:'폭풍 마법사',role:'spitter',height:110,shots:3,shotSpeed:330,shotColor:'#a8c4ff'},
+  sky_archer:{name:'깃털 궁수',role:'spitter',height:104,shots:1,shotSpeed:400},
+  sky_orb:{name:'번개 구슬 정령',role:'spitter',height:92,speed:80,attackRange:500,windup:.9,shots:3,shotSpeed:290,shotSpread:.14,shotColor:'#bfe0ff',projectileStyle:'spectral',standoffMin:160,standoffMax:300,attackInterval:2.5,tactic:'거리를 벌리며 세 갈래 번개 구슬'},
+  sky_thunderjelly:{name:'천둥 구름 해파리',role:'spitter',height:100,speed:55,attackRange:460,windup:1,shots:4,shotSpeed:250,shotSpread:.22,shotColor:'#d8e4ff',projectileStyle:'ice',attackInterval:3,damageScale:.85,tactic:'느리게 떠다니며 네 갈래 뇌운 방울'},
+  sky_rockgolem:{name:'부유석 골렘',role:'bulwark',height:164,speed:58,radius:115,attackRange:160,windup:1.05,attackCycle:['slam','charge'],chargeSpeed:300,chargeDuration:.34,guardMax:0,hpScale:1.3,attackInterval:1.8,tactic:'떠오른 바위 주먹 강타와 돌진'},
+  sky_griffinrider:{name:'그리폰 기수',role:'bulwark',height:150,speed:68,radius:105,attackRange:150,windup:1,attackCycle:['charge','slam'],chargeSpeed:370,chargeDuration:.32,guardMax:0,hpScale:1.25,attackInterval:1.8,tactic:'창을 앞세운 비행 돌격과 짓밟기'},
+  sky_stormknight:{name:'폭풍 기사',role:'bulwark',height:150,guardMax:125,speed:70},
+  sky_cloudturtle:{name:'구름 거북',role:'bulwark',height:140,speed:62,radius:110,attackRange:150},
+  divine_cherub:{name:'천사 병사',role:'skitter',height:88,speed:140,chargeEvery:3,chargeSpeed:440,chargeDuration:.22},
+  divine_hound:{name:'황금 수호견',role:'skitter',height:90,speed:150,radius:52,attackRange:140,windup:.6,attackCycle:['charge','slam'],chargeSpeed:450,chargeDuration:.22,guardMax:0,hpScale:.95,damageScale:1,attackInterval:1.05,tactic:'빛을 남기며 짧게 돌진해 물어뜯기'},
+  divine_lion:{name:'빛의 사자',role:'skitter',height:96,speed:135,chargeEvery:3,chargeSpeed:430,chargeDuration:.26,hpScale:1.1},
+  divine_wraith:{name:'시간의 망령',role:'skitter',height:86,speed:165,radius:46,attackRange:145,windup:.55,attackCycle:['charge'],chargeSpeed:450,chargeDuration:.2,guardMax:0,hpScale:.75,damageScale:.9,attackInterval:1.05,tactic:'시간을 건너뛰듯 순식간에 다가와 베기'},
+  divine_priest:{name:'빛의 사제',role:'spitter',height:108,shots:3,shotSpeed:310,shotColor:'#ffe08a'},
+  divine_starmage:{name:'성좌 마법사',role:'spitter',height:110,speed:70,attackRange:480,windup:1,shots:4,shotSpeed:270,shotSpread:.2,shotColor:'#c8b8ff',projectileStyle:'ice',attackInterval:2.8,tactic:'별자리 모양의 네 갈래 별빛탄'},
+  divine_archer:{name:'천상 궁수',role:'spitter',height:106,shots:2,shotSpeed:360,shotColor:'#fff0b0'},
+  divine_eye:{name:'심판의 눈',role:'spitter',height:100,speed:80,attackRange:500,windup:.95,shots:3,shotSpeed:265,shotSpread:.14,shotColor:'#ffd36a',projectileStyle:'spectral',standoffMin:160,standoffMax:300,attackInterval:2.6,tactic:'거리를 벌리며 세 갈래 심판의 시선'},
+  divine_golem:{name:'빛의 골렘',role:'bulwark',height:166,speed:60,radius:112,attackRange:150,windup:.95},
+  divine_paladin:{name:'타락 성기사',role:'bulwark',height:152,guardMax:125,speed:70},
+  divine_statue:{name:'날개 석상',role:'bulwark',height:150,speed:64,radius:105,attackRange:150,windup:1,attackCycle:['slam','charge'],chargeSpeed:340,chargeDuration:.3,guardMax:0,hpScale:1.25,attackInterval:1.8,tactic:'날개를 펼친 활강 돌진과 석상 강타'},
+  divine_clockwork:{name:'시계 장치 거신',role:'bulwark',height:168,speed:56,radius:115,attackRange:160,windup:1.05,attackCycle:['slam','charge'],chargeSpeed:290,chargeDuration:.34,guardMax:0,hpScale:1.3,attackInterval:1.9,tactic:'톱니 주먹 내려치기와 육중한 돌진'},
 });
 for(const [id,mid] of Object.entries(MID_BOSSES))MONSTERS[id]={name:mid.name,role:'bulwark',height:mid.height,guardMax:0,midBoss:true};
 for(const [id,boss] of Object.entries(CHAPTER_BOSSES))MONSTERS[id]={name:boss.name,role:'bulwark',height:boss.height,...(boss.special?{special:true}:{})};

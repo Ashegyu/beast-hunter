@@ -213,7 +213,7 @@ test('failed recovery copy keeps a damaged original instead of autosaving a defa
  ui.emit('nav-more','click');ui.emit('backup-export','click');assert.equal(ui.downloads.length,1);
  await selectBackup(ui,profileBackup.createBackup(game.createProfile(1_000_000),1_000_000));ui.emit('backup-confirm','click');assert.equal(ui.storage.get(KEY),damaged);assert.equal(ui.storage.has(KEY+':before-restore'),false);
  ui.setWriteFailure(null);ui.emit('save-retry','click');assert.equal(ui.reloads,1);assert.equal(ui.storage.get(KEY),damaged);
- const again=await host({saved:damaged});assert.equal(again.storage.get(KEY+':recovery'),damaged);assert.equal(again.profile().version,15);assert.equal(again.nodes.get('save-banner').hidden,true);
+ const again=await host({saved:damaged});assert.equal(again.storage.get(KEY+':recovery'),damaged);assert.equal(again.profile().version,16);assert.equal(again.nodes.get('save-banner').hidden,true);
 });
 test('backup restore previews, confirms once, preserves rollback and blocks stale page autosaves',async()=>{
  const ui=await host();ui.state.profile.gold=222;ui.emit('nav-more','click');const p=game.createProfile(1_000_000);p.level=20;p.gold=999;p.skillBook=game.restoreSkillBook(null,20);
@@ -723,7 +723,7 @@ test('real render draws dropped equipment and limits ordinary pickup HUD spam',a
 });
 
 test('boot shows real camp, locked stages and a saved versioned profile',async()=>{
-  const ui=await host();assert.equal(ui.nodes.get('loading').hidden,true);assert.equal(ui.nodes.get('camp-content').hidden,false);assert.equal(ui.nodes.get('stage-2').disabled,true);assert.equal(ui.nodes.get('forge-blade').disabled,true);assert.equal(ui.profile().version,15);
+  const ui=await host();assert.equal(ui.nodes.get('loading').hidden,true);assert.equal(ui.nodes.get('camp-content').hidden,false);assert.equal(ui.nodes.get('stage-2').disabled,true);assert.equal(ui.nodes.get('forge-blade').disabled,true);assert.equal(ui.profile().version,16);
   ui.emit('start','click');ui.tick();assert.equal(ui.state.phase,'playing');assert.equal(ui.nodes.get('overlay').hidden,true);assert.equal(ui.state.enemies.length,4);assert.equal(ui.nodes.get('monsters-left').textContent,'56');
   for(const call of ui.calls.filter(c=>c.args.length===8)){const size=imageSize(call.image);assert.ok(call.args[0]+call.args[2]<=size.width);assert.ok(call.args[1]+call.args[3]<=size.height);}
 });
@@ -906,14 +906,14 @@ test('portrait rotation freezes a committed attack until landscape is restored a
 });
 
 test('unreadable saves are backed up before a fresh profile replaces the active slot',async()=>{
-  const ui=await host({saved:'not valid json'});assert.equal(ui.storage.get(KEY+':recovery'),'not valid json');assert.equal(ui.profile().version,15);assert.match(ui.nodes.get('save-status').textContent,/복구 사본/);
+  const ui=await host({saved:'not valid json'});assert.equal(ui.storage.get(KEY+':recovery'),'not valid json');assert.equal(ui.profile().version,16);assert.match(ui.nodes.get('save-status').textContent,/복구 사본/);
 });
 
 test('equipment panel pauses combat, compares, equips and persists items without deleting v1 progress',async()=>{
   const p=game.createProfile(1_000_000);p.gold=42;p.inventory=[{id:1,slot:'weapon',name:'갑각 대검',rarity:1,tier:1,affixes:{damage:12}}];
   const ui=await host({saved:p});ui.emit('camp-inventory','click');assert.equal(ui.nodes.get('inventory-content').hidden,false);assert.match(ui.nodes.get('item-compare-0').textContent,/공격 \+12/);ui.emit('equip-0','click');assert.equal(ui.profile().equipment.weapon,1);assert.equal(ui.nodes.get('salvage-0').disabled,true);
   ui.emit('inventory-back','click');ui.emit('start','click');ui.tick();ui.emit('document','keydown',{key:'i',target:ui.nodes.get('arena')});const time=ui.state.run.time;ui.run(.5);assert.equal(ui.state.run.time,time);assert.equal(ui.state.paused,true);ui.emit('inventory-back','click');ui.emit('resume','click');ui.tick();assert.ok(ui.state.run.time>time);
-  const legacy=game.createProfile(1_000_000);legacy.version=1;legacy.gold=73;delete legacy.inventory;delete legacy.equipment;const migrated=await host({saved:legacy});assert.equal(migrated.profile().version,15);assert.equal(migrated.profile().gold,73);assert.equal(migrated.storage.has(KEY+':recovery'),false);
+  const legacy=game.createProfile(1_000_000);legacy.version=1;legacy.gold=73;delete legacy.inventory;delete legacy.equipment;const migrated=await host({saved:legacy});assert.equal(migrated.profile().version,16);assert.equal(migrated.profile().gold,73);assert.equal(migrated.storage.has(KEY+':recovery'),false);
 });
 test('mouse aiming drives directed attacks in the real app',async()=>{
   const ui=await host({manual:true});ui.emit('start','click');ui.tick();ui.state.enemies=[];
@@ -1639,7 +1639,7 @@ test('level-up results show real XP and unlocked ultimate, then open the worksho
 });
 
 test('max-level growth caps XP, fills the bar and explains the final awakening without changing builds',async()=>{
- // Lv.50 still unlocks the awakening; the level cap itself is MAX_LEVEL (100 since Alpha 0.105).
+ // Lv.50 still unlocks the awakening; the level cap itself is MAX_LEVEL (100 since Alpha 0.105, 200 since 0.118).
  const p=game.createProfile(1_000_000);p.level=49;p.xp=game.xpNeeded(49)-1;p.skillBook=game.restoreSkillBook(null,49);const ui=await host({saved:p,campaign:true});ui.emit('start','click');const s=ui.state,book=JSON.stringify(s.profile.skillBook);
  s.enemies=[];s.spawns=[];s.barrels=[];s.run.flow='break';s.run.timer=999;s.pickups=[{id:900,x:s.player.x,y:s.player.y,gold:0,xp:10000,cores:0}];ui.tick(.025);
  assert.ok(s.profile.level>=50&&s.profile.level<game.MAX_LEVEL);assert.notEqual(ui.nodes.get('xp-text').textContent,'최고 레벨');assert.equal(JSON.stringify(s.profile.skillBook),book);
@@ -1662,7 +1662,7 @@ test('scouting notice reports credited XP when an offline grant crosses level tw
 
 test('legacy five-stage saves reopen the proportional checkpoint and both maps expose ten stages',async()=>{
  const p=game.createProfile(1_000_000);p.version=7;p.gold=73;p.stageProgress=[4,0,0];const ui=await host({saved:p,campaign:true});
- assert.equal(ui.profile().version,15);assert.deepEqual(ui.profile().stageProgress,game.STAGES.map((_,i)=>i?0:8));assert.equal(ui.profile().gold,73);assert.equal(ui.storage.has(KEY+':recovery'),false);assert.equal(ui.nodes.get('hub-progress-text').textContent,'8 / 10');
+ assert.equal(ui.profile().version,16);assert.deepEqual(ui.profile().stageProgress,game.STAGES.map((_,i)=>i?0:8));assert.equal(ui.profile().gold,73);assert.equal(ui.storage.has(KEY+':recovery'),false);assert.equal(ui.nodes.get('hub-progress-text').textContent,'8 / 10');
  for(let n=1;n<=10;n++){assert.equal(ui.nodes.get('run-stage-'+n).disabled,n===10);assert.equal(ui.nodes.get('dashboard-stage-'+n).disabled,n===10);assert.equal(ui.nodes.get('dashboard-stage-number-'+n).textContent,'1–'+n);}
  ui.emit('run-stage-10','click');ui.emit('dashboard-stage-10','click');assert.equal(ui.nodes.get('run-stage-9').attributes['aria-pressed'],'true');
  ui.emit('start','click');assert.equal(ui.state.run.stage,9);assert.equal(ui.nodes.get('time-left').textContent,'01:00');assert.equal(ui.nodes.get('monsters-left').textContent,'116');assert.ok(ui.state.spawns.every(q=>!q.boss));
@@ -1789,7 +1789,7 @@ test('mobile lobby shortcuts preserve profile ownership and reject navigation du
 });
 
 test('stage B five presets save real gear and skill settings, expose two-tap entry selection and restore without a false recovery warning',async()=>{
- const p=bagFixture();p.version=11;p.level=30;p.gold=100000;const ui=await host({saved:p,campaign:true});assert.equal(ui.storage.has(KEY+':recovery'),false);assert.equal(ui.profile().version,15);ui.emit('lobby-equipment','click');ui.emit('loadout-build-open','click');ui.emit('build-tab-4','click');ui.nodes.get('build-name-4').value='실험 보스';ui.emit('build-name-4','input');ui.document.activeElement=ui.nodes.get('build-save-4');ui.tick(0);ui.emit('build-save-4','click');
+ const p=bagFixture();p.version=11;p.level=30;p.gold=100000;const ui=await host({saved:p,campaign:true});assert.equal(ui.storage.has(KEY+':recovery'),false);assert.equal(ui.profile().version,16);ui.emit('lobby-equipment','click');ui.emit('loadout-build-open','click');ui.emit('build-tab-4','click');ui.nodes.get('build-name-4').value='실험 보스';ui.emit('build-name-4','input');ui.document.activeElement=ui.nodes.get('build-save-4');ui.tick(0);ui.emit('build-save-4','click');
  const stored=ui.profile();assert.equal(stored.savedBuilds.length,5);assert.equal(stored.savedBuilds[4].name,'실험 보스');assert.deepEqual(stored.savedBuilds[4].skill.loadout,stored.skillBook.loadout);assert.equal(ui.nodes.get('build-card-4').hidden,false);assert.equal(ui.nodes.get('build-card-0').hidden,true);
  ui.emit('nav-home','click');ui.emit('hub-route','click');ui.nodes.get('entry-build').value='4';ui.emit('entry-build','change');assert.equal(ui.profile().selectedBuild,4);assert.equal(ui.nodes.get('entry-build-option-4').disabled,false);const restored=await host({saved:ui.profile()});assert.equal(restored.profile().savedBuilds[4].name,'실험 보스');assert.equal(restored.storage.has(KEY+':recovery'),false);
 });

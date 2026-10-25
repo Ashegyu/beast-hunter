@@ -100,7 +100,7 @@ test('every startup and chapter image resolves to a delivered file (Alpha 0.108)
 test('every chapter set item has a frame inside its atlas page (Alpha 0.109)', () => {
   const manifest = JSON.parse(fs.readFileSync(new URL('../dist/assets/manifest.json', import.meta.url)));
   const { setFrames, pages } = manifest.equipment;
-  assert.equal(Object.keys(setFrames).length, 30 * 6);
+  assert.equal(Object.keys(setFrames).length, CHAPTERS.length * 6);
   for (const chapter of CHAPTERS) for (const part of ['sword', 'blade2', 'helmet', 'armor', 'pants', 'boots']) {
     const f = setFrames[`set_${chapter.set}_${part}`], page = pages[f.image];
     assert.ok(page && f.x >= 0 && f.y >= 0 && f.w > 0 && f.h > 0 && f.x + f.w <= page.width && f.y + f.h <= page.height, chapter.set + part);

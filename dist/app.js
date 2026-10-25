@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.117.0';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.118.0';
 import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js';
 import { createCombatAudio } from './sound.js?v=0.76.0';
-import * as game from './game-engine.js?v=0.117.0';
+import * as game from './game-engine.js?v=0.118.0';
 import {FrameMetrics} from './frame-metrics.js?v=0.98.1';
 import { frameIndex, frameRect, validateClip } from './engine.js';
 import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
 import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.103.1';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.117.0';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.117.0';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.117.0';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.117.0';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.118.0';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.118.0';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.118.0';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.118.0';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -963,6 +963,7 @@ function refreshResultLoot(){
 for(const [id,step]of [['result-loot-prev',-1],['result-loot-next',1]])$(id).addEventListener('click',()=>{
   if(!['victory','defeat'].includes(state.phase)||!game.resultReady(state))return;resultLootPage+=step;refreshResultLoot();
 });
+const HOME_ROUTE_TEXT=['붉은 달이 비추는 숲, 사방에서 괴수들이 몰려온다.','불길과 눈보라가 갈라 놓은 땅, 원소의 괴수들이 깨어난다.','무너진 성문 너머, 잠들지 않는 망자들이 기다린다.','가라앉은 왕국의 물결 아래, 바다의 괴수들이 떠오른다.','번개가 몰아치는 하늘섬에서, 폭풍의 괴수들이 내려온다.','무너진 신들의 땅에서, 타락한 신의 군세가 일어선다.'];
 function updateHud(){
   $('start').disabled=!ready;if(!ready)return;
   refreshCombatSkills();if(state.phase==='camp'||game.resultReady(state))refreshPreparation();
@@ -1052,7 +1053,7 @@ function updateHud(){
     for(let i=0;i<6;i++){const id=choiceIds[i],item=game.UPGRADES[id];$('choice-'+i).hidden=!item;if(item){hudText($('choice-'+i+'-icon'),item.icon);hudText($('choice-'+i+'-name'),item.name);hudText($('choice-'+i+'-description'),item.description);hudText($('choice-'+i+'-level'),(profile.skills[id]+1)+' / '+item.max);}}
   }else if(state.phase==='camp'){
     modal('camp',profile.hunts?'다음 사냥을 준비하자.':'첫 사냥을 준비하자.','포격충을 먼저 잡고 중갑의 갑각을 깨뜨려. 폭발핵에 적을 모아 터뜨리면 유리해.','HUNTER\'S CAMP');
-    const selected=game.STAGES[selectedStage-1];const bossLoot=game.BOSS_LOOT[selected.theme-1];hudText($('boss-loot-title'),bossLoot.name+' · 일반 장비 드롭');if($('boss-loot-list').dataset.boss!==bossLoot.id){$('boss-loot-list').dataset.boss=bossLoot.id;$('boss-loot-list').replaceChildren(...game.STAGE_SLOTS.map(slot=>{const li=document.createElement('li');li.textContent=game.SLOTS[slot]+' · 일반 등급 드롭 → 최대 강화 후 승급';return li;}));}hudText($('camp-stage-name'),selected.name);hudText($('camp-stage-description'),selected.subtitle);hudText($('camp-stage-goal'),game.battlePlan(selectedRunStage).tactic);
+    const selected=game.STAGES[selectedStage-1];const bossLoot=game.BOSS_LOOT.find(b=>b.tier===selected.theme)??{id:'chapter-'+selected.id,name:selected.bossName};hudText($('boss-loot-title'),bossLoot.name+' · 일반 장비 드롭');if($('boss-loot-list').dataset.boss!==bossLoot.id){$('boss-loot-list').dataset.boss=bossLoot.id;$('boss-loot-list').replaceChildren(...game.STAGE_SLOTS.map(slot=>{const li=document.createElement('li');li.textContent=game.SLOTS[slot]+' · 일반 등급 드롭 → 최대 강화 후 승급';return li;}));}hudText($('camp-stage-name'),selected.name);hudText($('camp-stage-description'),selected.subtitle);hudText($('camp-stage-goal'),game.battlePlan(selectedRunStage).tactic);
     refreshFarmCamp();const limit=game.stageLimit(profile,selectedStage,selectedDifficulty),completed=game.completedStages(profile,selectedStage,selectedDifficulty);selectedRunStage=Math.min(selectedRunStage,limit);
     for(let n=1;n<=game.STAGES_PER_CHAPTER;n++){
       const button=$('run-stage-'+n),locked=n>limit,chosen=n===selectedRunStage,label=locked?'잠김':chosen?'선택':completed>=n?'완료':n===10?'보스':'도전';
@@ -1312,7 +1313,7 @@ function refreshHomeDashboard(selected){
  $('lobby-growth-badge').hidden=profile.skillPoints<=0;
  const xpPercent=profile.level===game.MAX_LEVEL?100:Math.floor(clamp(profile.xp/game.xpNeeded(profile.level)*100,0,100));
  $('home-xp-label').textContent=profile.level===game.MAX_LEVEL?'MAX':xpPercent+'%';$('home-xp-fill').style.width=xpPercent+'%';$('home-xp').setAttribute('aria-valuenow',String(xpPercent));
- $('home-route-chapter').textContent='CHAPTER '+String(selected.id).padStart(2,'0');$('home-route-title').textContent=selected.name;$('home-route-stage').textContent='STAGE '+String(selectedRunStage).padStart(2,'0')+' · '+game.HUNT_MODES[selectedDifficulty].name;$('home-route-description').textContent=selected.theme===1?'붉은 달이 비추는 숲, 사방에서 괴수들이 몰려온다.':selected.theme===2?'무너진 성문 너머, 잠들지 않는 망자들이 기다린다.':'얼어붙은 대지 위에, 끝나지 않는 사냥이 이어진다.';
+ $('home-route-chapter').textContent='CHAPTER '+String(selected.id).padStart(2,'0');$('home-route-title').textContent=selected.name;$('home-route-stage').textContent='STAGE '+String(selectedRunStage).padStart(2,'0')+' · '+game.HUNT_MODES[selectedDifficulty].name;$('home-route-description').textContent=HOME_ROUTE_TEXT[selected.theme-1]??selected.subtitle;
  $('hub-player-level').textContent='Lv. '+profile.level;$('hub-identity-chapter').textContent='CHAPTER '+String(selected.id).padStart(2,'0');$('hub-identity-name').textContent=selected.name;
  const completed=game.completedStages(profile,selected.id,selectedDifficulty);$('hub-progress-fill').style.width=completed/game.STAGES_PER_CHAPTER*100+'%';$('hub-progress-text').textContent=completed+' / '+game.STAGES_PER_CHAPTER;
  gearThumbnail($('dashboard-weapon-art'),weapon??{slot:'weapon',tier:1},172);$('dashboard-weapon-name').textContent=weapon?.name??'사냥꾼의 검';$('dashboard-weapon-grade').textContent=weapon?game.RARITIES[weapon.rarity]+' · 무기':'기본 무기';$('dashboard-weapon-trait').textContent=game.equippedWeaponTrait(profile)?.description??'첫 사냥을 준비하는 리리안의 검';

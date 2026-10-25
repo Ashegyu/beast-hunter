@@ -146,3 +146,12 @@
 #game-shell#game-shell #camp-map-panel .map-difficulty-modes>button[data-common-skin][data-common-skin]{border-radius:999px!important}
 #game-shell#game-shell #camp-map-panel .map-difficulty-modes>button[data-common-skin][data-common-skin]::before{border-image:none!important;border-radius:999px!important;inset:2px!important}
 #game-shell#game-shell #camp-map-panel .map-difficulty-modes>button[data-common-skin][data-common-skin][data-common-skin=tab][aria-pressed=true]::before{border:1px solid #d4a865!important;border-image:none!important;background:linear-gradient(#7b1426,#390d16)!important;background-size:100% 100%!important;box-shadow:inset 0 0 0 1px #ffd59a22,0 0 6px #e0303040}
+
+/* 0.118 · 사냥 지도: 지역이 6개(31~60장 가라앉은 왕국·폭풍의 하늘섬·황혼의 신역)로 늘어 왼쪽 지역 탭을 6줄로 나눈다.
+   아이콘을 숨기고 '범위 · 진행'과 지역 이름 두 줄만 남겨 한 줄 높이를 줄인다. */
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .stage-tabs{inset:17.5% auto 25% 1.2%;grid-template-rows:repeat(6,minmax(0,1fr))}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .stage-tabs>button{gap:0;padding:2px 6px!important}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .stage-tabs>button svg{display:none}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .stage-tabs>button>span{gap:1px}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .stage-tabs>button small{font-size:clamp(7px,1cqw,11px);line-height:1.1}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-map-panel .stage-tabs>button strong{font-size:clamp(8px,1.15cqw,12px);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}

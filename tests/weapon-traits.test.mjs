@@ -18,7 +18,7 @@ test('all six existing swords get immutable traits and legacy art fallback survi
  for(const art of EQUIPMENT_ART){const i=item(art.id);assert.equal(Boolean(g.weaponTrait(i)),art.slot==='weapon');}
  assert.equal(g.weaponTrait(null),null);assert.throws(()=>{g.WEAPON_TRAITS.bleed.name='bad';},TypeError);
  const p=g.createProfile();p.inventory=[item('frost_blade')];delete p.inventory[0].artId;p.equipment.weapon=1;
- const restored=g.restoreProfile(g.encodeProfile(p));assert.equal(restored.version,15);assert.equal(g.equippedWeaponTrait(restored).id,'frost');assert.equal(restored.inventory.length,1);
+ const restored=g.restoreProfile(g.encodeProfile(p));assert.equal(restored.version,16);assert.equal(g.equippedWeaponTrait(restored).id,'frost');assert.equal(restored.inventory.length,1);
 });
 test('bleed ticks exactly three times without stagger, extra drain or stacked instances',()=>{
  const {s,e}=arena();s.profile.skills.drain=1;s.player.hp=50;hit(s,e);assert.equal(e.bleedTicks,3);const hp=e.hp,playerHp=s.player.hp;

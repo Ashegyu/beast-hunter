@@ -14,8 +14,8 @@ function kill(s,{elite=false,boss=false}={}){
 }
 function advance(s,seconds){for(let i=0;i<Math.ceil(seconds/.025);i++)g.advanceGame(s,.025);}
 test('108 immutable item families cover all three slots in every chapter using valid art',()=>{
- // 123 original identities plus 360 chapter set pieces (Alpha 0.109: 30 sets × 4 weapons and 2 per armor part).
- assert.equal(ITEM_CATALOG.length,123+360);assert.equal(new Set(ITEM_CATALOG.map(i=>i.id)).size,483);assert.equal(new Set(ITEM_CATALOG.map(i=>i.name)).size,483);
+ // 123 original identities plus 720 chapter set pieces (Alpha 0.109: 12 per set; 0.118: 60 sets).
+ assert.equal(ITEM_CATALOG.length,123+720);assert.equal(new Set(ITEM_CATALOG.map(i=>i.id)).size,843);assert.equal(new Set(ITEM_CATALOG.map(i=>i.name)).size,843);
  for(const tier of [1,2,3])for(const slot of ['weapon','armor','charm'])assert.equal(ITEM_CATALOG.filter(i=>!i.set&&i.tier===tier&&i.slot===slot).length,12);
  for(const set of Object.keys(g.EQUIPMENT_SETS))assert.deepEqual([...new Set(ITEM_CATALOG.filter(i=>i.set===set).map(i=>i.slot))],['weapon','helmet','armor','pants','boots']);
  for(const row of ITEM_CATALOG)assert.ok([...EQUIPMENT_ART,...SET_ART].some(a=>a.id===row.artId&&a.slot===g.equipmentFamily(row.slot)&&a.tier===row.tier));
@@ -50,7 +50,7 @@ test('a drop reserves ownership, has a short landing time and claims exactly onc
 test('a reserved drop recovers after reload without resetting currencies, gear or grade',()=>{
  const s=arena();s.profile.gold=73;s.profile.lootPity=9;kill(s,{elite:true});const pending=s.profile.pendingLoot[0];
  const recovered=g.restoreProfile(g.encodeProfile(s.profile,1000),1000);assert.equal(recovered.gold,89);assert.equal(recovered.pendingLoot.length,0);assert.deepEqual(recovered.inventory[0],pending);
- const twice=g.restoreProfile(g.encodeProfile(recovered,1000),1000);assert.equal(twice.inventory.length,1);assert.equal(twice.gold,89);assert.equal(twice.version,15);
+ const twice=g.restoreProfile(g.encodeProfile(recovered,1000),1000);assert.equal(twice.inventory.length,1);assert.equal(twice.gold,89);assert.equal(twice.version,16);
 });
 test('a duplicate reserved ID already owned never duplicates the item or grants salvage gold',()=>{
  const p=g.createProfile();const a=item(1,4);p.inventory=[a];p.pendingLoot=[a,a,{...a,id:2,slot:'invalid'}];p.gold=42;
@@ -96,7 +96,7 @@ test('all chapter and difficulty boss receipts match the actual once-only payout
 });
 
 test('every chapter drops its own set and the new set bonuses reach player stats (Alpha 0.109)',()=>{
- assert.equal(new Set(g.STAGES.map(c=>c.set)).size,30);
+ assert.equal(new Set(g.STAGES.map(c=>c.set)).size,g.STAGES.length);
  for(const chapter of [2,13,24,30]){
   const p=g.createProfile(1000);p.unlockedStage=30;p.clearedStage=29;p.stageProgress=g.STAGES.map(()=>10);
   const s=g.createGame(p);g.launch(s,chapter);freezeCombat(s);s.enemies=[];s.player.invulnerable=999;

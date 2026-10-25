@@ -1,0 +1,29 @@
+{
+  "id": "props-divine",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production environment prop sprites for a dark fantasy 2D action RPG, 3/4 overhead view. Image1 shows the existing prop sheet: match its painterly pixel-illustrated style, outline, lighting and scale. Create ONE transparent RGBA square image with exactly FOUR separate props in a 2x2 invisible grid, each centered in its cell with wide transparent margins, never touching each other or the canvas edge: 1 a white marble winged angel statue on a pedestal with gold trim; 2 a broken white marble column with gold rings; 3 a golden brazier holding a soft holy flame; 4 a cluster of violet star crystals on dark stone. Grounded bottoms. Actual alpha transparency, no background, no floor, no shadow, no text, no characters.",
+  "referenceImages": [
+    {
+      "path": "dist/assets/props_chapters-v09.webp",
+      "sha256": "6937292484059f4eb852fa6ee74cdf886553f113a61b83d0528354a288a5adb4"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": 0.663,
+      "parts": 4,
+      "seconds": 57,
+      "sha256": "00bb66b02b1536b57354a8df19f30f99fb0fdee75cc0a0378912b58c36e2cc23"
+    }
+  ],
+  "final": {
+    "path": "art/env0118/props-divine.png",
+    "sha256": "00bb66b02b1536b57354a8df19f30f99fb0fdee75cc0a0378912b58c36e2cc23"
+  }
+}

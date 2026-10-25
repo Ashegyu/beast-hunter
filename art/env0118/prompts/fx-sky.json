@@ -1,0 +1,29 @@
+{
+  "id": "fx-sky",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D combat VFX sprite sheet for a dark fantasy pixel-art action RPG. Create ONE square transparent RGBA image, exactly 1024 by 1024 pixels, an evenly aligned 4 column by 4 row grid, sixteen equal 256x256 cells with invisible boundaries. Storm sky monster sorcery: electric blue, white and pale violet lightning with bright white cores, wind swirls and small cloud puffs. Row 1 three crackling wind-blade crescents sweeping RIGHT with an electric leading edge at right and thin gust trails toward left. Row 2 compact ball-lightning projectile travelling RIGHT, white-hot head at right, crackling tail to left. Row 3 a radial ground impact of a lightning strike with branching sparks and a shock ring. Row 4 a directional dive wake travelling RIGHT, wind streaks and sparks streaming LEFT. Each row is ONE attack effect evolving across four animation frames, left to right: small formation, strong contact, expanding aftermath, sparse fading remnants. Every frame remains centered at the same pivot (cell center). Each individual effect fits within its cell with at least 24 pixels of fully transparent margin, never crosses into adjacent cells, no cropping. Front view ground-space effect, no perspective camera or tilted board. Rich hand-painted pixel clusters, sharp readable silhouette, restrained inner glow, intricate shards and sparks, premium dark fantasy game sprite quality, readable on dark forest stone and ice terrain. Actual alpha transparency: no black/white/color background, no checkerboard painted into the image. No characters, bodies, monsters, weapons held by hands, scenery, text, labels, numbers, logos, grid lines or UI. Directional effects must all have their HEAD / leading edge on the RIGHT, trail on the LEFT. Radial impact stays centered and symmetric. Image1 is the existing forest version of this exact sheet: copy its layout, cell positions and sizes exactly, only change the element to storm lightning.",
+  "referenceImages": [
+    {
+      "path": "art/monster-effects069/forest-original.png",
+      "sha256": "ebfb3a856c259689aea4c8603c7ebf667a80463a89c2d16ede77f73e3e2c2233"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": 0.478,
+      "parts": 16,
+      "seconds": 61,
+      "sha256": "9bb1fbe265c39f8b4f0434695bbf69753be88ca45d1ee87dd0c21814b164841e"
+    }
+  ],
+  "final": {
+    "path": "art/env0118/fx-sky.png",
+    "sha256": "9bb1fbe265c39f8b4f0434695bbf69753be88ca45d1ee87dd0c21814b164841e"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "fx-sea",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D combat VFX sprite sheet for a dark fantasy pixel-art action RPG. Create ONE square transparent RGBA image, exactly 1024 by 1024 pixels, an evenly aligned 4 column by 4 row grid, sixteen equal 256x256 cells with invisible boundaries. Deep sea monster sorcery: teal, cyan and deep blue water with white sea-foam cores, bubbles and droplets. Row 1 three curling water-blade crescents sweeping RIGHT with a foamy leading edge at right and thin spray trailing toward left. Row 2 compact water orb projectile travelling RIGHT, bright foam head at right, bubble tail to left. Row 3 a radial ground impact of a splashing water geyser with ripples and droplets. Row 4 a directional lunge wake travelling RIGHT, rushing water streaks and bubbles streaming LEFT. Each row is ONE attack effect evolving across four animation frames, left to right: small formation, strong contact, expanding aftermath, sparse fading remnants. Every frame remains centered at the same pivot (cell center). Each individual effect fits within its cell with at least 24 pixels of fully transparent margin, never crosses into adjacent cells, no cropping. Front view ground-space effect, no perspective camera or tilted board. Rich hand-painted pixel clusters, sharp readable silhouette, restrained inner glow, intricate shards and sparks, premium dark fantasy game sprite quality, readable on dark forest stone and ice terrain. Actual alpha transparency: no black/white/color background, no checkerboard painted into the image. No characters, bodies, monsters, weapons held by hands, scenery, text, labels, numbers, logos, grid lines or UI. Directional effects must all have their HEAD / leading edge on the RIGHT, trail on the LEFT. Radial impact stays centered and symmetric. Image1 is the existing forest version of this exact sheet: copy its layout, cell positions and sizes exactly, only change the element to deep sea water.",
+  "referenceImages": [
+    {
+      "path": "art/monster-effects069/forest-original.png",
+      "sha256": "ebfb3a856c259689aea4c8603c7ebf667a80463a89c2d16ede77f73e3e2c2233"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": 0.511,
+      "parts": 16,
+      "seconds": 63,
+      "sha256": "41731e9d09ae58722b721544e38782c02546d297b9c605497a70790b38089b48"
+    }
+  ],
+  "final": {
+    "path": "art/env0118/fx-sea.png",
+    "sha256": "41731e9d09ae58722b721544e38782c02546d297b9c605497a70790b38089b48"
+  }
+}

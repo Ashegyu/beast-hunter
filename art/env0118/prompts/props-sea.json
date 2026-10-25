@@ -1,0 +1,29 @@
+{
+  "id": "props-sea",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production environment prop sprites for a dark fantasy 2D action RPG, 3/4 overhead view. Image1 shows the existing prop sheet: match its painterly pixel-illustrated style, outline, lighting and scale. Create ONE transparent RGBA square image with exactly FOUR separate props in a 2x2 invisible grid, each centered in its cell with wide transparent margins, never touching each other or the canvas edge: 1 a tall branching pink-orange coral formation on a rock; 2 a barnacle-covered broken ship mast stump with torn rope; 3 a cluster of tall dark green kelp fronds rising from rocks; 4 a giant open clam shell with a glowing pearl on a rock. Grounded bottoms. Actual alpha transparency, no background, no floor, no shadow, no text, no characters.",
+  "referenceImages": [
+    {
+      "path": "dist/assets/props_chapters-v09.webp",
+      "sha256": "6937292484059f4eb852fa6ee74cdf886553f113a61b83d0528354a288a5adb4"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": 0.524,
+      "parts": 4,
+      "seconds": 54,
+      "sha256": "ffb24660a9fbf0ba2be6121cf2a37a06974d804e67a09977edaa45d468bfa8a1"
+    }
+  ],
+  "final": {
+    "path": "art/env0118/props-sea.png",
+    "sha256": "ffb24660a9fbf0ba2be6121cf2a37a06974d804e67a09977edaa45d468bfa8a1"
+  }
+}

@@ -1,0 +1,326 @@
+{
+ "sea_piranha": {
+  "name": "이빨 피라냐",
+  "role": "skitter",
+  "out": "art/monsters0118/sea_piranha.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A giant fanged piranha that swims through the air just above the ground, steel-blue scales, red belly, huge underbite of needle teeth, small fins as legs. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "sea_eel": {
+  "name": "전기 뱀장어",
+  "role": "skitter",
+  "out": "art/monsters0118/sea_eel.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A long electric eel slithering on the ground, dark teal body with glowing yellow spots, crackling short sparks on its fins, wide mouth. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "sea_shrimp": {
+  "name": "갑옷 새우",
+  "role": "skitter",
+  "out": "art/monsters0118/sea_shrimp.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A large armored mantis shrimp, rainbow carapace plates, folded club arms ready to punch, stalked eyes, many small legs. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "sea_crab": {
+  "name": "해적 게",
+  "role": "skitter",
+  "out": "art/monsters0118/sea_crab.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A pirate crab with a tiny tricorn hat and eyepatch, red shell with barnacles, one oversized claw, scuttling sideways. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "sea_mermaid": {
+  "name": "인어 궁수",
+  "role": "spitter",
+  "out": "art/monsters0118/sea_mermaid.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A sinister mermaid archer on a short coral-shell sled, green-scaled tail, seaweed hair, bone bow shooting water arrows. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "sea_puffer": {
+  "name": "가시 복어",
+  "role": "spitter",
+  "out": "art/monsters0118/sea_puffer.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A huge floating pufferfish, inflated spiky yellow-brown body, angry eyes, shoots short spines; small tail fins. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "sea_jelly": {
+  "name": "독 해파리",
+  "role": "spitter",
+  "out": "art/monsters0118/sea_jelly.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A glowing purple jellyfish floating above the ground, translucent bell, short stinging tentacles, shoots small venom bubbles. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "sea_coralwisp": {
+  "name": "산호 정령",
+  "role": "spitter",
+  "out": "art/monsters0118/sea_coralwisp.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A floating coral spirit made of pink and orange branching coral with a glowing pearl core and tiny fish orbiting it. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "sea_crabknight": {
+  "name": "게 기사",
+  "role": "bulwark",
+  "out": "art/monsters0118/sea_crabknight.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A heavy crab knight, upright crustacean warrior in barnacled shell armor holding a coral shield and a trident, big claws. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "sea_turtle": {
+  "name": "바다거북 전사",
+  "role": "bulwark",
+  "out": "art/monsters0118/sea_turtle.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A humanoid sea turtle warrior with a mossy shell, carrying a heavy anchor as a hammer, leathery green skin. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "sea_sharkman": {
+  "name": "상어인 투사",
+  "role": "bulwark",
+  "out": "art/monsters0118/sea_sharkman.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A muscular shark-man brute, grey-blue skin, rows of teeth, dorsal fin on the back, wielding a jagged whalebone cleaver. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "sea_coralgolem": {
+  "name": "산호 골렘",
+  "role": "bulwark",
+  "out": "art/monsters0118/sea_coralgolem.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A massive golem of rock, coral and barnacles, seaweed hanging from its shoulders, glowing sea-green eyes. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "sky_harpy": {
+  "name": "하피",
+  "role": "skitter",
+  "out": "art/monsters0118/sky_harpy.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A harpy with grey-white wings for arms, sharp talons, wild feathered hair, screeching face, fast swooping pose. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "sky_hawk": {
+  "name": "폭풍 매",
+  "role": "skitter",
+  "out": "art/monsters0118/sky_hawk.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A large storm hawk with dark blue feathers crackling with small sparks, hooked beak, talons forward. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "sky_cloudwolf": {
+  "name": "구름 늑대",
+  "role": "skitter",
+  "out": "art/monsters0118/sky_cloudwolf.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A wolf made of white storm cloud fur with glowing blue eyes and tiny lightning in its mane, light airy body. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "sky_sprite": {
+  "name": "바람 요정",
+  "role": "skitter",
+  "out": "art/monsters0118/sky_sprite.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A small mischievous wind sprite with dragonfly wings, swirling air trails around its body, pointy ears, short dagger. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "sky_stormmage": {
+  "name": "폭풍 마법사",
+  "role": "spitter",
+  "out": "art/monsters0118/sky_stormmage.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A bird-masked storm mage in blue-grey robes with feathers, holding a short staff topped with a crackling lightning orb. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "sky_archer": {
+  "name": "깃털 궁수",
+  "role": "spitter",
+  "out": "art/monsters0118/sky_archer.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A bird-folk archer with white and gold feathers, hawk head, short recurve bow shooting wind arrows. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "sky_orb": {
+  "name": "번개 구슬 정령",
+  "role": "spitter",
+  "out": "art/monsters0118/sky_orb.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A floating orb of lightning wrapped in metal rings, crackling arcs, one glowing eye in the center. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "sky_thunderjelly": {
+  "name": "천둥 구름 해파리",
+  "role": "spitter",
+  "out": "art/monsters0118/sky_thunderjelly.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A floating cloud jellyfish, puffy grey cloud bell with short lightning tentacles hanging below. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "sky_rockgolem": {
+  "name": "부유석 골렘",
+  "role": "bulwark",
+  "out": "art/monsters0118/sky_rockgolem.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A golem made of floating island rocks with grass and small trees on its shoulders, chunks hovering between joints. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "sky_griffinrider": {
+  "name": "그리폰 기수",
+  "role": "bulwark",
+  "out": "art/monsters0118/sky_griffinrider.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "An armored lancer riding a small griffin, steel and blue armor, short lance, griffin with brown wings. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "sky_stormknight": {
+  "name": "폭풍 기사",
+  "role": "bulwark",
+  "out": "art/monsters0118/sky_stormknight.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A heavy storm knight in silver plate engraved with lightning, winged helm, tower shield crackling with energy, short mace. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "sky_cloudturtle": {
+  "name": "구름 거북",
+  "role": "bulwark",
+  "out": "art/monsters0118/sky_cloudturtle.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A giant turtle with a shell of stacked storm clouds and a stone body, small lightning flickering in the clouds. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "divine_cherub": {
+  "name": "천사 병사",
+  "role": "skitter",
+  "out": "art/monsters0118/divine_cherub.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A small winged angel soldier in golden armor with a short spear, white feathered wings, featureless golden mask. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "divine_hound": {
+  "name": "황금 수호견",
+  "role": "skitter",
+  "out": "art/monsters0118/divine_hound.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A golden guardian hound statue come to life, polished gold body, glowing white eyes, laurel collar. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "divine_lion": {
+  "name": "빛의 사자",
+  "role": "skitter",
+  "out": "art/monsters0118/divine_lion.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A radiant lion of white light and gold mane, glowing body with faint star patterns, fast pouncing pose. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "divine_wraith": {
+  "name": "시간의 망령",
+  "role": "skitter",
+  "out": "art/monsters0118/divine_wraith.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A ghostly wraith with a clock face for a head and tattered grey robes, hourglass sand trailing behind it. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "divine_priest": {
+  "name": "빛의 사제",
+  "role": "spitter",
+  "out": "art/monsters0118/divine_priest.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A fallen temple priest in white and gold robes with a halo, holding a short censer that fires orbs of light. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "divine_starmage": {
+  "name": "성좌 마법사",
+  "role": "spitter",
+  "out": "art/monsters0118/divine_starmage.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A star mage in deep blue robes covered with constellations, holding a small orb of starlight. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "divine_archer": {
+  "name": "천상 궁수",
+  "role": "spitter",
+  "out": "art/monsters0118/divine_archer.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A celestial archer with four small wings, white armor, golden bow shooting beams of light. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "divine_eye": {
+  "name": "심판의 눈",
+  "role": "spitter",
+  "out": "art/monsters0118/divine_eye.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A floating ring-angel ophanim: golden wheels inside wheels covered in eyes, one central glowing eye. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "divine_golem": {
+  "name": "빛의 골렘",
+  "role": "bulwark",
+  "out": "art/monsters0118/divine_golem.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A golem of white marble and gold seams glowing with holy light, rune-carved fists. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "divine_paladin": {
+  "name": "타락 성기사",
+  "role": "bulwark",
+  "out": "art/monsters0118/divine_paladin.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A fallen paladin in cracked golden armor with dark stains, great shield with a sun emblem, short warhammer. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "divine_statue": {
+  "name": "날개 석상",
+  "role": "bulwark",
+  "out": "art/monsters0118/divine_statue.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A living winged marble statue of a guardian angel holding a broken stone sword, cracked wings. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ },
+ "divine_clockwork": {
+  "name": "시계 장치 거신",
+  "role": "bulwark",
+  "out": "art/monsters0118/divine_clockwork.png",
+  "style": "art/monsters045/forest_orc.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "subject": "A clockwork colossus of brass gears and golden plates, a clock in its chest, steam from joints. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject."
+ }
+}

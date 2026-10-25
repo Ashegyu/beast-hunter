@@ -2,9 +2,10 @@
 
 Every chapter has its own set (dist/equipment-sets.js). Each set sheet holds six items
 in a 3x2 grid: sword, second weapon, helmet / chest, pants, boots. The 0.108 region sets
-come from art/equipment0108, the rest from art/equipment0109. Items are cut out by grid cell
+come from art/equipment0108, chapters 31-60 (Alpha 0.118) from art/equipment0118, the rest from
+art/equipment0109. Items are cut out by grid cell
 (stray specks and faint haze ignored), scaled to at most 240px (icons draw at 34-64px)
-and placed one set per row on the page of their region (chapters 1-10, 11-20, 21-30).
+and placed one set per row on the page of their region (chapters 1-10, 11-20, ... 51-60).
 
 manifest.equipment goes back to the unchanged Alpha 0.9 atlas for its twelve frames and
 gains `setFrames` (design id -> frame with its page `image`) and `pages` (page sizes).
@@ -32,7 +33,7 @@ GAP = 8
 def chapter_sets():
     source = (ROOT / 'dist/equipment-sets.js').read_text(encoding='utf-8')
     rows = re.findall(r"^ \['(\w+)',(\d+),'", source, re.M)
-    assert len(rows) == 30, 'expected thirty chapter sets'
+    assert len(rows) == 60, 'expected sixty chapter sets'
     return [(set_id, int(chapter)) for set_id, chapter in rows]
 
 
@@ -82,11 +83,12 @@ def main():
     manifest['delivery'].pop('equipment_chapters-v0108.png', None)
     (ASSETS / 'equipment_chapters-v0108.webp').unlink(missing_ok=True)
     set_frames, pages, report = {}, {}, []
-    for region in range(3):
+    for region in range(6):
         rows = [s for s in chapter_sets() if (s[1] - 1) // 10 == region]
         placed, y = [], GAP
         for set_id, chapter in rows:
-            source = ROOT / f"art/{'equipment0108' if set_id in LEGACY else 'equipment0109'}/set-{set_id}.png"
+            folder = 'equipment0108' if set_id in LEGACY else 'equipment0118' if chapter > 30 else 'equipment0109'
+            source = ROOT / f'art/{folder}/set-{set_id}.png'
             crops = items(source)
             x, shelf = GAP, 0
             for part, crop in zip(PARTS, crops):

@@ -37,7 +37,7 @@ test('all nine equipped contributions and signatures survive backup, pending rec
 test('version ten migration preserves IDs, affixes, separate enhancement values, pending reroll, worn gear and legacy builds exactly once',()=>{
  const p=g.createProfile(1000);p.version=10;p.equipment={weapon:1,armor:2,charm:3};p.inventory=[item('weapon',1,4),item('armor',2,3),item('charm',3,2)];
  p.inventory[0].enhancement=12;p.inventory[0].enhancementAffixes=Object.fromEntries(Object.keys(p.inventory[0].affixes).map(k=>[k,k==='damage'?1.23:k==='crit'?2.34:0]));p.inventory[0].rerollCandidate={affixes:Object.fromEntries(Object.entries(g.itemRollRanges(p.inventory[0])).map(([k,r])=>[k,r.max]))};p.savedBuilds=[{name:'기존 빌드',equipment:{...p.equipment}},null,null];
- const old=structuredClone(p.inventory);const restored=g.restoreProfile(p,1000);assert.equal(restored.version,15);assert.deepEqual(restored.inventory,old);assert.equal(restored.equipment.armor,2);assert.equal(restored.equipment.charm,3);
+ const old=structuredClone(p.inventory);const restored=g.restoreProfile(p,1000);assert.equal(restored.version,16);assert.deepEqual(restored.inventory,old);assert.equal(restored.equipment.armor,2);assert.equal(restored.equipment.charm,3);
  for(const pos of g.EQUIPMENT_KEYS.filter(k=>!['weapon','armor','charm'].includes(k)))assert.equal(restored.equipment[pos],null);
  assert.deepEqual(g.restoreProfile(g.encodeProfile(restored,1000),1000),restored);assert.equal(g.applyBuild(g.createGame(restored),0).ok,true);
 });

@@ -8,8 +8,9 @@ function prepared(chapter=1,stage=4){const p=g.createProfile(1000);p.clearedStag
 function arena(id){const chapter=CHAPTERS.find(c=>c.roster.includes(id)),s=prepared(chapter.id),design=MONSTERS[id];s.enemies=[];s.spawns=[{id:s.nextId++,type:design.role,species:id,boss:false,elite:false,x:750,y:1160,delay:0,warning:1}];s.barrels=[];s.run.flow='combat';s.player.invulnerable=99;g.advanceGame(s,.001);s.run.flow='break';s.run.timer=1e6;assert.equal(s.enemies.length,1);return {s,e:s.enemies[0],design};}
 
 test('nine new identities have distinct chapter membership and frozen attack definitions',()=>{
- // 0.65 added nine specialists; 0.106 nine more plus nine basics; 0.107 eighteen fire/dark species; plus every chapter boss and 0.108's five ice mid-bosses.
- assert.equal(NEW.length,18);assert.equal(Object.keys(MONSTERS).length,21+18+18+Object.keys(CHAPTER_BOSSES).length+5);
+ // 0.65 added nine specialists; 0.106 nine more plus nine basics; 0.107 eighteen fire/dark species; 0.118 thirty-six sea/sky/divine species;
+ // plus every chapter boss and 0.108's five ice mid-bosses.
+ assert.equal(NEW.length,18);assert.equal(Object.keys(MONSTERS).length,21+18+18+36+Object.keys(CHAPTER_BOSSES).length+5);
  for(const c of CHAPTERS){assert.equal(c.roster.length,6);assert.equal(new Set(c.roster).size,6);const pool=BIOMES[c.biome].pool;for(const type of ['skitter','spitter','bulwark'])assert.ok(c.roster.filter(id=>MONSTERS[id].role===type).length===2&&c.roster.filter(id=>MONSTERS[id].role===type).every(id=>pool[type].includes(id)));}
  // Every species of every biome pool appears in at least one chapter.
  const used=new Set(CHAPTERS.flatMap(c=>c.roster));for(const biome of Object.values(BIOMES))for(const id of Object.values(biome.pool).flat())assert.ok(used.has(id),id);

@@ -17,7 +17,7 @@ function clearWave(s){
 }
 test('v8 boss-only saves preserve earned state and start advanced campaigns at zero',()=>{
  const p=prepared();p.version=8;p.stageProgress=[10,0,0];p.bossMastery=[2,-1,-1];p.gold=713;delete p.difficultyProgress;
- const restored=g.restoreProfile(p,1000);assert.equal(restored.version,15);assert.deepEqual(restored.stageProgress,pad([10,0,0]));assert.deepEqual(restored.bossMastery,pad([2,-1,-1],-1));assert.deepEqual(restored.difficultyProgress,[pad([0,0,0]),pad([0,0,0])]);assert.equal(restored.gold,713);
+ const restored=g.restoreProfile(p,1000);assert.equal(restored.version,16);assert.deepEqual(restored.stageProgress,pad([10,0,0]));assert.deepEqual(restored.bossMastery,pad([2,-1,-1],-1));assert.deepEqual(restored.difficultyProgress,[pad([0,0,0]),pad([0,0,0])]);assert.equal(restored.gold,713);
  assert.equal(g.stageLimit(restored,1,1),1);assert.equal(g.stageLimit(restored,1,2),1);assert.deepEqual(g.restoreProfile(g.encodeProfile(restored,1000),1000),restored);
  assert.deepEqual(readBackup(createBackup(p,1000),1000).profile,restored);
 });

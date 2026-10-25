@@ -1,4 +1,4 @@
-// Chapter equipment sets (Alpha 0.108 region sets, Alpha 0.109 one set per chapter).
+// Chapter equipment sets (Alpha 0.108 region sets, Alpha 0.109 one set per chapter, Alpha 0.118 sixty chapters).
 // Every stage drops pieces of its chapter's set: weapon, helmet, chest, pants and boots.
 // Wearing 2 or 4 pieces of one set adds bonuses. Pure data and arithmetic: no DOM, storage or randomness.
 export const SET_SLOTS=Object.freeze(['weapon','helmet','armor','pants','boots']);
@@ -48,6 +48,37 @@ const ROWS=[
  ['mummy',28,'미라 왕','#d6c08a','vital',{hpPct:.10},{reduction:5,regeneration:3},named(['미라 왕','붕대'],['장검','코페시'],['왕관','붕대 갑옷','하의','발싸개'])],
  ['royalguard',29,'왕의 근위대','#c9c9d8','guard',{damagePct:.08,reduction:3},{hpPct:.10,damagePct:.12},named(['근위대','왕실'],['장검','의장 대검'],['투구','의장 판금','다리갑옷','철화'])],
  ['abyss',30,'심연의 군주','#8c4dff','fierce',{damagePct:.10,crit:6},{hpPct:.15,damagePct:.15},named(['심연 군주','공허의 왕관'],['마검','공허 대검'],['뿔 투구','공허 갑옷','각반','장화'])],
+ // Alpha 0.118: sunken kingdom (31–40), storm sky isles (41–50), twilight sanctum (51–60).
+ ['crabking',31,'거대 집게 게왕','#e0603a','guard',{reduction:5},{hpPct:.15,reduction:5},named(['집게왕','붉은 갑각'],['장검','집게날 대검'],['투구','갑각 흉갑','각반','장화'])],
+ ['ghostcaptain',32,'유령 선장','#7fe0c8','swift',{speed:8},{crit:8,attackSpeed:8},named(['유령 선장','난파선'],['커틀러스','닻날 대검'],['삼각모','선장 코트','하의','장화'])],
+ ['kelpwitch',33,'해초 마녀','#4fa36a','vital',{regeneration:2},{hpPct:.12,regeneration:3},named(['해초','마녀의 물결'],['세검','해초 곡검'],['관','해초 로브','하의','발싸개'])],
+ ['giantclam',34,'진주 대왕조개','#f0e4d0','guard',{hpPct:.10},{reduction:6,hpPct:.10},named(['진주','대왕조개'],['장검','조가비 대검'],['투구','조가비 갑옷','각반','장화'])],
+ ['siren',35,'세이렌 여왕','#6fb8f0','keen',{crit:7},{damagePct:.12,crit:6},named(['세이렌','노래하는 물결'],['세검','삼지창날 검'],['관','비늘 갑옷','하의','장화'])],
+ ['angler',36,'심해 아귀','#5a7ad0','brute',{collection:80},{damagePct:.14},named(['심해 아귀','등불'],['장검','이빨 대검'],['투구','심해 갑옷','각반','장화'])],
+ ['jellyfish',37,'거대 독해파리','#c890f0','keen',{attackSpeed:8},{crit:8,damagePct:.10},named(['독해파리','촉수'],['세검','촉수 채찍검'],['갓 투구','젤리 로브','하의','발싸개'])],
+ ['merpriest',38,'인어 대사제','#50d0d0','vital',{range:10},{hpPct:.12,damagePct:.10},named(['대사제','조수의 신전'],['의식검','삼지창 대검'],['관','사제 로브','하의','장화'])],
+ ['kraken',39,'크라켄','#a04a6a','brute',{damagePct:.08},{hpPct:.10,damagePct:.12},named(['크라켄','먹물'],['장검','촉수 대검'],['투구','빨판 갑옷','각반','장화'])],
+ ['leviathan',40,'심해의 리바이어던','#2fa0ff','fierce',{damagePct:.10,reduction:4},{crit:8,hpPct:.15},named(['리바이어던','심연 해류'],['해룡검','심해 대검'],['용 투구','심해 비늘 갑옷','각반','장화'])],
+ ['griffin',41,'그리폰 왕','#e0b860','swift',{speed:8},{damagePct:.12,speed:6},named(['그리폰 왕','폭풍 깃'],['장검','발톱 곡검'],['투구','깃털 갑옷','각반','장화'])],
+ ['harpy',42,'하피 여왕','#b0a0e0','swift',{attackSpeed:8},{crit:8,speed:8},named(['하피','바람 깃'],['세검','깃날 단검'],['관','깃털 갑옷','하의','발싸개'])],
+ ['cloudgiant',43,'구름 거인','#d8e8f8','guard',{hpPct:.10},{reduction:6,hpPct:.12},named(['구름 거인','하늘 바위'],['장검','바위 대검'],['투구','구름 판금','다리갑옷','철화'])],
+ ['crow',44,'까마귀 장군','#3a3a5a','keen',{crit:7},{damagePct:.12,attackSpeed:6},named(['까마귀','검은 깃'],['장검','부리날 곡검'],['투구','깃털 갑옷','각반','장화'])],
+ ['windlord',45,'바람의 정령왕','#8fe8c8','swift',{speed:10},{attackSpeed:10,range:8},named(['바람 정령','풍차'],['세검','바람개비 대검'],['관','바람 로브','하의','장화'])],
+ ['wyvern',46,'번개 와이번','#f0e050','fierce',{damagePct:.08},{crit:9,damagePct:.10},named(['와이번','번개 비늘'],['장검','날개뼈 대검'],['투구','비늘 갑옷','각반','장화'])],
+ ['storm',47,'폭풍의 정령','#7090ff','keen',{range:12},{damagePct:.14,crit:5},named(['폭풍','소용돌이'],['세검','뇌운 마검'],['관','폭풍 로브','하의','발싸개'])],
+ ['thundersmith',48,'천둥 대장장이','#e08a3a','brute',{damagePct:.08,reduction:3},{hpPct:.12,damagePct:.12},named(['천둥 대장장이','구리 망치'],['장검','망치날 대검'],['투구','대장장이 판금','다리갑옷','철화'])],
+ ['thunderbird',49,'썬더버드','#ffd040','fierce',{attackSpeed:8},{crit:10,damagePct:.10},named(['썬더버드','천둥 깃'],['장검','번개 깃 곡검'],['깃털 관','천둥 갑옷','각반','장화'])],
+ ['stormdragon',50,'천둥의 용왕','#5fd0ff','fierce',{damagePct:.12,crit:6},{hpPct:.15,damagePct:.16},named(['천둥 용왕','하늘 왕좌'],['용왕검','천둥 대검'],['용 투구','용린 갑옷','각반','장화'])],
+ ['templeguard',51,'신전 수호 석상','#d8c090','guard',{reduction:6},{hpPct:.16,reduction:5},named(['수호 석상','황금 신전'],['장검','석주 대검'],['투구','석상 판금','다리갑옷','철화'])],
+ ['sphinx',52,'황금 스핑크스','#f0c040','keen',{crit:7},{damagePct:.12,collection:100},named(['스핑크스','사막 태양'],['장검','코페시'],['관','황금 흉갑','하의','장화'])],
+ ['starknight',53,'성좌 기사','#9fb0ff','guard',{damagePct:.08,reduction:4},{crit:8,hpPct:.12},named(['성좌','별빛 기사'],['기사검','성좌 대검'],['투구','성좌 판금','다리갑옷','철화'])],
+ ['fallenangel',54,'타락 천사','#f0a0c0','fierce',{damagePct:.10},{crit:9,attackSpeed:8},named(['타락 천사','부서진 후광'],['세검','검은 깃 대검'],['후광 투구','깃털 갑옷','각반','장화'])],
+ ['judge',55,'심판관','#fff0b0','brute',{damagePct:.10},{damagePct:.14,reduction:4},named(['심판관','천칭'],['장검','처형 대검'],['투구','법복 갑옷','하의','장화'])],
+ ['chrono',56,'시간의 수호자','#a0e0f0','swift',{attackSpeed:10},{speed:10,crit:8},named(['시간','모래시계'],['세검','시침 대검'],['관','시계 장치 갑옷','하의','장화'])],
+ ['starserpent',57,'성좌 뱀','#8070f0','keen',{range:12},{damagePct:.14,crit:7},named(['성좌 뱀','별무리'],['세검','뱀날 곡검'],['관','별비늘 갑옷','하의','발싸개'])],
+ ['gatekeeper',58,'문지기 거신','#c0a8e0','guard',{hpPct:.12},{reduction:6,hpPct:.16},named(['문지기','영원의 문'],['장검','문빗장 대검'],['투구','거신 판금','다리갑옷','철화'])],
+ ['wargod',59,'타락한 전쟁신','#d04040','brute',{damagePct:.10,crit:5},{damagePct:.16,hpPct:.10},named(['전쟁신','핏빛 신위'],['장검','신살 대검'],['투구','전쟁신 판금','다리갑옷','철화'])],
+ ['sungod',60,'몰락한 태양신','#ffb020','fierce',{damagePct:.12,crit:8},{hpPct:.18,damagePct:.18},named(['태양신','일식'],['태양검','일식 대검'],['태양관 투구','태양 갑옷','각반','장화'])],
 ];
 const LEGACY=new Set(['forest','fire','frost','ruins']);
 export const EQUIPMENT_SETS=Object.freeze(Object.fromEntries(ROWS.map(([id,chapter,name,color,style,two,four,names])=>[id,Object.freeze({

@@ -1,0 +1,33 @@
+{
+  "id": "divine_eye",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production monster sprite animation sheet for an existing 2D action RPG.\nREFERENCE ROLES: Image1 is STYLE/LAYOUT reference ONLY: match its crisp finely detailed high-resolution pixel-illustrated fantasy sprites, dark ink outlines, 3/4 overhead RPG camera, shading and level of detail; never copy its subject. Image2 is SUBJECT CONCEPT reference only: pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only. Produce a brand-new single-species sheet.\nOUTPUT: genuinely transparent RGBA, no matte, no checkerboard, no background, no floor, no shadow oval. Square 2048x2048 or larger native pixels. Exactly 25 separate full-body monster silhouettes in a perfectly regular 5 columns x 5 rows invisible grid. Each cell same dimensions and clear padding; poses never touch each other or the canvas edge. No labels, text, frame borders, UI, grid lines, glow background, extra monsters or scenery.\nDIRECTIONS by ROW top-to-bottom: row1 front facing screen/down (south); row2 front-right three-quarter (southeast); row3 right profile (east); row4 back-right three-quarter (northeast); row5 back facing screen/up (north). Actually turn anatomy, faces and bodies in each row; do not repeat the front view.\nACTIONS by COLUMN left-to-right: 1 walk A planted left foot; 2 walk B visibly alternating limbs; 3 attack windup; 4 attack contact with a distinct forward action; 5 dead body lying flat on the ground. Keep each direction's body scale unchanged across actions. Feet or grounded contact point aligned near the cell bottom; full anatomy, no clipping. This is ONE creature repeated 25 times for animation, not a monster catalog.\nSUBJECT: A floating ring-angel ophanim: golden wheels inside wheels covered in eyes, one central glowing eye. Regular-enemy size. Windup crouches or rears ready to strike; contact lunges forward hitting with a clearly different pose; keep weapons, tails, tentacles and projectiles short and inside the cell. Distinct from the style reference subject.",
+  "referenceImages": [
+    {
+      "path": "art/monsters045/forest_orc.png",
+      "sha256": "bcb9ca6b8da27638d418d2c9958bb5f4c1acef8d19eb6fc9a6b3b11bda5805d0"
+    },
+    {
+      "path": "art/monsters065/references/encyclopedia-3.png",
+      "sha256": "20d80411c74413f468fcd2f500397cac563b8241ee2d9a3c9efab90266879911"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": 0.495,
+      "components": 25,
+      "seconds": 73,
+      "sha256": "2d013fbdcd855bb0a3416793b7a88e7085ea3e6e80dcbcbade5bc9116b99fcf3"
+    }
+  ],
+  "final": {
+    "path": "art/monsters0118/divine_eye.png",
+    "sha256": "2d013fbdcd855bb0a3416793b7a88e7085ea3e6e80dcbcbade5bc9116b99fcf3"
+  }
+}
