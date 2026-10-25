@@ -1,7 +1,7 @@
 {
   "id": "terrain-c33",
   "mode": "codex exec built-in image_gen",
-  "prompt": "Use case: stylized-concept. Asset type: production seamless repeating GROUND ALBEDO TILE for a premium illustrated dark fantasy top-down action RPG, matching the painterly quality of the attached reference tile. One square2048x2048 texture fills every pixel edge to edge. Orthographic top-down flat GROUND ONLY; no perspective, no horizon, no vignette, no cast shadows, no directional lighting, no text. Seamlessly repeatable on all edges and also when alternating horizontally/vertically mirrored. Matte painterly hand-crafted broad material masses, soft restrained tonal transitions, medium low contrast, calm negative space for tiny characters and red attack telegraphs. Very sparse broad forms at scale, no crisp tiny flecks, no scattered micro-debris, no checker pattern, no high-frequency grit, no jagged pixel edges, no multicolored noise. It should remain visually calm and high-end at mobile resolution. Large forms have clear material structure without blur or sharpen halos. No trees,bushes,rocks standing above the ground,architecture,props,characters,items or UI: those are separate runtime sprites. Opaque background, no transparency. Image1 is an existing ground tile from this game: match its painterly material quality, darkness and scale of forms, but depict this new place, clearly different at a glance: Kelp forest seabed: deep green-teal sand floor with long broad flat kelp fronds lying across it, smooth pebbles, soft dappled light patterns. LAYOUT: scatter the features as irregular rounded clusters evenly over the WHOLE tile in random orientations; no diagonal bands, no stripes or streaks running in one direction, no single dividing line, no large one-sided regions; it must look balanced when the tile is mirrored and repeated.",
+  "prompt": "Use case: stylized-concept. Asset type: production seamless repeating GROUND ALBEDO TILE for a premium illustrated dark fantasy top-down action RPG, matching the painterly quality of the attached reference tile. One square2048x2048 texture fills every pixel edge to edge. Orthographic top-down flat GROUND ONLY; no perspective, no horizon, no vignette, no cast shadows, no directional lighting, no text. Seamlessly repeatable on all edges and also when alternating horizontally/vertically mirrored. Matte painterly hand-crafted broad material masses, soft restrained tonal transitions, medium low contrast, calm negative space for tiny characters and red attack telegraphs. Very sparse broad forms at scale, no crisp tiny flecks, no scattered micro-debris, no checker pattern, no high-frequency grit, no jagged pixel edges, no multicolored noise. It should remain visually calm and high-end at mobile resolution. Large forms have clear material structure without blur or sharpen halos. No trees,bushes,rocks standing above the ground,architecture,props,characters,items or UI: those are separate runtime sprites. Opaque background, no transparency. Image1 is an existing ground tile from this game: match its painterly material quality, darkness and scale of forms, but depict this new place, clearly different at a glance: Kelp forest seabed: deep green-teal sand floor with long broad flat kelp fronds lying across it, smooth pebbles, soft dappled light patterns. LAYOUT: scatter the features as irregular rounded clusters evenly over the WHOLE tile in random orientations; no diagonal bands, no stripes or streaks running in one direction, no single dividing line, no large one-sided regions; it must look balanced when the tile is mirrored and repeated. STRICT: absolutely no diagonal composition. Place the features as separate roundish blobs of varied size on a loose irregular grid, with edges running in all directions equally; nothing flows corner to corner.",
   "referenceImages": [
     {
       "path": "dist/assets/terrain-frost-v044.webp",
@@ -16,12 +16,12 @@
         1254,
         1254
       ],
-      "seconds": 49,
-      "sha256": "504e921ce2c0073a583b0cf25ef388a4fcdebdd189e7ac7bff2bb40ffe39a1fe"
+      "seconds": 41,
+      "sha256": "5cd7b4959c819427ab1b38e75d8b575c9c3cd418f3704c1cb57f82d7f39ce016"
     }
   ],
   "final": {
     "path": "art/terrain0118/terrain-c33.png",
-    "sha256": "504e921ce2c0073a583b0cf25ef388a4fcdebdd189e7ac7bff2bb40ffe39a1fe"
+    "sha256": "5cd7b4959c819427ab1b38e75d8b575c9c3cd418f3704c1cb57f82d7f39ce016"
   }
 }
