@@ -6,16 +6,19 @@ function ordinary(rank=4,id=1){const choices=g.ITEM_CATALOG.filter(r=>r.tier===1
 function profile(item=ordinary()){const p=g.createProfile(1000);p.inventory=[item];p.nextItemId=2;p.gold=1e8;p.cores=10000;for(const m of g.MATERIALS)p.materials[m.id]=100000;return p;}
 function candidateMax(item){return Object.fromEntries(Object.entries(itemRollRanges(item)).map(([k,r])=>[k,r.max]));}
 test('reroll changes only base stats; stored enhancement survives and future upgrades add from the new base',()=>{
- const item=ordinary();item.affixes.damage=20;item.enhancement=10;let p=g.restoreProfile(profile(item),1000);p.equipment.weapon=1;
- const owned=p.inventory[0];assert.equal(owned.enhancementAffixes.damage,6);assert.equal(g.effectiveAffix(owned,'damage'),26);const bonuses=structuredClone(owned.enhancementAffixes);
- rerollOwned(p,1,()=>.999999);assert.equal(owned.affixes.damage,20);assert.deepEqual(owned.enhancementAffixes,bonuses);
- resolveOwnedReroll(p,1,true);assert.equal(owned.affixes.damage,24);assert.deepEqual(owned.enhancementAffixes,bonuses);assert.equal(g.effectiveAffix(owned,'damage'),30);assert.equal(g.equipmentBonuses(p).damage,30);
- assert.equal(enhanceOwned(p,1,()=>0).success,true);assert.equal(owned.affixes.damage,24);assert.equal(owned.enhancementAffixes.damage,6.72);assert.equal(g.effectiveAffix(owned,'damage'),30.72);
+ // 30 lies inside the Alpha 0.120 range of this family (restore lifts values below the minimum).
+ const item=ordinary();item.affixes.damage=30;item.enhancement=10;let p=g.restoreProfile(profile(item),1000);p.equipment.weapon=1;
+ const owned=p.inventory[0];assert.equal(owned.enhancementAffixes.damage,9);assert.equal(g.effectiveAffix(owned,'damage'),39);const bonuses=structuredClone(owned.enhancementAffixes);
+ // Alpha 0.120: the maximum comes only from the 극옵 draw (first number below 1%), so roll with 0.
+ const top=itemRollRanges(owned).damage.max;
+ rerollOwned(p,1,()=>0);assert.equal(owned.affixes.damage,30);assert.deepEqual(owned.enhancementAffixes,bonuses);
+ resolveOwnedReroll(p,1,true);assert.equal(owned.affixes.damage,top);assert.deepEqual(owned.enhancementAffixes,bonuses);assert.equal(g.effectiveAffix(owned,'damage'),top+9);assert.equal(g.equipmentBonuses(p).damage,top+9);
+ assert.equal(enhanceOwned(p,1,()=>0).success,true);assert.equal(owned.affixes.damage,top);const added=Math.round((9+top*.03)*100)/100;assert.equal(owned.enhancementAffixes.damage,added);assert.equal(g.effectiveAffix(owned,'damage'),Math.round((top+added)*100)/100);
  const expected=structuredClone(p);for(let n=0;n<10;n++)p=readBackup(createBackup(p,1000),1000).profile;assert.deepEqual(p,expected);
 });
 test('stored enhancement sanitizes independently of base stats and cannot grow during restore or rejected rolls',()=>{
  const item=ordinary();item.enhancement=10;item.enhancementAffixes={damage:1e99,hp:NaN,speed:-4,crit:1.234,reduction:'5',unknown:999};const p=g.restoreProfile(profile(item),1000),clean=p.inventory[0];
- assert.equal(clean.enhancementAffixes.damage,24);assert.equal(clean.enhancementAffixes.hp,0);assert.equal(clean.enhancementAffixes.speed,0);assert.equal(clean.enhancementAffixes.crit,1.23);assert.equal(clean.enhancementAffixes.reduction,0);assert.equal(clean.enhancementAffixes.unknown,undefined);
+ assert.equal(clean.enhancementAffixes.damage,45);// damage cap 150 × 10 levels × 3% (Alpha 0.120)assert.equal(clean.enhancementAffixes.hp,0);assert.equal(clean.enhancementAffixes.speed,0);assert.equal(clean.enhancementAffixes.crit,1.23);assert.equal(clean.enhancementAffixes.reduction,0);assert.equal(clean.enhancementAffixes.unknown,undefined);
  const before=structuredClone(clean);rerollOwned(p,1,()=>0);resolveOwnedReroll(p,1,false);assert.deepEqual(clean,before);
  const raw=structuredClone(p);raw.inventory[0].enhancement=0;assert.equal(g.restoreProfile(raw,1000).inventory[0].enhancementAffixes,undefined);
 });
@@ -44,8 +47,9 @@ test('one ordinary family spans normal to mythic; ancient has its own catalog an
 test('range endpoints are reachable, numeric max defines perfect quality, and reroll never changes option kinds',()=>{
  for(let rank=0;rank<=5;rank++){
   const item=rank===5?rollAncient({id:1,tier:1},.5):ordinary(rank);
-  const min=rollItemAffixes(item,()=>.5),max=rollItemAffixes(item,()=>.99999999),forced=rollItemAffixes(item,()=>0);
-  assert.deepEqual(Object.keys(min),Object.keys(item.affixes));assert.deepEqual(max,candidateMax(item));assert.deepEqual(forced,max);assert.equal(isPerfectRoll(item,max),true);
+  // Alpha 0.120: an ordinary roll tops out one below each maximum; only the 1% 극옵 draw reaches it.
+  const min=rollItemAffixes(item,()=>.5),high=rollItemAffixes(item,()=>.99999999),max=rollItemAffixes(item,()=>0);
+  assert.deepEqual(Object.keys(min),Object.keys(item.affixes));assert.deepEqual(max,candidateMax(item));assert.deepEqual(high,Object.fromEntries(Object.entries(itemRollRanges(item)).map(([k,r])=>[k,r.max-1])));assert.equal(isPerfectRoll(item,max),true);assert.equal(isPerfectRoll(item,high),false);
   const changed={...max},key=Object.keys(changed).find(k=>itemRollRanges(item)[k].min<changed[k]);if(key){changed[key]--;assert.equal(isPerfectRoll(item,changed),false);}
  }
 });
@@ -98,7 +102,7 @@ test('invalid identity, insufficient resources, pending reroll and non-camp acti
 test('mythic and ancient rerolls reserve a persisted candidate, preserve upgrade/pity, and charge once before an explicit choice',()=>{
  for(const item of [ordinary(4),rollAncient({id:1,tier:1},.5)]){
   item.enhancement=12;item.enhanceFailures=3;const p=profile(item),base=structuredClone(item.affixes),gold=p.gold,cost=g.rerollStatus(p,1).cost;
-  const r=rerollOwned(p,1,()=>.999999);assert.equal(r.ok,true);assert.deepEqual(item.affixes,base);assert.equal(item.enhancement,12);assert.equal(item.enhanceFailures,3);assert.equal(p.gold,gold-cost.gold);
+  const r=rerollOwned(p,1,()=>0);assert.equal(r.ok,true);assert.deepEqual(item.affixes,base);assert.equal(item.enhancement,12);assert.equal(item.enhanceFailures,3);assert.equal(p.gold,gold-cost.gold);
   const waiting=structuredClone(p);assert.equal(rerollOwned(p,1,()=>{throw Error('duplicate roll');}).ok,false);assert.equal(enhanceOwned(p,1,()=>{throw Error('pending enhancement');}).ok,false);assert.deepEqual(p,waiting);
   const restored=readBackup(createBackup(p,1000),1000).profile;assert.deepEqual(restored.inventory[0].rerollCandidate,item.rerollCandidate);assert.equal(g.itemProtection(restored,restored.inventory[0]),'수치작 결과 대기');
   assert.equal(resolveOwnedReroll(restored,1,true).ok,true);const final=restored.inventory[0];assert.deepEqual(final.affixes,candidateMax(item));assert.equal(final.perfect,true);assert.equal(final.enhancement,12);assert.equal(final.enhanceFailures,3);assert.equal(final.catalogId,item.catalogId);assert.equal(final.id,item.id);

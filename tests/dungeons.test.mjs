@@ -1,10 +1,12 @@
 import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';
-import * as g from '../dist/game-engine.js';import {dungeonPlan,dungeonActors} from '../dist/dungeons.js';import {createBackup,readBackup} from '../dist/profile-backup.js';
+import * as g from '../dist/game-engine.js';import {dungeonPlan,dungeonActors} from '../dist/dungeons.js';import {itemRollRanges,isPerfectRoll} from '../dist/loot.js';import {createBackup,readBackup} from '../dist/profile-backup.js';
 const make=(durable=false)=>g.createGame(g.createProfile(1000),{durable});
 function finish(s){s.enemies=[];s.spawns=[];s.barrels=[];s.run.wave=3;s.run.waveQuota=s.run.waveKills=0;s.run.stageKills=s.run.stageQuota;g.advanceGame(s,.025);}
 const progression=p=>JSON.stringify([p.stageProgress,p.difficultyProgress,p.clearedStage,p.unlockedStage,p.bossMastery]);
+// Alpha 0.120 widened roll ranges and rebalanced weapon families: restore moves stored rolls and paid reroll candidates into the current range.
+const fitRanges=item=>{const r=itemRollRanges(item),fit=a=>a&&Object.fromEntries(Object.entries(a).map(([k,v])=>[k,r[k]?Math.max(r[k].min,Math.min(r[k].max,v)):v]));const out={...item,affixes:fit(item.affixes),...(item.rerollCandidate?{rerollCandidate:{affixes:fit(item.rerollCandidate.affixes)}}:{})};delete out.perfect;if(isPerfectRoll(out))out.perfect=true;return out;};
 test('v12 backup keeps equipment, old material totals, free skill points and campaign; new fields are empty and idempotent',()=>{
- const raw=JSON.parse(fs.readFileSync(new URL('../tools/reports/stage-c/baseline-v12.json',import.meta.url)));const p=g.restoreProfile(raw,1000);assert.equal(p.version,16);for(const key of ['inventory','equipment','gold','cores'])assert.deepEqual(p[key],raw[key]);
+ const raw=JSON.parse(fs.readFileSync(new URL('../tools/reports/stage-c/baseline-v12.json',import.meta.url)));const p=g.restoreProfile(raw,1000);assert.equal(p.version,16);for(const key of ['equipment','gold','cores'])assert.deepEqual(p[key],raw[key]);assert.deepEqual(p.inventory,raw.inventory.map(fitRanges));
  // Saved builds keep their skills; regular skill lists are padded to the four Alpha 0.119 slots.
  assert.deepEqual(p.savedBuilds,raw.savedBuilds.map(b=>b&&{...b,skill:{...b.skill,loadout:{...b.skill.loadout,active:[...b.skill.loadout.active,null,null,null,null].slice(0,4)}}}));assert.deepEqual(p.stageProgress.slice(0,3),raw.stageProgress);assert.deepEqual(p.difficultyProgress.map(row=>row.slice(0,3)),raw.difficultyProgress);assert.equal(p.stageProgress.length,g.STAGES.length);for(const [id,n]of Object.entries(raw.materials))assert.equal(p.materials[id],n);assert.deepEqual(p.dungeonProgress,{gold:0,enhance:0,promote:0,skill:0});assert.equal(p.materials.skillPage,0);assert.equal(g.skillPoints(p),g.skillPoints(raw));assert.deepEqual(g.restoreProfile(g.encodeProfile(p,1000),1000),p);assert.deepEqual(readBackup(createBackup(p,1000),1000).profile,p);
 });

@@ -1,11 +1,12 @@
 // Validated innate powers: combat parameters and generated descriptions share one definition.
+// Alpha 0.120: the six weapon powers were measured on real waves (same weapon stats) and tuned to similar damage gains.
 const rows=[
- ['echo','weapon','잔향 검격','#e9cd8b',{damage:.65,cooldown:2.5,radius:280}],
- ['storm','weapon','연쇄 번개','#9edee9',{damage:.45,targets:3,cooldown:3,radius:230}],
- ['execution','weapon','처형자의 맹세','#eaa4a3',{threshold:.3,bossThreshold:.15,bonus:.7}],
- ['blood','weapon','혈월 계약','#ff819d',{threshold:.45,bonus:.55,heal:4}],
- ['frostNova','weapon','빙하 파쇄','#a2e8f0',{damage:.35,duration:3,cooldown:4,radius:230}],
- ['whirlwind','weapon','폭풍의 원무','#d5e1c0',{rangeBonus:.25}],
+ ['echo','weapon','잔향 검격','#e9cd8b',{damage:.55,cooldown:2.5,radius:280}],
+ ['storm','weapon','연쇄 번개','#9edee9',{damage:.5,targets:3,cooldown:2.5,radius:230}],
+ ['execution','weapon','처형자의 맹세','#eaa4a3',{threshold:.35,bossThreshold:.2,bonus:1}],
+ ['blood','weapon','혈월 계약','#ff819d',{threshold:.5,bonus:.6,heal:6}],
+ ['frostNova','weapon','빙하 파쇄','#a2e8f0',{damage:.45,duration:2.5,cooldown:3.5,radius:230}],
+ ['whirlwind','weapon','폭풍의 원무','#d5e1c0',{rangeBonus:.18}],
  ['barrier','armor','회피 방벽','#c4e9d5',{shield:.18,duration:3,cooldown:8}],
  ['thorns','armor','가시 반격','#e9c689',{ratio:.8,cooldown:1.5,radius:170}],
  ['pulse','armor','완벽 회피 폭발','#b8f3db',{damage:.8,cooldown:2,radius:180}],
@@ -22,10 +23,10 @@ const rows=[
 const pct=n=>Math.round(n*100)+'%';
 function describe(id,r){switch(id){
  case 'echo':return `3연격 마무리 적중 시 전방 충격파. 기본 공격력 ${pct(r.damage)} 피해. 재사용 ${r.cooldown}초.`;
- case 'storm':return `파쇄 적중 시 주변 다른 괴수 최대 ${r.targets}마리에게 기본 공격력 ${pct(r.damage)} 피해. 재사용 ${r.cooldown}초.`;
+ case 'storm':return `1·2연격 적중 시 주변 다른 괴수 최대 ${r.targets}마리에게 기본 공격력 ${pct(r.damage)} 피해. 재사용 ${r.cooldown}초.`;
  case 'execution':return `체력 ${pct(r.threshold)} 이하 괴수에게 직접 검격 피해 +${pct(r.bonus)}. 보스는 체력 ${pct(r.bossThreshold)} 이하.`;
  case 'blood':return `자신의 체력 ${pct(r.threshold)} 이하에서 직접 검격 피해 +${pct(r.bonus)}. 방어되지 않은 검격 적중 시 체력 ${r.heal} 회복.`;
- case 'frostNova':return `파쇄 적중 시 주변에 기본 공격력 ${pct(r.damage)} 피해와 ${r.duration}초 빙결. 보스 이동 감소 15%. 재사용 ${r.cooldown}초.`;
+ case 'frostNova':return `3연격 마무리 적중 시 주변에 기본 공격력 ${pct(r.damage)} 피해와 ${r.duration}초 빙결. 보스 이동 감소 15%. 재사용 ${r.cooldown}초.`;
  case 'whirlwind':return `3연격 마무리가 360도 회전 공격으로 바뀌고 범위가 ${pct(r.rangeBonus)} 증가.`;
  case 'barrier':return `회피 시 최대 체력 ${pct(r.shield)} 보호막을 ${r.duration}초 동안 획득. 재사용 ${r.cooldown}초.`;
  case 'thorns':return `피격 생존 시 가까운 괴수 한 마리에게 받은 피해 ${pct(r.ratio)} 반사. 재사용 ${r.cooldown}초.`;

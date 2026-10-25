@@ -1,39 +1,39 @@
-import {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonPlan,dungeonActors,emptyDungeonProgress} from './dungeons.js?v=0.119.0';
+import {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonPlan,dungeonActors,emptyDungeonProgress} from './dungeons.js?v=0.120.0';
 export {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards};
-import {beginStageJournal,profileForSave,strictBattle,cancelStageJournal,prepareStageCommit,finishStageJournal,stageTransactionId,ownedAtStageStart} from './battle-progress.js?v=0.119.0';
-import {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_DROP_CHANCE,INSCRIPTION_COST} from './build-effects.js?v=0.119.0';
-import {stageRule,STAGE_TYPE_NAMES} from './battle-plans.js?v=0.119.0';
+import {beginStageJournal,profileForSave,strictBattle,cancelStageJournal,prepareStageCommit,finishStageJournal,stageTransactionId,ownedAtStageStart} from './battle-progress.js?v=0.120.0';
+import {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_DROP_CHANCE,INSCRIPTION_COST} from './build-effects.js?v=0.120.0';
+import {stageRule,STAGE_TYPE_NAMES} from './battle-plans.js?v=0.120.0';
 export {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_COST,stageRule,STAGE_TYPE_NAMES};
 export const PROFILE_VERSION=16,MAX_LEVEL=200,BUILD_NAMES=Object.freeze(['일반 사냥','보스','광역','생존','실험']);
-import {SLOTS,EQUIPMENT_SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,equipmentFamily,emptyEquipment,restoreEquipment,equipmentAfterEquip,equippedPosition,isEquippedItem} from './equipment-slots.js?v=0.119.0';
-export * from './equipment-slots.js?v=0.119.0';
-import {enhanceOwned,promoteOwned,rerollOwned,resolveOwnedReroll,restoreEquipmentProgress} from './equipment-progression.js?v=0.119.0';
-export * from './equipment-progression.js?v=0.119.0';
+import {SLOTS,EQUIPMENT_SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,equipmentFamily,emptyEquipment,restoreEquipment,equipmentAfterEquip,equippedPosition,isEquippedItem} from './equipment-slots.js?v=0.120.0';
+export * from './equipment-slots.js?v=0.120.0';
+import {enhanceOwned,promoteOwned,rerollOwned,resolveOwnedReroll,restoreEquipmentProgress} from './equipment-progression.js?v=0.120.0';
+export * from './equipment-progression.js?v=0.120.0';
 export * from './skill-vfx.js?v=0.72.0';
 export * from './skill-image-fx.js?v=0.72.0';
 export * from './monster-fx.js?v=0.70.0';
 export * from './combat-feedback.js';
 export * from './ultimate-video.js';
 export * from './skill-motion.js';
-import * as skills from './combat-skills.js?v=0.119.0';
-export * from './combat-skills.js?v=0.119.0';
-import {MATERIALS,MATERIAL_BY_ID,MATERIAL_LIMIT,emptyMaterials,rollMaterials,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.119.0';
-export {MATERIALS,MATERIAL_BY_ID,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.119.0';
-import {equipmentSynergies} from './equipment-synergies.js?v=0.119.0';
-import {itemProtection} from './loot.js?v=0.119.0';
-export {itemProtection,salvageValue} from './loot.js?v=0.119.0';
-export {equipmentSynergies,EQUIPMENT_SYNERGIES} from './equipment-synergies.js?v=0.119.0';
+import * as skills from './combat-skills.js?v=0.120.0';
+export * from './combat-skills.js?v=0.120.0';
+import {MATERIALS,MATERIAL_BY_ID,MATERIAL_LIMIT,emptyMaterials,rollMaterials,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.120.0';
+export {MATERIALS,MATERIAL_BY_ID,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.120.0';
+import {equipmentSynergies} from './equipment-synergies.js?v=0.120.0';
+import {itemProtection} from './loot.js?v=0.120.0';
+export {itemProtection,salvageValue} from './loot.js?v=0.120.0';
+export {equipmentSynergies,EQUIPMENT_SYNERGIES} from './equipment-synergies.js?v=0.120.0';
 import {HUNT_MODES,huntMode,REPLAY_CYCLES} from './hunt-modes.js';
 export {HUNT_MODES} from './hunt-modes.js';
 // Pure combat, random waves and persistent RPG rules. No rendering or storage dependencies.
 import { directionIndex, recoilProgress, ACTION_DURATIONS } from './motion.js';
 import { WORLD_BOUNDS, GROUND_DEPTH_SCALE } from './world.js';
-import { CHAPTERS, CHAPTERS_PER_THEME, THEMES, chapterTheme, MONSTERS, chapterMonsterPool, EQUIPMENT_ART, ALL_EQUIPMENT_ART, equipmentArt } from './chapters.js?v=0.119.0';
-import { STAGES_PER_CHAPTER, battlePlan, stageWaveCount, waveComposition } from './battle-plans.js?v=0.119.0';
-import { INVENTORY_LIMIT, MAX_PENDING_LOOT, LEGENDARY_PITY_LIMIT, huntGrade, ITEM_CATALOG, ANCIENT_CATALOG, ancientIdOfBase, rollAncient, BOSS_LOOT, bossLootPool, discoverAncient, targetAncient, setAncientTarget, ancientDefinition, ancientForLegacy, effectiveAffix, RARITIES, RARITY_INFO, rollItem, rollStageItem, storeItem, salvageValue, uniqueEffect, uniqueLoadout, equippedUniqueEffect, UNIQUE_EFFECTS, itemSet, setBonusStats, EQUIPMENT_SETS, SET_SLOTS } from './loot.js?v=0.119.0';
-export { huntGrade, HUNT_POWER, HUNT_GRADE_TABLES, itemSet, setBonusStats, setBonusText, EQUIPMENT_SETS, SET_SLOTS, SET_STATS, CHAPTER_SETS, SET_CATALOG } from './loot.js?v=0.119.0';
-export { INVENTORY_LIMIT, LEGENDARY_PITY_LIMIT, ITEM_CATALOG, ANCIENT_CATALOG, BOSS_LOOT, RARITIES, RARITY_INFO, UNIQUE_EFFECTS, uniqueEffect, uniqueLoadout, targetAncient, setAncientTarget, ancientDefinition, gearDropPresentation, gearDropDuration } from './loot.js?v=0.119.0';
-export { STAGES_PER_CHAPTER, BATTLE_PLANS, battlePlan, stageWaveCount } from './battle-plans.js?v=0.119.0';
+import { CHAPTERS, CHAPTERS_PER_THEME, THEMES, chapterTheme, MONSTERS, chapterMonsterPool, EQUIPMENT_ART, ALL_EQUIPMENT_ART, equipmentArt } from './chapters.js?v=0.120.0';
+import { STAGES_PER_CHAPTER, battlePlan, stageWaveCount, waveComposition } from './battle-plans.js?v=0.120.0';
+import { affixCap, INVENTORY_LIMIT, MAX_PENDING_LOOT, LEGENDARY_PITY_LIMIT, huntGrade, ITEM_CATALOG, ANCIENT_CATALOG, ancientIdOfBase, rollAncient, BOSS_LOOT, bossLootPool, discoverAncient, targetAncient, setAncientTarget, ancientDefinition, ancientForLegacy, effectiveAffix, RARITIES, RARITY_INFO, rollItem, rollStageItem, storeItem, salvageValue, uniqueEffect, uniqueLoadout, equippedUniqueEffect, UNIQUE_EFFECTS, itemSet, setBonusStats, EQUIPMENT_SETS, SET_SLOTS } from './loot.js?v=0.120.0';
+export { huntGrade, HUNT_POWER, HUNT_GRADE_TABLES, itemSet, setBonusStats, setBonusText, EQUIPMENT_SETS, SET_SLOTS, SET_STATS, CHAPTER_SETS, SET_CATALOG } from './loot.js?v=0.120.0';
+export { INVENTORY_LIMIT, LEGENDARY_PITY_LIMIT, ITEM_CATALOG, ANCIENT_CATALOG, BOSS_LOOT, RARITIES, RARITY_INFO, UNIQUE_EFFECTS, uniqueEffect, uniqueLoadout, targetAncient, setAncientTarget, ancientDefinition, gearDropPresentation, gearDropDuration } from './loot.js?v=0.120.0';
+export { STAGES_PER_CHAPTER, BATTLE_PLANS, battlePlan, stageWaveCount } from './battle-plans.js?v=0.120.0';
 export const ARRIVAL_EPSILON=.001;
 export const STAGES = CHAPTERS;
 export {THEMES,CHAPTERS_PER_THEME};
@@ -131,7 +131,7 @@ function cleanItem(item,version){
   if(!item||typeof item.slot!=='string'||!Object.hasOwn(SLOTS,item.slot)||!Number.isInteger(item.id)||item.id<1||item.id>1e9)return null;
   // v15 (Alpha 0.112) renumbered ancients by region: old ancient-2 (ruins) is ancient-3, old ancient-3 (frost) is ancient-2.
   if(version<15&&typeof item.catalogId==='string'&&/^ancient-[23]-/.test(item.catalogId))item={...item,catalogId:ancientIdOfBase(item.catalogId),tier:{2:3,3:2}[item.tier]??item.tier};
-  const affixes={};for(const id of Object.keys(AFFIXES)){const v=integer(item.affixes?.[id],0,id==='hp'?250:id==='damage'?80:25);if(v)affixes[id]=v;}
+  const affixes={};for(const id of Object.keys(AFFIXES)){const v=integer(item.affixes?.[id],0,affixCap(id));if(v)affixes[id]=v;}
   const clean={...(BUILD_EFFECTS[item.inscription]?{inscription:item.inscription}:{}),...(huntGrade(item)?{hunt:huntGrade(item)}:{}),id:item.id,slot:item.slot,rarity:integer(item.rarity,0,6),tier:integer(item.tier,1,THEMES.length,1),name:String(item.name??SLOTS[item.slot]).slice(0,32),affixes};
   // An ancient keeps its family's base art id, whose tier can differ from the ancient's region tier (0.112).
   if(ALL_EQUIPMENT_ART.some(a=>a.id===item.artId&&a.slot===equipmentFamily(clean.slot)&&a.tier===clean.tier)||ancientDefinition({...clean,artId:item.artId,catalogId:item.catalogId}))clean.artId=item.artId;
@@ -747,12 +747,13 @@ function strikeUnique(s,swing,stats,target,unguarded,targetX,targetY){
  if(id==='execution'&&swing.executionProc)uniqueVisual(s,spec);
  if(id==='blood'&&unguarded){p.hp=Math.min(p.maxHp,p.hp+UNIQUE_EFFECTS.blood.heal*spec.power);uniqueVisual(s,spec);}
  if(id==='echo'&&p.combo===3&&uniqueReady(s,id,spec.definition.cooldown))areaUnique(s,spec,p.x,p.y,spec.definition.radius,stats.damage*spec.definition.damage*spec.power,0,swing);
- if(id==='storm'&&swing.heavy&&uniqueReady(s,id,spec.definition.cooldown)){
+ // Alpha 0.120: 파쇄 left auto combat in 0.104, so the two 파쇄 weapon powers now fire on ordinary combo hits (storm) and the finisher (frostNova).
+ if(id==='storm'&&!swing.heavy&&p.combo!==3&&uniqueReady(s,id,spec.definition.cooldown)){
   let n=0;const origin={x:targetX,y:targetY};for(const e of s.enemies){if(s.phase!=='playing')break;if(e===target||!eligible(s,e)||length(e.x-targetX,e.y-targetY)>spec.definition.radius)continue;
    effect(s,'uniqueLink',{uniqueId:id,x:targetX,y:targetY,tx:e.x,ty:e.y},.5);damageEnemy(s,e,stats.damage*spec.definition.damage*spec.power,false,'proc',origin);if(++n===spec.definition.targets)break;
   }
  }
- if(id==='frostNova'&&swing.heavy&&uniqueReady(s,id,spec.definition.cooldown))areaUnique(s,spec,p.x,p.y,spec.definition.radius,stats.damage*spec.definition.damage*spec.power,spec.definition.duration);
+ if(id==='frostNova'&&!swing.heavy&&p.combo===3&&uniqueReady(s,id,spec.definition.cooldown))areaUnique(s,spec,p.x,p.y,spec.definition.radius,stats.damage*spec.definition.damage*spec.power,spec.definition.duration);
  if(id==='whirlwind'&&p.combo===3)uniqueVisual(s,spec,stats.range*swing.range);
  const charm=swing.charm,cid=charm?.definition.id;
  if(cid==='focus'&&p.combo===3){p.stamina=Math.min(100,p.stamina+UNIQUE_EFFECTS.focus.stamina*charm.power);p.thunderCooldown=Math.max(0,p.thunderCooldown-UNIQUE_EFFECTS.focus.cooldownReduction);uniqueVisual(s,charm);}

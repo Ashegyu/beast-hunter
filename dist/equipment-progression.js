@@ -1,4 +1,4 @@
-import {itemRollRanges,isPerfectRoll,effectiveAffix,enhancementBonus,rollItemAffixes,promotionPreview,ENHANCEMENT_CAPS,MAX_ENHANCEMENT,enhancementCap,enhancementLevel} from './loot.js?v=0.119.0';
+import {itemRollRanges,isPerfectRoll,effectiveAffix,enhancementBonus,rollItemAffixes,promotionPreview,ENHANCEMENT_CAPS,MAX_ENHANCEMENT,enhancementCap,enhancementLevel} from './loot.js?v=0.120.0';
 export {itemRollRanges,isPerfectRoll,effectiveAffix,enhancementBonus,ENHANCEMENT_CAPS,MAX_ENHANCEMENT,enhancementCap,enhancementLevel};
 const CHANCE_BANDS=[[[100,92]],[[95,77.9]],[[90,73.8],[54,46.8]],[[80,65.6],[48,33.6]],[[65,53.3],[39,27.3],[13,1]],[[60,49.2],[36,25.2],[12,3],[1.5,.5]],[[55,45.1],[33,23.1],[11,3],[2,.8],[.6,.3]]];
 const bounded=(n,min,max,fallback=0)=>Number.isInteger(n)?Math.max(min,Math.min(max,n)):fallback;
@@ -85,6 +85,6 @@ export function restoreEquipmentProgress(clean,raw,allowProgress){
  const level=bounded(raw.enhancement,0,enhancementCap(clean.rarity));if(level){clean.enhancement=level;clean.enhancementAffixes=bonusData({...clean,enhancementAffixes:raw.enhancementAffixes});}
  const rule=enhancementRule(level+1,clean.rarity),fails=rule?bounded(raw.enhanceFailures,0,failureLimit(rule)):0;if(fails)clean.enhanceFailures=fails;
  const candidate=raw.rerollCandidate?.affixes;
- if(clean.rarity>=4&&keys.length&&candidate&&typeof candidate==='object'&&!Array.isArray(candidate)&&Object.keys(candidate).length===keys.length&&keys.every(k=>Object.hasOwn(candidate,k)&&Number.isInteger(candidate[k])&&candidate[k]>=ranges[k].min&&candidate[k]<=ranges[k].max))clean.rerollCandidate={affixes:Object.fromEntries(keys.map(k=>[k,candidate[k]]))};
+ if(clean.rarity>=4&&keys.length&&candidate&&typeof candidate==='object'&&!Array.isArray(candidate)&&Object.keys(candidate).length===keys.length&&keys.every(k=>Object.hasOwn(candidate,k)&&Number.isInteger(candidate[k])))clean.rerollCandidate={affixes:Object.fromEntries(keys.map(k=>[k,bounded(candidate[k],ranges[k].min,ranges[k].max,ranges[k].min)]))};// A paid candidate survives range changes (Alpha 0.120) by moving into the current range.
  return clean;
 }

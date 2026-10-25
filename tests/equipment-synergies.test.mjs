@@ -48,7 +48,8 @@ test('committed attack retains old combination through paused swap, and cannot g
  for(const gain of [false,true]){const s=arena(['3-weapon-1',gain?'1-charm-4':'1-charm-2']),e=enemy(s,{chillRemaining:4});s.profile.inventory.push(gear(gain?'1-charm-2':'1-charm-4',9));g.thunder(s,{x:1,y:0});s.paused=true;g.equipItem(s,9);s.paused=false;advance(s,s.player.swing.impact+.001);assert.equal(s.run.synergyProcs.shatter,gain?0:1);assert.equal(s.synergies.length,gain?1:0);}
 });
 test('ancient or unique proc damage cannot trigger recursive payoff',()=>{
- const s=arena(['3-weapon-5','1-charm-2']);enemy(s);const e=enemy(s,{x:s.player.x-150,chillRemaining:4});hit(s);assert.equal(s.run.synergyProcs.shatter,0);assert.ok(e.hp<1000);assert.ok(e.chillRemaining>0);
+ // 빙하 파쇄 fires on the combo finisher since Alpha 0.120 (it used to need 파쇄).
+ const s=arena(['3-weapon-5','1-charm-2']);enemy(s);const e=enemy(s,{x:s.player.x-150,chillRemaining:4});hit(s,{heavy:false,finisher:true});assert.equal(s.run.synergyProcs.shatter,0);assert.ok(e.hp<1000);assert.ok(e.chillRemaining>0);
 });
 test('lethal execution rewards one death, while new hunt resets counters and cooldowns',()=>{
  const s=arena(['1-weapon-1','1-charm-4']),e=enemy(s,{hp:1,bleedTicks:3,bleedTimer:2,bleedDamage:2});hit(s);assert.equal(e.dead,true);assert.equal(s.run.kills,1);assert.equal(s.run.synergyProcs.execute,1);advance(s,2);assert.equal(s.run.kills,1);g.returnToCamp(s);g.launch(s);assert.deepEqual(s.run.synergyProcs,{shatter:0,execute:0});assert.equal(s.uniqueState.cooldowns['synergy:execute'],undefined);

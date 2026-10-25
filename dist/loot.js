@@ -1,17 +1,23 @@
-import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily} from './equipment-slots.js?v=0.119.0';
-import {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.119.0';
-export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.119.0';
+import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily} from './equipment-slots.js?v=0.120.0';
+import {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.120.0';
+export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.120.0';
 import {huntMode,BOSS_DROP_TABLES} from './hunt-modes.js';
-import {UNIQUE_EFFECTS,EFFECT_ROWS,uniquePower} from './unique-effects.js?v=0.98.0';
-import {ANCIENT_POWER_BY_ID} from './ancient-powers.js?v=0.119.0';
-import {REGION_ANCIENTS,REGION_ANCIENT_BOSSES} from './ancient-regions.js?v=0.119.0';
-import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.119.0';
-export {EQUIPMENT_SETS,SET_SLOTS,SET_STATS,CHAPTER_SETS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.119.0';
-export {UNIQUE_EFFECTS,uniquePower} from './unique-effects.js?v=0.98.0';
+import {UNIQUE_EFFECTS,EFFECT_ROWS,uniquePower} from './unique-effects.js?v=0.120.0';
+import {ANCIENT_POWER_BY_ID} from './ancient-powers.js?v=0.120.0';
+import {REGION_ANCIENTS,REGION_ANCIENT_BOSSES} from './ancient-regions.js?v=0.120.0';
+import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.120.0';
+export {EQUIPMENT_SETS,SET_SLOTS,SET_STATS,CHAPTER_SETS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.120.0';
+export {UNIQUE_EFFECTS,uniquePower} from './unique-effects.js?v=0.120.0';
 // Item definitions and pure rolls; the combat state owns identities and delivery.
 import {INVENTORY_LIMIT,MAX_PENDING_LOOT} from './inventory-rules.js?v=0.86.9';
 export {INVENTORY_LIMIT,MAX_PENDING_LOOT} from './inventory-rules.js?v=0.86.9';
-export const LEGENDARY_PITY_LIMIT=100,PERFECT_ROLL_CHANCE=.08;
+// Alpha 0.120: 극옵 (every rolled stat at its maximum) comes only from this 1% draw; ordinary rolls stop one below the maximum.
+export const LEGENDARY_PITY_LIMIT=100,PERFECT_ROLL_CHANCE=.01;
+// Per-item stat caps. Alpha 0.120 raised flat damage/HP (80/250) so late tiers, mythic promotions and hunt modes keep their spread.
+export const AFFIX_CAPS=Object.freeze({damage:150,hp:500});
+export const affixCap=key=>AFFIX_CAPS[key]??25;
+// A non-perfect roll lands in [min, max-1]; the perfect draw takes max.
+const rollWithin=(range,n,perfect)=>perfect?range.max:range.min+Math.min(range.max-range.min-1,Math.floor(n*(range.max-range.min)));
 export const RARITY_INFO=Object.freeze([
  {name:'일반',color:'#c5d0c9',beam:0,power:1,particles:0,rings:1,ttl:1.2},
  {name:'희귀',color:'#399bff',beam:85,power:1.3,particles:4,rings:1,ttl:1.4},
@@ -29,7 +35,9 @@ const chapterNames=[
  [['빙결 수정검','눈꽃 수정검','서리 송곳니 검','빙하 파쇄검','영원의 결빙검','눈보라 검','빙룡의 메아리','극광 뇌검','서리 처형검','붉은 얼음검','수정 해일검','백야 회전검'],['빙하 판금 흉갑','설원 원정대 갑옷','골렘 핵갑옷','서리결 흉갑','빙룡의 불멸갑','고요한 눈갑옷','극광 회피복','결정 가시갑','골렘 반격갑','겨울 수호갑','왕좌의 유언','눈꽃 회복갑'],['눈꽃 룬','빙원의 심장','빙룡의 이빨','눈보라 깃털','극광 별무리','빙원 수집석','백야의 기세','서리 연격룬','영구동토 충격핵','빙룡 추격인','눈의 위성','해빙의 맥박']],
 ];
 const artRows=[['forest_blade','forest_fang','forest_armor','forest_charm'],['ruins_blade','ruins_rune','ruins_armor','ruins_charm'],['frost_blade','frost_fang','frost_armor','frost_charm']];
-const patterns={weapon:[{damage:8,crit:2},{damage:6,speed:3},{damage:10,crit:1},{damage:12,hp:10}],armor:[{hp:25,reduction:2},{hp:18,speed:3},{hp:30,reduction:3},{hp:32,crit:2}],charm:[{speed:4,crit:2},{hp:20,reduction:2},{damage:5,crit:3},{speed:6,hp:10}]};
+// Alpha 0.120: weapon designs share one budget (damage plus a secondary stat), measured on real waves; the average
+// damage stays at the 0.119 level so the campaign difficulty does not shift.
+const patterns={weapon:[{damage:10,crit:3},{damage:10,speed:4},{damage:11,crit:1},{damage:10,hp:12}],armor:[{hp:25,reduction:2},{hp:18,speed:3},{hp:30,reduction:3},{hp:32,crit:2}],charm:[{speed:4,crit:2},{hp:20,reduction:2},{damage:5,crit:3},{speed:6,hp:10}]};
 const legacyCatalog=chapterNames.flatMap((groups,t)=>groups.flatMap((names,slotIndex)=>{
  const slot=['weapon','armor','charm'][slotIndex];return names.map((name,i)=>Object.freeze({id:`${t+1}-${slot}-${i+1}`,name,slot,tier:t+1,artId:artRows[t][slotIndex===0?(i<4?(i<2?0:1):i%2):slotIndex+1],base:Object.freeze(patterns[slot][i%4]),effectId:EFFECT_ROWS[slot][i%6]}));
 }));
@@ -39,12 +47,12 @@ const BASE_CATALOG=Object.freeze([...legacyCatalog,...[1,2,3].flatMap(tier=>addi
 // They carry `set` and drop only in their chapter; ancient identities stay derived from the base catalog.
 // Base stats follow the set's style; `power` raises them slightly for later chapters of a region.
 const SET_STYLES=Object.freeze({
- swift:{weapon:[{damage:7,speed:4},{damage:9,crit:2}],armor:{hp:22,speed:3},helmet:{hp:10,speed:2},pants:{hp:13,speed:2},boots:{hp:7,speed:3}},
- fierce:{weapon:[{damage:11,crit:1},{damage:13}],armor:{hp:26,crit:2},helmet:{hp:11,crit:1},pants:{hp:14,crit:1},boots:{hp:8,crit:1}},
- guard:{weapon:[{damage:8,hp:14},{damage:10,hp:10}],armor:{hp:32,reduction:3},helmet:{hp:14,reduction:1},pants:{hp:17,reduction:1},boots:{hp:10,reduction:1}},
- keen:{weapon:[{damage:8,crit:3},{damage:10,crit:2}],armor:{hp:24,crit:3},helmet:{hp:11,crit:2},pants:{hp:14,crit:1},boots:{hp:8,crit:2}},
- vital:{weapon:[{damage:8,hp:18},{damage:10,hp:12}],armor:{hp:38},helmet:{hp:17},pants:{hp:20},boots:{hp:12,speed:1}},
- brute:{weapon:[{damage:13},{damage:15}],armor:{hp:24,damage:2},helmet:{hp:10,damage:1},pants:{hp:13,damage:1},boots:{hp:7,damage:1}},
+ swift:{weapon:[{damage:10,speed:4},{damage:10,crit:2}],armor:{hp:22,speed:3},helmet:{hp:10,speed:2},pants:{hp:13,speed:2},boots:{hp:7,speed:3}},
+ fierce:{weapon:[{damage:11,crit:1},{damage:10,crit:2}],armor:{hp:26,crit:2},helmet:{hp:11,crit:1},pants:{hp:14,crit:1},boots:{hp:8,crit:1}},
+ guard:{weapon:[{damage:10,hp:12},{damage:9,hp:16}],armor:{hp:32,reduction:3},helmet:{hp:14,reduction:1},pants:{hp:17,reduction:1},boots:{hp:10,reduction:1}},
+ keen:{weapon:[{damage:9,crit:4},{damage:10,crit:3}],armor:{hp:24,crit:3},helmet:{hp:11,crit:2},pants:{hp:14,crit:1},boots:{hp:8,crit:2}},
+ vital:{weapon:[{damage:9,hp:18},{damage:10,hp:14}],armor:{hp:38},helmet:{hp:17},pants:{hp:20},boots:{hp:12,speed:1}},
+ brute:{weapon:[{damage:12},{damage:11,hp:6}],armor:{hp:24,damage:2},helmet:{hp:10,damage:1},pants:{hp:13,damage:1},boots:{hp:7,damage:1}},
 });
 const setBase=(set,stats)=>Object.freeze(Object.fromEntries(Object.entries(stats).map(([k,v])=>[k,Math.max(1,Math.round(v*set.power))])));
 export const SET_CATALOG=Object.freeze(Object.values(EQUIPMENT_SETS).flatMap(set=>SET_SLOTS.flatMap(slot=>slot==='weapon'
@@ -81,8 +89,8 @@ export function ancientForLegacy(item){const row=CATALOG_BY_ID.get(item.catalogI
 export function rollAncient({id,tier,slot,bossId,hunt=0},pick,rng=null){
  const pool=bossId?bossLootPool(bossId,tier):ANCIENT_CATALOG,choices=pool.filter(r=>r.tier===tier&&(!slot||r.slot===slot)),base=choices[Math.min(choices.length-1,Math.floor(pick*choices.length))];
  if(!base)throw new RangeError('Unknown ancient chapter/slot');
- const power=HUNT_POWER[hunt]??1,item={id,slot:base.slot,tier:base.tier,rarity:5,name:base.name,catalogId:base.id,artId:base.artId,affixes:Object.fromEntries(Object.entries(base.base).map(([k,v])=>[k,Math.min(k==='hp'?250:k==='damage'?80:25,Math.round(v*power))])),rollVersion:1,...(hunt?{hunt}:{}),...(base.characterId?{characterId:base.characterId}:{})};
- if(rng){const forced=(pick*choices.length)%1<PERFECT_ROLL_CHANCE;for(const [key,range]of Object.entries(itemRollRanges(item))){const n=rng();item.affixes[key]=forced?range.max:range.min+Math.min(range.max-range.min,Math.floor(n*(range.max-range.min+1)));}}
+ const power=HUNT_POWER[hunt]??1,item={id,slot:base.slot,tier:base.tier,rarity:5,name:base.name,catalogId:base.id,artId:base.artId,affixes:Object.fromEntries(Object.entries(base.base).map(([k,v])=>[k,Math.min(affixCap(k),Math.round(v*power))])),rollVersion:1,...(hunt?{hunt}:{}),...(base.characterId?{characterId:base.characterId}:{})};
+ if(rng){const forced=(pick*choices.length)%1<PERFECT_ROLL_CHANCE;for(const [key,range]of Object.entries(itemRollRanges(item))){const n=rng();item.affixes[key]=rollWithin(range,n,forced);}}
  if(isPerfectRoll(item))item.perfect=true;return item;
 }
 export function rollRarity(source,rng,minimum=0,difficulty=0){const mode=huntMode(difficulty);if(!mode)throw new RangeError('Unknown hunt mode');const weights=source==='boss'?BOSS_DROP_TABLES[mode.id]:DROP_TABLES[source]??DROP_TABLES.normal,floor=Number.isInteger(minimum)?Math.max(0,Math.min(5,minimum)):0;let value=rng()*100;for(let i=0;i<weights.length;i++){value-=weights[i];if(value<0)return Math.max(floor,i);}return weights.length-1;}
@@ -97,10 +105,10 @@ export function rollItem({id,tier,slot,set=null,source='normal',minimum=0,bossId
  // quality without consuming another random draw or changing later rolls.
  const perfect=(pick*choices.length)%1<PERFECT_ROLL_CHANCE;
  const affixes={},scale=(.76+tier*.24)*RARITY_INFO[rarity].power;
- for(const [key,value]of Object.entries(base.base)){const n=rng(),range=affixRange(base,rarity,key,hunt);affixes[key]=perfect?range.max:range.min+Math.min(range.max-range.min,Math.floor(n*(range.max-range.min+1)));}
+ for(const [key,value]of Object.entries(base.base)){const n=rng(),range=affixRange(base,rarity,key,hunt);affixes[key]=rollWithin(range,n,perfect);}
  const targets=[2,2,3,4,5,5,5],extra={damage:3,hp:12,speed:2,crit:2,reduction:1},keys=Object.keys(extra).filter(k=>!Object.hasOwn(affixes,k));
- while(Object.keys(affixes).length<targets[rarity]&&keys.length){const k=keys.splice(Math.min(keys.length-1,Math.floor(rng()*keys.length)),1)[0],n=rng(),range=affixRange(base,rarity,k,hunt);affixes[k]=perfect?range.max:range.min+Math.min(range.max-range.min,Math.floor(n*(range.max-range.min+1)));}
- for(const k of Object.keys(affixes))affixes[k]=Math.min(k==='hp'?250:k==='damage'?80:25,affixes[k]);
+ while(Object.keys(affixes).length<targets[rarity]&&keys.length){const k=keys.splice(Math.min(keys.length-1,Math.floor(rng()*keys.length)),1)[0],n=rng(),range=affixRange(base,rarity,k,hunt);affixes[k]=rollWithin(range,n,perfect);}
+ for(const k of Object.keys(affixes))affixes[k]=Math.min(affixCap(k),affixes[k]);
  const prefix=rarity>=1?['날카로운','견고한','바람의','행운의','수호의'][Math.min(4,Math.floor(rng()*5))]+' ':'';
  const item={id,slot:base.slot,tier,rarity,name:prefix+base.name,catalogId:base.id,artId:base.artId,affixes,rollVersion:1,...(hunt?{hunt}:{}),...(base.characterId?{characterId:base.characterId}:{})};if(isPerfectRoll(item)){item.perfect=true;item.name='완벽한 '+base.name;}return item;
 }
@@ -141,8 +149,10 @@ export const HUNT_POWER=Object.freeze([1,1.25,1.6]);
 export const huntGrade=item=>Number.isInteger(item?.hunt)&&item.hunt>0&&item.hunt<HUNT_POWER.length?item.hunt:0;
 function affixRange(definition,rarity,key,hunt=0){
  const special=rarity>=5,primary=Object.hasOwn(definition.base,key),base=definition.base[key]??EXTRA_AFFIXES[key];
- const scale=(special?1:(.76+definition.tier*.24)*RARITY_INFO[rarity].power)*HUNT_POWER[hunt],low=(special||primary)?0.85:0.8,high=(special||primary)?1.15:1.2,cap=key==='hp'?250:key==='damage'?80:25;
- return {min:Math.min(cap,Math.max(1,Math.round(base*scale*low))),max:Math.min(cap,Math.max(1,Math.round(base*scale*high)))};
+ // Alpha 0.120: wider spreads (base stats ±30%, added stats ±40%, ancient/crafted ±20%; was ±15/20/15%), and every
+ // uncapped stat keeps at least two values so a maximum is never automatic.
+ const scale=(special?1:(.76+definition.tier*.24)*RARITY_INFO[rarity].power)*HUNT_POWER[hunt],low=special?.8:primary?.7:.6,high=special?1.2:primary?1.3:1.4,cap=affixCap(key);
+ const min=Math.min(cap-1,Math.max(1,Math.round(base*scale*low)));return {min,max:Math.min(cap,Math.max(min+1,Math.round(base*scale*high)))};
 }
 export function itemRollRanges(item){
  if(!item||!Number.isInteger(item.rarity)||item.rarity<0||item.rarity>6)return {};
@@ -156,7 +166,7 @@ export function isPerfectRoll(item,affixes=item?.affixes){
 }
 export function rollItemAffixes(item,rng){
  const ranges=itemRollRanges(item),forced=rng()<PERFECT_ROLL_CHANCE,result={};
- for(const [key,range]of Object.entries(ranges)){const n=rng();result[key]=forced?range.max:range.min+Math.min(range.max-range.min,Math.floor(n*(range.max-range.min+1)));}return result;
+ for(const [key,range]of Object.entries(ranges)){const n=rng();result[key]=rollWithin(range,n,forced);}return result;
 }
 // Promotion keeps the item identity and its relative base-roll quality.
 export function promotionPreview(item){
@@ -167,7 +177,8 @@ export function promotionPreview(item){
  const next={...item,rarity:item.rarity+1,affixes:{...item.affixes}},target=[2,2,3,4,5][next.rarity];
  for(const key of Object.keys(row.base))if(!Object.hasOwn(next.affixes,key))next.affixes[key]=1;
  for(const key of Object.keys(EXTRA_AFFIXES)){if(Object.keys(next.affixes).length>=target)break;if(!Object.hasOwn(next.affixes,key))next.affixes[key]=1;}
- for(const [key,r]of Object.entries(itemRollRanges(next)))next.affixes[key]=r.min+Math.round((r.max-r.min)*(quality[key]??average));
+ // Only a 극옵 stays 극옵: other items keep their quality but stop one below each new maximum.
+ const perfect=isPerfectRoll(item);for(const [key,r]of Object.entries(itemRollRanges(next)))next.affixes[key]=Math.min(perfect?r.max:r.max-1,r.min+Math.round((r.max-r.min)*(quality[key]??average)));
  next.name=row.name;next.rollVersion=1;next.promotionCount=Math.min(next.rarity,(Number.isInteger(item.promotionCount)?Math.max(0,item.promotionCount):0)+1);delete next.perfect;delete next.enhancement;delete next.enhancementAffixes;delete next.enhanceFailures;delete next.rerollCandidate;if(isPerfectRoll(next))next.perfect=true;
  return next;
 }
@@ -180,7 +191,7 @@ export const enhancementLevel=item=>Number.isInteger(item?.enhancement)?Math.max
 export function enhancementBonus(item,key){
  const level=enhancementLevel(item);if(!level||!Object.hasOwn(item.affixes??{},key))return 0;
  const stored=item.enhancementAffixes,value=stored===undefined?(item.affixes[key]??0)*level*3/100:stored&&typeof stored==='object'&&!Array.isArray(stored)?stored[key]:0;
- return Number.isFinite(value)?Math.max(0,Math.min(Math.round(value*100),Math.round((key==='hp'?250:key==='damage'?80:25)*level*3)))/100:0;
+ return Number.isFinite(value)?Math.max(0,Math.min(Math.round(value*100),Math.round(affixCap(key)*level*3)))/100:0;
 }
 export function effectiveAffix(item,key){return Math.round(((item.affixes?.[key]??0)+enhancementBonus(item,key))*100)/100;}
 const DROP_DURATIONS=Object.freeze([.45,.55,.65,.8,.95,1.1,1.2]);

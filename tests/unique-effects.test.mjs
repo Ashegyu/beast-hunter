@@ -22,17 +22,17 @@ test('all 108 identities gain validated slot effects at high grade and preserve 
 test('echo adds a finisher-only forward shockwave with cooldown and no reverse damage',()=>{
  const s=arena('echo'),front=enemy(s,230),rear=enemy(s,-180);enemy(s);hit(s);assert.equal(front.hp,1000);hit(s,{finisher:true});assert.ok(front.hp<1000);assert.equal(rear.hp,1000);const before=front.hp;front.x=s.player.x+260;enemy(s);hit(s,{finisher:true});assert.equal(front.hp,before);assert.ok(s.uniqueState.cooldowns.echo>0);
 });
-test('storm chains from one heavy contact to at most three distinct secondary targets',()=>{
- const s=arena('storm'),primary=enemy(s),secondaries=[enemy(s,-50,140),enemy(s,-50,-140),enemy(s,-90,80),enemy(s,-90,-80)];hit(s,{heavy:true});assert.equal(s.effects.filter(f=>f.type==='uniqueLink').length,3);assert.equal(secondaries.filter(e=>e.hp<1000).length,3);assert.ok(primary.hp<1000);const count=s.effects.filter(f=>f.type==='uniqueLink').length;advance(s,.3);assert.equal(s.effects.filter(f=>f.type==='uniqueLink').length,count);
+test('storm chains from one ordinary combo contact to at most three distinct secondary targets (Alpha 0.120: no longer 파쇄-only)',()=>{
+ const s=arena('storm'),primary=enemy(s),secondaries=[enemy(s,-50,140),enemy(s,-50,-140),enemy(s,-90,80),enemy(s,-90,-80)];hit(s);assert.equal(s.effects.filter(f=>f.type==='uniqueLink').length,3);assert.equal(secondaries.filter(e=>e.hp<1000).length,3);assert.ok(primary.hp<1000);const count=s.effects.filter(f=>f.type==='uniqueLink').length;advance(s,.3);assert.equal(s.effects.filter(f=>f.type==='uniqueLink').length,count);
 });
 test('execution thresholds distinguish regular monsters from bosses',()=>{
- const result=[];for(const boss of [false,true]){const s=arena('execution'),e=enemy(s);e.hp=200;e.boss=boss;s.run.bossSpawned=boss;hit(s);result.push(200-e.hp);}assert.ok(result[0]>result[1]*1.5);
+ const result=[];for(const boss of [false,true]){const s=arena('execution'),e=enemy(s);e.hp=300;e.boss=boss;s.run.bossSpawned=boss;hit(s);result.push(300-e.hp);}assert.ok(result[0]>result[1]*1.5);
 });
 test('blood supports a low-health damage style and restores health once per unguarded strike',()=>{
- const rows=[];for(const hp of [30,130]){const s=arena('blood');s.player.hp=hp;const e=enemy(s);enemy(s,90,15);hit(s);rows.push(1000-e.hp);assert.equal(s.player.hp,hp+4);}assert.ok(rows[0]>rows[1]*1.4);
+ const rows=[];for(const hp of [30,130]){const s=arena('blood');s.player.hp=hp;const e=enemy(s);enemy(s,90,15);hit(s);rows.push(1000-e.hp);assert.equal(s.player.hp,hp+6);}assert.ok(rows[0]>rows[1]*1.4);
 });
-test('frost nova hits surrounding enemies on heavy impact and respects cooldown',()=>{
- const s=arena('frostNova'),behind=enemy(s,-160);enemy(s);hit(s,{heavy:true});assert.ok(behind.hp<1000);assert.ok(behind.chillRemaining>2.9);const hp=behind.hp;enemy(s);hit(s,{heavy:true});assert.equal(behind.hp,hp);
+test('frost nova hits surrounding enemies on the combo finisher and respects cooldown (Alpha 0.120)',()=>{
+ const s=arena('frostNova'),behind=enemy(s,-160);enemy(s);hit(s);assert.equal(behind.hp,1000);hit(s,{finisher:true});assert.ok(behind.hp<1000);assert.ok(behind.chillRemaining>2.4);const hp=behind.hp;enemy(s);hit(s,{finisher:true});assert.equal(behind.hp,hp);
 });
 test('whirlwind turns only the finisher into a full-circle attack',()=>{
  const s=arena('whirlwind'),back=enemy(s,-80);enemy(s);hit(s);assert.equal(back.hp,1000);hit(s,{finisher:true});assert.ok(back.hp<1000);assert.equal(s.player.swing.dot,-1);
@@ -97,5 +97,5 @@ test('stage transitions discard spatial buffs, keep earned charges and advance c
  const s=arena('barrier','capacitor');g.dash(s);s.uniqueState.capacitor=2;s.uniqueState.orbit={spec:s.loadout.armor,x:s.player.x,y:s.player.y,timer:.3,ticks:3,damage:10};s.uniqueState.momentum=2;s.run.flow='combat';s.run.wave=3;s.run.waveKills=s.run.waveQuota;s.spawns=[];s.enemies=[];advance(s,.025);assert.equal(s.run.flow,'combat');assert.equal(s.run.stage,2);assert.equal(s.uniqueState.orbit,null);assert.equal(s.uniqueState.shield,0);assert.equal(s.uniqueState.momentum,0);assert.equal(s.uniqueState.capacitor,2);const before=s.uniqueState.cooldowns.barrier;advance(s,2.6);assert.equal(s.run.stage,2);assert.ok(s.uniqueState.cooldowns.barrier<before-2.4);assert.equal(s.uniqueState.orbit,null);
 });
 test('highest grades strengthen scalable control and range while free-heavy behavior stays bounded',()=>{
- const p=g.createProfile();p.inventory=[gear('frostWard',1,6),gear('whirlwind',2,6)];p.equipment.armor=1;p.equipment.weapon=2;const s=g.createGame(p);g.launch(s);freezeCombat(s);s.enemies=[];const e=enemy(s);hurt(s);assert.ok(e.chillRemaining>3.3);s.player.action='idle';s.player.attackCooldown=0;s.player.combo=2;s.player.comboWindow=.5;g.attack(s,{x:1,y:0});assert.ok(Math.abs(s.player.swing.range-1.12*1.34)<.00001);
+ const p=g.createProfile();p.inventory=[gear('frostWard',1,6),gear('whirlwind',2,6)];p.equipment.armor=1;p.equipment.weapon=2;const s=g.createGame(p);g.launch(s);freezeCombat(s);s.enemies=[];const e=enemy(s);hurt(s);assert.ok(e.chillRemaining>3.3);s.player.action='idle';s.player.attackCooldown=0;s.player.combo=2;s.player.comboWindow=.5;g.attack(s,{x:1,y:0});assert.ok(Math.abs(s.player.swing.range-1.12*(1+.18*1.36))<.00001);
 });
