@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.127.0';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.128.0';
 import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js';
 import { createCombatAudio } from './sound.js?v=0.76.0';
-import * as game from './game-engine.js?v=0.127.0';
+import * as game from './game-engine.js?v=0.128.0';
 import {FrameMetrics} from './frame-metrics.js?v=0.98.1';
 import { frameIndex, frameRect, validateClip } from './engine.js';
 import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
 import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.103.1';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.127.0';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.127.0';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.127.0';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.127.0';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.128.0';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.128.0';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.128.0';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.128.0';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -1391,6 +1391,8 @@ $('tactics-map-back').addEventListener('click',()=>{if(ready&&state.phase==='cam
 $('farm-codex-open').addEventListener('click',()=>navigateCamp('codex'));
 
 let skillPage=0;
+// Alpha 0.128: the skill detail has an 정보 view and a 갈래 view; a first tap on an unbought branch arms it (`branchArmed`).
+let skillDetailView='info',branchArmed='';
 const skillPageSize=9;
 // Skill workshop uses the existing camp drawer; mutations remain camp-only.
 function openSkills(origin='nav-skills'){skillPage=0;if(!ready||state.phase!=='camp')return;inventoryOpen=false;codexOpen=false;craftOpen=false;trackOpen=false;campChoices=false;skillRenderKey='';openCampDrawer('skills',origin);}
@@ -1410,7 +1412,7 @@ for(const [node,key]of [['skill-auto-mode','mode'],['skill-auto-ultimate','ultim
 $('skill-awakening').addEventListener('change',()=>{if(state.phase!=='camp'||profile.level<50||!['area','execution'].includes($('skill-awakening').value))return;profile.skillBook.awakening=$('skill-awakening').value;skillChanged('적월난무 각성 변경');});
 for(const [id,delta]of [['skill-page-prev',-1],['skill-page-next',1]])$(id).addEventListener('click',()=>{if(state.phase!=='camp'||campDrawer!=='skills')return;skillPage+=delta;skillRenderKey='';refreshSkills();});
 function refreshSkills(){
- if(campDrawer!=='skills')return;const book=profile.skillBook,key=JSON.stringify([book,profile.level,selectedSkill,skillTab,skillPage,skillFeedback,profile.gold,profile.materials.skillPage]);if(key===skillRenderKey)return;skillRenderKey=key;
+ if(campDrawer!=='skills')return;const book=profile.skillBook,key=JSON.stringify([skillDetailView,branchArmed,book,profile.level,selectedSkill,skillTab,skillPage,skillFeedback,profile.gold,profile.materials.skillPage]);if(key===skillRenderKey)return;skillRenderKey=key;
  const slots=game.skillSlots(profile.level),d=game.SKILL_BY_ID[selectedSkill],rank=game.skillRank(profile,d.id),equipped=book.loadout[d.kind].includes(d.id);
  $('skill-budget').textContent='리리안 Lv.'+profile.level+' · 강화 포인트 '+game.skillPoints(profile);$('skill-feedback').textContent=skillFeedback;
  for(const tab of ['all','active','passive','ultimate','beast'])$('skill-tab-'+tab).setAttribute('aria-pressed',String(skillTab===tab));
@@ -1425,15 +1427,21 @@ function refreshSkills(){
  $('skill-study').disabled=!!game.skillStudyStatus(profile);$('skill-study-cost').textContent='보유 검술서 '+profile.materials.skillPage+' · 연구 1회: 검술서 '+game.SKILL_STUDY_COST.pages+' + '+game.SKILL_STUDY_COST.gold+' 골드';$('skill-study-note').textContent='강화 포인트 +1 · 레벨 조건 유지 · 연구 '+book.trainingPoints+'/'+game.SKILL_STUDY_COST.max+(game.skillStudyStatus(profile)?' · '+game.skillStudyStatus(profile):'');
  $('skill-detail-icon').src=d.icon;$('skill-detail-name').textContent=d.name;$('skill-detail-kind').textContent=skillKinds[d.kind]+(equipped?' · 장착 중':'');const beast=d.kind==='beast';$('skill-detail-unlock').textContent=beast?d.chapter+'장 '+d.bossName+' 처치로 획득'+(rank?' · 현재 '+game.BEAST_GRADES[rank].name:' · 아직 미획득'):'캐릭터 Lv.'+d.unlock+' 해금'+(rank?' · 현재 Lv.'+rank:' · 아직 잠김');
  const areaScale=game.skillAreaScale(profile,d.id),growing=['line','dash','circle','cone','targetArea','echo','returning','field','gather','ultimateArea'].includes(d.shape);
- $('skill-detail-description').textContent=d.description+(growing?' 기본 범위 기준. 현재 광역 범위 +'+Math.round((areaScale-1)*100)+'% · 캐릭터 Lv.10마다 +10%, 최대 +40%.':'');
+ // The area growth note lives under '전체 단계별 수치' (Alpha 0.128) so the description stays short.
+ const areaNote=growing?' 범위는 기본 기준이며 현재 광역 범위 +'+Math.round((areaScale-1)*100)+'% (캐릭터 Lv.10마다 +10%, 최대 +40%).':'';$('skill-detail-description').textContent=d.description;
  $('skill-current-effect').textContent=beast?(rank?'현재 ':'미획득 · 기본 기준 · ')+game.skillNumbers(profile,d.id,rank||1):(rank?'현재 Lv.'+rank+' · ':'미해금 · Lv.1 기준 · ')+game.skillNumbers(profile,d.id,rank||1);
  const cooldown=Math.round((beast&&!rank?d.cooldown:game.skillCooldown(profile,d.id))*10)/10;$('skill-detail-resource').textContent=beast?'기력 '+d.cost+' · 재사용 '+cooldown+'초 · 자동 시전':d.kind==='passive'?'장착한 동안 조건에 따라 발동':d.kind==='ultimate'?'재사용 '+cooldown+'초 · 기력 소모 없음':'기력 '+game.skillCost(profile,d.id)+' · 재사용 '+cooldown+'초';
  // Alpha 0.126 갈래: two branches per attacking active / ultimate, bought with 검술서 and switched freely in camp.
- const branches=game.SKILL_BRANCHES[d.id];$('skill-branches').hidden=!branches;if(branches){const pick=game.skillBranchIndex(profile,d.id),c=game.SKILL_BRANCH_COST;for(let i=0;i<2;i++){const b=branches[i],owned=game.ownsBranch(profile,d.id,i),status=game.branchStatus(profile,d.id,i),state=pick===i?'active':owned?'owned':status?'locked':'buyable',node=$('skill-branch-'+i);node.setAttribute('data-state',state);node.setAttribute('aria-pressed',String(pick===i));node.disabled=!owned&&!!status;$('skill-branch-name-'+i).textContent=b.name;$('skill-branch-info-'+i).textContent=(pick===i?'사용 중':owned?'보유 · 눌러 사용':'검술서 '+c.pages+' 해금')+' · '+game.branchSummary(b.mods);node.title=b.text+' '+game.branchSummary(b.mods)+(owned?'':' · 해금: 검술서 '+c.pages+' + '+c.gold+' 골드'+(status?' ('+status+')':''));node.setAttribute('aria-label','갈래 '+b.name+' · '+node.title);}}
+ const branches=game.SKILL_BRANCHES[d.id],view=branches?skillDetailView:'info',pick=game.skillBranchIndex(profile,d.id);$('skill-detail').setAttribute('data-view',view);$('skill-branches').hidden=view!=='branch';
+ for(const [id,v]of [['skill-view-info','info'],['skill-view-branch','branch']])$(id).setAttribute('aria-pressed',String(view===v));$('skill-view-branch').disabled=!branches;$('skill-view-branch').textContent=branches?'갈래 '+[0,1].filter(i=>game.ownsBranch(profile,d.id,i)).length+'/2':'갈래 없음';
+ if(pick>=0)$('skill-current-effect').textContent+=' · 갈래 '+branches[pick].name;
+ if(branches){const c=game.SKILL_BRANCH_COST;for(let i=0;i<2;i++){const b=branches[i],owned=game.ownsBranch(profile,d.id,i),status=game.branchStatus(profile,d.id,i),armed=branchArmed===d.id+':'+i,state=pick===i?'active':owned?'owned':status?'locked':armed?'armed':'buyable',node=$('skill-branch-'+i);node.setAttribute('data-state',state);node.setAttribute('aria-pressed',String(pick===i));node.disabled=!owned&&!!status;
+  $('skill-branch-name-'+i).textContent=b.name+' · '+(pick===i?'사용 중':owned?'보유':status?status:armed?'다시 눌러 해금':'검술서 '+c.pages);$('skill-branch-info-'+i).textContent=game.branchSummary(b.mods);$('skill-branch-text-'+i).textContent=b.text;node.setAttribute('aria-label','갈래 '+b.name+' · '+b.text+' '+game.branchSummary(b.mods)+(owned?'':' · 해금: 검술서 '+c.pages+' + '+c.gold+' 골드'+(status?' ('+status+')':'')));}
+  $('skill-branch-note').textContent='보유 검술서 '+profile.materials.skillPage+' · 해금 검술서 '+c.pages+' + '+c.gold+' 골드 · 하나만 사용, 눌러서 전환·끄기';}
  // 괴수 기술 grades: 기본 (first kill), 강화 (정예 chance), 극 (악몽 chance) instead of five skill-point ranks.
  for(let i=1;i<=5;i++){$('skill-rank-row-'+i).hidden=beast&&i>3;$('skill-rank-row-'+i).setAttribute('data-current',String(rank===i));$('skill-rank-value-'+i).textContent=beast&&i>3?'':game.skillNumbers(profile,d.id,i);$('skill-rank-gate-'+i).textContent=beast?['첫 처치','정예 처치 '+Math.round(game.BEAST_GRADE_CHANCE[1]*100)+'%','악몽 처치 '+Math.round(game.BEAST_GRADE_CHANCE[2]*100)+'%',''][i-1]??'':'캐릭터 Lv.'+game.skillLevelGate(d.id,i);}
  const next=game.skillLevelGate(d.id,rank+1);
- $('skill-detail-note').textContent=beast?'괴수 기술 칸 1개에 장착하며, 준비되면 자동으로 시전합니다. 보스를 처음 쓰러뜨리면 기본을 배우고, 정예·악몽에서 다시 쓰러뜨리면 확률로 강화·극을 배웁니다(낮은 등급으로 내려가지 않음).':d.kind==='ultimate'?'궁극기는 캐릭터 레벨에 따라 자동 강화됩니다. 사냥 시작 시 바로 사용하며, 사용 후 60초 동안 기다립니다. 일시정지 중에는 남은 시간도 멈춥니다.':'해금 시 Lv.1을 바로 사용합니다. 이후 단계당 강화 포인트 1개를 사용합니다.';
+ $('skill-detail-note').textContent=(beast?'괴수 기술 칸 1개에 장착하며, 준비되면 자동으로 시전합니다. 보스를 처음 쓰러뜨리면 기본을 배우고, 정예·악몽에서 다시 쓰러뜨리면 확률로 강화·극을 배웁니다(낮은 등급으로 내려가지 않음).':d.kind==='ultimate'?'궁극기는 캐릭터 레벨에 따라 자동 강화됩니다. 사냥 시작 시 바로 사용하며, 사용 후 60초 동안 기다립니다. 일시정지 중에는 남은 시간도 멈춥니다.':'해금 시 Lv.1을 바로 사용합니다. 이후 단계당 강화 포인트 1개를 사용합니다.')+areaNote;
  $('skill-upgrade').hidden=d.kind==='ultimate'||beast;$('skill-upgrade').disabled=!rank||rank>=5||!game.skillPoints(profile)||profile.level<next;$('skill-upgrade').textContent=!rank?'캐릭터 Lv.'+d.unlock+' 필요':rank>=5?'최대 강화':profile.level<next?'다음 강화 · 캐릭터 Lv.'+next:game.skillPoints(profile)?'Lv.'+(rank+1)+' 강화 · 포인트 1':'강화 포인트 부족';
  for(let i=0;i<4;i++){const node=$('skill-equip-'+i);node.hidden=i>=game.MAX_SLOTS[d.kind];node.disabled=!rank||i>=slots[d.kind];const action=book.loadout[d.kind][i]===d.id?'해제':'장착';node.textContent=(game.MAX_SLOTS[d.kind]>2?'':'슬롯 ')+(i+1)+' '+action;node.setAttribute('aria-label','슬롯 '+(i+1)+' '+action);}
  for(let i=0;i<3;i++){const b=book.presets[i];$('skill-preset-load-'+i).disabled=!b;$('skill-preset-state-'+i).textContent=b?[...b.active,...b.ultimate].filter(Boolean).map(id=>game.SKILL_BY_ID[id].name).join(' · ')||'빈 구성':'비어 있음';}
@@ -1567,8 +1575,8 @@ for(const mode of ['growth','raid'])$('dungeon-mode-'+mode).addEventListener('cl
 for(const r of game.RAIDS)$('raid-card-'+r.id).addEventListener('click',()=>{if(state.phase!=='camp'||campDrawer!=='dungeons')return;launchRevision++;selectedRaid=r.id;$('dungeon-feedback').textContent=game.raidUnlocked(profile,r.id)?'':r.unlock+'장을 클리어하면 열립니다.';refreshDungeons();});
 $('dungeon-result-exit').addEventListener('click',()=>{if(!game.resultReady(state)||!state.run.dungeonId&&!state.run.raidId)return;if(state.run.raidId){dungeonMode='raid';selectedRaid=state.run.raidId;}else{dungeonMode='growth';selectedDungeon=state.run.dungeonId;selectedDungeonLevel=state.run.stage;}returnCamp();openDungeons();});
 // The first tap on an unbought branch shows its full text (buttons are clipped on phones); the second tap buys it.
-let branchArmed='';
+for(const [id,v]of [['skill-view-info','info'],['skill-view-branch','branch']])$(id).addEventListener('click',()=>{if(state.phase!=='camp'||campDrawer!=='skills')return;skillDetailView=v;branchArmed='';skillRenderKey='';refreshSkills();});
 for(let i=0;i<2;i++)$('skill-branch-'+i).addEventListener('click',()=>{if(state.phase!=='camp'||campDrawer!=='skills')return;const b=game.SKILL_BRANCHES[selectedSkill]?.[i];if(!b)return;const owned=game.ownsBranch(profile,selectedSkill,i),key=selectedSkill+':'+i,full=b.name+' · '+b.text+' '+game.branchSummary(b.mods);
- if(!owned&&branchArmed!==key){branchArmed=key;const why=game.branchStatus(profile,selectedSkill,i);skillFeedback=full+(why?' · '+why:' · 다시 누르면 검술서 '+game.SKILL_BRANCH_COST.pages+' + '+game.SKILL_BRANCH_COST.gold+' 골드로 해금');skillRenderKey='';refreshSkills();return;}
+ if(!owned&&branchArmed!==key){branchArmed=key;const why=game.branchStatus(profile,selectedSkill,i);skillFeedback=b.name+(why?' · '+why:' · 다시 누르면 검술서 '+game.SKILL_BRANCH_COST.pages+' + '+game.SKILL_BRANCH_COST.gold+' 골드로 해금');skillRenderKey='';refreshSkills();return;}
  branchArmed='';if(owned?game.chooseSkillBranch(state,selectedSkill,i):game.unlockSkillBranch(state,selectedSkill,i)){skillFeedback=(owned?(game.skillBranchIndex(profile,selectedSkill)===i?'갈래 사용 · ':'갈래 해제 · '):'갈래 해금 · ')+full;save();skillRenderKey='';updateHud();}});
 $('skill-study').addEventListener('click',()=>{if(state.phase!=='camp'||campDrawer!=='skills')return;if(game.studySkill(state)){skillFeedback='검술서 연구 완료 · 강화 포인트 +1';save();skillRenderKey='';updateHud();}});

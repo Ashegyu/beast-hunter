@@ -189,19 +189,36 @@
 /* 0.125 스킬 화면: 괴수 기술 탭까지 다섯 탭을 한 줄에 둔다(568px에서 두 줄로 접히지 않게). */
 #game-shell#game-shell #camp-skills-panel .skill-tabs{grid-template-columns:repeat(5,minmax(0,1fr))}
 #game-shell#game-shell #camp-skills-panel .skill-tabs>button{white-space:nowrap;letter-spacing:-.02em;padding-inline:2px}
-/* 0.126 스킬 상세: 갈래 두 개(검술서로 해금, 하나만 사용). 이름 한 줄 + 수치 한 줄. */
-#game-shell #camp-skills-panel .skill-branches{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin:0;flex:none}
+/* 0.126/0.128 스킬 상세: 머리 오른쪽 위 '정보 | 갈래' 전환. 갈래 화면은 설명·수치·장착 버튼 대신 갈래 카드 두 장을 크게 보여 준다. */
+#game-shell #camp-skills-panel .skill-detail{position:relative}
+#game-shell #camp-skills-panel .skill-detail-views{position:absolute;top:2px;right:2px;display:flex;gap:2px;z-index:2}
+#game-shell #camp-skills-panel .skill-detail-views>button{min-height:20px;height:20px;padding:0 7px;font-size:9.5px;line-height:1;border:1px solid #a78c5b66;border-radius:10px;background:#121a22;color:#cbbd9f;white-space:nowrap}
+#game-shell #camp-skills-panel .skill-detail-views>button[aria-pressed=true]{background:linear-gradient(#7f202c,#40151e);border-color:#d4a363;color:#ffe7b7}
+#game-shell #camp-skills-panel .skill-detail-views>button:disabled{opacity:.45}
+#game-shell #camp-skills-panel .skill-detail header{padding-right:84px}
+#game-shell #camp-skills-panel .skill-detail[data-view=branch] :is(#skill-detail-description,#skill-detail-resource,#skill-current-effect,.skill-rank-disclosure,.skill-detail-actions){display:none!important}
+#game-shell #camp-skills-panel .skill-branches{display:flex;flex-direction:column;gap:5px;flex:1 1 auto;min-height:0;margin:2px 0 0}
 #game-shell #camp-skills-panel .skill-branches[hidden]{display:none}
-#game-shell #camp-skills-panel .skill-branches>button{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-width:0;min-height:26px;height:auto;padding:1px 6px;border:1px solid #a78c5b66;border-radius:4px;background:linear-gradient(#232a30,#121a22);color:#d8cdb6;text-align:left;line-height:1.15;font-size:10px}
-#game-shell #camp-skills-panel .skill-branches>button>*{display:block;max-width:100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-#game-shell #camp-skills-panel .skill-branches>button>b{font-size:11px;color:#f0dcb0}
-#game-shell #camp-skills-panel .skill-branches>button>small{font-size:9.5px;color:#a9b4b8}
+#game-shell #camp-skills-panel .skill-branches>button{display:flex;flex-direction:column;align-items:stretch;justify-content:center;gap:2px;flex:1 1 0;min-height:0;min-width:0;height:auto;padding:4px 8px;border:1px solid #a78c5b66;border-radius:5px;background:linear-gradient(#232a30,#121a22);color:#d8cdb6;text-align:left;line-height:1.25;overflow:hidden}
+#game-shell #camp-skills-panel .skill-branches>button>*{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis}
+#game-shell #camp-skills-panel .skill-branches>button>b{font-size:11px;color:#f0dcb0;white-space:nowrap}
+#game-shell #camp-skills-panel .skill-branches>button>small{font-size:10px;color:#ffd58a;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2}
+#game-shell #camp-skills-panel .skill-branches>button>.skill-branch-text{font-size:9.5px;color:#a9b4b8;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2}
 #game-shell #camp-skills-panel .skill-branches>button[data-state=active]{border-color:#e4b465;background:linear-gradient(#6d1f2a,#35121b);box-shadow:inset 0 0 0 1px #ffd58a55}
-#game-shell #camp-skills-panel .skill-branches>button[data-state=buyable]{border-color:#c79a52}
+#game-shell #camp-skills-panel .skill-branches>button:is([data-state=buyable],[data-state=owned]){border-color:#c79a52}
+#game-shell #camp-skills-panel .skill-branches>button[data-state=armed]{border-color:#ffd58a;box-shadow:0 0 0 1px #ffd58a88}
 #game-shell #camp-skills-panel .skill-branches>button:disabled{opacity:.55}
-/* 갈래 줄 자리: 설명은 두 줄(전체는 카드), 자원·현재 수치 줄의 여백을 줄여 장착 버튼이 패널 안에 남게 한다. */
-#game-shell#game-shell #camp-skills-panel #skill-detail-description{-webkit-line-clamp:2}
-#game-shell#game-shell #camp-skills-panel #skill-detail-resource{padding-block:1px}
-#game-shell#game-shell #camp-skills-panel #skill-current-effect{padding:2px 5px}
-/* 높이 360px 이하: 갈래는 이름 한 줄(수치는 title·aria-label), 머리 아이콘을 줄여 장착 버튼이 패널 안에 남게 한다. */
-@media(max-height:360px){#game-shell #camp-skills-panel .skill-branches{margin:0}#game-shell #camp-skills-panel .skill-detail-actions{row-gap:3px!important;grid-template-rows:24px 24px!important}#game-shell#game-shell #camp-skills-panel #skill-upgrade{min-height:0!important;height:24px!important}#game-shell #camp-skills-panel .skill-branches>button{min-height:20px;padding:1px 5px}#game-shell #camp-skills-panel .skill-branches>button>small{display:none}#game-shell #camp-skills-panel .skill-detail header img{width:30px!important;height:30px!important}}
+#game-shell #camp-skills-panel .skill-branch-note{flex:none;margin:0;font-size:9px;line-height:1.3;color:#a99a7c}
+@media(max-height:360px){#game-shell #camp-skills-panel .skill-branches>button{padding:2px 6px}#game-shell #camp-skills-panel .skill-branches>button>.skill-branch-text{-webkit-line-clamp:1;white-space:nowrap}#game-shell #camp-skills-panel .skill-branches>button>small{-webkit-line-clamp:1}}
+/* 0.128 스킬 화면 장착 칸: 9칸(일반 4 · 패시브 3 · 궁극 1 · 괴수 1)을 3×3 격자로. 칸마다 아이콘 위, 칸 이름·스킬 이름 아래(가운데 스킬 카드와 같은 모양). */
+#game-shell#game-shell #camp-skills-panel .skill-equipped{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-template-rows:repeat(3,minmax(0,1fr))!important;grid-auto-rows:minmax(0,1fr)!important;gap:4px!important;align-content:stretch}
+#game-shell#game-shell #camp-skills-panel .skill-equipped>[id^=skill-slot-]{grid-column:auto!important;grid-row:auto!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:1px!important;min-width:0;min-height:0!important;height:auto!important;padding:3px 3px!important;text-align:center!important;overflow:hidden}
+#game-shell#game-shell #camp-skills-panel .skill-equipped>[id^=skill-slot-] .skill-slot-art{flex:none;width:var(--slot-icon,34px)!important;height:var(--slot-icon,34px)!important;min-width:0;position:relative!important;inset:auto!important;margin:0!important;overflow:hidden;border-radius:4px}
+#game-shell#game-shell #camp-skills-panel .skill-equipped>[id^=skill-slot-] .skill-slot-art img{width:100%!important;height:100%!important;object-fit:cover;position:static!important}
+#game-shell#game-shell #camp-skills-panel .skill-equipped>[id^=skill-slot-] :is(small,strong){position:static!important;display:block!important;max-width:100%;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;-webkit-line-clamp:unset!important;text-align:center!important}
+#game-shell#game-shell #camp-skills-panel .skill-equipped>[id^=skill-slot-] small{font-size:8px!important;line-height:1.1!important;opacity:.85}
+#game-shell#game-shell #camp-skills-panel .skill-equipped>[id^=skill-slot-] strong{font-size:10px!important;line-height:1.2!important}
+@media(max-height:400px){#game-shell#game-shell #camp-skills-panel .skill-equipped{--slot-icon:28px}}
+@media(max-height:360px){#game-shell#game-shell #camp-skills-panel .skill-equipped{--slot-icon:22px}#game-shell#game-shell #camp-skills-panel .skill-equipped>[id^=skill-slot-] small{display:none!important}#game-shell#game-shell #camp-skills-panel .skill-equipped>[id^=skill-slot-] strong{font-size:9px!important}}
+/* 좁은 화면(폭 700px 이하): 상세 폭이 좁아 전환 탭을 머리 아래 한 줄(전체 폭 2등분)로 둔다. */
+@media(max-width:700px){#game-shell #camp-skills-panel .skill-detail-actions{row-gap:3px!important;grid-template-rows:24px 24px!important}#game-shell#game-shell #camp-skills-panel #skill-upgrade{min-height:0!important;height:24px!important}#game-shell #camp-skills-panel .skill-detail-views{position:static;flex:none;margin:1px 0}#game-shell #camp-skills-panel .skill-detail-views>button{flex:1 1 0;height:18px;min-height:18px}#game-shell #camp-skills-panel .skill-detail header{padding-right:0}}
