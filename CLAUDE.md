@@ -13,7 +13,7 @@
 ## 실행
 - 게임: `PORT=8090 node serve-local.mjs` 후 `http://127.0.0.1:8090/` (기본 포트 8080). file:// 로는 안 된다.
 - 헤드리스 확인: 전역 playwright(`/opt/node22/lib/node_modules/playwright`)를 createRequire로 불러 Chromium 실행. 844×390에서 거점 → 사냥터 → 전투 준비 → 전투까지 콘솔 오류·404 없이 동작 확인함.
-- 테스트: `npm test` = `node --experimental-vm-modules --test tests/*.test.mjs` (약 70초). **867/867 통과** (0.121 기준). game-ui 테스트는 host마다 vm 문맥에 app.js를 컴파일하는데 V8 컴파일 캐시가 그 문맥을 붙잡아 메모리가 쌓였다(0.119에서 3.3GB, 기본 힙 약 2GB 초과). 테스트 파일 첫머리의 `v8.setFlagsFromString('--no-compilation-cache')`로 최대 RSS 약 0.73GB. 지우지 말 것. 어셋 개수 단언(클립 415+(45+26+66)×15, 프레임 907+(45+26+66)×25, 시작 시 요청 이미지 26장 = 공유 18 + 1장 8장(세트 장비 페이지 포함))은 0.109 기준. region-assets 테스트가 모든 챕터 이미지 경로가 `delivery`를 거쳐 실제 파일로 이어지는지 검사한다(0.107에서 재사용 지형 6장 연결이 빠져 5·9·17·18·28·29장 입장이 막혔었다).
+- 테스트: `npm test` = `node --experimental-vm-modules --test tests/*.test.mjs` (약 70초). **868/868 통과** (0.121 기준). game-ui 테스트는 host마다 vm 문맥에 app.js를 컴파일하는데 V8 컴파일 캐시가 그 문맥을 붙잡아 메모리가 쌓였다(0.119에서 3.3GB, 기본 힙 약 2GB 초과). 테스트 파일 첫머리의 `v8.setFlagsFromString('--no-compilation-cache')`로 최대 RSS 약 0.73GB. 지우지 말 것. 어셋 개수 단언(클립 415+(45+26+66)×15, 프레임 907+(45+26+66)×25, 시작 시 요청 이미지 26장 = 공유 18 + 1장 8장(세트 장비 페이지 포함))은 0.109 기준. region-assets 테스트가 모든 챕터 이미지 경로가 `delivery`를 거쳐 실제 파일로 이어지는지 검사한다(0.107에서 재사용 지형 6장 연결이 빠져 5·9·17·18·28·29장 입장이 막혔었다).
 
 ## 테스트 작성 시 주의 (0.103.2에서 정리한 내용)
 - 고대 장비(0.110): 보스 고대 = 챕터 10스테이지 보스가 그 지역 번호의 고대(0.112부터 번호 = 지역: 1 숲지기, 2 서리, 3 폐성·망자; 0.119부터 4 바다·5 하늘·6 신역은 옛 카탈로그 파생이 아니라 `ancient-regions.js`에 직접 정의한 25종씩, `REGION_ANCIENT_BOSSES` 풀 abyss_tide/storm_sovereign/twilight_god, 특수효과는 ancient-powers.js의 4~6번째 배열(색 `REGION_COLORS`), 총 150종. 기본 카탈로그 티어 2가 폐성, 3이 서리라 `ancientIdOfBase`/`ANCIENT_TIER_OF_BASE`가 2↔3을 바꿔 고대 아이디·티어를 만든다. 고대는 계열의 기본 원화 아이디를 그대로 써서 원화 티어 ≠ 고대 티어일 수 있으므로 `equipmentArt`·`cleanItem`·`equipmentSnapshot`이 고대는 티어 비교를 건너뛴다. 저장 v15가 v14 이하의 고대 2·3번을 한 번 바꿔 옮긴다) 고대를 `ANCIENT_BOSS_CHANCE`(0.113: 일반 1%·정예 2%·악몽 3%, 사용자 요청 '진짜 잘 안 나와야')로 떨어뜨린다(`dropBossAncient`). 0.114부터 확정 드롭(천장) 없음(사용자 결정): 저장 필드 `legendaryPity`는 남아 있지만 쓰지 않는다. 레이드 고대는 레이드와 함께 추가 예정(미구현). 테스트에서 고대 드롭을 확인할 때는 `s.lootRng` 시드를 바꿔 가며 고대가 나오는 처치를 찾는다(tests/ancient-items.test.mjs).
@@ -59,6 +59,7 @@
 - `advanceGame`: dt ≤0.1s, 0.025s 고정 서브스텝. RNG는 LCG 5개 스트림(전투·전리품·재료·재련·승급), `Math.random` 미사용 → 결정적.
 - 장비 9칸(무기, 헬멧·상의·하의·신발, 목걸이·귀걸이×2, 전용). 등급 0일반~4신화, 5고대, 6제작. 강화 상한 5/10/15/20/30/40/50, 구간별 보장(10/20/30회), 고대 +30 이상 실패 보정, 제작 +40 이상 보장 없음. 승급은 최대 강화 후 +0으로.
 - 저장: localStorage `beast-hunter:profile:v1` (+ `:recovery`, `:before-restore`, `:sound`). 엔진은 v1~16 수용(v13 이하의 1~3장 진행은 새 1~3장으로, v14 이하의 고대 2·3번은 서로 바꿔 옮김, 진행 배열은 STAGES 기준으로 다시 만들어 30칸 저장도 60칸으로 열림), 백업 검증(profile-backup.js)은 v8~16(진행 배열 v16 60칸·v14~15 30칸·그 전 3칸, 레벨 상한 v16 200·v14~15 100), 범위 밖이면 새 프로필(앱이 원본을 :recovery에 보관). 백업 형식 `beast-hunter-backup` v1, FNV-1a, 256KB. 저장은 호스트·포트별이라 포트를 바꾸면 진행이 안 보인다.
+- 보스 처치 정산(`queueSettlement`)은 durable(앱)일 때 phase를 다시 'playing'(flow 'settling')으로 둔다. 엔진 테스트는 기본 durable=false라 바로 victory가 되므로, 정산 대기 중 동작을 볼 때는 `s.durable=true`를 둔다(0.121 투사체 루프 오류가 이 차이로 테스트에서 안 보였음).
 - strict(normal이 아닌) 스테이지는 체크포인트 → 실패/이탈 시 롤백, 클리어 시 `confirmSettlement`로 2단계 정산.
 
 ## UI 레이아웃 원칙과 함정

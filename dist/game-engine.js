@@ -824,7 +824,8 @@ function fireProjectiles(s,e,count=1){
 function segmentHit(ax,ay,bx,by,x,y,r){const dx=bx-ax,dy=by-ay,d2=dx*dx+dy*dy,t=d2?clamp(((x-ax)*dx+(y-ay)*dy)/d2,0,1):0;return length(x-ax-dx*t,y-ay-dy*t)<=r?t:null;}
 function updateProjectiles(s,dt){
   for(let i=s.projectiles.length-1;i>=0;i--){
-    const q=s.projectiles[i],ax=q.x,ay=q.y;q.x+=q.vx*dt;q.y+=q.vy*dt;q.ttl-=dt;
+    // A hit can end the stage and empty the list (victory clears projectiles) while we iterate.
+    const q=s.projectiles[i];if(!q)continue;const ax=q.x,ay=q.y;q.x+=q.vx*dt;q.y+=q.vy*dt;q.ttl-=dt;
     if(q.ttl<=0||q.x<0||q.y<0||q.x>s.bounds.width||q.y>s.bounds.height){s.projectiles.splice(i,1);continue;}
     let target=null,best=2;
     for(const b of s.barrels){if(b.status==='spent')continue;const t=segmentHit(ax,ay,q.x,q.y,b.x,b.y,32);if(t!==null&&t<best){target=b;best=t;}}

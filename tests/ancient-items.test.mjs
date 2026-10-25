@@ -62,3 +62,13 @@ test('boss ancients are never guaranteed: about 1% of normal boss kills and the 
   s.projectiles.push({id:s.nextId++,x:e.x,y:e.y,vx:0,vy:0,damage:1e9,ttl:1,friendly:true});g.advanceGame(s,.025);ancients+=s.run.bossAncients.length;assert.equal(p.legendaryPity,g.LEGENDARY_PITY_LIMIT-1);}
  assert.ok(ancients<kills*.04,'ancients '+ancients);
 });
+test('a projectile that kills the boss ends the stage without breaking the projectile loop (Alpha 0.121)',()=>{
+ // Victory empties s.projectiles mid-loop; with a durable save queueSettlement puts the phase back to 'playing' (flow 'settling'),
+ // so the loop kept reading removed entries (browser crash at a 40장 boss killed by an ancient projectile).
+ const p=g.createProfile(1000);p.unlockedStage=60;p.clearedStage=59;p.stageProgress=g.STAGES.map(()=>10);
+ const s=g.createGame(p);s.durable=true;assert.equal(g.launch(s,41,10),true);s.spawns=[];s.barrels=[];s.run.bossSpawned=true;s.player.invulnerable=999;
+ const e={id:s.nextId++,species:g.STAGES[40].bossSpecies,type:'bulwark',elite:false,boss:true,x:s.player.x+300,y:s.player.y,hp:1,maxHp:1,action:'walk',actionTime:0,speed:0,cooldown:999,aggro:true,guard:0,dead:false,wave:s.run.wave,runStage:s.run.stage,damage:8,radius:58};s.enemies=[e];
+ for(let i=0;i<2;i++)s.projectiles.push({id:s.nextId++,x:s.player.x-200,y:s.player.y-200,vx:0,vy:0,damage:1,ttl:1,friendly:true});
+ s.projectiles.push({id:s.nextId++,x:e.x,y:e.y,vx:0,vy:0,damage:1e9,ttl:1,friendly:true});
+ assert.doesNotThrow(()=>g.advanceGame(s,.025));assert.equal(s.run.flow,'settling');assert.ok(s.settlement);assert.equal(s.projectiles.length,0);
+});
