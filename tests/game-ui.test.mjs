@@ -71,6 +71,15 @@ function widen(p){
  if(p.difficultyProgress)p.difficultyProgress=p.difficultyProgress.map(r=>row(r,0,()=>0));
  return p;
 }
+// Alpha 0.118 adds regions 4–6: open every region's first chapter the way widen() opens chapter 21
+// (earlier regions cleared, the last region's first chapter unlocked but not cleared).
+function openRegions(p){
+ const last=game.STAGES.length-game.CHAPTERS_PER_THEME;
+ p.clearedStage=last;p.unlockedStage=last+1;
+ p.stageProgress=game.STAGES.map(c=>c.id<=last?10:0);p.bossMastery=game.STAGES.map(c=>c.id<=last?Math.max(0,p.bossMastery?.[c.id-1]??0):-1);
+ if(p.difficultyProgress)p.difficultyProgress=p.difficultyProgress.map(()=>game.STAGES.map(()=>0));
+ return p;
+}
 // Region tab, then the chapter pager, exactly as a player would reach the chapter.
 function pickChapter(ui,id){
  ui.emit('stage-'+game.STAGES[id-1].theme,'click');
@@ -668,9 +677,10 @@ async function host({manual=false,coldStart=false,readBlocked=false,failWriteKey
     load(){if(videoMode==='error')queueMicrotask(()=>this.mediaListeners.get('error')?.());}pause(){this.paused=true;this.pauseCalls++;}play(){this.playCalls++;if(videoMode==='reject')return Promise.reject(Error('Autoplay blocked'));this.paused=false;return Promise.resolve();}
   }
   const document={createElement(tag){return tag==='video'&&videoMode!=='unsupported'?new MediaVideo():new Element('','<'+tag+'>');},hidden:false,activeElement:null,getElementById(id){assert.ok(nodes.has(id),'Missing HTML ID: '+id);return nodes.get(id);},addEventListener(name,fn){add('document',name,fn);}};
-  const requestedImages=[],deferredLoads=[];
+  // vm module contexts outlive their test, so disposal empties each manifest copy (about 12MB since Alpha 0.118).
+  const requestedImages=[],deferredLoads=[],fetched=[];
   class Image{set src(path){requestedImages.push(path);this._src=path.replace(/\.webp$/,'.png');const bytes=fs.readFileSync(new URL(path,root));if(path.endsWith('.webp')){assert.equal(bytes.toString('ascii',12,16),'VP8L');const bits=bytes.readUInt32LE(21);this.naturalWidth=(bits&16383)+1;this.naturalHeight=((bits>>>14)&16383)+1;}else{this.naturalWidth=bytes.readUInt32BE(16);this.naturalHeight=bytes.readUInt32BE(20);}const complete=()=>failedAssets===true||failedAssets===path||failedAssets===this._src||failedAssets?.has?.(path)?this.onerror():this.onload();if(path===deferredAsset)deferredLoads.push(complete);else queueMicrotask(complete);}get src(){return this._src;}}
-  const context=vm.createContext({ResizeObserver,console,document,Image,Date:class extends Date{static now(){return clock;}},Blob,URL:{createObjectURL(blob){const url='blob:test-'+objectURLs.size;objectURLs.set(url,blob);return url;},revokeObjectURL(url){revokedURLs.push(url);objectURLs.delete(url);}},setTimeout(fn){timers.push(fn);},window:{getComputedStyle:()=>({fontWeight:'400',fontSize:'12px',fontFamily:'Pretendard',lineHeight:'20.4px'}),hunterPages:{first(node){node.menuPage=1;},reveal(node){node.pageRevealed=true;}},location:{reload(){reloads++;}},matchMedia:()=>({matches:motionReduced}),devicePixelRatio:pixelRatio,addEventListener(name,fn){add('window',name,fn);}},localStorage:{getItem(k){if(blocked||readBlocked)throw Error('Blocked');return storage.get(k)??null;},setItem(k,v){if(blocked||k===failWriteKey)throw Error('Blocked');storage.set(k,v);}},fetch:async()=>({ok:true,json:async()=>{const data=structuredClone(manifest);if(invalidSocket)data.equipmentSockets[data.directions.hunter.idle.s][0].handX=NaN;if(invalidPickup)data.pickupEffects.width++;return data;}}),requestAnimationFrame(fn){frames.push(fn);}});
+  const context=vm.createContext({ResizeObserver,console,document,Image,Date:class extends Date{static now(){return clock;}},Blob,URL:{createObjectURL(blob){const url='blob:test-'+objectURLs.size;objectURLs.set(url,blob);return url;},revokeObjectURL(url){revokedURLs.push(url);objectURLs.delete(url);}},setTimeout(fn){timers.push(fn);},window:{getComputedStyle:()=>({fontWeight:'400',fontSize:'12px',fontFamily:'Pretendard',lineHeight:'20.4px'}),hunterPages:{first(node){node.menuPage=1;},reveal(node){node.pageRevealed=true;}},location:{reload(){reloads++;}},matchMedia:()=>({matches:motionReduced}),devicePixelRatio:pixelRatio,addEventListener(name,fn){add('window',name,fn);}},localStorage:{getItem(k){if(blocked||readBlocked)throw Error('Blocked');return storage.get(k)??null;},setItem(k,v){if(blocked||k===failWriteKey)throw Error('Blocked');storage.set(k,v);}},fetch:async()=>({ok:true,json:async()=>{const data=structuredClone(manifest);fetched.push(data);if(invalidSocket)data.equipmentSockets[data.directions.hunter.idle.s][0].handX=NaN;if(invalidPickup)data.pickupEffects.width++;return data;}}),requestAnimationFrame(fn){frames.push(fn);}});
   const modules=new Map();
   for(const [path,exports] of [['./frame-metrics.js',frameMetrics],['./profile-backup.js',profileBackup],['./region-assets.js',regionAssets],['./motion.js',motion],['./sound.js',sound],['./game-engine.js',game],['./engine.js',animation],['./world.js',world],['./view-controls.js',viewControls],['./terrain.js',terrain],['./chapters.js',chapters],['./equipment-visuals.js',equipmentVisuals]]){
     modules.set(path,new vm.SyntheticModule(Object.keys(exports),function(){for(const[k,v]of Object.entries(exports))this.setExport(k,path==='./sound.js'&&k==='createCombatAudio'?(...args)=>{const a=v(...args);return new Proxy(a,{get(target,key){if(key==='play')return(type,details)=>{audioEvents.push(type);audioDetails.push({type,details,time:scene.run.time});target.play(type,details);};return Reflect.get(target,key);}});}:path==='./game-engine.js'&&k==='launch'?(...args)=>{const ok=v(...args);if(ok&&!campaign)freezeCombat(args[0]);return ok;}:path==='./game-engine.js'&&k==='createGame'?(...args)=>(scene=v(...args)):v);},{context}));
@@ -682,7 +692,7 @@ async function host({manual=false,coldStart=false,readBlocked=false,failWriteKey
   // path so render/engine QA tests can still steer the hunter directly.
   if(manual)scene.auto=false;
   const api={resizeDetail(width,height){detailBox={width,height};for(let i=0;i<48;i++){const id='item-read-text-'+i;resizeObservers.get(id)?.([{target:nodes.get(id),contentRect:detailBox}]);}},resizeBag(width,height){bagBox={width,height};for(const id of ['bag-grid','bag-material-grid'])resizeObservers.get(id)?.([{target:nodes.get(id),contentRect:bagBox}]);},downloads,revokedURLs,get reloads(){return reloads;},flushTimers(){timers.splice(0).forEach(fn=>fn());},setStorageBlocked(value){blocked=value;},setReadBlocked(value){readBlocked=value;},setWriteFailure(key){failWriteKey=key;},async settle(){await new Promise(resolve=>setImmediate(resolve));},window:context.window,stick(x,y,pointerId=1,name='pointerdown'){this.emit('joystick',name,{pointerId,pointerType:'touch',clientX:61+x*45,clientY:61+y*45});},nodes,calls,geometry,storage,document,audioEvents,audioDetails,requestedImages,mediaVideos,async completeDeferredAssets(){deferredLoads.splice(0).forEach(fn=>fn());await new Promise(resolve=>setImmediate(resolve));},get state(){return scene;},emit(id,name,event={}){for(const fn of events.get(id+':'+name)||[])fn({target:nodes.get(id),preventDefault(){},...event});},tick(dt=.05){clock+=dt*1000;rafTime+=dt*1000;frames.shift()(rafTime);},run(seconds){for(let i=0;i<Math.ceil(seconds/.05);i++)this.tick();},profile(){return JSON.parse(storage.get(KEY));}};
-  hostDisposals.push(()=>{nodes.clear();events.clear();resizeObservers.clear();frames.length=0;calls.length=0;geometry.length=0;storage.clear();deferredLoads.length=0;timers.length=0;downloads.length=0;objectURLs.clear();modules.clear();audioEvents.length=0;audioDetails.length=0;});
+  hostDisposals.push(()=>{nodes.clear();events.clear();resizeObservers.clear();frames.length=0;calls.length=0;geometry.length=0;storage.clear();deferredLoads.length=0;timers.length=0;downloads.length=0;objectURLs.clear();modules.clear();audioEvents.length=0;audioDetails.length=0;for(const data of fetched.splice(0))for(const key of Object.keys(data))delete data[key];});
   api.tick(0);return api;
 }
 
@@ -1195,7 +1205,7 @@ test('a simultaneous skitter kill burst keeps each reward but dispatches at most
 });
 
 test('chapter selection changes real terrain, creature previews and boss names while preserving stage locks',async()=>{
-  const saved=game.createProfile(1000);saved.clearedStage=2;saved.unlockedStage=3;widen(saved);
+  const saved=game.createProfile(1000);saved.clearedStage=2;saved.unlockedStage=3;widen(saved);openRegions(saved);
   const ui=await host({saved});
   for(const chapter of chapters.CHAPTERS.filter(c=>c.number===1)){
     pickChapter(ui,chapter.id);await ui.settle();ui.calls.length=0;ui.tick(0);
@@ -1209,7 +1219,7 @@ test('chapter selection changes real terrain, creature previews and boss names w
   const fresh=await host();fresh.emit('stage-3','click');assert.equal(fresh.nodes.get('chapter-preview-name').textContent,chapters.CHAPTERS[0].name);
 });
 test('all twenty-one creatures render locked windup/contact, hurt and fixed-scale corpses in eight directions',async()=>{
-  const saved=game.createProfile(1000);saved.clearedStage=2;saved.unlockedStage=3;widen(saved);
+  const saved=game.createProfile(1000);saved.clearedStage=2;saved.unlockedStage=3;widen(saved);openRegions(saved);
   for(const chapter of chapters.CHAPTERS.filter(c=>c.number===1)){
     const ui=await host({saved});pickChapter(ui,chapter.id);await ui.settle();ui.emit('start','click');ui.state.barrels=[];ui.state.paused=true;
     const p=ui.state.player;p.x=1800;p.y=1160;const originals=ui.state.enemies;
@@ -1677,7 +1687,7 @@ test('ninth checkpoint transitions directly to a single-boss final with matching
 });
 
 test('chapter dossiers include six normal species and one boss with real unlock notes and atlas thumbnails',async()=>{
- const p=game.createProfile(1_000_000);p.clearedStage=3;p.unlockedStage=3;widen(p);const ui=await host({saved:p});
+ const p=game.createProfile(1_000_000);p.clearedStage=3;p.unlockedStage=3;widen(p);openRegions(p);const ui=await host({saved:p});
  for(const c of chapters.CHAPTERS.filter(c=>c.number===1)){pickChapter(ui,c.id);await ui.settle();for(const [i,id]of [...c.roster,c.bossSpecies].entries()){
   assert.equal(ui.nodes.get('roster-name-'+i).textContent,chapters.MONSTERS[id].name);assert.match(ui.nodes.get('roster-art-'+i).atlasImage.src,/monsters-/);assert.match(ui.nodes.get('roster-detail-'+i).textContent,new RegExp('STAGE '+(id===c.bossSpecies?'10':c.stages.map((l,n)=>Object.values(l).includes(id)?n+1:0).filter(Boolean).join('·'))));
  }}

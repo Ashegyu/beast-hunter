@@ -179,6 +179,186 @@
       "chapter": 30,
       "source": "art/equipment0109/set-abyss.png",
       "sha256": "7aa7db213193a25891573d3e2bd0664ea3a1215c923a786221d0fbe1522da213"
+    },
+    {
+      "set": "crabking",
+      "chapter": 31,
+      "source": "art/equipment0118/set-crabking.png",
+      "sha256": "4dc593d89e32340bd14afb8e8caf5562c2e5e3c10c2868c1ed2a4af2c7b56ef1"
+    },
+    {
+      "set": "ghostcaptain",
+      "chapter": 32,
+      "source": "art/equipment0118/set-ghostcaptain.png",
+      "sha256": "402f1bfc7d1b05766305a03a375f9709b344b831aeaa3364da995a81b3fe3cb7"
+    },
+    {
+      "set": "kelpwitch",
+      "chapter": 33,
+      "source": "art/equipment0118/set-kelpwitch.png",
+      "sha256": "994858768c5c04e3bae9ae4b5ed99ca013d9d513602dc3903b0969ad651188a6"
+    },
+    {
+      "set": "giantclam",
+      "chapter": 34,
+      "source": "art/equipment0118/set-giantclam.png",
+      "sha256": "e0b491080e26f0db1cc183edaa929130913fb7f9596f7907c3838f114bd20fd2"
+    },
+    {
+      "set": "siren",
+      "chapter": 35,
+      "source": "art/equipment0118/set-siren.png",
+      "sha256": "e180fe40c9603a0e53105b25b8c79515a0c2514c8d1291a5d1901b7be8c7cb94"
+    },
+    {
+      "set": "angler",
+      "chapter": 36,
+      "source": "art/equipment0118/set-angler.png",
+      "sha256": "2a31c83cab7cfe5bd9f5afb6bcc58aa2b1603d95ec2fcddb0f36f24e481db60d"
+    },
+    {
+      "set": "jellyfish",
+      "chapter": 37,
+      "source": "art/equipment0118/set-jellyfish.png",
+      "sha256": "3dae3953af0a102bd84138deb4fd633a6348ede99e5a6a30d109488f939ccbc0"
+    },
+    {
+      "set": "merpriest",
+      "chapter": 38,
+      "source": "art/equipment0118/set-merpriest.png",
+      "sha256": "0e447f90e185987dd126ccd19af1cfe69fe9298681e13c39bdc3fa55672dbd07"
+    },
+    {
+      "set": "kraken",
+      "chapter": 39,
+      "source": "art/equipment0118/set-kraken.png",
+      "sha256": "28eae83f83153f9485e0e9ebbffc6efce5e36092ec28a6a27ba0d710e70030bb"
+    },
+    {
+      "set": "leviathan",
+      "chapter": 40,
+      "source": "art/equipment0118/set-leviathan.png",
+      "sha256": "f22bcea2ae6a9fa4a3aee3d6b6d13f9a6d25adfe6649eec0cead369ecfcffb48"
+    },
+    {
+      "set": "griffin",
+      "chapter": 41,
+      "source": "art/equipment0118/set-griffin.png",
+      "sha256": "81001fdf3c78580b177d324015ad3d667d87851c071aa14e84e70aa53aeb4ba0"
+    },
+    {
+      "set": "harpy",
+      "chapter": 42,
+      "source": "art/equipment0118/set-harpy.png",
+      "sha256": "446dd7779cfde4f6ee66dcf71461321ec59c392f01d41dba8d78c6a06e7eaae1"
+    },
+    {
+      "set": "cloudgiant",
+      "chapter": 43,
+      "source": "art/equipment0118/set-cloudgiant.png",
+      "sha256": "e9b957a5fc0d8656701a99b2c3bcd79a54c78aac2400dc3b84211c901008732c"
+    },
+    {
+      "set": "crow",
+      "chapter": 44,
+      "source": "art/equipment0118/set-crow.png",
+      "sha256": "e227a06787ac035193229cc49a461a870cd7959eb8fc588acec38dea4f2d3a77"
+    },
+    {
+      "set": "windlord",
+      "chapter": 45,
+      "source": "art/equipment0118/set-windlord.png",
+      "sha256": "d4b8439a723886256ed0eabf83866f4d20ae2fbecfa2bd6371e5ad8658bc1f9c"
+    },
+    {
+      "set": "wyvern",
+      "chapter": 46,
+      "source": "art/equipment0118/set-wyvern.png",
+      "sha256": "3a4999bc0af2f3c951eab0ff195e46d3cc711b39b1eeb205ea021a379f5ec217"
+    },
+    {
+      "set": "storm",
+      "chapter": 47,
+      "source": "art/equipment0118/set-storm.png",
+      "sha256": "b27e1b14fb6a856ce4d10407dc042183b7f77cce928bd171cc3dde669ddab5a4"
+    },
+    {
+      "set": "thundersmith",
+      "chapter": 48,
+      "source": "art/equipment0118/set-thundersmith.png",
+      "sha256": "4456b6b0f70cdf35d0090e633ff964e03870712a1390f4f9d1e3adad68dbce45"
+    },
+    {
+      "set": "thunderbird",
+      "chapter": 49,
+      "source": "art/equipment0118/set-thunderbird.png",
+      "sha256": "904dc930b2fd1d1a286fe6ab301dad638ec0352ba5ba8b324a7d4f8e5696afe0"
+    },
+    {
+      "set": "stormdragon",
+      "chapter": 50,
+      "source": "art/equipment0118/set-stormdragon.png",
+      "sha256": "6fb1d5f1cd914618794f01bc397cee7c48ccfb9b9bac514b0c071bdf42c62756"
+    },
+    {
+      "set": "templeguard",
+      "chapter": 51,
+      "source": "art/equipment0118/set-templeguard.png",
+      "sha256": "af4edb7b65a32243361c11c33ee59fb10b7e83cf6571e2d5d7214807c3f8c718"
+    },
+    {
+      "set": "sphinx",
+      "chapter": 52,
+      "source": "art/equipment0118/set-sphinx.png",
+      "sha256": "8985390458913aabdd997b3dd6f80fcf1180e3787097bb7b18fa762df0b09013"
+    },
+    {
+      "set": "starknight",
+      "chapter": 53,
+      "source": "art/equipment0118/set-starknight.png",
+      "sha256": "0d8c542f50c7f69097daab1bc866e62ac390342a9d19109e777a0c95d9369188"
+    },
+    {
+      "set": "fallenangel",
+      "chapter": 54,
+      "source": "art/equipment0118/set-fallenangel.png",
+      "sha256": "88101e8ccdcc6a4d6a86ad1e051d3d6acfc6f3dc45dd8f7916c0c762909570d1"
+    },
+    {
+      "set": "judge",
+      "chapter": 55,
+      "source": "art/equipment0118/set-judge.png",
+      "sha256": "31fe921a06d6125ce0a805a9ff25005ef9901437e64873b64e8eb89684352c37"
+    },
+    {
+      "set": "chrono",
+      "chapter": 56,
+      "source": "art/equipment0118/set-chrono.png",
+      "sha256": "c31eafaaffe453521743dcf7476141b25dda278b5bec6b46ba6bbeee6efbfdbc"
+    },
+    {
+      "set": "starserpent",
+      "chapter": 57,
+      "source": "art/equipment0118/set-starserpent.png",
+      "sha256": "f6ff1c9fbea16795330996b9d7613f6b386a65144b3ffacbbe0685c4bcf17f12"
+    },
+    {
+      "set": "gatekeeper",
+      "chapter": 58,
+      "source": "art/equipment0118/set-gatekeeper.png",
+      "sha256": "3a334a54eaebd1090f6255f8a896f72110f4c22b6c5ab1a0c60ea5153520615a"
+    },
+    {
+      "set": "wargod",
+      "chapter": 59,
+      "source": "art/equipment0118/set-wargod.png",
+      "sha256": "478750c2444373b85794a29be3ae148db3d5e77df8c505be642dc03dbe509fea"
+    },
+    {
+      "set": "sungod",
+      "chapter": 60,
+      "source": "art/equipment0118/set-sungod.png",
+      "sha256": "4c6bbaeaaa5ddf7b9a5fb867e7f0570cf87d1e4de1e91856f974398a63e48575"
     }
   ],
   "pages": {
@@ -193,12 +373,27 @@
     "equipment-sets-r3-v0109.png": {
       "width": 1216,
       "height": 2488
+    },
+    "equipment-sets-r4-v0109.png": {
+      "width": 1245,
+      "height": 2488
+    },
+    "equipment-sets-r5-v0109.png": {
+      "width": 1195,
+      "height": 2488
+    },
+    "equipment-sets-r6-v0109.png": {
+      "width": 1187,
+      "height": 2488
     }
   },
-  "setFrames": 180,
+  "setFrames": 360,
   "webpBytes": {
     "equipment-sets-r1-v0109.png": 3535624,
     "equipment-sets-r2-v0109.png": 3833394,
-    "equipment-sets-r3-v0109.png": 3489320
+    "equipment-sets-r3-v0109.png": 3489320,
+    "equipment-sets-r4-v0109.png": 3807606,
+    "equipment-sets-r5-v0109.png": 3563406,
+    "equipment-sets-r6-v0109.png": 3575074
   }
 }

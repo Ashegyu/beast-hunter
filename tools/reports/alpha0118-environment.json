@@ -1,0 +1,582 @@
+{
+  "terrain": [
+    {
+      "chapter": 2,
+      "source": "art/terrain0107/terrain-c02.png",
+      "sha256": "86020c707ab0aa58e49f6eb20849523d659aee63057d1ba93d1f1f48bcfefc13",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1859400
+    },
+    {
+      "chapter": 3,
+      "source": "art/terrain0107/terrain-c03.png",
+      "sha256": "e6b1605510cd5d164ca2eeec2027fb1ae2031291a4fc6a7c92bcb093adef1aa5",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1860260
+    },
+    {
+      "chapter": 4,
+      "source": "art/terrain0107/terrain-c04.png",
+      "sha256": "2fac0b5c53207f55f9522be382e69cc978c92f571a6cff948b868cec79f26068",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1802772
+    },
+    {
+      "chapter": 6,
+      "source": "art/terrain0107/terrain-c06.png",
+      "sha256": "8254f3aa5b0d56bb843ea12f6932e340ce0bbce0c1f042f5f06c2e6fe48e1992",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1606878
+    },
+    {
+      "chapter": 7,
+      "source": "art/terrain0107/terrain-c07.png",
+      "sha256": "e482a86d819ff76da517b528826b38758c4b6dff6afb7726858a410611ae084b",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1878390
+    },
+    {
+      "chapter": 8,
+      "source": "art/terrain0107/terrain-c08.png",
+      "sha256": "503101c6ce8c6bb99736d63f82bee28f4613f0121046221d36519bebc4d3f66d",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1754758
+    },
+    {
+      "chapter": 10,
+      "source": "art/terrain0107/terrain-c10.png",
+      "sha256": "045933f2ca790fa3fbd9ef7c5ad07e7bf6acb4709464e4964bd4e55d12977d79",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1717442
+    },
+    {
+      "chapter": 11,
+      "source": "art/terrain0107/terrain-c11.png",
+      "sha256": "09ba259f15a0ae5ea74725bab9347648748a1bcfa83290cc3b02f6c1188d9440",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1822616
+    },
+    {
+      "chapter": 12,
+      "source": "art/terrain0107/terrain-c12.png",
+      "sha256": "1de85cd2bde678b0ce51f53707a2251d2877358472f4f2bd5892223255a1d852",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1901532
+    },
+    {
+      "chapter": 13,
+      "source": "art/terrain0107/terrain-c13.png",
+      "sha256": "c0a95eac0e696ecab870a1ece878f9a489d90a2736b85a0a7d489edf2f0d00a4",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1759652
+    },
+    {
+      "chapter": 14,
+      "source": "art/terrain0107/terrain-c14.png",
+      "sha256": "e339bd7e573c049bfa6fcfc444faf8e6807689b449f112277417312725d3ceeb",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 2069624
+    },
+    {
+      "chapter": 15,
+      "source": "art/terrain0107/terrain-c15.png",
+      "sha256": "2d2c849e97011d742eaab3b0a138220ba91982d90197876f25d6dd826b9f6064",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 2124758
+    },
+    {
+      "chapter": 19,
+      "source": "art/terrain0107/terrain-c19.png",
+      "sha256": "498da471e97c088232ef379eb6519f493b88006152fd58028053ffe1c7c94968",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1802232
+    },
+    {
+      "chapter": 20,
+      "source": "art/terrain0107/terrain-c20.png",
+      "sha256": "14f502a1f865810a7acb2c1d86885d1c7dbd3995c23e75c574dd9667885eadb5",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 2284388
+    },
+    {
+      "chapter": 22,
+      "source": "art/terrain0107/terrain-c22.png",
+      "sha256": "4249d9461b0e9113c11ccc05afa5692a8cf96c443d8b28ca3c1da20193347955",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1786586
+    },
+    {
+      "chapter": 23,
+      "source": "art/terrain0107/terrain-c23.png",
+      "sha256": "e8376e1a23d165d7fbad8e24e75f75af020528265f5ae36f37a92edcf2a47a96",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1864674
+    },
+    {
+      "chapter": 24,
+      "source": "art/terrain0107/terrain-c24.png",
+      "sha256": "38b3edca79221cd276c31cb927bb0ef2ff9f55820866736577638f6b3c085b4e",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1958440
+    },
+    {
+      "chapter": 25,
+      "source": "art/terrain0107/terrain-c25.png",
+      "sha256": "2a3dbe263692e79866a14cf09a3ccc327d26b76475cae7a7480117030bb13d03",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1975622
+    },
+    {
+      "chapter": 26,
+      "source": "art/terrain0107/terrain-c26.png",
+      "sha256": "6881d7d955254e083614707249fd23cd88f3e7cba398861cccf7a03b15e13692",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1666686
+    },
+    {
+      "chapter": 27,
+      "source": "art/terrain0107/terrain-c27.png",
+      "sha256": "cff0eb89ba84825482515d351f0747b668e61560682141830655d5c2d9abd0fa",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1970436
+    },
+    {
+      "chapter": 30,
+      "source": "art/terrain0107/terrain-c30.png",
+      "sha256": "f21ae032fecd778e69c3249a2fd86710b7712d43c5ed30cdd3270796ed57a66c",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1647802
+    },
+    {
+      "chapter": 31,
+      "source": "art/terrain0118/terrain-c31.png",
+      "sha256": "225dfee8e903b0d2a6e922968f081d3d6b9905b9539ecab2d941c205b57f1e8b",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 2338522
+    },
+    {
+      "chapter": 32,
+      "source": "art/terrain0118/terrain-c32.png",
+      "sha256": "f9e31ab3ba403ff433755c4b8cb04b7516506a7d62f9eb11b27e0229a83428d9",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1908574
+    },
+    {
+      "chapter": 33,
+      "source": "art/terrain0118/terrain-c33.png",
+      "sha256": "5cd7b4959c819427ab1b38e75d8b575c9c3cd418f3704c1cb57f82d7f39ce016",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1720410
+    },
+    {
+      "chapter": 34,
+      "source": "art/terrain0118/terrain-c34.png",
+      "sha256": "741472d7a9a320555af3cef4f57c6e6a2e1ed608aec177eeaa767765ec098a8a",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1742166
+    },
+    {
+      "chapter": 35,
+      "source": "art/terrain0118/terrain-c35.png",
+      "sha256": "5aa77ccb8bc4ed8251c26d8bcfe8947c608d22f03205770d664e120bd50490a4",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1983004
+    },
+    {
+      "chapter": 36,
+      "source": "art/terrain0118/terrain-c36.png",
+      "sha256": "72dd9f24dff6423e0898cfa590e2ab2d5f228a03947ded0e82c88328c6db8bce",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1654606
+    },
+    {
+      "chapter": 37,
+      "source": "art/terrain0118/terrain-c37.png",
+      "sha256": "92f4edf6ce0e8e559da4e0c27fe937666f3d5402dc6211b9602ce17c4e9e963c",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1917544
+    },
+    {
+      "chapter": 38,
+      "source": "art/terrain0118/terrain-c38.png",
+      "sha256": "c9503dfd76eac40dc42d86edeba3cfa78926318fe422b679d48ecd6e7618c954",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 2097290
+    },
+    {
+      "chapter": 39,
+      "source": "art/terrain0118/terrain-c39.png",
+      "sha256": "34ed4624a051ebab1bf676f9e2c822e15cd39925e93fc41fe1038061263fb9ea",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1810876
+    },
+    {
+      "chapter": 40,
+      "source": "art/terrain0118/terrain-c40.png",
+      "sha256": "37f7bf5af48d6bf1ba0996caea0dc5b8923c58205f50c2e4142c9eed3472b906",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1824788
+    },
+    {
+      "chapter": 41,
+      "source": "art/terrain0118/terrain-c41.png",
+      "sha256": "c717a7b6ef50eaa041e9a74d2a988f8c72676254b28c80fdc1e96865ba397481",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 2179940
+    },
+    {
+      "chapter": 42,
+      "source": "art/terrain0118/terrain-c42.png",
+      "sha256": "7a8140b3a145f45d4e77d0c60c6425b0e77154c926d386df0462e7b7236b81cb",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 2110896
+    },
+    {
+      "chapter": 43,
+      "source": "art/terrain0118/terrain-c43.png",
+      "sha256": "e5b2cf289542c3087326710ec36d936e43461351ff455cadba1a5e99efe8c5ab",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1830856
+    },
+    {
+      "chapter": 44,
+      "source": "art/terrain0118/terrain-c44.png",
+      "sha256": "9c7c0e2a8507bf2492c7103f62f86d6f072f94dff97a197fd7142e65c6eea32a",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 2078272
+    },
+    {
+      "chapter": 45,
+      "source": "art/terrain0118/terrain-c45.png",
+      "sha256": "a542e2c2df5500edd88e49b330e3fc328697f304beb2a3be6a69137ee008beef",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 2111642
+    },
+    {
+      "chapter": 46,
+      "source": "art/terrain0118/terrain-c46.png",
+      "sha256": "ef4be4063178e2b4c9901e9ca26be25ea959c777b554894c4e32715c384f1d1a",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 2033536
+    },
+    {
+      "chapter": 47,
+      "source": "art/terrain0118/terrain-c47.png",
+      "sha256": "e2451f982a40d654fce7bea88a1fd246a4079c4459ae8d71f911692c00dade3b",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1979708
+    },
+    {
+      "chapter": 48,
+      "source": "art/terrain0118/terrain-c48.png",
+      "sha256": "4401098064ffadaf572dc460f1cac808757747c434a75d6358ceb055f2243485",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1878386
+    },
+    {
+      "chapter": 49,
+      "source": "art/terrain0118/terrain-c49.png",
+      "sha256": "2f026a11ce9ac4a8a5f6dd9e4df452c4deb248ec96bc949155affdc0dfa061e5",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 2096564
+    },
+    {
+      "chapter": 50,
+      "source": "art/terrain0118/terrain-c50.png",
+      "sha256": "1d7c31c250de3e1648de02e5fa19bb001d6ba0dd5659245d8f2efd19a571a9ba",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 2288408
+    },
+    {
+      "chapter": 51,
+      "source": "art/terrain0118/terrain-c51.png",
+      "sha256": "0041b79d27e1e810c9ea2e6cbf0d34f7face3b19a07622a24343ba88317491b2",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 2066830
+    },
+    {
+      "chapter": 52,
+      "source": "art/terrain0118/terrain-c52.png",
+      "sha256": "eae2a48ddd80727910922e5f17c8bdc469b6c40b53ac046c5b25508d5ddaa05a",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 2317898
+    },
+    {
+      "chapter": 53,
+      "source": "art/terrain0118/terrain-c53.png",
+      "sha256": "215c203fcedb659c859006ae2ae13da63f716c2744a26fb8c9347adf17f7c41c",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1929116
+    },
+    {
+      "chapter": 54,
+      "source": "art/terrain0118/terrain-c54.png",
+      "sha256": "b342b56cfa1e616940089950a74c97451c42e04db5eb03c6e8d8c63ae5d08252",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 2110828
+    },
+    {
+      "chapter": 55,
+      "source": "art/terrain0118/terrain-c55.png",
+      "sha256": "2db75a5995813f226e89091f3adabfc6d4fcfffe184f03b04fdd3f7dd73dffc3",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 2043116
+    },
+    {
+      "chapter": 56,
+      "source": "art/terrain0118/terrain-c56.png",
+      "sha256": "41e9fb7ddd6d263af060258f88f6bf88a414ad81527410437ddbca7432ee8fdf",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 2303050
+    },
+    {
+      "chapter": 57,
+      "source": "art/terrain0118/terrain-c57.png",
+      "sha256": "191987562428f423dcc7d5783c3b33c56f5001399c8b26b84d83eeccb7174476",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 2011718
+    },
+    {
+      "chapter": 58,
+      "source": "art/terrain0118/terrain-c58.png",
+      "sha256": "0b210cfc095a4cb3f9feeb880283683566d1188fba8eb67c781d93c6b289728c",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1938932
+    },
+    {
+      "chapter": 59,
+      "source": "art/terrain0118/terrain-c59.png",
+      "sha256": "6c86c8a506d845693455ad6f66bf9c212ef40ae9686a02e6c6a01b227fb6992c",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1939708
+    },
+    {
+      "chapter": 60,
+      "source": "art/terrain0118/terrain-c60.png",
+      "sha256": "c1f49ee7a795fbce590966aefa6b89a9b7f258c17cb34b3e9938f01adb2bbc00",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1992450
+    }
+  ],
+  "props": {
+    "sources": [
+      {
+        "source": "art/fire0107/props-fire.png",
+        "sha256": "8cdeb67e742ba23ca220f2ed392f24525f98601fe991db7b879cb10231dee0e3"
+      },
+      {
+        "source": "art/env0118/props-sea.png",
+        "sha256": "ffb24660a9fbf0ba2be6121cf2a37a06974d804e67a09977edaa45d468bfa8a1"
+      },
+      {
+        "source": "art/env0118/props-sky.png",
+        "sha256": "a8ec4ba1e9bb31fe7a5bb46bc5c69db02ae4efba454727f5cbc80ece53512795"
+      },
+      {
+        "source": "art/env0118/props-divine.png",
+        "sha256": "00bb66b02b1536b57354a8df19f30f99fb0fdee75cc0a0378912b58c36e2cc23"
+      }
+    ],
+    "atlas": [
+      1254,
+      3924
+    ],
+    "frames": 28,
+    "webpBytes": 4512714
+  },
+  "effects": [
+    {
+      "key": "4",
+      "source": "art/fire0107/fx-fire.png",
+      "sha256": "11ff93c1605f5dcb06b4f435cd02cdbac635673761324ef574300b31636662e7",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1570140
+    },
+    {
+      "key": "5",
+      "source": "art/env0118/fx-sea.png",
+      "sha256": "41731e9d09ae58722b721544e38782c02546d297b9c605497a70790b38089b48",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1512022
+    },
+    {
+      "key": "6",
+      "source": "art/env0118/fx-sky.png",
+      "sha256": "9bb1fbe265c39f8b4f0434695bbf69753be88ca45d1ee87dd0c21814b164841e",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1599736
+    },
+    {
+      "key": "7",
+      "source": "art/env0118/fx-divine.png",
+      "sha256": "31c75603620a6a9671234040188cef09feedf93379ebe1681926138ed6961bec",
+      "size": [
+        1254,
+        1254
+      ],
+      "webpBytes": 1684714
+    }
+  ]
+}

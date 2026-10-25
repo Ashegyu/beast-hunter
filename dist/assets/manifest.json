@@ -79036,10 +79036,10 @@
     "reference": "user-supplied LIRIAN design sheet"
   },
   "chapterProps": {
-    "id": "chapterProps_v0107",
+    "id": "chapterProps_v0118",
     "actor": "chapterProps",
     "name": "chapterProps",
-    "image": "props_chapters-v0107.png",
+    "image": "props_chapters-v0118.png",
     "fps": 1,
     "loop": false,
     "frames": [
@@ -79186,6 +79186,114 @@
         "pivotX": 257.0,
         "pivotY": 504,
         "bodyHeight": 504
+      },
+      {
+        "x": 8,
+        "y": 2452,
+        "w": 302,
+        "h": 360,
+        "pivotX": 151.0,
+        "pivotY": 358,
+        "bodyHeight": 358
+      },
+      {
+        "x": 318,
+        "y": 2452,
+        "w": 279,
+        "h": 360,
+        "pivotX": 139.5,
+        "pivotY": 358,
+        "bodyHeight": 358
+      },
+      {
+        "x": 605,
+        "y": 2452,
+        "w": 346,
+        "h": 360,
+        "pivotX": 173.0,
+        "pivotY": 358,
+        "bodyHeight": 358
+      },
+      {
+        "x": 8,
+        "y": 2820,
+        "w": 360,
+        "h": 356,
+        "pivotX": 180.0,
+        "pivotY": 353,
+        "bodyHeight": 353
+      },
+      {
+        "x": 376,
+        "y": 2820,
+        "w": 360,
+        "h": 327,
+        "pivotX": 180.0,
+        "pivotY": 326,
+        "bodyHeight": 326
+      },
+      {
+        "x": 744,
+        "y": 2820,
+        "w": 332,
+        "h": 360,
+        "pivotX": 166.0,
+        "pivotY": 358,
+        "bodyHeight": 358
+      },
+      {
+        "x": 8,
+        "y": 3188,
+        "w": 256,
+        "h": 360,
+        "pivotX": 128.0,
+        "pivotY": 358,
+        "bodyHeight": 358
+      },
+      {
+        "x": 272,
+        "y": 3188,
+        "w": 360,
+        "h": 354,
+        "pivotX": 180.0,
+        "pivotY": 352,
+        "bodyHeight": 352
+      },
+      {
+        "x": 640,
+        "y": 3188,
+        "w": 199,
+        "h": 360,
+        "pivotX": 99.5,
+        "pivotY": 347,
+        "bodyHeight": 347
+      },
+      {
+        "x": 847,
+        "y": 3188,
+        "w": 243,
+        "h": 360,
+        "pivotX": 121.5,
+        "pivotY": 357,
+        "bodyHeight": 357
+      },
+      {
+        "x": 8,
+        "y": 3556,
+        "w": 214,
+        "h": 360,
+        "pivotX": 107.0,
+        "pivotY": 357,
+        "bodyHeight": 357
+      },
+      {
+        "x": 230,
+        "y": 3556,
+        "w": 353,
+        "h": 360,
+        "pivotX": 176.5,
+        "pivotY": 358,
+        "bodyHeight": 358
       }
     ]
   },
@@ -81120,6 +81228,1806 @@
         "pivotX": 102.5,
         "pivotY": 237,
         "bodyHeight": 236
+      },
+      "set_crabking_sword": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 8,
+        "y": 8,
+        "w": 179,
+        "h": 240,
+        "pivotX": 89.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_crabking_blade2": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 195,
+        "y": 8,
+        "w": 176,
+        "h": 240,
+        "pivotX": 88.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_crabking_helmet": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 379,
+        "y": 8,
+        "w": 202,
+        "h": 240,
+        "pivotX": 101.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_crabking_armor": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 589,
+        "y": 8,
+        "w": 240,
+        "h": 231,
+        "pivotX": 120.0,
+        "pivotY": 228,
+        "bodyHeight": 227
+      },
+      "set_crabking_pants": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 837,
+        "y": 8,
+        "w": 159,
+        "h": 240,
+        "pivotX": 79.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_crabking_boots": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 1004,
+        "y": 8,
+        "w": 194,
+        "h": 240,
+        "pivotX": 97.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_ghostcaptain_sword": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 8,
+        "y": 256,
+        "w": 171,
+        "h": 240,
+        "pivotX": 85.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_ghostcaptain_blade2": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 187,
+        "y": 256,
+        "w": 190,
+        "h": 240,
+        "pivotX": 95.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_ghostcaptain_helmet": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 385,
+        "y": 256,
+        "w": 229,
+        "h": 240,
+        "pivotX": 114.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_ghostcaptain_armor": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 622,
+        "y": 256,
+        "w": 211,
+        "h": 240,
+        "pivotX": 105.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_ghostcaptain_pants": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 841,
+        "y": 256,
+        "w": 171,
+        "h": 240,
+        "pivotX": 85.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_ghostcaptain_boots": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 1020,
+        "y": 256,
+        "w": 217,
+        "h": 240,
+        "pivotX": 108.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_kelpwitch_sword": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 8,
+        "y": 504,
+        "w": 179,
+        "h": 240,
+        "pivotX": 89.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_kelpwitch_blade2": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 195,
+        "y": 504,
+        "w": 157,
+        "h": 240,
+        "pivotX": 78.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_kelpwitch_helmet": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 360,
+        "y": 504,
+        "w": 158,
+        "h": 240,
+        "pivotX": 79.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_kelpwitch_armor": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 526,
+        "y": 504,
+        "w": 169,
+        "h": 240,
+        "pivotX": 84.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_kelpwitch_pants": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 703,
+        "y": 504,
+        "w": 192,
+        "h": 240,
+        "pivotX": 96.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_kelpwitch_boots": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 903,
+        "y": 504,
+        "w": 191,
+        "h": 240,
+        "pivotX": 95.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_giantclam_sword": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 8,
+        "y": 752,
+        "w": 177,
+        "h": 240,
+        "pivotX": 88.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_giantclam_blade2": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 193,
+        "y": 752,
+        "w": 183,
+        "h": 240,
+        "pivotX": 91.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_giantclam_helmet": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 384,
+        "y": 752,
+        "w": 189,
+        "h": 240,
+        "pivotX": 94.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_giantclam_armor": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 581,
+        "y": 752,
+        "w": 240,
+        "h": 239,
+        "pivotX": 120.0,
+        "pivotY": 236,
+        "bodyHeight": 235
+      },
+      "set_giantclam_pants": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 829,
+        "y": 752,
+        "w": 164,
+        "h": 240,
+        "pivotX": 82.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_giantclam_boots": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 1001,
+        "y": 752,
+        "w": 211,
+        "h": 240,
+        "pivotX": 105.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_siren_sword": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 8,
+        "y": 1000,
+        "w": 166,
+        "h": 240,
+        "pivotX": 83.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_siren_blade2": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 182,
+        "y": 1000,
+        "w": 168,
+        "h": 240,
+        "pivotX": 84.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_siren_helmet": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 358,
+        "y": 1000,
+        "w": 188,
+        "h": 240,
+        "pivotX": 94.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_siren_armor": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 554,
+        "y": 1000,
+        "w": 231,
+        "h": 240,
+        "pivotX": 115.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_siren_pants": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 793,
+        "y": 1000,
+        "w": 170,
+        "h": 240,
+        "pivotX": 85.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_siren_boots": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 971,
+        "y": 1000,
+        "w": 192,
+        "h": 240,
+        "pivotX": 96.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_angler_sword": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 8,
+        "y": 1248,
+        "w": 182,
+        "h": 240,
+        "pivotX": 91.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_angler_blade2": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 198,
+        "y": 1248,
+        "w": 165,
+        "h": 240,
+        "pivotX": 82.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_angler_helmet": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 371,
+        "y": 1248,
+        "w": 220,
+        "h": 240,
+        "pivotX": 110.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_angler_armor": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 599,
+        "y": 1248,
+        "w": 222,
+        "h": 240,
+        "pivotX": 111.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_angler_pants": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 829,
+        "y": 1248,
+        "w": 165,
+        "h": 240,
+        "pivotX": 82.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_angler_boots": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 1002,
+        "y": 1248,
+        "w": 233,
+        "h": 240,
+        "pivotX": 116.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_jellyfish_sword": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 8,
+        "y": 1496,
+        "w": 171,
+        "h": 240,
+        "pivotX": 85.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_jellyfish_blade2": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 187,
+        "y": 1496,
+        "w": 190,
+        "h": 240,
+        "pivotX": 95.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_jellyfish_helmet": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 385,
+        "y": 1496,
+        "w": 194,
+        "h": 240,
+        "pivotX": 97.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_jellyfish_armor": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 587,
+        "y": 1496,
+        "w": 213,
+        "h": 240,
+        "pivotX": 106.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_jellyfish_pants": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 808,
+        "y": 1496,
+        "w": 176,
+        "h": 240,
+        "pivotX": 88.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_jellyfish_boots": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 992,
+        "y": 1496,
+        "w": 188,
+        "h": 240,
+        "pivotX": 94.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_merpriest_sword": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 8,
+        "y": 1744,
+        "w": 165,
+        "h": 240,
+        "pivotX": 82.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_merpriest_blade2": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 181,
+        "y": 1744,
+        "w": 171,
+        "h": 240,
+        "pivotX": 85.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_merpriest_helmet": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 360,
+        "y": 1744,
+        "w": 216,
+        "h": 240,
+        "pivotX": 108.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_merpriest_armor": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 584,
+        "y": 1744,
+        "w": 181,
+        "h": 240,
+        "pivotX": 90.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_merpriest_pants": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 773,
+        "y": 1744,
+        "w": 168,
+        "h": 240,
+        "pivotX": 84.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_merpriest_boots": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 949,
+        "y": 1744,
+        "w": 188,
+        "h": 240,
+        "pivotX": 94.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_kraken_sword": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 8,
+        "y": 1992,
+        "w": 160,
+        "h": 240,
+        "pivotX": 80.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_kraken_blade2": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 176,
+        "y": 1992,
+        "w": 189,
+        "h": 240,
+        "pivotX": 94.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_kraken_helmet": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 373,
+        "y": 1992,
+        "w": 181,
+        "h": 240,
+        "pivotX": 90.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_kraken_armor": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 562,
+        "y": 1992,
+        "w": 203,
+        "h": 240,
+        "pivotX": 101.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_kraken_pants": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 773,
+        "y": 1992,
+        "w": 150,
+        "h": 240,
+        "pivotX": 75.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_kraken_boots": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 931,
+        "y": 1992,
+        "w": 181,
+        "h": 240,
+        "pivotX": 90.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_leviathan_sword": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 8,
+        "y": 2240,
+        "w": 169,
+        "h": 240,
+        "pivotX": 84.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_leviathan_blade2": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 185,
+        "y": 2240,
+        "w": 167,
+        "h": 240,
+        "pivotX": 83.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_leviathan_helmet": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 360,
+        "y": 2240,
+        "w": 184,
+        "h": 240,
+        "pivotX": 92.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_leviathan_armor": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 552,
+        "y": 2240,
+        "w": 221,
+        "h": 240,
+        "pivotX": 110.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_leviathan_pants": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 781,
+        "y": 2240,
+        "w": 185,
+        "h": 240,
+        "pivotX": 92.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_leviathan_boots": {
+        "image": "equipment-sets-r4-v0109.png",
+        "x": 974,
+        "y": 2240,
+        "w": 193,
+        "h": 240,
+        "pivotX": 96.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_griffin_sword": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 8,
+        "y": 8,
+        "w": 171,
+        "h": 240,
+        "pivotX": 85.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_griffin_blade2": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 187,
+        "y": 8,
+        "w": 166,
+        "h": 240,
+        "pivotX": 83.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_griffin_helmet": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 361,
+        "y": 8,
+        "w": 181,
+        "h": 240,
+        "pivotX": 90.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_griffin_armor": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 550,
+        "y": 8,
+        "w": 213,
+        "h": 240,
+        "pivotX": 106.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_griffin_pants": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 771,
+        "y": 8,
+        "w": 144,
+        "h": 240,
+        "pivotX": 72.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_griffin_boots": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 923,
+        "y": 8,
+        "w": 181,
+        "h": 240,
+        "pivotX": 90.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_harpy_sword": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 8,
+        "y": 256,
+        "w": 173,
+        "h": 240,
+        "pivotX": 86.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_harpy_blade2": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 189,
+        "y": 256,
+        "w": 163,
+        "h": 240,
+        "pivotX": 81.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_harpy_helmet": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 360,
+        "y": 256,
+        "w": 187,
+        "h": 240,
+        "pivotX": 93.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_harpy_armor": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 555,
+        "y": 256,
+        "w": 204,
+        "h": 240,
+        "pivotX": 102.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_harpy_pants": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 767,
+        "y": 256,
+        "w": 175,
+        "h": 240,
+        "pivotX": 87.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_harpy_boots": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 950,
+        "y": 256,
+        "w": 173,
+        "h": 240,
+        "pivotX": 86.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_cloudgiant_sword": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 8,
+        "y": 504,
+        "w": 164,
+        "h": 240,
+        "pivotX": 82.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_cloudgiant_blade2": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 180,
+        "y": 504,
+        "w": 163,
+        "h": 240,
+        "pivotX": 81.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_cloudgiant_helmet": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 351,
+        "y": 504,
+        "w": 188,
+        "h": 240,
+        "pivotX": 94.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_cloudgiant_armor": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 547,
+        "y": 504,
+        "w": 195,
+        "h": 240,
+        "pivotX": 97.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_cloudgiant_pants": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 750,
+        "y": 504,
+        "w": 152,
+        "h": 240,
+        "pivotX": 76.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_cloudgiant_boots": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 910,
+        "y": 504,
+        "w": 193,
+        "h": 240,
+        "pivotX": 96.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_crow_sword": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 8,
+        "y": 752,
+        "w": 159,
+        "h": 240,
+        "pivotX": 79.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_crow_blade2": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 175,
+        "y": 752,
+        "w": 172,
+        "h": 240,
+        "pivotX": 86.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_crow_helmet": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 355,
+        "y": 752,
+        "w": 206,
+        "h": 240,
+        "pivotX": 103.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_crow_armor": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 569,
+        "y": 752,
+        "w": 208,
+        "h": 240,
+        "pivotX": 104.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_crow_pants": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 785,
+        "y": 752,
+        "w": 147,
+        "h": 240,
+        "pivotX": 73.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_crow_boots": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 940,
+        "y": 752,
+        "w": 203,
+        "h": 240,
+        "pivotX": 101.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_windlord_sword": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 8,
+        "y": 1000,
+        "w": 149,
+        "h": 240,
+        "pivotX": 74.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_windlord_blade2": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 165,
+        "y": 1000,
+        "w": 162,
+        "h": 240,
+        "pivotX": 81.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_windlord_helmet": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 335,
+        "y": 1000,
+        "w": 187,
+        "h": 240,
+        "pivotX": 93.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_windlord_armor": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 530,
+        "y": 1000,
+        "w": 209,
+        "h": 240,
+        "pivotX": 104.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_windlord_pants": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 747,
+        "y": 1000,
+        "w": 167,
+        "h": 240,
+        "pivotX": 83.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_windlord_boots": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 922,
+        "y": 1000,
+        "w": 182,
+        "h": 240,
+        "pivotX": 91.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_wyvern_sword": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 8,
+        "y": 1248,
+        "w": 172,
+        "h": 240,
+        "pivotX": 86.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_wyvern_blade2": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 188,
+        "y": 1248,
+        "w": 177,
+        "h": 240,
+        "pivotX": 88.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_wyvern_helmet": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 373,
+        "y": 1248,
+        "w": 188,
+        "h": 240,
+        "pivotX": 94.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_wyvern_armor": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 569,
+        "y": 1248,
+        "w": 217,
+        "h": 240,
+        "pivotX": 108.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_wyvern_pants": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 794,
+        "y": 1248,
+        "w": 170,
+        "h": 240,
+        "pivotX": 85.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_wyvern_boots": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 972,
+        "y": 1248,
+        "w": 173,
+        "h": 240,
+        "pivotX": 86.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_storm_sword": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 8,
+        "y": 1496,
+        "w": 166,
+        "h": 240,
+        "pivotX": 83.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_storm_blade2": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 182,
+        "y": 1496,
+        "w": 160,
+        "h": 240,
+        "pivotX": 80.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_storm_helmet": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 350,
+        "y": 1496,
+        "w": 194,
+        "h": 240,
+        "pivotX": 97.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_storm_armor": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 552,
+        "y": 1496,
+        "w": 217,
+        "h": 240,
+        "pivotX": 108.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_storm_pants": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 777,
+        "y": 1496,
+        "w": 187,
+        "h": 240,
+        "pivotX": 93.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_storm_boots": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 972,
+        "y": 1496,
+        "w": 177,
+        "h": 240,
+        "pivotX": 88.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_thundersmith_sword": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 8,
+        "y": 1744,
+        "w": 164,
+        "h": 240,
+        "pivotX": 82.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_thundersmith_blade2": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 180,
+        "y": 1744,
+        "w": 176,
+        "h": 240,
+        "pivotX": 88.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_thundersmith_helmet": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 364,
+        "y": 1744,
+        "w": 210,
+        "h": 240,
+        "pivotX": 105.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_thundersmith_armor": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 582,
+        "y": 1744,
+        "w": 225,
+        "h": 240,
+        "pivotX": 112.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_thundersmith_pants": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 815,
+        "y": 1744,
+        "w": 165,
+        "h": 240,
+        "pivotX": 82.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_thundersmith_boots": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 988,
+        "y": 1744,
+        "w": 199,
+        "h": 240,
+        "pivotX": 99.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_thunderbird_sword": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 8,
+        "y": 1992,
+        "w": 178,
+        "h": 240,
+        "pivotX": 89.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_thunderbird_blade2": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 194,
+        "y": 1992,
+        "w": 152,
+        "h": 240,
+        "pivotX": 76.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_thunderbird_helmet": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 354,
+        "y": 1992,
+        "w": 196,
+        "h": 240,
+        "pivotX": 98.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_thunderbird_armor": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 558,
+        "y": 1992,
+        "w": 226,
+        "h": 240,
+        "pivotX": 113.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_thunderbird_pants": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 792,
+        "y": 1992,
+        "w": 159,
+        "h": 240,
+        "pivotX": 79.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_thunderbird_boots": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 959,
+        "y": 1992,
+        "w": 198,
+        "h": 240,
+        "pivotX": 99.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_stormdragon_sword": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 8,
+        "y": 2240,
+        "w": 190,
+        "h": 240,
+        "pivotX": 95.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_stormdragon_blade2": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 206,
+        "y": 2240,
+        "w": 162,
+        "h": 240,
+        "pivotX": 81.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_stormdragon_helmet": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 376,
+        "y": 2240,
+        "w": 185,
+        "h": 240,
+        "pivotX": 92.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_stormdragon_armor": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 569,
+        "y": 2240,
+        "w": 228,
+        "h": 240,
+        "pivotX": 114.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_stormdragon_pants": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 805,
+        "y": 2240,
+        "w": 152,
+        "h": 240,
+        "pivotX": 76.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_stormdragon_boots": {
+        "image": "equipment-sets-r5-v0109.png",
+        "x": 965,
+        "y": 2240,
+        "w": 194,
+        "h": 240,
+        "pivotX": 97.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_templeguard_sword": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 8,
+        "y": 8,
+        "w": 186,
+        "h": 240,
+        "pivotX": 93.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_templeguard_blade2": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 202,
+        "y": 8,
+        "w": 178,
+        "h": 240,
+        "pivotX": 89.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_templeguard_helmet": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 388,
+        "y": 8,
+        "w": 177,
+        "h": 240,
+        "pivotX": 88.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_templeguard_armor": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 573,
+        "y": 8,
+        "w": 205,
+        "h": 240,
+        "pivotX": 102.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_templeguard_pants": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 786,
+        "y": 8,
+        "w": 169,
+        "h": 240,
+        "pivotX": 84.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_templeguard_boots": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 963,
+        "y": 8,
+        "w": 216,
+        "h": 240,
+        "pivotX": 108.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_sphinx_sword": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 8,
+        "y": 256,
+        "w": 173,
+        "h": 240,
+        "pivotX": 86.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_sphinx_blade2": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 189,
+        "y": 256,
+        "w": 170,
+        "h": 240,
+        "pivotX": 85.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_sphinx_helmet": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 367,
+        "y": 256,
+        "w": 208,
+        "h": 240,
+        "pivotX": 104.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_sphinx_armor": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 583,
+        "y": 256,
+        "w": 225,
+        "h": 240,
+        "pivotX": 112.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_sphinx_pants": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 816,
+        "y": 256,
+        "w": 158,
+        "h": 240,
+        "pivotX": 79.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_sphinx_boots": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 982,
+        "y": 256,
+        "w": 188,
+        "h": 240,
+        "pivotX": 94.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_starknight_sword": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 8,
+        "y": 504,
+        "w": 184,
+        "h": 240,
+        "pivotX": 92.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_starknight_blade2": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 200,
+        "y": 504,
+        "w": 170,
+        "h": 240,
+        "pivotX": 85.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_starknight_helmet": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 378,
+        "y": 504,
+        "w": 185,
+        "h": 240,
+        "pivotX": 92.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_starknight_armor": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 571,
+        "y": 504,
+        "w": 205,
+        "h": 240,
+        "pivotX": 102.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_starknight_pants": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 784,
+        "y": 504,
+        "w": 168,
+        "h": 240,
+        "pivotX": 84.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_starknight_boots": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 960,
+        "y": 504,
+        "w": 188,
+        "h": 240,
+        "pivotX": 94.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_fallenangel_sword": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 8,
+        "y": 752,
+        "w": 172,
+        "h": 240,
+        "pivotX": 86.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_fallenangel_blade2": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 188,
+        "y": 752,
+        "w": 166,
+        "h": 240,
+        "pivotX": 83.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_fallenangel_helmet": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 362,
+        "y": 752,
+        "w": 201,
+        "h": 240,
+        "pivotX": 100.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_fallenangel_armor": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 571,
+        "y": 752,
+        "w": 227,
+        "h": 240,
+        "pivotX": 113.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_fallenangel_pants": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 806,
+        "y": 752,
+        "w": 171,
+        "h": 240,
+        "pivotX": 85.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_fallenangel_boots": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 985,
+        "y": 752,
+        "w": 186,
+        "h": 240,
+        "pivotX": 93.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_judge_sword": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 8,
+        "y": 1000,
+        "w": 184,
+        "h": 240,
+        "pivotX": 92.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_judge_blade2": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 200,
+        "y": 1000,
+        "w": 184,
+        "h": 240,
+        "pivotX": 92.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_judge_helmet": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 392,
+        "y": 1000,
+        "w": 156,
+        "h": 240,
+        "pivotX": 78.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_judge_armor": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 556,
+        "y": 1000,
+        "w": 203,
+        "h": 240,
+        "pivotX": 101.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_judge_pants": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 767,
+        "y": 1000,
+        "w": 165,
+        "h": 240,
+        "pivotX": 82.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_judge_boots": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 940,
+        "y": 1000,
+        "w": 200,
+        "h": 240,
+        "pivotX": 100.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_chrono_sword": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 8,
+        "y": 1248,
+        "w": 170,
+        "h": 240,
+        "pivotX": 85.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_chrono_blade2": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 186,
+        "y": 1248,
+        "w": 174,
+        "h": 240,
+        "pivotX": 87.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_chrono_helmet": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 368,
+        "y": 1248,
+        "w": 178,
+        "h": 240,
+        "pivotX": 89.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_chrono_armor": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 554,
+        "y": 1248,
+        "w": 226,
+        "h": 240,
+        "pivotX": 113.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_chrono_pants": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 788,
+        "y": 1248,
+        "w": 171,
+        "h": 240,
+        "pivotX": 85.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_chrono_boots": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 967,
+        "y": 1248,
+        "w": 188,
+        "h": 240,
+        "pivotX": 94.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_starserpent_sword": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 8,
+        "y": 1496,
+        "w": 171,
+        "h": 240,
+        "pivotX": 85.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_starserpent_blade2": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 187,
+        "y": 1496,
+        "w": 153,
+        "h": 240,
+        "pivotX": 76.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_starserpent_helmet": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 348,
+        "y": 1496,
+        "w": 180,
+        "h": 240,
+        "pivotX": 90.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_starserpent_armor": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 536,
+        "y": 1496,
+        "w": 197,
+        "h": 240,
+        "pivotX": 98.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_starserpent_pants": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 741,
+        "y": 1496,
+        "w": 146,
+        "h": 240,
+        "pivotX": 73.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_starserpent_boots": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 895,
+        "y": 1496,
+        "w": 164,
+        "h": 240,
+        "pivotX": 82.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_gatekeeper_sword": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 8,
+        "y": 1744,
+        "w": 183,
+        "h": 240,
+        "pivotX": 91.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_gatekeeper_blade2": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 199,
+        "y": 1744,
+        "w": 162,
+        "h": 240,
+        "pivotX": 81.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_gatekeeper_helmet": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 369,
+        "y": 1744,
+        "w": 142,
+        "h": 240,
+        "pivotX": 71.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_gatekeeper_armor": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 519,
+        "y": 1744,
+        "w": 200,
+        "h": 240,
+        "pivotX": 100.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_gatekeeper_pants": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 727,
+        "y": 1744,
+        "w": 165,
+        "h": 240,
+        "pivotX": 82.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_gatekeeper_boots": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 900,
+        "y": 1744,
+        "w": 209,
+        "h": 240,
+        "pivotX": 104.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_wargod_sword": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 8,
+        "y": 1992,
+        "w": 171,
+        "h": 240,
+        "pivotX": 85.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_wargod_blade2": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 187,
+        "y": 1992,
+        "w": 168,
+        "h": 240,
+        "pivotX": 84.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_wargod_helmet": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 363,
+        "y": 1992,
+        "w": 196,
+        "h": 240,
+        "pivotX": 98.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_wargod_armor": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 567,
+        "y": 1992,
+        "w": 232,
+        "h": 240,
+        "pivotX": 116.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_wargod_pants": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 807,
+        "y": 1992,
+        "w": 160,
+        "h": 240,
+        "pivotX": 80.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_wargod_boots": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 975,
+        "y": 1992,
+        "w": 188,
+        "h": 240,
+        "pivotX": 94.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_sungod_sword": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 8,
+        "y": 2240,
+        "w": 182,
+        "h": 240,
+        "pivotX": 91.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_sungod_blade2": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 198,
+        "y": 2240,
+        "w": 177,
+        "h": 240,
+        "pivotX": 88.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_sungod_helmet": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 383,
+        "y": 2240,
+        "w": 187,
+        "h": 240,
+        "pivotX": 93.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_sungod_armor": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 578,
+        "y": 2240,
+        "w": 219,
+        "h": 240,
+        "pivotX": 109.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_sungod_pants": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 805,
+        "y": 2240,
+        "w": 177,
+        "h": 240,
+        "pivotX": 88.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "set_sungod_boots": {
+        "image": "equipment-sets-r6-v0109.png",
+        "x": 990,
+        "y": 2240,
+        "w": 184,
+        "h": 240,
+        "pivotX": 92.0,
+        "pivotY": 237,
+        "bodyHeight": 236
       }
     },
     "pages": {
@@ -81133,6 +83041,18 @@
       },
       "equipment-sets-r3-v0109.png": {
         "width": 1216,
+        "height": 2488
+      },
+      "equipment-sets-r4-v0109.png": {
+        "width": 1245,
+        "height": 2488
+      },
+      "equipment-sets-r5-v0109.png": {
+        "width": 1195,
+        "height": 2488
+      },
+      "equipment-sets-r6-v0109.png": {
+        "width": 1187,
         "height": 2488
       }
     }
@@ -81236,6 +83156,96 @@
     },
     "c30": {
       "environment": "terrain-c30-v0107.png"
+    },
+    "c31": {
+      "environment": "terrain-c31-v0118.png"
+    },
+    "c32": {
+      "environment": "terrain-c32-v0118.png"
+    },
+    "c33": {
+      "environment": "terrain-c33-v0118.png"
+    },
+    "c34": {
+      "environment": "terrain-c34-v0118.png"
+    },
+    "c35": {
+      "environment": "terrain-c35-v0118.png"
+    },
+    "c36": {
+      "environment": "terrain-c36-v0118.png"
+    },
+    "c37": {
+      "environment": "terrain-c37-v0118.png"
+    },
+    "c38": {
+      "environment": "terrain-c38-v0118.png"
+    },
+    "c39": {
+      "environment": "terrain-c39-v0118.png"
+    },
+    "c40": {
+      "environment": "terrain-c40-v0118.png"
+    },
+    "c41": {
+      "environment": "terrain-c41-v0118.png"
+    },
+    "c42": {
+      "environment": "terrain-c42-v0118.png"
+    },
+    "c43": {
+      "environment": "terrain-c43-v0118.png"
+    },
+    "c44": {
+      "environment": "terrain-c44-v0118.png"
+    },
+    "c45": {
+      "environment": "terrain-c45-v0118.png"
+    },
+    "c46": {
+      "environment": "terrain-c46-v0118.png"
+    },
+    "c47": {
+      "environment": "terrain-c47-v0118.png"
+    },
+    "c48": {
+      "environment": "terrain-c48-v0118.png"
+    },
+    "c49": {
+      "environment": "terrain-c49-v0118.png"
+    },
+    "c50": {
+      "environment": "terrain-c50-v0118.png"
+    },
+    "c51": {
+      "environment": "terrain-c51-v0118.png"
+    },
+    "c52": {
+      "environment": "terrain-c52-v0118.png"
+    },
+    "c53": {
+      "environment": "terrain-c53-v0118.png"
+    },
+    "c54": {
+      "environment": "terrain-c54-v0118.png"
+    },
+    "c55": {
+      "environment": "terrain-c55-v0118.png"
+    },
+    "c56": {
+      "environment": "terrain-c56-v0118.png"
+    },
+    "c57": {
+      "environment": "terrain-c57-v0118.png"
+    },
+    "c58": {
+      "environment": "terrain-c58-v0118.png"
+    },
+    "c59": {
+      "environment": "terrain-c59-v0118.png"
+    },
+    "c60": {
+      "environment": "terrain-c60-v0118.png"
     }
   },
   "delivery": {
@@ -81364,7 +83374,6 @@
     "terrain-c26-v0107.png": "terrain-c26-v0107.webp",
     "terrain-c27-v0107.png": "terrain-c27-v0107.webp",
     "terrain-c30-v0107.png": "terrain-c30-v0107.webp",
-    "props_chapters-v0107.png": "props_chapters-v0107.webp",
     "terrain-forest-2-v0106.png": "terrain-forest-2-v0106.webp",
     "terrain-forest-3-v0106.png": "terrain-forest-3-v0106.webp",
     "terrain-frost-2-v0106.png": "terrain-frost-2-v0106.webp",
@@ -81440,7 +83449,41 @@
     "monsters-sky_sprite-v0118.png": "monsters-sky_sprite-v0118.webp",
     "monsters-sky_stormknight-v0118.png": "monsters-sky_stormknight-v0118.webp",
     "monsters-sky_stormmage-v0118.png": "monsters-sky_stormmage-v0118.webp",
-    "monsters-sky_thunderjelly-v0118.png": "monsters-sky_thunderjelly-v0118.webp"
+    "monsters-sky_thunderjelly-v0118.png": "monsters-sky_thunderjelly-v0118.webp",
+    "terrain-c31-v0118.png": "terrain-c31-v0118.webp",
+    "terrain-c32-v0118.png": "terrain-c32-v0118.webp",
+    "terrain-c33-v0118.png": "terrain-c33-v0118.webp",
+    "terrain-c34-v0118.png": "terrain-c34-v0118.webp",
+    "terrain-c35-v0118.png": "terrain-c35-v0118.webp",
+    "terrain-c36-v0118.png": "terrain-c36-v0118.webp",
+    "terrain-c37-v0118.png": "terrain-c37-v0118.webp",
+    "terrain-c38-v0118.png": "terrain-c38-v0118.webp",
+    "terrain-c39-v0118.png": "terrain-c39-v0118.webp",
+    "terrain-c40-v0118.png": "terrain-c40-v0118.webp",
+    "terrain-c41-v0118.png": "terrain-c41-v0118.webp",
+    "terrain-c42-v0118.png": "terrain-c42-v0118.webp",
+    "terrain-c43-v0118.png": "terrain-c43-v0118.webp",
+    "terrain-c44-v0118.png": "terrain-c44-v0118.webp",
+    "terrain-c45-v0118.png": "terrain-c45-v0118.webp",
+    "terrain-c46-v0118.png": "terrain-c46-v0118.webp",
+    "terrain-c47-v0118.png": "terrain-c47-v0118.webp",
+    "terrain-c48-v0118.png": "terrain-c48-v0118.webp",
+    "terrain-c49-v0118.png": "terrain-c49-v0118.webp",
+    "terrain-c50-v0118.png": "terrain-c50-v0118.webp",
+    "terrain-c51-v0118.png": "terrain-c51-v0118.webp",
+    "terrain-c52-v0118.png": "terrain-c52-v0118.webp",
+    "terrain-c53-v0118.png": "terrain-c53-v0118.webp",
+    "terrain-c54-v0118.png": "terrain-c54-v0118.webp",
+    "terrain-c55-v0118.png": "terrain-c55-v0118.webp",
+    "terrain-c56-v0118.png": "terrain-c56-v0118.webp",
+    "terrain-c57-v0118.png": "terrain-c57-v0118.webp",
+    "terrain-c58-v0118.png": "terrain-c58-v0118.webp",
+    "terrain-c59-v0118.png": "terrain-c59-v0118.webp",
+    "terrain-c60-v0118.png": "terrain-c60-v0118.webp",
+    "props_chapters-v0118.png": "props_chapters-v0118.webp",
+    "equipment-sets-r4-v0109.png": "equipment-sets-r4-v0109.webp",
+    "equipment-sets-r5-v0109.png": "equipment-sets-r5-v0109.webp",
+    "equipment-sets-r6-v0109.png": "equipment-sets-r6-v0109.webp"
   },
   "equipmentSockets": {
     "lirian_idle_s_v05": [
@@ -85337,6 +87380,435 @@
             "h": 314,
             "pivotX": 267.75,
             "pivotY": 181.55
+          }
+        ],
+        "impact": [
+          {
+            "x": 0,
+            "y": 627,
+            "w": 313,
+            "h": 313,
+            "pivotX": 156.5,
+            "pivotY": 237.88
+          },
+          {
+            "x": 313,
+            "y": 627,
+            "w": 314,
+            "h": 313,
+            "pivotX": 157.0,
+            "pivotY": 237.88
+          },
+          {
+            "x": 627,
+            "y": 627,
+            "w": 313,
+            "h": 313,
+            "pivotX": 156.5,
+            "pivotY": 237.88
+          },
+          {
+            "x": 940,
+            "y": 627,
+            "w": 314,
+            "h": 313,
+            "pivotX": 157.0,
+            "pivotY": 237.88
+          }
+        ],
+        "charge": [
+          {
+            "x": 0,
+            "y": 940,
+            "w": 313,
+            "h": 314,
+            "pivotX": 156.5,
+            "pivotY": 157.0
+          },
+          {
+            "x": 313,
+            "y": 940,
+            "w": 314,
+            "h": 314,
+            "pivotX": 157.0,
+            "pivotY": 157.0
+          },
+          {
+            "x": 627,
+            "y": 940,
+            "w": 313,
+            "h": 314,
+            "pivotX": 156.5,
+            "pivotY": 157.0
+          },
+          {
+            "x": 940,
+            "y": 940,
+            "w": 314,
+            "h": 314,
+            "pivotX": 157.0,
+            "pivotY": 157.0
+          }
+        ]
+      }
+    },
+    "5": {
+      "image": "monster-effects-sea-v0118.webp",
+      "width": 1254,
+      "height": 1254,
+      "frames": {
+        "slash": [
+          {
+            "x": 0,
+            "y": 0,
+            "w": 313,
+            "h": 313,
+            "pivotX": 156.5,
+            "pivotY": 156.5
+          },
+          {
+            "x": 313,
+            "y": 0,
+            "w": 314,
+            "h": 313,
+            "pivotX": 157.0,
+            "pivotY": 156.5
+          },
+          {
+            "x": 627,
+            "y": 0,
+            "w": 313,
+            "h": 313,
+            "pivotX": 156.5,
+            "pivotY": 156.5
+          },
+          {
+            "x": 940,
+            "y": 0,
+            "w": 314,
+            "h": 313,
+            "pivotX": 157.0,
+            "pivotY": 156.5
+          }
+        ],
+        "bolt": [
+          {
+            "x": 0,
+            "y": 313,
+            "w": 313,
+            "h": 314,
+            "pivotX": 242.76,
+            "pivotY": 182.09
+          },
+          {
+            "x": 313,
+            "y": 313,
+            "w": 314,
+            "h": 314,
+            "pivotX": 267.53,
+            "pivotY": 179.1
+          },
+          {
+            "x": 627,
+            "y": 313,
+            "w": 313,
+            "h": 314,
+            "pivotX": 279.67,
+            "pivotY": 175.95
+          },
+          {
+            "x": 940,
+            "y": 313,
+            "w": 314,
+            "h": 314,
+            "pivotX": 266.91,
+            "pivotY": 181.94
+          }
+        ],
+        "impact": [
+          {
+            "x": 0,
+            "y": 627,
+            "w": 313,
+            "h": 313,
+            "pivotX": 156.5,
+            "pivotY": 237.88
+          },
+          {
+            "x": 313,
+            "y": 627,
+            "w": 314,
+            "h": 313,
+            "pivotX": 157.0,
+            "pivotY": 237.88
+          },
+          {
+            "x": 627,
+            "y": 627,
+            "w": 313,
+            "h": 313,
+            "pivotX": 156.5,
+            "pivotY": 237.88
+          },
+          {
+            "x": 940,
+            "y": 627,
+            "w": 314,
+            "h": 313,
+            "pivotX": 157.0,
+            "pivotY": 237.88
+          }
+        ],
+        "charge": [
+          {
+            "x": 0,
+            "y": 940,
+            "w": 313,
+            "h": 314,
+            "pivotX": 156.5,
+            "pivotY": 157.0
+          },
+          {
+            "x": 313,
+            "y": 940,
+            "w": 314,
+            "h": 314,
+            "pivotX": 157.0,
+            "pivotY": 157.0
+          },
+          {
+            "x": 627,
+            "y": 940,
+            "w": 313,
+            "h": 314,
+            "pivotX": 156.5,
+            "pivotY": 157.0
+          },
+          {
+            "x": 940,
+            "y": 940,
+            "w": 314,
+            "h": 314,
+            "pivotX": 157.0,
+            "pivotY": 157.0
+          }
+        ]
+      }
+    },
+    "6": {
+      "image": "monster-effects-sky-v0118.webp",
+      "width": 1254,
+      "height": 1254,
+      "frames": {
+        "slash": [
+          {
+            "x": 0,
+            "y": 0,
+            "w": 313,
+            "h": 313,
+            "pivotX": 156.5,
+            "pivotY": 156.5
+          },
+          {
+            "x": 313,
+            "y": 0,
+            "w": 314,
+            "h": 313,
+            "pivotX": 157.0,
+            "pivotY": 156.5
+          },
+          {
+            "x": 627,
+            "y": 0,
+            "w": 313,
+            "h": 313,
+            "pivotX": 156.5,
+            "pivotY": 156.5
+          },
+          {
+            "x": 940,
+            "y": 0,
+            "w": 314,
+            "h": 313,
+            "pivotX": 157.0,
+            "pivotY": 156.5
+          }
+        ],
+        "bolt": [
+          {
+            "x": 0,
+            "y": 313,
+            "w": 313,
+            "h": 314,
+            "pivotX": 238.76,
+            "pivotY": 182.57
+          },
+          {
+            "x": 313,
+            "y": 313,
+            "w": 314,
+            "h": 314,
+            "pivotX": 262.41,
+            "pivotY": 179.53
+          },
+          {
+            "x": 627,
+            "y": 313,
+            "w": 313,
+            "h": 314,
+            "pivotX": 278.52,
+            "pivotY": 177.44
+          },
+          {
+            "x": 940,
+            "y": 313,
+            "w": 314,
+            "h": 314,
+            "pivotX": 263.46,
+            "pivotY": 182.3
+          }
+        ],
+        "impact": [
+          {
+            "x": 0,
+            "y": 627,
+            "w": 313,
+            "h": 313,
+            "pivotX": 156.5,
+            "pivotY": 237.88
+          },
+          {
+            "x": 313,
+            "y": 627,
+            "w": 314,
+            "h": 313,
+            "pivotX": 157.0,
+            "pivotY": 237.88
+          },
+          {
+            "x": 627,
+            "y": 627,
+            "w": 313,
+            "h": 313,
+            "pivotX": 156.5,
+            "pivotY": 237.88
+          },
+          {
+            "x": 940,
+            "y": 627,
+            "w": 314,
+            "h": 313,
+            "pivotX": 157.0,
+            "pivotY": 237.88
+          }
+        ],
+        "charge": [
+          {
+            "x": 0,
+            "y": 940,
+            "w": 313,
+            "h": 314,
+            "pivotX": 156.5,
+            "pivotY": 157.0
+          },
+          {
+            "x": 313,
+            "y": 940,
+            "w": 314,
+            "h": 314,
+            "pivotX": 157.0,
+            "pivotY": 157.0
+          },
+          {
+            "x": 627,
+            "y": 940,
+            "w": 313,
+            "h": 314,
+            "pivotX": 156.5,
+            "pivotY": 157.0
+          },
+          {
+            "x": 940,
+            "y": 940,
+            "w": 314,
+            "h": 314,
+            "pivotX": 157.0,
+            "pivotY": 157.0
+          }
+        ]
+      }
+    },
+    "7": {
+      "image": "monster-effects-divine-v0118.webp",
+      "width": 1254,
+      "height": 1254,
+      "frames": {
+        "slash": [
+          {
+            "x": 0,
+            "y": 0,
+            "w": 313,
+            "h": 313,
+            "pivotX": 156.5,
+            "pivotY": 156.5
+          },
+          {
+            "x": 313,
+            "y": 0,
+            "w": 314,
+            "h": 313,
+            "pivotX": 157.0,
+            "pivotY": 156.5
+          },
+          {
+            "x": 627,
+            "y": 0,
+            "w": 313,
+            "h": 313,
+            "pivotX": 156.5,
+            "pivotY": 156.5
+          },
+          {
+            "x": 940,
+            "y": 0,
+            "w": 314,
+            "h": 313,
+            "pivotX": 157.0,
+            "pivotY": 156.5
+          }
+        ],
+        "bolt": [
+          {
+            "x": 0,
+            "y": 313,
+            "w": 313,
+            "h": 314,
+            "pivotX": 235.42,
+            "pivotY": 180.78
+          },
+          {
+            "x": 313,
+            "y": 313,
+            "w": 314,
+            "h": 314,
+            "pivotX": 257.72,
+            "pivotY": 178.83
+          },
+          {
+            "x": 627,
+            "y": 313,
+            "w": 313,
+            "h": 314,
+            "pivotX": 270.17,
+            "pivotY": 175.87
+          },
+          {
+            "x": 940,
+            "y": 313,
+            "w": 314,
+            "h": 314,
+            "pivotX": 252.88,
+            "pivotY": 180.42
           }
         ],
         "impact": [

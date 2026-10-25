@@ -106,5 +106,5 @@ test('every chapter set item has a frame inside its atlas page (Alpha 0.109)', (
     assert.ok(page && f.x >= 0 && f.y >= 0 && f.w > 0 && f.h > 0 && f.x + f.w <= page.width && f.y + f.h <= page.height, chapter.set + part);
     assert.ok(Math.max(f.w, f.h) <= 240);
   }
-  assert.equal(new Set(CHAPTERS.map(c => c.set)).size, 30);
+  assert.equal(new Set(CHAPTERS.map(c => c.set)).size, CHAPTERS.length);
 });

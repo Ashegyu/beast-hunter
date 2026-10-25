@@ -4,12 +4,13 @@
   1-30 come from art/terrain0107/terrain-cNN.png (Alpha 0.107) or reuse earlier tiles;
   31-60 come from art/terrain0118/terrain-cNN.png (Alpha 0.118).
 - Props: the Alpha 0.9 prop atlas (12 frames: forest, ruins, frost) is copied
-  unchanged into a taller atlas with four props per later biome appended:
+  unchanged into a taller atlas with four props per later biome appended (0.118 props are
+  downscaled to at most 360px, the only resampling here):
   fire 12-15 (0.107), sea 16-19, sky 20-23, divine 24-27 (0.118).
 - Effects: art/fire0107/fx-fire.png becomes manifest.monsterEffects['4'] and
   art/env0118/fx-{sea,sky,divine}.png become '5'-'7', using the same 4x4
   measurement as tools/pack-monster-effects069.py.
-Pixels are never resampled or repainted; every WebP is decoded and compared.
+Other pixels are never resampled or repainted; every WebP is decoded and compared.
 """
 from pathlib import Path
 import hashlib
@@ -26,6 +27,7 @@ BASE_PROPS = 'props_chapters-v09.png'
 REUSED = {1: 'terrain-forest-v044.png', 5: 'terrain-forest-2-v0106.png', 9: 'terrain-forest-3-v0106.png',
           16: 'terrain-frost-v044.png', 17: 'terrain-frost-2-v0106.png', 18: 'terrain-frost-3-v0106.png',
           21: 'terrain-ruins-v044.png', 28: 'terrain-ruins-2-v0106.png', 29: 'terrain-ruins-3-v0106.png'}
+PROP_MAX_SIDE = 360
 # Four props per sheet, appended in this order after the twelve Alpha 0.9 props.
 PROP_SHEETS = ['art/fire0107/props-fire.png', 'art/env0118/props-sea.png', 'art/env0118/props-sky.png', 'art/env0118/props-divine.png']
 EFFECT_SHEETS = [('4', 'art/fire0107/fx-fire.png', 'monster-effects-fire-v0107.png'),
@@ -75,7 +77,8 @@ def pack_props(manifest, report):
     base = Image.open(ASSETS / manifest['delivery'].get(BASE_PROPS, BASE_PROPS)).convert('RGBA')
     crops, sources = [], []
     for source in PROP_SHEETS:
-        crops += cut_props(ROOT / source)
+        # The 0.118 props are drawn at most ~180 world units tall; shrink them so the shared atlas stays small.
+        crops += [shrink(c, g) for c, g in cut_props(ROOT / source)] if '0118' in source else cut_props(ROOT / source)
         sources.append({'source': source, 'sha256': sha((ROOT / source).read_bytes())})
     # Shelf-pack the props below the old atlas (they are larger than the 0.9 props).
     placed, x, y, shelf = [], 8, base.height + 8, 0
@@ -102,6 +105,14 @@ def pack_props(manifest, report):
     out = save_webp(atlas, logical, manifest)
     manifest['chapterProps'] = {**old, 'id': 'chapterProps_v0118', 'image': logical, 'frames': frames}
     report['props'] = {'sources': sources, 'atlas': [atlas.width, atlas.height], 'frames': len(frames), 'webpBytes': out.stat().st_size}
+
+
+def shrink(crop, ground, side=PROP_MAX_SIDE):
+    scale = side / max(crop.size)
+    if scale >= 1:
+        return crop, ground
+    size = (max(1, round(crop.width * scale)), max(1, round(crop.height * scale)))
+    return crop.resize(size, Image.LANCZOS), max(1, round(ground * scale))
 
 
 def cut_props(source):
