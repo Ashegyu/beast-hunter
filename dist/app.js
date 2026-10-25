@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.126.0';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.127.0';
 import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js';
 import { createCombatAudio } from './sound.js?v=0.76.0';
-import * as game from './game-engine.js?v=0.126.0';
+import * as game from './game-engine.js?v=0.127.0';
 import {FrameMetrics} from './frame-metrics.js?v=0.98.1';
 import { frameIndex, frameRect, validateClip } from './engine.js';
 import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
 import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.103.1';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.126.0';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.126.0';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.126.0';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.126.0';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.127.0';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.127.0';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.127.0';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.127.0';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -969,7 +969,8 @@ const HOME_ROUTE_TEXT=['붉은 달이 비추는 숲, 사방에서 괴수들이 �
 // Alpha 0.121: an ancient's powers follow its tier and the hunt mode it was earned on (악몽 adds a second power).
 function ancientPowerText(item){const row=game.ancientDefinition(item);if(!row)return '';const hunt=game.huntGrade(item),lines=game.ancientSignatures(item).map(r=>'✦ '+r.name+' · '+r.description).join('\n');
  // Raid ancients roll their effect power (Alpha 0.123): shown against its 60~120% range.
- if(row.raid)return lines+'\n레이드 고대 · 효과 위력 '+game.raidPowerRoll(item)+'% (범위 '+game.RAID_POWER_ROLL.min+'~'+game.RAID_POWER_ROLL.max+'%, 수치작으로 다시 굴림)';
+ // Each raid ancient also carries a 장비 기술 that casts by itself while worn (Alpha 0.127), scaled by the same roll.
+ if(row.raid){const skill=game.GEAR_SKILL_BY_ANCIENT[row.id],power=game.raidPowerRoll(item);return lines+(skill?'\n◆ 장비 기술 '+skill.name+' · 피해 '+Math.round(skill.damage*power/100)+'% · 재사용 '+skill.cooldown+'초 · '+skill.description+' (착용 중 자동 시전)':'')+'\n레이드 고대 · 효과 위력 '+power+'% (범위 '+game.RAID_POWER_ROLL.min+'~'+game.RAID_POWER_ROLL.max+'%, 장비 기술 피해에도 적용, 수치작으로 다시 굴림)';}
  return lines+'\n'+row.tier+'티어 위력 ×'+game.ANCIENT_TIER_POWER[row.tier-1].toFixed(1)+(hunt?' · '+game.HUNT_MODES[hunt].name+' 획득 ×'+game.ANCIENT_HUNT_POWER[hunt]+(hunt===2?' · 추가 특수효과':''):'');}
 function updateHud(){
   $('start').disabled=!ready;if(!ready)return;

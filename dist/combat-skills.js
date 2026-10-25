@@ -1,9 +1,11 @@
 import {createSkillMotion} from './skill-motion.js';
-import {CHAPTERS,CHAPTER_BOSSES} from './chapters.js?v=0.126.0';
-import {beastTechniques,BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE,beastElementText} from './beast-techniques.js?v=0.126.0';
-export {BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE} from './beast-techniques.js?v=0.126.0';
-import {SKILL_BRANCHES,SKILL_BRANCH_COST,EXECUTE_HEALTH,branchSummary} from './skill-branches.js?v=0.126.0';
-export {SKILL_BRANCHES,SKILL_BRANCH_COST,EXECUTE_HEALTH,branchSummary} from './skill-branches.js?v=0.126.0';
+import {CHAPTERS,CHAPTER_BOSSES} from './chapters.js?v=0.127.0';
+import {beastTechniques,BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE,beastElementText} from './beast-techniques.js?v=0.127.0';
+export {BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE} from './beast-techniques.js?v=0.127.0';
+import {SKILL_BRANCHES,SKILL_BRANCH_COST,EXECUTE_HEALTH,branchSummary} from './skill-branches.js?v=0.127.0';
+export {SKILL_BRANCHES,SKILL_BRANCH_COST,EXECUTE_HEALTH,branchSummary} from './skill-branches.js?v=0.127.0';
+import {GEAR_SKILLS} from './raid-skills.js?v=0.127.0';
+export {GEAR_SKILLS,GEAR_SKILL_BY_ANCIENT} from './raid-skills.js?v=0.127.0';
 // Lirian skill rules: one catalog drives unlocks, rank values, UI and combat.
 const active=(id,name,unlock,damage,step,cost,cooldown,shape,description,extra={})=>({id,name,kind:'active',unlock,damage,step,cost,cooldown,shape,description,...extra});
 const passive=(id,name,unlock,value,step,unit,description)=>({id,name,kind:'passive',unlock,value,step,unit,description});
@@ -48,7 +50,8 @@ export const SKILL_CATALOG=Object.freeze([...[
  // Alpha 0.125: one 괴수 기술 per chapter boss (beast-techniques.js), equipped in its own slot.
  ...beastTechniques(CHAPTERS.map(c=>({...c,special:!!CHAPTER_BOSSES[c.bossSpecies]?.special})))]);
 export const BEAST_TECHNIQUES=Object.freeze(SKILL_CATALOG.filter(d=>d.kind==='beast'));
-export const SKILL_BY_ID=Object.freeze(Object.assign(Object.create(null),Object.fromEntries(SKILL_CATALOG.map(r=>[r.id,r]))));
+// Alpha 0.127 장비 기술 (kind 'gear') are looked up like skills but stay out of SKILL_CATALOG: no card, slot or rank.
+export const SKILL_BY_ID=Object.freeze(Object.assign(Object.create(null),Object.fromEntries([...SKILL_CATALOG,...GEAR_SKILLS].map(r=>[r.id,r]))));
 const AREA_SHAPES=new Set(['line','dash','circle','cone','targetArea','echo','returning','field','gather','ultimateArea']);
 const RADIAL_REACH=new Set(['circle','cone','echo','gather','ultimateArea']);
 // Levels widen area attacks, while targeting distance and dash travel stay fixed.
@@ -91,7 +94,7 @@ export function skillMilestones(afterLevel,throughLevel=50){
 export function skillLevelGate(id,rank){const d=SKILL_BY_ID[id];if(!d)return 51;if(d.kind==='beast')return 1;return d.unlock+Math.ceil((Math.max(1,Math.min(5,rank))-1)*Math.min(d.kind==='ultimate'?7:3,(50-d.unlock)/4));}
 // A 괴수 기술's rank is its learned grade (1 기본, 2 강화, 3 극); 0 until its boss is defeated.
 export const beastGrade=(profile,id)=>{const g=profile?.beastSkills?.[id];return Number.isInteger(g)&&g>=1&&g<=3?g:0;};
-export function skillRank(profile,id){const d=SKILL_BY_ID[id];if(!d)return 0;if(d.kind==='beast')return beastGrade(profile,id);if(profile.level<d.unlock)return 0;if(d.kind==='ultimate'){let rank=1;while(rank<5&&profile.level>=skillLevelGate(id,rank+1))rank++;return rank;}return 1+(profile.skillBook?.ranks?.[id]??0);}
+export function skillRank(profile,id){const d=SKILL_BY_ID[id];if(!d)return 0;if(d.kind==='gear')return 1;if(d.kind==='beast')return beastGrade(profile,id);if(profile.level<d.unlock)return 0;if(d.kind==='ultimate'){let rank=1;while(rank<5&&profile.level>=skillLevelGate(id,rank+1))rank++;return rank;}return 1+(profile.skillBook?.ranks?.[id]??0);}
 export function skillValue(profile,id){const d=SKILL_BY_ID[id],rank=skillRank(profile,id);if(d?.kind==='beast')return rank?Math.round(d.damage*BEAST_GRADES[rank].damage):0;return rank?(d.damage??d.value)+d.step*(rank-1):0;}
 export function skillPoints(profile){return Math.max(0,profile.level-1+(profile.skillBook?.trainingPoints??0)-Object.values(profile.skillBook?.ranks??{}).reduce((a,b)=>a+b,0));}
 function cleanLoadout(raw,level){const slots=skillSlots(level),used=new Set();const list=(kind,n)=>Array.from({length:n},(_,i)=>{const id=raw?.[kind]?.[i],d=SKILL_BY_ID[id];if(i>=slots[kind]||!d||d.kind!==kind||d.unlock>level||used.has(id))return null;used.add(id);return id;});return {active:list('active',MAX_SLOTS.active),passive:list('passive',MAX_SLOTS.passive),ultimate:list('ultimate',MAX_SLOTS.ultimate),beast:list('beast',MAX_SLOTS.beast)};}
@@ -133,12 +136,12 @@ export function interruptSkill(s){const r=s.skillRuntime;if(!r)return;r.token++;
 export function clearSkillStage(s){const r=s.skillRuntime;interruptSkill(s);r.jobs.length=0;r.stanceUntil=0;r.bloodbladeUntil=0;r.phantomUntil=0;r.pursuitUntil=0;r.finisherUntil=0;r.openingUntil=0;r.footworkUntil=0;r.lastCast=null;}
 export function skillMoveScale(s){const r=s.skillRuntime;return (r.footworkUntil>s.run.time?1+pv(s,'footwork')/100:1)*(r.casting?.id==='dance'?.7:1);}
 function nearestTarget(s,n,range){let best=null,score=-Infinity;for(const e of s.enemies){if(!live(e))continue;const dx=e.x-s.player.x,dy=e.y-s.player.y,d=Math.hypot(dx,dy);if(d>range)continue;const facing=d>.001?(dx*n.x+dy*n.y)/d:1,v=facing*300-d;if(v>score){score=v;best=e;}}return best;}
-export function skillReady(s,id){const d=SKILL_BY_ID[id],r=s.skillRuntime;return !!d&&s.phase==='playing'&&!s.paused&&s.run.flow==='combat'&&s.player.hp>0&&!!skillRank(s.profile,id)&&s.profile.skillBook.loadout[d.kind]?.includes(id)&&!['attack','heavy','dash','hurt','death'].includes(s.player.action)&&!r.casting&&!(r.cooldowns[id]>0)&&s.player.stamina>=skillCost(s.profile,id);}
+export function skillReady(s,id){const d=SKILL_BY_ID[id],r=s.skillRuntime;return !!d&&s.phase==='playing'&&!s.paused&&s.run.flow==='combat'&&s.player.hp>0&&!!skillRank(s.profile,id)&&(d.kind==='gear'||s.profile.skillBook.loadout[d.kind]?.includes(id))&&!['attack','heavy','dash','hurt','death'].includes(s.player.action)&&!r.casting&&!(r.cooldowns[id]>0)&&s.player.stamina>=skillCost(s.profile,id);}
 export function castSkill(s,id,aim,h){
- if(!skillReady(s,id))return false;const d=SKILL_BY_ID[id],r=s.skillRuntime,p=s.player,beast=d.kind==='beast'?BEAST_GRADES[skillRank(s.profile,id)]:null,br=branchMods(s.profile,id),vid=d.visual??id,reach=skillReach(s.profile,id),areaScale=skillAreaScale(s.profile,id),n=unit(Number.isFinite(aim?.x)?aim.x:p.aimX,Number.isFinite(aim?.y)?aim.y:p.aimY),target=s.enemies.find(e=>e.id===aim?.targetId&&live(e)&&distance(e,p)<=reach)??nearestTarget(s,n,reach),rank=skillRank(s.profile,id),now=s.run.time;
+ if(!skillReady(s,id))return false;const gear=SKILL_BY_ID[id].kind==='gear'?h.gearSkills?.(s)?.find(g=>g.id===id):null;if(SKILL_BY_ID[id].kind==='gear'&&!gear)return false;const d=SKILL_BY_ID[id],r=s.skillRuntime,p=s.player,beast=d.kind==='beast'?BEAST_GRADES[skillRank(s.profile,id)]:null,br=branchMods(s.profile,id),vid=d.visual??id,reach=skillReach(s.profile,id),areaScale=skillAreaScale(s.profile,id),n=unit(Number.isFinite(aim?.x)?aim.x:p.aimX,Number.isFinite(aim?.y)?aim.y:p.aimY),target=s.enemies.find(e=>e.id===aim?.targetId&&live(e)&&distance(e,p)<=reach)??nearestTarget(s,n,reach),rank=skillRank(s.profile,id),now=s.run.time;
  if(['mark','seeking'].includes(d.shape)&&!target||r.jobs.length+(d.hits??1)>64)return false;
- const attack=h.stats(s.profile).damage,root={id,serial:++r.serial,rank,attack,areaScale,range:reach,radius:d.radius?d.radius*areaScale:undefined,width:d.width?d.width*areaScale:undefined,equipmentAtStart:h.capture?.(s)??null,inscriptions:h.inscriptions?.(s)??null,damage:skillValue(s.profile,id)/100*attack*(br.damage??1),boss:br.boss??0,execute:br.execute??0,x:p.x,y:p.y,n,targetId:target?.id,token:r.token,recovered:false,poise:(d.poise??12)*(r.finisherUntil>now?1+pv(s,'finisher')/100:1),castX:p.x,castY:p.y,count:(d.hits??1)+(beast?.hits??0)+(br.hits??0),...(beast?{beast:{color:d.color}}:{})};
- const element=mergeElements(beast?scaleElement(BEAST_ELEMENTS[d.element],beast.element):null,br.element);if(element)root.element=element;
+ const attack=h.stats(s.profile).damage,root={id,serial:++r.serial,rank,attack,areaScale,range:reach,radius:d.radius?d.radius*areaScale:undefined,width:d.width?d.width*areaScale:undefined,equipmentAtStart:h.capture?.(s)??null,inscriptions:h.inscriptions?.(s)??null,damage:skillValue(s.profile,id)/100*attack*(br.damage??1)*(gear?gear.power/100:1),boss:br.boss??0,execute:(br.execute??0)+(d.execute??0),x:p.x,y:p.y,n,targetId:target?.id,token:r.token,recovered:false,poise:(d.poise??12)*(r.finisherUntil>now?1+pv(s,'finisher')/100:1),castX:p.x,castY:p.y,count:(d.hits??1)+(beast?.hits??0)+(br.hits??0),...(beast||gear?{sigColor:d.color}:{})};
+ const element=mergeElements(beast?scaleElement(BEAST_ELEMENTS[d.element],beast.element):gear?d.element:null,br.element);if(element)root.element=element;
  p.stamina-=skillCost(s.profile,id);if(!Object.hasOwn(r.cooldowns,id))r.cooldownKeys.push(id);r.cooldowns[id]=skillCooldown(s.profile,id);h.cast?.(s,id);r.stanceUntil=0;if(id!=='bloodblade')r.bloodbladeUntil=0;
  if(d.kind==='ultimate'){r.ultimatePresentation={id,startedAt:now,token:r.token,x:p.x,y:p.y,nx:n.x,ny:n.y};}
  if(d.kind==='active'){
@@ -151,9 +154,9 @@ export function castSkill(s,id,aim,h){
  const count=root.count,interval=d.interval??(count>1?.25:0),duration=delay+(count-1)*interval+.18,utility=['stance','bloodblade','mark','phantoms'].includes(id);
  // A 괴수 기술 borrows the motion, travel and effect art of the skill it is drawn like (`visual`).
  r.motion=createSkillMotion(vid,root,now,utility?.16:delay,count,interval,utility?.42:id==='parry'?.25:duration);
- if(root.element?.shield){h.shield?.(s,root.element.shield);}
+ if(root.element?.shield){h.shield?.(s,root.element.shield);}if(root.element?.heal){h.heal?.(s,root.element.heal);}
  if(vid==='gale'||vid==='echo'||vid==='plunge'){
-  if(vid!=='plunge'&&d.kind!=='beast')r.pursuitUntil=now+3;
+  if(vid!=='plunge'&&d.kind!=='beast'&&d.kind!=='gear')r.pursuitUntil=now+3;
   const reach=vid==='echo'?-95:vid==='plunge'?Math.min(170,target?distance(p,target):170):170,end={x:p.x+n.x*reach,y:p.y+n.y*reach};h.clamp(end,s.bounds);
   r.travel={fromX:p.x,fromY:p.y,toX:end.x,toY:end.y,startedAt:now,duration:Math.max(.025,delay)};
   if(vid==='plunge'){root.x=end.x;root.y=end.y;}
@@ -168,7 +171,7 @@ export function castSkill(s,id,aim,h){
  const center=d.shape==='field'?(target?{x:target.x,y:target.y}:{x:p.x+n.x*d.range,y:p.y+n.y*d.range}):{x:root.x,y:root.y};
  const interruptible=['draw','triple','dance','bloodmoon','eclipse'].includes(id);
  for(let i=0;i<count;i++)r.jobs.push({root,at:now+delay+i*interval,index:i,center,interruptible,rootToken:r.token});
- if(root.beast)h.visual(s,'ancientSig',{x:center.x,y:center.y,radius:root.radius??root.range,color:root.beast.color,rune:SKILL_CATALOG.indexOf(d)},.6);
+ if(root.sigColor)h.visual(s,'ancientSig',{x:center.x,y:center.y,radius:root.radius??root.range,color:root.sigColor,rune:SKILL_CATALOG.indexOf(d)},.6);
  h.visual(s,'skillCast',{skillId:vid,x:center.x,y:center.y,radius:root.radius??root.range,areaScale,n,fromX:root.castX,fromY:root.castY,targetX:target?.x??center.x+n.x*d.range,targetY:target?.y??center.y+n.y*d.range,serial:root.serial,targetId:root.targetId},Math.max(.025,delay));return true;
 }
 function shapeHits(s,e,j,d){const root=j.root,p=s.player,n=root.n;let origin=j.center;
@@ -237,6 +240,11 @@ export function incomingSkillDamage(s,value,source,h){const r=s.skillRuntime,p=s
  let reduction=p.stamina>=40?pv(s,'reserve'):0;if(reduction)passiveVisual(s,'reserve',h);if(r.stanceUntil>now)reduction+=15+skillRank(s.profile,'stance')*3+(branchMods(s.profile,'stance').power??0);return value*(1-Math.min(.7,reduction/100+h.stats(s.profile).reduction));
 }
 export function skillLastStand(s,h){const r=s.skillRuntime,cooldown=pv(s,'resolve');if(!cooldown||s.run.time<r.resolveReady)return false;r.resolveReady=s.run.time+cooldown;passiveVisual(s,'resolve',h);s.player.hp=1;s.player.invulnerable=.6;return true;}
+// Worn raid ancients cast their 장비 기술 by themselves whenever one is ready and an enemy is in reach (Alpha 0.127).
+export function gearSkill(s,n,h){const list=h.gearSkills?.(s);if(!list?.length)return false;
+ for(const g of list){if(!skillReady(s,g.id))continue;const target=nearestTarget(s,n,skillReach(s.profile,g.id));if(target&&castSkill(s,g.id,{x:n.x,y:n.y,targetId:target.id},h))return true;}
+ return false;
+}
 export function autoSkill(s,n,h){const p=s.player,r=s.skillRuntime,b=s.profile.skillBook,near=s.enemies.filter(e=>live(e)&&distance(e,p)<240),boss=near.some(e=>e.boss||e.elite);
  const ultimate=b.loadout.ultimate[0];if(ultimate&&b.auto.ultimate!=='off'&&(b.auto.ultimate==='any'||boss)&&castSkill(s,ultimate,n,h))return true;
  // An equipped 파갑참 goes first whenever a guarded or still-armored enemy is within its reach.

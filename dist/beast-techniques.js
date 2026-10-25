@@ -2,7 +2,7 @@
 // 정예/악몽 kills have a chance to teach the 강화 (2) / 극 (3) grades, which hit much harder (see BEAST_GRADES).
 // Techniques reuse the shapes, motions and effect art of Lilian's skills (`visual`) and add the boss region's element.
 // Pure data; combat-skills.js adds them to SKILL_CATALOG as kind 'beast' and game-engine.js teaches them.
-const TEMPLATES=Object.freeze({
+export const SKILL_TEMPLATES=Object.freeze({
  slam:{shape:'targetArea',visual:'plunge',damage:260,range:260,radius:160,delay:.35,poise:40,text:'전방으로 뛰어올라 반경 {r}을 내려친다.'},
  breath:{shape:'cone',visual:'draw',damage:240,range:240,dot:.5,delay:.3,poise:30,text:'전방 {r} 부채꼴에 기운을 내뿜는다.'},
  charge:{shape:'dash',visual:'gale',damage:220,range:260,width:70,delay:.15,poise:30,text:'전방으로 돌진하며 경로의 적을 들이받는다.'},
@@ -45,10 +45,10 @@ const ROWS=[
  ['guardian','석상 일격','slam'],['sphinx','수수께끼의 빛','breath'],['starknight','성좌 돌격','charge'],['fallenangel','타락의 깃','volley'],['judge','심판의 저울','boomerang'],
  ['chrono','멈춘 시간','zone'],['starserpent','별무리 똬리','spin'],['gatekeeper','문지기의 함성','roar'],['wargod','전쟁신의 일격','slam'],['sungod','태양 붕괴','zone'],
 ];
-const elementText=e=>[e.bleed?'출혈 '+e.bleed+'회':'',e.chill?e.chill+'초 빙결':'',e.push?'밀쳐내기 '+e.push:'',e.breach?'5초간 받는 피해 +'+e.breach+'%':'',e.extraHit?'타격 +'+e.extraHit+'회':'',e.shield?'시전 시 최대 체력 '+Math.round(e.shield*100)+'% 보호막':''].filter(Boolean).join(' · ');
+const elementText=e=>[e.heal?'시전 시 체력 '+Math.round(e.heal*100)+'% 회복':'',e.bleed?'출혈 '+e.bleed+'회':'',e.chill?e.chill+'초 빙결':'',e.push?'밀쳐내기 '+e.push:'',e.breach?'5초간 받는 피해 +'+e.breach+'%':'',e.extraHit?'타격 +'+e.extraHit+'회':'',e.shield?'시전 시 최대 체력 '+Math.round(e.shield*100)+'% 보호막':''].filter(Boolean).join(' · ');
 // chapters: the 60 chapter rows (id, biome, bossSpecies, bossName, special flag) in order.
 export function beastTechniques(chapters){
- return chapters.map((c,i)=>{const [key,name,template]=ROWS[i],t=TEMPLATES[template],element=BEAST_ELEMENTS[c.biome],special=!!c.special;
+ return chapters.map((c,i)=>{const [key,name,template]=ROWS[i],t=SKILL_TEMPLATES[template],element=BEAST_ELEMENTS[c.biome],special=!!c.special;
   if(!c.bossSpecies.endsWith(key))throw new Error('괴수 기술 표가 챕터 보스와 맞지 않아: '+c.id);
   const damage=Math.round(t.damage*(special?1.2:1)),hits=(t.hits??1)+(element.extraHit??0),r=t.radius??t.range;
   return Object.freeze({id:'beast-'+key,name,kind:'beast',unlock:0,chapter:c.id,bossSpecies:c.bossSpecies,bossName:c.bossName,template,element:c.biome,
