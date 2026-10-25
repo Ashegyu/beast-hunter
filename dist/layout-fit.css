@@ -175,3 +175,14 @@
 #game-shell #camp-skills-panel #skill-detail-description{flex:0 1 auto;min-height:12px}
 #game-shell #camp-skills-panel .skill-detail{gap:2px;padding-block:6px}
 }
+
+/* Alpha 0.123 레이드: 던전 화면 위쪽의 성장 던전/레이드 전환, 레이드 카드 3장 + 주간 입장 안내 칸(2×2). */
+#game-shell .dungeon-modes{display:flex;gap:6px}
+#game-shell .dungeon-modes button{flex:none;min-height:0;height:24px;padding:0 12px;border:1px solid #9e835366;border-radius:999px;background:#160f12cc;color:#cfc3ad;font-size:11px;line-height:1.4}
+#game-shell .dungeon-modes button[aria-pressed=true]{border-color:#ddac69;background:linear-gradient(145deg,#701d25,#2a1418);color:#ffe7c2}
+#game-shell .raid-week{display:grid;align-content:center;gap:3px;padding:9px;border:1px dashed #9e835356;border-radius:10px;min-width:0;min-height:0}
+#game-shell .raid-week small{font-size:10px;color:#aeb4af}
+#game-shell .raid-week strong{font-size:12px;color:#ffe7c2;line-height:1.35}
+#game-shell .raid-week em{font-size:10px;font-style:normal;color:#b6bcb5;line-height:1.4}
+#game-shell .raid-card[data-locked=true]{opacity:.55}
+@media(max-height:360px){#game-shell .dungeon-modes button{height:20px;padding:0 9px;font-size:10px}#game-shell #camp-dungeons-panel[data-mode=raid] #dungeon-rule{font-size:10px;line-height:1.35}#game-shell #camp-dungeons-panel[data-mode=raid] .dungeon-reward-preview>small{display:none}#game-shell .raid-week em{display:none}}

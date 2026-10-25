@@ -1,4 +1,4 @@
-import {restoreEquipment} from './equipment-slots.js?v=0.122.0';
+import {restoreEquipment} from './equipment-slots.js?v=0.123.0';
 // A stage owns uncommitted rewards. The profile identity stays stable for the UI.
 // Checkpoints are runtime-only; saves serialize the pre-stage state until settlement.
 const journals=new WeakMap();
@@ -11,7 +11,7 @@ export function beginStageJournal(s){
  for(const key of strict?REWARD_FIELDS:PROGRESS_FIELDS)checkpoint[key]=structuredClone(s.profile[key]);
  const totals=Object.fromEntries(RUN_FIELDS.map(k=>[k,s.run[k]]));
  journals.set(s.profile,{strict,checkpoint,totals,lootLength:s.run.lootLedger.length,committing:false});
- s.profile.activeBattle={id:stageTransactionId(s),chapter:s.stageId,stage:s.run.stage,difficulty:s.difficulty,strict,...(s.run.dungeonId?{dungeon:s.run.dungeonId}:{} )};
+ s.profile.activeBattle={id:stageTransactionId(s),chapter:s.stageId,stage:s.run.stage,difficulty:s.difficulty,strict,...(s.run.dungeonId?{dungeon:s.run.dungeonId}:{} ),...(s.run.raidId?{raid:s.run.raidId}:{} )};
 }
 export function profileForSave(profile){
  const j=journals.get(profile);if(j?.committing)return j.candidate;

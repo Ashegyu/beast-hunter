@@ -6,9 +6,9 @@ test('ordinary item identity and atlas rectangle stay constant across all five q
  for(const row of ITEM_CATALOG){const records=[];for(let rarity=0;rarity<=4;rarity++){const item=owned(row,rarity),before=JSON.stringify(item),design=visualDesign(item);assert.equal(design.id,row.artId);assert.equal(design.variant,undefined);assert.equal(design.rarity,rarity);records.push(gearFrame(manifest.equipment,design,manifest.equipmentRarities).frame);assert.equal(JSON.stringify(item),before);}assert.ok(records.every(r=>r===records[0]));}
 });
 test('ancient definitions are separate identities with fixed properties and no ordinary quality versions',()=>{
- assert.deepEqual(g.RARITIES,['일반','희귀','영웅','전설','신화','고대','제작']);// 75 derived ancients (regions 1-3) plus 75 authored ones for regions 4-6 (Alpha 0.119).
- assert.equal(ANCIENT_CATALOG.length,150);assert.equal(new Set(ANCIENT_CATALOG.map(r=>r.id)).size,150);
- for(const row of ANCIENT_CATALOG){assert.ok(!ITEM_CATALOG.some(r=>r.id===row.id));assert.ok(Object.isFrozen(row)&&Object.isFrozen(row.base));const choices=ANCIENT_CATALOG.filter(r=>r.tier===row.tier&&r.slot===row.slot),pick=(choices.indexOf(row)+.5)/choices.length,a=rollAncient({id:1,tier:row.tier,slot:row.slot},pick),b=rollAncient({id:2,tier:row.tier,slot:row.slot},pick);assert.equal(a.rarity,5);assert.deepEqual(a.affixes,b.affixes);assert.equal(a.name,row.name);assert.equal(ancientDefinition(a),row);assert.equal(uniqueEffect(a).id,row.signatureOnly?'signature-'+row.id:row.effectId);assert.equal(uniquePower(a.rarity),1.36);assert.equal(visualDesign(a).variant,row.id);}
+ assert.deepEqual(g.RARITIES,['일반','희귀','영웅','전설','신화','고대','제작']);// 75 derived ancients (regions 1-3), 75 authored ones for regions 4-6 (Alpha 0.119) and 15 raid-only ones (0.123).
+ assert.equal(ANCIENT_CATALOG.length,165);assert.equal(new Set(ANCIENT_CATALOG.map(r=>r.id)).size,165);assert.equal(ANCIENT_CATALOG.filter(r=>r.raid).length,15);
+ for(const row of ANCIENT_CATALOG){assert.ok(!ITEM_CATALOG.some(r=>r.id===row.id));assert.ok(Object.isFrozen(row)&&Object.isFrozen(row.base));const choices=ANCIENT_CATALOG.filter(r=>r.tier===row.tier&&r.slot===row.slot&&r.raid===row.raid),pick=(choices.indexOf(row)+.5)/choices.length,a=rollAncient({id:1,tier:row.tier,slot:row.slot,raid:row.raid},pick),b=rollAncient({id:2,tier:row.tier,slot:row.slot,raid:row.raid},pick);assert.equal(a.rarity,5);assert.deepEqual(a.affixes,b.affixes);assert.equal(a.name,row.name);assert.equal(ancientDefinition(a),row);assert.equal(uniqueEffect(a).id,row.signatureOnly?'signature-'+row.id:row.effectId);assert.equal(uniquePower(a.rarity),1.36);assert.equal(visualDesign(a).variant,row.id);}
 });
 test('ordinary quality intervals never select ancient identity and ancient interval selects only ancient',()=>{
  for(const source of ['normal','elite','boss','stage'])for(const pick of [.001,.5,.999]){let count=0;const ancient=rollItem({id:1,tier:2,source,minimum:5},()=>++count===1?pick:.9999);assert.ok(ancientDefinition(ancient));assert.equal(ancient.rarity,5);assert.equal(count,5);}
@@ -40,7 +40,7 @@ test('boss ancients drop their region tier: 1 forest, 2 frost, 3 ruined castle/a
  }
  const weapon=t=>ANCIENT_CATALOG.find(r=>r.tier===t&&r.slot==='weapon').base.damage;for(let t=1;t<6;t++)assert.ok(weapon(t)<weapon(t+1));
  // Regions 4-6 are authored rows with their own atlas frame and the region's finale set art as fallback icon.
- for(const [t,set]of [[4,'leviathan'],[5,'stormdragon'],[6,'sungod']]){const rows=ANCIENT_CATALOG.filter(r=>r.tier===t);assert.equal(rows.length,25);assert.equal(rows.filter(r=>r.slot==='weapon').length,8);assert.ok(rows.every(r=>manifest.equipmentRarities.designIds.includes(r.id)&&r.signature.id===r.id));assert.equal(rows[0].artId,'set_'+set+'_sword');}
+ for(const [t,set]of [[4,'leviathan'],[5,'stormdragon'],[6,'sungod']]){const rows=ANCIENT_CATALOG.filter(r=>r.tier===t&&!r.raid);assert.equal(rows.length,25);assert.equal(rows.filter(r=>r.slot==='weapon').length,8);assert.ok(rows.every(r=>manifest.equipmentRarities.designIds.includes(r.id)&&r.signature.id===r.id));assert.equal(rows[0].artId,'set_'+set+'_sword');}
  assert.equal(ANCIENT_CATALOG.find(r=>r.id==='ancient-2-weapon-1').artId,'frost_blade');assert.equal(ANCIENT_CATALOG.find(r=>r.id==='ancient-3-weapon-1').artId,'ruins_blade');
 });
 

@@ -7,7 +7,7 @@ faint haze goes to the nearest body and stray specks are dropped, then scaled to
 like the earlier ancient art. They are shelf-packed below an exact copy of the area holding the
 first 75 frames (the Alpha 0.112 atlas). Weapon frames get grip/tip anchors measured like the 0.19 art: the tip is the
 top-right-most pixel, the grip sits 14% of the way from the bottom-left-most pixel (pommel).
-Re-running cuts the current atlas back to those 75 frames first.
+Re-running cuts the current atlas back to those 75 frames first (and drops the 0.123 raid frames: run pack-raid0123.py after).
 """
 from pathlib import Path
 import hashlib
@@ -71,7 +71,7 @@ def main():
     path = ASSETS / 'manifest.json'
     manifest = json.loads(path.read_text(encoding='utf-8'))
     old = manifest['equipmentRarities']
-    keep = [i for i, d in enumerate(old['designIds']) if int(d.split('-')[1]) <= 3]
+    keep = [i for i, d in enumerate(old['designIds']) if d.split('-')[1].isdigit() and int(d.split('-')[1]) <= 3]
     assert len(keep) == 75 and old.get('numbering') == 'region'
     # The current atlas (0.112 or an earlier 0.119 run) cut back to the area of the first 75 frames.
     current = Image.open(ASSETS / manifest['delivery'].get(old['image'], old['image'])).convert('RGBA')

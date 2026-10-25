@@ -1,0 +1,29 @@
+{
+  "id": "raid-queen",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production legendary (ancient grade, raid exclusive) equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing ANCIENT equipment sheet of this game: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting and scale, and the exact diagonal orientation of its swords (hilt at bottom-left, tip at top-right). Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, row 1 cells 1-3, row 2 cells 4-5, and the sixth cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge: (1) a curved sword made from a green-glowing insect scythe leg with chitin hilt, (2) a chitin crown-helmet with mandible cheek guards and small compound-eye gems, (3) an insect chitin carapace armor with glowing acid-green veins, (4) a necklace pendant of a glowing green egg in a chitin claw setting, (5) a chitin seal medallion with a queen insect emblem and translucent wing details. All five share one design language: SWARM QUEEN raid relics: glossy dark chitin, toxic acid-green glow, amber resin. They are the rarest raid trophies: more ornate than any other gear, each clearly distinct. Each item clearly readable at small icon size. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "referenceImages": [
+    {
+      "path": "dist/assets/ancient-individual-v019.webp",
+      "sha256": "b94f6ad7f4958e337a1aed40e86a429272e1c4400ead68bc9ed2a64969e12dcd"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1536,
+        1024
+      ],
+      "transparent": 0.64,
+      "parts": 5,
+      "seconds": 55,
+      "sha256": "4e1787051b210475150e7ec71e8e2f0c278bbfb90bb7dbaecfdbfb8204894564"
+    }
+  ],
+  "final": {
+    "path": "art/raid0123/raid-queen.png",
+    "sha256": "4e1787051b210475150e7ec71e8e2f0c278bbfb90bb7dbaecfdbfb8204894564"
+  }
+}

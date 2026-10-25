@@ -75233,6 +75233,1341 @@
           "y": 855
         }
       ]
+    },
+    "raid_colossus_walk_s_v0123": {
+      "id": "raid_colossus_walk_s_v0123",
+      "actor": "raid_colossus",
+      "name": "raid_colossus S walk",
+      "image": "monsters-raid_colossus-v0123.png",
+      "fps": 6,
+      "loop": true,
+      "bodyHeight": 202.0,
+      "sourceColumns": [
+        0,
+        1
+      ],
+      "frames": [
+        {
+          "w": 233,
+          "h": 235,
+          "pivotX": 139.0,
+          "pivotY": 216,
+          "bodyHeight": 202.0,
+          "x": 810,
+          "y": 577
+        },
+        {
+          "w": 268,
+          "h": 227,
+          "pivotX": 140.0,
+          "pivotY": 209,
+          "bodyHeight": 202.0,
+          "x": 277,
+          "y": 827
+        }
+      ]
+    },
+    "raid_colossus_attack_s_v0123": {
+      "id": "raid_colossus_attack_s_v0123",
+      "actor": "raid_colossus",
+      "name": "raid_colossus S attack",
+      "image": "monsters-raid_colossus-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 202.0,
+      "sourceColumns": [
+        2,
+        3
+      ],
+      "frames": [
+        {
+          "w": 258,
+          "h": 271,
+          "pivotX": 118.0,
+          "pivotY": 237,
+          "bodyHeight": 202.0,
+          "x": 791,
+          "y": 4
+        },
+        {
+          "w": 321,
+          "h": 242,
+          "pivotX": 132.0,
+          "pivotY": 200,
+          "bodyHeight": 202.0,
+          "x": 4,
+          "y": 577
+        }
+      ]
+    },
+    "raid_colossus_death_s_v0123": {
+      "id": "raid_colossus_death_s_v0123",
+      "actor": "raid_colossus",
+      "name": "raid_colossus S death",
+      "image": "monsters-raid_colossus-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 202.0,
+      "sourceColumns": [
+        4
+      ],
+      "frames": [
+        {
+          "w": 281,
+          "h": 283,
+          "pivotX": 141.5,
+          "pivotY": 227,
+          "bodyHeight": 202.0,
+          "x": 268,
+          "y": 4
+        }
+      ]
+    },
+    "raid_colossus_walk_se_v0123": {
+      "id": "raid_colossus_walk_se_v0123",
+      "actor": "raid_colossus",
+      "name": "raid_colossus SE walk",
+      "image": "monsters-raid_colossus-v0123.png",
+      "fps": 6,
+      "loop": true,
+      "bodyHeight": 211.0,
+      "sourceColumns": [
+        0,
+        1
+      ],
+      "frames": [
+        {
+          "w": 243,
+          "h": 238,
+          "pivotX": 125.0,
+          "pivotY": 219,
+          "bodyHeight": 211.0,
+          "x": 559,
+          "y": 577
+        },
+        {
+          "w": 256,
+          "h": 253,
+          "pivotX": 135.0,
+          "pivotY": 217,
+          "bodyHeight": 211.0,
+          "x": 1503,
+          "y": 4
+        }
+      ]
+    },
+    "raid_colossus_attack_se_v0123": {
+      "id": "raid_colossus_attack_se_v0123",
+      "actor": "raid_colossus",
+      "name": "raid_colossus SE attack",
+      "image": "monsters-raid_colossus-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 211.0,
+      "sourceColumns": [
+        2,
+        3
+      ],
+      "frames": [
+        {
+          "w": 256,
+          "h": 305,
+          "pivotX": 102.0,
+          "pivotY": 250,
+          "bodyHeight": 211.0,
+          "x": 4,
+          "y": 4
+        },
+        {
+          "w": 287,
+          "h": 246,
+          "pivotX": 93.0,
+          "pivotY": 217,
+          "bodyHeight": 211.0,
+          "x": 1144,
+          "y": 317
+        }
+      ]
+    },
+    "raid_colossus_death_se_v0123": {
+      "id": "raid_colossus_death_se_v0123",
+      "actor": "raid_colossus",
+      "name": "raid_colossus SE death",
+      "image": "monsters-raid_colossus-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 211.0,
+      "sourceColumns": [
+        4
+      ],
+      "frames": [
+        {
+          "w": 284,
+          "h": 235,
+          "pivotX": 143.5,
+          "pivotY": 181,
+          "bodyHeight": 211.0,
+          "x": 1051,
+          "y": 577
+        }
+      ]
+    },
+    "raid_colossus_walk_e_v0123": {
+      "id": "raid_colossus_walk_e_v0123",
+      "actor": "raid_colossus",
+      "name": "raid_colossus E walk",
+      "image": "monsters-raid_colossus-v0123.png",
+      "fps": 6,
+      "loop": true,
+      "bodyHeight": 216.0,
+      "sourceColumns": [
+        0,
+        1
+      ],
+      "frames": [
+        {
+          "w": 174,
+          "h": 263,
+          "pivotX": 95.0,
+          "pivotY": 233,
+          "bodyHeight": 216.0,
+          "x": 1057,
+          "y": 4
+        },
+        {
+          "w": 218,
+          "h": 241,
+          "pivotX": 122.0,
+          "pivotY": 225,
+          "bodyHeight": 216.0,
+          "x": 333,
+          "y": 577
+        }
+      ]
+    },
+    "raid_colossus_attack_e_v0123": {
+      "id": "raid_colossus_attack_e_v0123",
+      "actor": "raid_colossus",
+      "name": "raid_colossus E attack",
+      "image": "monsters-raid_colossus-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 216.0,
+      "sourceColumns": [
+        2,
+        3
+      ],
+      "frames": [
+        {
+          "w": 256,
+          "h": 260,
+          "pivotX": 96.5,
+          "pivotY": 249,
+          "bodyHeight": 216.0,
+          "x": 1239,
+          "y": 4
+        },
+        {
+          "w": 284,
+          "h": 243,
+          "pivotX": 78.0,
+          "pivotY": 231,
+          "bodyHeight": 216.0,
+          "x": 1439,
+          "y": 317
+        }
+      ]
+    },
+    "raid_colossus_death_e_v0123": {
+      "id": "raid_colossus_death_e_v0123",
+      "actor": "raid_colossus",
+      "name": "raid_colossus E death",
+      "image": "monsters-raid_colossus-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 216.0,
+      "sourceColumns": [
+        4
+      ],
+      "frames": [
+        {
+          "w": 292,
+          "h": 153,
+          "pivotX": 145.0,
+          "pivotY": 115,
+          "bodyHeight": 216.0,
+          "x": 838,
+          "y": 827
+        }
+      ]
+    },
+    "raid_colossus_walk_ne_v0123": {
+      "id": "raid_colossus_walk_ne_v0123",
+      "actor": "raid_colossus",
+      "name": "raid_colossus NE walk",
+      "image": "monsters-raid_colossus-v0123.png",
+      "fps": 6,
+      "loop": true,
+      "bodyHeight": 209.5,
+      "sourceColumns": [
+        0,
+        1
+      ],
+      "frames": [
+        {
+          "w": 265,
+          "h": 230,
+          "pivotX": 146.0,
+          "pivotY": 217,
+          "bodyHeight": 209.5,
+          "x": 4,
+          "y": 827
+        },
+        {
+          "w": 256,
+          "h": 234,
+          "pivotX": 129.0,
+          "pivotY": 226,
+          "bodyHeight": 209.5,
+          "x": 1343,
+          "y": 577
+        }
+      ]
+    },
+    "raid_colossus_attack_ne_v0123": {
+      "id": "raid_colossus_attack_ne_v0123",
+      "actor": "raid_colossus",
+      "name": "raid_colossus NE attack",
+      "image": "monsters-raid_colossus-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 209.5,
+      "sourceColumns": [
+        2,
+        3
+      ],
+      "frames": [
+        {
+          "w": 226,
+          "h": 279,
+          "pivotX": 119.0,
+          "pivotY": 249,
+          "bodyHeight": 209.5,
+          "x": 557,
+          "y": 4
+        },
+        {
+          "w": 283,
+          "h": 250,
+          "pivotX": 159.0,
+          "pivotY": 219,
+          "bodyHeight": 209.5,
+          "x": 264,
+          "y": 317
+        }
+      ]
+    },
+    "raid_colossus_death_ne_v0123": {
+      "id": "raid_colossus_death_ne_v0123",
+      "actor": "raid_colossus",
+      "name": "raid_colossus NE death",
+      "image": "monsters-raid_colossus-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 209.5,
+      "sourceColumns": [
+        4
+      ],
+      "frames": [
+        {
+          "w": 286,
+          "h": 248,
+          "pivotX": 145.5,
+          "pivotY": 180,
+          "bodyHeight": 209.5,
+          "x": 850,
+          "y": 317
+        }
+      ]
+    },
+    "raid_colossus_walk_n_v0123": {
+      "id": "raid_colossus_walk_n_v0123",
+      "actor": "raid_colossus",
+      "name": "raid_colossus N walk",
+      "image": "monsters-raid_colossus-v0123.png",
+      "fps": 6,
+      "loop": true,
+      "bodyHeight": 207.0,
+      "sourceColumns": [
+        0,
+        1
+      ],
+      "frames": [
+        {
+          "w": 239,
+          "h": 232,
+          "pivotX": 92.0,
+          "pivotY": 223,
+          "bodyHeight": 207.0,
+          "x": 1607,
+          "y": 577
+        },
+        {
+          "w": 252,
+          "h": 252,
+          "pivotX": 115.0,
+          "pivotY": 211,
+          "bodyHeight": 207.0,
+          "x": 4,
+          "y": 317
+        }
+      ]
+    },
+    "raid_colossus_attack_n_v0123": {
+      "id": "raid_colossus_attack_n_v0123",
+      "actor": "raid_colossus",
+      "name": "raid_colossus N attack",
+      "image": "monsters-raid_colossus-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 207.0,
+      "sourceColumns": [
+        2,
+        3
+      ],
+      "frames": [
+        {
+          "w": 246,
+          "h": 253,
+          "pivotX": 153.0,
+          "pivotY": 245,
+          "bodyHeight": 207.0,
+          "x": 1767,
+          "y": 4
+        },
+        {
+          "w": 287,
+          "h": 250,
+          "pivotX": 167.0,
+          "pivotY": 222,
+          "bodyHeight": 207.0,
+          "x": 555,
+          "y": 317
+        }
+      ]
+    },
+    "raid_colossus_death_n_v0123": {
+      "id": "raid_colossus_death_n_v0123",
+      "actor": "raid_colossus",
+      "name": "raid_colossus N death",
+      "image": "monsters-raid_colossus-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 207.0,
+      "sourceColumns": [
+        4
+      ],
+      "frames": [
+        {
+          "w": 277,
+          "h": 180,
+          "pivotX": 139.5,
+          "pivotY": 165,
+          "bodyHeight": 207.0,
+          "x": 553,
+          "y": 827
+        }
+      ]
+    },
+    "raid_judge_walk_s_v0123": {
+      "id": "raid_judge_walk_s_v0123",
+      "actor": "raid_judge",
+      "name": "raid_judge S walk",
+      "image": "monsters-raid_judge-v0123.png",
+      "fps": 6,
+      "loop": true,
+      "bodyHeight": 217.0,
+      "sourceColumns": [
+        0,
+        1
+      ],
+      "frames": [
+        {
+          "w": 253,
+          "h": 264,
+          "pivotX": 114.0,
+          "pivotY": 238,
+          "bodyHeight": 217.0,
+          "x": 411,
+          "y": 612
+        },
+        {
+          "w": 278,
+          "h": 272,
+          "pivotX": 137.0,
+          "pivotY": 223,
+          "bodyHeight": 217.0,
+          "x": 659,
+          "y": 321
+        }
+      ]
+    },
+    "raid_judge_attack_s_v0123": {
+      "id": "raid_judge_attack_s_v0123",
+      "actor": "raid_judge",
+      "name": "raid_judge S attack",
+      "image": "monsters-raid_judge-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 217.0,
+      "sourceColumns": [
+        2,
+        3
+      ],
+      "frames": [
+        {
+          "w": 257,
+          "h": 260,
+          "pivotX": 128.0,
+          "pivotY": 248,
+          "bodyHeight": 217.0,
+          "x": 1609,
+          "y": 612
+        },
+        {
+          "w": 417,
+          "h": 271,
+          "pivotX": 126.5,
+          "pivotY": 236,
+          "bodyHeight": 217.0,
+          "x": 945,
+          "y": 321
+        }
+      ]
+    },
+    "raid_judge_death_s_v0123": {
+      "id": "raid_judge_death_s_v0123",
+      "actor": "raid_judge",
+      "name": "raid_judge S death",
+      "image": "monsters-raid_judge-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 217.0,
+      "sourceColumns": [
+        4
+      ],
+      "frames": [
+        {
+          "w": 276,
+          "h": 219,
+          "pivotX": 141.5,
+          "pivotY": 178,
+          "bodyHeight": 217.0,
+          "x": 1068,
+          "y": 886
+        }
+      ]
+    },
+    "raid_judge_walk_se_v0123": {
+      "id": "raid_judge_walk_se_v0123",
+      "actor": "raid_judge",
+      "name": "raid_judge SE walk",
+      "image": "monsters-raid_judge-v0123.png",
+      "fps": 6,
+      "loop": true,
+      "bodyHeight": 218.5,
+      "sourceColumns": [
+        0,
+        1
+      ],
+      "frames": [
+        {
+          "w": 255,
+          "h": 293,
+          "pivotX": 113.0,
+          "pivotY": 235,
+          "bodyHeight": 218.5,
+          "x": 903,
+          "y": 4
+        },
+        {
+          "w": 278,
+          "h": 293,
+          "pivotX": 143.0,
+          "pivotY": 234,
+          "bodyHeight": 218.5,
+          "x": 1166,
+          "y": 4
+        }
+      ]
+    },
+    "raid_judge_attack_se_v0123": {
+      "id": "raid_judge_attack_se_v0123",
+      "actor": "raid_judge",
+      "name": "raid_judge SE attack",
+      "image": "monsters-raid_judge-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 218.5,
+      "sourceColumns": [
+        2,
+        3
+      ],
+      "frames": [
+        {
+          "w": 225,
+          "h": 258,
+          "pivotX": 96.0,
+          "pivotY": 244,
+          "bodyHeight": 218.5,
+          "x": 4,
+          "y": 886
+        },
+        {
+          "w": 367,
+          "h": 276,
+          "pivotX": 119.0,
+          "pivotY": 243,
+          "bodyHeight": 218.5,
+          "x": 284,
+          "y": 321
+        }
+      ]
+    },
+    "raid_judge_death_se_v0123": {
+      "id": "raid_judge_death_se_v0123",
+      "actor": "raid_judge",
+      "name": "raid_judge SE death",
+      "image": "monsters-raid_judge-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 218.5,
+      "sourceColumns": [
+        4
+      ],
+      "frames": [
+        {
+          "w": 266,
+          "h": 178,
+          "pivotX": 133.0,
+          "pivotY": 138,
+          "bodyHeight": 218.5,
+          "x": 1624,
+          "y": 886
+        }
+      ]
+    },
+    "raid_judge_walk_e_v0123": {
+      "id": "raid_judge_walk_e_v0123",
+      "actor": "raid_judge",
+      "name": "raid_judge E walk",
+      "image": "monsters-raid_judge-v0123.png",
+      "fps": 6,
+      "loop": true,
+      "bodyHeight": 210.5,
+      "sourceColumns": [
+        0,
+        1
+      ],
+      "frames": [
+        {
+          "w": 239,
+          "h": 257,
+          "pivotX": 105.0,
+          "pivotY": 222,
+          "bodyHeight": 210.5,
+          "x": 237,
+          "y": 886
+        },
+        {
+          "w": 274,
+          "h": 270,
+          "pivotX": 117.0,
+          "pivotY": 220,
+          "bodyHeight": 210.5,
+          "x": 1370,
+          "y": 321
+        }
+      ]
+    },
+    "raid_judge_attack_e_v0123": {
+      "id": "raid_judge_attack_e_v0123",
+      "actor": "raid_judge",
+      "name": "raid_judge E attack",
+      "image": "monsters-raid_judge-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 210.5,
+      "sourceColumns": [
+        2,
+        3
+      ],
+      "frames": [
+        {
+          "w": 245,
+          "h": 283,
+          "pivotX": 119.0,
+          "pivotY": 242,
+          "bodyHeight": 210.5,
+          "x": 1717,
+          "y": 4
+        },
+        {
+          "w": 392,
+          "h": 264,
+          "pivotX": 113.0,
+          "pivotY": 231,
+          "bodyHeight": 210.5,
+          "x": 672,
+          "y": 612
+        }
+      ]
+    },
+    "raid_judge_death_e_v0123": {
+      "id": "raid_judge_death_e_v0123",
+      "actor": "raid_judge",
+      "name": "raid_judge E death",
+      "image": "monsters-raid_judge-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 210.5,
+      "sourceColumns": [
+        4
+      ],
+      "frames": [
+        {
+          "w": 288,
+          "h": 221,
+          "pivotX": 151.0,
+          "pivotY": 166,
+          "bodyHeight": 210.5,
+          "x": 772,
+          "y": 886
+        }
+      ]
+    },
+    "raid_judge_walk_ne_v0123": {
+      "id": "raid_judge_walk_ne_v0123",
+      "actor": "raid_judge",
+      "name": "raid_judge NE walk",
+      "image": "monsters-raid_judge-v0123.png",
+      "fps": 6,
+      "loop": true,
+      "bodyHeight": 218.5,
+      "sourceColumns": [
+        0,
+        1
+      ],
+      "frames": [
+        {
+          "w": 257,
+          "h": 290,
+          "pivotX": 116.0,
+          "pivotY": 232,
+          "bodyHeight": 218.5,
+          "x": 1452,
+          "y": 4
+        },
+        {
+          "w": 272,
+          "h": 283,
+          "pivotX": 118.0,
+          "pivotY": 240,
+          "bodyHeight": 218.5,
+          "x": 4,
+          "y": 321
+        }
+      ]
+    },
+    "raid_judge_attack_ne_v0123": {
+      "id": "raid_judge_attack_ne_v0123",
+      "actor": "raid_judge",
+      "name": "raid_judge NE attack",
+      "image": "monsters-raid_judge-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 218.5,
+      "sourceColumns": [
+        2,
+        3
+      ],
+      "frames": [
+        {
+          "w": 263,
+          "h": 309,
+          "pivotX": 118.0,
+          "pivotY": 254,
+          "bodyHeight": 218.5,
+          "x": 4,
+          "y": 4
+        },
+        {
+          "w": 399,
+          "h": 266,
+          "pivotX": 117.0,
+          "pivotY": 239,
+          "bodyHeight": 218.5,
+          "x": 4,
+          "y": 612
+        }
+      ]
+    },
+    "raid_judge_death_ne_v0123": {
+      "id": "raid_judge_death_ne_v0123",
+      "actor": "raid_judge",
+      "name": "raid_judge NE death",
+      "image": "monsters-raid_judge-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 218.5,
+      "sourceColumns": [
+        4
+      ],
+      "frames": [
+        {
+          "w": 264,
+          "h": 204,
+          "pivotX": 135.5,
+          "pivotY": 147,
+          "bodyHeight": 218.5,
+          "x": 1352,
+          "y": 886
+        }
+      ]
+    },
+    "raid_judge_walk_n_v0123": {
+      "id": "raid_judge_walk_n_v0123",
+      "actor": "raid_judge",
+      "name": "raid_judge N walk",
+      "image": "monsters-raid_judge-v0123.png",
+      "fps": 6,
+      "loop": true,
+      "bodyHeight": 227.0,
+      "sourceColumns": [
+        0,
+        1
+      ],
+      "frames": [
+        {
+          "w": 255,
+          "h": 294,
+          "pivotX": 131.0,
+          "pivotY": 248,
+          "bodyHeight": 227.0,
+          "x": 640,
+          "y": 4
+        },
+        {
+          "w": 263,
+          "h": 261,
+          "pivotX": 111.0,
+          "pivotY": 245,
+          "bodyHeight": 227.0,
+          "x": 1338,
+          "y": 612
+        }
+      ]
+    },
+    "raid_judge_attack_n_v0123": {
+      "id": "raid_judge_attack_n_v0123",
+      "actor": "raid_judge",
+      "name": "raid_judge N attack",
+      "image": "monsters-raid_judge-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 227.0,
+      "sourceColumns": [
+        2,
+        3
+      ],
+      "frames": [
+        {
+          "w": 258,
+          "h": 264,
+          "pivotX": 124.0,
+          "pivotY": 252,
+          "bodyHeight": 227.0,
+          "x": 1072,
+          "y": 612
+        },
+        {
+          "w": 357,
+          "h": 295,
+          "pivotX": 124.0,
+          "pivotY": 251,
+          "bodyHeight": 227.0,
+          "x": 275,
+          "y": 4
+        }
+      ]
+    },
+    "raid_judge_death_n_v0123": {
+      "id": "raid_judge_death_n_v0123",
+      "actor": "raid_judge",
+      "name": "raid_judge N death",
+      "image": "monsters-raid_judge-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 227.0,
+      "sourceColumns": [
+        4
+      ],
+      "frames": [
+        {
+          "w": 280,
+          "h": 244,
+          "pivotX": 145.0,
+          "pivotY": 195,
+          "bodyHeight": 227.0,
+          "x": 484,
+          "y": 886
+        }
+      ]
+    },
+    "raid_queen_walk_s_v0123": {
+      "id": "raid_queen_walk_s_v0123",
+      "actor": "raid_queen",
+      "name": "raid_queen S walk",
+      "image": "monsters-raid_queen-v0123.png",
+      "fps": 6,
+      "loop": true,
+      "bodyHeight": 189.5,
+      "sourceColumns": [
+        0,
+        1
+      ],
+      "frames": [
+        {
+          "w": 254,
+          "h": 266,
+          "pivotX": 124.0,
+          "pivotY": 216,
+          "bodyHeight": 189.5,
+          "x": 4,
+          "y": 619
+        },
+        {
+          "w": 246,
+          "h": 252,
+          "pivotX": 138.5,
+          "pivotY": 208,
+          "bodyHeight": 189.5,
+          "x": 614,
+          "y": 893
+        }
+      ]
+    },
+    "raid_queen_attack_s_v0123": {
+      "id": "raid_queen_attack_s_v0123",
+      "actor": "raid_queen",
+      "name": "raid_queen S attack",
+      "image": "monsters-raid_queen-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 189.5,
+      "sourceColumns": [
+        2,
+        3
+      ],
+      "frames": [
+        {
+          "w": 281,
+          "h": 258,
+          "pivotX": 146.0,
+          "pivotY": 221,
+          "bodyHeight": 189.5,
+          "x": 4,
+          "y": 893
+        },
+        {
+          "w": 313,
+          "h": 258,
+          "pivotX": 103.0,
+          "pivotY": 217,
+          "bodyHeight": 189.5,
+          "x": 293,
+          "y": 893
+        }
+      ]
+    },
+    "raid_queen_death_s_v0123": {
+      "id": "raid_queen_death_s_v0123",
+      "actor": "raid_queen",
+      "name": "raid_queen S death",
+      "image": "monsters-raid_queen-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 189.5,
+      "sourceColumns": [
+        4
+      ],
+      "frames": [
+        {
+          "w": 281,
+          "h": 273,
+          "pivotX": 151.0,
+          "pivotY": 214,
+          "bodyHeight": 189.5,
+          "x": 317,
+          "y": 333
+        }
+      ]
+    },
+    "raid_queen_walk_se_v0123": {
+      "id": "raid_queen_walk_se_v0123",
+      "actor": "raid_queen",
+      "name": "raid_queen SE walk",
+      "image": "monsters-raid_queen-v0123.png",
+      "fps": 6,
+      "loop": true,
+      "bodyHeight": 194.0,
+      "sourceColumns": [
+        0,
+        1
+      ],
+      "frames": [
+        {
+          "w": 266,
+          "h": 260,
+          "pivotX": 107.0,
+          "pivotY": 221,
+          "bodyHeight": 194.0,
+          "x": 962,
+          "y": 619
+        },
+        {
+          "w": 273,
+          "h": 273,
+          "pivotX": 126.0,
+          "pivotY": 210,
+          "bodyHeight": 194.0,
+          "x": 606,
+          "y": 333
+        }
+      ]
+    },
+    "raid_queen_attack_se_v0123": {
+      "id": "raid_queen_attack_se_v0123",
+      "actor": "raid_queen",
+      "name": "raid_queen SE attack",
+      "image": "monsters-raid_queen-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 194.0,
+      "sourceColumns": [
+        2,
+        3
+      ],
+      "frames": [
+        {
+          "w": 305,
+          "h": 278,
+          "pivotX": 116.0,
+          "pivotY": 231,
+          "bodyHeight": 194.0,
+          "x": 4,
+          "y": 333
+        },
+        {
+          "w": 343,
+          "h": 260,
+          "pivotX": 115.0,
+          "pivotY": 215,
+          "bodyHeight": 194.0,
+          "x": 1236,
+          "y": 619
+        }
+      ]
+    },
+    "raid_queen_death_se_v0123": {
+      "id": "raid_queen_death_se_v0123",
+      "actor": "raid_queen",
+      "name": "raid_queen SE death",
+      "image": "monsters-raid_queen-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 194.0,
+      "sourceColumns": [
+        4
+      ],
+      "frames": [
+        {
+          "w": 276,
+          "h": 237,
+          "pivotX": 143.0,
+          "pivotY": 171,
+          "bodyHeight": 194.0,
+          "x": 1146,
+          "y": 893
+        }
+      ]
+    },
+    "raid_queen_walk_e_v0123": {
+      "id": "raid_queen_walk_e_v0123",
+      "actor": "raid_queen",
+      "name": "raid_queen E walk",
+      "image": "monsters-raid_queen-v0123.png",
+      "fps": 6,
+      "loop": true,
+      "bodyHeight": 197.0,
+      "sourceColumns": [
+        0,
+        1
+      ],
+      "frames": [
+        {
+          "w": 264,
+          "h": 269,
+          "pivotX": 123.0,
+          "pivotY": 229,
+          "bodyHeight": 197.0,
+          "x": 1560,
+          "y": 333
+        },
+        {
+          "w": 274,
+          "h": 270,
+          "pivotX": 126.0,
+          "pivotY": 213,
+          "bodyHeight": 197.0,
+          "x": 1278,
+          "y": 333
+        }
+      ]
+    },
+    "raid_queen_attack_e_v0123": {
+      "id": "raid_queen_attack_e_v0123",
+      "actor": "raid_queen",
+      "name": "raid_queen E attack",
+      "image": "monsters-raid_queen-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 197.0,
+      "sourceColumns": [
+        2,
+        3
+      ],
+      "frames": [
+        {
+          "w": 285,
+          "h": 295,
+          "pivotX": 66.0,
+          "pivotY": 254,
+          "bodyHeight": 197.0,
+          "x": 844,
+          "y": 4
+        },
+        {
+          "w": 392,
+          "h": 266,
+          "pivotX": 117.0,
+          "pivotY": 220,
+          "bodyHeight": 197.0,
+          "x": 266,
+          "y": 619
+        }
+      ]
+    },
+    "raid_queen_death_e_v0123": {
+      "id": "raid_queen_death_e_v0123",
+      "actor": "raid_queen",
+      "name": "raid_queen E death",
+      "image": "monsters-raid_queen-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 197.0,
+      "sourceColumns": [
+        4
+      ],
+      "frames": [
+        {
+          "w": 270,
+          "h": 240,
+          "pivotX": 135.5,
+          "pivotY": 175,
+          "bodyHeight": 197.0,
+          "x": 868,
+          "y": 893
+        }
+      ]
+    },
+    "raid_queen_walk_ne_v0123": {
+      "id": "raid_queen_walk_ne_v0123",
+      "actor": "raid_queen",
+      "name": "raid_queen NE walk",
+      "image": "monsters-raid_queen-v0123.png",
+      "fps": 6,
+      "loop": true,
+      "bodyHeight": 214.0,
+      "sourceColumns": [
+        0,
+        1
+      ],
+      "frames": [
+        {
+          "w": 270,
+          "h": 289,
+          "pivotX": 145.0,
+          "pivotY": 229,
+          "bodyHeight": 214.0,
+          "x": 1137,
+          "y": 4
+        },
+        {
+          "w": 269,
+          "h": 283,
+          "pivotX": 144.0,
+          "pivotY": 229,
+          "bodyHeight": 214.0,
+          "x": 1415,
+          "y": 4
+        }
+      ]
+    },
+    "raid_queen_attack_ne_v0123": {
+      "id": "raid_queen_attack_ne_v0123",
+      "actor": "raid_queen",
+      "name": "raid_queen NE attack",
+      "image": "monsters-raid_queen-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 214.0,
+      "sourceColumns": [
+        2,
+        3
+      ],
+      "frames": [
+        {
+          "w": 288,
+          "h": 265,
+          "pivotX": 116.0,
+          "pivotY": 254,
+          "bodyHeight": 214.0,
+          "x": 666,
+          "y": 619
+        },
+        {
+          "w": 383,
+          "h": 271,
+          "pivotX": 124.0,
+          "pivotY": 235,
+          "bodyHeight": 214.0,
+          "x": 887,
+          "y": 333
+        }
+      ]
+    },
+    "raid_queen_death_ne_v0123": {
+      "id": "raid_queen_death_ne_v0123",
+      "actor": "raid_queen",
+      "name": "raid_queen NE death",
+      "image": "monsters-raid_queen-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 214.0,
+      "sourceColumns": [
+        4
+      ],
+      "frames": [
+        {
+          "w": 273,
+          "h": 259,
+          "pivotX": 139.5,
+          "pivotY": 184,
+          "bodyHeight": 214.0,
+          "x": 1587,
+          "y": 619
+        }
+      ]
+    },
+    "raid_queen_walk_n_v0123": {
+      "id": "raid_queen_walk_n_v0123",
+      "actor": "raid_queen",
+      "name": "raid_queen N walk",
+      "image": "monsters-raid_queen-v0123.png",
+      "fps": 6,
+      "loop": true,
+      "bodyHeight": 215.0,
+      "sourceColumns": [
+        0,
+        1
+      ],
+      "frames": [
+        {
+          "w": 255,
+          "h": 313,
+          "pivotX": 132.0,
+          "pivotY": 248,
+          "bodyHeight": 215.0,
+          "x": 299,
+          "y": 4
+        },
+        {
+          "w": 274,
+          "h": 308,
+          "pivotX": 129.0,
+          "pivotY": 245,
+          "bodyHeight": 215.0,
+          "x": 562,
+          "y": 4
+        }
+      ]
+    },
+    "raid_queen_attack_n_v0123": {
+      "id": "raid_queen_attack_n_v0123",
+      "actor": "raid_queen",
+      "name": "raid_queen N attack",
+      "image": "monsters-raid_queen-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 215.0,
+      "sourceColumns": [
+        2,
+        3
+      ],
+      "frames": [
+        {
+          "w": 287,
+          "h": 321,
+          "pivotX": 163.0,
+          "pivotY": 259,
+          "bodyHeight": 215.0,
+          "x": 4,
+          "y": 4
+        },
+        {
+          "w": 321,
+          "h": 282,
+          "pivotX": 144.0,
+          "pivotY": 235,
+          "bodyHeight": 215.0,
+          "x": 1692,
+          "y": 4
+        }
+      ]
+    },
+    "raid_queen_death_n_v0123": {
+      "id": "raid_queen_death_n_v0123",
+      "actor": "raid_queen",
+      "name": "raid_queen N death",
+      "image": "monsters-raid_queen-v0123.png",
+      "fps": 4,
+      "loop": false,
+      "bodyHeight": 215.0,
+      "sourceColumns": [
+        4
+      ],
+      "frames": [
+        {
+          "w": 272,
+          "h": 236,
+          "pivotX": 140.5,
+          "pivotY": 195,
+          "bodyHeight": 215.0,
+          "x": 1430,
+          "y": 893
+        }
+      ]
     }
   },
   "tileSize": 512,
@@ -79026,6 +80361,75 @@
         "e": "sky_thunderjelly_death_e_v0118",
         "ne": "sky_thunderjelly_death_ne_v0118",
         "n": "sky_thunderjelly_death_n_v0118"
+      }
+    },
+    "raid_colossus": {
+      "walk": {
+        "s": "raid_colossus_walk_s_v0123",
+        "se": "raid_colossus_walk_se_v0123",
+        "e": "raid_colossus_walk_e_v0123",
+        "ne": "raid_colossus_walk_ne_v0123",
+        "n": "raid_colossus_walk_n_v0123"
+      },
+      "attack": {
+        "s": "raid_colossus_attack_s_v0123",
+        "se": "raid_colossus_attack_se_v0123",
+        "e": "raid_colossus_attack_e_v0123",
+        "ne": "raid_colossus_attack_ne_v0123",
+        "n": "raid_colossus_attack_n_v0123"
+      },
+      "death": {
+        "s": "raid_colossus_death_s_v0123",
+        "se": "raid_colossus_death_se_v0123",
+        "e": "raid_colossus_death_e_v0123",
+        "ne": "raid_colossus_death_ne_v0123",
+        "n": "raid_colossus_death_n_v0123"
+      }
+    },
+    "raid_judge": {
+      "walk": {
+        "s": "raid_judge_walk_s_v0123",
+        "se": "raid_judge_walk_se_v0123",
+        "e": "raid_judge_walk_e_v0123",
+        "ne": "raid_judge_walk_ne_v0123",
+        "n": "raid_judge_walk_n_v0123"
+      },
+      "attack": {
+        "s": "raid_judge_attack_s_v0123",
+        "se": "raid_judge_attack_se_v0123",
+        "e": "raid_judge_attack_e_v0123",
+        "ne": "raid_judge_attack_ne_v0123",
+        "n": "raid_judge_attack_n_v0123"
+      },
+      "death": {
+        "s": "raid_judge_death_s_v0123",
+        "se": "raid_judge_death_se_v0123",
+        "e": "raid_judge_death_e_v0123",
+        "ne": "raid_judge_death_ne_v0123",
+        "n": "raid_judge_death_n_v0123"
+      }
+    },
+    "raid_queen": {
+      "walk": {
+        "s": "raid_queen_walk_s_v0123",
+        "se": "raid_queen_walk_se_v0123",
+        "e": "raid_queen_walk_e_v0123",
+        "ne": "raid_queen_walk_ne_v0123",
+        "n": "raid_queen_walk_n_v0123"
+      },
+      "attack": {
+        "s": "raid_queen_attack_s_v0123",
+        "se": "raid_queen_attack_se_v0123",
+        "e": "raid_queen_attack_e_v0123",
+        "ne": "raid_queen_attack_ne_v0123",
+        "n": "raid_queen_attack_n_v0123"
+      },
+      "death": {
+        "s": "raid_queen_death_s_v0123",
+        "se": "raid_queen_death_se_v0123",
+        "e": "raid_queen_death_e_v0123",
+        "ne": "raid_queen_death_ne_v0123",
+        "n": "raid_queen_death_n_v0123"
       }
     }
   },
@@ -83637,8 +85041,11 @@
     "equipment-sets-r4-v0109.png": "equipment-sets-r4-v0109.webp",
     "equipment-sets-r5-v0109.png": "equipment-sets-r5-v0109.webp",
     "equipment-sets-r6-v0109.png": "equipment-sets-r6-v0109.webp",
-    "ancient-individual-v0119.png": "ancient-individual-v0119.webp",
-    "equipment-accessories-v0122.png": "equipment-accessories-v0122.webp"
+    "equipment-accessories-v0122.png": "equipment-accessories-v0122.webp",
+    "monsters-raid_colossus-v0123.png": "monsters-raid_colossus-v0123.webp",
+    "monsters-raid_judge-v0123.png": "monsters-raid_judge-v0123.webp",
+    "monsters-raid_queen-v0123.png": "monsters-raid_queen-v0123.webp",
+    "ancient-individual-v0123.png": "ancient-individual-v0123.webp"
   },
   "equipmentSockets": {
     "lirian_idle_s_v05": [
@@ -85763,10 +87170,10 @@
     ]
   },
   "equipmentRarities": {
-    "id": "ancient_individual_v0119",
+    "id": "ancient_individual_v0123",
     "actor": "equipment",
     "name": "ancient_individual",
-    "image": "ancient-individual-v0119.png",
+    "image": "ancient-individual-v0123.png",
     "fps": 1,
     "loop": false,
     "frames": [
@@ -87461,6 +88868,168 @@
         "pivotY": 174,
         "duration": 1,
         "slot": "special"
+      },
+      {
+        "x": 12,
+        "y": 3288,
+        "w": 200,
+        "h": 200,
+        "pivotX": 100.0,
+        "pivotY": 200,
+        "duration": 1,
+        "slot": "weapon",
+        "gripX": 29.1,
+        "gripY": 169.9,
+        "tipX": 198.5,
+        "tipY": 0.5
+      },
+      {
+        "x": 224,
+        "y": 3288,
+        "w": 154,
+        "h": 200,
+        "pivotX": 77.0,
+        "pivotY": 200,
+        "duration": 1,
+        "slot": "helmet"
+      },
+      {
+        "x": 390,
+        "y": 3288,
+        "w": 200,
+        "h": 185,
+        "pivotX": 100.0,
+        "pivotY": 185,
+        "duration": 1,
+        "slot": "armor"
+      },
+      {
+        "x": 602,
+        "y": 3288,
+        "w": 163,
+        "h": 200,
+        "pivotX": 81.5,
+        "pivotY": 200,
+        "duration": 1,
+        "slot": "charm"
+      },
+      {
+        "x": 777,
+        "y": 3288,
+        "w": 177,
+        "h": 200,
+        "pivotX": 88.5,
+        "pivotY": 200,
+        "duration": 1,
+        "slot": "special"
+      },
+      {
+        "x": 966,
+        "y": 3288,
+        "w": 198,
+        "h": 200,
+        "pivotX": 99.0,
+        "pivotY": 200,
+        "duration": 1,
+        "slot": "weapon",
+        "gripX": 27.7,
+        "gripY": 167.7,
+        "tipX": 176.5,
+        "tipY": 9.5
+      },
+      {
+        "x": 1176,
+        "y": 3288,
+        "w": 128,
+        "h": 200,
+        "pivotX": 64.0,
+        "pivotY": 200,
+        "duration": 1,
+        "slot": "helmet"
+      },
+      {
+        "x": 1316,
+        "y": 3288,
+        "w": 195,
+        "h": 200,
+        "pivotX": 97.5,
+        "pivotY": 200,
+        "duration": 1,
+        "slot": "armor"
+      },
+      {
+        "x": 1523,
+        "y": 3288,
+        "w": 120,
+        "h": 200,
+        "pivotX": 60.0,
+        "pivotY": 200,
+        "duration": 1,
+        "slot": "charm"
+      },
+      {
+        "x": 1655,
+        "y": 3288,
+        "w": 158,
+        "h": 200,
+        "pivotX": 79.0,
+        "pivotY": 200,
+        "duration": 1,
+        "slot": "special"
+      },
+      {
+        "x": 1825,
+        "y": 3288,
+        "w": 194,
+        "h": 200,
+        "pivotX": 97.0,
+        "pivotY": 200,
+        "duration": 1,
+        "slot": "weapon",
+        "gripX": 27.5,
+        "gripY": 170.8,
+        "tipX": 193.5,
+        "tipY": 0.5
+      },
+      {
+        "x": 2031,
+        "y": 3288,
+        "w": 167,
+        "h": 200,
+        "pivotX": 83.5,
+        "pivotY": 200,
+        "duration": 1,
+        "slot": "helmet"
+      },
+      {
+        "x": 12,
+        "y": 3500,
+        "w": 200,
+        "h": 185,
+        "pivotX": 100.0,
+        "pivotY": 185,
+        "duration": 1,
+        "slot": "armor"
+      },
+      {
+        "x": 224,
+        "y": 3500,
+        "w": 134,
+        "h": 200,
+        "pivotX": 67.0,
+        "pivotY": 200,
+        "duration": 1,
+        "slot": "charm"
+      },
+      {
+        "x": 370,
+        "y": 3500,
+        "w": 170,
+        "h": 200,
+        "pivotX": 85.0,
+        "pivotY": 200,
+        "duration": 1,
+        "slot": "special"
       }
     ],
     "designIds": [
@@ -87613,7 +89182,22 @@
       "ancient-6-pants-1",
       "ancient-6-boots-1",
       "ancient-6-earring-1",
-      "ancient-6-special-1"
+      "ancient-6-special-1",
+      "ancient-raid-colossus-weapon",
+      "ancient-raid-colossus-helmet",
+      "ancient-raid-colossus-armor",
+      "ancient-raid-colossus-charm",
+      "ancient-raid-colossus-special",
+      "ancient-raid-queen-weapon",
+      "ancient-raid-queen-helmet",
+      "ancient-raid-queen-armor",
+      "ancient-raid-queen-charm",
+      "ancient-raid-queen-special",
+      "ancient-raid-judge-weapon",
+      "ancient-raid-judge-helmet",
+      "ancient-raid-judge-armor",
+      "ancient-raid-judge-charm",
+      "ancient-raid-judge-special"
     ],
     "numbering": "region"
   },

@@ -1,0 +1,44 @@
+{
+ "raid-colossus": {
+  "kind": "sprite",
+  "minParts": 5,
+  "out": "art/raid0123/raid-colossus.png",
+  "style": "dist/assets/ancient-individual-v019.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production legendary (ancient grade, raid exclusive) equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing ANCIENT equipment sheet of this game: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting and scale, and the exact diagonal orientation of its swords (hilt at bottom-left, tip at top-right). Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, row 1 cells 1-3, row 2 cells 4-5, and the sixth cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge: (1) a massive greatsword forged from riveted dark steel plates with glowing molten-orange seams, (2) a heavy fortress-like great helm with a narrow glowing visor, (3) a thick riveted steel breastplate with molten core in the chest, (4) a necklace pendant of a small glowing anvil-shaped molten core on an iron chain, (5) a round iron seal medallion with a hammer and gear emblem and molten-orange runes. All five share one design language: IRON COLOSSUS raid relics: blackened steel, rivets, molten orange glow. They are the rarest raid trophies: more ornate than any other gear, each clearly distinct. Each item clearly readable at small icon size. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "items": [
+   "ancient-raid-colossus-weapon",
+   "ancient-raid-colossus-helmet",
+   "ancient-raid-colossus-armor",
+   "ancient-raid-colossus-charm",
+   "ancient-raid-colossus-special"
+  ]
+ },
+ "raid-queen": {
+  "kind": "sprite",
+  "minParts": 5,
+  "out": "art/raid0123/raid-queen.png",
+  "style": "dist/assets/ancient-individual-v019.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production legendary (ancient grade, raid exclusive) equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing ANCIENT equipment sheet of this game: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting and scale, and the exact diagonal orientation of its swords (hilt at bottom-left, tip at top-right). Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, row 1 cells 1-3, row 2 cells 4-5, and the sixth cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge: (1) a curved sword made from a green-glowing insect scythe leg with chitin hilt, (2) a chitin crown-helmet with mandible cheek guards and small compound-eye gems, (3) an insect chitin carapace armor with glowing acid-green veins, (4) a necklace pendant of a glowing green egg in a chitin claw setting, (5) a chitin seal medallion with a queen insect emblem and translucent wing details. All five share one design language: SWARM QUEEN raid relics: glossy dark chitin, toxic acid-green glow, amber resin. They are the rarest raid trophies: more ornate than any other gear, each clearly distinct. Each item clearly readable at small icon size. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "items": [
+   "ancient-raid-queen-weapon",
+   "ancient-raid-queen-helmet",
+   "ancient-raid-queen-armor",
+   "ancient-raid-queen-charm",
+   "ancient-raid-queen-special"
+  ]
+ },
+ "raid-judge": {
+  "kind": "sprite",
+  "minParts": 5,
+  "out": "art/raid0123/raid-judge.png",
+  "style": "dist/assets/ancient-individual-v019.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production legendary (ancient grade, raid exclusive) equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing ANCIENT equipment sheet of this game: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting and scale, and the exact diagonal orientation of its swords (hilt at bottom-left, tip at top-right). Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, row 1 cells 1-3, row 2 cells 4-5, and the sixth cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge: (1) a radiant greatsword of golden light with a violet gem crossguard and wing-shaped quillons, (2) a blindfolded halo-crowned gold helmet, (3) an ornate gold and violet plate cuirass with a sun emblem, (4) a necklace pendant of a small golden scale of judgement, (5) a gold seal medallion with a sword-and-scale emblem and violet glow. All five share one design language: TWILIGHT JUDGE raid relics: polished gold, deep violet, white radiance. They are the rarest raid trophies: more ornate than any other gear, each clearly distinct. Each item clearly readable at small icon size. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "items": [
+   "ancient-raid-judge-weapon",
+   "ancient-raid-judge-helmet",
+   "ancient-raid-judge-armor",
+   "ancient-raid-judge-charm",
+   "ancient-raid-judge-special"
+  ]
+ }
+}

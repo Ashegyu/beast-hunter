@@ -1,5 +1,5 @@
-import {equipmentFamily} from './equipment-slots.js?v=0.122.0';
-import {EQUIPMENT_SETS,SET_SLOTS,CHAPTER_SETS,setArtId} from './equipment-sets.js?v=0.122.0';
+import {equipmentFamily} from './equipment-slots.js?v=0.123.0';
+import {EQUIPMENT_SETS,SET_SLOTS,CHAPTER_SETS,setArtId} from './equipment-sets.js?v=0.123.0';
 // Sixty chapters in six regions of ten: 1–10 forest, 11–20 fire and ice (11–15 fire,
 // 16–20 ice), 21–30 darkness (Alpha 0.107), 31–40 sunken kingdom, 41–50 storm sky isles,
 // 51–60 twilight sanctum (Alpha 0.118). A region drives the map tabs, item and
@@ -238,6 +238,9 @@ Object.assign(MONSTERS,{
 });
 for(const [id,mid] of Object.entries(MID_BOSSES))MONSTERS[id]={name:mid.name,role:'bulwark',height:mid.height,guardMax:0,midBoss:true};
 for(const [id,boss] of Object.entries(CHAPTER_BOSSES))MONSTERS[id]={name:boss.name,role:'bulwark',height:boss.height,...(boss.special?{special:true}:{})};
+// Alpha 0.123 raid bosses (raids.js); not part of any chapter, so their atlases load only with a raid region.
+export const RAID_BOSSES={raid_colossus:{name:'강철 거신',height:300},raid_queen:{name:'군단의 여왕',height:280},raid_judge:{name:'황혼의 심판자',height:290}};
+for(const [id,boss] of Object.entries(RAID_BOSSES))MONSTERS[id]={name:boss.name,role:'bulwark',height:boss.height,raid:true};
 // Only role-compatible, unlocked chapter identities can enter a normal wave.
 export function chapterMonsterPool(chapterId,stage,role){
   const stages=CHAPTERS[chapterId-1]?.stages;if(!stages)return [];const species=stages[Math.min(stages.length,Math.max(1,stage))-1][role];return [species];

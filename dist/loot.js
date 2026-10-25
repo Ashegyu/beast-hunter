@@ -1,13 +1,14 @@
-import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily} from './equipment-slots.js?v=0.122.0';
-import {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.122.0';
-export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.122.0';
+import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily} from './equipment-slots.js?v=0.123.0';
+import {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.123.0';
+export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.123.0';
 import {huntMode,BOSS_DROP_TABLES} from './hunt-modes.js';
-import {UNIQUE_EFFECTS,EFFECT_ROWS,uniquePower} from './unique-effects.js?v=0.122.0';
-import {ANCIENT_POWER_BY_ID,NIGHTMARE_POWERS,describePower} from './ancient-powers.js?v=0.122.0';
-import {REGION_ANCIENTS,REGION_ANCIENT_BOSSES} from './ancient-regions.js?v=0.122.0';
-import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.122.0';
-export {EQUIPMENT_SETS,SET_SLOTS,SET_STATS,CHAPTER_SETS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.122.0';
-export {UNIQUE_EFFECTS,uniquePower} from './unique-effects.js?v=0.122.0';
+import {UNIQUE_EFFECTS,EFFECT_ROWS,uniquePower} from './unique-effects.js?v=0.123.0';
+import {ANCIENT_POWER_BY_ID,NIGHTMARE_POWERS,RAID_POWERS,describePower} from './ancient-powers.js?v=0.123.0';
+import {RAID_ANCIENTS,RAID_REGION,RAID_ANCIENT_STATS} from './raids.js?v=0.123.0';
+import {REGION_ANCIENTS,REGION_ANCIENT_BOSSES} from './ancient-regions.js?v=0.123.0';
+import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.123.0';
+export {EQUIPMENT_SETS,SET_SLOTS,SET_STATS,CHAPTER_SETS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.123.0';
+export {UNIQUE_EFFECTS,uniquePower} from './unique-effects.js?v=0.123.0';
 // Item definitions and pure rolls; the combat state owns identities and delivery.
 import {INVENTORY_LIMIT,MAX_PENDING_LOOT} from './inventory-rules.js?v=0.86.9';
 export {INVENTORY_LIMIT,MAX_PENDING_LOOT} from './inventory-rules.js?v=0.86.9';
@@ -102,9 +103,12 @@ for(const {key,row,tier}of ancientDrafts){const id='ancient-'+tier+row.id.slice(
 // Alpha 0.119: regions 4-6 have authored ancients (ancient-regions.js) with the same stat rules, keyed by id.
 for(const row of REGION_ANCIENTS){const scale=(.76+row.tier*.24)*ANCIENT_POWER,base={};for(const [k,v]of Object.entries(ANCIENT_STATS[row.slot]))base[k]=Math.round(v*scale);const part=!['weapon','armor','charm'].includes(row.slot),ordinal=ancientRows.size;
  ancientRows.set(row.id,Object.freeze({...row,name:'태초의 '+row.name,region:row.tier,base:Object.freeze(base),effectId:row.effectId??null,...(part?{signatureOnly:true}:{}),...(row.slot==='special'?{characterId:'lirian'}:{}),visualStyle:VISUAL_STYLE[row.effectId]??3,ancient:true,ordinal,signature:scalePower(ANCIENT_POWER_BY_ID[row.id],ANCIENT_TIER_POWER[row.tier-1]),bossId:REGION_ANCIENT_BOSSES.find(b=>b.tier===row.tier).id}));}
+// Alpha 0.123: raid-only ancients (raids.js) — region 7 in the codex, never in a chapter boss pool.
+for(const row of RAID_ANCIENTS){const scale=(.76+row.tier*.24)*ANCIENT_POWER*RAID_ANCIENT_STATS,base={};for(const [k,v]of Object.entries(ANCIENT_STATS[row.slot]))base[k]=Math.round(v*scale);const part=!['weapon','armor','charm'].includes(row.slot),ordinal=ancientRows.size;
+ ancientRows.set(row.id,Object.freeze({...row,name:'태초의 '+row.name,region:RAID_REGION,base:Object.freeze(base),...(part?{signatureOnly:true}:{}),...(row.slot==='special'?{characterId:'lirian'}:{}),visualStyle:VISUAL_STYLE[row.effectId]??6,ancient:true,ordinal,signature:RAID_POWERS[row.id],bossId:'raid-'+row.raid}));}
 export const ANCIENT_CATALOG=Object.freeze([...ancientRows.values()]);
 const ANCIENT_BY_ID=new Map(ANCIENT_CATALOG.map(r=>[r.id,r]));
-export const BOSS_LOOT=Object.freeze([...['세계수의 수호령','빙원의 지배자','무덤의 왕'].map((name,i)=>({id:['forest_guardian','frost_king','ruins_king'][i],name,tier:i+1})),...REGION_ANCIENT_BOSSES].map(b=>Object.freeze({id:b.id,name:b.name,tier:b.tier,items:Object.freeze(ANCIENT_CATALOG.filter(r=>r.tier===b.tier))})));
+export const BOSS_LOOT=Object.freeze([...['세계수의 수호령','빙원의 지배자','무덤의 왕'].map((name,i)=>({id:['forest_guardian','frost_king','ruins_king'][i],name,tier:i+1})),...REGION_ANCIENT_BOSSES].map(b=>Object.freeze({id:b.id,name:b.name,tier:b.tier,items:Object.freeze(ANCIENT_CATALOG.filter(r=>r.tier===b.tier&&!r.raid))})));
 export function bossLootPool(bossId,tier){const boss=BOSS_LOOT.find(b=>b.id===bossId&&b.tier===tier);if(!boss)throw new RangeError('Boss loot identity does not match chapter');return boss.items;}
 export function ancientDefinition(item){const row=ANCIENT_BY_ID.get(item?.catalogId);return row&&row.slot===item.slot&&row.tier===item.tier&&row.artId===item.artId?row:null;}
 export function ancientForLegacy(item){const row=CATALOG_BY_ID.get(item.catalogId),matching=row&&row.slot===item.slot&&row.tier===item.tier&&row.artId===item.artId;return ancientRows.get(ancientKey(matching?row:{...item,effectId:LEGACY_EFFECT[item.artId]}))??null;}
@@ -112,13 +116,13 @@ export function ancientForLegacy(item){const row=CATALOG_BY_ID.get(item.catalogI
 // plus the 악몽 second power. Crafted gear keeps its fixed signature. Ids double as cooldown keys.
 export function ancientSignatures(item){
  const crafted=item?.rarity===6?craftedDefinition(item):null;if(crafted)return [crafted.signature];
- const row=ancientDefinition(item);if(!row)return [];const hunt=huntGrade(item);if(!hunt)return [row.signature];
+ const row=ancientDefinition(item);if(!row)return [];const hunt=huntGrade(item);if(!hunt||row.raid)return [row.signature];
  const list=[scalePower(row.signature,ANCIENT_HUNT_POWER[hunt])];
  if(hunt===2){const family=equipmentFamily(row.slot);list.push(scalePower(NIGHTMARE_POWERS[family],ANCIENT_TIER_POWER[row.tier-1]*ANCIENT_HUNT_POWER[hunt],{id:row.id+'-nightmare',color:NIGHTMARE_POWERS[family].color}));}
  return list;
 }
-export function rollAncient({id,tier,slot,bossId,hunt=0},pick,rng=null){
- const pool=bossId?bossLootPool(bossId,tier):ANCIENT_CATALOG,choices=pool.filter(r=>r.tier===tier&&(!slot||r.slot===slot)),base=choices[Math.min(choices.length-1,Math.floor(pick*choices.length))];
+export function rollAncient({id,tier,slot,bossId,hunt=0,raid=null},pick,rng=null){
+ const pool=raid?ANCIENT_CATALOG.filter(r=>r.raid===raid):bossId?bossLootPool(bossId,tier):ANCIENT_CATALOG.filter(r=>!r.raid),choices=pool.filter(r=>r.tier===tier&&(!slot||r.slot===slot)),base=choices[Math.min(choices.length-1,Math.floor(pick*choices.length))];
  if(!base)throw new RangeError('Unknown ancient chapter/slot');
  const power=HUNT_POWER[hunt]??1,item={id,slot:base.slot,tier:base.tier,rarity:5,name:base.name,catalogId:base.id,artId:base.artId,affixes:Object.fromEntries(Object.entries(base.base).map(([k,v])=>[k,Math.min(affixCap(k),Math.round(v*power))])),rollVersion:1,...(hunt?{hunt}:{}),...(base.characterId?{characterId:base.characterId}:{})};
  if(rng){const forced=(pick*choices.length)%1<PERFECT_ROLL_CHANCE;for(const [key,range]of Object.entries(itemRollRanges(item))){const n=rng();item.affixes[key]=rollWithin(range,n,forced);}}

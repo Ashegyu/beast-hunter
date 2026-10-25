@@ -1,0 +1,29 @@
+{
+ "raid_colossus": {
+  "style": "art/monsters045/frost_king.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "special": true,
+  "name": "강철 거신",
+  "out": "art/raid0123/bosses/raid_colossus.png",
+  "subject": "A colossal ancient iron titan golem covered in thick riveted steel armor plates, glowing molten-orange seams between plates, a massive anvil-like hammer fist, small glowing eyes in a fortress-like helmet head. Reads as nearly impenetrable armor. Raid boss: the largest, most imposing silhouette in the game, heavily detailed. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Keep breath, beams, wings and weapons short and inside the cell. Distinct from the style reference subject."
+ },
+ "raid_queen": {
+  "style": "art/monsters045/frost_king.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "special": true,
+  "name": "군단의 여왕",
+  "out": "art/raid0123/bosses/raid_queen.png",
+  "subject": "A gigantic insectoid brood queen with a bloated glowing green egg sac abdomen, chitin crown, four scythe-like forelegs and translucent short wings, dripping acid. Reads as the mother of a swarm. Raid boss: the largest, most imposing silhouette in the game, heavily detailed. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Keep breath, beams, wings and weapons short and inside the cell. Distinct from the style reference subject."
+ },
+ "raid_judge": {
+  "style": "art/monsters045/frost_king.png",
+  "reference": "art/monsters065/references/encyclopedia-3.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "special": true,
+  "name": "황혼의 심판자",
+  "out": "art/raid0123/bosses/raid_judge.png",
+  "subject": "A towering divine armored judge angel with gold and violet plate armor, a blindfolded halo-crowned helmet, a huge greatsword of radiant light and short folded wings, holding a small golden scale of judgement. Reads as an executioner of divine light. Raid boss: the largest, most imposing silhouette in the game, heavily detailed. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Keep breath, beams, wings and weapons short and inside the cell. Distinct from the style reference subject."
+ }
+}

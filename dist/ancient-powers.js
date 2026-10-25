@@ -188,4 +188,24 @@ export const NIGHTMARE_POWERS=Object.freeze(Object.fromEntries([
  ['charm',{name:'악몽의 메아리',trigger:'skill',cooldown:6,cdr:.6,stamina:6}],
 ].map(([family,r],i)=>[family,Object.freeze({...r,index:150+i,radius:0,color:'#ff6b8a',description:describePower(r)})])));
 
+// Alpha 0.123: raid-only ancients carry authored powers at full strength (no tier or hunt-mode scaling).
+const RAID_COLORS={colossus:'#ff9a4d',queen:'#a6e05a',judge:'#c9a2ff'};
+export const RAID_POWERS=Object.freeze(Object.fromEntries([
+ ['colossus-weapon',{name:'강철 분쇄',trigger:'finisher',cooldown:4,damage:.9,cone:true,push:30,radius:260}],
+ ['colossus-helmet',{name:'요새의 의지',trigger:'hurt',cooldown:9,shield:.14,stamina:10}],
+ ['colossus-armor',{name:'용광로 심장',trigger:'lowHp',cooldown:20,damage:.6,heal:.2,invuln:1.5,radius:220}],
+ ['colossus-charm',{name:'불씨 축적',trigger:'kill',cooldown:3,fury:.15,furyTime:4}],
+ ['colossus-special',{name:'대장장이의 망치',trigger:'periodic',cooldown:8,damage:.7,push:25,radius:240}],
+ ['queen-weapon',{name:'산성 난도질',trigger:'normal',cooldown:3,shots:4,damage:.4,bleed:3,radius:260}],
+ ['queen-helmet',{name:'군단의 시야',trigger:'crit',cooldown:4,haste:.2,hasteTime:3}],
+ ['queen-armor',{name:'산성 외피',trigger:'hurt',cooldown:4,damage:.5,bleed:3,radius:200}],
+ ['queen-charm',{name:'부화',trigger:'skill',cooldown:6,damage:.3,ticks:3,center:'target',radius:220}],
+ ['queen-special',{name:'여왕의 명령',trigger:'kill',cooldown:5,shots:3,damage:.45,radius:300}],
+ ['judge-weapon',{name:'빛의 선고',trigger:'crit',cooldown:5,damage:1.1,cone:true,execute:.25,radius:240}],
+ ['judge-helmet',{name:'맹목의 정의',trigger:'perfect',cooldown:6,invuln:1,cdr:1}],
+ ['judge-armor',{name:'성역',trigger:'periodic',cooldown:10,shield:.16,heal:.05}],
+ ['judge-charm',{name:'천칭의 균형',trigger:'skill',cooldown:7,heal:.06,fury:.15,furyTime:4}],
+ ['judge-special',{name:'최후의 판결',trigger:'lowHp',cooldown:25,damage:1.2,invuln:2,radius:300}],
+].map(([key,r],i)=>{const id='ancient-raid-'+key;return [id,Object.freeze({...r,id,index:153+i,radius:r.radius??0,color:RAID_COLORS[key.split('-')[0]],description:describePower(r)})];})));
+
 export const ANCIENT_POWER_BY_ID=Object.freeze(Object.fromEntries(ANCIENT_POWERS.map(r=>[r.id,r])));

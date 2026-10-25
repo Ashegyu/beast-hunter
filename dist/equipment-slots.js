@@ -27,9 +27,11 @@ export function restoreEquipment(raw,inventory,characterId='lirian'){
  }return result;
 }
 export function equipmentAcquisition(item){
+ if(item?.rarity===5&&/^ancient-raid-/.test(item.catalogId??''))return '레이드 전용 · 클리어 시 10% 확률';
  if(item?.rarity===5)return ((item.tier-1)*10+1)+'~'+item.tier*10+'장 보스 희귀 드롭';
  if(item?.rarity===6)return '제작 전용';
- if(item?.slot==='special')return '던전 전용 · 낮은 획득 확률 · 추후 추가';
- if(item?.slot==='charm'||item?.slot==='earring')return '던전 전용 · 추후 추가';
+ // Alpha 0.122: necklaces, earrings and Lilian seals drop from growth dungeon clears.
+ if(item?.slot==='special')return '성장 던전 완료 시 장신구 확률 보상 · 낮은 확률';
+ if(item?.slot==='charm'||item?.slot==='earring')return '성장 던전 완료 시 장신구 확률 보상';
  return item?.rarity>0?'일반 장비에서 승급':'스테이지 · 일반 등급 드롭';
 }

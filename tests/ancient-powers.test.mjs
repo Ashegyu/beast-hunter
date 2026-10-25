@@ -58,7 +58,7 @@ test('spatial ticks pause and terminate at stage boundary without resetting sign
 test('ancient powers grow with region tier and with the hunt mode they were earned on (Alpha 0.121)',async()=>{
  const {ANCIENT_POWER_BY_ID,NIGHTMARE_POWERS}=await import('../dist/ancient-powers.js');
  // Tier: amounts ×1.0 … ×1.5; triggers, cooldowns and radii stay as authored.
- for(const row of g.ANCIENT_CATALOG){const base=ANCIENT_POWER_BY_ID[row.id],f=g.ANCIENT_TIER_POWER[row.tier-1];assert.equal(row.signature.trigger,base.trigger);assert.equal(row.signature.cooldown,base.cooldown);assert.equal(row.signature.radius,base.radius);
+ for(const row of g.ANCIENT_CATALOG.filter(r=>!r.raid)){const base=ANCIENT_POWER_BY_ID[row.id],f=g.ANCIENT_TIER_POWER[row.tier-1];assert.equal(row.signature.trigger,base.trigger);assert.equal(row.signature.cooldown,base.cooldown);assert.equal(row.signature.radius,base.radius);
   for(const k of ['damage','heal','shield','fury','haste'])if(base[k])assert.ok(Math.abs(row.signature[k]-base[k]*f)<.0011,row.id+' '+k);}
  assert.deepEqual([...g.ANCIENT_TIER_POWER],[1,1.1,1.2,1.3,1.4,1.5]);
  // Hunt mode: 정예 ×1.15, 악몽 ×1.3 and a second power by slot family.
