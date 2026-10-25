@@ -83028,6 +83028,156 @@
         "pivotX": 92.0,
         "pivotY": 237,
         "bodyHeight": 236
+      },
+      "acc_t1_earring": {
+        "image": "equipment-accessories-v0122.png",
+        "x": 8,
+        "y": 8,
+        "w": 118,
+        "h": 240,
+        "pivotX": 59.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "acc_t1_seal": {
+        "image": "equipment-accessories-v0122.png",
+        "x": 134,
+        "y": 8,
+        "w": 211,
+        "h": 240,
+        "pivotX": 105.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "acc_t2_earring": {
+        "image": "equipment-accessories-v0122.png",
+        "x": 353,
+        "y": 8,
+        "w": 86,
+        "h": 240,
+        "pivotX": 43.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "acc_t2_seal": {
+        "image": "equipment-accessories-v0122.png",
+        "x": 447,
+        "y": 8,
+        "w": 174,
+        "h": 240,
+        "pivotX": 87.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "acc_t3_earring": {
+        "image": "equipment-accessories-v0122.png",
+        "x": 629,
+        "y": 8,
+        "w": 105,
+        "h": 240,
+        "pivotX": 52.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "acc_t3_seal": {
+        "image": "equipment-accessories-v0122.png",
+        "x": 742,
+        "y": 8,
+        "w": 177,
+        "h": 240,
+        "pivotX": 88.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "acc_t4_charm": {
+        "image": "equipment-accessories-v0122.png",
+        "x": 927,
+        "y": 8,
+        "w": 150,
+        "h": 240,
+        "pivotX": 75.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "acc_t4_earring": {
+        "image": "equipment-accessories-v0122.png",
+        "x": 8,
+        "y": 256,
+        "w": 114,
+        "h": 240,
+        "pivotX": 57.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "acc_t4_seal": {
+        "image": "equipment-accessories-v0122.png",
+        "x": 130,
+        "y": 256,
+        "w": 201,
+        "h": 240,
+        "pivotX": 100.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "acc_t5_charm": {
+        "image": "equipment-accessories-v0122.png",
+        "x": 339,
+        "y": 256,
+        "w": 145,
+        "h": 240,
+        "pivotX": 72.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "acc_t5_earring": {
+        "image": "equipment-accessories-v0122.png",
+        "x": 492,
+        "y": 256,
+        "w": 112,
+        "h": 240,
+        "pivotX": 56.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "acc_t5_seal": {
+        "image": "equipment-accessories-v0122.png",
+        "x": 612,
+        "y": 256,
+        "w": 207,
+        "h": 240,
+        "pivotX": 103.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "acc_t6_charm": {
+        "image": "equipment-accessories-v0122.png",
+        "x": 827,
+        "y": 256,
+        "w": 169,
+        "h": 240,
+        "pivotX": 84.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "acc_t6_earring": {
+        "image": "equipment-accessories-v0122.png",
+        "x": 1004,
+        "y": 256,
+        "w": 102,
+        "h": 240,
+        "pivotX": 51.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "acc_t6_seal": {
+        "image": "equipment-accessories-v0122.png",
+        "x": 8,
+        "y": 504,
+        "w": 199,
+        "h": 240,
+        "pivotX": 99.5,
+        "pivotY": 237,
+        "bodyHeight": 236
       }
     },
     "pages": {
@@ -83054,6 +83204,10 @@
       "equipment-sets-r6-v0109.png": {
         "width": 1187,
         "height": 2488
+      },
+      "equipment-accessories-v0122.png": {
+        "width": 1200,
+        "height": 752
       }
     }
   },
@@ -83483,7 +83637,8 @@
     "equipment-sets-r4-v0109.png": "equipment-sets-r4-v0109.webp",
     "equipment-sets-r5-v0109.png": "equipment-sets-r5-v0109.webp",
     "equipment-sets-r6-v0109.png": "equipment-sets-r6-v0109.webp",
-    "ancient-individual-v0119.png": "ancient-individual-v0119.webp"
+    "ancient-individual-v0119.png": "ancient-individual-v0119.webp",
+    "equipment-accessories-v0122.png": "equipment-accessories-v0122.webp"
   },
   "equipmentSockets": {
     "lirian_idle_s_v05": [

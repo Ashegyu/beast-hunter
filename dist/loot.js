@@ -1,13 +1,13 @@
-import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily} from './equipment-slots.js?v=0.121.0';
-import {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.121.0';
-export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.121.0';
+import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily} from './equipment-slots.js?v=0.122.0';
+import {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.122.0';
+export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.122.0';
 import {huntMode,BOSS_DROP_TABLES} from './hunt-modes.js';
-import {UNIQUE_EFFECTS,EFFECT_ROWS,uniquePower} from './unique-effects.js?v=0.121.0';
-import {ANCIENT_POWER_BY_ID,NIGHTMARE_POWERS,describePower} from './ancient-powers.js?v=0.121.0';
-import {REGION_ANCIENTS,REGION_ANCIENT_BOSSES} from './ancient-regions.js?v=0.121.0';
-import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.121.0';
-export {EQUIPMENT_SETS,SET_SLOTS,SET_STATS,CHAPTER_SETS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.121.0';
-export {UNIQUE_EFFECTS,uniquePower} from './unique-effects.js?v=0.121.0';
+import {UNIQUE_EFFECTS,EFFECT_ROWS,uniquePower} from './unique-effects.js?v=0.122.0';
+import {ANCIENT_POWER_BY_ID,NIGHTMARE_POWERS,describePower} from './ancient-powers.js?v=0.122.0';
+import {REGION_ANCIENTS,REGION_ANCIENT_BOSSES} from './ancient-regions.js?v=0.122.0';
+import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.122.0';
+export {EQUIPMENT_SETS,SET_SLOTS,SET_STATS,CHAPTER_SETS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.122.0';
+export {UNIQUE_EFFECTS,uniquePower} from './unique-effects.js?v=0.122.0';
 // Item definitions and pure rolls; the combat state owns identities and delivery.
 import {INVENTORY_LIMIT,MAX_PENDING_LOOT} from './inventory-rules.js?v=0.86.9';
 export {INVENTORY_LIMIT,MAX_PENDING_LOOT} from './inventory-rules.js?v=0.86.9';
@@ -42,7 +42,19 @@ const legacyCatalog=chapterNames.flatMap((groups,t)=>groups.flatMap((names,slotI
  const slot=['weapon','armor','charm'][slotIndex];return names.map((name,i)=>Object.freeze({id:`${t+1}-${slot}-${i+1}`,name,slot,tier:t+1,artId:artRows[t][slotIndex===0?(i<4?(i<2?0:1):i%2):slotIndex+1],base:Object.freeze(patterns[slot][i%4]),effectId:EFFECT_ROWS[slot][i%6]}));
 }));
 const additionalParts=Object.keys(SLOTS).filter(slot=>!['weapon','armor','charm'].includes(slot));
-const BASE_CATALOG=Object.freeze([...legacyCatalog,...[1,2,3].flatMap(tier=>additionalParts.map(slot=>Object.freeze({id:`${tier}-${slot}-1`,name:slot==='special'?['리리안의 적월 인장','리리안의 망령 인장','리리안의 서리 인장'][tier-1]:['숲지기의 ','폐성 수호자의 ','서리결 '][tier-1]+SLOTS[slot],slot,tier,artId:artRows[tier-1][equipmentFamily(slot)==='armor'?2:3],base:Object.freeze(slot==='helmet'?{hp:12,reduction:1}:slot==='pants'?{hp:15,reduction:1}:slot==='boots'?{hp:8,speed:2}:slot==='earring'?{damage:3,crit:1}:{damage:5,hp:10}),effectId:null,signatureOnly:true,...(slot==='special'?{characterId:'lirian'}:{})}))) ]);
+const BASE_CATALOG=Object.freeze([...legacyCatalog,...[1,2,3].flatMap(tier=>additionalParts.map(slot=>Object.freeze({id:`${tier}-${slot}-1`,name:slot==='special'?['리리안의 적월 인장','리리안의 망령 인장','리리안의 서리 인장'][tier-1]:['숲지기의 ','폐성 수호자의 ','서리결 '][tier-1]+SLOTS[slot],slot,tier,artId:equipmentFamily(slot)==='armor'?artRows[tier-1][2]:`acc_t${tier}_${slot==='special'?'seal':'earring'}`,base:Object.freeze(slot==='helmet'?{hp:12,reduction:1}:slot==='pants'?{hp:15,reduction:1}:slot==='boots'?{hp:8,speed:2}:slot==='earring'?{damage:3,crit:1}:{damage:5,hp:10}),effectId:null,signatureOnly:true,...(slot==='special'?{characterId:'lirian'}:{})}))) ]);
+// Region 4-6 accessories (Alpha 0.122): one necklace per charm power, an earring and a Lilian seal per region.
+// They drop from growth dungeons like the tier 1-3 accessories; ancients stay derived from BASE_CATALOG only.
+const ACCESSORY_NAMES=[
+ ['파도의 기세 진주','심해 호흡 목걸이','해류 축전 진주','추적자의 소라','물방울 별무리','조수 수집 진주','심해 산호 귀걸이','리리안의 해류 인장'],
+ ['돌풍 기세 깃목걸이','창공 호흡석','뇌운 축전석','매의 추적 깃','폭풍 별무리','바람 수집석','뇌운 귀걸이','리리안의 뇌운 인장'],
+ ['여명의 기세 원반','성휘 호흡석','황혼 축전핵','신역 추적 목걸이','천상 별무리','은총 수집 원반','황혼 성륜 귀걸이','리리안의 성휘 인장'],
+];
+export const ACCESSORY_CATALOG=Object.freeze(ACCESSORY_NAMES.flatMap((names,r)=>{const tier=r+4;return [
+ ...EFFECT_ROWS.charm.map((effectId,i)=>Object.freeze({id:`${tier}-charm-${i+1}`,name:names[i],slot:'charm',tier,artId:`acc_t${tier}_charm`,base:Object.freeze(patterns.charm[i%4]),effectId})),
+ Object.freeze({id:`${tier}-earring-1`,name:names[6],slot:'earring',tier,artId:`acc_t${tier}_earring`,base:Object.freeze({damage:3,crit:1}),effectId:null,signatureOnly:true}),
+ Object.freeze({id:`${tier}-special-1`,name:names[7],slot:'special',tier,artId:`acc_t${tier}_seal`,base:Object.freeze({damage:5,hp:10}),effectId:null,signatureOnly:true,characterId:'lirian'}),
+];}));
 // Chapter set pieces (Alpha 0.108/0.109): per set two weapon designs × two names and two names per armor part.
 // They carry `set` and drop only in their chapter; ancient identities stay derived from the base catalog.
 // Base stats follow the set's style; `power` raises them slightly for later chapters of a region.
@@ -58,7 +70,7 @@ const setBase=(set,stats)=>Object.freeze(Object.fromEntries(Object.entries(stats
 export const SET_CATALOG=Object.freeze(Object.values(EQUIPMENT_SETS).flatMap(set=>SET_SLOTS.flatMap(slot=>slot==='weapon'
  ?set.names.weapon.flatMap((names,variant)=>names.map((name,i)=>Object.freeze({id:`set-${set.id}-weapon-${variant*2+i+1}`,name,slot,tier:set.tier,artId:setArtId(set.id,slot,variant),set:set.id,base:setBase(set,SET_STYLES[set.style].weapon[variant]),effectId:EFFECT_ROWS.weapon[(set.effectOffset+variant*2+i)%6]})))
  :set.names[slot].map((name,i)=>Object.freeze({id:`set-${set.id}-${slot}-${i+1}`,name,slot,tier:set.tier,artId:setArtId(set.id,slot),set:set.id,base:setBase(set,SET_STYLES[set.style][slot]),...(slot==='armor'?{effectId:EFFECT_ROWS.armor[(set.effectOffset+i)%6]}:{effectId:null,signatureOnly:true})})))));
-export const ITEM_CATALOG=Object.freeze([...BASE_CATALOG,...SET_CATALOG]);
+export const ITEM_CATALOG=Object.freeze([...BASE_CATALOG,...ACCESSORY_CATALOG,...SET_CATALOG]);
 // Ordinary identity and quality are independent. Ancient identities have no quality variants.
 const ancientKey=row=>[row.tier,row.slot,row.artId,row.effectId].join(':');
 const VISUAL_STYLE=Object.freeze({echo:3,storm:5,execution:6,blood:4,frostNova:5,whirlwind:6,barrier:3,thorns:4,pulse:6,frostWard:5,lastStand:6,recovery:3,momentum:3,focus:4,capacitor:5,hunter:4,orbit:6,magnet:5});
@@ -140,6 +152,14 @@ export function rollStageItem({id,tier,slot=null,set=null,hunt=0},rng){
  const type=slot??STAGE_SLOTS[Math.min(STAGE_SLOTS.length-1,Math.floor(rng()*STAGE_SLOTS.length))],grade=Number.isInteger(hunt)&&hunt>0&&hunt<HUNT_GRADE_TABLES.length?hunt:0;
  let quality=0;if(grade){const table=HUNT_GRADE_TABLES[grade];let value=rng()*100;quality=table.length-1;for(let i=0;i<table.length;i++){value-=table[i];if(value<0){quality=i;break;}}}
  return rollItem({id,tier,slot:type,set,source:'stage',quality,hunt:grade},rng);
+}
+// Accessories (necklace, earring, Lilian seal) come from growth dungeons (Alpha 0.122): a chance per clear, never guaranteed.
+// `grade` picks the rarity table like a hunt mode (dungeon 4+ → 정예 table, 7+ → 악몽 table) but stats stay hunt 0.
+export const DUNGEON_ACCESSORY_CHANCE=.4,ACCESSORY_SLOT_WEIGHTS=Object.freeze([['charm',.45],['earring',.45],['special',.1]]);
+export function rollAccessory({id,tier,grade=0},rng){
+ let value=rng(),slot='special';for(const [s,w]of ACCESSORY_SLOT_WEIGHTS){value-=w;if(value<0){slot=s;break;}}
+ let quality=0;if(grade>0&&grade<HUNT_GRADE_TABLES.length){const table=HUNT_GRADE_TABLES[grade];let roll=rng()*100;quality=table.length-1;for(let i=0;i<table.length;i++){roll-=table[i];if(roll<0){quality=i;break;}}}
+ return rollItem({id,tier,slot,source:'stage',quality,hunt:0},rng);
 }
 const SCORE_WEIGHT=Object.freeze({damage:5,hp:.5,speed:3,crit:4,reduction:5});
 export function itemPower(item){let score=item.rarity*10000+item.tier*1000;for(const [k,v]of Object.entries(item.affixes))score+=(SCORE_WEIGHT[k]??0)*effectiveAffix(item,k);return score;}

@@ -49,3 +49,15 @@ test('two real skill dungeon settlements supply the material used by research an
 test('invalid dungeon requests are inert and never consume a battle ID, gold or material',()=>{
  const s=make(),before=JSON.stringify(s);for(const [id,level]of [['bad',1],['gold',0],['gold',1.5],['gold',NaN],['gold',Infinity],['gold','1']])assert.equal(g.launchDungeon(s,id,level),false);assert.equal(JSON.stringify(s),before);
 });
+test('growth dungeon clears roll one accessory of the furthest region; tier 1-3 earrings and seals move to their own art (Alpha 0.122)',()=>{
+ const slots=new Set(),rarities=new Set();
+ for(const seed of [1,2,3,4,5,6,7,8,9,10,11,12]){const p=g.createProfile(1000);p.unlockedStage=45;p.clearedStage=44;p.dungeonProgress.gold=9;const s=g.createGame(p,{durable:true});assert.equal(g.launchDungeon(s,'gold',10),true);s.lootRates={dungeon:1};s.lootRng=seed*7919;finish(s);
+  const item=s.run.dungeonReward.item;assert.ok(item,'dungeon:1 always rolls an accessory');assert.equal(item.tier,5);assert.ok(['charm','earring','special'].includes(item.slot));assert.ok(item.rarity<=3);assert.match(item.artId,/^acc_t5_/);slots.add(item.slot);rarities.add(item.rarity);
+  g.confirmSettlement(s,s.settlement.id);assert.ok(s.profile.inventory.some(i=>i.id===item.id));const saved=g.restoreProfile(g.encodeProfile(s.profile,1000),1000);assert.deepEqual(saved.inventory.find(i=>i.id===item.id),item);}
+ assert.ok(slots.has('charm')&&slots.has('earring'));assert.ok(rarities.size>1,'level 7+ dungeons use the 악몽 rarity table');
+ // Not guaranteed: with the normal 40% some clears give nothing.
+ let none=0;for(let seed=1;seed<=20;seed++){const s=g.createGame(g.createProfile(1000),{durable:true});g.launchDungeon(s,'gold',1);s.lootRng=seed*104729;finish(s);if(!s.run.dungeonReward.item)none++;}assert.ok(none>0&&none<20);
+ // Old earrings and seals named the shared charm art of their tier; restore moves them to the 0.122 art.
+ const p=g.createProfile(1000);p.inventory=[{id:1,slot:'earring',tier:2,rarity:1,name:'폐성 수호자의 귀걸이',catalogId:'2-earring-1',artId:'ruins_charm',affixes:{damage:3,crit:1}},{id:2,slot:'special',tier:3,rarity:0,name:'리리안의 서리 인장',catalogId:'3-special-1',artId:'frost_charm',characterId:'lirian',affixes:{damage:5,hp:10}}];
+ const moved=g.restoreProfile(g.encodeProfile(p,1000),1000).inventory;assert.deepEqual(moved.map(i=>[i.artId,i.catalogId]),[['acc_t2_earring','2-earring-1'],['acc_t3_seal','3-special-1']]);
+});

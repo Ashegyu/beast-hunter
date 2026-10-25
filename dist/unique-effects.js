@@ -1,4 +1,5 @@
 // Validated innate powers: combat parameters and generated descriptions share one definition.
+// Alpha 0.121: focus and capacitor fed the removed 파쇄; they now act on equipped skills.
 // Alpha 0.120: the six weapon powers were measured on real waves (same weapon stats) and tuned to similar damage gains.
 const rows=[
  ['echo','weapon','잔향 검격','#e9cd8b',{damage:.55,cooldown:2.5,radius:280}],
@@ -14,8 +15,8 @@ const rows=[
  ['lastStand','armor','불멸의 유언','#ffda9d',{health:.2,invulnerable:1}],
  ['recovery','armor','고요한 회복','#b0d9ad',{quiet:1.5,ratio:.04}],
  ['momentum','charm','회피의 기세','#eed6a0',{duration:2,bonus:.6,stamina:12}],
- ['focus','charm','연격의 호흡','#c5e8b1',{stamina:15,cooldownReduction:1}],
- ['capacitor','charm','파쇄 축전기','#b3dff4',{paidHits:2}],
+ ['focus','charm','연격의 호흡','#c5e8b1',{stamina:15,cooldownReduction:.4}],
+ ['capacitor','charm','스킬 축전기','#b3dff4',{charges:2,refund:.4}],
  ['hunter','charm','추격자의 인장','#e2bf89',{stamina:10,dashReduction:.5,cooldown:.5}],
  ['orbit','charm','회피 별무리','#e5c6fa',{duration:1.2,interval:.4,damage:.25,ticks:3,cooldown:4,radius:145}],
  ['magnet','charm','전리품의 맥박','#90e6dc',{range:90,heal:5,stamina:8,cooldown:1}],
@@ -35,8 +36,8 @@ function describe(id,r){switch(id){
  case 'lastStand':return `사냥당 한 번, 치명적인 피해를 체력 ${pct(r.health)}로 버티고 ${r.invulnerable}초 무적. 장비 교체로 충전되지 않음.`;
  case 'recovery':return `이동·공격·피격 없이 ${r.quiet}초 머물면 초당 최대 체력 ${pct(r.ratio)} 회복.`;
  case 'momentum':return `회피 후 ${r.duration}초 안에 시작한 다음 검격 피해 +${pct(r.bonus)}. 적중하면 기력 ${r.stamina} 회복. 빗나가도 소모.`;
- case 'focus':return `3연격 마무리 적중 시 기력 ${r.stamina} 회복, 파쇄 대기 시간 ${r.cooldownReduction}초 감소. 한 검격에 한 번.`;
- case 'capacitor':return `기력을 쓴 파쇄 ${r.paidHits}회 적중 후 다음 파쇄의 기력 소모가 0. 무료 파쇄·반격은 충전하지 않음. 대기 시간은 유지.`;
+ case 'focus':return `3연격 마무리 적중 시 기력 ${r.stamina} 회복, 장착 스킬 재사용 대기 ${r.cooldownReduction}초 감소. 한 검격에 한 번.`;
+ case 'capacitor':return `스킬 ${r.charges}회 시전으로 충전되고, 다음 스킬의 재사용 대기 시간이 ${pct(r.refund)} 짧아짐.`;
  case 'hunter':return `처치 시 기력 ${r.stamina} 회복, 회피 대기 시간 ${r.dashReduction}초 감소. 재사용 ${r.cooldown}초.`;
  case 'orbit':return `회피 출발 지점에 ${r.duration}초 별무리 생성. 주변에 ${r.interval}초마다 기본 공격력 ${pct(r.damage)} 피해, 총 ${r.ticks}회. 재사용 ${r.cooldown}초.`;
  case 'magnet':return `수집 거리 +${r.range}. 장비 또는 핵 회수 시 체력 ${r.heal}·기력 ${r.stamina} 회복. 재사용 ${r.cooldown}초.`;

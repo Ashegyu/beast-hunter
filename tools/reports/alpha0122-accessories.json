@@ -1,0 +1,25 @@
+{
+  "sources": [
+    {
+      "sheet": "acc-1",
+      "source": "art/accessories0122/acc-1.png",
+      "sha256": "550a0eeeac973127fe6b413973baaefeae101f532cfd16fb9ab2b97eed0e6ccc"
+    },
+    {
+      "sheet": "acc-2",
+      "source": "art/accessories0122/acc-2.png",
+      "sha256": "ceb26809d87e38bcbe32646082f4872bc6ae4b385b8dba4ecfb62ba16caaf6b1"
+    },
+    {
+      "sheet": "acc-3",
+      "source": "art/accessories0122/acc-3.png",
+      "sha256": "239061cb715c2abf2e8b3a95c9a2f6d74910ea550fdd2199dd74011067faae66"
+    }
+  ],
+  "page": [
+    1200,
+    752
+  ],
+  "frames": 15,
+  "webpBytes": 722006
+}

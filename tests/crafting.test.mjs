@@ -6,8 +6,8 @@ const prepare=()=>{const p=g.createProfile(1000);p.clearedStage=3;p.unlockedStag
 const advance=(s,t)=>{while(t>1e-8){const dt=Math.min(.025,t);g.advanceGame(s,dt);t-=dt;}};
 function arena(s){g.launch(s);freezeCombat(s);s.run.flow='combat';s.run.waveQuota=1000;s.spawns=[];s.enemies=[];s.barrels=[];s.player.invulnerable=999;}
 function enemy(s,opts={}){const e={id:s.nextId++,type:'skitter',boss:false,x:s.player.x+60,y:s.player.y,hp:1,maxHp:1000,action:'walk',actionTime:0,speed:0,cooldown:999,aggro:true,guard:0,dead:false,wave:s.run.wave,runStage:s.run.stage,lookX:0,lookY:1,...opts};s.enemies.push(e);return e;}
-test('all twelve material chances have exact independent boundaries, extreme ingredient is boss-only 1 in 100000',()=>{
- assert.equal(g.MATERIALS.length,13);const origin=g.MATERIAL_BY_ID.origin,source=g.MATERIAL_BY_ID.source;assert.equal(origin.boss,.00001);assert.equal(source.boss,.001);
+test('all twelve material chances have exact independent boundaries, extreme ingredients are boss-only (Alpha 0.122: 원질 핵 2%, 무명의 기원 0.3%)',()=>{
+ assert.equal(g.MATERIALS.length,13);const origin=g.MATERIAL_BY_ID.origin,source=g.MATERIAL_BY_ID.source;assert.equal(origin.boss,.003);assert.equal(source.boss,.02);assert.equal(origin.normal+origin.elite+source.normal+source.elite,0);
  for(const m of g.MATERIALS)for(let tier=1;tier<=3;tier++)for(const role of ['normal','elite','boss']){const context={tier,boss:role==='boss',elite:role==='elite'},chance=materialChance(m,context);assert.ok(chance>=0&&chance<=1);if(chance){assert.ok(rollMaterials(context,()=>Math.max(0,chance-Number.EPSILON)).some(d=>d.id===m.id));assert.ok(!rollMaterials(context,()=>chance).some(d=>d.id===m.id));}else assert.ok(!rollMaterials(context,()=>0).some(d=>d.id===m.id));}
  const drops=rollMaterials({tier:1,boss:true},()=>0);assert.equal(drops.find(d=>d.id==='boneIron').amount,4);assert.ok(drops.some(d=>d.id==='root'));assert.ok(!drops.some(d=>d.id==='seal'||d.id==='tear'));
 });

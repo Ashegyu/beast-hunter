@@ -1,0 +1,29 @@
+{
+  "id": "acc-3",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production equipment item icons (jewelry accessories) for a dark fantasy 2D action RPG. Image1 is the existing equipment sheet of this game: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting and scale. Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, row 1 cells 1-3, row 2 cells 4-5, and the sixth cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge, each item compact and filling about 60% of its cell: (1) a silver earring shaped like a small lightning bolt with a storm-blue gem and tiny wing (STORM SKY ISLAND theme), (2) a silver and sky-blue seal medallion engraved with spread wings around a thundercloud (STORM SKY ISLAND theme), (3) a necklace pendant of a radiant golden sun disc with a dusk-violet gem on a gold chain (TWILIGHT DIVINE REALM theme), (4) a gold earring shaped like a small halo with a hanging violet-amber gem (TWILIGHT DIVINE REALM theme), (5) an ornate gold seal medallion with a twilight sun eclipse emblem, white marble inlay and violet glow (TWILIGHT DIVINE REALM theme). Each item is a single object (an earring is ONE single earring, not a pair). Each item clearly readable at small icon size and clearly distinct from the others. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "referenceImages": [
+    {
+      "path": "dist/assets/equipment_chapters-v09.webp",
+      "sha256": "99f0495a7004767706f9fe38dad276fea039d514d886e08f3363661b67bb0929"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": 0.717,
+      "parts": 5,
+      "seconds": 156,
+      "sha256": "239061cb715c2abf2e8b3a95c9a2f6d74910ea550fdd2199dd74011067faae66"
+    }
+  ],
+  "final": {
+    "path": "art/accessories0122/acc-3.png",
+    "sha256": "239061cb715c2abf2e8b3a95c9a2f6d74910ea550fdd2199dd74011067faae66"
+  }
+}

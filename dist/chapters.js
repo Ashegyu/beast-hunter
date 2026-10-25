@@ -1,5 +1,5 @@
-import {equipmentFamily} from './equipment-slots.js?v=0.121.0';
-import {EQUIPMENT_SETS,SET_SLOTS,CHAPTER_SETS,setArtId} from './equipment-sets.js?v=0.121.0';
+import {equipmentFamily} from './equipment-slots.js?v=0.122.0';
+import {EQUIPMENT_SETS,SET_SLOTS,CHAPTER_SETS,setArtId} from './equipment-sets.js?v=0.122.0';
 // Sixty chapters in six regions of ten: 1–10 forest, 11–20 fire and ice (11–15 fire,
 // 16–20 ice), 21–30 darkness (Alpha 0.107), 31–40 sunken kingdom, 41–50 storm sky isles,
 // 51–60 twilight sanctum (Alpha 0.118). A region drives the map tabs, item and
@@ -254,7 +254,13 @@ export const EQUIPMENT_ART = [
 const PART_NAMES={helmet:'투구',armor:'흉갑',pants:'각반',boots:'장화'};
 export const SET_ART = Object.values(EQUIPMENT_SETS).flatMap(set=>SET_SLOTS.flatMap(slot=>(slot==='weapon'?[0,1]:[0]).map(variant=>({id:setArtId(set.id,slot,variant),tier:set.tier,slot:equipmentFamily(slot),set:set.id,
   name:set.name+' '+(slot==='weapon'?(variant?'대검':'장검'):PART_NAMES[slot])}))));
-export const ALL_EQUIPMENT_ART = [...EQUIPMENT_ART,...SET_ART];
+// Accessory art (Alpha 0.122): earrings and Lilian seals for every region, necklaces for regions 4-6
+// (regions 1-3 keep their charm art). Frames sit on the equipment-accessories-v0122 page (manifest setFrames).
+const ACCESSORY_REGIONS=['붉은 숲','폐성','서리','해류','뇌운','성휘'];
+export const ACCESSORY_ART = ACCESSORY_REGIONS.flatMap((name,i)=>[
+  ...(i>=3?[{id:`acc_t${i+1}_charm`,tier:i+1,slot:'charm',name:name+' 목걸이'}]:[]),
+  {id:`acc_t${i+1}_earring`,tier:i+1,slot:'charm',name:name+' 귀걸이'},{id:`acc_t${i+1}_seal`,tier:i+1,slot:'charm',name:name+' 인장'}]);
+export const ALL_EQUIPMENT_ART = [...EQUIPMENT_ART,...SET_ART,...ACCESSORY_ART];
 export function equipmentArt(item){
   // Ancients keep their family's base art, whose tier differs from the region tier for tiers 2/3 (Alpha 0.112).
   const explicit=ALL_EQUIPMENT_ART.find(a=>a.id===item?.artId&&a.slot===equipmentFamily(item.slot)&&(a.tier===item.tier||item.ancient||item.rarity===5));
@@ -267,4 +273,4 @@ for(const biome of Object.values(BIOMES)){
 }
 FORMATIONS.forEach(Object.freeze);Object.freeze(FORMATIONS);Object.freeze(BIOMES);THEMES.forEach(Object.freeze);
 for(const chapter of CHAPTERS){chapter.route=BIOMES[chapter.biome].route;Object.freeze(chapter);}
-Object.values(CHAPTER_BOSSES).forEach(Object.freeze);Object.freeze(CHAPTER_BOSSES);Object.values(MID_BOSSES).forEach(Object.freeze);Object.freeze(MID_BOSSES);Object.freeze(THEMES);Object.freeze(CHAPTERS);Object.values(MONSTERS).forEach(m=>{if(m.attackCycle)Object.freeze(m.attackCycle);Object.freeze(m);});Object.freeze(MONSTERS);EQUIPMENT_ART.forEach(Object.freeze);Object.freeze(EQUIPMENT_ART);SET_ART.forEach(Object.freeze);Object.freeze(SET_ART);Object.freeze(ALL_EQUIPMENT_ART);
+Object.values(CHAPTER_BOSSES).forEach(Object.freeze);Object.freeze(CHAPTER_BOSSES);Object.values(MID_BOSSES).forEach(Object.freeze);Object.freeze(MID_BOSSES);Object.freeze(THEMES);Object.freeze(CHAPTERS);Object.values(MONSTERS).forEach(m=>{if(m.attackCycle)Object.freeze(m.attackCycle);Object.freeze(m);});Object.freeze(MONSTERS);EQUIPMENT_ART.forEach(Object.freeze);Object.freeze(EQUIPMENT_ART);SET_ART.forEach(Object.freeze);Object.freeze(SET_ART);ACCESSORY_ART.forEach(Object.freeze);Object.freeze(ACCESSORY_ART);Object.freeze(ALL_EQUIPMENT_ART);

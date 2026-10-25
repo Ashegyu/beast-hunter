@@ -1297,9 +1297,7 @@ test('high-grade cards explain the real slot effect and highest-grade filter pre
 test('seven visual ranks keep bounded distinct beams and chimes; crafted rank remains a presentation fixture',async()=>{
  for(let rarity=0;rarity<7;rarity++){const ui=await host({recordGeometry:true});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];const row=rarity===6?game.CRAFTED_CATALOG[0]:rarity===5?game.ANCIENT_CATALOG[0]:game.ITEM_CATALOG[0],item={id:99,slot:row.slot,tier:1,rarity,catalogId:row.id,artId:row.artId,name:row.name,affixes:{}};ui.state.effects.push({id:999,type:'gearDrop',x:ui.state.player.x+60,y:ui.state.player.y,item,rarity,ttl:game.RARITY_INFO[rarity].ttl,maxTtl:game.RARITY_INFO[rarity].ttl});ui.tick();assert.ok(ui.audioDetails.some(e=>e.type==='gearDrop'&&e.details.rarity===rarity));if(rarity)assert.ok(ui.geometry.some(c=>c.kind==='fillRect'&&c.args[3]===[0,48,72,100,124,150,176][rarity]));assert.equal(ui.nodes.get('reward-toast').hidden,true);}
 });
-test('charged capacitor UI advertises zero stamina heavy and capture works through the real button',async()=>{
- const row=game.ITEM_CATALOG.find(r=>r.effectId==='capacitor'),p=game.createProfile(1_000_000);p.inventory=[{id:1,slot:'charm',tier:row.tier,rarity:3,catalogId:row.id,artId:row.artId,name:row.name,affixes:{}}];p.equipment.charm=1;const ui=await host({saved:p});ui.emit('start','click');ui.state.uniqueState.capacitor=2;ui.state.player.stamina=0;ui.state.player.thunderCooldown=0;ui.tick();assert.match(ui.nodes.get('thunder-status').textContent,/기력 0/);ui.emit('thunder','click');assert.equal(ui.state.player.action,'heavy');assert.equal(ui.state.uniqueState.capacitor,0);
-});
+// Alpha 0.121: 스킬 축전기 no longer touches 파쇄 (removed from the UI in 0.104); see tests/unique-effects.test.mjs.
 
 
 test('ancient slot icons and committed attack effects retain identity without character weapon overlays',async()=>{
@@ -1823,8 +1821,8 @@ test('followup HUD writes preserve simulation, controls, pause and live diagnost
 });
 
 
-test('followup unchanged HUD text preserves its node while changed values and capacitor actions appear immediately',async()=>{
- const ui=await host();ui.emit('start','click');ui.tick(0);const node=ui.nodes.get('gold');let text=node.textContent,writes=0;Object.defineProperty(node,'textContent',{get(){return text;},set(value){text=value;writes++;}});for(let i=0;i<20;i++)ui.tick(0);assert.equal(writes,0);ui.state.profile.gold++;ui.tick(0);assert.equal(writes,1);assert.equal(text,String(ui.state.profile.gold));ui.state.uniqueState.capacitor=2;ui.state.loadout.charm={definition:{id:'capacitor'}};ui.state.player.stamina=0;ui.tick(.025);assert.equal(ui.nodes.get('thunder-status').textContent,'축전 · 기력 0');
+test('followup unchanged HUD text preserves its node while changed values appear immediately',async()=>{
+ const ui=await host();ui.emit('start','click');ui.tick(0);const node=ui.nodes.get('gold');let text=node.textContent,writes=0;Object.defineProperty(node,'textContent',{get(){return text;},set(value){text=value;writes++;}});for(let i=0;i<20;i++)ui.tick(0);assert.equal(writes,0);ui.state.profile.gold++;ui.tick(0);assert.equal(writes,1);assert.equal(text,String(ui.state.profile.gold));
 });
 
 

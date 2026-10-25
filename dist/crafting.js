@@ -1,4 +1,5 @@
 import {INVENTORY_LIMIT} from './inventory-rules.js?v=0.86.9';
+// Alpha 0.122: 원질 핵 0.1%→2%, 무명의 기원 0.001%→0.3% so a recipe is reachable (still rare; crafting always succeeds).
 // Authored crafting identities. This catalogue is never part of equipment roll pools.
 export const MATERIAL_LIMIT=1_000_000;
 export const MATERIALS=Object.freeze([
@@ -8,8 +9,8 @@ export const MATERIALS=Object.freeze([
  {id:'root',name:'수호령의 뿌리',color:'#b8e894',tier:1,normal:0,elite:.006,boss:.06,where:'붉은 숲 · 정예 0.6% / 보스 6%'},
  {id:'seal',name:'망자의 왕인',color:'#ceb7ff',tier:3,normal:0,elite:.006,boss:.06,where:'어둠의 심연 · 정예 0.6% / 보스 6%'},
  {id:'tear',name:'빙룡의 눈물',color:'#96ecfa',tier:2,normal:0,elite:.006,boss:.06,where:'불과 얼음의 땅 · 정예 0.6% / 보스 6%'},
- {id:'source',name:'원질 핵',color:'#ffbf76',normal:0,elite:0,boss:.001,rare:true,where:'모든 지역 보스 · 처치당 0.1% · 평균 1,000회당 1개'},
- {id:'origin',name:'무명의 기원',color:'#8ffff1',normal:0,elite:0,boss:.00001,rare:true,where:'모든 지역 보스 · 처치당 0.001% · 평균 100,000회당 1개'},
+ {id:'source',name:'원질 핵',color:'#ffbf76',normal:0,elite:0,boss:.02,rare:true,where:'모든 지역 보스 · 처치당 2% · 평균 50회당 1개'},
+ {id:'origin',name:'무명의 기원',color:'#8ffff1',normal:0,elite:0,boss:.003,rare:true,where:'모든 지역 보스 · 처치당 0.3% · 평균 약 330회당 1개'},
  {id:'refineStone',name:'재련석',color:'#e3cf94',refining:true,normal:.25,elite:.75,boss:1,quantity:[1,2,6],where:'강화 던전 확정 보상 / 모든 사냥터 · 일반 25% / 정예 75% / 보스 100% · 1 / 2 / 6개'},
  {id:'refineCrystal',name:'정제석',color:'#b8a5ef',refining:true,normal:0,elite:.15,boss:.65,quantity:[1,1,3],where:'강화 던전 4단계부터 확정 보상 / 모든 사냥터 · 정예 15% / 보스 65% · 1 / 3개'},
  {id:'refineEssence',name:'순수결정',color:'#ffbf76',refining:true,normal:0,elite:.02,boss:.2,quantity:[1,1,1],where:'강화 던전 7단계부터 확정 보상 / 모든 사냥터 · 정예 2% / 보스 20% · 1개'},

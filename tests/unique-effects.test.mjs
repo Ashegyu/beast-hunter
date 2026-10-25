@@ -61,10 +61,10 @@ test('momentum buffs exactly the next committed strike and is consumed even on a
  const miss=arena('momentum');g.dash(miss);miss.player.action='idle';g.attack(miss,{x:1,y:0});assert.equal(miss.uniqueState.momentum,0);assert.ok(miss.player.swing.momentum>0);
 });
 test('focus grants one resource refund per finisher regardless of target count',()=>{
- const s=arena('focus');enemy(s);enemy(s,85,20);s.player.action='idle';s.player.combo=2;s.player.comboWindow=.5;s.player.stamina=30;s.player.thunderCooldown=3;g.attack(s,{x:1,y:0});advance(s,s.player.swing.impact);assert.ok(s.player.stamina<50&&s.player.stamina>45);assert.ok(s.player.thunderCooldown<2&&s.player.thunderCooldown>1.7);
+ const s=arena('focus');enemy(s);enemy(s,85,20);s.skillRuntime.cooldowns.crescent=3;s.skillRuntime.cooldownKeys.push('crescent');s.player.action='idle';s.player.combo=2;s.player.comboWindow=.5;s.player.stamina=30;g.attack(s,{x:1,y:0});const impact=s.player.swing.impact;advance(s,impact);assert.ok(s.player.stamina<50&&s.player.stamina>45);assert.ok(Math.abs(s.skillRuntime.cooldowns.crescent-(3-.4-impact))<.03);
 });
-test('capacitor gives the third heavy zero cost and unequipping clears the owned charge',()=>{
- const s=arena('capacitor');enemy(s);hit(s,{heavy:true});enemy(s);hit(s,{heavy:true});assert.equal(s.uniqueState.capacitor,2);s.player.action='idle';s.player.thunderCooldown=0;s.player.stamina=0;assert.equal(g.thunder(s,{x:1,y:0}),true);assert.equal(s.player.stamina,0);assert.equal(s.uniqueState.capacitor,0);s.paused=true;s.uniqueState.capacitor=2;s.profile.inventory.push(gear('focus',2));g.equipItem(s,2);assert.equal(s.uniqueState.capacitor,0);
+test('capacitor charges on skill casts and unequipping clears the owned charge',()=>{
+ const s=arena('capacitor');s.run.flow='combat';enemy(s,60);for(let i=0;i<2;i++){s.player.action='idle';s.player.stamina=100;s.skillRuntime.casting=null;s.skillRuntime.cooldowns.crescent=0;assert.ok(g.useSkill(s,'crescent',{x:1,y:0}));}assert.equal(s.uniqueState.capacitor,2);s.paused=true;s.profile.inventory.push(gear('focus',2));g.equipItem(s,2);assert.equal(s.uniqueState.capacitor,0);
 });
 test('hunter refunds resources on a kill and limits simultaneous-kill gain',()=>{
  const s=arena('hunter');const a=enemy(s),b=enemy(s,85,10);a.hp=b.hp=1;s.player.stamina=0;s.player.dashCooldown=.65;g.attack(s,{x:1,y:0});advance(s,.11);assert.equal(s.run.kills,2);assert.ok(s.player.stamina>10&&s.player.stamina<13);assert.ok(s.player.dashCooldown<.1);
@@ -88,9 +88,6 @@ test('proc kills pay once, result states freeze zones and return clears their li
 });
 
 
-test('free heavy hits and perfect counters do not recharge or consume a stored paid-heavy charge',()=>{
- const s=arena('capacitor');enemy(s);s.uniqueState.capacitor=2;s.player.stamina=0;s.player.thunderCooldown=0;g.thunder(s,{x:1,y:0});advance(s,.31);assert.equal(s.uniqueState.capacitor,0);s.uniqueState.capacitor=2;s.player.action='idle';s.player.counterReady=2;s.player.stamina=0;g.thunder(s,{x:1,y:0});assert.equal(s.uniqueState.capacitor,2);advance(s,.2);assert.equal(s.uniqueState.capacitor,2);s.paused=true;g.equipItem(s,1);assert.equal(s.uniqueState.capacitor,2);
-});
 
 
 test('stage transitions discard spatial buffs, keep earned charges and advance cooldown clocks',()=>{
@@ -98,4 +95,16 @@ test('stage transitions discard spatial buffs, keep earned charges and advance c
 });
 test('highest grades strengthen scalable control and range while free-heavy behavior stays bounded',()=>{
  const p=g.createProfile();p.inventory=[gear('frostWard',1,6),gear('whirlwind',2,6)];p.equipment.armor=1;p.equipment.weapon=2;const s=g.createGame(p);g.launch(s);freezeCombat(s);s.enemies=[];const e=enemy(s);hurt(s);assert.ok(e.chillRemaining>3.3);s.player.action='idle';s.player.attackCooldown=0;s.player.combo=2;s.player.comboWindow=.5;g.attack(s,{x:1,y:0});assert.ok(Math.abs(s.player.swing.range-1.12*(1+.18*1.36))<.00001);
+});
+test('연격의 호흡 and 스킬 축전기 act on equipped skills now that 파쇄 is gone (Alpha 0.121)',()=>{
+ assert.match(UNIQUE_EFFECTS.focus.description,/장착 스킬 재사용 대기 0.4초 감소/);assert.equal(UNIQUE_EFFECTS.capacitor.name,'스킬 축전기');assert.doesNotMatch(UNIQUE_EFFECTS.focus.description+UNIQUE_EFFECTS.capacitor.description,/파쇄/);
+ // focus: a landed 3연격 finisher trims every running skill cooldown.
+ let s=arena('focus');enemy(s,60);s.skillRuntime.cooldowns.crescent=5;s.skillRuntime.cooldownKeys.push('crescent');hit(s,{finisher:true});
+ assert.ok(Math.abs(s.skillRuntime.cooldowns.crescent-(5-.4-s.player.swing.impact))<.03,String(s.skillRuntime.cooldowns.crescent));
+ // capacitor: two casts charge it, the third cast starts with a 40% shorter cooldown and empties the charge.
+ s=arena('capacitor');s.run.flow='combat';enemy(s,60);const cast=()=>{const p=s.player;p.stamina=100;p.action='idle';s.skillRuntime.casting=null;s.skillRuntime.cooldowns.crescent=0;assert.ok(g.useSkill(s,'crescent',{x:1,y:0}));return s.skillRuntime.cooldowns.crescent;};
+ const full=cast();assert.equal(s.uniqueState.capacitor,1);assert.equal(cast(),full);assert.equal(s.uniqueState.capacitor,2);
+ assert.ok(Math.abs(cast()-full*.6)<1e-9);assert.equal(s.uniqueState.capacitor,0);
+ // The removed 파쇄 no longer spends or uses the charge.
+ s.uniqueState.capacitor=2;s.player.stamina=0;s.player.thunderCooldown=0;s.player.action='idle';s.skillRuntime.casting=null;assert.equal(g.thunder(s,{x:1,y:0}),false);assert.equal(s.uniqueState.capacitor,2);
 });

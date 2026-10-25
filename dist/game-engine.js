@@ -1,39 +1,39 @@
-import {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonPlan,dungeonActors,emptyDungeonProgress} from './dungeons.js?v=0.121.0';
+import {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonPlan,dungeonActors,emptyDungeonProgress} from './dungeons.js?v=0.122.0';
 export {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards};
-import {beginStageJournal,profileForSave,strictBattle,cancelStageJournal,prepareStageCommit,finishStageJournal,stageTransactionId,ownedAtStageStart} from './battle-progress.js?v=0.121.0';
-import {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_DROP_CHANCE,INSCRIPTION_COST} from './build-effects.js?v=0.121.0';
-import {stageRule,STAGE_TYPE_NAMES} from './battle-plans.js?v=0.121.0';
+import {beginStageJournal,profileForSave,strictBattle,cancelStageJournal,prepareStageCommit,finishStageJournal,stageTransactionId,ownedAtStageStart} from './battle-progress.js?v=0.122.0';
+import {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_DROP_CHANCE,INSCRIPTION_COST} from './build-effects.js?v=0.122.0';
+import {stageRule,STAGE_TYPE_NAMES} from './battle-plans.js?v=0.122.0';
 export {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_COST,stageRule,STAGE_TYPE_NAMES};
 export const PROFILE_VERSION=16,MAX_LEVEL=200,BUILD_NAMES=Object.freeze(['일반 사냥','보스','광역','생존','실험']);
-import {SLOTS,EQUIPMENT_SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,equipmentFamily,emptyEquipment,restoreEquipment,equipmentAfterEquip,equippedPosition,isEquippedItem} from './equipment-slots.js?v=0.121.0';
-export * from './equipment-slots.js?v=0.121.0';
-import {enhanceOwned,promoteOwned,rerollOwned,resolveOwnedReroll,restoreEquipmentProgress} from './equipment-progression.js?v=0.121.0';
-export * from './equipment-progression.js?v=0.121.0';
+import {SLOTS,EQUIPMENT_SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,equipmentFamily,emptyEquipment,restoreEquipment,equipmentAfterEquip,equippedPosition,isEquippedItem} from './equipment-slots.js?v=0.122.0';
+export * from './equipment-slots.js?v=0.122.0';
+import {enhanceOwned,promoteOwned,rerollOwned,resolveOwnedReroll,restoreEquipmentProgress} from './equipment-progression.js?v=0.122.0';
+export * from './equipment-progression.js?v=0.122.0';
 export * from './skill-vfx.js?v=0.72.0';
 export * from './skill-image-fx.js?v=0.72.0';
 export * from './monster-fx.js?v=0.70.0';
 export * from './combat-feedback.js';
 export * from './ultimate-video.js';
 export * from './skill-motion.js';
-import * as skills from './combat-skills.js?v=0.121.0';
-export * from './combat-skills.js?v=0.121.0';
-import {MATERIALS,MATERIAL_BY_ID,MATERIAL_LIMIT,emptyMaterials,rollMaterials,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.121.0';
-export {MATERIALS,MATERIAL_BY_ID,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.121.0';
-import {equipmentSynergies} from './equipment-synergies.js?v=0.121.0';
-import {itemProtection} from './loot.js?v=0.121.0';
-export {itemProtection,salvageValue} from './loot.js?v=0.121.0';
-export {equipmentSynergies,EQUIPMENT_SYNERGIES} from './equipment-synergies.js?v=0.121.0';
+import * as skills from './combat-skills.js?v=0.122.0';
+export * from './combat-skills.js?v=0.122.0';
+import {MATERIALS,MATERIAL_BY_ID,MATERIAL_LIMIT,emptyMaterials,rollMaterials,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.122.0';
+export {MATERIALS,MATERIAL_BY_ID,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.122.0';
+import {equipmentSynergies} from './equipment-synergies.js?v=0.122.0';
+import {itemProtection} from './loot.js?v=0.122.0';
+export {itemProtection,salvageValue} from './loot.js?v=0.122.0';
+export {equipmentSynergies,EQUIPMENT_SYNERGIES} from './equipment-synergies.js?v=0.122.0';
 import {HUNT_MODES,huntMode,REPLAY_CYCLES} from './hunt-modes.js';
 export {HUNT_MODES} from './hunt-modes.js';
 // Pure combat, random waves and persistent RPG rules. No rendering or storage dependencies.
 import { directionIndex, recoilProgress, ACTION_DURATIONS } from './motion.js';
 import { WORLD_BOUNDS, GROUND_DEPTH_SCALE } from './world.js';
-import { CHAPTERS, CHAPTERS_PER_THEME, THEMES, chapterTheme, MONSTERS, chapterMonsterPool, EQUIPMENT_ART, ALL_EQUIPMENT_ART, equipmentArt } from './chapters.js?v=0.121.0';
-import { STAGES_PER_CHAPTER, battlePlan, stageWaveCount, waveComposition } from './battle-plans.js?v=0.121.0';
-import { affixCap, INVENTORY_LIMIT, MAX_PENDING_LOOT, LEGENDARY_PITY_LIMIT, huntGrade, ITEM_CATALOG, ANCIENT_CATALOG, ancientIdOfBase, rollAncient, BOSS_LOOT, bossLootPool, discoverAncient, targetAncient, setAncientTarget, ancientDefinition, ancientForLegacy, effectiveAffix, RARITIES, RARITY_INFO, rollItem, rollStageItem, storeItem, salvageValue, uniqueEffect, uniqueLoadout, equippedUniqueEffect, UNIQUE_EFFECTS, itemSet, setBonusStats, EQUIPMENT_SETS, SET_SLOTS } from './loot.js?v=0.121.0';
-export { ancientSignatures, ANCIENT_TIER_POWER, ANCIENT_HUNT_POWER, huntGrade, HUNT_POWER, HUNT_GRADE_TABLES, itemSet, setBonusStats, setBonusText, EQUIPMENT_SETS, SET_SLOTS, SET_STATS, CHAPTER_SETS, SET_CATALOG } from './loot.js?v=0.121.0';
-export { INVENTORY_LIMIT, LEGENDARY_PITY_LIMIT, ITEM_CATALOG, ANCIENT_CATALOG, BOSS_LOOT, RARITIES, RARITY_INFO, UNIQUE_EFFECTS, uniqueEffect, uniqueLoadout, targetAncient, setAncientTarget, ancientDefinition, gearDropPresentation, gearDropDuration } from './loot.js?v=0.121.0';
-export { STAGES_PER_CHAPTER, BATTLE_PLANS, battlePlan, stageWaveCount } from './battle-plans.js?v=0.121.0';
+import { CHAPTERS, CHAPTERS_PER_THEME, THEMES, chapterTheme, MONSTERS, chapterMonsterPool, EQUIPMENT_ART, ALL_EQUIPMENT_ART, equipmentArt } from './chapters.js?v=0.122.0';
+import { STAGES_PER_CHAPTER, battlePlan, stageWaveCount, waveComposition } from './battle-plans.js?v=0.122.0';
+import { affixCap, INVENTORY_LIMIT, MAX_PENDING_LOOT, LEGENDARY_PITY_LIMIT, huntGrade, ITEM_CATALOG, ANCIENT_CATALOG, ancientIdOfBase, rollAncient, BOSS_LOOT, bossLootPool, discoverAncient, targetAncient, setAncientTarget, ancientDefinition, ancientForLegacy, effectiveAffix, RARITIES, RARITY_INFO, rollItem, rollStageItem, rollAccessory, storeItem, salvageValue, uniqueEffect, uniqueLoadout, equippedUniqueEffect, UNIQUE_EFFECTS, itemSet, setBonusStats, EQUIPMENT_SETS, SET_SLOTS } from './loot.js?v=0.122.0';
+export { ancientSignatures, ANCIENT_TIER_POWER, ANCIENT_HUNT_POWER, huntGrade, HUNT_POWER, HUNT_GRADE_TABLES, itemSet, setBonusStats, setBonusText, EQUIPMENT_SETS, SET_SLOTS, SET_STATS, CHAPTER_SETS, SET_CATALOG } from './loot.js?v=0.122.0';
+export { INVENTORY_LIMIT, LEGENDARY_PITY_LIMIT, ITEM_CATALOG, ANCIENT_CATALOG, BOSS_LOOT, RARITIES, RARITY_INFO, UNIQUE_EFFECTS, uniqueEffect, uniqueLoadout, targetAncient, setAncientTarget, ancientDefinition, gearDropPresentation, gearDropDuration } from './loot.js?v=0.122.0';
+export { STAGES_PER_CHAPTER, BATTLE_PLANS, battlePlan, stageWaveCount } from './battle-plans.js?v=0.122.0';
 export const ARRIVAL_EPSILON=.001;
 export const STAGES = CHAPTERS;
 export {THEMES,CHAPTERS_PER_THEME};
@@ -134,6 +134,9 @@ function cleanItem(item,version){
   const affixes={};for(const id of Object.keys(AFFIXES)){const v=integer(item.affixes?.[id],0,affixCap(id));if(v)affixes[id]=v;}
   const clean={...(BUILD_EFFECTS[item.inscription]?{inscription:item.inscription}:{}),...(huntGrade(item)?{hunt:huntGrade(item)}:{}),id:item.id,slot:item.slot,rarity:integer(item.rarity,0,6),tier:integer(item.tier,1,THEMES.length,1),name:String(item.name??SLOTS[item.slot]).slice(0,32),affixes};
   // An ancient keeps its family's base art id, whose tier can differ from the ancient's region tier (0.112).
+  // Alpha 0.122: earrings and Lilian seals got their own art; older saves name the shared charm art of their family
+  // (crafted pieces keep their recipe art).
+  if((clean.slot==='earring'||clean.slot==='special')&&item.rarity!==6&&/^(forest|ruins|frost)_charm$/.test(item.artId??''))item={...item,artId:`acc_t${['forest','ruins','frost'].indexOf(item.artId.split('_')[0])+1}_${clean.slot==='special'?'seal':'earring'}`};
   if(ALL_EQUIPMENT_ART.some(a=>a.id===item.artId&&a.slot===equipmentFamily(clean.slot)&&a.tier===clean.tier)||ancientDefinition({...clean,artId:item.artId,catalogId:item.catalogId}))clean.artId=item.artId;
   if(ITEM_CATALOG.some(a=>a.id===item.catalogId&&a.slot===clean.slot&&a.tier===clean.tier&&a.artId===clean.artId))clean.catalogId=item.catalogId;
   const candidateDefinition=EQUIPMENT_DEFINITIONS.get(item.catalogId),definition=candidateDefinition?.slot===clean.slot&&candidateDefinition.tier===clean.tier&&candidateDefinition.artId===clean.artId?candidateDefinition:null;
@@ -505,7 +508,8 @@ function receiveItem(s,item,origin='monster',stageReward=null){
 }
 // Alpha 0.115: no equipment is guaranteed (user decision; enhancement guarantees stay). Each grant is a loot roll.
 // s.lootRates (not saved) can override the rates for a run: tests use 1 to keep a drop, events could raise them.
-export const DROP_CHANCE=Object.freeze({normal:.16,elite:.7,stage:.7,boss:.75});
+// dungeon (Alpha 0.122): chance of one accessory (necklace/earring/Lilian seal) per growth dungeon clear.
+export const DROP_CHANCE=Object.freeze({normal:.16,elite:.7,stage:.7,boss:.75,dungeon:.4});
 const dropRate=(s,kind)=>(s.lootRates??DROP_CHANCE)[kind]??DROP_CHANCE[kind];
 function awardItem(s,slot,minimumRarity=0,stageReward=null,kind='stage'){if(lootRandom(s)>=dropRate(s,kind))return null;const item=makeItem(s,slot,'stage',minimumRarity);receiveItem(s,item,'stage',stageReward);if(s.run.bossKilled)effect(s,'gearDrop',{x:s.player.x,y:s.player.y,item,rarity:item.rarity},RARITY_INFO[item.rarity].ttl);return item;}
 // Alpha 0.110: chapter bosses rarely drop an ancient of their region (raid ancients come later; tier = region since 0.112).
@@ -577,7 +581,7 @@ export function attack(s,aim){const p=s.player;if(s.skillRuntime.casting)return 
 export function thunder(s,aim){
   if(s.skillRuntime.casting)return false;
   s.skillRuntime.stanceUntil=0;s.skillRuntime.bloodbladeUntil=0;
-  const p=s.player,counter=p.counterReady>0,free=!counter&&s.loadout.charm?.definition.id==='capacitor'&&s.uniqueState.capacitor>=UNIQUE_EFFECTS.capacitor.paidHits;
+  const p=s.player,counter=p.counterReady>0,free=false;
   if(s.phase!=='playing'||s.settlement||s.paused||s.run.flow==='stageClear'||p.hp<=0||(!counter&&(p.thunderCooldown>0||!free&&p.stamina<35))||['dash','hurt','heavy'].includes(p.action))return false;
   if(!counter&&!free)p.stamina-=35;if(free)s.uniqueState.capacitor=0;p.counterReady=0;p.thunderCooldown=playerStats(s.profile).thunderCooldown;startAttack(s,aim,true,counter);p.swing.capacitorFree=free;return true;
 }
@@ -762,8 +766,12 @@ function strikeUnique(s,swing,stats,target,unguarded,targetX,targetY){
  if(id==='frostNova'&&!swing.heavy&&p.combo===3&&uniqueReady(s,id,spec.definition.cooldown))areaUnique(s,spec,p.x,p.y,spec.definition.radius,stats.damage*spec.definition.damage*spec.power,spec.definition.duration);
  if(id==='whirlwind'&&p.combo===3)uniqueVisual(s,spec,stats.range*swing.range);
  const charm=swing.charm,cid=charm?.definition.id;
- if(cid==='focus'&&p.combo===3){p.stamina=Math.min(100,p.stamina+UNIQUE_EFFECTS.focus.stamina*charm.power);p.thunderCooldown=Math.max(0,p.thunderCooldown-UNIQUE_EFFECTS.focus.cooldownReduction);uniqueVisual(s,charm);}
- if(cid==='capacitor'&&swing.heavy&&!swing.counter&&!swing.capacitorFree&&s.loadout.charm?.itemId===charm.itemId){u.capacitor=Math.min(UNIQUE_EFFECTS.capacitor.paidHits,u.capacitor+1);uniqueVisual(s,charm);}
+ if(cid==='focus'&&p.combo===3){p.stamina=Math.min(100,p.stamina+UNIQUE_EFFECTS.focus.stamina*charm.power);const cooldowns=s.skillRuntime.cooldowns;for(const id of Object.keys(cooldowns))cooldowns[id]=Math.max(0,cooldowns[id]-UNIQUE_EFFECTS.focus.cooldownReduction);uniqueVisual(s,charm);}
+}
+// 스킬 축전기 (0.121): every cast charges; a full charge shortens the fresh cooldown of the next cast.
+function capacitorCast(s,id){
+ const charm=s.loadout.charm;if(charm?.definition.id!=='capacitor')return;const u=s.uniqueState,cooldowns=s.skillRuntime.cooldowns;
+ if(u.capacitor>=UNIQUE_EFFECTS.capacitor.charges){u.capacitor=0;if(cooldowns[id]>0)cooldowns[id]*=1-UNIQUE_EFFECTS.capacitor.refund;uniqueVisual(s,charm);}else u.capacitor++;
 }
 function dashUnique(s,perfect){
  for(const slot of ANCIENT_SLOTS)ancientEvent(s,s.loadout[slot],perfect?'perfect':'dash');
@@ -1036,7 +1044,7 @@ export function bossModeAvailable(profile,chapter,difficulty){
 export function projectileCount(e,chapter=1){return e.boss?((e.action==='windup'||e.action==='attack')&&Number.isInteger(e.volleyShots)?e.volleyShots:(e.enraged?5:3)+(HUNT_MODES[e.huntMode??0]?.shots??0)):e.shots??(chapter>1?3:1);}
 
 // Hooks keep all enemy death, rewards and existing guard resolution in this engine.
-const SKILL_HOOKS={cast:s=>ancientAll(s,'skill'),inscriptions:s=>s.buildEffects,capture:s=>equipmentSnapshot(s.profile),stats:playerStats,hit:damageEnemy,visual:effect,clamp:clampPosition,motion(s,n,duration,id){
+const SKILL_HOOKS={cast:(s,id)=>{capacitorCast(s,id);ancientAll(s,'skill');},inscriptions:s=>s.buildEffects,capture:s=>equipmentSnapshot(s.profile),stats:playerStats,hit:damageEnemy,visual:effect,clamp:clampPosition,motion(s,n,duration,id){
  const momentum=s.uniqueState.momentum;startAttack(s,n,true,false);s.uniqueState.momentum=momentum;const p=s.player;p.swing.name=skills.SKILL_BY_ID[id]?.name??p.swing.name;p.swing.skillId=id;p.swing.skillVisualOnly=true;p.swing.step=0;p.swing.duration=duration;p.swing.impact=Math.min(duration,.1);p.attackCooldown=duration;p.queued=false;
 }};
 export function useSkill(s,id,aim){return skills.castSkill(s,id,aim,SKILL_HOOKS);}
@@ -1046,6 +1054,7 @@ function completeDungeon(s){
  const reward=dungeonRewards(s.run.dungeonId,s.run.stage);s.run.dungeonReward={gold:Math.min(reward.gold,Math.max(0,1e8-s.profile.gold)),materials:{}};s.profile.gold+=s.run.dungeonReward.gold;s.run.gold+=s.run.dungeonReward.gold;
  for(const [id,n]of Object.entries(reward.materials)){const amount=Math.min(n,Math.max(0,MATERIAL_LIMIT-s.profile.materials[id]));s.profile.materials[id]+=amount;s.run.materials+=amount;s.run.dungeonReward.materials[id]=amount;}
  s.profile.dungeonProgress[s.run.dungeonId]=Math.max(s.profile.dungeonProgress[s.run.dungeonId],s.run.stage);s.run.rooms=1;s.run.seals=1;
+ if(lootRandom(s)<dropRate(s,'dungeon')){const chapter=STAGES[Math.min(STAGES.length,Math.max(1,s.profile.unlockedStage))-1],item=rollAccessory({id:allocateItemId(s),tier:chapter?.theme??1,grade:s.run.stage>=7?2:s.run.stage>=4?1:0},()=>lootRandom(s));if(receiveItem(s,item,'stage'))s.run.dungeonReward.item=item;}
  s.projectiles.length=0;s.spawns.length=0;s.player.queued=false;s.player.swing=null;s.player.action='idle';s.hitStop=0;skills.clearSkillStage(s);clearUniqueTransient(s);clearAncient(s);s.resultDelay=.5;return queueSettlement(s,true);
 }
 function queueSettlement(s,boss){
