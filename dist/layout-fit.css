@@ -401,3 +401,19 @@
  #game-shell#game-shell #inventory-content #item-workshop .workshop-actions>button{height:30px!important;min-height:30px}
  #game-shell#game-shell #inventory-content #item-workshop .workshop-enhance-cost>*{min-height:22px}
 }
+/* 0.136.1 강화 비용: 글자 대신 그림(골드 금화, 재료는 가방과 같은 재료 그림) + 필요 수량. 이름·보유량은 길게 누르기/마우스 올림(title)과 aria-label. 부족하면 수량이 붉다. */
+#game-shell#game-shell #inventory-content #item-workshop .workshop-enhance-cost:not([hidden]){grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:6px}
+#game-shell#game-shell #inventory-content #item-workshop .workshop-enhance-cost>:is(#workshop-gold-cost,button){display:flex;align-items:center;justify-content:center;gap:4px;min-height:40px;padding:3px 6px;border:1px solid #b8a27350;border-radius:4px;background:#0a111bcc;color:#f1e2c7;font:600 12px/1 var(--ui-font);cursor:pointer}
+#game-shell#game-shell #inventory-content #item-workshop .workshop-enhance-cost>#workshop-gold-cost{grid-column:span 2;cursor:default}
+#game-shell#game-shell #inventory-content #item-workshop .workshop-enhance-cost :is(.craft-material-icon,.ui-utility-icon,.dungeon-book-icon){flex:none;display:block;width:30px;height:30px;min-width:0;min-height:0;margin:0}
+#game-shell#game-shell #inventory-content #item-workshop .workshop-enhance-cost>#workshop-gold-cost .ui-utility-icon{width:24px;height:24px}
+#game-shell#game-shell #inventory-content #item-workshop .workshop-enhance-cost b{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:inherit}
+#game-shell#game-shell #inventory-content #item-workshop .workshop-enhance-cost>[data-ready=false]{border-color:#c0505070}
+#game-shell#game-shell #inventory-content #item-workshop .workshop-enhance-cost>[data-ready=false] b{color:#ff8b7d}
+@media(max-height:360px){#game-shell#game-shell #inventory-content #item-workshop .workshop-enhance-cost>:is(#workshop-gold-cost,button){min-height:32px}#game-shell#game-shell #inventory-content #item-workshop .workshop-enhance-cost :is(.craft-material-icon,.dungeon-book-icon){width:24px;height:24px}}
+/* 0.136.1 강화·승급 재료는 제작 재료 그림을 같이 써서(재련석=뼈철, 정제석=이형 결정, 순수결정=원질 핵, 승급석=왕인) 승급 비용에
+   이형 결정과 정제석이 같은 그림으로 나왔다. 색조만 바꿔 구분한다(가방·제작·추적·강화 비용 모두, 아이디 끝으로 고름). */
+#game-shell [id$="-refineStone"]>.craft-material-icon{filter:sepia(1) saturate(2.4) hue-rotate(-8deg) brightness(1.15)}
+#game-shell [id$="-refineCrystal"]>.craft-material-icon{filter:hue-rotate(60deg) saturate(1.4)}
+#game-shell [id$="-refineEssence"]>.craft-material-icon{filter:hue-rotate(150deg) saturate(1.5) brightness(1.1)}
+#game-shell [id$="-promotionStone"]>.craft-material-icon{filter:sepia(1) saturate(3) hue-rotate(5deg) brightness(1.2)}
