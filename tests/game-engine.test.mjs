@@ -10,10 +10,10 @@ function gear(id,slot='weapon'){return{id,slot,rarity:1,tier:1,name:'시험 장�
 
 test('version one migrates without losing progress; unsafe equipment and malformed saves are rejected',()=>{
   for(const raw of [null,'broken','{}',{version:9},[]])assert.deepEqual(g.restoreProfile(raw,1000),g.createProfile(1000));
-  const old=g.createProfile(1000);old.version=1;old.gold=80;old.level=7;old.skills.edge=2;old.clearedStage=1;old.unlockedStage=2;delete old.inventory;delete old.equipment;
-  const migrated=g.restoreProfile(old,1000);assert.equal(migrated.version,16);assert.equal(migrated.gold,80);assert.equal(migrated.level,7);assert.equal(migrated.skills.edge,2);assert.equal(migrated.unlockedStage,2);assert.deepEqual(migrated.inventory,[]);
+  const old=g.createProfile(1000);old.version=1;old.gold=80;old.level=7;old.skills={edge:2};delete old.training;old.clearedStage=1;old.unlockedStage=2;delete old.inventory;delete old.equipment;
+  const migrated=g.restoreProfile(old,1000);assert.equal(migrated.version,16);assert.equal(migrated.gold,80);assert.equal(migrated.level,7);assert.deepEqual(migrated.training,g.emptyTraining());assert.equal(g.growthPoints(migrated),6);assert.equal(migrated.unlockedStage,2);assert.deepEqual(migrated.inventory,[]);
   const p=g.restoreProfile({version:2,gold:Infinity,level:999,skills:{edge:99},forge:{blade:99},unlockedStage:3,lastSeenAt:1e9,inventory:[gear(5),gear(5),{...gear(9),slot:'bogus'}],equipment:{armor:5,weapon:5}},1000);
-  assert.equal(p.gold,0);assert.equal(p.level,g.MAX_LEVEL);assert.equal(p.skills.edge,4);assert.equal(p.forge.blade,8);assert.equal(p.unlockedStage,1);assert.equal(p.lastSeenAt,1000);assert.equal(p.inventory.length,1);assert.equal(p.equipment.weapon,5);assert.equal(p.equipment.armor,null);assert.equal(p.nextItemId,6);
+  assert.equal(p.gold,g.legacyForgeRefund({blade:8}).gold);assert.equal(p.level,g.MAX_LEVEL);assert.deepEqual(p.training,g.emptyTraining());assert.equal(g.growthPoints(p),g.MAX_LEVEL-1);assert.equal(p.unlockedStage,1);assert.equal(p.lastSeenAt,1000);assert.equal(p.inventory.length,1);assert.equal(p.equipment.weapon,5);assert.equal(p.equipment.armor,null);assert.equal(p.nextItemId,6);
 });
 test('offline scouting requires a cleared boss, caps four hours, and claims once',()=>{
   const now=1e6,p=g.createProfile(now);assert.deepEqual(g.collectOffline(p,now+86400000),{minutes:0,gold:0,xp:0});p.clearedStage=1;p.lastSeenAt=now;
@@ -44,8 +44,8 @@ test('monster telegraphs resolve their marked ellipse and hurt causes a flinch',
 });
 test('level ups continue combat; permanent skill allocation is an explicit camp activity',()=>{
   const s=hunt();s.enemies=[];s.pickups=[{id:99,x:s.player.x,y:s.player.y,gold:4,xp:g.xpNeeded(1)+5,cores:1}];ticks(s,.05);
-  assert.equal(s.profile.level,2);assert.equal(s.profile.xp,5);assert.equal(s.profile.skillPoints,1);assert.equal(s.phase,'playing');assert.equal(s.pickups.length,0);assert.equal(s.profile.gold,4);
-  const time=s.run.time;ticks(s,.2);assert.ok(s.run.time>time);assert.equal(g.chooseUpgrade(s,'edge'),false);g.returnToCamp(s);assert.equal(g.upgradeOptions(s).length,6);assert.equal(g.chooseUpgrade(s,'edge'),true);assert.equal(s.profile.skills.edge,1);
+  assert.equal(s.profile.level,2);assert.equal(s.profile.xp,5);assert.equal(g.growthPoints(s.profile),1);assert.equal(s.phase,'playing');assert.equal(s.pickups.length,0);assert.equal(s.profile.gold,4);
+  const time=s.run.time;ticks(s,.2);assert.ok(s.run.time>time);assert.equal(g.trainStat(s,'power'),false);g.returnToCamp(s);assert.equal(g.trainStat(s,'power'),true);assert.equal(s.profile.training.power,1);assert.equal(g.growthPoints(s.profile),0);assert.equal(g.trainStat(s,'vitality'),false);
 });
 test('no manual interaction is required by random waves',()=>{const s=g.createGame();g.launch(s);assert.equal(g.interactionTarget(s),null);assert.equal(g.interact(s),false);assert.equal(s.run.items,0);});
 test('equipment changes combat stats, saves identity and only unequipped items can be salvaged',()=>{
@@ -54,32 +54,29 @@ test('equipment changes combat stats, saves identity and only unequipped items c
   const loaded=g.restoreProfile(g.encodeProfile(s.profile,2000),2000);assert.equal(loaded.equipment.weapon,1);assert.equal(loaded.equipment.armor,3);assert.equal(loaded.inventory.length,2);
   g.launch(s);assert.equal(g.equipItem(s,3),false);s.paused=true;assert.equal(g.equipItem(s,3),true);
 });
-test('forge spends currencies atomically and capped skills convert remaining points',()=>{
-  const s=g.createGame();s.profile.gold=100;assert.equal(g.upgradeForge(s,'core'),false);assert.equal(s.profile.gold,100);assert.equal(g.upgradeForge(s,'blade'),true);assert.equal(s.profile.gold,70);s.profile.cores=1;assert.equal(g.upgradeForge(s,'core'),true);assert.equal(s.profile.gold,10);assert.equal(g.upgradeForge(s,'bogus'),false);
-  const p=g.createProfile();for(const[id,v]of Object.entries(g.UPGRADES))p.skills[id]=v.max;p.skillPoints=2;const camp=g.createGame(p);assert.equal(camp.profile.skillPoints,0);assert.equal(camp.profile.gold,70);
-});
-test('in-hunt training point conversion is included in earned gold exactly once',()=>{
- const p=g.createProfile();p.level=21;for(const[id,d]of Object.entries(g.UPGRADES))p.skills[id]=d.max;
- const s=g.createGame(p);g.launch(s);s.enemies=[];s.spawns=[];s.barrels=[];s.run.flow='break';s.run.timer=999;
- s.pickups=[{id:99,x:s.player.x,y:s.player.y,gold:4,xp:g.xpNeeded(21),cores:0}];const gold=p.gold;g.advanceGame(s,.025);
- assert.equal(p.level,22);assert.equal(p.gold-gold,39);assert.equal(s.run.gold,39);assert.equal(s.run.trainingGold,35);assert.equal(p.skillPoints,0);g.advanceGame(s,.1);assert.equal(s.run.gold,39);
+test('old forge levels are refunded once and old 숙련 points come back as 성장 포인트 (Alpha 0.131)',()=>{
+  const old=JSON.parse(g.encodeProfile(g.createProfile(1000),1000));delete old.training;delete old.growthTree;old.level=21;old.gold=100;old.cores=3;old.forge={blade:2,armor:1,core:3};old.skills={edge:4,haste:3};old.skillPoints=2;
+  const p=g.restoreProfile(old,1000),refund=g.legacyForgeRefund(old.forge);assert.equal(refund.gold,Math.round(30*1)+Math.round(30*Math.pow(2,1.5))+25+60+Math.round(60*Math.pow(2,1.5))+Math.round(60*Math.pow(3,1.5)));assert.equal(refund.cores,1+1+2);
+  assert.equal(p.gold,100+refund.gold);assert.equal(p.cores,3+refund.cores);assert.equal(g.growthPoints(p),20);assert.equal(p.forge,undefined);assert.equal(p.skills,undefined);
+  // Saved again, the refund never repeats.
+  const again=g.restoreProfile(JSON.parse(g.encodeProfile(p,1000)),1000);assert.equal(again.gold,p.gold);assert.equal(again.cores,p.cores);
 });
 test('pause freezes combat and defeat preserves collected progression',()=>{
   const s=hunt();s.paused=true;const before=JSON.stringify(s);g.advanceGame(s,.1,{x:1,attack:true});assert.equal(JSON.stringify(s),before);assert.equal(g.attack(s),false);s.paused=false;s.profile.gold=77;
   const e=dummy(s,50);s.enemies=[e];e.action='windup';e.windup=.1;e.targetX=s.player.x;e.targetY=s.player.y;e.damage=999;ticks(s,.125);assert.equal(s.phase,'defeat');assert.equal(g.thunder(s),false);g.returnToCamp(s);assert.equal(s.profile.gold,77);
 });
 test('a trained level-twenty auto build completes all chapter waves and bosses within the minute budgets; full bags protect equipment',()=>{
-  const trained=g.createProfile(1000);trained.level=20;trained.skillBook=g.restoreSkillBook(null,20);trained.skillBook.loadout.active=['gather','dance'];trained.skillBook.loadout.passive=['surrounded','finisher',null];trained.skillBook.ranks.gather=1;trained.skillBook.ranks.dance=3;trained.skillBook.auto.ultimate='any';trained.skills.edge=4;trained.skills.haste=3;trained.skills.chain=3;trained.skillPoints=9;trained.inventory=[gear(1)];trained.equipment.weapon=1;const s=g.createGame(trained);s.lootRates={normal:1,elite:1,stage:1,boss:1};s.auto=true;
+  const trained=g.createProfile(1000);trained.level=20;trained.skillBook=g.restoreSkillBook(null,20);trained.skillBook.loadout.active=['gather','dance'];trained.skillBook.loadout.passive=['surrounded','finisher',null];trained.skillBook.ranks.gather=1;trained.skillBook.ranks.dance=3;trained.skillBook.auto.ultimate='any';trained.training={...g.emptyTraining(),power:8,tempo:30,stride:18};trained.inventory=[gear(1)];trained.equipment.weapon=1;const s=g.createGame(trained);s.lootRates={normal:1,elite:1,stage:1,boss:1};s.auto=true;
   for(let stage=1;stage<=3;stage++){assert.equal(g.launch(s,stage),true);for(let i=0;i<24000&&s.phase==='playing';i++)g.advanceGame(s,.05);assert.equal(s.phase,'victory','stage '+stage);assert.equal(s.run.rooms,g.STAGES_PER_CHAPTER);assert.ok(s.run.kills>=770&&s.run.kills<=776);assert.equal(s.run.stageItems,g.STAGES_PER_CHAPTER);assert.ok(s.run.monsterItems>=12);assert.equal(s.run.items,s.run.stageItems+s.run.monsterItems);assert.equal(s.profile.clearedStage,stage);assert.ok(s.enemies.length<20);
-    g.returnToCamp(s);for(const slot of ['weapon','armor','charm']){let best=null;for(const item of s.profile.inventory)if(item.slot===slot&&(!best||itemPower(item)>itemPower(best)))best=item;if(best)g.equipItem(s,best.id);}for(const id of ['gather','dance'])while(g.upgradeSkill(s,id)){}for(const id of g.upgradeOptions(s))g.chooseUpgrade(s,id);for(const id of Object.keys(g.FORGE))g.upgradeForge(s,id);
+    g.returnToCamp(s);for(const slot of ['weapon','armor','charm']){let best=null;for(const item of s.profile.inventory)if(item.slot===slot&&(!best||itemPower(item)>itemPower(best)))best=item;if(best)g.equipItem(s,best.id);}for(const id of ['gather','dance'])while(g.upgradeSkill(s,id)){}for(const id of ['power','vitality'])while(g.trainStat(s,id)){}
   }
   assert.equal(s.profile.inventory.length,g.INVENTORY_LIMIT);assert.ok(s.profile.inventory.some(i=>i.id===s.profile.equipment.weapon));const p=g.restoreProfile(g.encodeProfile(s.profile,2000),2000);assert.equal(p.clearedStage,3);assert.equal(p.inventory.length,g.INVENTORY_LIMIT);
 });
 
 
 test('inherited object keys cannot masquerade as valid upgrade ids or item slots',()=>{
-  const s=g.createGame();s.profile.gold=100;s.profile.skillPoints=1;const before=JSON.stringify(s);
-  for(const id of ['constructor','toString','__proto__']){assert.equal(g.forgeCost(s.profile,id),null);assert.equal(g.upgradeForge(s,id),false);assert.equal(g.chooseUpgrade(s,id),false);}
+  const s=g.createGame();s.profile.gold=100;s.profile.level=30;const before=JSON.stringify(s);
+  for(const id of ['constructor','toString','__proto__']){assert.equal(g.trainStat(s,id),false);assert.equal(g.learnGrowthNode(s,id),false);}
   assert.equal(JSON.stringify(s),before);const p=g.restoreProfile({version:2,inventory:[{id:1,slot:'constructor',name:'invalid',affixes:{damage:99}},{id:2,slot:['weapon'],affixes:{damage:5}}]},1000);assert.deepEqual(p.inventory,[]);
 });
 test('whoosh is emitted at launch once, contact is emitted once, and early dodge cancels both',()=>{
@@ -106,7 +103,7 @@ test('victory settles an interrupted windup without damage, regeneration or queu
 
 test('destination walking consumes only the remaining distance across speeds, substeps and hitstop',()=>{
   for(const elapsed of [1/60,.05,.1])for(let heading=0;heading<8;heading++){
-    const s=hunt();s.enemies=[];s.barrels=[];s.profile.skills.haste=3;s.profile.inventory=[{id:99,slot:'charm',affixes:{speed:20}}];s.profile.equipment.charm=99;
+    const s=hunt();s.enemies=[];s.barrels=[];s.profile.training.tempo=30;s.profile.training.stride=18;s.profile.inventory=[{id:99,slot:'charm',affixes:{speed:20}}];s.profile.equipment.charm=99;
     const p=s.player,angle=heading*Math.PI/4,destination={x:p.x+Math.cos(angle)*10,y:p.y+Math.sin(angle)*10};s.hitStop=.01;
     let previous=10;for(let i=0;i<15;i++){g.advanceGame(s,elapsed,{destination});const d=Math.hypot(destination.x-p.x,destination.y-p.y);assert.ok(d<=previous+1e-8);previous=d;}
     assert.ok(previous<1e-8);assert.equal(p.action,'idle');const before=JSON.stringify(s);s.paused=true;const paused=JSON.stringify(s);g.advanceGame(s,.1,{destination:{x:999,y:999}});assert.equal(JSON.stringify(s),paused);s.paused=false;assert.equal(JSON.stringify(s),before);

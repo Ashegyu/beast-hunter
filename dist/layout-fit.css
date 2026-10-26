@@ -309,3 +309,36 @@
 /* 도감 발견률 퍼센트는 큰 발견 수 위에 겹쳐 숨긴다(같은 정보가 발견 수·진행 막대에 있음). */
 #game-shell#game-shell #codex-percent{display:none!important}
 #game-shell#game-shell #codex-count{white-space:nowrap}
+/* 0.131 성장 화면: 오른쪽 '능력치 단련 | 성장 트리'. 단련은 2열×3줄, 트리는 3갈래×5노드. 한 화면 안(스크롤 없음). */
+#game-shell #camp-growth-panel>.growth-board{grid-column:2;grid-row:1/5;display:flex;flex-direction:column;gap:6px;min-height:0;overflow:hidden}
+#game-shell .growth-board-head{display:flex;align-items:center;gap:8px;flex:none}
+#game-shell .growth-tabs{display:flex;gap:4px;flex:none}
+#game-shell .growth-tabs>button,#game-shell #growth-reset{height:26px;min-height:0;padding:0 10px;border:1px solid #a78c5b66;border-radius:13px;background:#121a22;color:#cbbd9f;font-size:11px;white-space:nowrap}
+#game-shell .growth-tabs>button[aria-pressed=true]{background:linear-gradient(#7f202c,#40151e);border-color:#d4a363;color:#ffe7b7}
+#game-shell #growth-points{flex:1 1 auto;min-width:0;text-align:right;color:#f0d79c;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#game-shell #growth-reset{flex:none}
+#game-shell .growth-training{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:minmax(0,1fr);gap:5px;flex:1 1 auto;min-height:0}
+#game-shell .train-row{display:grid;grid-template-columns:26px minmax(0,1fr) auto;grid-template-rows:auto auto;align-items:center;column-gap:7px;min-height:0;height:auto;padding:4px 8px;border:1px solid #a78c5b55;border-radius:5px;background:linear-gradient(#1d262c,#10181f);color:#e3d6bb;text-align:left}
+#game-shell .train-row>i{grid-row:1/3;font-style:normal;font-size:18px;color:#e2c17f;text-align:center}
+#game-shell .train-row>span{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#game-shell .train-row>small{grid-column:2;font-size:10px;color:#a9b4b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#game-shell .train-row>b{grid-column:3;grid-row:1/3;font-size:13px;color:#ffd58a}
+#game-shell .train-row:disabled{opacity:.6}
+#game-shell .growth-tree{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;flex:1 1 auto;min-height:0}
+#game-shell .growth-tree[hidden],#game-shell .growth-training[hidden]{display:none}
+#game-shell .tree-branch{display:flex;flex-direction:column;gap:3px;min-height:0;min-width:0}
+#game-shell .tree-branch>header{display:flex;flex-direction:column;align-items:center;flex:none;line-height:1.2}
+#game-shell .tree-branch>header strong{font-size:12px;color:#f0dcb0}
+#game-shell .tree-branch>header small{font-size:9px;color:#9fa9ad;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+#game-shell .tree-node{position:relative;display:flex;flex-direction:column;justify-content:center;flex:1 1 0;min-height:0;min-width:0;padding:2px 6px;border:1px solid #a78c5b44;border-radius:5px;background:#10181f;color:#cfc4ac;text-align:left;overflow:hidden}
+#game-shell .tree-node>b{font-size:11px;color:#f0dcb0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:26px}
+#game-shell .tree-node>small{font-size:9px;line-height:1.25;color:#a9b4b8;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+#game-shell .tree-node>em{position:absolute;top:2px;right:5px;font-style:normal;font-size:10px;color:#ffd58a}
+#game-shell .tree-node[data-state=owned]{border-color:#e4b465;background:linear-gradient(#5d1d27,#2b1219)}
+#game-shell .tree-node[data-state=open]{border-color:#c79a52}
+#game-shell .tree-node[data-state=locked]{opacity:.55}
+#game-shell .tree-node:last-child{border-style:double;border-width:3px}
+#game-shell #camp-growth-panel .growth-board #growth-feedback{flex:none;margin:0;font-size:10px;min-height:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#game-shell #camp-growth-panel .growth-board #offline-note{flex:none}
+@media(max-height:360px){#game-shell .tree-node>small{-webkit-line-clamp:1}#game-shell .train-row{padding:2px 6px}#game-shell .tree-branch>header small{display:none}}
+#game-shell #camp-growth-panel>.growth-board{padding-right:6px}

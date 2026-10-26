@@ -1,43 +1,45 @@
-import {RAIDS,RAID_WEEKLY_ENTRIES,RAID_DAMAGE,raidScale,RAID_ANCIENT_CHANCE,raidDefinition,raidPlan,raidRewards,raidWeek,raidEntriesLeft,raidUnlocked,raidChapter,emptyRaidProgress} from './raids.js?v=0.130.0';
-export * from './raids.js?v=0.130.0';
-import {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonPlan,dungeonActors,emptyDungeonProgress} from './dungeons.js?v=0.130.0';
+import {RAIDS,RAID_WEEKLY_ENTRIES,RAID_DAMAGE,raidScale,RAID_ANCIENT_CHANCE,raidDefinition,raidPlan,raidRewards,raidWeek,raidEntriesLeft,raidUnlocked,raidChapter,emptyRaidProgress} from './raids.js?v=0.131.0';
+export * from './raids.js?v=0.131.0';
+import {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonPlan,dungeonActors,emptyDungeonProgress} from './dungeons.js?v=0.131.0';
 export {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards};
-import {beginStageJournal,profileForSave,strictBattle,cancelStageJournal,prepareStageCommit,finishStageJournal,stageTransactionId,ownedAtStageStart} from './battle-progress.js?v=0.130.0';
-import {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_DROP_CHANCE,INSCRIPTION_COST} from './build-effects.js?v=0.130.0';
-import {stageRule,STAGE_TYPE_NAMES} from './battle-plans.js?v=0.130.0';
+import {beginStageJournal,profileForSave,strictBattle,cancelStageJournal,prepareStageCommit,finishStageJournal,stageTransactionId,ownedAtStageStart} from './battle-progress.js?v=0.131.0';
+import {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_DROP_CHANCE,INSCRIPTION_COST} from './build-effects.js?v=0.131.0';
+import {stageRule,STAGE_TYPE_NAMES} from './battle-plans.js?v=0.131.0';
 export {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_COST,stageRule,STAGE_TYPE_NAMES};
 export const PROFILE_VERSION=16,MAX_LEVEL=200,BUILD_NAMES=Object.freeze(['일반 사냥','보스','광역','생존','실험']);
-import {SLOTS,EQUIPMENT_SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,equipmentFamily,emptyEquipment,restoreEquipment,equipmentAfterEquip,equippedPosition,isEquippedItem} from './equipment-slots.js?v=0.130.0';
-export * from './equipment-slots.js?v=0.130.0';
-import {enhanceOwned,promoteOwned,rerollOwned,resolveOwnedReroll,restoreEquipmentProgress} from './equipment-progression.js?v=0.130.0';
-export * from './equipment-progression.js?v=0.130.0';
+import {SLOTS,EQUIPMENT_SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,equipmentFamily,emptyEquipment,restoreEquipment,equipmentAfterEquip,equippedPosition,isEquippedItem} from './equipment-slots.js?v=0.131.0';
+export * from './equipment-slots.js?v=0.131.0';
+import {enhanceOwned,promoteOwned,rerollOwned,resolveOwnedReroll,restoreEquipmentProgress} from './equipment-progression.js?v=0.131.0';
+export * from './equipment-progression.js?v=0.131.0';
 export * from './skill-vfx.js?v=0.72.0';
 export * from './skill-image-fx.js?v=0.72.0';
 export * from './monster-fx.js?v=0.70.0';
 export * from './combat-feedback.js';
 export * from './ultimate-video.js';
 export * from './skill-motion.js';
-import * as skills from './combat-skills.js?v=0.130.0';
-export * from './combat-skills.js?v=0.130.0';
-import {MATERIALS,MATERIAL_BY_ID,MATERIAL_LIMIT,emptyMaterials,rollMaterials,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.130.0';
-export {MATERIALS,MATERIAL_BY_ID,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.130.0';
-import {equipmentSynergies} from './equipment-synergies.js?v=0.130.0';
-import {itemProtection} from './loot.js?v=0.130.0';
-export {itemProtection,salvageValue} from './loot.js?v=0.130.0';
-export {equipmentSynergies,EQUIPMENT_SYNERGIES} from './equipment-synergies.js?v=0.130.0';
+import * as skills from './combat-skills.js?v=0.131.0';
+export * from './combat-skills.js?v=0.131.0';
+import {MATERIALS,MATERIAL_BY_ID,MATERIAL_LIMIT,emptyMaterials,rollMaterials,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.131.0';
+export {MATERIALS,MATERIAL_BY_ID,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.131.0';
+import {equipmentSynergies} from './equipment-synergies.js?v=0.131.0';
+import {itemProtection} from './loot.js?v=0.131.0';
+export {itemProtection,salvageValue} from './loot.js?v=0.131.0';
+export {equipmentSynergies,EQUIPMENT_SYNERGIES} from './equipment-synergies.js?v=0.131.0';
 import {HUNT_MODES,huntMode,REPLAY_CYCLES} from './hunt-modes.js';
 export {HUNT_MODES} from './hunt-modes.js';
 // Pure combat, random waves and persistent RPG rules. No rendering or storage dependencies.
 import { directionIndex, recoilProgress, ACTION_DURATIONS } from './motion.js';
 import { WORLD_BOUNDS, GROUND_DEPTH_SCALE } from './world.js';
-import { CHAPTERS, CHAPTERS_PER_THEME, THEMES, chapterTheme, MONSTERS, chapterMonsterPool, EQUIPMENT_ART, ALL_EQUIPMENT_ART, equipmentArt } from './chapters.js?v=0.130.0';
-import { STAGES_PER_CHAPTER, battlePlan, stageWaveCount, waveComposition } from './battle-plans.js?v=0.130.0';
-import { RAID_POWER_ROLL, raidPowerRoll } from './loot.js?v=0.130.0';
-export { RAID_POWER_ROLL, RAID_ROLL_SKEW, raidPowerRoll } from './loot.js?v=0.130.0';
-import { affixCap, INVENTORY_LIMIT, MAX_PENDING_LOOT, LEGENDARY_PITY_LIMIT, huntGrade, ITEM_CATALOG, ANCIENT_CATALOG, ancientIdOfBase, rollAncient, BOSS_LOOT, bossLootPool, discoverAncient, targetAncient, setAncientTarget, ancientDefinition, ancientForLegacy, effectiveAffix, RARITIES, RARITY_INFO, rollItem, rollStageItem, rollAccessory, storeItem, salvageValue, uniqueEffect, uniqueLoadout, equippedUniqueEffect, UNIQUE_EFFECTS, itemSet, setBonusStats, EQUIPMENT_SETS, SET_SLOTS } from './loot.js?v=0.130.0';
-export { ancientSignatures, ANCIENT_TIER_POWER, ANCIENT_HUNT_POWER, huntGrade, HUNT_POWER, HUNT_GRADE_TABLES, itemSet, setBonusStats, setBonusText, EQUIPMENT_SETS, SET_SLOTS, SET_STATS, CHAPTER_SETS, SET_CATALOG } from './loot.js?v=0.130.0';
-export { INVENTORY_LIMIT, LEGENDARY_PITY_LIMIT, ITEM_CATALOG, ANCIENT_CATALOG, BOSS_LOOT, RARITIES, RARITY_INFO, UNIQUE_EFFECTS, uniqueEffect, uniqueLoadout, targetAncient, setAncientTarget, ancientDefinition, gearDropPresentation, gearDropDuration } from './loot.js?v=0.130.0';
-export { STAGES_PER_CHAPTER, BATTLE_PLANS, battlePlan, stageWaveCount } from './battle-plans.js?v=0.130.0';
+import { CHAPTERS, CHAPTERS_PER_THEME, THEMES, chapterTheme, MONSTERS, chapterMonsterPool, EQUIPMENT_ART, ALL_EQUIPMENT_ART, equipmentArt } from './chapters.js?v=0.131.0';
+import { STAGES_PER_CHAPTER, battlePlan, stageWaveCount, waveComposition } from './battle-plans.js?v=0.131.0';
+import { RAID_POWER_ROLL, raidPowerRoll } from './loot.js?v=0.131.0';
+import * as growth from './growth.js?v=0.131.0';
+export * from './growth.js?v=0.131.0';
+export { RAID_POWER_ROLL, RAID_ROLL_SKEW, raidPowerRoll } from './loot.js?v=0.131.0';
+import { affixCap, INVENTORY_LIMIT, MAX_PENDING_LOOT, LEGENDARY_PITY_LIMIT, huntGrade, ITEM_CATALOG, ANCIENT_CATALOG, ancientIdOfBase, rollAncient, BOSS_LOOT, bossLootPool, discoverAncient, targetAncient, setAncientTarget, ancientDefinition, ancientForLegacy, effectiveAffix, RARITIES, RARITY_INFO, rollItem, rollStageItem, rollAccessory, storeItem, salvageValue, uniqueEffect, uniqueLoadout, equippedUniqueEffect, UNIQUE_EFFECTS, itemSet, setBonusStats, EQUIPMENT_SETS, SET_SLOTS } from './loot.js?v=0.131.0';
+export { ancientSignatures, ANCIENT_TIER_POWER, ANCIENT_HUNT_POWER, huntGrade, HUNT_POWER, HUNT_GRADE_TABLES, itemSet, setBonusStats, setBonusText, EQUIPMENT_SETS, SET_SLOTS, SET_STATS, CHAPTER_SETS, SET_CATALOG } from './loot.js?v=0.131.0';
+export { INVENTORY_LIMIT, LEGENDARY_PITY_LIMIT, ITEM_CATALOG, ANCIENT_CATALOG, BOSS_LOOT, RARITIES, RARITY_INFO, UNIQUE_EFFECTS, uniqueEffect, uniqueLoadout, targetAncient, setAncientTarget, ancientDefinition, gearDropPresentation, gearDropDuration } from './loot.js?v=0.131.0';
+export { STAGES_PER_CHAPTER, BATTLE_PLANS, battlePlan, stageWaveCount } from './battle-plans.js?v=0.131.0';
 export const ARRIVAL_EPSILON=.001;
 export const STAGES = CHAPTERS;
 export {THEMES,CHAPTERS_PER_THEME};
@@ -66,20 +68,7 @@ function recordStageClear(s,stage){
  if(s.difficulty===0)p.stageProgress[s.stageId-1]=Math.max(p.stageProgress[s.stageId-1],stage);
  else{p.difficultyProgress??=[STAGES.map(()=>0),STAGES.map(()=>0)];const row=p.difficultyProgress[s.difficulty-1];row[s.stageId-1]=Math.max(row[s.stageId-1],stage);}
 }
-export const UPGRADES = {
-  edge:{name:'검술 숙련',description:'베기 범위 +8%, 피해 +10%',max:4,icon:'✦'},
-  chain:{name:'파쇄 검격',description:'강공격 피해 +18%',max:3,icon:'ϟ'},
-  guard:{name:'갑각 적응',description:'최대 체력 +22',max:4,icon:'◇'},
-  haste:{name:'사냥의 리듬',description:'연격 속도 증가, 이동 속도 +6%',max:3,icon:'»'},
-  magnet:{name:'재료 감각',description:'재료 수집 거리 +60, 경험치 +10%',max:3,icon:'◉'},
-  drain:{name:'생명 흡수',description:'직접 검격 적중 시 체력 +2',max:3,icon:'♥'},
-};
-export const FORGE = {
-  blade:{name:'검날 연마',description:'기본 공격력 +12%',max:8},
-  armor:{name:'갑각 보강',description:'체력 +20, 받는 피해 감소',max:6},
-  core:{name:'충격 핵',description:'강공격 대기 시간 감소, 재생력 증가',max:5},
-};
-
+// Alpha 0.131: the old 숙련 (UPGRADES) and 대장간 영구 강화 (FORGE) are replaced by growth.js (능력치 단련 + 성장 트리).
 export const AFFIXES={damage:'공격',hp:'체력',speed:'이동',crit:'치명타',reduction:'피해 감소'};
 
 export const WEAPON_TRAITS=Object.freeze({
@@ -128,7 +117,7 @@ export function growthXp(profile,value){
  return Math.min(Number.MAX_SAFE_INTEGER,awarded+remaining);
 }
 export function createProfile(now=Date.now()){
-  return {version:PROFILE_VERSION,dungeonProgress:emptyDungeonProgress(),raids:emptyRaidProgress(),beastSkills:{},battleSerial:0,settledBattleIds:[],activeBattle:null,lastInterruptedBattle:null,selectedBuild:null,characterId:'lirian',equipmentRng:246813579,difficultyProgress:[STAGES.map(()=>0),STAGES.map(()=>0)],skillBook:skills.restoreSkillBook(null,1),favoriteItemIds:[],savedBuilds:[null,null,null,null,null],targetCraftId:null,craftTrackerVisible:true,materials:emptyMaterials(),discoveredAncients:[],targetAncientId:null,bossMastery:STAGES.map(()=>-1),lootPity:0,legendaryPity:0,pendingGold:0,pendingMaterials:emptyMaterials(),pendingLoot:[],stageProgress:STAGES.map(()=>0),gold:0,cores:0,level:1,xp:0,skillPoints:0,skills:Object.fromEntries(Object.keys(UPGRADES).map(k=>[k,0])),forge:{blade:0,armor:0,core:0},unlockedStage:1,clearedStage:0,totalKills:0,hunts:0,lastSeenAt:number(now),inventory:[],equipment:emptyEquipment(),nextItemId:1};
+  return {version:PROFILE_VERSION,dungeonProgress:emptyDungeonProgress(),raids:emptyRaidProgress(),beastSkills:{},battleSerial:0,settledBattleIds:[],activeBattle:null,lastInterruptedBattle:null,selectedBuild:null,characterId:'lirian',equipmentRng:246813579,difficultyProgress:[STAGES.map(()=>0),STAGES.map(()=>0)],skillBook:skills.restoreSkillBook(null,1),favoriteItemIds:[],savedBuilds:[null,null,null,null,null],targetCraftId:null,craftTrackerVisible:true,materials:emptyMaterials(),discoveredAncients:[],targetAncientId:null,bossMastery:STAGES.map(()=>-1),lootPity:0,legendaryPity:0,pendingGold:0,pendingMaterials:emptyMaterials(),pendingLoot:[],stageProgress:STAGES.map(()=>0),gold:0,cores:0,level:1,xp:0,training:growth.emptyTraining(),growthTree:[],unlockedStage:1,clearedStage:0,totalKills:0,hunts:0,lastSeenAt:number(now),inventory:[],equipment:emptyEquipment(),nextItemId:1};
 }
 const EQUIPMENT_DEFINITIONS=new Map([...ITEM_CATALOG,...ANCIENT_CATALOG,...CRAFTED_CATALOG].map(row=>[row.id,row]));
 function cleanItem(item,version){
@@ -173,9 +162,10 @@ export function restoreProfile(raw,now=Date.now()){
   p.gold=Math.min(1e8,p.gold+integer(data.pendingGold,0,1e8));
   for(const m of MATERIALS)p.materials[m.id]=Math.min(MATERIAL_LIMIT,p.materials[m.id]+integer(data.pendingMaterials?.[m.id],0,MATERIAL_LIMIT));
   p.skillBook=skills.restoreSkillBook(data.skillBook,p.level);
-  p.xp=integer(data.xp,0,xpNeeded(p.level)-1);p.skillPoints=integer(data.skillPoints,0,MAX_LEVEL);
-  for(const[k,v]of Object.entries(UPGRADES))p.skills[k]=integer(data.skills?.[k],0,v.max);
-  for(const[k,v]of Object.entries(FORGE))p.forge[k]=integer(data.forge?.[k],0,v.max);
+  p.xp=integer(data.xp,0,xpNeeded(p.level)-1);
+  // Alpha 0.131 성장: saves without `training` refund their old 대장간 levels once; old 숙련 points simply return as 성장 포인트.
+  if(!data.training&&data.forge){const refund=growth.legacyForgeRefund(data.forge);p.gold=Math.min(1e8,p.gold+refund.gold);p.cores=Math.min(1e6,p.cores+refund.cores);}
+  p.training=growth.cleanTraining(data.training,p.level);p.growthTree=growth.fitTree(p,data.growthTree);
   p.clearedStage=integer(data.clearedStage,0,STAGES.length);p.unlockedStage=clamp(integer(data.unlockedStage,1,STAGES.length,1),1,Math.min(STAGES.length,p.clearedStage+1));
   // Legacy five-stage checkpoints retain their completion ratio; v8 is already ten-stage.
   p.stageProgress=STAGES.map(({id})=>id<=p.clearedStage?STAGES_PER_CHAPTER:id===p.unlockedStage?(data.version<8?integer(data.stageProgress?.[id-1],0,4)*2:integer(data.stageProgress?.[id-1],0,STAGES_PER_CHAPTER-1)):0);
@@ -197,7 +187,7 @@ export function restoreProfile(raw,now=Date.now()){
     const row=data.savedBuilds?.[n];if(!row||typeof row.name!=='string'||!row.equipment)return null;
     const equipment=emptyEquipment(),used=new Set();for(const slot of EQUIPMENT_KEYS){const id=row.equipment[slot]??null,owned=p.inventory.find(i=>i.id===id);if(id!==null&&(!Number.isInteger(id)||id<1||id>1e9||used.has(id)||owned&&(owned.slot!==itemSlotForPosition(slot)||owned.slot==='special'&&owned.characterId!==p.characterId)))return null;equipment[slot]=id;if(id!==null)used.add(id);}
     const skill=skills.restoreSkillBook({...p.skillBook,...row.skill,loadout:row.skill?.loadout??p.skillBook.loadout},p.level);
-    return {name:row.name.trim().slice(0,24)||BUILD_NAMES[n],equipment,skill:skillSelection(skill)};
+    return {name:row.name.trim().slice(0,24)||BUILD_NAMES[n],equipment,skill:skillSelection(skill),tree:growth.fitTree(p,row.tree??p.growthTree)};
   });
   p.lootPity=data.version>=4?integer(data.lootPity,0,9):0;
   p.legendaryPity=integer(data.legendaryPity,0,LEGENDARY_PITY_LIMIT-1);
@@ -206,7 +196,7 @@ export function restoreProfile(raw,now=Date.now()){
   for(const item of p.inventory)discoverAncient(p,item);p.nextItemId=Math.max(integer(data.nextItemId,1,1e9,1),...p.inventory.map(i=>i.id+1));return p;
 }
 export function encodeProfile(profile,now=Date.now()){return JSON.stringify({...profileForSave(profile),lastSeenAt:number(now,profile.lastSeenAt)});}
-function gainXp(p,value){p.xp+=Math.max(0,value);let levels=0;while(p.level<MAX_LEVEL&&p.xp>=xpNeeded(p.level)){p.xp-=xpNeeded(p.level);p.level++;p.skillPoints++;levels++;}if(p.level>=MAX_LEVEL)p.xp=0;return levels;}
+function gainXp(p,value){p.xp+=Math.max(0,value);let levels=0;while(p.level<MAX_LEVEL&&p.xp>=xpNeeded(p.level)){p.xp-=xpNeeded(p.level);p.level++;levels++;}if(p.level>=MAX_LEVEL)p.xp=0;return levels;}
 export function collectOffline(p,now=Date.now()){
   const minutes=Math.floor(clamp((number(now)-p.lastSeenAt)/60000,0,240));p.lastSeenAt=number(now,p.lastSeenAt);
   if(!p.clearedStage||!minutes)return{minutes:0,gold:0,xp:0};const gold=minutes*2*p.clearedStage,xp=growthXp(p,minutes*p.clearedStage);p.gold+=gold;gainXp(p,xp);return{minutes,gold,xp};
@@ -215,13 +205,13 @@ export function equipmentBonuses(p){const result={damage:0,hp:0,speed:0,crit:0,r
 // Pieces worn per region set (Alpha 0.108), and each set's progress for the UI.
 export function equippedSetCounts(p){const counts={};for(const item of p.inventory??[]){const set=itemSet(item);if(set&&isEquippedItem(p,item))counts[set]=(counts[set]??0)+1;}return counts;}
 export function equippedSets(p){const counts=equippedSetCounts(p);return Object.entries(counts).map(([id,count])=>({set:EQUIPMENT_SETS[id],count,active:EQUIPMENT_SETS[id].bonuses.filter(b=>count>=b.pieces)})).sort((a,b)=>b.count-a.count);}
-export function playerStats(p){const b=equipmentBonuses(p);return{
-  maxHp:(150+(p.level-1)*6+p.forge.armor*20+p.skills.guard*22+b.hp)*(1+b.hpPct),
-  damage:(24*(1+p.forge.blade*.12+(p.level-1)*.035+p.skills.edge*.10)+b.damage)*(1+b.damagePct),
-  range:135*(1+p.skills.edge*.08+b.range/100),speed:280*(1+p.skills.haste*.06+b.speed/100),
-  attackDuration:.32/(1+p.skills.haste*.1+b.attackSpeed/100),attackSpeed:1+p.skills.haste*.1+b.attackSpeed/100,
-  thunderCooldown:Math.max(2.8,4.8-p.forge.core*.4),thunderDamage:62*(1+p.skills.chain*.18+p.forge.blade*.08)+b.damage*1.8,
-  crit:Math.min(.5,.05+b.crit/100),reduction:Math.min(.5,p.forge.armor*.045+b.reduction/100),collection:110+p.skills.magnet*60+(equippedUniqueEffect(p,'charm')?.id==='magnet'?UNIQUE_EFFECTS.magnet.range:0)+b.collection,regeneration:.65+p.forge.core*.3+b.regeneration};}
+export function playerStats(p){const b=equipmentBonuses(p),t=p.training??growth.emptyTraining(),tree=growth.treeBonus(p),base=growth.levelGrowth(p.level),attackSpeed=1+base.attackSpeed+t.tempo*.01+tree.attackSpeed+b.attackSpeed/100;return{
+  maxHp:(150+(p.level-1)*6+base.hp+t.vitality*12+b.hp)*(1+b.hpPct+tree.hpPct),
+  damage:(24*(1+(p.level-1)*.035+base.damage+t.power*.05)+b.damage)*(1+b.damagePct+tree.damagePct),
+  range:135*(1+base.range+b.range/100),speed:280*(1+base.speed+t.stride*.01+b.speed/100),
+  attackDuration:.32/attackSpeed,attackSpeed,
+  thunderCooldown:4.8,thunderDamage:62+b.damage*1.8,
+  crit:Math.min(.5,.05+t.precision*.005+tree.crit+b.crit/100),reduction:Math.min(.5,base.reduction+t.guard*.01+tree.reduction+b.reduction/100),collection:110+t.stride*5+(equippedUniqueEffect(p,'charm')?.id==='magnet'?UNIQUE_EFFECTS.magnet.range:0)+b.collection,regeneration:.65+base.regeneration+tree.regeneration+b.regeneration};}
 export function compareEquipment(profile,equipment){
  const next={...profile,equipment},before=playerStats(profile),after=playerStats(next),current=equipmentSynergies(profile),future=equipmentSynergies(next);
  const gained=future.filter(r=>!current.some(b=>b.id===r.id)),lost=current.filter(r=>!future.some(b=>b.id===r.id));
@@ -238,14 +228,14 @@ export function buildStatus(profile,n){
 }
 export function saveBuild(s,n,name){
  if(!buildIndex(n)||s.phase!=='camp')return false;
- s.profile.savedBuilds[n]={name:String(name??'').trim().slice(0,24)||BUILD_NAMES[n],equipment:{...s.profile.equipment},skill:skillSelection(s.profile.skillBook)};s.profile.selectedBuild=n;return true;
+ s.profile.savedBuilds[n]={name:String(name??'').trim().slice(0,24)||BUILD_NAMES[n],equipment:{...s.profile.equipment},skill:skillSelection(s.profile.skillBook),tree:[...s.profile.growthTree]};s.profile.selectedBuild=n;return true;
 }
 export function deleteBuild(s,n){if(!buildIndex(n)||s.phase!=='camp')return false;s.profile.savedBuilds[n]=null;if(s.profile.selectedBuild===n)s.profile.selectedBuild=null;return true;}
 export function applyBuild(s,n){
  if(s.phase!=='camp')return {ok:false,reason:'빌드 교체는 캠프에서만 가능해.'};
  const status=buildStatus(s.profile,n);if(!status.ok)return status;
  const next=restoreEquipment(status.build.equipment,s.profile.inventory,s.profile.characterId),skill=skills.restoreSkillBook({...s.profile.skillBook,...status.build.skill,loadout:status.build.skill?.loadout??s.profile.skillBook.loadout},s.profile.level);
- s.profile.equipment=next;s.profile.skillBook={...s.profile.skillBook,...skillSelection(skill)};s.profile.selectedBuild=n;
+ s.profile.equipment=next;s.profile.skillBook={...s.profile.skillBook,...skillSelection(skill)};s.profile.selectedBuild=n;if(status.build.tree)s.profile.growthTree=growth.fitTree(s.profile,status.build.tree);
  s.loadout=uniqueLoadout(s.profile);s.buildEffects=buildEffects(s.profile);s.synergies=equipmentSynergies(s.profile);
  clearUniqueTransient(s);s.uniqueState.capacitor=0;s.uniqueState.momentumPower=0;s.inscriptionState={furyUntil:0,furyPower:0};s.skillRuntime=skills.createSkillRuntime();refreshStats(s,true);
  return {ok:true,missing:status.missing,reason:status.missing.length?status.reason:status.build.name+' 교체 완료'};
@@ -262,13 +252,12 @@ export function bulkSalvage(s,ids){
  const items=s.profile.inventory.filter(i=>selected.has(i.id));if(items.length!==ids.length||items.some(i=>itemProtection(s.profile,i)))return {ok:false,reason:'장비 상태가 바뀌었어. 보호된 장비는 분해할 수 없어.'};
  const gold=items.reduce((sum,i)=>sum+salvageValue(i),0);s.profile.inventory=s.profile.inventory.filter(i=>!selected.has(i.id));s.profile.gold+=gold;return {ok:true,count:items.length,gold,reason:items.length+'개 분해 · 골드 +'+gold};
 }
-export function forgeCost(p,id){if(!Object.hasOwn(FORGE,id))return null;const n=p.forge[id];return{gold:Math.round((id==='blade'?30:id==='armor'?25:60)*Math.pow(n+1,1.5)),cores:id==='core'?1+Math.floor(n/2):0};}
 export function createGame(profile=createProfile(),{durable=false}={}){
   profile.skillBook??=skills.restoreSkillBook(null,profile.level);
   const stats=playerStats(profile),s={profile,durable,settlement:null,buildEffects:buildEffects(profile),inscriptionState:{furyUntil:0,furyPower:0},effectBudget:50,skillRuntime:skills.createSkillRuntime(),phase:'camp',auto:false,paused:false,stageId:1,difficulty:0,bounds:{width:WORLD_BOUNDS.width,height:WORLD_BOUNDS.height,padding:80},
     player:{x:350,y:1160,hp:stats.maxHp,maxHp:stats.maxHp,stamina:100,action:'idle',actionTime:0,aimX:0,aimY:1,facing:1,attackHit:false,attackCooldown:0,dashCooldown:0,thunderCooldown:0,invulnerable:0,lastDamage:0,dashX:1,dashY:0,combo:0,comboWindow:0,queued:false,queuedAim:null,swing:null,counterReady:0,lookX:0,lookY:1,heading:2,motionDistance:0,lastAimRevision:0,moving:false},
     synergies:equipmentSynergies(profile),loadout:uniqueLoadout(profile),uniqueState:{cooldowns:{},cooldownKeys:[],momentum:0,momentumPower:0,capacitor:0,shield:0,shieldTime:0,shieldOwner:null,lastStand:false,still:0,orbit:null,ancientZones:[],ancientShields:emptyEquipment(),ancientBuffs:{}},spawnView:{width:720,height:1280},spawns:[],assist:{targetId:null,approaching:false,evade:null},enemies:[],projectiles:[],barrels:[],pickups:[],effects:[],nodes:[],encounters:[],caches:[],encounterIndex:0,run:{stage:1,startStage:1,wave:0,waveTime:0,waveKills:0,waveQuota:0,stageKills:0,stageQuota:0,timeLimit:0,timeRemaining:0,timedOut:false,flow:'idle',timer:0,kills:0,rooms:0,seals:0,gold:0,xp:0,xpBonus:0,trainingGold:0,startLevel:profile.level,cores:0,items:0,lootLedger:[],resourceRevision:0,stageItems:0,monsterItems:0,autoSalvaged:0,perfectDodges:0,guardBreaks:0,explosions:0,time:0,ancientProcs:0,craftedProcs:0,materials:0,synergyProcs:{shatter:0,execute:0},bossAncients:[],bossSpawned:false,bossKilled:false,beastLearned:null},rng:12345,materialRng:98765,refiningRng:13579,promotionRng:97531,lootRng:54321,resultDelay:0,nextId:1,hitStop:0,shake:0,lastLoot:null};
-  settleExcessPoints(s);return s;
+  return s;
 }
 const random=s=>{s.rng=(Math.imul(1664525,s.rng)+1013904223)>>>0;return s.rng/4294967296;};
 const lootRandom=s=>{s.lootRng=(Math.imul(1664525,s.lootRng)+1013904223)>>>0;return s.lootRng/4294967296;};
@@ -434,10 +423,11 @@ function updateCampaign(s,dt){
 }
 export function returnToCamp(s){if(s.phase==='camp'||s.settlement)return false;finishFailedStage(s);settleResources(s);collectGear(s);const auto=s.auto,durable=s.durable;Object.assign(s,createGame(s.profile,{durable}));s.auto=auto;return true;}
 export function resultReady(s){return s.phase==='victory'&&s.resultDelay<=0||s.phase==='defeat'&&(s.run.timedOut||s.player.actionTime>=ACTION_DURATIONS.death);}
-export function upgradeForge(s,id){if(s.phase!=='camp'||!Object.hasOwn(FORGE,id)||s.profile.forge[id]>=FORGE[id].max)return false;const cost=forgeCost(s.profile,id);if(s.profile.gold<cost.gold||s.profile.cores<cost.cores)return false;s.profile.gold-=cost.gold;s.profile.cores-=cost.cores;s.profile.forge[id]++;refreshStats(s,true);return true;}
-export function upgradeOptions(s){return Object.keys(UPGRADES).filter(k=>s.profile.skills[k]<UPGRADES[k].max);}
-export function chooseUpgrade(s,id){if(s.phase!=='camp'||!s.profile.skillPoints||!Object.hasOwn(UPGRADES,id)||s.profile.skills[id]>=UPGRADES[id].max)return false;s.profile.skills[id]++;s.profile.skillPoints--;refreshStats(s,true);settleExcessPoints(s);return true;}
-function settleExcessPoints(s){if(s.profile.skillPoints&&!upgradeOptions(s).length){const gold=s.profile.skillPoints*35;s.profile.gold+=gold;if(s.phase==='playing'){s.run.gold+=gold;s.run.trainingGold+=gold;}s.profile.skillPoints=0;}}
+// Alpha 0.131 성장: 능력치 단련 and 성장 트리 are changed in camp only.
+export function trainStat(s,id){if(s.phase!=='camp'||!growth.train(s.profile,id))return false;refreshStats(s,true);return true;}
+export function resetTrainingStats(s){if(s.phase!=='camp')return false;growth.resetTraining(s.profile);refreshStats(s,true);return true;}
+export function learnGrowthNode(s,id){if(s.phase!=='camp'||!growth.learnNode(s.profile,id))return false;refreshStats(s,true);return true;}
+export function resetGrowthTree(s){if(s.phase!=='camp')return false;growth.resetTree(s.profile);refreshStats(s,true);return true;}
 function refreshStats(s,heal=false){const old=s.player.maxHp,stats=playerStats(s.profile);s.player.maxHp=stats.maxHp;s.player.hp=heal?stats.maxHp:clamp(s.player.hp+Math.max(0,stats.maxHp-old),0,stats.maxHp);let remaining=stats.maxHp*.25;for(const slot of ANCIENT_SLOTS){const shield=s.uniqueState.ancientShields[slot];if(shield){shield.amount=Math.min(shield.amount,remaining);remaining-=shield.amount;if(shield.amount<=0)s.uniqueState.ancientShields[slot]=null;}}}
 export function canEquipItem(s,id){return !s.settlement&&(s.phase==='camp'||s.paused)&&ownedAtStageStart(s.profile,id);}
 export function equipItem(s,id,position=null){
@@ -657,6 +647,8 @@ function kill(s,e,inscriptions=s.buildEffects,explode=true){if(e.dead)return;e.d
 function damageEnemy(s,e,value,critical=false,kind='normal',origin=s.player,piercing=false,synergy=null,swing=null){
   if(!eligible(s,e)||s.phase!=='playing'||s.settlement)return 'miss';value*=1+ancientBuff(s,'fury');
   const direct=kind!=='proc'&&kind!=='inscription'&&kind!=='rune-dot'&&kind!=='blast',inscriptions=swing?.inscriptions??s.buildEffects;
+  // 성장 트리 '처형자' (Alpha 0.131): direct hits on enemies under 35% health.
+  if(direct&&e.hp<e.maxHp*growth.EXECUTE_HEALTH){const ex=growth.treeBonus(s.profile).execute;if(ex)value*=1+ex;}
   if(direct&&inscriptions.execution&&e.hp/e.maxHp<=BUILD_EFFECTS.execution.threshold){const legacy=swing?.unique?.definition.id==='execution'&&e.hp/e.maxHp<=(e.boss?UNIQUE_EFFECTS.execution.bossThreshold:UNIQUE_EFFECTS.execution.threshold)?UNIQUE_EFFECTS.execution.bonus*swing.unique.power:0;value*=(1+legacy+BUILD_EFFECTS.execution.bonus*inscriptions.execution)/(1+legacy);}
   const shred=e.runeShredTime>0?e.runeShred:0,defending=e.boss&&ruleOf(s)==='defense'&&s.run.time%12<8;
   // A defense stance is armor too: weakening applies before its mitigation.
@@ -838,11 +830,11 @@ function strike(s){
   if(s.player.swing.skillVisualOnly){s.player.attackHit=true;return;}
   const p=s.player,stats=playerStats(s.profile),swing=p.swing;p.attackHit=true;swing.contactX=p.x;swing.contactY=p.y;let hits=0,firstTarget=null,firstX=0,firstY=0,unguarded=false;
   let critHit=null;const contacts=[],skillScale=skills.basicSkillBonus(s,swing);
-  const kind=swing.heavy?'heavy':p.combo===3?'finisher':'normal';
+  const kind=swing.heavy?'heavy':p.combo===3?'finisher':'normal',tree=growth.treeBonus(s.profile),fin=kind==='finisher'?1+tree.finisher:1;
   for(const e of s.enemies){if(!eligible(s,e)||!inCleave(p,e,stats.range*swing.range+(e.boss?30:12),swing.dot))continue;
-    const synergy=strikeSynergy(s,e,swing),piercing=swing.trait==='pierce'&&e.guard>0&&(kind==='heavy'||kind==='finisher'),critical=random(s)<stats.crit,result=damageEnemy(s,e,(swing.heavy?stats.thunderDamage*swing.damage:stats.damage*swing.damage)*skillScale*(critical?1.6:1)*directUniqueMultiplier(s,e,swing),critical,kind,p,piercing,synergy,swing);hits++;contacts.push(e);if(critical&&result!=='miss'&&!critHit)critHit={x:e.x,y:e.y};if(!firstTarget){firstTarget=e;firstX=e.x;firstY=e.y;}unguarded||=result==='hit';applyWeaponTrait(s,e,synergy&&result==='hit'&&swing.synergyTriggered[synergy.id]&&((synergy.id==='shatter'&&swing.trait==='frost')||(synergy.id==='execute'&&swing.trait==='bleed'))?null:piercing?'pierce':swing.trait==='pierce'?null:swing.trait,stats,result);
+    const synergy=strikeSynergy(s,e,swing),piercing=swing.trait==='pierce'&&e.guard>0&&(kind==='heavy'||kind==='finisher'),critical=random(s)<stats.crit,result=damageEnemy(s,e,(swing.heavy?stats.thunderDamage*swing.damage:stats.damage*swing.damage)*skillScale*fin*(critical?1.6:1)*directUniqueMultiplier(s,e,swing),critical,kind,p,piercing,synergy,swing);hits++;contacts.push(e);if(critical&&result!=='miss'&&!critHit)critHit={x:e.x,y:e.y};if(!firstTarget){firstTarget=e;firstX=e.x;firstY=e.y;}unguarded||=result==='hit';applyWeaponTrait(s,e,synergy&&result==='hit'&&swing.synergyTriggered[synergy.id]&&((synergy.id==='shatter'&&swing.trait==='frost')||(synergy.id==='execute'&&swing.trait==='bleed'))?null:piercing?'pierce':swing.trait==='pierce'?null:swing.trait,stats,result);
     if(!e.boss&&result!=='guarded'){const n=direction(e.x-p.x,e.y-p.y),beforeX=e.x,beforeY=e.y;e.x+=n.x*swing.push;e.y+=n.y*swing.push;clampPosition(e,s.bounds);e.recoilX-=e.x-beforeX;e.recoilY-=e.y-beforeY;}
-    if(s.profile.skills.drain)p.hp=Math.min(p.maxHp,p.hp+2*s.profile.skills.drain);
+    if(tree.drain)p.hp=Math.min(p.maxHp,p.hp+p.maxHp*tree.drain);
   }
   if(critHit)ancientAll(s,'crit',critHit);
   skills.basicSkillContact(s,swing,contacts,SKILL_HOOKS);
@@ -884,6 +876,7 @@ function updateBarrels(s,dt){
 function hurtPlayer(s,value,source=null){
  const p=s.player;if(s.phase!=='playing'||p.invulnerable>0)return;
  value=skills.incomingSkillDamage(s,value,source,SKILL_HOOKS);if(value<=0||s.phase!=='playing')return;skills.interruptSkill(s);
+ {const guard=growth.treeBonus(s.profile).lowHpGuard;if(guard&&p.hp<p.maxHp*.5)value*=1-guard;}
  let damage=Math.max(1,Math.round(value));const u=s.uniqueState;
  if(u.shield>0){const blocked=Math.min(damage,u.shield);u.shield-=blocked;damage-=blocked;effect(s,'unique',{uniqueId:'barrier',x:p.x,y:p.y,radius:55},.4);}
  p.invulnerable=.42;if(!damage)return;
@@ -981,10 +974,10 @@ function updatePickups(s,dt,force=false){
     if(d>28)return true;
     if(isResourcePickup(drop)){claimResource(s,drop);return false;}
     if(drop.kind==='equipment'){receiveItem(s,drop.item);return false;}
-    if(drop.cores)lootPulse(s);const baseXp=Math.round(drop.xp*(1+s.profile.skills.magnet*.1)),xp=growthXp(s.profile,baseXp);s.profile.gold+=drop.gold;s.profile.cores+=drop.cores;s.run.gold+=drop.gold;s.run.cores+=drop.cores;s.run.xp+=xp;s.run.xpBonus+=xp-baseXp;
+    if(drop.cores)lootPulse(s);const baseXp=Math.round(drop.xp),xp=growthXp(s.profile,baseXp);s.profile.gold+=drop.gold;s.profile.cores+=drop.cores;s.run.gold+=drop.gold;s.run.cores+=drop.cores;s.run.xp+=xp;s.run.xpBonus+=xp-baseXp;
     if(gainXp(s.profile,xp)){refreshStats(s);p.hp=Math.min(p.maxHp,p.hp+22);effect(s,'levelUp',{x:p.x,y:p.y},1);}
     effect(s,'collect',{x:drop.x,y:drop.y},.3);return false;
-  });settleExcessPoints(s);
+  });
 }
 export function remainingMonsters(s){if(s.phase==='camp'||s.phase==='victory'||s.run.flow==='stageClear')return 0;let adds=0;for(const e of s.enemies)if(e.objective===false&&!e.dead)adds++;return Math.max(0,s.run.stageQuota-s.run.stageKills)+adds;}
 function expireHunt(s){
@@ -1017,7 +1010,7 @@ export function advanceGame(s,elapsed,input={}){
   let left=dt;while(left>.00001&&s.phase==='playing'){
     const timed=s.run.flow==='combat'||s.run.flow==='break';
     if(timed&&s.run.timeRemaining<=1e-9){expireHunt(s);break;}
-    const step=Math.min(.025,left,timed?s.run.timeRemaining:Infinity),previousStage=s.run.stage;left-=step;if(timed)s.run.timeRemaining=Math.max(0,s.run.timeRemaining-step);s.run.time+=step;s.effects=s.effects.filter(f=>(f.ttl-=step)>0);const p=s.player,stats=playerStats(s.profile),previousX=p.x,previousY=p.y;for(const key of ['attackCooldown','dashCooldown','thunderCooldown','invulnerable','comboWindow','counterReady'])p[key]=Math.max(0,p[key]-step);p.stamina=Math.min(100,p.stamina+18*step);tickUniqueClocks(s,step);skills.tickSkills(s,step,SKILL_HOOKS);if(s.phase!=='playing')break;
+    const step=Math.min(.025,left,timed?s.run.timeRemaining:Infinity),previousStage=s.run.stage;left-=step;if(timed)s.run.timeRemaining=Math.max(0,s.run.timeRemaining-step);s.run.time+=step;s.effects=s.effects.filter(f=>(f.ttl-=step)>0);const p=s.player,stats=playerStats(s.profile),previousX=p.x,previousY=p.y;for(const key of ['attackCooldown','dashCooldown','thunderCooldown','invulnerable','comboWindow','counterReady'])p[key]=Math.max(0,p[key]-step);p.stamina=Math.min(100,p.stamina+18*(1+growth.treeBonus(s.profile).staminaRegen)*step);tickUniqueClocks(s,step);skills.tickSkills(s,step,SKILL_HOOKS);if(s.phase!=='playing')break;
     if(s.run.flow==='stageClear'){s.run.timer=Math.max(0,s.run.timer-step);if(!s.run.timer){s.run.stage++;prepareStage(s,true);}continue;}
     if(s.run.flow==='combat'){s.run.waveTime+=step;advanceSpawns(s,step);}
     if(!s.auto){s.assist.targetId=null;s.assist.approaching=false;s.assist.evade=null;}

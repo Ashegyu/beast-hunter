@@ -1,0 +1,6 @@
+seed0 attempts=70 farms=10 fails={"1-2":1,"1-4":7,"3-4":2}
+ch10 clear Lv33 ch20 clear Lv57 ch30 clear Lv80 ch40 clear Lv102 ch50 clear Lv124 ch60 clear Lv144 
+seed4 attempts=90 farms=30 fails={"1-3":1,"1-4":3,"3-4":7,"35-4":3,"38-4":8,"40-4":3,"41-4":2,"47-4":3}
+ch10 clear Lv33 ch20 clear Lv57 ch30 clear Lv80 ch40 clear Lv106 ch50 clear Lv128 ch60 clear Lv149 
+seed9 attempts=67 farms=7 fails={"1-3":1,"1-4":1,"1-8":2,"40-4":3}
+ch10 clear Lv31 ch20 clear Lv56 ch30 clear Lv79 ch40 clear Lv102 ch50 clear Lv123 ch60 clear Lv144 

@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as g from '../dist/game-engine.js';
 const profile=(level,xp=0)=>{const p=g.createProfile(1000);p.level=level;p.xp=xp;p.skillBook=g.restoreSkillBook(null,level);return p;};
-function apply(p,xp){p.xp+=xp;while(p.level<50&&p.xp>=g.xpNeeded(p.level)){p.xp-=g.xpNeeded(p.level);p.level++;p.skillPoints++;}if(p.level===50)p.xp=0;}
+function apply(p,xp){p.xp+=xp;while(p.level<50&&p.xp>=g.xpNeeded(p.level)){p.xp-=g.xpNeeded(p.level);p.level++;}if(p.level===50)p.xp=0;}
 function grant(p,base){const xp=g.growthXp(p,base);apply(p,xp);return xp;}
 // Alpha 0.104 slowed growth: no accelerated bands, every level earns XP at 1x.
 test('growth XP is unscaled at every level, and the XP query never writes the profile',()=>{
@@ -27,7 +27,7 @@ test('invalid and extreme grants stay finite and capped without per-point work',
 test('combat and scouting credit the same band-aware experience once, including boundary carry',()=>{
  const p=profile(19,g.xpNeeded(19)-1);p.clearedStage=1;p.unlockedStage=2;p.stageProgress=[10,0,0];const offline=structuredClone(p),s=g.createGame(p);g.launch(s);s.enemies=[];s.spawns=[];s.barrels=[];s.run.flow='break';s.run.timer=999;
  s.pickups=[{id:999,x:s.player.x,y:s.player.y,gold:0,xp:17,cores:0}];g.advanceGame(s,.025);const reward=g.collectOffline(offline,1000+17*60000);
- assert.equal(reward.xp,17);assert.equal(s.run.xp,reward.xp);assert.equal(s.run.xpBonus,0);assert.equal(p.level,offline.level);assert.equal(p.xp,offline.xp);assert.equal(p.skillPoints,offline.skillPoints);
+ assert.equal(reward.xp,17);assert.equal(s.run.xp,reward.xp);assert.equal(s.run.xpBonus,0);assert.equal(p.level,offline.level);assert.equal(p.xp,offline.xp);assert.equal(g.growthPoints(p),g.growthPoints(offline));
  const before=g.encodeProfile(p,1000);g.advanceGame(s,.1);assert.equal(g.encodeProfile(p,1000),before);assert.equal(s.run.xp,17);assert.deepEqual(g.collectOffline(offline,1000+17*60000),{minutes:0,gold:0,xp:0});
  s.paused=true;const paused=JSON.stringify(s);g.advanceGame(s,.1);assert.equal(JSON.stringify(s),paused);
 });

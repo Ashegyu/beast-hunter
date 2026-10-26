@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.130.0';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.131.0';
 import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js';
 import { createCombatAudio } from './sound.js?v=0.76.0';
-import * as game from './game-engine.js?v=0.130.0';
+import * as game from './game-engine.js?v=0.131.0';
 import {FrameMetrics} from './frame-metrics.js?v=0.98.1';
 import { frameIndex, frameRect, validateClip } from './engine.js';
 import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
 import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.103.1';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.130.0';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.130.0';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.130.0';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.130.0';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.131.0';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.131.0';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.131.0';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.131.0';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -252,7 +252,22 @@ function doThunder(){if(!ready||orientationBlocked||state.phase!=='playing'||sta
 function togglePause(){if(state.settlement||orientationBlocked||state.phase!=='playing')return;state.paused=!state.paused;if(state.paused)audio.suspend();else audio.unlock();clearInput();save();updateHud();}
 $('sound').addEventListener('click',()=>{soundEnabled=!soundEnabled;audio.mute(!soundEnabled);if(soundEnabled)audio.unlock();try{localStorage.setItem(STORAGE_KEY+':sound',soundEnabled?'on':'off');}catch{}updateHud();});
 $('start').addEventListener('click',()=>start());
-for(const id of ['blade','armor','core'])$('forge-'+id).addEventListener('click',()=>{if(game.upgradeForge(state,id)){save();updateHud();$('growth-feedback').textContent=game.FORGE[id].name+' +'+profile.forge[id]+' 강화 완료';}});
+// Alpha 0.131 성장: 능력치 단련 (shared) and 성장 트리 (saved with each build), both paid with 성장 포인트 (one per level).
+let growthView='training',growthArmed='';
+for(const [id,v]of [['growth-tab-training','training'],['growth-tab-tree','tree']])$(id).addEventListener('click',()=>{if(state.phase!=='camp')return;growthView=v;growthArmed='';updateHud();});
+for(const id of game.TRAINING_IDS)$('train-'+id).addEventListener('click',()=>{if(game.trainStat(state,id)){save();$('growth-feedback').textContent=game.TRAINING[id].name+' '+profile.training[id]+'단계';updateHud();}});
+for(const id of Object.keys(game.TREE_NODES))$('tree-node-'+id).addEventListener('click',()=>{if(game.learnGrowthNode(state,id)){save();$('growth-feedback').textContent='성장 트리 · '+game.TREE_NODES[id].name+' 습득';updateHud();}});
+// Reset asks twice: the first tap arms it, the second clears the visible page.
+$('growth-reset').addEventListener('click',()=>{if(state.phase!=='camp')return;if(growthArmed!==growthView){growthArmed=growthView;$('growth-feedback').textContent=(growthView==='tree'?'성장 트리':'능력치 단련')+'를 초기화하려면 한 번 더 누르세요. 포인트는 모두 돌려받습니다.';updateHud();return;}growthArmed='';if(growthView==='tree'?game.resetGrowthTree(state):game.resetTrainingStats(state)){save();$('growth-feedback').textContent=(growthView==='tree'?'성장 트리':'능력치 단련')+' 초기화 완료';updateHud();}});
+function refreshGrowthBoard(){
+ const points=game.growthPoints(profile),cap=game.trainingCap(profile.level),tree=profile.growthTree;
+ $('growth-board').setAttribute('data-view',growthView);$('growth-training').hidden=growthView!=='training';$('growth-tree').hidden=growthView!=='tree';
+ for(const [id,v]of [['growth-tab-training','training'],['growth-tab-tree','tree']])$(id).setAttribute('aria-pressed',String(growthView===v));
+ hudText($('growth-points'),'성장 포인트 '+points+' / '+game.growthPointsTotal(profile));hudText($('growth-reset'),growthArmed===growthView?'초기화 확인':'초기화');
+ for(const id of game.TRAINING_IDS){const t=game.TRAINING[id],rank=profile.training[id],why=game.trainStatus(profile,id);hudText($('train-'+id+'-value'),t.unit+' +'+game.trainingValue(id,rank)+t.suffix+(why&&why!=='성장 포인트 부족'?' · '+why:''));hudText($('train-'+id+'-rank'),rank+'/'+cap);$('train-'+id).disabled=!!why;$('train-'+id).setAttribute('aria-label',t.name+' '+rank+'단계 · '+t.unit+' 단계당 +'+t.per+t.suffix+(why?' · '+why:''));}
+ for(const b of game.GROWTH_TREE){hudText($('tree-branch-'+b.id+'-spent'),b.text+' · '+b.nodes.filter(n=>tree.includes(n.id)).reduce((a,n)=>a+n.cost,0)+'P');
+  for(const n of b.nodes){const why=game.nodeStatus(profile,n.id),state=tree.includes(n.id)?'owned':why?'locked':'open',node=$('tree-node-'+n.id);node.setAttribute('data-state',state);node.disabled=state!=='open';hudText($('tree-node-'+n.id+'-name'),n.name);hudText($('tree-node-'+n.id+'-text'),n.text);hudText($('tree-node-'+n.id+'-cost'),state==='owned'?'습득':n.cost+'P');node.setAttribute('aria-label',n.name+' · '+n.text+' · '+(state==='owned'?'습득':n.cost+'포인트'+(why?' · '+why:'')));}}
+}
 // Regions group ten chapters; a region tab opens its furthest unlocked chapter.
 // The species a stage is known by on the map (rotates skitter/spitter/bulwark), and the stages a species appears in.
 function stageHeadline(chapter,stage){const lineup=chapter.stages[Math.min(9,Math.max(1,stage))-1];return lineup[['skitter','spitter','bulwark'][(stage-1)%3]];}
@@ -262,7 +277,6 @@ function selectChapter(id){if(!ready||state.phase!=='camp'||id<1||id>profile.unl
 for(const theme of game.THEMES)$('stage-'+theme.id).addEventListener('click',()=>{const open=regionChapters(theme.id).filter(c=>c.id<=profile.unlockedStage).at(-1);if(open&&game.STAGES[selectedStage-1].theme!==theme.id)selectChapter(open.id);});
 $('chapter-prev').addEventListener('click',()=>selectChapter(selectedStage-1));
 $('chapter-next').addEventListener('click',()=>selectChapter(selectedStage+1));
-for(let i=0;i<6;i++)$('choice-'+i).addEventListener('click',()=>{if(game.chooseUpgrade(state,choiceIds[i])){if(!profile.skillPoints)campChoices=false;save();updateHud();}});
 $('choice-back').addEventListener('click',()=>{campChoices=false;updateHud();});
 $('inventory').addEventListener('click',()=>openInventory());$('camp-inventory').addEventListener('click',()=>openInventory());
 $('loot-filter').addEventListener('change',event=>{const value=Number(event.target.value);rarityFilter=Number.isInteger(value)&&value>=0&&value<=6?value:0;bagReviewIds=null;updateHud();});
@@ -477,15 +491,14 @@ for(const action of ['enhance','promote','reroll','apply','keep'])$('workshop-'+
  const result=action==='enhance'?game.enhanceItem(state,item.id):action==='promote'?game.promoteItem(state,item.id):action==='reroll'?game.rerollItem(state,item.id):game.resolveItemReroll(state,item.id,action==='apply');
  if(result.ok){if(action==='promote')workshopMode='enhance';save();}workshopFeedback=result.reason;bagRenderKey='';updateHud();if(action==='promote'&&result.ok)$('workshop-enhance').focus({preventScroll:true});
 });
-$('camp-upgrade').addEventListener('click',()=>{campChoices=true;updateHud();});
 let preparationKey='';
 function refreshPreparation(){
- const points=game.skillPoints(profile),key=profile.inventory.length+':'+profile.skillPoints+':'+points+':'+state.run.autoSalvaged+':'+state.phase;
+ const points=game.skillPoints(profile),key=profile.inventory.length+':'+game.growthPoints(profile)+':'+points+':'+state.run.autoSalvaged+':'+state.phase;
  if(key===preparationKey)return;preparationKey=key;
  $('result-prepare-title').textContent=state.phase==='defeat'?'재도전 전 정비':'다음 사냥 전 정비';
  for(const where of ['map','result']){
   $(where+'-prepare-gear-note').textContent='보관 '+profile.inventory.length+'/'+game.INVENTORY_LIMIT+' · 장비와 시너지 확인';
-  $(where+'-prepare-growth-note').textContent='남은 숙련 '+profile.skillPoints+'포인트';
+  $(where+'-prepare-growth-note').textContent='남은 성장 포인트 '+game.growthPoints(profile);
   $(where+'-prepare-skills-note').textContent='남은 스킬 강화 '+points+'포인트';
  }
  $('result-storage-note').textContent='보관 '+profile.inventory.length+'/'+game.INVENTORY_LIMIT+' · 이번 사냥 자동 정리 '+state.run.autoSalvaged+'개';
@@ -1055,10 +1068,6 @@ function updateHud(){
     const uniqueSummary=Object.values(state.loadout).filter(Boolean);$('equipped-unique').hidden=!uniqueSummary.length;hudText($('equipped-unique-title'),'착용 고유 효과 · '+uniqueSummary.length+'개');hudText($('equipped-unique-details'),uniqueSummary.map(u=>game.EQUIPMENT_SLOTS[u.slot]+' · '+u.definition.name+' — '+u.definition.description+((u.ancient??u.crafted)?(u.signatures??[]).map(r=>'\n  '+r.name+' — '+r.description).join(''):'')).join('\n'));
     $('equipped-trait').hidden=!trait;hudText($('equipped-trait'),trait?trait.name+' · '+trait.description:'');
     refreshBag();
-  }else if(campChoices&&profile.skillPoints){
-    choiceIds=game.upgradeOptions(state);modal('choice','검술을 정비하자.','원하는 능력에 포인트를 배분해. 사냥 중 레벨업은 전투를 멈추지 않아.','LEVEL '+profile.level+' / TRAINING');
-    hudText($('choice-note'),'남은 숙련 포인트 '+profile.skillPoints+'개');
-    for(let i=0;i<6;i++){const id=choiceIds[i],item=game.UPGRADES[id];$('choice-'+i).hidden=!item;if(item){hudText($('choice-'+i+'-icon'),item.icon);hudText($('choice-'+i+'-name'),item.name);hudText($('choice-'+i+'-description'),item.description);hudText($('choice-'+i+'-level'),(profile.skills[id]+1)+' / '+item.max);}}
   }else if(state.phase==='camp'){
     modal('camp',profile.hunts?'다음 사냥을 준비하자.':'첫 사냥을 준비하자.','포격충을 먼저 잡고 중갑의 갑각을 깨뜨려. 폭발핵에 적을 모아 터뜨리면 유리해.','HUNTER\'S CAMP');
     const selected=game.STAGES[selectedStage-1];const bossLoot=game.BOSS_LOOT.find(b=>b.tier===selected.theme)??{id:'chapter-'+selected.id,name:selected.bossName};hudText($('boss-loot-title'),bossLoot.name+' · 일반 장비 드롭');if($('boss-loot-list').dataset.boss!==bossLoot.id){$('boss-loot-list').dataset.boss=bossLoot.id;$('boss-loot-list').replaceChildren(...game.STAGE_SLOTS.map(slot=>{const li=document.createElement('li');li.textContent=game.SLOTS[slot]+' · 일반 등급 드롭 → 최대 강화 후 승급';return li;}));}hudText($('camp-stage-name'),selected.name);hudText($('camp-stage-description'),selected.subtitle);hudText($('camp-stage-goal'),game.battlePlan(selectedRunStage).tactic);
@@ -1077,9 +1086,8 @@ function updateHud(){
     $('chapter-banner').style.backgroundImage='linear-gradient(90deg,#101319a8,#10131925),url("assets/'+(manifest.delivery?.[environment]??environment)+'")';hudText($('chapter-label'),'CHAPTER '+String(selected.id).padStart(2,'0')+' · '+selected.region);$('chapter-prev').disabled=selected.id<=1;$('chapter-next').disabled=selected.id>=Math.min(game.STAGES.length,profile.unlockedStage);hudText($('chapter-preview-name'),selected.name);hudText($('chapter-preview-boss'),(selected.special?'특수 보스 · ':'챕터 보스 · ')+selected.bossName);hudText($('chapter-tactic'),selected.tactic);
     for(const [i,species] of [...selected.roster,selected.bossSpecies].entries()){const design=MONSTERS[species],clip=manifest.clips[manifest.directions[species].walk.s];atlasThumbnail($('roster-art-'+i),clip.image,clip.frames[0],72);hudText($('roster-name-'+i),design.name);hudText($('roster-detail-'+i),species===selected.bossSpecies?'STAGE 10 · '+(selected.special?'특수 보스':'챕터 보스'):'STAGE '+stagesOf(selected,species).join('·')+' · '+(design.tactic??({skitter:'근접 추격',spitter:'원거리 사격',bulwark:'중갑 강타'}[design.role])));$('roster-art-'+i).setAttribute('aria-label',design.name);}
     for(const theme of game.THEMES){const b=$('stage-'+theme.id),first=regionChapters(theme.id)[0],on=theme.id===selected.theme,cleared=regionChapters(theme.id).filter(c=>c.id<=profile.clearedStage).length;b.disabled=first.id>profile.unlockedStage;b.classList.toggle('selected',on);b.setAttribute('aria-pressed',String(on));hudText($('stage-progress-'+theme.id),cleared+'/'+game.CHAPTERS_PER_THEME);}
-    hudText($('stat-summary'),'공격 '+Math.round(stats.damage)+' · 체력 '+stats.maxHp);
-    for(const [id,item] of Object.entries(game.FORGE)){const cost=game.forgeCost(profile,id),max=profile.forge[id]>=item.max;hudText($('forge-'+id+'-level'),'+'+profile.forge[id]);hudText($('forge-'+id+'-cost'),max?'최대 강화':cost.gold+' 골드'+(cost.cores?' · 핵 '+cost.cores:''));$('forge-'+id).disabled=max||profile.gold<cost.gold||profile.cores<cost.cores;hudText($('forge-'+id+'-state'),max?'최대 단계':profile.gold<cost.gold?'골드 부족':profile.cores<cost.cores?'괴수 핵 부족':'눌러서 강화');}
-    $('camp-upgrade').hidden=!profile.skillPoints;hudText($('camp-upgrade'),'검술 정비 · 숙련 포인트 '+profile.skillPoints+'개');$('start').disabled=!ready;
+    hudText($('stat-summary'),'공격 '+Math.round(stats.damage)+' · 체력 '+Math.round(stats.maxHp));
+    refreshGrowthBoard();$('start').disabled=!ready;
     hudText($('offline-note'),offline.gold?'정찰 보상: '+offline.minutes+'분 동안 골드 '+offline.gold+' · 경험치 '+offline.xp:profile.clearedStage?'정찰대가 열린 구역을 탐색 중이야. 다음 접속 때 최대 4시간 보상을 받아.':'첫 보스를 잡으면 접속하지 않은 동안 정찰 보상이 쌓여. 최대 4시간.');
     refreshCampScene(selected);refreshMapScene(selected,selectedPlan,previewSpecies,completed,limit);
   }else if(['defeat','victory'].includes(state.phase)&&!game.resultReady(state)){modal('','','','');
@@ -1320,8 +1328,8 @@ for(let n=1;n<=3;n++)$('track-route-'+n).addEventListener('click',()=>{if(!track
 let homeDashboardKey='';
 function refreshHomeDashboard(selected){
  const stats=game.playerStats(profile),weapon=profile.inventory.find(i=>i.id===profile.equipment.weapon&&i.slot==='weapon');
- const key=JSON.stringify([selectedStage,selectedRunStage,selectedDifficulty,profile.stageProgress,profile.difficultyProgress,profile.level,profile.xp,profile.skillPoints,profile.inventory,profile.equipment,profile.skills,profile.forge]);if(key===homeDashboardKey)return;homeDashboardKey=key;
- $('lobby-growth-badge').hidden=profile.skillPoints<=0;
+ const key=JSON.stringify([selectedStage,selectedRunStage,selectedDifficulty,profile.stageProgress,profile.difficultyProgress,profile.level,profile.xp,profile.training,profile.growthTree,profile.inventory,profile.equipment,profile.skills,profile.forge]);if(key===homeDashboardKey)return;homeDashboardKey=key;
+ $('lobby-growth-badge').hidden=game.growthPoints(profile)<=0;
  const xpPercent=profile.level===game.MAX_LEVEL?100:Math.floor(clamp(profile.xp/game.xpNeeded(profile.level)*100,0,100));
  $('home-xp-label').textContent=profile.level===game.MAX_LEVEL?'MAX':xpPercent+'%';$('home-xp-fill').style.width=xpPercent+'%';$('home-xp').setAttribute('aria-valuenow',String(xpPercent));
  $('home-route-chapter').textContent='CHAPTER '+String(selected.id).padStart(2,'0');$('home-route-title').textContent=selected.name;$('home-route-stage').textContent='STAGE '+String(selectedRunStage).padStart(2,'0')+' · '+game.HUNT_MODES[selectedDifficulty].name;$('home-route-description').textContent=HOME_ROUTE_TEXT[selected.theme-1]??selected.subtitle;
@@ -1398,7 +1406,6 @@ const skillPageSize=9;
 function openSkills(origin='nav-skills'){skillPage=0;if(!ready||state.phase!=='camp')return;inventoryOpen=false;codexOpen=false;craftOpen=false;trackOpen=false;campChoices=false;skillRenderKey='';openCampDrawer('skills',origin);}
 $('nav-skills').addEventListener('click',()=>openSkills());
 $('skill-list-back').addEventListener('click',()=>{if(state.phase!=='camp'||campDrawer!=='skills')return;window.hunterPages?.reveal($('skill-library'));$('skill-tab-'+skillTab).focus({preventScroll:true});});
-$('growth-skills').addEventListener('click',()=>openSkills('hub-growth'));
 function skillChanged(message){skillFeedback=message;skillRenderKey='';save();updateHud();}
 for(const row of game.SKILL_CATALOG)$('skill-card-'+row.id).addEventListener('click',()=>{if(state.phase!=='camp'||campDrawer!=='skills')return;selectedSkill=row.id;skillRenderKey='';refreshSkills();window.hunterPages?.reveal($('skill-detail'));});
 for(const tab of ['all','active','passive','ultimate','beast'])$('skill-tab-'+tab).addEventListener('click',()=>{if(state.phase!=='camp')return;skillTab=tab;skillPage=0;skillRenderKey='';refreshSkills();});
@@ -1460,15 +1467,15 @@ function refreshCombatSkills(){
 
 function refreshGrowthProgress(){
  if(!(state.phase==='camp'&&['growth','skills'].includes(campDrawer))&&!game.resultReady(state))return;
- const points=game.skillPoints(profile),start=state.run.startLevel,key=profile.level+':'+start+':'+points+':'+profile.skillPoints;
+ const points=game.skillPoints(profile),start=state.run.startLevel,key=profile.level+':'+start+':'+points+':'+game.growthPoints(profile);
  if(key===growthRenderKey)return;growthRenderKey=key;
  const future=game.skillMilestones(profile.level),next=future[0]?.level,nextRows=future.filter(row=>row.level===next),nextText=next?'다음 해금 · Lv.'+next+' · '+nextRows.map(row=>row.label).join(' · '):'모든 검술과 슬롯 해금 완료';
  for(const id of ['growth-next-skill','skill-next-unlock']){$(id).textContent=nextText;$(id).setAttribute('title',nextText);}
- $('growth-skill-budget').textContent='스킬 강화 '+points+' · 숙련 '+profile.skillPoints+' 포인트';
+ $('growth-skill-budget').textContent='성장 포인트 '+game.growthPoints(profile)+' · 스킬 강화 '+points;
  const bandIndex=game.GROWTH_XP_BANDS.findIndex(row=>profile.level<row.until),band=game.GROWTH_XP_BANDS[bandIndex],nextBand=game.GROWTH_XP_BANDS[bandIndex+1];
  $('growth-xp-rate').textContent=profile.level===game.MAX_LEVEL?'최고 레벨 · 경험치 성장 완료':(game.growthXpMultiplier(profile.level)>1?'사냥·정찰 성장 경험치 '+game.growthXpMultiplier(profile.level)+'배 · ':'')+'다음 레벨까지 경험치 '+Math.max(0,game.xpNeeded(profile.level)-profile.xp)+(nextBand?' · Lv.'+band.until+'부터 '+nextBand.multiplier+'배':'');
  $('result-level').textContent=start<profile.level?'Lv.'+start+' → Lv.'+profile.level:'Lv.'+profile.level;
- $('result-points').textContent='남은 스킬 강화 '+points+' · 숙련 '+profile.skillPoints+' 포인트';
+ $('result-points').textContent='남은 성장 포인트 '+game.growthPoints(profile)+' · 스킬 강화 '+points;
  const unlocked=game.skillMilestones(start,profile.level),names=unlocked.map(row=>row.label),shown=names.slice(0,3).join(' · ')+(names.length>3?' 외 '+(names.length-3)+'개':'');
  $('result-unlocks').hidden=!names.length;$('result-unlocks').textContent=names.length?'새 해금 · '+shown:'';$('result-unlocks').setAttribute('title',names.join(' · '));
  $('result-skills').hidden=false;

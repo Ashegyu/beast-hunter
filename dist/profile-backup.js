@@ -1,5 +1,5 @@
-import {SLOTS,EQUIPMENT_KEYS,itemSlotForPosition} from './equipment-slots.js?v=0.130.0';
-import {encodeProfile,restoreProfile,INVENTORY_LIMIT,MAX_LEVEL,STAGES} from './game-engine.js?v=0.130.0';
+import {SLOTS,EQUIPMENT_KEYS,itemSlotForPosition} from './equipment-slots.js?v=0.131.0';
+import {encodeProfile,restoreProfile,INVENTORY_LIMIT,MAX_LEVEL,STAGES} from './game-engine.js?v=0.131.0';
 
 export const MAX_BACKUP_BYTES=262144;
 const FORMAT='beast-hunter-backup',VERSION=1;
@@ -10,10 +10,10 @@ function validProfile(p){
  if(!plain(p)||![8,9,10,11,12,13,14,15,16].includes(p.version)||!Number.isInteger(p.level)||p.level<1||p.level>(p.version>=16?MAX_LEVEL:p.version>=14?100:50))return false;
  // One entry per chapter: v16 sixty (Alpha 0.118), v14–15 thirty, older saves three.
  const chapters=p.version>=16?STAGES.length:p.version>=14?30:3;
- for(const key of ['gold','cores','xp','skillPoints','unlockedStage','clearedStage','totalKills','hunts','lastSeenAt'])if(!Number.isFinite(p[key])||p[key]<0)return false;
+ for(const key of ['gold','cores','xp','unlockedStage','clearedStage','totalKills','hunts','lastSeenAt'])if(!Number.isFinite(p[key])||p[key]<0)return false;
  if(!Array.isArray(p.inventory)||p.inventory.length>INVENTORY_LIMIT||!Array.isArray(p.stageProgress)||p.stageProgress.length!==chapters||!p.stageProgress.every(n=>Number.isInteger(n)&&n>=0&&n<=10))return false;
  if(p.version>=9&&(!Array.isArray(p.difficultyProgress)||p.difficultyProgress.length!==2||!p.difficultyProgress.every(row=>Array.isArray(row)&&row.length===chapters&&row.every(n=>Number.isInteger(n)&&n>=0&&n<=10))))return false;
- if(!plain(p.equipment)||!plain(p.skills)||!plain(p.forge)||!plain(p.skillBook)||!plain(p.materials))return false;
+ if(!plain(p.equipment)||!(plain(p.training)||plain(p.skills)&&plain(p.forge))||!plain(p.skillBook)||!plain(p.materials))return false;
  const ids=new Set();for(const item of p.inventory){
   if(!plain(item)||!Number.isInteger(item.id)||item.id<1||ids.has(item.id)||!Object.hasOwn(SLOTS,item.slot)||!plain(item.affixes))return false;
   ids.add(item.id);

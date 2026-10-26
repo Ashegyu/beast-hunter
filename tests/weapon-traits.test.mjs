@@ -21,7 +21,7 @@ test('all six existing swords get immutable traits and legacy art fallback survi
  const restored=g.restoreProfile(g.encodeProfile(p));assert.equal(restored.version,16);assert.equal(g.equippedWeaponTrait(restored).id,'frost');assert.equal(restored.inventory.length,1);
 });
 test('bleed ticks exactly three times without stagger, extra drain or stacked instances',()=>{
- const {s,e}=arena();s.profile.skills.drain=1;s.player.hp=50;hit(s,e);assert.equal(e.bleedTicks,3);const hp=e.hp,playerHp=s.player.hp;
+ const {s,e}=arena();s.player.hp=50;hit(s,e);assert.equal(e.bleedTicks,3);const hp=e.hp,playerHp=s.player.hp;
  advance(s,.8);assert.equal(e.hp,hp-4);assert.equal(e.bleedTicks,2);assert.equal(s.player.hp,playerHp);assert.notEqual(e.action,'hurt');
  advance(s,1.6);assert.equal(e.hp,hp-12);assert.equal(e.bleedTicks,0);advance(s,1);assert.equal(e.hp,hp-12);
 });
@@ -63,7 +63,7 @@ test('piercing feedback appears only when hitting armor, not on unarmored target
  const {s,e}=arena('forest_fang');hit(s,e,{heavy:true});assert.equal(s.effects.some(f=>f.type==='gearProc'),false);
 });
 test('expired bleed releases old damage; a later weaker hit snapshots its own strength',()=>{
- const {s,e}=arena();s.profile.forge.blade=8;hit(s,e);assert.equal(e.bleedDamage,7);advance(s,2.5);assert.equal(e.bleedTicks,0);s.profile.forge.blade=0;hit(s,e);assert.equal(e.bleedDamage,4);
+ const {s,e}=arena();s.profile.training.power=19;hit(s,e);assert.equal(e.bleedDamage,7);advance(s,2.5);assert.equal(e.bleedTicks,0);s.profile.training.power=0;hit(s,e);assert.equal(e.bleedDamage,4);
 });
 test('a final boss killed by bleed advances chapter and rewards once, and victory freezes statuses',()=>{
  const p=g.createProfile();p.stageProgress[0]=9;p.inventory=[item('forest_blade')];p.equipment.weapon=1;const s=g.createGame(p);g.launch(s,1,10);s.lootRates={normal:1,elite:1,stage:1,boss:1};

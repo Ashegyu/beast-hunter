@@ -179,8 +179,8 @@ test('a partial battle load failure keeps the camp usable and retry never launch
  assert.equal(ui.state.phase,'camp');assert.equal(ui.state.profile.hunts,0);assert.equal(ui.nodes.get('game-shell').attributes['data-combat-ready'],'true');ui.emit('nav-home','click');ui.emit('start','click');assert.equal(ui.state.phase,'playing');
 });
 test('preparation shortcuts use live point budgets, open the requested page and stay inert during combat',async()=>{
- const p=bagFixture();p.level=10;p.skillBook=game.restoreSkillBook(null,10);p.skillPoints=3;
- const ui=await host({saved:p,campaign:true});ui.emit('nav-hunt','click');assert.equal(ui.nodes.get('map-prepare-growth-note').textContent,'남은 숙련 3포인트');assert.equal(ui.nodes.get('map-prepare-skills-note').textContent,'남은 스킬 강화 '+game.skillPoints(p)+'포인트');
+ const p=bagFixture();p.level=10;p.skillBook=game.restoreSkillBook(null,10);p.training.power=2;
+ const ui=await host({saved:p,campaign:true});ui.emit('nav-hunt','click');assert.equal(ui.nodes.get('map-prepare-growth-note').textContent,'남은 성장 포인트 7');assert.equal(ui.nodes.get('map-prepare-skills-note').textContent,'남은 스킬 강화 '+game.skillPoints(p)+'포인트');
  const before=ui.profile();ui.emit('map-prepare-gear','click');assert.equal(ui.nodes.get('equipment-content').hidden,false);assert.deepEqual(ui.profile(),before);
  ui.emit('nav-hunt','click');ui.emit('map-prepare-growth','click');assert.equal(ui.nodes.get('camp-growth-panel').hidden,false);ui.emit('nav-hunt','click');ui.emit('map-prepare-skills','click');assert.equal(ui.nodes.get('camp-skills-panel').hidden,false);
  ui.emit('nav-home','click');ui.emit('start','click');ui.emit('map-prepare-gear','click');assert.equal(ui.state.phase,'playing');assert.equal(ui.state.paused,false);
@@ -736,7 +736,7 @@ test('real render draws dropped equipment and limits ordinary pickup HUD spam',a
 });
 
 test('boot shows real camp, locked stages and a saved versioned profile',async()=>{
-  const ui=await host();assert.equal(ui.nodes.get('loading').hidden,true);assert.equal(ui.nodes.get('camp-content').hidden,false);assert.equal(ui.nodes.get('stage-2').disabled,true);assert.equal(ui.nodes.get('forge-blade').disabled,true);assert.equal(ui.profile().version,16);
+  const ui=await host();assert.equal(ui.nodes.get('loading').hidden,true);assert.equal(ui.nodes.get('camp-content').hidden,false);assert.equal(ui.nodes.get('stage-2').disabled,true);assert.equal(ui.nodes.get('train-power').disabled,true);assert.equal(ui.profile().version,16);
   ui.emit('start','click');ui.tick();assert.equal(ui.state.phase,'playing');assert.equal(ui.nodes.get('overlay').hidden,true);assert.equal(ui.state.enemies.length,4);assert.equal(ui.nodes.get('monsters-left').textContent,'56');
   for(const call of ui.calls.filter(c=>c.args.length===8)){const size=imageSize(call.image);assert.ok(call.args[0]+call.args[2]<=size.width);assert.ok(call.args[1]+call.args[3]<=size.height);}
 });
@@ -752,19 +752,22 @@ test('pause and blur freeze combat and resume never applies hidden-tab elapsed t
   ui.emit('resume','click');ui.tick();assert.ok(ui.state.run.time>time);ui.emit('window','blur');const before=ui.state.run.time;ui.tick(200);assert.equal(ui.state.run.time,before);assert.equal(ui.state.paused,true);
   ui.emit('resume','click');ui.tick(.05);assert.ok(ui.state.run.time-before<=.050001);
 });
-test('training happens at camp and never interrupts the hunt',async()=>{
-  const p=game.createProfile(1_000_000);p.level=3;p.skillPoints=1;
-  const ui=await host({saved:p});ui.emit('camp-upgrade','click');assert.equal(ui.nodes.get('choice-content').hidden,false);
-  const id=game.upgradeOptions(ui.state)[0];ui.emit('choice-0','click');assert.equal(ui.profile().skills[id],1);assert.equal(ui.profile().skillPoints,0);ui.emit('start','click');ui.tick();assert.equal(ui.state.phase,'playing');assert.equal(ui.nodes.get('overlay').hidden,true);
-  ui.state.enemies=[];ui.state.pickups=[{id:99,x:ui.state.player.x,y:ui.state.player.y,gold:4,xp:100,cores:0}];ui.tick();assert.equal(ui.state.phase,'playing');assert.equal(ui.nodes.get('overlay').hidden,true);
+test('training happens at camp and never interrupts the hunt (Alpha 0.131 성장)',async()=>{
+  const p=game.createProfile(1_000_000);p.level=7;
+  const ui=await host({saved:p});ui.emit('hub-growth','click');assert.equal(ui.nodes.get('growth-points').textContent,'성장 포인트 6 / 6');
+  ui.emit('train-power','click');ui.emit('train-power','click');assert.equal(ui.profile().training.power,2);ui.emit('train-power','click');assert.equal(ui.profile().training.power,2,'Lv.7 단련 상한 2');
+  ui.emit('growth-tab-tree','click');assert.equal(ui.nodes.get('growth-tree').hidden,false);assert.equal(ui.nodes.get('tree-node-blade2').disabled,true);ui.emit('tree-node-blade1','click');assert.deepEqual(ui.profile().growthTree,['blade1']);assert.equal(ui.nodes.get('growth-points').textContent,'성장 포인트 2 / 6');
+  ui.emit('growth-reset','click');assert.deepEqual(ui.profile().growthTree,['blade1'],'첫 탭은 확인만');ui.emit('growth-reset','click');assert.deepEqual(ui.profile().growthTree,[]);
+  ui.emit('page-back','click');ui.emit('start','click');ui.tick();assert.equal(ui.state.phase,'playing');assert.equal(ui.nodes.get('overlay').hidden,true);
+  ui.state.enemies=[];ui.state.pickups=[{id:99,x:ui.state.player.x,y:ui.state.player.y,gold:4,xp:game.xpNeeded(7),cores:0}];ui.tick();assert.equal(ui.state.phase,'playing');assert.equal(ui.nodes.get('overlay').hidden,true);assert.equal(game.trainStat(ui.state,'power'),false);
 });
-test('forge and unlocked stages survive loading another application instance',async()=>{
-  const p=game.createProfile(1_000_000);p.gold=100;p.clearedStage=1;p.unlockedStage=2;widen(p);
-  const ui=await host({saved:p});ui.emit('forge-blade','click');assert.equal(ui.profile().forge.blade,1);assert.equal(ui.profile().gold,70);
-  const reload=await host({saved:ui.profile()});assert.equal(reload.state.profile.forge.blade,1);assert.equal(reload.nodes.get('stage-2').disabled,false);reload.emit('stage-2','click');await reload.settle();reload.emit('start','click');reload.tick();assert.equal(reload.state.stageId,11);
+test('growth choices and unlocked stages survive loading another application instance',async()=>{
+  const p=game.createProfile(1_000_000);p.level=12;p.clearedStage=1;p.unlockedStage=2;widen(p);
+  const ui=await host({saved:p});ui.emit('hub-growth','click');ui.emit('train-vitality','click');ui.emit('growth-tab-tree','click');ui.emit('tree-node-ward1','click');assert.equal(ui.profile().training.vitality,1);
+  const reload=await host({saved:ui.profile()});assert.equal(reload.state.profile.training.vitality,1);assert.deepEqual(reload.state.profile.growthTree,['ward1']);assert.equal(reload.nodes.get('stage-2').disabled,false);reload.emit('stage-2','click');await reload.settle();reload.emit('start','click');reload.tick();assert.equal(reload.state.stageId,11);
 });
 test('live hunts run automatically through content, victory, saved rewards and a camp return',async()=>{
-  const p=game.createProfile(1_000_000);p.level=35;p.forge.blade=5;p.forge.armor=5;p.skillBook=game.restoreSkillBook(null,35);p.skillBook.loadout.active=['gather','dance'];p.skillBook.loadout.passive=['surrounded','finisher',null];p.skillBook.ranks.gather=1;p.skillBook.ranks.dance=3;p.skillBook.auto.ultimate='any';p.skills.edge=4;p.skills.haste=3;p.skills.chain=3;p.skillPoints=9;p.inventory=[{id:1,slot:'weapon',name:'성장 검',rarity:1,tier:1,artId:'forest_blade',affixes:{damage:12,crit:5}}];p.equipment.weapon=1;
+  const p=game.createProfile(1_000_000);p.level=35;p.training={...game.emptyTraining(),power:7,vitality:5,guard:12,tempo:30,stride:18};p.growthTree=['blade1','blade2'];p.skillBook=game.restoreSkillBook(null,35);p.skillBook.loadout.active=['gather','dance'];p.skillBook.loadout.passive=['surrounded','finisher',null];p.skillBook.ranks.gather=1;p.skillBook.ranks.dance=3;p.skillBook.auto.ultimate='any';p.inventory=[{id:1,slot:'weapon',name:'성장 검',rarity:1,tier:1,artId:'forest_blade',affixes:{damage:12,crit:5}}];p.equipment.weapon=1;
   const ui=await host({campaign:true,saved:p});ui.emit('start','click');ui.tick();assert.equal(ui.state.auto,true);
   for(let i=0;i<12000&&ui.state.phase!=='victory'&&ui.state.phase!=='defeat';i++){ui.tick();ui.calls.length=0;}
   assert.equal(ui.state.phase,'victory');assert.equal(ui.nodes.get('result-content').hidden,true);ui.run(1.2);assert.equal(ui.nodes.get('result-content').hidden,false,JSON.stringify({phase:ui.state.phase,resultDelay:ui.state.resultDelay,hitStop:ui.state.hitStop,paused:ui.state.paused}));assert.equal(ui.nodes.get('modal-eyebrow').textContent,'1-10 스테이지 완료');assert.equal(ui.state.run.rooms,10);assert.equal(ui.profile().unlockedStage,2);assert.ok(ui.profile().gold>100);assert.equal(ui.nodes.get('next-stage').hidden,false);
@@ -1044,7 +1047,7 @@ test('real 45-degree drawing keeps measured head position stable across walking,
   for(const boosted of [false,true])for(let heading=0;heading<8;heading++){
     const ui=await host({manual:true});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];
     const p=ui.state.player;p.x=1800;p.y=1160;
-    if(boosted){ui.state.profile.skills.haste=3;ui.state.profile.inventory=[{id:99,slot:'charm',affixes:{speed:20}}];ui.state.profile.equipment.charm=99;}
+    if(boosted){ui.state.profile.training.tempo=30;ui.state.profile.training.stride=18;ui.state.profile.inventory=[{id:99,slot:'charm',affixes:{speed:20}}];ui.state.profile.equipment.charm=99;}
     const view=motion.DIRECTION_VIEWS[heading],measure=alignment.directions[view.key],heads=[],seen=new Set();
     const sample=family=>{
       const clip=manifest.clips[motion.directionalClipId(manifest,'hunter',family,heading)],call=ui.calls.filter(c=>c.image.endsWith(alignment.image)).at(-1);
@@ -1151,7 +1154,7 @@ test('hidden area warnings preserve airborne projection and visible boss heads a
 
 test('boosted near-destination clicks stop without reversing at either frame rate in every direction',async()=>{
   for(const dt of [1/60,.05])for(let heading=0;heading<8;heading++){
-    const ui=await host({manual:true});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.state.profile.skills.haste=3;ui.state.profile.inventory=[{id:99,slot:'charm',affixes:{speed:20}}];ui.state.profile.equipment.charm=99;
+    const ui=await host({manual:true});ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.state.profile.training.tempo=30;ui.state.profile.training.stride=18;ui.state.profile.inventory=[{id:99,slot:'charm',affixes:{speed:20}}];ui.state.profile.equipment.charm=99;
     const p=ui.state.player;p.x=1800;p.y=1160;ui.tick(0);const angle=heading*Math.PI/4,start={x:p.x,y:p.y},n={x:Math.cos(angle),y:Math.sin(angle)},target={x:p.x+n.x*10,y:p.y+n.y*10},screen=world.worldToScreen(target,appCamera(ui));
     ui.emit('arena','pointerdown',clientAt(screen));let progress=0;for(let i=0;i<20;i++){ui.tick(dt);const next=(p.x-start.x)*n.x+(p.y-start.y)*n.y;assert.ok(next>=progress-1e-8&&next<=10+1e-8);progress=next;}
     assert.ok(Math.hypot(p.x-target.x,p.y-target.y)<8);assert.equal(p.action,'idle');const x=p.x,y=p.y;ui.run(.3);near(p.x,x);near(p.y,y);
@@ -1660,9 +1663,9 @@ test('max-level growth caps XP, fills the bar and explains the final awakening w
  assert.equal(c.profile.level,game.MAX_LEVEL);assert.equal(c.profile.xp,0);assert.equal(capped.nodes.get('xp-fill').style.width,'100%');assert.equal(capped.nodes.get('xp-text').textContent,'최고 레벨');assert.equal(JSON.stringify(c.profile.skillBook),cappedBook);
 });
 test('growth panel and result receipt show unscaled XP after existing XP gear modifiers',async()=>{
- const p=game.createProfile(1_000_000);p.level=5;p.skills.magnet=2;p.skillBook=game.restoreSkillBook(null,5);const ui=await host({saved:p,campaign:true});ui.emit('hub-growth','click');assert.match(ui.nodes.get('growth-xp-rate').textContent,/다음 레벨까지 경험치 \d+/);assert.doesNotMatch(ui.nodes.get('growth-xp-rate').textContent,/배/);ui.emit('page-back','click');ui.emit('start','click');const s=ui.state;
+ const p=game.createProfile(1_000_000);p.level=5;p.skillBook=game.restoreSkillBook(null,5);const ui=await host({saved:p,campaign:true});ui.emit('hub-growth','click');assert.match(ui.nodes.get('growth-xp-rate').textContent,/다음 레벨까지 경험치 \d+/);assert.doesNotMatch(ui.nodes.get('growth-xp-rate').textContent,/배/);ui.emit('page-back','click');ui.emit('start','click');const s=ui.state;
  s.enemies=[];s.spawns=[];s.barrels=[];s.run.flow='break';s.run.timer=999;s.pickups=[{id:900,x:s.player.x,y:s.player.y,gold:0,xp:9,cores:0}];ui.tick(.025);
- assert.equal(s.run.xp,11);assert.equal(s.run.xpBonus,0);assert.equal(s.profile.xp,11);s.phase='victory';s.resultDelay=0;ui.tick(0);assert.equal(ui.nodes.get('result-xp').textContent,'경험치 +11');assert.match(ui.nodes.get('result-xp').attributes.title,/기본 경험치 11.*성장 보너스 \+0/);
+ assert.equal(s.run.xp,9);assert.equal(s.run.xpBonus,0);assert.equal(s.profile.xp,9);s.phase='victory';s.resultDelay=0;ui.tick(0);assert.equal(ui.nodes.get('result-xp').textContent,'경험치 +9');assert.match(ui.nodes.get('result-xp').attributes.title,/기본 경험치 9.*성장 보너스 \+0/);
 });
 
 test('scouting notice reports credited XP when an offline grant crosses level twenty',async()=>{
