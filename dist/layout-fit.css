@@ -361,3 +361,7 @@
 /* 별을 받은 스테이지는 상태 글자 대신 ★☆ 3칸(획득 별), 장식용 완료 별 그림은 숨김. */
 #game-shell#game-shell[data-camp-view=map] #camp-map-panel .sub-stage-tabs>button[data-stars]:not([data-stars="0"]) .stage-seal:after{display:none}
 #game-shell#game-shell[data-camp-view=map] #camp-map-panel .sub-stage-tabs>button[data-stars]:not([data-stars="0"]) .stage-state{color:#f3d27a;font-size:clamp(9px,1.25cqw,14px);letter-spacing:.02em}
+
+/* 0.133 관문: 지도 스테이지 테두리에 붉은 고리, 미리보기 설명 첫머리에 관문 효과·대응률(gateText). */
+#game-shell#game-shell[data-camp-view=map] #camp-map-panel .sub-stage-tabs>button:not([data-gate=""])[data-gate] .stage-seal{box-shadow:0 0 0 2px #d2484880,0 0 10px #ff5a4a90;border-radius:50%}
+#game-shell#game-shell[data-camp-view=map] #camp-map-panel .sub-stage-tabs>button:not([data-gate=""])[data-gate][data-stars="0"]:not(:disabled) .stage-state{color:#ff9a86}

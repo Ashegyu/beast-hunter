@@ -1,5 +1,5 @@
-import {equipmentFamily} from './equipment-slots.js?v=0.132.0';
-import {EQUIPMENT_SETS,SET_SLOTS,CHAPTER_SETS,setArtId} from './equipment-sets.js?v=0.132.0';
+import {equipmentFamily} from './equipment-slots.js?v=0.133.0';
+import {EQUIPMENT_SETS,SET_SLOTS,CHAPTER_SETS,setArtId} from './equipment-sets.js?v=0.133.0';
 // Sixty chapters in six regions of ten: 1–10 forest, 11–20 fire and ice (11–15 fire,
 // 16–20 ice), 21–30 darkness (Alpha 0.107), 31–40 sunken kingdom, 41–50 storm sky isles,
 // 51–60 twilight sanctum (Alpha 0.118). A region drives the map tabs, item and
@@ -111,6 +111,13 @@ export const MID_BOSSES = {
 const josa=(word,consonant,vowel)=>{const code=word.charCodeAt(word.length-1)-0xac00;return code>=0&&code<11172&&code%28?consonant:vowel;};
 // Enemy stats grow 16% of the first chapter per chapter (ch.30 = ×5.64).
 export const chapterMultiplier=id=>Math.round((1+(id-1)*.16)*100)/100;
+// Alpha 0.133 난이도 곡선: enemy health and damage (not rewards, which keep `multiplier`) grow by `growth` every chapter
+// on top of the old line and jump by `jump` at every new region. Raids keep the old scale (`raidBossHp`; raids.js has
+// its own chapter scale).
+export const THREAT=Object.freeze({hp:Object.freeze({growth:1.012,jump:1.12}),damage:Object.freeze({growth:1.014,jump:1.12})});
+const threat=(id,t)=>Math.round(chapterMultiplier(id)*Math.pow(t.growth,id-1)*Math.pow(t.jump,Math.floor((id-1)/10))*1000)/1000;
+export const enemyHpScale=id=>threat(id,THREAT.hp);
+export const enemyDamageScale=id=>threat(id,THREAT.damage);
 // Each chapter takes two species per role from its biome pool (pairs rotate by chapter,
 // offset per role). Stages 1–8 visit all eight role combinations in an order where every
 // stage changes at least two roles; stage 9 (swarm, skitters only) differs from stage 8.
@@ -128,7 +135,7 @@ export const CHAPTERS = CHAPTER_ROWS.map(([name,biomeKey,bossSpecies,midBoss=nul
   const boss=CHAPTER_BOSSES[bossSpecies],multiplier=chapterMultiplier(id),index=biomeIndex[biomeKey]=(biomeIndex[biomeKey]??-1)+1,{roster,stages}=chapterLineups(biome,index);
   return {id,theme:theme.id,key:biome.key,biome:biomeKey,region:theme.name,name,number,finale,special:!!boss.special,environment:'c'+id,effects:biome.effects,props:biome.props,bossRule:biome.bossRule,
     subtitle:biome.subtitle+(finale?` 지역의 끝에서 특수 보스 ${boss.name}${josa(boss.name,'이','가')} 기다린다.`:` 열 스테이지 끝에서 ${boss.name}${josa(boss.name,'을','를')} 사냥해.`),
-    multiplier,bossHp:Math.round(780*multiplier*theme.bossScale*(finale?1.15:1)),reward:Math.round(90*multiplier),
+    multiplier,hpScale:enemyHpScale(id),damageScale:enemyDamageScale(id),bossHp:Math.round(780*enemyHpScale(id)*theme.bossScale*(finale?1.15:1)),raidBossHp:Math.round(780*multiplier*theme.bossScale*(finale?1.15:1)),reward:Math.round(90*multiplier),
     color:biome.color,shotColor:biome.shotColor,pathColor:biome.pathColor,bossName:boss.name,bossSpecies,midBoss,midBossName:midBoss?MID_BOSSES[midBoss].name:null,set:CHAPTER_SETS[id],bossPosition:biome.bossPosition,bossCycle:biome.bossCycle,
     roster:Object.freeze(roster),stages:Object.freeze(stages),encounters:biome.encounters,formations:FORMATIONS,caches:biome.caches,tactic:biome.tactic};
 });

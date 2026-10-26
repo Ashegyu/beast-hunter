@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.132.0';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.133.0';
 import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js';
 import { createCombatAudio } from './sound.js?v=0.76.0';
-import * as game from './game-engine.js?v=0.132.0';
+import * as game from './game-engine.js?v=0.133.0';
 import {FrameMetrics} from './frame-metrics.js?v=0.98.1';
 import { frameIndex, frameRect, validateClip } from './engine.js';
 import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
 import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.103.1';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.132.0';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.132.0';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.132.0';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.132.0';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.133.0';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.133.0';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.133.0';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.133.0';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -1088,14 +1088,14 @@ function updateHud(){
     const selected=game.STAGES[selectedStage-1];const bossLoot=game.BOSS_LOOT.find(b=>b.tier===selected.theme)??{id:'chapter-'+selected.id,name:selected.bossName};hudText($('boss-loot-title'),bossLoot.name+' · 일반 장비 드롭');if($('boss-loot-list').dataset.boss!==bossLoot.id){$('boss-loot-list').dataset.boss=bossLoot.id;$('boss-loot-list').replaceChildren(...game.STAGE_SLOTS.map(slot=>{const li=document.createElement('li');li.textContent=game.SLOTS[slot]+' · 일반 등급 드롭 → 최대 강화 후 승급';return li;}));}hudText($('camp-stage-name'),selected.name);hudText($('camp-stage-description'),selected.subtitle);hudText($('camp-stage-goal'),game.battlePlan(selectedRunStage).tactic);
     refreshFarmCamp();const limit=game.stageLimit(profile,selectedStage,selectedDifficulty),completed=game.completedStages(profile,selectedStage,selectedDifficulty);selectedRunStage=Math.min(selectedRunStage,limit);
     for(let n=1;n<=game.STAGES_PER_CHAPTER;n++){
-      const button=$('run-stage-'+n),locked=n>limit,chosen=n===selectedRunStage,starMask=game.stageStarMask(profile,selectedStage,n),label=locked?'잠김':starMask?starText(starMask):chosen?'선택':completed>=n?'완료':n===10?'보스':'도전';
+      const button=$('run-stage-'+n),locked=n>limit,chosen=n===selectedRunStage,starMask=game.stageStarMask(profile,selectedStage,n),gate=game.stageGate(selectedStage,n),label=locked?'잠김':starMask?starText(starMask):chosen?'선택':completed>=n?'완료':gate&&!gate.boss?'관문':n===10?'보스':'도전';
       hudText($('run-stage-number-'+n),String(n).padStart(2,'0'));hudText($('run-stage-state-'+n),label);
-      button.setAttribute('data-number',selectedStage+'–'+n);button.setAttribute('data-state',locked?'locked':completed>=n?'cleared':'open');button.setAttribute('data-mark',locked?'×':completed>=n?'✓':'');button.setAttribute('data-caption',label);button.setAttribute('aria-label',selectedStage+'-'+n+' · '+game.battlePlan(n).name+' · '+(starMask?'별 '+game.starCount(starMask)+'개':label));button.setAttribute('data-stars',String(game.starCount(starMask)));button.disabled=locked;button.classList.toggle('selected',chosen);button.setAttribute('aria-pressed',String(chosen));
+      button.setAttribute('data-number',selectedStage+'–'+n);button.setAttribute('data-state',locked?'locked':completed>=n?'cleared':'open');button.setAttribute('data-mark',locked?'×':completed>=n?'✓':'');button.setAttribute('data-caption',label);button.setAttribute('aria-label',selectedStage+'-'+n+' · '+game.battlePlan(n).name+' · '+(starMask?'별 '+game.starCount(starMask)+'개':label));button.setAttribute('data-stars',String(game.starCount(starMask)));button.setAttribute('data-gate',gate?gate.type:'');button.disabled=locked;button.classList.toggle('selected',chosen);button.setAttribute('aria-pressed',String(chosen));
     }
     hudText($('stage-board-count'),completed+' / '+game.STAGES_PER_CHAPTER);$('stage-board-progress').setAttribute('aria-valuenow',String(completed));$('stage-board-fill').style.width=completed/game.STAGES_PER_CHAPTER*100+'%';
     const selectedPlan=game.battlePlan(selectedRunStage),bossStage=selectedRunStage===game.STAGES_PER_CHAPTER,previewSpecies=bossStage?selected.bossSpecies:stageHeadline(selected,selectedRunStage),previewClip=manifest.clips[manifest.directions[previewSpecies].walk.s];
     atlasThumbnail($('stage-preview-art'),previewClip.image,previewClip.frames[0],80);
-    hudText($('stage-preview-title'),selectedStage+'-'+selectedRunStage+' · '+selectedPlan.name);hudText($('stage-preview-kind'),game.HUNT_MODES[selectedDifficulty].name+' · '+(bossStage?'보스 단독전':game.stageWaveCount(selectedRunStage)+'웨이브'));const rule=game.stageRule(selectedStage,selectedRunStage);hudText($('stage-preview-kind'),game.HUNT_MODES[selectedDifficulty].name+' · '+game.STAGE_TYPE_NAMES[rule.type]);hudText($('stage-preview-description'),rule.rule+' — '+rule.hint+(rule.required?' 필요':' 유리'));
+    hudText($('stage-preview-title'),selectedStage+'-'+selectedRunStage+' · '+selectedPlan.name);hudText($('stage-preview-kind'),game.HUNT_MODES[selectedDifficulty].name+' · '+(bossStage?'보스 단독전':game.stageWaveCount(selectedRunStage)+'웨이브'));const rule=game.stageRule(selectedStage,selectedRunStage);hudText($('stage-preview-kind'),game.HUNT_MODES[selectedDifficulty].name+' · '+game.STAGE_TYPE_NAMES[rule.type]);const gateNow=game.gateEffect(profile,game.stageGate(selectedStage,selectedRunStage));hudText($('stage-preview-description'),(gateNow?game.gateText(gateNow)+' — ':'')+rule.rule+' — '+rule.hint+(rule.required?' 필요':' 유리'));$('camp-map-panel').setAttribute('data-gate',gateNow?gateNow.type:'');
     hudText($('stage-progress-note'),game.HUNT_MODES[selectedDifficulty].name+' · '+(selectedRunStage===limit&&completed<10?'현재 공략 지점':'선택한 출발 지점')+' '+selectedStage+'-'+selectedRunStage);
     const environment=manifest.chapters[selected.environment].environment;
     $('chapter-banner').style.backgroundImage='linear-gradient(90deg,#101319a8,#10131925),url("assets/'+(manifest.delivery?.[environment]??environment)+'")';hudText($('chapter-label'),'CHAPTER '+String(selected.id).padStart(2,'0')+' · '+selected.region);$('chapter-prev').disabled=selected.id<=1;$('chapter-next').disabled=selected.id>=Math.min(game.STAGES.length,profile.unlockedStage);hudText($('chapter-preview-name'),selected.name);hudText($('chapter-preview-boss'),(selected.special?'특수 보스 · ':'챕터 보스 · ')+selected.bossName);hudText($('chapter-tactic'),selected.tactic);
@@ -1504,7 +1504,7 @@ $('result-skills').addEventListener('click',()=>{
 function refreshBuildSystem(){
  $('game-shell').setAttribute('data-settling',String(!!state.settlement));
  const rule=state.run.rule;$('stage-rule-hud').hidden=state.phase!=='playing'||!rule;
- const ruleText=state.settlement?'보상 저장 중 · 저장을 마치면 진행합니다':rule&&rule.type!=='normal'?(rule.type==='dungeon'?'성장 던전':rule.type==='raid'?'레이드':game.STAGE_TYPE_NAMES[rule.type])+' · '+rule.name+' · '+(rule.type==='raid'?'추천 '+rule.hint:rule.hint+(rule.required?' 필요':' 유리')):'';if($('stage-rule-hud').textContent!==ruleText)$('stage-rule-hud').textContent=ruleText;
+ const ruleText=state.settlement?'보상 저장 중 · 저장을 마치면 진행합니다':rule&&rule.type!=='normal'?(rule.type==='dungeon'?'성장 던전':rule.type==='raid'?'레이드':game.STAGE_TYPE_NAMES[rule.type])+' · '+rule.name+' · '+(rule.type==='raid'?'추천 '+rule.hint:rule.hint+(rule.required?' 필요':' 유리')):'';const gateHud=!state.settlement&&state.run.gate?game.GATE_TYPES[state.run.gate.type].name+' · '+game.gateText(state.run.gate).split(' · ')[1]:'',hudRule=[gateHud,ruleText].filter(Boolean).join(' | ');if($('stage-rule-hud').textContent!==hudRule)$('stage-rule-hud').textContent=hudRule;
 
  if(state.phase==='playing'&&!inventoryOpen)return;
  const uiKey=buildUiRevision+':'+state.phase+':'+buildTab+':'+inventoryOpen+':'+$('inscription-item').value+':'+$('inscription-effect').value+':'+!!retryPlan;if(uiKey===buildUiRendered)return;buildUiRendered=uiKey;

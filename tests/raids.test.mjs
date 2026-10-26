@@ -27,7 +27,7 @@ test('weekly entries: three per raid, spent at entry, kept spent on failure and 
 });
 
 test('raid bosses scale with the furthest chapter and fight with their own species, cycle and pattern',()=>{
- for(const r of g.RAIDS){const s=raid(r.id),e=boss(s),st=g.STAGES[59];assert.equal(s.stageId,60);assert.equal(e.species,r.species);assert.equal(e.maxHp,Math.round(st.bossHp*r.hp*g.raidScale(60)));assert.deepEqual([...e.bossCycle],[...r.cycle]);assert.equal(e.special,undefined);assert.equal(s.run.timeLimit,g.RAID_TIME_LIMIT);assert.equal(s.run.rule.type,'raid');assert.match(g.bossRuleStatus(s),r.mechanic==='armor'?/강철 장갑/:r.mechanic==='swarm'?/군단 소환까지/:/심판까지/);}
+ for(const r of g.RAIDS){const s=raid(r.id),e=boss(s),st=g.STAGES[59];assert.equal(s.stageId,60);assert.equal(e.species,r.species);assert.equal(e.maxHp,Math.round(st.raidBossHp*r.hp*g.raidScale(60)));assert.deepEqual([...e.bossCycle],[...r.cycle]);assert.equal(e.special,undefined);assert.equal(s.run.timeLimit,g.RAID_TIME_LIMIT);assert.equal(s.run.rule.type,'raid');assert.match(g.bossRuleStatus(s),r.mechanic==='armor'?/강철 장갑/:r.mechanic==='swarm'?/군단 소환까지/:/심판까지/);}
  assert.ok(g.raidScale(20)>g.raidScale(60));assert.equal(g.raidScale(60),.7);
 });
 
@@ -71,7 +71,7 @@ test('raid ancients: fifteen authored identities, never in chapter boss pools, f
 });
 
 test('raid ancient rolls are wide and skewed low: stats 60~125%, effect power 60~120%, top results rare (Alpha 0.123)',async()=>{
- const L=await import('../dist/loot.js?v=0.132.0');let seed=99;const rng=()=>{seed=(Math.imul(1664525,seed)+1013904223)>>>0;return seed/4294967296;};
+ const L=await import('../dist/loot.js?v=0.133.0');let seed=99;const rng=()=>{seed=(Math.imul(1664525,seed)+1013904223)>>>0;return seed/4294967296;};
  const row=g.ANCIENT_CATALOG.find(r=>r.raid==='judge'&&r.slot==='weapon'),N=4000,power=[];let high=0;
  for(let i=0;i<N;i++){const it=L.rollAncient({id:1,tier:6,slot:'weapon',raid:'judge'},rng(),rng);power.push(it.powerRoll);const r=L.itemRollRanges(it);if(it.affixes.damage>=r.damage.min+(r.damage.max-r.damage.min)*.8)high++;}
  const ranges=L.itemRollRanges({id:1,slot:'weapon',tier:6,rarity:5,catalogId:row.id,artId:row.artId,affixes:{...row.base}});assert.equal(ranges.damage.min,Math.round(row.base.damage*.6));assert.equal(ranges.damage.max,Math.round(row.base.damage*1.25));

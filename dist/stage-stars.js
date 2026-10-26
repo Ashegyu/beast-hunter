@@ -5,7 +5,7 @@
 // profile.stageStars[chapter-1] packs ten 3-bit masks (stage n at bits 3(n-1)..3(n-1)+2).
 // profile.starChests[chapter-1] is the claimed mask of the chapter's 별 상자 (10·20·30 stars).
 // The 30-star chest also gives one 성장 포인트 (growth.js bonusGrowthPoints counts them).
-import {STAGES_PER_CHAPTER} from './battle-plans.js?v=0.132.0';
+import {STAGES_PER_CHAPTER} from './battle-plans.js?v=0.133.0';
 export const STAR_BITS=Object.freeze({clear:1,fast:2,healthy:4});
 export const STAR_FAST_SHARE=.5;
 export const STAR_HEALTH=.5;
