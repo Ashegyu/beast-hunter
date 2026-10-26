@@ -5,13 +5,15 @@
 //  spec   스펙업: 고정 빌드 + 강화·승급 + 막히면 앞 스테이지 한 번과 강화·골드·승급 던전을 한 번씩 파밍.
 //  switch 빌드 전환 + 스펙업: 다음 관문 유형에 맞춰 성장 트리 갈래와 스킬 예시를 바꾼다.
 //  adapt  빌드 전환만: 강화·승급·파밍 없음.
-// 고정 빌드 = 트리 검귀→수호자, 스킬 예시 '자동 광역'. 한 스테이지에서 15번 실패하면 STUCK.
+// 고정 빌드 = 트리 검귀→수호자, 스킬 예시 '자동 광역'. 한 스테이지에서 15번(STUCK_AFTER) 실패하면 STUCK.
+// STARS=1이면 스테이지 클리어마다 받은 별(30초 별·체력 별)을 모아 끝에 스테이지별·지역별 비율을 출력한다.
 import fs from 'node:fs';
 import path from 'node:path';
 const dist=path.resolve(process.argv[2]||'dist');
 const g=await import(new URL('file://'+dist+'/game-engine.js').href);
 const loot=await import(new URL('file://'+dist+'/loot.js').href);
 const SEED=Number(process.argv[3]||0),LAST=Number(process.argv[4]||60),POLICY=process.argv[5]||'spec',DUMP=process.argv[6]||null;
+const STARS=process.env.STARS==='1',starSeen=new Set(),starLog=[];
 const SPEC=POLICY==='spec'||POLICY==='switch',SWITCH=POLICY==='switch'||POLICY==='adapt';
 const FIXED_TREE=['blade1','blade2','ward1','ward2','blade3','blade4','blade5','ward3','ward4','ward5'];
 const BRANCHES={blade:['blade1','blade2','blade3','blade4','blade5'],ward:['ward1','ward2','ward3','ward4','ward5'],art:['art1','art2','art3','art4','art5']};
@@ -34,7 +36,7 @@ if(DUMP)fs.mkdirSync(DUMP,{recursive:true});
 for(let ch=1;ch<=LAST&&!stuck;ch++){let won=false,tries=0;
  if(DUMP)fs.writeFileSync(path.join(DUMP,`c${ch}.json`),g.encodeProfile(p,1000));
  const failSeen={};
- for(let a=0;!won;a++){const from=g.stageLimit(p,ch)||1;prepare(s,nextGate(ch,from));attempts++;tries++;g.launch(s,ch,from);for(let i=0;i<24000&&s.phase==='playing';i++)g.advanceGame(s,.05);
+ for(let a=0;!won;a++){const from=g.stageLimit(p,ch)||1;prepare(s,nextGate(ch,from));attempts++;tries++;g.launch(s,ch,from);for(let i=0;i<24000&&s.phase==='playing';i++){g.advanceGame(s,.05);if(STARS)for(const f of s.effects)if(f.type==='stageClear'&&!starSeen.has(f.id)){starSeen.add(f.id);starLog.push([ch,f.stage,f.stars]);}}
   if(s.phase==='victory'){won=true;g.returnToCamp(s);break;}
   const st=s.run.stage,k=ch+'-'+st,gate=g.stageGate(ch,st);fails[k]=(fails[k]??0)+1;failSeen[st]=(failSeen[st]??0)+1;g.returnToCamp(s);
   if(failSeen[st]>=(Number(process.env.STUCK_AFTER)||15)){stuck={chapter:ch,stage:st,gate:gate?.type??null};break;}
@@ -45,3 +47,5 @@ for(let ch=1;ch<=LAST&&!stuck;ch++){let won=false,tries=0;
  console.log(`${POLICY} seed${SEED} ch${ch} ${won?'clear':'STUCK'} tries=${tries} Lv${p.level} dmg=${Math.round(stt.damage)} hp=${Math.round(stt.maxHp)} gear+${enh.toFixed(1)} r${rar.toFixed(1)} ${Math.round((Date.now()-t0)/1000)}s`);
 }
 console.log(`${POLICY} seed${SEED} attempts=${attempts} farms=${farms} dungeons=${dungeons} stuck=${JSON.stringify(stuck)} fails=${JSON.stringify(fails)}`);
+if(STARS){const rate=key=>{const out={};for(const [c,st,m] of starLog){const k=key(c,st);out[k]??={n:0,fast:0,hp:0};out[k].n++;if(m&2)out[k].fast++;if(m&4)out[k].hp++;}return Object.entries(out).map(([k,v])=>k+':'+v.n+'회 30초 '+Math.round(v.fast/v.n*100)+'% 체력 '+Math.round(v.hp/v.n*100)+'%').join(' | ');};
+ console.log('별 스테이지별',rate((c,st)=>st));console.log('별 지역별',rate(c=>Math.ceil(c/10)+'지역'));}
