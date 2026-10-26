@@ -222,3 +222,46 @@
 @media(max-height:360px){#game-shell#game-shell #camp-skills-panel .skill-equipped{--slot-icon:22px}#game-shell#game-shell #camp-skills-panel .skill-equipped>[id^=skill-slot-] small{display:none!important}#game-shell#game-shell #camp-skills-panel .skill-equipped>[id^=skill-slot-] strong{font-size:9px!important}}
 /* 좁은 화면(폭 700px 이하): 상세 폭이 좁아 전환 탭을 머리 아래 한 줄(전체 폭 2등분)로 둔다. */
 @media(max-width:700px){#game-shell #camp-skills-panel .skill-detail-actions{row-gap:3px!important;grid-template-rows:24px 24px!important}#game-shell#game-shell #camp-skills-panel #skill-upgrade{min-height:0!important;height:24px!important}#game-shell #camp-skills-panel .skill-detail-views{position:static;flex:none;margin:1px 0}#game-shell #camp-skills-panel .skill-detail-views>button{flex:1 1 0;height:18px;min-height:18px}#game-shell #camp-skills-panel .skill-detail header{padding-right:0}}
+/* 0.129 사냥 결과 창 간소화(사용자 요청 '정보가 너무 많아, 스크롤 없이'): 왼쪽은 핵심 수치 4칸 · 획득 장비 아이콘 한 줄 · 레벨/경험치 한 줄,
+   오른쪽은 재도전 · 거점으로 · 정비 바로가기 3개. 전투 기록·보관 안내·정비 설명·프리셋 재도전·장비 이름은 숨긴다(장비 이름은 아이콘 title). */
+#game-shell#game-shell #overlay[data-panel=result] :is(.result-report,.result-actions){overflow:hidden!important}
+#game-shell#game-shell #overlay[data-panel=result] .result-report{display:flex!important;flex-direction:column;gap:8px;padding-right:0!important}
+#game-shell#game-shell #overlay[data-panel=result] :is(.result-record,#result-storage-note,#result-note,#result-craft-target,#result-track,#result-points,#result-loot-pager,.preparation-guide>h3,.preparation-guide>p,#result-build,[id^=result-prepare-][id$=-note],#result-prepare-skills-note){display:none!important}
+#game-shell#game-shell #overlay[data-panel=result] .result-stats{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important;margin:0!important;flex:none}
+#game-shell#game-shell #overlay[data-panel=result] .result-stats>span:is(:has(#result-items),:has(#result-time)){display:none!important}
+#game-shell#game-shell #overlay[data-panel=result] .result-stats>span{min-height:0!important;height:auto!important;padding:6px 4px!important;font-size:10px!important;line-height:1.2!important}
+#game-shell#game-shell #overlay[data-panel=result] .result-stats b{font-size:20px!important;line-height:1.15!important}
+#game-shell#game-shell #overlay[data-panel=result] .result-loot-gallery{flex:none;margin:0!important;padding:0!important}
+#game-shell#game-shell #overlay[data-panel=result] .result-loot-gallery>header{margin:0 0 4px!important;font-size:11px}
+#game-shell#game-shell #overlay[data-panel=result] .result-loot-grid{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(40px,1fr))!important;grid-template-rows:auto!important;grid-auto-rows:0!important;row-gap:0!important;column-gap:4px!important;overflow:hidden!important}
+#game-shell#game-shell #overlay[data-panel=result] .result-loot-grid>figure{margin:0!important;padding:2px!important;min-height:0!important;height:auto!important;aspect-ratio:1}
+#game-shell#game-shell #overlay[data-panel=result] .result-loot-grid>figure figcaption{display:none!important}
+#game-shell#game-shell #overlay[data-panel=result] .result-loot-grid .equipment-icon{width:100%!important;height:100%!important}
+#game-shell#game-shell #overlay[data-panel=result] .result-growth{flex:none;display:flex!important;align-items:center;gap:8px;margin:0!important;padding:4px 8px!important;min-height:0!important}
+#game-shell#game-shell #overlay[data-panel=result] .result-growth>div{display:flex;gap:10px;align-items:baseline}
+#game-shell#game-shell #overlay[data-panel=result] #result-boss-ancients{margin:0!important;font-size:11px;white-space:pre-line}
+#game-shell#game-shell #overlay[data-panel=result] .result-actions{display:flex!important;flex-direction:column;justify-content:flex-start!important;gap:6px!important}
+#game-shell#game-shell #overlay[data-panel=result] #next-stage{order:1}
+#game-shell#game-shell #overlay[data-panel=result] #result-camp{order:2}
+#game-shell#game-shell #overlay[data-panel=result] .preparation-guide{order:3;margin:0!important;padding:0!important;border:0!important}
+#game-shell#game-shell #overlay[data-panel=result] .preparation-guide>div{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px!important}
+#game-shell#game-shell #overlay[data-panel=result] .preparation-guide>div>button{min-height:30px!important;height:30px!important;padding:0 2px!important;font-size:10px!important}
+#game-shell#game-shell #overlay[data-panel=result] .result-actions>button{height:38px!important;min-height:38px!important}
+@media(max-height:360px){#game-shell#game-shell #overlay[data-panel=result] .result-actions>button{height:32px!important;min-height:32px!important}#game-shell#game-shell #overlay[data-panel=result] .result-stats b{font-size:16px!important}#game-shell#game-shell #overlay[data-panel=result] .result-stats>span{padding:4px 2px!important}}
+#game-shell#game-shell #overlay[data-panel=result] .result-report{height:auto!important;max-height:100%;align-self:start!important;justify-content:flex-start}
+#game-shell#game-shell #overlay[data-panel=result] .result-loot-grid{grid-template-columns:repeat(auto-fill,minmax(34px,40px))!important;justify-content:start}
+#game-shell#game-shell #overlay[data-panel=result] .result-stats>span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-height:360px){#game-shell#game-shell #overlay[data-panel=result] .result-report{gap:4px}#game-shell#game-shell #overlay[data-panel=result] .result-loot-grid{grid-template-columns:repeat(auto-fill,minmax(30px,34px))!important}#game-shell#game-shell #overlay[data-panel=result] .result-loot-gallery>header{margin-bottom:2px!important}#game-shell#game-shell #overlay[data-panel=result] .result-growth{padding:2px 6px!important}#game-shell#game-shell #overlay[data-panel=result] .result-growth strong{font-size:13px!important}}
+/* 0.129 장비 화면: 시너지 줄은 이름·상태 한 줄(설명은 시너지 상세 보기에서). 설명 두 줄이 다음 줄과 겹치던 문제. */
+#game-shell#game-shell .equipment-synergy-list .equipment-link small{display:none!important}
+#game-shell#game-shell .equipment-synergy-list .equipment-link strong{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#game-shell#game-shell .equipment-synergy-list .equipment-link>span:first-of-type{display:flex;align-items:center;min-width:0}
+/* 0.129 던전 화면: 입장 가능 단계 표시는 한 줄로 줄임. */
+#game-shell #dungeon-progress{white-space:nowrap}
+@media(max-height:360px){
+ /* 장비 화면 획득처 3줄이 세트 줄과 겹치므로 숨김(가방·도감에서 확인). 성장 화면 정찰 띠는 강화 줄을 가려서 숨김(값은 결과 화면·홈에서). */
+ #game-shell#game-shell .equipment-sources{display:none!important}
+ #game-shell#game-shell #offline-note{display:none!important}
+}
+#game-shell#game-shell .equipment-synergy-list .equipment-link>span:first-of-type{justify-content:flex-start;text-align:left}
+@media(max-height:360px){#game-shell#game-shell :is(#forge-blade,#forge-armor,#forge-core){min-height:0!important;height:auto!important;padding-block:3px!important}#game-shell#game-shell :is(#forge-blade,#forge-armor,#forge-core) .forge-symbol{max-height:40px}}

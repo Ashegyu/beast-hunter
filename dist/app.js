@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.128.0';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.129.0';
 import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js';
 import { createCombatAudio } from './sound.js?v=0.76.0';
-import * as game from './game-engine.js?v=0.128.0';
+import * as game from './game-engine.js?v=0.129.0';
 import {FrameMetrics} from './frame-metrics.js?v=0.98.1';
 import { frameIndex, frameRect, validateClip } from './engine.js';
 import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
 import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.103.1';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.128.0';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.128.0';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.128.0';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.128.0';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.129.0';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.129.0';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.129.0';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.129.0';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -1084,7 +1084,7 @@ function updateHud(){
     refreshCampScene(selected);refreshMapScene(selected,selectedPlan,previewSpecies,completed,limit);
   }else if(['defeat','victory'].includes(state.phase)&&!game.resultReady(state)){modal('','','','');
   }else if(['victory','defeat'].includes(state.phase)){
-    const raidRun=state.run.raidId?game.raidDefinition(state.run.raidId):null,dungeon=raidRun?{kind:'레이드',name:raidRun.name}:game.dungeonDefinition(state.run.dungeonId),victory=state.phase==='victory',timedOut=state.run.timedOut,unpaid=!victory&&state.run.stageType!=='normal';modal('result',victory?(state.difficulty?game.HUNT_MODES[state.difficulty].name+' 수문장 사냥 완료!':'수문장 사냥 완료!'):timedOut?'제한 시간이 끝났어.':'이번 사냥은 여기까지.',unpaid?'남은 몬스터 '+monsters+'마리 · 실패한 구간의 보상은 지급되지 않습니다. 이전에 완료한 구간의 보상은 유지됩니다.':timedOut?'남은 몬스터 '+monsters+'마리 · 수집한 재료와 성장은 유지돼.':'수집한 재료와 성장은 유지돼. 거점에서 장비를 강화해.',victory?state.stageId+'-'+state.run.stage+' 스테이지 완료':timedOut?'TIME OVER':'RETURN TO CAMP');
+    const raidRun=state.run.raidId?game.raidDefinition(state.run.raidId):null,dungeon=raidRun?{kind:'레이드',name:raidRun.name}:game.dungeonDefinition(state.run.dungeonId),victory=state.phase==='victory',timedOut=state.run.timedOut,unpaid=!victory&&state.run.stageType!=='normal';modal('result',victory?(state.difficulty?game.HUNT_MODES[state.difficulty].name+' 수문장 사냥 완료!':'수문장 사냥 완료!'):timedOut?'제한 시간이 끝났어.':'이번 사냥은 여기까지.',unpaid?'남은 몬스터 '+monsters+'마리 · 실패한 구간 보상 없음':timedOut?'남은 몬스터 '+monsters+'마리 · 획득한 것은 유지돼':'획득한 것은 유지돼',victory?state.stageId+'-'+state.run.stage+' 스테이지 완료':timedOut?'TIME OVER':'RETURN TO CAMP');
     $('dungeon-result-rewards').hidden=!dungeon;
     const learned=state.run.beastLearned;$('result-boss-ancients').hidden=!state.run.bossAncients.length&&!learned;hudText($('result-boss-ancients'),[state.run.bossAncients.length?'보스 고대 유물 · '+state.run.bossAncients.map(id=>game.ANCIENT_CATALOG.find(r=>r.id===id).name).join(' / '):'',learned?'괴수 기술 '+(learned.before?'등급 상승':'획득')+' · '+game.SKILL_BY_ID[learned.id].name+' ('+game.BEAST_GRADES[learned.grade].name+')':''].filter(Boolean).join('\n'));hudText($('result-loot'),'스테이지 보상 '+state.run.stageItems+' · 몬스터 드롭 '+state.run.monsterItems+' · 자동 분해 '+state.run.autoSalvaged);
     hudText($('result-style'),'완벽 회피 '+state.run.perfectDodges+' · 갑각 파쇄 '+state.run.guardBreaks+' · 폭발 '+state.run.explosions+' · 빙결 파쇄 '+state.run.synergyProcs.shatter+' · 출혈 처형 '+state.run.synergyProcs.execute+' · 제작 각인 '+state.run.craftedProcs+' · 재료 '+state.run.materials+(state.run.trainingGold?' · 숙련 환전 +'+state.run.trainingGold+' 골드':''));
@@ -1539,7 +1539,7 @@ function refreshDungeons(){
  if(raid){refreshDungeonBuild();refreshRaids();return;}
  const d=game.dungeonDefinition(selectedDungeon),limit=game.dungeonLimit(profile,d.id);selectedDungeonLevel=Math.min(selectedDungeonLevel,limit);const reward=game.dungeonRewards(d.id,selectedDungeonLevel);
  for(const row of game.DUNGEONS){$('dungeon-card-'+row.id).setAttribute('aria-pressed',String(row.id===d.id));$('dungeon-stage-'+row.id).textContent='최고 완료 '+profile.dungeonProgress[row.id]+' / '+game.DUNGEON_MAX_LEVEL+'단계';const r=game.dungeonRewards(row.id,Math.min(selectedDungeonLevel,game.dungeonLimit(profile,row.id)));$('dungeon-owned-'+row.id).textContent=row.id==='gold'?'보유 '+profile.gold.toLocaleString('ko-KR')+' 골드':Object.keys(r.materials).map(id=>game.MATERIAL_BY_ID[id].name+' '+profile.materials[id]).join(' · ');}
- $('dungeon-kind').textContent=d.kind+' · 60초';$('dungeon-name').textContent=d.name;$('dungeon-rule').textContent=d.rule;$('dungeon-hint').textContent=d.hint+' 유리';$('dungeon-rewards').textContent=dungeonRewardText(reward)+' · 장신구 '+Math.round(game.DROP_CHANCE.dungeon*100)+'%';$('dungeon-use').textContent=d.use;$('dungeon-progress').textContent='입장 가능 1~'+limit+'단계';$('dungeon-level').value=String(selectedDungeonLevel);
+ $('dungeon-kind').textContent=d.kind+' · 60초';$('dungeon-name').textContent=d.name;$('dungeon-rule').textContent=d.rule;$('dungeon-hint').textContent=d.hint+' 유리';$('dungeon-rewards').textContent=dungeonRewardText(reward)+' · 장신구 '+Math.round(game.DROP_CHANCE.dungeon*100)+'%';$('dungeon-use').textContent=d.use;$('dungeon-progress').textContent='1~'+limit+'단계';$('dungeon-level').value=String(selectedDungeonLevel);
  for(let n=1;n<=game.DUNGEON_MAX_LEVEL;n++){$('dungeon-level-'+n).disabled=n>limit;$('dungeon-level-'+n).textContent=n+'단계'+(n>limit?' · 이전 단계 완료 필요':profile.dungeonProgress[d.id]>=n?' · 완료':'');}
  refreshDungeonBuild();
  $('dungeon-enter').disabled=dungeonBusy||!!combatWork||!!combatError;$('dungeon-enter').textContent=dungeonBusy?'전투 준비 중…':'던전 입장 ›';

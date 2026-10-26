@@ -1827,7 +1827,7 @@ test('followup unchanged HUD text preserves its node while changed values appear
 
 
 test('followup failed special stage explains that current rewards were canceled and keeps earlier progress',async()=>{
- const p=game.createProfile(1_000_000);p.stageProgress=[3,0,0];p.gold=400;const ui=await host({saved:p,campaign:true});ui.emit('start','click');await ui.settle();const s=ui.state;s.profile.gold+=90;s.run.gold+=90;s.run.timeRemaining=0;ui.tick(.025);assert.equal(s.phase,'defeat');ui.run(1.2);assert.equal(ui.nodes.get('result-content').hidden,false);assert.match(ui.nodes.get('modal-description').textContent,/실패한 구간의 보상은 지급되지/);assert.match(ui.nodes.get('result-note').textContent,/보상 없음/);assert.equal(ui.profile().gold,400);assert.equal(ui.profile().stageProgress[0],3);
+ const p=game.createProfile(1_000_000);p.stageProgress=[3,0,0];p.gold=400;const ui=await host({saved:p,campaign:true});ui.emit('start','click');await ui.settle();const s=ui.state;s.profile.gold+=90;s.run.gold+=90;s.run.timeRemaining=0;ui.tick(.025);assert.equal(s.phase,'defeat');ui.run(1.2);assert.equal(ui.nodes.get('result-content').hidden,false);assert.match(ui.nodes.get('modal-description').textContent,/실패한 구간 보상 없음/);assert.match(ui.nodes.get('result-note').textContent,/보상 없음/);assert.equal(ui.profile().gold,400);assert.equal(ui.profile().stageProgress[0],3);
 });
 
 function finishDungeonUi(ui){ui.state.spawns=[];ui.state.enemies=[];ui.state.barrels=[];ui.state.run.wave=3;ui.state.run.waveQuota=ui.state.run.waveKills=0;ui.state.run.stageKills=ui.state.run.stageQuota;ui.tick(.025);ui.run(.6);}
