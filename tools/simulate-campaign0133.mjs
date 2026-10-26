@@ -13,6 +13,7 @@ const dist=path.resolve(process.argv[2]||'dist');
 const g=await import(new URL('file://'+dist+'/game-engine.js').href);
 const loot=await import(new URL('file://'+dist+'/loot.js').href);
 const SEED=Number(process.argv[3]||0),LAST=Number(process.argv[4]||60),POLICY=process.argv[5]||'spec',DUMP=process.argv[6]||null;
+const HPLOG=process.env.HPLOG==='1',hpLog=[];
 const STARS=process.env.STARS==='1',starSeen=new Set(),starLog=[];
 const SPEC=POLICY==='spec'||POLICY==='switch',SWITCH=POLICY==='switch'||POLICY==='adapt';
 const FIXED_TREE=['blade1','blade2','ward1','ward2','blade3','blade4','blade5','ward3','ward4','ward5'];
@@ -36,7 +37,7 @@ if(DUMP)fs.mkdirSync(DUMP,{recursive:true});
 for(let ch=1;ch<=LAST&&!stuck;ch++){let won=false,tries=0;
  if(DUMP)fs.writeFileSync(path.join(DUMP,`c${ch}.json`),g.encodeProfile(p,1000));
  const failSeen={};
- for(let a=0;!won;a++){const from=g.stageLimit(p,ch)||1;prepare(s,nextGate(ch,from));attempts++;tries++;g.launch(s,ch,from);for(let i=0;i<24000&&s.phase==='playing';i++){g.advanceGame(s,.05);if(STARS)for(const f of s.effects)if(f.type==='stageClear'&&!starSeen.has(f.id)){starSeen.add(f.id);starLog.push([ch,f.stage,f.stars]);}}
+ for(let a=0;!won;a++){const from=g.stageLimit(p,ch)||1;prepare(s,nextGate(ch,from));attempts++;tries++;g.launch(s,ch,from);let hpStage=s.run.stage,hpPrev=s.player.hp,hurt=0,heal=0;for(let i=0;i<24000&&s.phase==='playing';i++){g.advanceGame(s,.05);if(HPLOG){if(s.run.stage!==hpStage||s.phase!=='playing'){hpLog.push([ch,hpStage,hurt/s.player.maxHp,heal/s.player.maxHp]);hpStage=s.run.stage;hurt=heal=0;hpPrev=s.player.hp;}else{const d=s.player.hp-hpPrev;if(d<0)hurt-=d;else heal+=d;hpPrev=s.player.hp;}}if(STARS)for(const f of s.effects)if(f.type==='stageClear'&&!starSeen.has(f.id)){starSeen.add(f.id);starLog.push([ch,f.stage,f.stars]);}}
   if(s.phase==='victory'){won=true;g.returnToCamp(s);break;}
   const st=s.run.stage,k=ch+'-'+st,gate=g.stageGate(ch,st);fails[k]=(fails[k]??0)+1;failSeen[st]=(failSeen[st]??0)+1;g.returnToCamp(s);
   if(failSeen[st]>=(Number(process.env.STUCK_AFTER)||15)){stuck={chapter:ch,stage:st,gate:gate?.type??null};break;}
@@ -49,3 +50,5 @@ for(let ch=1;ch<=LAST&&!stuck;ch++){let won=false,tries=0;
 console.log(`${POLICY} seed${SEED} attempts=${attempts} farms=${farms} dungeons=${dungeons} stuck=${JSON.stringify(stuck)} fails=${JSON.stringify(fails)}`);
 if(STARS){const rate=key=>{const out={};for(const [c,st,m] of starLog){const k=key(c,st);out[k]??={n:0,fast:0,hp:0};out[k].n++;if(m&2)out[k].fast++;if(m&4)out[k].hp++;}return Object.entries(out).map(([k,v])=>k+':'+v.n+'회 30초 '+Math.round(v.fast/v.n*100)+'% 체력 '+Math.round(v.hp/v.n*100)+'%').join(' | ');};
  console.log('별 스테이지별',rate((c,st)=>st));console.log('별 지역별',rate(c=>Math.ceil(c/10)+'지역'));}
+if(HPLOG){const by={};for(const [c,st,h,r] of hpLog){const k=Math.ceil(c/10)+'지역 '+(st===10?'보스':'일반');by[k]??={n:0,h:0,r:0};by[k].n++;by[k].h+=h;by[k].r+=r;}
+ console.log('스테이지당 받은 피해·회복(최대 체력 대비)',Object.entries(by).map(([k,v])=>k+' 피해 '+Math.round(v.h/v.n*100)+'% 회복 '+Math.round(v.r/v.n*100)+'%').join(' | '));}
