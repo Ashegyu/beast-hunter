@@ -365,3 +365,39 @@
 /* 0.133 관문: 지도 스테이지 테두리에 붉은 고리, 미리보기 설명 첫머리에 관문 효과·대응률(gateText). */
 #game-shell#game-shell[data-camp-view=map] #camp-map-panel .sub-stage-tabs>button:not([data-gate=""])[data-gate] .stage-seal{box-shadow:0 0 0 2px #d2484880,0 0 10px #ff5a4a90;border-radius:50%}
 #game-shell#game-shell[data-camp-view=map] #camp-map-panel .sub-stage-tabs>button:not([data-gate=""])[data-gate][data-stars="0"]:not(:disabled) .stage-state{color:#ff9a86}
+
+/* 0.136 가방 → 장비 강화 화면(#item-workshop: 강화·승급·수치작 탭).
+   가방 상세 틀 안에 패널 틀을 한 번 더 그려 테두리가 이중이었고, 내용이 테두리에 붙었으며, 아래 버튼은 공통 스킨 틀(::before)과
+   옛 버튼 틀(::after)을 함께 그려 금색 틀이 어긋났다. 안쪽 틀을 지우고 여백·격자를 다시 잡는다. */
+#game-shell#game-shell #inventory-content #bag-detail #item-workshop[data-common-skin][data-common-skin]::before{display:none!important}
+/* 강화 화면을 열면 '장비 정보로'에 포커스가 가는데, 바깥으로 그려지는 포커스 테두리가 잘려 금색 ㄱ자처럼 보였다: 안쪽에 그린다. */
+#game-shell#game-shell #inventory-content #item-workshop button:focus-visible{outline:2px solid #e1c28d;outline-offset:-4px}
+#game-shell#game-shell #inventory-content #bag-detail #item-workshop:not([hidden]){display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr) auto auto auto;gap:6px 12px;align-content:stretch;box-sizing:border-box;min-height:0;margin:0;padding:6px 12px 10px;overflow:hidden}
+#game-shell#game-shell #inventory-content #item-workshop .workshop-tabs{grid-column:1/-1;grid-row:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:0;padding:0}
+#game-shell#game-shell #inventory-content #item-workshop .workshop-tabs>button{box-sizing:border-box;width:100%;height:30px;min-height:30px;margin:0;padding:2px 4px;border:1px solid #b8a27350;border-radius:3px;background:#0a111bcc;color:#a8b4ab;font:600 12px/1 var(--ui-font)}
+#game-shell#game-shell #inventory-content #item-workshop .workshop-tabs>button[aria-pressed=true]{border-color:#e6c27a;background:linear-gradient(#3a2c14,#1d160b);color:#f3d79b;box-shadow:inset 0 -2px 0 #e6c27a}
+#game-shell#game-shell #inventory-content #item-workshop .workshop-tabs>button:disabled{opacity:.45}
+#game-shell#game-shell #inventory-content #item-workshop .workshop-tabs>button::before,#game-shell#game-shell #inventory-content #item-workshop .workshop-tabs>button::after{content:none}
+#game-shell#game-shell #inventory-content #item-workshop .workshop-stat-heading{grid-column:1;grid-row:2;margin:0;padding:0 8px;font-size:9px;color:#9aa6b2}
+#game-shell#game-shell #inventory-content #item-workshop .workshop-stats{grid-column:1;grid-row:3;align-content:start;gap:2px;margin:0;padding:6px 8px;min-height:0;border:1px solid #b3a17e30;border-radius:3px;background:#0a111b99;overflow:hidden}
+#game-shell#game-shell #inventory-content #item-workshop :is(.workshop-stats>div,.workshop-stat-heading){grid-template-columns:42px minmax(0,1.3fr) minmax(0,.8fr) minmax(0,.9fr);gap:4px;align-items:center}
+#game-shell#game-shell #inventory-content #item-workshop .workshop-stats>div{min-height:18px;font-size:11px}
+#game-shell#game-shell #inventory-content #item-workshop .workshop-stats :is(dd:nth-child(3),dd:nth-child(4)){text-align:right}
+#game-shell#game-shell #inventory-content #item-workshop .workshop-stat-heading>span:nth-child(n+3){text-align:right}
+#game-shell#game-shell #inventory-content #item-workshop .workshop-chance{grid-column:2;grid-row:2;margin:0;font-size:10px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#game-shell#game-shell #inventory-content #item-workshop :is(.workshop-enhance-cost:not([hidden]),.workshop-cost,#workshop-keep){grid-column:2;grid-row:3;align-self:start;min-width:0;margin:0;padding:0}
+#game-shell#game-shell #inventory-content #item-workshop .workshop-enhance-cost:not([hidden]){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+#game-shell#game-shell #inventory-content #item-workshop .workshop-enhance-cost>*{box-sizing:border-box;min-width:0;min-height:26px;margin:0;padding:2px 4px;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#game-shell#game-shell #inventory-content #item-workshop .workshop-note{grid-column:1/-1;grid-row:4;margin:0;font-size:10px!important;line-height:1.35;color:#c9c1b0}
+#game-shell#game-shell #inventory-content #item-workshop .workshop-feedback{grid-column:1/-1;grid-row:5;margin:0;min-height:13px;font-size:10px;line-height:1.3}
+#game-shell#game-shell #inventory-content #item-workshop .workshop-actions{grid-column:1/-1;grid-row:6;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0;padding:0}
+#game-shell#game-shell #inventory-content #item-workshop .workshop-actions>button{box-sizing:border-box;height:34px!important;min-height:34px;margin:0;font-size:11px}
+#game-shell#game-shell #inventory-content #item-workshop .workshop-actions>button::after{content:none}
+@media(max-height:360px){
+ #game-shell#game-shell #inventory-content #bag-detail #item-workshop:not([hidden]){gap:3px 8px;padding:4px 8px 6px}
+ #game-shell#game-shell #inventory-content #item-workshop .workshop-tabs>button{height:26px;min-height:26px;font-size:11px}
+ #game-shell#game-shell #inventory-content #item-workshop .workshop-stats{padding:3px 6px}
+ #game-shell#game-shell #inventory-content #item-workshop .workshop-stats>div{min-height:15px;font-size:10px}
+ #game-shell#game-shell #inventory-content #item-workshop .workshop-actions>button{height:30px!important;min-height:30px}
+ #game-shell#game-shell #inventory-content #item-workshop .workshop-enhance-cost>*{min-height:22px}
+}
