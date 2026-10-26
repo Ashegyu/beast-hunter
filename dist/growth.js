@@ -1,7 +1,7 @@
 // Alpha 0.131 캐릭터 성장: every level gives one 성장 포인트 (Lv.200 → 199). Points go to
 //  · 능력치 단련 (TRAINING): six stats shared by every build, one point per rank, rank cap rises with level;
 //  · 성장 트리 (GROWTH_TREE): three branches of five nodes taken in order, saved with each build.
-// Points are not stored: free points = level-1 − trained ranks − nodes of the current tree.
+// Points are not stored: free points = level-1 (+ 30-star chests) − trained ranks − nodes of the current tree.
 // Pure data and rules; game-engine.js and combat-skills.js read the bonuses.
 export const TRAINING_MAX=30;
 export const EXECUTE_HEALTH=.35;
@@ -45,12 +45,14 @@ export const TREE_COST=GROWTH_TREE.reduce((a,b)=>a+b.nodes.reduce((x,n)=>x+n.cos
 const int=(n,min,max)=>Number.isFinite(n)?Math.max(min,Math.min(max,Math.floor(n))):min;
 export const emptyTraining=()=>Object.fromEntries(TRAINING_IDS.map(id=>[id,0]));
 // Ranks above the level cap or beyond the level's points are trimmed (largest stat first).
-export function cleanTraining(raw,level){const cap=trainingCap(level),out=emptyTraining();for(const id of TRAINING_IDS)out[id]=int(raw?.[id],0,cap);let over=TRAINING_IDS.reduce((a,id)=>a+out[id],0)-Math.max(0,(level|0)-1);while(over>0){const id=TRAINING_IDS.reduce((a,b)=>out[b]>out[a]?b:a);out[id]--;over--;}return out;}
+export function cleanTraining(raw,level,bonus=0){const cap=trainingCap(level),out=emptyTraining();for(const id of TRAINING_IDS)out[id]=int(raw?.[id],0,cap);let over=TRAINING_IDS.reduce((a,id)=>a+out[id],0)-Math.max(0,(level|0)-1)-bonus;while(over>0){const id=TRAINING_IDS.reduce((a,b)=>out[b]>out[a]?b:a);out[id]--;over--;}return out;}
 // A tree keeps only nodes whose earlier nodes in the same branch are also taken, in branch order.
 export function cleanTree(raw){const taken=new Set(Array.isArray(raw)?raw.filter(id=>typeof id==='string'):[]),out=[];for(const b of GROWTH_TREE)for(const n of b.nodes){if(!taken.has(n.id))break;out.push(n.id);}return out;}
 export const trainingSpent=p=>TRAINING_IDS.reduce((a,id)=>a+(p?.training?.[id]??0),0);
 export const treeSpent=tree=>(tree??[]).reduce((a,id)=>a+(Object.hasOwn(TREE_NODES,id)?TREE_NODES[id].cost:0),0);
-export const growthPointsTotal=p=>Math.max(0,(p?.level??1)-1);
+// Alpha 0.132: every claimed 30-star chapter chest (stage-stars.js) adds one point.
+export const bonusGrowthPoints=p=>(p?.starChests??[]).reduce((a,m)=>a+(m>>2&1),0);
+export const growthPointsTotal=p=>Math.max(0,(p?.level??1)-1)+bonusGrowthPoints(p);
 export const growthPoints=p=>growthPointsTotal(p)-trainingSpent(p)-treeSpent(p?.growthTree);
 // Fit a tree into the points left after training (drops the latest nodes first).
 export function fitTree(p,tree){const out=cleanTree(tree),limit=growthPointsTotal(p)-trainingSpent(p);while(out.length&&treeSpent(out)>limit){const last=[...out].sort((a,b)=>TREE_NODES[b].index-TREE_NODES[a].index)[0];out.splice(out.indexOf(last),1);}return cleanTree(out);}
