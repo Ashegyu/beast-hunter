@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.129.0';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.130.0';
 import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js';
 import { createCombatAudio } from './sound.js?v=0.76.0';
-import * as game from './game-engine.js?v=0.129.0';
+import * as game from './game-engine.js?v=0.130.0';
 import {FrameMetrics} from './frame-metrics.js?v=0.98.1';
 import { frameIndex, frameRect, validateClip } from './engine.js';
 import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
 import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.103.1';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.129.0';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.129.0';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.129.0';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.129.0';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.130.0';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.130.0';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.130.0';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.130.0';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -1523,7 +1523,7 @@ function openDungeons(origin='lobby-summon'){
 function raidResetText(){const left=game.nextRaidReset(Date.now())-Date.now(),days=Math.floor(left/864e5),hours=Math.ceil(left%864e5/36e5);return '월요일 00:00 초기화 · '+(days?days+'일 ':'')+hours+'시간 남음';}
 function refreshRaids(){
  const now=Date.now(),chapter=game.raidChapter(profile,game.STAGES.length),r=game.raidDefinition(selectedRaid),left=game.raidEntriesLeft(profile,r.id,now),unlocked=game.raidUnlocked(profile,r.id),reward=game.raidRewards(chapter);
- for(const row of game.RAIDS){const open=game.raidUnlocked(profile,row.id);$('raid-card-'+row.id).setAttribute('aria-pressed',String(row.id===r.id));$('raid-card-'+row.id).setAttribute('data-locked',String(!open));$('raid-entries-'+row.id).textContent=open?'주간 입장 '+game.raidEntriesLeft(profile,row.id,now)+' / '+game.RAID_WEEKLY_ENTRIES:row.unlock+'장 클리어 후 개방';$('raid-state-'+row.id).textContent='클리어 '+profile.raids.clears[row.id]+'회 · 고대 '+game.ANCIENT_CATALOG.filter(a=>a.raid===row.id&&profile.discoveredAncients.includes(a.id)).length+' / 5';}
+ for(const row of game.RAIDS){const open=game.raidUnlocked(profile,row.id);$('raid-card-'+row.id).setAttribute('aria-pressed',String(row.id===r.id));$('raid-card-'+row.id).setAttribute('data-locked',String(!open));$('raid-entries-'+row.id).textContent=open?'주간 입장 '+game.raidEntriesLeft(profile,row.id,now)+' / '+game.RAID_WEEKLY_ENTRIES:row.unlock+'장 클리어 후 개방';$('raid-state-'+row.id).textContent='클리어 '+profile.raids.clears[row.id]+' · 고대 '+game.ANCIENT_CATALOG.filter(a=>a.raid===row.id&&profile.discoveredAncients.includes(a.id)).length+'/5';}
  $('raid-week-reset').textContent=raidResetText();$('raid-week-loot').textContent='보스는 지금까지 연 '+chapter+'장 기준으로 강해집니다.';
  $('dungeon-kind').textContent='레이드 · '+game.RAID_TIME_LIMIT+'초';$('dungeon-name').textContent=r.name;$('dungeon-rule').textContent=r.rule;$('dungeon-hint').textContent='추천 빌드 · '+r.build;
  $('dungeon-rewards').textContent=dungeonRewardText(reward)+' · 레이드 고대 '+Math.round(game.DROP_CHANCE.raid*100)+'%';
