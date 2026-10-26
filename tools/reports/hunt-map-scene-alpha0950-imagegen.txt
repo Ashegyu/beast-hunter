@@ -1,7 +1,0 @@
-Mode: built-in image_gen, transparent_background=false.
-Final asset: /workspace/sites/beast-hunter-motion/dist/assets/hunt-map-frost-wide-v0950.webp
-Source: /workspace/scratch/75541e0d6f78/generated_images/exec-e0b21cf3-f48e-4c9d-bd68-373741b7c917.png
-Preparation: WebP format conversion; original generation kept intact.
-
-Final prompt:
-Use case: stylized-concept. Asset type: landscape background illustration for the existing dark fantasy RPG hunting map, 16:9 wide composition. Primary request: a moonlit snowy gothic castle called Frost Throne, a grand dark blue stone citadel illuminated by small warm windows, rising at the right-center on a steep snowy rock escarpment; a huge gothic stone bridge crosses a deep misty ravine below it. Left and middle foreground contain snowy pine forest, dark rugged mountain ridges and a traversable snow-covered path across terraces, leaving a readable horizontal valley band across the middle-lower third for live stage checkpoint icons added by code. Distant snowy mountains, dramatic cold clouds, pale moonlight and restrained warm torch lights. Match a polished painted Korean fantasy mobile game environment, richly detailed architecture and atmospheric depth. Composition wide and spacious, castle fully visible in upper right-center, not cropped by the top, dark snowy foreground along bottom. Image is environment ONLY: no characters, no weapons, no UI, no borders, no labels, no text, no letters, no numbers, no stage circles, no map pins, no glowing route line, no watermarks.

@@ -1,7 +1,0 @@
-{
-  "bootImageCount": 24,
-  "compressedBytes": 46727605,
-  "rgbaSourceBytes": 150994648,
-  "scope": "sum of PNG width*height*4, not measured browser RAM/GPU usage; excludes CSS portrait",
-  "cssPortraitBytes": 3112564
-}

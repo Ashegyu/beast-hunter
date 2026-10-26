@@ -44,8 +44,9 @@
 - 로직 모듈: loot, equipment-progression/slots/synergies, crafting, chapters, battle-plans, battle-progress(정산 저널), dungeons, hunt-modes(난이도), combat-skills(35종), skill-motion, ancient-powers, unique-effects, build-effects(각인), profile-backup, world(카메라·좌표), terrain, motion.
 - `engine.js` + `lab.html/lab.js`: 구형 모션 검사 도구(MOTION LAB). 실게임과 무관.
 - `sound.js`: 오디오 파일 없이 WebAudio로 효과음 합성 (동시 10음).
+- dist 어셋(0.130.1): 런타임 사용 집합(`regionAssetPlan`+`campAssetPaths`+manifest의 클립 외 이미지+html/css/js 경로+스킬 아이콘)에 없는 파일은 지웠다(webp로 대체된 PNG 원본, 옛 UI 시안, 프롬프트 txt, 안 쓰는 글꼴). 단 MOTION LAB(lab.html)이 쓰는 옛 클립 PNG 10장(hunter_walk 등)은 남김. 새 어셋을 넣으면 manifest/코드에서 참조되게 할 것.
 - 어셋 로딩: `dist/assets/manifest.json`(클립 2470개, png→webp `delivery` 매핑). 거점 3장 → 공유 전투 18장 → 챕터별 7~9장(지형 `chapters['c<id>']`, 공격 효과, 보스 아틀라스, 그 챕터 6종의 아틀라스; 한 번에 한 챕터만 상주). 0.106 이후 몬스터는 종마다 아틀라스 1장. 어느 챕터도 안 쓰는 종(옛 지역 보스 3종)은 공유에서도 빠져 내려받지 않는다(region-assets.js, 밑줄 있는 액터 = 몬스터 종). 장식물은 `props_chapters-v0118`(0~11 기존, 12~15 불, 16~19 바다, 20~23 하늘, 24~27 신역). 장비 아틀라스: 기본은 0.9 원본 `equipment_chapters-v09`(12프레임, 검증 대상), 세트 360점은 지역별 페이지 `equipment-sets-r1~r6-v0109`에 있고 `manifest.equipment.setFrames[designId]`(프레임마다 `image`)와 `pages`(크기)로 찾는다(`gearFrame`이 처리, designId `set_<세트>_<sword|blade2|helmet|armor|pants|boots>`, chapters.js `SET_ART`/`ALL_EQUIPMENT_ART`). 아이콘은 `<img>`라 필요할 때 내려받고, 지역 어셋이 챕터 세트의 페이지를 함께 올려 전장 드롭을 그린다. 전투 중 캐릭터 손의 무기는 캐릭터 원화 그대로다(장비 원화는 미리보기·아이콘·드롭에만 쓰임).
-- CSS: 버전별로 파일을 뒤에 덧붙여 덮어쓰는 레이어 구조 → **로드 순서 = 우선순위**. 끝에서 두 번째는 `layout-fit.css`(0.103.2, 한 화면 맞춤 규칙 모음, 0.105 지도 챕터 넘김 버튼, 0.108 장비 시너지 3줄 포함), 마지막은 `combat-auto.css`(0.104, 자동 전투 HUD: 상태 창 9분할 테두리, 하단 스킬 줄, 스킬 자동/수동 버튼). 새 화면 맞춤 수정은 여기에 화면별 주석과 함께 추가한다. `#game-shell` 접두 + `data-panel`/`data-camp-view`/`data-phase` 속성 선택자. `!important` 약 900개 + index.html 인라인 474개(tools/apply-common-ui-v2.py가 주입). 세로용 규칙 다수는 가로 전용 전환 뒤 사실상 죽은 코드.
+- CSS: 버전별로 파일을 뒤에 덧붙여 덮어쓰는 레이어 구조 → **로드 순서 = 우선순위**. 끝에서 두 번째는 `layout-fit.css`(0.103.2, 한 화면 맞춤 규칙 모음, 0.105 지도 챕터 넘김 버튼, 0.108 장비 시너지 3줄 포함), 마지막은 `combat-auto.css`(0.104, 자동 전투 HUD: 상태 창 9분할 테두리, 하단 스킬 줄, 스킬 자동/수동 버튼). 새 화면 맞춤 수정은 여기에 화면별 주석과 함께 추가한다. `#game-shell` 접두 + `data-panel`/`data-camp-view`/`data-phase` 속성 선택자. `!important` 약 900개 + index.html 인라인 474개(옛 tools/apply-common-ui-v2.py가 주입, 0.130.1에서 도구 삭제). 세로용 규칙 다수는 가로 전용 전환 뒤 사실상 죽은 코드.
 - `art/`: 원화 원본, 생성 프롬프트, 검수 자료. Codex 생성 원화: `art/monsters0106`(보스 27·일반 18), `art/terrain0106`(지형 6), `art/monsters0107`(불 12·어둠 6·불 보스 5·특수 보스 3), `art/terrain0107`(지형 21), `art/fire0107`(불 장식물·공격 효과), `art/equipment0108`(지역 세트 4장), `art/equipment0109`(챕터 세트 26장, 장당 6점), `art/ancient0111`(고대 신규 부위 3장, 장당 5점), `art/accessories0122`(장신구 15점, 장당 5점), `art/raid0123`(레이드 보스 3·레이드 고대 15), 0.118의 `art/monsters0118`·`art/terrain0118`·`art/env0118`·`art/equipment0118`. 각 폴더에 사양 JSON, `prompts/<id>.json`, PROVENANCE.md. 사용자 몬스터 백과 참고 이미지는 `art/monsters065/references/encyclopedia-1~5.png`. `tools/reports/`: 버전별 측정·검수 결과.
 
 ## 버전 표기
@@ -104,12 +105,11 @@
 - 생성본은 반드시 눈으로 검수한다(모아보기 이미지를 만들어 Read). 자동 검사는 배치만 본다. 실패 시도는 `art/*/.codex-work/`(gitignore).
 - 대기 루프에서 `pgrep -f "tools/codex-monster-sheet.py"`를 쓰면 루프 자신과 일치해 끝나지 않는다. `pkill -f`도 같은 이유로 셸을 죽일 수 있다.
 
-## tools/
-- 63개 스크립트: benchmark-*, measure-*.mjs/.py, render-*, review-*, pack-*.py, optimize-*.py, create-*-report.py, simulate-*.
-- 렌더/리뷰 계열은 `CODEX_PRIMARY_RUNTIME_NODE_MODULES` 환경변수의 `@napi-rs/canvas`에 의존 → 이 환경에선 실행 불가. 다수가 저장소에 없는 기준 커밋 SHA를 `git show`로 참조. atlas 측정 .py는 scipy 필요(미설치).
-- 저장소 루트에서 실행 가능: `simulate-stage-b`, `simulate-stage-c`, `measure-skills049/054`, `benchmark-replays`.
-- `prepare-stage-c-qa.py:5`는 `app.js?v=0.99.0`을 치환하려 해 현재 무동작이며 dist/에 QA 파일을 직접 쓴다(배포 위험). `qa-skills.html`은 `qa-codex.html`의 복사본.
+## tools/ (0.130.1 정리 후 16개)
+- 벤치마크·시뮬레이션: `benchmark-raids0123.mjs`, `benchmark-skills0128.mjs`, `benchmark-replays.mjs`, `simulate-stage-b.mjs`, `simulate-stage-c.mjs`, `measure-skills049/054.mjs`(저장소 루트에서 실행, 결과는 `tools/reports/`에 씀).
+- 원화: `codex-monster-sheet.py`(Codex 생성+검사), 포장 `pack-monsters0106.py`·`pack-environment0107.py`·`pack-equipment0109.py`·`pack-ancient0112.py`·`pack-ancient0119.py`·`pack-accessories0122.py`·`pack-raid0123.py`, 아이콘 `make-beast-icons0125.py`. 포장 스크립트는 `art/` 원본을 읽고 `tools/reports/`에 측정 결과를 쓴다.
+- `tools/reports/`에는 테스트가 읽는 기준 파일(stage-b-baseline 4개, stage-c/baseline-v12, alpha045/065-monsters, equipment-sockets-alpha091, lirian-alpha081-alignment)과 최근 밸런스 측정(0123 레이드, 0128 스킬)만 남겼다. README의 옛 절이 가리키는 다른 리포트·Codex 전용 렌더/검수 스크립트(@napi-rs/canvas, 없는 기준 커밋 git show), 옛 포장기, QA html은 0.130.1에서 지웠다(git 기록에 있음). index.html의 인라인 스킨 스타일을 넣은 `apply-common-ui-v2.py`도 지웠으니 인라인 스타일은 손으로 고친다.
 
 ## 문서
-- README.md (206KB): 버전별 변경 기록, 최신이 맨 위. 각 절에 검증 내용과 `tools/reports/` 증빙 경로.
+- README.md: 버전별 변경 기록, 최신이 맨 위. 각 절에 검증 내용과 `tools/reports/` 증빙 경로(0.130.1에서 대부분의 옛 리포트를 지워 옛 절의 경로는 git 기록에서 찾는다).
 - GAME_DESIGN.md / PERFORMANCE.md / ANIMATION_ASSETS.md: 최신 기준이 위, 아래는 과거 기록. 옛 규칙과 충돌하면 위쪽이 현재 기준.
