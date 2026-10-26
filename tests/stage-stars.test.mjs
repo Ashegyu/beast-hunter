@@ -5,8 +5,8 @@ import * as g from '../dist/game-engine.js';
 // Alpha 0.132 스테이지 별: ★ 클리어 · ★ 30초 안 · ★ 체력 50% 이상, best result kept; chapter chests at 10/20/30 stars.
 const clearStage=(s,{time=40,hp=1}={})=>{s.run.timeRemaining=s.run.timeLimit-time;s.run.lowestHp=hp;s.enemies=[];s.spawns.length=0;s.run.wave=g.stageWaveCount(s.run.stage);s.run.waveKills=s.run.waveQuota=1;s.run.flow='combat';g.advanceGame(s,.025);};
 
-test('star masks: clear, half the time limit, a third of it (bosses: half health); each on its own',()=>{
- assert.equal(g.starsFor({stage:3,timeLimit:60,timeRemaining:41,lowestHp:.1}),7);assert.equal(g.starsFor({stage:3,timeLimit:60,timeRemaining:35,lowestHp:1}),3);assert.equal(g.starsFor({stage:9,timeLimit:60,timeRemaining:10,lowestHp:1}),1);
+test('star masks: clear, the stage\'s fast and fastest times (bosses: half health); each on its own',()=>{
+ assert.equal(g.starsFor({stage:3,timeLimit:60,timeRemaining:41,lowestHp:.1}),7);assert.equal(g.starsFor({stage:3,timeLimit:60,timeRemaining:28,lowestHp:1}),3);assert.equal(g.starsFor({stage:4,timeLimit:60,timeRemaining:26,lowestHp:1}),7);assert.deepEqual([...g.starTimes(10)],[35,null]);for(let n=1;n<=10;n++){const [f,r]=g.starTimes(n);assert.ok(f<60&&(r===null?n===10:r<f));}assert.equal(g.starsFor({stage:9,timeLimit:60,timeRemaining:10,lowestHp:1}),1);
  assert.equal(g.starsFor({timeLimit:60,timeRemaining:20,lowestHp:.1}),1);
  assert.equal(g.starsFor({timeLimit:60,timeRemaining:30,lowestHp:.1}),3);
  assert.equal(g.starsFor({timeLimit:60,timeRemaining:10,lowestHp:.5}),5);

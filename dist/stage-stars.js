@@ -1,15 +1,16 @@
 // Alpha 0.132 스테이지 별: every stage clear can earn up to three stars, kept as the best result of any difficulty.
-//  ★1 클리어 · ★2 제한 시간의 절반(30초) 안에 클리어 · ★3 1~9스테이지는 20초 안에 클리어, 보스(10)는 스테이지 내내
-//  체력 50% 이상 유지 (each on its own; 0.134 — ordinary stages cost 1~8% of max health, so health only matters at bosses).
+//  ★1 클리어 · ★2 빠른 클리어 · ★3 1~9스테이지는 최속 클리어, 보스(10)는 스테이지 내내 체력 50% 이상 유지 (each on its own).
+//  0.135: the times are per stage (STAR_TIMES). Spawn pacing and walking make some stages take 30s+ even against one-hit
+//  enemies, so one 30s/20s line was impossible there; these lines are what a player 5~10× stronger than the stage reaches.
 // ★3 uses the lowest health of the stage (s.run.lowestHp): health at the clear was almost always above half
 // because wave clears heal 8% and regeneration refills between hits (0.132 sim: 100% of clears).
 // profile.stageStars[chapter-1] packs ten 3-bit masks (stage n at bits 3(n-1)..3(n-1)+2).
 // profile.starChests[chapter-1] is the claimed mask of the chapter's 별 상자 (10·20·30 stars).
 // The 30-star chest also gives one 성장 포인트 (growth.js bonusGrowthPoints counts them).
-import {STAGES_PER_CHAPTER} from './battle-plans.js?v=0.134.0';
+import {STAGES_PER_CHAPTER} from './battle-plans.js?v=0.135.0';
 export const STAR_BITS=Object.freeze({clear:1,fast:2,third:4});
-export const STAR_FAST_SHARE=.5;
-export const STAR_RUSH_SHARE=1/3;
+export const STAR_TIMES=Object.freeze([[30,15],[30,20],[40,30],[45,35],[35,25],[35,25],[40,30],[40,30],[30,20],[35,null]].map(r=>Object.freeze(r)));
+export const starTimes=stage=>STAR_TIMES[Math.max(1,Math.min(STAR_TIMES.length,stage))-1];
 export const STAR_HEALTH=.5;
 export const STAR_CHEST_STARS=Object.freeze([10,20,30]);
 export const MAX_CHAPTER_STARS=STAGES_PER_CHAPTER*3;
@@ -21,9 +22,9 @@ export function chapterStars(p,chapter){let total=0;for(let n=1;n<=STAGES_PER_CH
 export function totalStars(p){let total=0;for(let c=1;c<=(p?.stageStars?.length??0);c++)total+=chapterStars(p,c);return total;}
 // The mask a clear earns: time used against the stage limit and the lowest health share during the stage.
 export function starsFor({stage=10,timeLimit,timeRemaining,lowestHp}){
- let mask=STAR_BITS.clear;const used=timeLimit-timeRemaining;
- if(timeLimit>0&&used<=timeLimit*STAR_FAST_SHARE+1e-9)mask|=STAR_BITS.fast;
- if(stage<STAGES_PER_CHAPTER?timeLimit>0&&used<=timeLimit*STAR_RUSH_SHARE+1e-9:lowestHp>=STAR_HEALTH-1e-9)mask|=STAR_BITS.third;
+ let mask=STAR_BITS.clear;const used=timeLimit-timeRemaining,[fast,rush]=starTimes(stage);
+ if(timeLimit>0&&used<=fast+1e-9)mask|=STAR_BITS.fast;
+ if(rush?timeLimit>0&&used<=rush+1e-9:lowestHp>=STAR_HEALTH-1e-9)mask|=STAR_BITS.third;
  return mask;
 }
 // Merge a clear into the profile; returns {mask, gained} (gained = new stars only).

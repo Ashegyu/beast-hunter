@@ -309,7 +309,7 @@ test('all ten stage buttons preserve selected identity through redraws, repeated
  for(const mode of [0,1,2]){ui.emit('map-mode-'+mode,'click');for(let n=1;n<=10;n++){
   ui.emit('run-stage-'+n,'click');ui.tick(0);ui.emit('stage-1','click');ui.emit('map-mode-'+mode,'click');
   for(let i=1;i<=10;i++)assert.equal(ui.nodes.get('run-stage-'+i).attributes['aria-pressed'],String(i===n));
-  assert.equal(ui.nodes.get('run-stage-number-'+n).textContent,String(n).padStart(2,'0'));assert.equal(ui.nodes.get('run-stage-state-'+n).textContent,'선택');assert.equal(ui.nodes.get('stage-preview-title').textContent,'1-'+n+' · '+game.battlePlan(n).name);assert.equal(ui.nodes.get('stage-preview-kind').textContent,game.HUNT_MODES[mode].name+' · '+game.STAGE_TYPE_NAMES[game.battlePlan(n).stageType]);
+  assert.equal(ui.nodes.get('run-stage-number-'+n).textContent,String(n).padStart(2,'0'));assert.equal(ui.nodes.get('run-stage-state-'+n).textContent,'선택');assert.equal(ui.nodes.get('stage-preview-title').textContent,'1-'+n+' · '+game.battlePlan(n).name);{const [f,r]=game.starTimes(n);assert.equal(ui.nodes.get('stage-preview-kind').textContent,game.HUNT_MODES[mode].name+' · '+game.STAGE_TYPE_NAMES[game.battlePlan(n).stageType]+' · ★'+f+'초 · ★'+(r?r+'초':'체력 50%'));}
   assert.match(ui.nodes.get('camp-map-launch-meta').textContent,new RegExp('STAGE '+String(n).padStart(2,'0')+'.*'+game.HUNT_MODES[mode].name));
  }}
  ui.emit('run-stage-7','click');ui.emit('nav-bag','click');ui.emit('page-back','click');ui.emit('nav-hunt','click');assert.equal(ui.nodes.get('run-stage-7').attributes['aria-pressed'],'true');assert.deepEqual(ui.profile(),before);

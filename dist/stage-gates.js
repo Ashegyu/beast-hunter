@@ -4,10 +4,10 @@
 //  · 생존 (survival): enemies deal more damage          → 수호자 갈래 · 방어 스킬
 //  · 광역 (swarm): ordinary monsters have more health     → 검술사 갈래 · 광역 스킬
 //  · 단일 화력 (single): elites and bosses have more health → 검귀 갈래 · 일격 스킬
-//  · 방어 태세 (defense): enemies take less damage        → 검술사 갈래 · 순간 화력 스킬
+//  · 방어 태세 (defense): enemies take less damage        → 검술사 갈래 · 순간 화력 스킬 (at a defense-rule boss's weak point the cut shrinks by the counter)
 // 대응 (counter, 0~1) = matching tree nodes × .15 (max .75) + matching equipped skills × .1 (max .4), at most 1;
 // the counter removes up to 75% of the pressure. Raw spec (gear, training) also gets through: it just takes more.
-import {CHAPTERS,CHAPTERS_PER_THEME} from './chapters.js?v=0.134.0';
+import {CHAPTERS,CHAPTERS_PER_THEME} from './chapters.js?v=0.135.0';
 export const GATE_TYPES=Object.freeze({
  survival:Object.freeze({id:'survival',short:'수호자 갈래·방어 스킬',name:'생존 관문',effect:'적이 주는 피해',branch:'ward',branchName:'수호자',skills:Object.freeze(['stance','parry','resolve','reserve','breath']),hint:'수호자 갈래 · 수월의 자세 · 흘려베기 · 적월의 결의'}),
  swarm:Object.freeze({id:'swarm',short:'검술사 갈래·광역 스킬',name:'광역 관문',effect:'일반 괴수 체력',branch:'art',branchName:'검술사',skills:Object.freeze(['gather','dance','field','crescent','triple','bloodmoon','surrounded']),hint:'검술사 갈래 · 월쇄 · 윤무 · 잔월진 · 적월난무'}),
@@ -17,8 +17,8 @@ export const GATE_TYPES=Object.freeze({
 export const GATE_IDS=Object.freeze(Object.keys(GATE_TYPES));
 export const BOSS_GATE_BY_RULE=Object.freeze({regen:'single',fury:'survival',summon:'swarm',defense:'defense'});
 export const GATE_STAGES=Object.freeze([7,9,6]);
-// Pressure (+share) of a chapter's gates: small at first, rising every chapter with a step at every region; bosses ×1.2.
-export const GATE_PRESSURE=Object.freeze({start:.4,ramp:.012,region:.15,boss:1.2});
+// Pressure (+share) of a chapter's gates: small at first, rising every chapter with a step at every region; bosses ×1.1.
+export const GATE_PRESSURE=Object.freeze({start:.4,ramp:.012,region:.15,boss:1.1});
 export const COUNTER_REDUCTION=.75;
 export function gatePressure(chapter,boss=false){const i=chapter-1,region=Math.floor(i/CHAPTERS_PER_THEME);return Math.round((GATE_PRESSURE.start+GATE_PRESSURE.ramp*i+GATE_PRESSURE.region*region)*(boss?GATE_PRESSURE.boss:1)*1000)/1000;}
 // The gate of a chapter's stage, or null.

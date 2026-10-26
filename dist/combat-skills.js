@@ -1,12 +1,12 @@
 import {createSkillMotion} from './skill-motion.js';
-import {CHAPTERS,CHAPTER_BOSSES} from './chapters.js?v=0.134.0';
-import {beastTechniques,BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE,beastElementText} from './beast-techniques.js?v=0.134.0';
-export {BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE} from './beast-techniques.js?v=0.134.0';
-import {SKILL_BRANCHES,SKILL_BRANCH_COST,EXECUTE_HEALTH,branchSummary} from './skill-branches.js?v=0.134.0';
-export {SKILL_BRANCHES,SKILL_BRANCH_COST,EXECUTE_HEALTH,branchSummary} from './skill-branches.js?v=0.134.0';
-import {GEAR_SKILLS} from './raid-skills.js?v=0.134.0';
-import {treeBonus} from './growth.js?v=0.134.0';
-export {GEAR_SKILLS,GEAR_SKILL_BY_ANCIENT} from './raid-skills.js?v=0.134.0';
+import {CHAPTERS,CHAPTER_BOSSES} from './chapters.js?v=0.135.0';
+import {beastTechniques,BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE,beastElementText} from './beast-techniques.js?v=0.135.0';
+export {BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE} from './beast-techniques.js?v=0.135.0';
+import {SKILL_BRANCHES,SKILL_BRANCH_COST,EXECUTE_HEALTH,branchSummary} from './skill-branches.js?v=0.135.0';
+export {SKILL_BRANCHES,SKILL_BRANCH_COST,EXECUTE_HEALTH,branchSummary} from './skill-branches.js?v=0.135.0';
+import {GEAR_SKILLS} from './raid-skills.js?v=0.135.0';
+import {treeBonus} from './growth.js?v=0.135.0';
+export {GEAR_SKILLS,GEAR_SKILL_BY_ANCIENT} from './raid-skills.js?v=0.135.0';
 // Lirian skill rules: one catalog drives unlocks, rank values, UI and combat.
 const active=(id,name,unlock,damage,step,cost,cooldown,shape,description,extra={})=>({id,name,kind:'active',unlock,damage,step,cost,cooldown,shape,description,...extra});
 const passive=(id,name,unlock,value,step,unit,description)=>({id,name,kind:'passive',unlock,value,step,unit,description});
