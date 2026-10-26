@@ -1,5 +1,5 @@
-import {equipmentFamily} from './equipment-slots.js?v=0.133.0';
-import {EQUIPMENT_SETS,SET_SLOTS,CHAPTER_SETS,setArtId} from './equipment-sets.js?v=0.133.0';
+import {equipmentFamily} from './equipment-slots.js?v=0.134.0';
+import {EQUIPMENT_SETS,SET_SLOTS,CHAPTER_SETS,setArtId} from './equipment-sets.js?v=0.134.0';
 // Sixty chapters in six regions of ten: 1–10 forest, 11–20 fire and ice (11–15 fire,
 // 16–20 ice), 21–30 darkness (Alpha 0.107), 31–40 sunken kingdom, 41–50 storm sky isles,
 // 51–60 twilight sanctum (Alpha 0.118). A region drives the map tabs, item and
@@ -114,7 +114,9 @@ export const chapterMultiplier=id=>Math.round((1+(id-1)*.16)*100)/100;
 // Alpha 0.133 난이도 곡선: enemy health and damage (not rewards, which keep `multiplier`) grow by `growth` every chapter
 // on top of the old line and jump by `jump` at every new region. Raids keep the old scale (`raidBossHp`; raids.js has
 // its own chapter scale).
-export const THREAT=Object.freeze({hp:Object.freeze({growth:1.012,jump:1.12}),damage:Object.freeze({growth:1.014,jump:1.12})});
+// Alpha 0.134: ordinary monsters (not bosses, not in dungeons or raids) hit `mob` times harder; they barely dented an auto
+// battle before (1~8% of max health per stage).
+export const THREAT=Object.freeze({hp:Object.freeze({growth:1.012,jump:1.12}),damage:Object.freeze({growth:1.014,jump:1.12}),mob:3});
 const threat=(id,t)=>Math.round(chapterMultiplier(id)*Math.pow(t.growth,id-1)*Math.pow(t.jump,Math.floor((id-1)/10))*1000)/1000;
 export const enemyHpScale=id=>threat(id,THREAT.hp);
 export const enemyDamageScale=id=>threat(id,THREAT.damage);

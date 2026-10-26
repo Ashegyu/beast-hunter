@@ -5,7 +5,8 @@ import * as g from '../dist/game-engine.js';
 // Alpha 0.132 스테이지 별: ★ 클리어 · ★ 30초 안 · ★ 체력 50% 이상, best result kept; chapter chests at 10/20/30 stars.
 const clearStage=(s,{time=40,hp=1}={})=>{s.run.timeRemaining=s.run.timeLimit-time;s.run.lowestHp=hp;s.enemies=[];s.spawns.length=0;s.run.wave=g.stageWaveCount(s.run.stage);s.run.waveKills=s.run.waveQuota=1;s.run.flow='combat';g.advanceGame(s,.025);};
 
-test('star masks: clear, half the time limit, half health; each on its own',()=>{
+test('star masks: clear, half the time limit, a third of it (bosses: half health); each on its own',()=>{
+ assert.equal(g.starsFor({stage:3,timeLimit:60,timeRemaining:41,lowestHp:.1}),7);assert.equal(g.starsFor({stage:3,timeLimit:60,timeRemaining:35,lowestHp:1}),3);assert.equal(g.starsFor({stage:9,timeLimit:60,timeRemaining:10,lowestHp:1}),1);
  assert.equal(g.starsFor({timeLimit:60,timeRemaining:20,lowestHp:.1}),1);
  assert.equal(g.starsFor({timeLimit:60,timeRemaining:30,lowestHp:.1}),3);
  assert.equal(g.starsFor({timeLimit:60,timeRemaining:10,lowestHp:.5}),5);
@@ -15,22 +16,22 @@ test('star masks: clear, half the time limit, half health; each on its own',()=>
  g.awardStars(p,3,10,7);g.awardStars(p,3,1,1);assert.equal(g.stageStarMask(p,3,10),7);assert.equal(g.stageStarMask(p,3,1),1);assert.equal(g.stageStarMask(p,3,2),0);assert.equal(g.chapterStars(p,3),7);assert.equal(g.totalStars(p),7);
 });
 
-test('a stage clear records stars from the time used and the lowest health of the stage; the boss too',()=>{
+test('a stage clear records stars from the time used; the boss from time and the lowest health of the stage',()=>{
  const p=g.createProfile(1000);p.level=60;const s=g.createGame(p);g.launch(s,1);
  clearStage(s,{time:25,hp:.3});assert.equal(s.run.stage,2);assert.equal(g.stageStarMask(p,1,1),3);
  const banner=s.effects.find(f=>f.type==='stageClear');assert.equal(banner.stars,3);assert.equal(banner.gained,2);
- clearStage(s,{time:45,hp:.8});assert.equal(g.stageStarMask(p,1,2),5);
+ clearStage(s,{time:15,hp:.1});assert.equal(g.stageStarMask(p,1,2),7);
  // The boss: kill it with fast time and full health.
  const q=g.createProfile(1000);q.level=60;q.stageProgress[0]=9;const b=g.createGame(q);assert.ok(g.launch(b,1,10));b.enemies=[];b.barrels=[];b.run.flow='combat';b.run.wave=1;b.run.waveQuota=1e6;b.run.waveKills=0;b.run.bossSpawned=true;b.spawns=[{id:b.nextId++,type:'bulwark',boss:true,elite:false,x:b.player.x+80,y:b.player.y,delay:0,warning:1}];g.advanceGame(b,.001);
  const boss=b.enemies.find(e=>e.boss);boss.hp=1;boss.action='idle';boss.cooldown=999;b.player.invulnerable=999;b.run.timeRemaining=b.run.timeLimit-20;b.player.hp=b.player.maxHp;g.attack(b,{x:1,y:0});for(let i=0;i<6;i++)g.advanceGame(b,.025);
  assert.equal(b.phase,'victory');assert.equal(g.stageStarMask(q,1,10),7);assert.equal(b.run.stars.earned,7);
  // Dungeons give no stars.
- const d=g.createGame(p);assert.ok(g.launchDungeon(d,'gold',1));clearStage(d,{time:10});assert.equal(g.totalStars(p),4);
+ const d=g.createGame(p);assert.ok(g.launchDungeon(d,'gold',1));clearStage(d,{time:10});assert.equal(g.totalStars(p),5);
 });
 
 test('stars are published with the stage settlement and survive saves',()=>{
  const p=g.createProfile(1000);p.level=60;p.unlockedStage=1;p.stageProgress[0]=3;const s=g.createGame(p,{durable:true});g.launch(s,1,4);
- clearStage(s,{time:20,hp:1});assert.equal(s.settlement?.boss,false);assert.equal(g.stageStarMask(p,1,4),0,'acknowledgement first');
+ clearStage(s,{time:19,hp:1});assert.equal(s.settlement?.boss,false);assert.equal(g.stageStarMask(p,1,4),0,'acknowledgement first');
  assert.equal(g.stageStarMask(g.restoreProfile(g.encodeProfile(p,1000),1000),1,4),7,'the save being acknowledged carries the stars');
  assert.ok(g.confirmSettlement(s,s.settlement.id));assert.equal(g.stageStarMask(p,1,4),7);
  const r=g.restoreProfile(g.encodeProfile(p,1000),1000);assert.equal(g.stageStarMask(r,1,4),7);assert.equal(g.chapterStars(r,1),3);

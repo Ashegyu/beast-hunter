@@ -45,6 +45,8 @@ test('gates act on spawned enemies: survival damage, swarm and single health, de
   assert.ok(st.hpScale>0);}
  const {chapter,stage}=gateStage('defense');const s=arena(chapter,stage);s.enemies=[];const e=spawn(s,'bulwark');assert.ok(Math.abs(e.gateGuard-(1+s.run.gate.effect))<1e-9);
  const countered=arena(chapter,stage,p=>{p.growthTree=['art1','art2','art3','art4','art5'];});assert.ok(Math.abs(countered.run.gate.effect-countered.run.gate.pressure*(1-.75*.75))<1e-3);
+ // Ordinary monsters hit THREAT.mob (3) times harder outside dungeons (0.134).
+ {const s=arena(2,1);s.run.gate=null;s.enemies=[];const mob=spawn(s,'skitter');const d=g.createGame(g.createProfile(1000));g.launchDungeon(d,'gold',1);d.enemies=[];const dm=spawn(d,'skitter');assert.equal(g.THREAT.mob,3);const boss=arena(2,1);boss.run.gate=null;boss.enemies=[];boss.spawns=[{id:boss.nextId++,type:'skitter',boss:true,elite:false,x:boss.player.x+400,y:boss.player.y,delay:0,warning:0}];g.advanceGame(boss,.001);const b=boss.enemies.at(-1);assert.ok(Math.abs(b.damage-26*g.STAGES[1].damageScale)<1e-9,'bosses unchanged '+b.damage);assert.ok(mob.damage>8*g.STAGES[1].damageScale*1.5,'mob '+mob.damage);assert.ok(dm.damage<mob.damage/4);}
  // Dungeons and raids have no gates.
  const d=g.createGame(g.createProfile(1000));assert.ok(g.launchDungeon(d,'gold',1));assert.equal(d.run.gate,null);
 });

@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import * as g from '../dist/game-engine.js';
-import * as L from '../dist/loot.js?v=0.133.0';
+import * as L from '../dist/loot.js?v=0.134.0';
 import {freezeCombat} from './combat-fixture.mjs';
 
 // Alpha 0.127 장비 기술: every raid ancient carries a skill that casts by itself while worn.
