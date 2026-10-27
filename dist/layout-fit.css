@@ -483,3 +483,40 @@
 #game-shell#game-shell #overlay[data-panel=result] #dungeon-result-rewards>strong{font-size:11px;white-space:nowrap}
 #game-shell#game-shell #overlay[data-panel=result] #dungeon-result-list{margin:0!important;font-size:12px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 #game-shell#game-shell #overlay[data-panel=result] #dungeon-result-exit{min-height:0!important;height:26px;padding:0 10px!important;font-size:11px;white-space:nowrap}
+/* Alpha 0.138 경험치·능력치 (사용자 요청 '경험치바도 있어야하고, 캐릭터 스탯에 관한 창도 있어야해').
+   전투 상태 창: 체력바와 기력바 사이에 얇은 경험치바(style.css가 숨기던 .bar.xp, 기력과 구분되게 하늘색)를 다시 보인다. */
+#game-shell#game-shell .battle .top-hud .hunter-hud .bar.xp{display:block!important;height:3px!important;min-height:0!important;margin:2px 0 0!important;border:0!important;background:#0008!important;overflow:hidden}
+#game-shell#game-shell .battle .top-hud .hunter-hud .bar.xp i{display:block;height:100%;background:linear-gradient(90deg,#bfe8ff,#5f9dff)!important;transition:width .2s linear}
+/* 홈 프로필(이름·레벨)을 누르면 열린다 */
+#game-shell[data-panel=camp] #home-profile{cursor:pointer}
+#game-shell[data-panel=camp] #home-profile:focus-visible{outline:2px solid #ffd27a;outline-offset:2px}
+/* 장비 화면 '전투 능력치' 머리의 '상세' 버튼 */
+#game-shell#game-shell #equipment-stats-open{flex:none;height:22px;min-height:0;min-width:0;padding:0 9px;border:1px solid #d6ba8899;border-radius:4px;background:#2a1a12cc;color:#ffe3b0;font:600 11px/1 var(--ui-font,inherit);cursor:pointer}
+#game-shell#game-shell .equipment-stats-panel>header>strong{margin-left:auto}
+/* 능력치 창: 화면 전체 덮개 + 가운데 카드, 세 묶음(공격·생존·기동·스킬)을 한 화면에 */
+#game-shell #stats-sheet{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:10px;background:#000a;box-sizing:border-box}
+#game-shell #stats-sheet[hidden]{display:none}
+#game-shell .stats-sheet-card{box-sizing:border-box;display:flex;flex-direction:column;width:min(640px,100%);max-height:100%;border:1px solid #d6ba88aa;border-radius:6px;background:linear-gradient(160deg,#18121aef,#0b0d12f4);box-shadow:0 8px 30px #000c;color:#f2e6cf;overflow:hidden}
+#game-shell .stats-sheet-card>header{display:flex;align-items:center;gap:10px;flex:none;padding:8px 12px;border-bottom:1px solid #d8ab6a40;background:linear-gradient(90deg,#3a141a66,#0000)}
+#game-shell .stats-sheet-card .equipment-profile-avatar{flex:none;width:40px;height:40px;border:1px solid #d6ba88;border-radius:50%;background:url('assets/lirian_home-illustration-v027.png') 50% 6%/210% auto}
+#game-shell .stats-sheet-id{flex:1;min-width:0}
+#game-shell .stats-sheet-id h3{margin:0;font-size:14px;line-height:1.2;color:#ffe3b0}
+#game-shell .stats-sheet-level{display:flex;justify-content:space-between;gap:8px;margin-top:2px;font-size:11px;line-height:1.2}
+#game-shell .stats-sheet-level strong{color:#ffd27a}
+#game-shell .stats-sheet-xp{display:block;height:5px;margin-top:3px;background:#d8ccb534;border-radius:3px;overflow:hidden}
+#game-shell .stats-sheet-xp i{display:block;height:100%;background:linear-gradient(90deg,#fff2b7,#d69844)}
+#game-shell#game-shell #stats-sheet-close{flex:none;width:30px;height:30px;min-width:0;min-height:0;padding:0;border:1px solid #d6ba8877;border-radius:50%;background:#0006;color:#ffe3b0;font-size:18px;line-height:1;cursor:pointer}
+#game-shell .stats-sheet-body{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;min-height:0;padding:8px 12px}
+#game-shell .stats-sheet-group h4{margin:0 0 4px;padding-bottom:3px;border-bottom:1px solid #d8ab6a40;font-size:12px;line-height:1.2;color:#ffbf8a}
+#game-shell .stats-sheet-group dl{margin:0}
+#game-shell .stats-sheet-group dl>div{display:flex;justify-content:space-between;gap:6px;padding:3px 2px;font-size:12px;line-height:1.25;border-bottom:1px solid #ffffff0d}
+#game-shell .stats-sheet-group dt{color:#cdbfa6;white-space:nowrap}
+#game-shell .stats-sheet-group dd{margin:0;font-weight:700;color:#fff;white-space:nowrap;font-variant-numeric:tabular-nums}
+#game-shell #stat-sheet-note{flex:none;margin:0;padding:5px 12px 8px;font-size:10px;line-height:1.3;color:#a99c86}
+@media (max-height:360px){
+ #game-shell .stats-sheet-card>header{padding:5px 10px}
+ #game-shell .stats-sheet-card .equipment-profile-avatar{width:30px;height:30px}
+ #game-shell .stats-sheet-body{padding:5px 10px;gap:6px}
+ #game-shell .stats-sheet-group dl>div{padding:2px;font-size:11px}
+ #game-shell #stat-sheet-note{padding:3px 10px 5px}
+}

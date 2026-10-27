@@ -223,7 +223,7 @@ function resizeViewport(){
   if(layoutChanged&&inventoryOpen){bagRenderKey='';refreshBag();resizeBagGrids();}
 }
 function manual(){}
-function start(stage=selectedStage,substage=selectedRunStage,difficulty=selectedDifficulty){if(!ready||orientationBlocked)return;audio.unlock();
+function start(stage=selectedStage,substage=selectedRunStage,difficulty=selectedDifficulty){if(!ready||orientationBlocked)return;closeStatsSheet();audio.unlock();
   if(!combatReady||!regionReady(stage)){
     if(state.phase!=='camp'&&!game.resultReady(state))return;
     const token=++launchRevision,phase=state.phase,run=state.run,panel=previousModal,drawer=campDrawer,selection=selectedStage+':'+selectedRunStage+':'+selectedDifficulty;
@@ -601,7 +601,7 @@ document.addEventListener('keydown',event=>{
   if(event.key==='Tab'&&pauseMenuActive()){event.preventDefault();const active=document.activeElement;const next=active===$('resume')?'retreat':active===$('retreat')?'resume':event.shiftKey?'retreat':'resume';$(next).focus({preventScroll:true});return;}
   // A Space held for combat must not click the result button after focus changes.
   if(event.key===' '&&suppressHeldSpace){if(event.repeat){event.preventDefault();return;}suppressHeldSpace=false;}
-  if(event.key==='Escape'){event.preventDefault();if(campDrawer){closeCampDrawer();}else if(trackOpen){closeTrack();}else if(craftOpen){craftOpen=false;updateHud();}else if(codexOpen){if(codexDetailOpen)closeCodexDetail();else{codexOpen=false;updateHud();}}else if(inventoryOpen){if(bagSelectedId!==null)closeBagDetail();else if(inventoryPanel==='build')setInventoryPanel('gear');else{inventoryOpen=false;updateHud();}}else if(campChoices){campChoices=false;updateHud();}else togglePause();return;}
+  if(event.key==='Escape'){event.preventDefault();if(!$('stats-sheet').hidden){closeStatsSheet();}else if(campDrawer){closeCampDrawer();}else if(trackOpen){closeTrack();}else if(craftOpen){craftOpen=false;updateHud();}else if(codexOpen){if(codexDetailOpen)closeCodexDetail();else{codexOpen=false;updateHud();}}else if(inventoryOpen){if(bagSelectedId!==null)closeBagDetail();else if(inventoryPanel==='build')setInventoryPanel('gear');else{inventoryOpen=false;updateHud();}}else if(campChoices){campChoices=false;updateHud();}else togglePause();return;}
   if(event.key.toLowerCase()==='i'){event.preventDefault();openInventory();return;}
   if(['INPUT','SELECT','TEXTAREA','BUTTON'].includes(event.target?.tagName)||event.target?.isContentEditable)return;
   // Live hunts move, attack and dodge automatically, so only skills and pickup stay on keys.
@@ -1109,7 +1109,7 @@ function updateHud(){
     }
     hudText($('equipped-summary'),Object.entries(game.EQUIPMENT_SLOTS).map(([slot,name])=>name+': '+(profile.inventory.find(i=>i.id===profile.equipment[slot])?.name??'기본 장비')).join(' · '));
     for(const slot of Object.keys(game.EQUIPMENT_SLOTS)){const item=profile.inventory.find(i=>i.id===profile.equipment[slot]);hudText($('equipped-name-'+slot),item?.name??'미착용');gearThumbnail($('equipped-art-'+slot),item??{slot:game.itemSlotForPosition(slot),tier:1},56,true);hudText($('equipped-level-'+slot),game.isSeal(item)?'+'+item.seal.level:item?'+'+game.enhancementLevel(item):'기본');$('equipped-open-'+slot).setAttribute('data-rarity',item?String(item.rarity):'none');$('equipped-open-'+slot).disabled=false;$('equipped-open-'+slot).setAttribute('data-empty',String(!item));const label=game.EQUIPMENT_SLOTS[slot]+' · '+(item?.name??'미착용');$('equipped-open-'+slot).setAttribute('aria-label',label);$('equipped-open-'+slot).title=label;}
-    hudText($('persona-level'),'Lv. '+profile.level);hudText($('persona-damage'),Math.round(stats.damage));hudText($('persona-health'),Number(stats.maxHp.toFixed(1)));hudText($('persona-critical'),(stats.crit*100).toFixed(1)+'%');
+    hudText($('persona-level'),'Lv. '+profile.level);hudText($('persona-damage'),Math.round(stats.damage));hudText($('persona-health'),Math.round(stats.maxHp));hudText($('persona-critical'),(stats.crit*100).toFixed(1)+'%');
     hudText($('inventory-note'),'공격 '+Math.round(stats.damage)+' · 체력 '+stats.maxHp+' · 치명타 '+Math.round(stats.crit*100)+'% · 이동 '+Math.round(stats.speed)+' | '+profile.inventory.length+'/'+game.INVENTORY_LIMIT);
     refreshEquipmentScene();
     const combos=state.synergies;hudText($('equipment-synergy-name'),combos.length?combos.map(c=>c.name).join(' · '):'장비 시너지');hudText($('equipment-synergy-status'),combos.length?'활성':'조합 찾기');$('equipment-synergy-open').setAttribute('data-active',String(combos.length>0));hudText($('equipped-synergies-title'),'장비 시너지 · '+(combos.length?combos.length+'개 활성':'조합을 찾아봐'));
@@ -1392,7 +1392,7 @@ function refreshHomeDashboard(selected){
  $('dashboard-chapter-label').textContent='CHAPTER '+String(selected.id).padStart(2,'0');$('dashboard-chapter-name').textContent=selected.name;$('dashboard-stage-meta').textContent=selected.id+'–'+selectedRunStage+' · '+(selectedRunStage===game.STAGES_PER_CHAPTER?'수문장 공략':'다음 사냥');$('dashboard-stage-name').textContent=game.battlePlan(selectedRunStage).name;$('dashboard-stage-tactic').textContent=game.battlePlan(selectedRunStage).tactic;
  for(let n=1;n<=game.STAGES_PER_CHAPTER;n++){const b=$('dashboard-stage-'+n);$('dashboard-stage-number-'+n).textContent=selectedStage+'–'+n;b.disabled=n>game.stageLimit(profile,selectedStage,selectedDifficulty);b.setAttribute('aria-label',selectedStage+'–'+n+' '+game.battlePlan(n).name);b.setAttribute('aria-pressed',String(n===selectedRunStage));$('dashboard-stage-state-'+n).textContent=completed>=n?'완료':n>game.stageLimit(profile,selectedStage,selectedDifficulty)?'잠김':n===selectedRunStage?'선택':'';}
 }
-function navigateCamp(view){if(!ready||state.phase!=='camp')return;launchRevision++;inventoryOpen=false;codexOpen=false;craftOpen=false;trackOpen=false;campChoices=false;campDrawer='';if(view==='equipment'||view==='bag'){openInventory(view==='equipment'?'equipment':'gear');return;}if(view==='codex'){openCodex();return;}if(view==='craft'){craftOpen=true;craftRenderKey='';}else if(view==='hunt'||view==='growth'||view==='more'){openCampDrawer(view==='hunt'?'map':view,view==='growth'?'nav-more':'nav-'+view);return;}updateHud();if(view==='home')$('start').focus({preventScroll:true});}
+function navigateCamp(view){if(!ready||state.phase!=='camp')return;closeStatsSheet();launchRevision++;inventoryOpen=false;codexOpen=false;craftOpen=false;trackOpen=false;campChoices=false;campDrawer='';if(view==='equipment'||view==='bag'){openInventory(view==='equipment'?'equipment':'gear');return;}if(view==='codex'){openCodex();return;}if(view==='craft'){craftOpen=true;craftRenderKey='';}else if(view==='hunt'||view==='growth'||view==='more'){openCampDrawer(view==='hunt'?'map':view,view==='growth'?'nav-more':'nav-'+view);return;}updateHud();if(view==='home')$('start').focus({preventScroll:true});}
 for(const view of ['hunt','growth','codex'])$('home-nav-'+view).addEventListener('click',()=>navigateCamp(view));
 $('home-settings').addEventListener('click',()=>navigateCamp('more'));
 for(const [id,view] of [['lobby-character','equipment'],['lobby-hero','equipment'],['lobby-bag','bag'],['lobby-equipment','equipment'],['lobby-craft','craft']])$(id).addEventListener('click',()=>navigateCamp(view));
@@ -1406,6 +1406,26 @@ $('dashboard-build-tab').addEventListener('click',()=>{openInventory('build');wi
 $('dashboard-material-tab').addEventListener('click',()=>{navigateCamp('bag');setBagCategory('materials');});$('dashboard-growth-tab').addEventListener('click',()=>navigateCamp('growth'));
 $('dashboard-map-open').addEventListener('click',()=>openCampDrawer('map','dashboard-map-open'));
 $('dashboard-start').addEventListener('click',()=>start());
+// Alpha 0.138 캐릭터 능력치 창 (사용자 요청): 엔진의 playerStats와 성장 트리 보너스를 그대로 읽어 보여 준다(읽기 전용).
+let statsSheetReturn=null;
+const signed=(v,unit='%')=>(v>0?'+':'')+Number(v.toFixed(1))+unit;
+function refreshStatsSheet(){
+ if($('stats-sheet').hidden)return;
+ const stats=game.playerStats(profile),tree=game.treeBonus(profile),max=profile.level===game.MAX_LEVEL,need=game.xpNeeded(profile.level),xp=max?100:Math.floor(clamp(profile.xp/need*100,0,100));
+ hudText($('stat-sheet-level'),'Lv. '+profile.level);hudText($('stat-sheet-xp-text'),max?'최고 레벨':profile.xp+' / '+need+' ('+xp+'%)');$('stat-sheet-xp-fill').style.width=xp+'%';$('stat-sheet-xp').setAttribute('aria-valuenow',String(xp));
+ const rows={damage:Math.round(stats.damage),crit:(stats.crit*100).toFixed(1)+'%','attack-speed':Math.round(stats.attackSpeed*100)+'%',range:Math.round(stats.range),execute:signed(tree.execute*100),finisher:signed(tree.finisher*100),
+  health:Math.round(stats.maxHp),reduction:(stats.reduction*100).toFixed(1)+'%',regeneration:Number(stats.regeneration.toFixed(2))+' / 초',drain:signed(tree.drain*100),guard:signed(-tree.lowHpGuard*100),
+  speed:Math.round(stats.speed),collection:Math.round(stats.collection),stamina:signed(tree.staminaRegen*100),cooldown:signed(-tree.skillCooldown*100),area:signed((game.SKILL_AREA_BOOST*(1+tree.skillArea)-1)*100),'skill-damage':signed(tree.skillDamage*100)};
+ for(const [k,v] of Object.entries(rows))hudText($('stat-sheet-'+k),String(v));
+ hudText($('stat-sheet-note'),'남은 성장 포인트 '+game.growthPoints(profile)+' · 레벨·능력치 단련·성장 트리·장비·세트·인장을 합한 값');
+}
+function openStatsSheet(from){if(!ready||state.phase!=='camp')return;statsSheetReturn=from??null;$('stats-sheet').hidden=false;refreshStatsSheet();$('stats-sheet-close').focus({preventScroll:true});}
+function closeStatsSheet(){if($('stats-sheet').hidden)return;$('stats-sheet').hidden=true;const back=statsSheetReturn&&$(statsSheetReturn);statsSheetReturn=null;back?.focus({preventScroll:true});}
+$('home-profile').addEventListener('click',()=>openStatsSheet('home-profile'));
+$('home-profile').addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();openStatsSheet('home-profile');}});
+$('equipment-stats-open').addEventListener('click',()=>openStatsSheet('equipment-stats-open'));
+$('stats-sheet-close').addEventListener('click',closeStatsSheet);
+$('stats-sheet').addEventListener('click',event=>{if(event.target===$('stats-sheet'))closeStatsSheet();});
 // Read-only scene values; equipment identity and combat effects remain engine-owned.
 function refreshEquipmentScene(){
  if(inventoryPanel!=='equipment')return;

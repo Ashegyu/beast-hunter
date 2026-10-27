@@ -395,11 +395,26 @@ test('equipment and bag are distinct screens and cold camp renders the real hunt
  const scene=html.slice(html.indexOf('<div id="equipment-content"'),html.indexOf('<div id="inventory-content"'));assert.equal([...scene.matchAll(/<canvas /g)].length,1);assert.ok(scene.includes('id="equipment-preview"'));for(const slot of game.EQUIPMENT_KEYS)assert.ok(scene.includes('id="equipped-open-'+slot+'"'));
  assert.equal(html.slice(html.indexOf('<div id="inventory-content"')).includes('id="equipment-preview"'),false);
 });
+test('character stats sheet opens from home and equipment, mirrors playerStats and the combat HUD shows an XP bar',async()=>{
+ const p=bagFixture();p.level=47;p.xp=Math.ceil(game.xpNeeded(47)*.63);p.growthTree=['blade1','blade2'];
+ const ui=await host({saved:p}),before=ui.profile(),stats=game.playerStats(ui.profile());
+ assert.equal(ui.nodes.get('stats-sheet').hidden,true);ui.emit('home-profile','click');assert.equal(ui.nodes.get('stats-sheet').hidden,false);assert.equal(ui.document.activeElement.id,'stats-sheet-close');
+ assert.equal(ui.nodes.get('stat-sheet-level').textContent,'Lv. 47');assert.equal(ui.nodes.get('stat-sheet-xp').attributes['aria-valuenow'],'63');
+ assert.equal(ui.nodes.get('stat-sheet-damage').textContent,String(Math.round(stats.damage)));assert.equal(ui.nodes.get('stat-sheet-health').textContent,String(Math.round(stats.maxHp)));
+ assert.equal(ui.nodes.get('stat-sheet-crit').textContent,(stats.crit*100).toFixed(1)+'%');assert.equal(ui.nodes.get('stat-sheet-attack-speed').textContent,Math.round(stats.attackSpeed*100)+'%');
+ assert.equal(ui.nodes.get('stat-sheet-speed').textContent,String(Math.round(stats.speed)));assert.equal(ui.nodes.get('stat-sheet-execute').textContent,'0%');
+ ui.emit('document','keydown',{key:'Escape'});assert.equal(ui.nodes.get('stats-sheet').hidden,true);assert.equal(ui.document.activeElement.id,'home-profile');
+ ui.emit('nav-equipment','click');ui.emit('equipment-stats-open','click');assert.equal(ui.nodes.get('stats-sheet').hidden,false);ui.emit('stats-sheet-close','click');assert.equal(ui.nodes.get('stats-sheet').hidden,true);
+ assert.deepEqual(ui.profile(),before);
+ ui.emit('nav-home','click');ui.emit('start','click');ui.tick();ui.emit('home-profile','click');assert.equal(ui.nodes.get('stats-sheet').hidden,true);
+ assert.equal(ui.nodes.get('xp-fill').style.width,ui.profile().xp/game.xpNeeded(ui.profile().level)*100+'%');
+ const fit=fs.readFileSync(new URL('layout-fit.css',root),'utf8');assert.match(fit,/\.hunter-hud \.bar\.xp\{display:block!important/);
+});
 test('equipment scene reads real levels, slots and synergies while its camp links preserve ownership',async()=>{
  const p=bagFixture();p.level=47;p.xp=Math.ceil(game.xpNeeded(47)*.63);p.inventory[0].enhancement=12;p.inventory[4].enhancement=11;
  const ui=await host({saved:p}),before=ui.profile();ui.emit('nav-equipment','click');
  assert.equal(ui.nodes.get('equipment-equipped-count').textContent,'착용 3 / 9');assert.equal(ui.nodes.get('equipment-xp-label').textContent,'63%');assert.equal(ui.nodes.get('equipment-xp').attributes['aria-valuenow'],'63');assert.equal(ui.nodes.get('equipped-level-weapon').textContent,'+12');
- assert.match(String(ui.nodes.get('persona-health').textContent),/^\d+(?:\.\d)?$/);assert.ok(Math.abs(Number(ui.nodes.get('persona-health').textContent)-game.playerStats(ui.profile()).maxHp)<=.050001);
+ assert.match(String(ui.nodes.get('persona-health').textContent),/^\d+$/);assert.ok(Math.abs(Number(ui.nodes.get('persona-health').textContent)-game.playerStats(ui.profile()).maxHp)<=.500001);
  assert.equal(ui.nodes.get('equipment-link-state-shatter').textContent,'활성');assert.equal(ui.nodes.get('equipment-link-state-execute').textContent,'미완성');assert.equal(ui.nodes.get('equipment-link-name-shatter').textContent,game.EQUIPMENT_SYNERGIES[0].name);
  ui.emit('equipment-link-shatter','click');assert.equal(ui.nodes.get('inventory-build-view').hidden,false);assert.equal(ui.document.activeElement.id,'equipped-synergies-title');
  for(const view of ['skills','growth','codex']){ui.emit('nav-equipment','click');ui.emit('equipment-menu-'+view,'click');if(view==='codex')assert.equal(ui.nodes.get('codex-content').hidden,false);else assert.equal(ui.nodes.get('game-shell').attributes['data-camp-view'],view);ui.emit('page-back','click');if(view!=='codex')assert.equal(ui.document.activeElement.id,view==='skills'?'lobby-skills':'hub-growth');}
