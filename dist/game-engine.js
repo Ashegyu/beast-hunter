@@ -436,7 +436,8 @@ function stageCleared(s){
   skills.clearSkillStage(s);collectRemainder(s,false);const n=s.run.stage;s.run.rooms++;s.run.seals=s.run.rooms;
   recordStageClear(s,n);
   const gold=18+s.stageId*6+n*3;s.profile.gold+=gold;s.run.gold+=gold;s.profile.cores++;s.run.cores++;
-  const nextHp=Math.min(s.player.maxHp,s.player.hp+s.player.maxHp*.25),healed=nextHp-s.player.hp;
+  // Alpha 0.137.1 (사용자 요청): a cleared stage restores full health (it was +25% of max).
+  const nextHp=s.player.maxHp,healed=nextHp-s.player.hp;
   awardItem(s,STAGE_SLOTS[(n-1)%STAGE_SLOTS.length],n>=4?1:0,{gold,cores:1,healed});
   s.player.hp=nextHp;s.player.stamina=100;
   s.projectiles.length=0;s.spawns.length=0;s.barrels.length=0;s.player.queued=false;s.player.queuedAim=null;s.player.action='idle';s.player.actionTime=0;s.player.moving=false;s.player.swing=null;s.player.combo=0;s.player.comboWindow=0;s.player.attackCooldown=0;
