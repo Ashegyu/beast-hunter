@@ -417,3 +417,8 @@
 #game-shell [id$="-refineCrystal"]>.craft-material-icon{filter:hue-rotate(60deg) saturate(1.4)}
 #game-shell [id$="-refineEssence"]>.craft-material-icon{filter:hue-rotate(150deg) saturate(1.5) brightness(1.1)}
 #game-shell [id$="-promotionStone"]>.craft-material-icon{filter:sepia(1) saturate(3) hue-rotate(5deg) brightness(1.2)}
+/* 0.136.2 결과 창: 보스 처치 때만 나오는 '보스 고대 유물 · 괴수 기술' 줄이 왼쪽 칸(수치·장비·레벨) 아래에 붙어
+   칸 높이를 넘겨 잘렸다. 비어 있는 오른쪽 버튼 칸(폭 200px, 왼쪽 구분선 안쪽 189px = 버튼 폭) 맨 아래로 띄운다. 낮은 화면은 줄마다 한 줄 말줄임. */
+#game-shell#game-shell #overlay[data-panel=result] #result-content{position:relative}
+#game-shell#game-shell #overlay[data-panel=result] #result-boss-ancients{position:absolute;right:0;bottom:0;width:189px!important;box-sizing:border-box;margin:0!important;padding:5px 8px!important;border:1px solid #d2be8d55!important;border-radius:4px!important;background:#0b1216cc!important;font-size:10.5px!important;line-height:1.4!important;color:#e9d6a4!important;white-space:pre-line;overflow:hidden}
+@media(max-height:360px){#game-shell#game-shell #overlay[data-panel=result] #result-boss-ancients{padding:3px 6px!important;font-size:10px!important;line-height:1.3!important;white-space:pre!important;text-overflow:ellipsis}}
