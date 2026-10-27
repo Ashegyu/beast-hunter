@@ -1,0 +1,29 @@
+{
+  "id": "anim-echo",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is the finished key art of this exact effect at its peak: ghostly violet afterimage sword-wave blades streaking RIGHT. Keep its design, palette (silver-white core, deep crimson, rose-magenta, violet and gold sparks), orientation and lavish detail, and animate it. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size releasing an extra flare and flying shards, (5) breaking apart and dissipating into ribbons and petals, (6) faint fading wisps and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. Spectacular high-end quality: layered luminous ribbons, crackling filaments, glowing shards, soft bloom halo. Flat picture-plane shapes, not isometric. No characters, no hands, no sword handles, no ground, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "referenceImages": [
+    {
+      "path": "art/skills0137/keys/echo.png",
+      "sha256": "6b6eb4a9b7f9b1e00f2081a3f1ea096cb76c407f8a7b60ee62cdc338ee34a615"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1536,
+        1024
+      ],
+      "transparent": 0.379,
+      "parts": 8,
+      "seconds": 59,
+      "sha256": "383b3ea19098155b1a7f83b1374ab0ec3d1e7084ced8a292fa033e689fa9228a"
+    }
+  ],
+  "final": {
+    "path": "art/skills0137/anim-echo.png",
+    "sha256": "383b3ea19098155b1a7f83b1374ab0ec3d1e7084ced8a292fa033e689fa9228a"
+  }
+}

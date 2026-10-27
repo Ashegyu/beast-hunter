@@ -1,0 +1,53 @@
+{
+  "id": "anim-bloodblade",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is the finished key art of this exact effect at its peak: a tall vertical blood-red blade aura, a giant upright sword of crimson flame and light. Keep its design, palette (silver-white core, deep crimson, rose-magenta, violet and gold sparks), orientation and lavish detail, and animate it. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) the effect fading in at low brightness, (2) brightening, (3) full brilliance, (4) full brilliance with rotated/shifted details and extra sparks, (5) pulsing slightly dimmer, (6) returning toward frame 1 so the six frames LOOP seamlessly. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. Spectacular high-end quality: layered luminous ribbons, crackling filaments, glowing shards, soft bloom halo. Flat picture-plane shapes, not isometric. No characters, no hands, no sword handles, no ground, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "referenceImages": [
+    {
+      "path": "art/skills0137/keys/bloodblade.png",
+      "sha256": "a77f0781350a825110757908b7a33f0524036e0e0a3feff88a057dcc7c864fcc"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": false,
+      "size": [
+        1536,
+        1024
+      ],
+      "transparent": 0.255,
+      "parts": 6,
+      "reason": "missing real transparency",
+      "seconds": 57,
+      "sha256": "84fa21e857955ecc4c709c838a14b3b45a3a9e2d25b0418887212209aa9494c3"
+    },
+    {
+      "attempt": 2,
+      "ok": false,
+      "size": [
+        1536,
+        1024
+      ],
+      "transparent": 0.21,
+      "parts": 6,
+      "reason": "missing real transparency",
+      "seconds": 53,
+      "sha256": "b9d960c9faadf712f80a7fb8622aa907c8f5d8483cb178e7816c347f09b10401"
+    },
+    {
+      "attempt": 3,
+      "ok": false,
+      "size": [
+        1536,
+        1024
+      ],
+      "transparent": 0.286,
+      "parts": 6,
+      "reason": "missing real transparency",
+      "seconds": 58,
+      "sha256": "ea1439d870b5a15628110ed406dcfaa47bbc07aa2183a29caa147b86e6ee8dd2"
+    }
+  ],
+  "final": null
+}

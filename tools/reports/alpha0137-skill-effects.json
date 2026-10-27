@@ -1,0 +1,219 @@
+{
+  "page": [
+    2040,
+    2040
+  ],
+  "cell": 204,
+  "frames": 6,
+  "webpBytes": 2279152,
+  "sources": [
+    {
+      "id": "crescent",
+      "source": "art/skills0137/anim-crescent.png",
+      "sha256": "cfe1341dd89fc2fa5368615039044add5fcfe0296c55082da46a16a430ae2e4f",
+      "edgeAlpha": [
+        2,
+        2,
+        136,
+        237,
+        235,
+        227
+      ]
+    },
+    {
+      "id": "gale",
+      "source": "art/skills0137/anim-gale.png",
+      "sha256": "8111cb4660fc884889084d6bad524d8937ccb9c420d312677722fb2a50a81c3c",
+      "edgeAlpha": [
+        1,
+        1,
+        2,
+        225,
+        212,
+        7
+      ]
+    },
+    {
+      "id": "dance",
+      "source": "art/skills0137/anim-dance.png",
+      "sha256": "193810a71d7b8d144e39c40552e7a55216969f657d7839ffc19303f7f8470ec4",
+      "edgeAlpha": [
+        8,
+        239,
+        238,
+        244,
+        243,
+        1
+      ]
+    },
+    {
+      "id": "draw",
+      "source": "art/skills0137/anim-draw.png",
+      "sha256": "6a8b20c774b0f85a5817519b5a5fff4008e8f3697276786d242b39af3f55bd71",
+      "edgeAlpha": [
+        2,
+        1,
+        3,
+        252,
+        251,
+        1
+      ]
+    },
+    {
+      "id": "plunge",
+      "source": "art/skills0137/anim-plunge.png",
+      "sha256": "1d9f41bc817562c734a7c13717a97fb390794440f378dcfb2d14332714807f2a",
+      "edgeAlpha": [
+        236,
+        11,
+        23,
+        241,
+        5,
+        2
+      ]
+    },
+    {
+      "id": "parry",
+      "source": "art/skills0137/anim-parry.png",
+      "sha256": "7a3de885bb6305cbf23a096021845e88b4d543e5807a404e6d8a1bfcb3c6b7c1",
+      "edgeAlpha": [
+        238,
+        3,
+        1,
+        245,
+        242,
+        95
+      ]
+    },
+    {
+      "id": "echo",
+      "source": "art/skills0137/anim-echo.png",
+      "sha256": "383b3ea19098155b1a7f83b1374ab0ec3d1e7084ced8a292fa033e689fa9228a",
+      "edgeAlpha": [
+        1,
+        241,
+        238,
+        16,
+        11,
+        2
+      ]
+    },
+    {
+      "id": "triple",
+      "source": "art/skills0137/anim-triple.png",
+      "sha256": "395c59bc18df44249bca07f35f28eebfc2fcb5c071b4caacae187009626617cf",
+      "edgeAlpha": [
+        1,
+        251,
+        250,
+        38,
+        29,
+        1
+      ]
+    },
+    {
+      "id": "seeking",
+      "source": "art/skills0137/anim-seeking.png",
+      "sha256": "638d03ea0c119bfc9838e3eacde4cb4264dd36e252da6d76bea8990874e28575",
+      "edgeAlpha": [
+        1,
+        1,
+        46,
+        242,
+        236,
+        69
+      ]
+    },
+    {
+      "id": "returning",
+      "source": "art/skills0137/anim-returning.png",
+      "sha256": "c183e0ee41469834623d17cfceee402cacf8e79090fcf6b19ce4b4b18d5b64d4",
+      "edgeAlpha": [
+        238,
+        1,
+        1,
+        250,
+        249,
+        233
+      ]
+    },
+    {
+      "id": "field",
+      "source": "art/skills0137/anim-field.png",
+      "sha256": "7f512458a4c30a56050923c21c7cf4f1fc246ef0cfa22262923d446d6f988306",
+      "edgeAlpha": [
+        120,
+        182,
+        191,
+        112,
+        60,
+        42
+      ]
+    },
+    {
+      "id": "breach",
+      "source": "art/skills0137/anim-breach.png",
+      "sha256": "af1423e1e46ad30f9deff3bf1e510a9ed43b3e7ed001718eab34ca89bd2fdbbf",
+      "edgeAlpha": [
+        226,
+        6,
+        15,
+        248,
+        246,
+        2
+      ]
+    },
+    {
+      "id": "gather",
+      "source": "art/skills0137/anim-gather.png",
+      "sha256": "314002828a20b787f38b83a23413dab911e463e1d48b84bb828be813ba55fa82",
+      "edgeAlpha": [
+        248,
+        102,
+        162,
+        248,
+        237,
+        1
+      ]
+    },
+    {
+      "id": "stance",
+      "source": "art/skills0137/anim-stance.png",
+      "sha256": "8ed4ecaa10d017b868815e908eb955f130eb050e24a5523ae64431400227ea75",
+      "edgeAlpha": [
+        168,
+        244,
+        247,
+        243,
+        237,
+        182
+      ]
+    },
+    {
+      "id": "mark",
+      "source": "art/skills0137/anim-mark.png",
+      "sha256": "ad36e2a199b6f6b102d63fc07d7cef60949e59914e3d136b9902eced143d0bb2",
+      "edgeAlpha": [
+        1,
+        4,
+        227,
+        13,
+        4,
+        225
+      ]
+    },
+    {
+      "id": "bloodblade",
+      "source": "art/skills0137/anim-bloodblade.png",
+      "sha256": "ea1439d870b5a15628110ed406dcfaa47bbc07aa2183a29caa147b86e6ee8dd2",
+      "edgeAlpha": [
+        10,
+        68,
+        168,
+        8,
+        44,
+        142
+      ]
+    }
+  ]
+}

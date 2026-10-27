@@ -1,0 +1,178 @@
+{
+ "anim-crescent": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0137/anim-crescent.png",
+  "style": "art/skills0137/keys/crescent.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is the finished key art of this exact effect at its peak: a huge crescent sword slash whose pointed tip points RIGHT. Keep its design, palette (silver-white core, deep crimson, rose-magenta, violet and gold sparks), orientation and lavish detail, and animate it. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size releasing an extra flare and flying shards, (5) breaking apart and dissipating into ribbons and petals, (6) faint fading wisps and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. Spectacular high-end quality: layered luminous ribbons, crackling filaments, glowing shards, soft bloom halo. Flat picture-plane shapes, not isometric. No characters, no hands, no sword handles, no ground, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "crescent"
+  ],
+  "loop": false
+ },
+ "anim-gale": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0137/anim-gale.png",
+  "style": "art/skills0137/keys/gale.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is the finished key art of this exact effect at its peak: three fast parallel wind-blade slashes stacked vertically, pointing RIGHT. Keep its design, palette (silver-white core, deep crimson, rose-magenta, violet and gold sparks), orientation and lavish detail, and animate it. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size releasing an extra flare and flying shards, (5) breaking apart and dissipating into ribbons and petals, (6) faint fading wisps and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. Spectacular high-end quality: layered luminous ribbons, crackling filaments, glowing shards, soft bloom halo. Flat picture-plane shapes, not isometric. No characters, no hands, no sword handles, no ground, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "gale"
+  ],
+  "loop": false
+ },
+ "anim-dance": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0137/anim-dance.png",
+  "style": "art/skills0137/keys/dance.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is the finished key art of this exact effect at its peak: a circular spinning slash vortex of curved blades around a bright core. Keep its design, palette (silver-white core, deep crimson, rose-magenta, violet and gold sparks), orientation and lavish detail, and animate it. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size releasing an extra flare and flying shards, (5) breaking apart and dissipating into ribbons and petals, (6) faint fading wisps and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. Spectacular high-end quality: layered luminous ribbons, crackling filaments, glowing shards, soft bloom halo. Flat picture-plane shapes, not isometric. No characters, no hands, no sword handles, no ground, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "dance"
+  ],
+  "loop": false
+ },
+ "anim-draw": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0137/anim-draw.png",
+  "style": "art/skills0137/keys/draw.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is the finished key art of this exact effect at its peak: a wide iaijutsu fan of light opening to the RIGHT. Keep its design, palette (silver-white core, deep crimson, rose-magenta, violet and gold sparks), orientation and lavish detail, and animate it. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size releasing an extra flare and flying shards, (5) breaking apart and dissipating into ribbons and petals, (6) faint fading wisps and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. Spectacular high-end quality: layered luminous ribbons, crackling filaments, glowing shards, soft bloom halo. Flat picture-plane shapes, not isometric. No characters, no hands, no sword handles, no ground, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "draw"
+  ],
+  "loop": false
+ },
+ "anim-plunge": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0137/anim-plunge.png",
+  "style": "art/skills0137/keys/plunge.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is the finished key art of this exact effect at its peak: a circular landing impact explosion seen from above, shockwave ring with radiating crystal spikes. Keep its design, palette (silver-white core, deep crimson, rose-magenta, violet and gold sparks), orientation and lavish detail, and animate it. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size releasing an extra flare and flying shards, (5) breaking apart and dissipating into ribbons and petals, (6) faint fading wisps and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. Spectacular high-end quality: layered luminous ribbons, crackling filaments, glowing shards, soft bloom halo. Flat picture-plane shapes, not isometric. No characters, no hands, no sword handles, no ground, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "plunge"
+  ],
+  "loop": false
+ },
+ "anim-parry": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0137/anim-parry.png",
+  "style": "art/skills0137/keys/parry.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is the finished key art of this exact effect at its peak: a curved magical parry shield arc bulging to the RIGHT with lattice runes and a deflection flare. Keep its design, palette (silver-white core, deep crimson, rose-magenta, violet and gold sparks), orientation and lavish detail, and animate it. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size releasing an extra flare and flying shards, (5) breaking apart and dissipating into ribbons and petals, (6) faint fading wisps and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. Spectacular high-end quality: layered luminous ribbons, crackling filaments, glowing shards, soft bloom halo. Flat picture-plane shapes, not isometric. No characters, no hands, no sword handles, no ground, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "parry"
+  ],
+  "loop": false
+ },
+ "anim-echo": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0137/anim-echo.png",
+  "style": "art/skills0137/keys/echo.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is the finished key art of this exact effect at its peak: ghostly violet afterimage sword-wave blades streaking RIGHT. Keep its design, palette (silver-white core, deep crimson, rose-magenta, violet and gold sparks), orientation and lavish detail, and animate it. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size releasing an extra flare and flying shards, (5) breaking apart and dissipating into ribbons and petals, (6) faint fading wisps and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. Spectacular high-end quality: layered luminous ribbons, crackling filaments, glowing shards, soft bloom halo. Flat picture-plane shapes, not isometric. No characters, no hands, no sword handles, no ground, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "echo"
+  ],
+  "loop": false
+ },
+ "anim-triple": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0137/anim-triple.png",
+  "style": "art/skills0137/keys/triple.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is the finished key art of this exact effect at its peak: three parallel crimson slash trails pointing RIGHT. Keep its design, palette (silver-white core, deep crimson, rose-magenta, violet and gold sparks), orientation and lavish detail, and animate it. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size releasing an extra flare and flying shards, (5) breaking apart and dissipating into ribbons and petals, (6) faint fading wisps and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. Spectacular high-end quality: layered luminous ribbons, crackling filaments, glowing shards, soft bloom halo. Flat picture-plane shapes, not isometric. No characters, no hands, no sword handles, no ground, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "triple"
+  ],
+  "loop": false
+ },
+ "anim-seeking": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0137/anim-seeking.png",
+  "style": "art/skills0137/keys/seeking.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is the finished key art of this exact effect at its peak: a homing comet with an arrowhead pointing RIGHT and a long burning tail. Keep its design, palette (silver-white core, deep crimson, rose-magenta, violet and gold sparks), orientation and lavish detail, and animate it. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size releasing an extra flare and flying shards, (5) breaking apart and dissipating into ribbons and petals, (6) faint fading wisps and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. Spectacular high-end quality: layered luminous ribbons, crackling filaments, glowing shards, soft bloom halo. Flat picture-plane shapes, not isometric. No characters, no hands, no sword handles, no ground, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "seeking"
+  ],
+  "loop": false
+ },
+ "anim-returning": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0137/anim-returning.png",
+  "style": "art/skills0137/keys/returning.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is the finished key art of this exact effect at its peak: a spinning crescent boomerang blade with a curved returning trail. Keep its design, palette (silver-white core, deep crimson, rose-magenta, violet and gold sparks), orientation and lavish detail, and animate it. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size releasing an extra flare and flying shards, (5) breaking apart and dissipating into ribbons and petals, (6) faint fading wisps and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. Spectacular high-end quality: layered luminous ribbons, crackling filaments, glowing shards, soft bloom halo. Flat picture-plane shapes, not isometric. No characters, no hands, no sword handles, no ground, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "returning"
+  ],
+  "loop": false
+ },
+ "anim-field": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0137/anim-field.png",
+  "style": "art/skills0137/keys/field.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is the finished key art of this exact effect at its peak: an intricate circular blade-field sigil of concentric rune rings, crescents and blade spokes. Keep its design, palette (silver-white core, deep crimson, rose-magenta, violet and gold sparks), orientation and lavish detail, and animate it. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) the effect fading in at low brightness, (2) brightening, (3) full brilliance, (4) full brilliance with rotated/shifted details and extra sparks, (5) pulsing slightly dimmer, (6) returning toward frame 1 so the six frames LOOP seamlessly. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. Spectacular high-end quality: layered luminous ribbons, crackling filaments, glowing shards, soft bloom halo. Flat picture-plane shapes, not isometric. No characters, no hands, no sword handles, no ground, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "field"
+  ],
+  "loop": true
+ },
+ "anim-breach": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0137/anim-breach.png",
+  "style": "art/skills0137/keys/breach.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is the finished key art of this exact effect at its peak: a jagged armor-shattering fracture burst of exploding crimson crystal shards. Keep its design, palette (silver-white core, deep crimson, rose-magenta, violet and gold sparks), orientation and lavish detail, and animate it. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size releasing an extra flare and flying shards, (5) breaking apart and dissipating into ribbons and petals, (6) faint fading wisps and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. Spectacular high-end quality: layered luminous ribbons, crackling filaments, glowing shards, soft bloom halo. Flat picture-plane shapes, not isometric. No characters, no hands, no sword handles, no ground, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "breach"
+  ],
+  "loop": false
+ },
+ "anim-gather": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0137/anim-gather.png",
+  "style": "art/skills0137/keys/gather.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is the finished key art of this exact effect at its peak: an inward-pulling vortex of crimson chains and energy spiraling to a bright center. Keep its design, palette (silver-white core, deep crimson, rose-magenta, violet and gold sparks), orientation and lavish detail, and animate it. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size releasing an extra flare and flying shards, (5) breaking apart and dissipating into ribbons and petals, (6) faint fading wisps and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. Spectacular high-end quality: layered luminous ribbons, crackling filaments, glowing shards, soft bloom halo. Flat picture-plane shapes, not isometric. No characters, no hands, no sword handles, no ground, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "gather"
+  ],
+  "loop": false
+ },
+ "anim-stance": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0137/anim-stance.png",
+  "style": "art/skills0137/keys/stance.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is the finished key art of this exact effect at its peak: an elegant silvery moon stance ring with crescent ornaments and drifting motes. Keep its design, palette (silver-white core, deep crimson, rose-magenta, violet and gold sparks), orientation and lavish detail, and animate it. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) the effect fading in at low brightness, (2) brightening, (3) full brilliance, (4) full brilliance with rotated/shifted details and extra sparks, (5) pulsing slightly dimmer, (6) returning toward frame 1 so the six frames LOOP seamlessly. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. Spectacular high-end quality: layered luminous ribbons, crackling filaments, glowing shards, soft bloom halo. Flat picture-plane shapes, not isometric. No characters, no hands, no sword handles, no ground, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "stance"
+  ],
+  "loop": true
+ },
+ "anim-mark": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0137/anim-mark.png",
+  "style": "art/skills0137/keys/mark.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is the finished key art of this exact effect at its peak: a detailed crescent target sigil, a crosshair of crescents and runes. Keep its design, palette (silver-white core, deep crimson, rose-magenta, violet and gold sparks), orientation and lavish detail, and animate it. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) the effect fading in at low brightness, (2) brightening, (3) full brilliance, (4) full brilliance with rotated/shifted details and extra sparks, (5) pulsing slightly dimmer, (6) returning toward frame 1 so the six frames LOOP seamlessly. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. Spectacular high-end quality: layered luminous ribbons, crackling filaments, glowing shards, soft bloom halo. Flat picture-plane shapes, not isometric. No characters, no hands, no sword handles, no ground, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "mark"
+  ],
+  "loop": true
+ },
+ "anim-bloodblade": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0137/anim-bloodblade.png",
+  "style": "art/skills0137/keys/bloodblade.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is the finished key art of this exact effect at its peak: a tall vertical blood-red blade aura, a giant upright sword of crimson flame and light. Keep its design, palette (silver-white core, deep crimson, rose-magenta, violet and gold sparks), orientation and lavish detail, and animate it. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) the effect fading in at low brightness, (2) brightening, (3) full brilliance, (4) full brilliance with rotated/shifted details and extra sparks, (5) pulsing slightly dimmer, (6) returning toward frame 1 so the six frames LOOP seamlessly. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. Spectacular high-end quality: layered luminous ribbons, crackling filaments, glowing shards, soft bloom halo. Flat picture-plane shapes, not isometric. No characters, no hands, no sword handles, no ground, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "bloodblade"
+  ],
+  "loop": true
+ }
+}

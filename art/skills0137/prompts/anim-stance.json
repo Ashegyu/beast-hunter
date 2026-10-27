@@ -1,0 +1,53 @@
+{
+  "id": "anim-stance",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is the finished key art of this exact effect at its peak: an elegant silvery moon stance ring with crescent ornaments and drifting motes. Keep its design, palette (silver-white core, deep crimson, rose-magenta, violet and gold sparks), orientation and lavish detail, and animate it. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) the effect fading in at low brightness, (2) brightening, (3) full brilliance, (4) full brilliance with rotated/shifted details and extra sparks, (5) pulsing slightly dimmer, (6) returning toward frame 1 so the six frames LOOP seamlessly. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. Spectacular high-end quality: layered luminous ribbons, crackling filaments, glowing shards, soft bloom halo. Flat picture-plane shapes, not isometric. No characters, no hands, no sword handles, no ground, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "referenceImages": [
+    {
+      "path": "art/skills0137/keys/stance.png",
+      "sha256": "bd92626ddaf7fabc542467f7bebc5c66032d325d3fce3c6ba695a485ea1c1d47"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": false,
+      "size": [
+        1536,
+        1024
+      ],
+      "transparent": 0.108,
+      "parts": 6,
+      "reason": "missing real transparency",
+      "seconds": 54,
+      "sha256": "ed019b2a5c6178a1c3c81a9e2a6fce95fabcf300eb291d51c79d6550b2699ad1"
+    },
+    {
+      "attempt": 2,
+      "ok": false,
+      "size": [
+        1536,
+        1024
+      ],
+      "transparent": 0.13,
+      "parts": 6,
+      "reason": "missing real transparency",
+      "seconds": 55,
+      "sha256": "8ed4ecaa10d017b868815e908eb955f130eb050e24a5523ae64431400227ea75"
+    },
+    {
+      "attempt": 3,
+      "ok": false,
+      "size": [
+        1536,
+        1024
+      ],
+      "transparent": 0.128,
+      "parts": 6,
+      "reason": "missing real transparency",
+      "seconds": 55,
+      "sha256": "7a16421ad83682b5023c498e9ad14de08075880840319a7bcd4544a0c73d6565"
+    }
+  ],
+  "final": null
+}

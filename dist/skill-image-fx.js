@@ -4,26 +4,36 @@ const cells=Object.fromEntries(IDS.map((id,i)=>[id,Object.freeze({column:i%4,row
 for(const [id,base,secondary] of [['bloodmoon','dance','crescent'],['eclipse','draw','gale'],['phantoms','echo','field']])cells[id]=Object.freeze({...cells[base],base,secondary});
 export const SKILL_ART_CELLS=Object.freeze(cells);
 // Only the combat atlas is required. Retired cutins never block a hunt.
+// Alpha 0.137: the atlas also holds SKILL_FRAMES sequential frames per effect (`sequences`); `frames` keeps the peak frame
+// for still uses (cut-ins, buffs). Older atlases without sequences still draw their single frame.
+export const SKILL_FRAMES=6,SKILL_PEAK_FRAME=2;
 export function validSkillPresentation(art,images){
- if(!art||!images||art.effects?.columns!==4||art.effects?.rows!==4)return false;
+ if(!art||!images||!Number.isInteger(art.effects?.columns)||!Number.isInteger(art.effects?.rows)||art.effects.columns<4||art.effects.rows<4)return false;
  const descriptors=[art.effects];
  for(const d of descriptors){if(!d||typeof d.image!=='string'||!Number.isInteger(d.width)||!Number.isInteger(d.height)||d.width<=0||d.height<=0||d.width*d.height>4194304)return false;const image=images.get(d.image);if(!image||(image.naturalWidth??image.width)!==d.width||(image.naturalHeight??image.height)!==d.height)return false;}
- const a=art.effects;for(const id of IDS){const f=a.frames?.[id];if(!f||![f.x,f.y,f.w,f.h].every(Number.isInteger)||f.x<0||f.y<0||f.w<=0||f.h<=0||f.x+f.w>a.width||f.y+f.h>a.height)return false;}
+ const a=art.effects,inside=f=>!!f&&[f.x,f.y,f.w,f.h].every(Number.isInteger)&&f.x>=0&&f.y>=0&&f.w>0&&f.h>0&&f.x+f.w<=a.width&&f.y+f.h<=a.height;
+ for(const id of IDS){if(!inside(a.frames?.[id]))return false;if(a.sequences&&!(Array.isArray(a.sequences[id])&&a.sequences[id].length===SKILL_FRAMES&&a.sequences[id].every(inside)))return false;}
  return true;
 }
 const finite=(v,fallback=0)=>Number.isFinite(v)?v:fallback;
 const clamp=v=>Math.max(0,Math.min(1,finite(v)));
 const smooth=v=>{v=clamp(v);return v*v*(3-2*v);};
 function source(options){const atlas=options?.atlas,img=typeof atlas?.image==='object'?atlas.image:options?.image;if(!img)return null;const width=finite(atlas?.width,finite(img.width)),height=finite(atlas?.height,finite(img.height));if(width<=0||height<=0||img.complete===false)return null;return {atlas,img,width,height};}
-function stamp(ctx,src,id,x,y,w,h,angle=0,opacity=1){const cell=SKILL_ART_CELLS[id];if(!cell||w<=0||h<=0)return;const frame=src.atlas?.frames?.[id]||src.atlas?.frames?.[cell.base];const sw=frame?.w||src.width/4,sh=frame?.h||src.height/4,sx=frame?.x??cell.column*sw,sy=frame?.y??cell.row*sh;ctx.save();try{ctx.translate(x,y);ctx.rotate(angle);if(cell.mirrorX===-1)ctx.scale(-1,1);ctx.globalAlpha*=clamp(opacity);ctx.drawImage(src.img,sx,sy,sw,sh,-w/2,-h/2,w,h);}finally{ctx.restore();}}
+// The frame of the effect being drawn (0..SKILL_FRAMES-1), set by drawImageSkillEffect for its call; null = peak frame.
+let sequenceFrame=null;
+const LOOPING=new Set(['field','stance','mark','bloodblade']);
+function frameIndex(id,progress){const n=SKILL_FRAMES;return LOOPING.has(id)?Math.floor(clamp(progress)*n*2)%n:Math.min(n-1,Math.floor(clamp(progress)*n));}
+function stamp(ctx,src,id,x,y,w,h,angle=0,opacity=1){const cell=SKILL_ART_CELLS[id];if(!cell||w<=0||h<=0)return;const seq=src.atlas?.sequences?.[id]||src.atlas?.sequences?.[cell.base],frame=seq&&sequenceFrame!==null?seq[frameIndex(id,sequenceFrame)]:src.atlas?.frames?.[id]||src.atlas?.frames?.[cell.base];const sw=frame?.w||src.width/4,sh=frame?.h||src.height/4,sx=frame?.x??cell.column*sw,sy=frame?.y??cell.row*sh;ctx.save();try{ctx.translate(x,y);ctx.rotate(angle);if(cell.mirrorX===-1)ctx.scale(-1,1);ctx.globalAlpha*=clamp(opacity);ctx.drawImage(src.img,sx,sy,sw,sh,-w/2,-h/2,w,h);}finally{ctx.restore();}}
 export function drawImageSkillEffect(ctx,f,alpha,options={}){
  if(!ctx||!f||!['skillCast','skillImpact','skillMark'].includes(f.type)||!SKILL_ART_CELLS[f.skillId])return false;const src=source(options);if(!src)return false;
- const a=clamp(alpha),p=1-a,hit=f.type!=='skillCast',r=Math.max(8,Math.min(560,finite(f.radius,100))),area=Math.max(1,Math.min(1.4,finite(f.areaScale,1)));
+ const a=clamp(alpha),p=1-a,hit=f.type!=='skillCast',r=Math.max(8,Math.min(800,finite(f.radius,100))),area=Math.max(1,Math.min(2.4,finite(f.areaScale,1)));
  const tracked=f.skillId==='seeking'&&Number.isFinite(f.fromX)&&Number.isFinite(f.fromY)&&Number.isFinite(f.targetX)&&Number.isFinite(f.targetY),dx=tracked?f.targetX-f.fromX:0,dy=tracked?f.targetY-f.fromY:0;
  // Tracking art follows its actual flight segment, even if aim and target differ.
  const angle=tracked&&Math.hypot(dx,dy)>.001?Math.atan2(dy,dx):Math.atan2(finite(f.n?.y),finite(f.n?.x,1));
  let x=finite(f.x),y=finite(f.y);if(tracked&&!hit){x=f.fromX+dx*p;y=f.fromY+dy*p;}
- ctx.save();try{ctx.translate(x,y);ctx.rotate(angle);ctx.globalCompositeOperation='lighter';ctx.globalAlpha=hit?a:.65+.25*Math.sin(p*Math.PI);const q=hit?.7+.3*smooth(p):.35+.25*smooth(p),size=r*2*q;
+ // Animated atlases (0.137) dissipate inside their own frames, so a hit keeps more of its brightness while it plays.
+ ctx.save();try{ctx.translate(x,y);ctx.rotate(angle);ctx.globalCompositeOperation='lighter';ctx.globalAlpha=hit?(src.atlas?.sequences?Math.min(1,a*1.6):a):.65+.25*Math.sin(p*Math.PI);const q=hit?.7+.3*smooth(p):.35+.25*smooth(p),size=r*2*q;
+ sequenceFrame=p;
  switch(f.skillId){
  case 'crescent':stamp(ctx,src,'crescent',hit?r/2:24,0,hit?r:48,(hit?118:38)*area,-.08,1);break;
  case 'gale':for(let i=0;i<3;i++)stamp(ctx,src,'gale',hit?r*.5:18+i*6,(i-1)*12*area,hit?r:40,(hit?90:18)*area,0,1-i*.2);break;
@@ -51,7 +61,7 @@ export function drawImageSkillEffect(ctx,f,alpha,options={}){
  case 'eclipse':stamp(ctx,src,'gale',hit?r/2:24,0,hit?r:48,(hit?55:30)*area,0,.65);stamp(ctx,src,'draw',hit?r/2:24,0,hit?r:48,(hit?35:24)*area,0,1);break;
  case 'phantoms':for(let i=0;i<3;i++)stamp(ctx,src,'echo',(i-1)*r*.35,0,size*.65,size*.65,(i-1)*.15,1-Math.abs(i-1)*.4);stamp(ctx,src,'field',0,0,size,size*.6,-p,.35);break;
  }
- }finally{ctx.restore();}return true;
+ }finally{sequenceFrame=null;ctx.restore();}return true;
 }
 const ULT_NAMES=Object.freeze({bloodmoon:'적월난무',eclipse:'일섬 · 월식',phantoms:'월영군무'});
 function portraitSource(options,id){let p=options?.portraits?.[id];if(!p&&options?.images instanceof Map)p=options.images.get(id)||options.images.get(`cutin-${id}`);if(!p)return null;const image=p.image||p,width=finite(p.width,finite(image.width)),height=finite(p.height,finite(image.height));return width>0&&height>0&&image.complete!==false?{image,width,height,kind:p.kind}:null;}

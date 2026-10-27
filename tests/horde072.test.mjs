@@ -27,11 +27,12 @@ test('same real 32-monster pack survives an untrained level one wave but a train
 });
 test('level area thresholds are capped, leave single targets alone and snapshot width for the whole cast',()=>{
  for(const [level,scale]of [[1,1],[9,1],[10,1.1],[19,1.1],[20,1.2],[39,1.3],[40,1.4],[50,1.4]]){
-  assert.equal(g.skillAreaScale({level},'crescent'),scale);assert.equal(g.skillAreaScale({level},'seeking'),1);assert.equal(g.skillReach({level},'crescent'),300);assert.equal(g.skillReach({level},'dance'),175*scale);
+  // Alpha 0.137: every area skill also has the SKILL_AREA_BOOST base.
+  const area=g.SKILL_AREA_BOOST*scale;assert.ok(Math.abs(g.skillAreaScale({level},'crescent')-area)<1e-9);assert.equal(g.skillAreaScale({level},'seeking'),1);assert.equal(g.skillReach({level},'crescent'),300);assert.ok(Math.abs(g.skillReach({level},'dance')-175*area)<1e-9);
  }
- const s=arena(9),[e]=pack(s,1,70);e.hp=e.maxHp=1000;assert.ok(g.useSkill(s,'crescent',{x:1,y:0}));const root=s.skillRuntime.jobs[0].root;assert.equal(root.width,60);
- s.profile.level=40;step(s,.3);assert.equal(e.hp,1000);assert.equal(root.width,60);s.player.action='idle';s.skillRuntime.cooldowns.crescent=0;
- assert.ok(g.useSkill(s,'crescent',{x:1,y:0}));step(s,.2);assert.ok(e.hp<1000);assert.ok(s.effects.some(f=>f.type==='skillImpact'&&f.skillId==='crescent'&&f.areaScale===1.4));
+ const s=arena(9),[e]=pack(s,1,80);e.hp=e.maxHp=1000;assert.ok(g.useSkill(s,"crescent",{x:1,y:0}));const root=s.skillRuntime.jobs[0].root,width=root.width;assert.ok(Math.abs(width-60*g.SKILL_AREA_BOOST)<1e-9);
+ s.profile.level=40;step(s,.3);assert.equal(e.hp,1000);assert.equal(root.width,width);s.player.action='idle';s.skillRuntime.cooldowns.crescent=0;
+ assert.ok(g.useSkill(s,'crescent',{x:1,y:0}));step(s,.2);assert.ok(e.hp<1000);assert.ok(s.effects.some(f=>f.type==='skillImpact'&&f.skillId==='crescent'&&Math.abs(f.areaScale-1.4*g.SKILL_AREA_BOOST)<1e-9));
 });
 test('bulk drops remain reserved exactly once and higher-quality receipts last four seconds',()=>{
  // Stage 3 is a normal stage; strict stages (4, 8, 9, 10) forfeit kills and loot on retreat by design.

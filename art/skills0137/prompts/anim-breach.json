@@ -1,0 +1,42 @@
+{
+  "id": "anim-breach",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is the finished key art of this exact effect at its peak: a jagged armor-shattering fracture burst of exploding crimson crystal shards. Keep its design, palette (silver-white core, deep crimson, rose-magenta, violet and gold sparks), orientation and lavish detail, and animate it. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size releasing an extra flare and flying shards, (5) breaking apart and dissipating into ribbons and petals, (6) faint fading wisps and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. Spectacular high-end quality: layered luminous ribbons, crackling filaments, glowing shards, soft bloom halo. Flat picture-plane shapes, not isometric. No characters, no hands, no sword handles, no ground, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "referenceImages": [
+    {
+      "path": "art/skills0137/keys/breach.png",
+      "sha256": "88ef3857274bc016e109924c1cfbcb5a32640a1ba66843c4afb14df2765cf422"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": false,
+      "size": [
+        1536,
+        1024
+      ],
+      "transparent": 0.289,
+      "parts": 6,
+      "reason": "missing real transparency",
+      "seconds": 45,
+      "sha256": "32cad8b2e4cb2378790db5d3d02ab23946d923a364607878624328adc3657a3c"
+    },
+    {
+      "attempt": 2,
+      "ok": true,
+      "size": [
+        1536,
+        1024
+      ],
+      "transparent": 0.318,
+      "parts": 6,
+      "seconds": 63,
+      "sha256": "af1423e1e46ad30f9deff3bf1e510a9ed43b3e7ed001718eab34ca89bd2fdbbf"
+    }
+  ],
+  "final": {
+    "path": "art/skills0137/anim-breach.png",
+    "sha256": "af1423e1e46ad30f9deff3bf1e510a9ed43b3e7ed001718eab34ca89bd2fdbbf"
+  }
+}

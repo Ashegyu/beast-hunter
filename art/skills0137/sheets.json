@@ -1,0 +1,54 @@
+{
+ "fx-1": {
+  "kind": "sprite",
+  "minParts": 4,
+  "out": "art/skills0137/fx-1.png",
+  "style": "dist/assets/skill-effects-v051.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production game VFX sprite sheet for a dark fantasy 2D action RPG (skill effects of Lilian, a silver-haired crimson swordswoman). Image1 is the game's CURRENT skill effect atlas: keep the same identity, palette and each effect's basic silhouette, but make every effect FAR MORE SPECTACULAR and lavish: multi-layered luminous ribbons, a blinding silver-white core, deep crimson and rose-magenta body, violet and gold accent sparks, crackling energy filaments, glowing petal and crystal shards, motion streaks, soft outer bloom halo, high material richness, AAA anime gacha game quality. Create ONE transparent RGBA square image (2048x2048 if possible) split into an invisible 2 columns x 2 rows grid with exactly FOUR independent effects, one centered in each quadrant with about 8% transparent padding; nothing may cross into another quadrant or touch the canvas edge. Shapes are drawn in the flat picture plane (top-down readable), not isometric. No characters, no hands, no sword handles, no ground, no background, no text, no frames, no checkerboard; genuine alpha transparency around every effect. Effects: (1) top-left: a huge rightward crescent sword slash, the pointed tip pointing RIGHT, trailing layered crimson ribbons and petals; (2) top-right: three fast parallel rightward wind blade slashes stacked vertically, pointing RIGHT, with streaking air ribbons; (3) bottom-left: a circular spinning slash vortex, several curved blades whirling around a bright core; (4) bottom-right: a wide rightward iaijutsu fan of light, a flat blade arc opening to the RIGHT with a brilliant edge.",
+  "items": [
+   "crescent",
+   "gale",
+   "dance",
+   "draw"
+  ]
+ },
+ "fx-2": {
+  "kind": "sprite",
+  "minParts": 4,
+  "out": "art/skills0137/fx-2.png",
+  "style": "dist/assets/skill-effects-v051.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production game VFX sprite sheet for a dark fantasy 2D action RPG (skill effects of Lilian, a silver-haired crimson swordswoman). Image1 is the game's CURRENT skill effect atlas: keep the same identity, palette and each effect's basic silhouette, but make every effect FAR MORE SPECTACULAR and lavish: multi-layered luminous ribbons, a blinding silver-white core, deep crimson and rose-magenta body, violet and gold accent sparks, crackling energy filaments, glowing petal and crystal shards, motion streaks, soft outer bloom halo, high material richness, AAA anime gacha game quality. Create ONE transparent RGBA square image (2048x2048 if possible) split into an invisible 2 columns x 2 rows grid with exactly FOUR independent effects, one centered in each quadrant with about 8% transparent padding; nothing may cross into another quadrant or touch the canvas edge. Shapes are drawn in the flat picture plane (top-down readable), not isometric. No characters, no hands, no sword handles, no ground, no background, no text, no frames, no checkerboard; genuine alpha transparency around every effect. Effects: (1) top-left: a circular landing impact explosion seen from above, shockwave ring with radiating crystal spikes; (2) top-right: a curved magical parry shield arc bulging to the RIGHT with lattice runes and a bright deflection flare; (3) bottom-left: three ghostly violet afterimage sword-wave blades streaking RIGHT, translucent spirit wisps; (4) bottom-right: three parallel crimson slash trails pointing RIGHT, each a sharp luminous streak.",
+  "items": [
+   "plunge",
+   "parry",
+   "echo",
+   "triple"
+  ]
+ },
+ "fx-3": {
+  "kind": "sprite",
+  "minParts": 4,
+  "out": "art/skills0137/fx-3.png",
+  "style": "dist/assets/skill-effects-v051.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production game VFX sprite sheet for a dark fantasy 2D action RPG (skill effects of Lilian, a silver-haired crimson swordswoman). Image1 is the game's CURRENT skill effect atlas: keep the same identity, palette and each effect's basic silhouette, but make every effect FAR MORE SPECTACULAR and lavish: multi-layered luminous ribbons, a blinding silver-white core, deep crimson and rose-magenta body, violet and gold accent sparks, crackling energy filaments, glowing petal and crystal shards, motion streaks, soft outer bloom halo, high material richness, AAA anime gacha game quality. Create ONE transparent RGBA square image (2048x2048 if possible) split into an invisible 2 columns x 2 rows grid with exactly FOUR independent effects, one centered in each quadrant with about 8% transparent padding; nothing may cross into another quadrant or touch the canvas edge. Shapes are drawn in the flat picture plane (top-down readable), not isometric. No characters, no hands, no sword handles, no ground, no background, no text, no frames, no checkerboard; genuine alpha transparency around every effect. Effects: (1) top-left: a homing comet with an arrowhead pointing RIGHT and a long burning crimson tail; (2) top-right: a spinning crescent boomerang blade with a curved returning motion trail; (3) bottom-left: an intricate circular blade field sigil, concentric rune rings with crescent moons and blade spokes; (4) bottom-right: a jagged armor-shattering fracture burst, exploding shards of broken crimson crystal and sparks.",
+  "items": [
+   "seeking",
+   "returning",
+   "field",
+   "breach"
+  ]
+ },
+ "fx-4": {
+  "kind": "sprite",
+  "minParts": 4,
+  "out": "art/skills0137/fx-4.png",
+  "style": "dist/assets/skill-effects-v051.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production game VFX sprite sheet for a dark fantasy 2D action RPG (skill effects of Lilian, a silver-haired crimson swordswoman). Image1 is the game's CURRENT skill effect atlas: keep the same identity, palette and each effect's basic silhouette, but make every effect FAR MORE SPECTACULAR and lavish: multi-layered luminous ribbons, a blinding silver-white core, deep crimson and rose-magenta body, violet and gold accent sparks, crackling energy filaments, glowing petal and crystal shards, motion streaks, soft outer bloom halo, high material richness, AAA anime gacha game quality. Create ONE transparent RGBA square image (2048x2048 if possible) split into an invisible 2 columns x 2 rows grid with exactly FOUR independent effects, one centered in each quadrant with about 8% transparent padding; nothing may cross into another quadrant or touch the canvas edge. Shapes are drawn in the flat picture plane (top-down readable), not isometric. No characters, no hands, no sword handles, no ground, no background, no text, no frames, no checkerboard; genuine alpha transparency around every effect. Effects: (1) top-left: an inward pulling vortex of crimson chains and energy spiraling toward a bright center; (2) top-right: an elegant silvery moon stance ring, a thin glowing ring with crescent ornaments and drifting motes; (3) bottom-left: a detailed crescent target sigil, a crosshair of crescents and runes marking a target; (4) bottom-right: a tall vertical blood-red blade aura, a giant upright sword of crimson flame and light.",
+  "items": [
+   "gather",
+   "stance",
+   "mark",
+   "bloodblade"
+  ]
+ }
+}

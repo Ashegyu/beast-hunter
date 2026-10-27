@@ -1,0 +1,29 @@
+{
+  "id": "anim-parry",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is the finished key art of this exact effect at its peak: a curved magical parry shield arc bulging to the RIGHT with lattice runes and a deflection flare. Keep its design, palette (silver-white core, deep crimson, rose-magenta, violet and gold sparks), orientation and lavish detail, and animate it. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size releasing an extra flare and flying shards, (5) breaking apart and dissipating into ribbons and petals, (6) faint fading wisps and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. Spectacular high-end quality: layered luminous ribbons, crackling filaments, glowing shards, soft bloom halo. Flat picture-plane shapes, not isometric. No characters, no hands, no sword handles, no ground, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "referenceImages": [
+    {
+      "path": "art/skills0137/keys/parry.png",
+      "sha256": "28e4a234b650b71f2a0da13378cc405ad863101efd72c5dc19c7214c9068ce6a"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1536,
+        1024
+      ],
+      "transparent": 0.464,
+      "parts": 7,
+      "seconds": 59,
+      "sha256": "7a3de885bb6305cbf23a096021845e88b4d543e5807a404e6d8a1bfcb3c6b7c1"
+    }
+  ],
+  "final": {
+    "path": "art/skills0137/anim-parry.png",
+    "sha256": "7a3de885bb6305cbf23a096021845e88b4d543e5807a404e6d8a1bfcb3c6b7c1"
+  }
+}

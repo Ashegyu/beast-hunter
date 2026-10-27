@@ -1,0 +1,42 @@
+{
+  "id": "fx-1",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production game VFX sprite sheet for a dark fantasy 2D action RPG (skill effects of Lilian, a silver-haired crimson swordswoman). Image1 is the game's CURRENT skill effect atlas: keep the same identity, palette and each effect's basic silhouette, but make every effect FAR MORE SPECTACULAR and lavish: multi-layered luminous ribbons, a blinding silver-white core, deep crimson and rose-magenta body, violet and gold accent sparks, crackling energy filaments, glowing petal and crystal shards, motion streaks, soft outer bloom halo, high material richness, AAA anime gacha game quality. Create ONE transparent RGBA square image (2048x2048 if possible) split into an invisible 2 columns x 2 rows grid with exactly FOUR independent effects, one centered in each quadrant with about 8% transparent padding; nothing may cross into another quadrant or touch the canvas edge. Shapes are drawn in the flat picture plane (top-down readable), not isometric. No characters, no hands, no sword handles, no ground, no background, no text, no frames, no checkerboard; genuine alpha transparency around every effect. Effects: (1) top-left: a huge rightward crescent sword slash, the pointed tip pointing RIGHT, trailing layered crimson ribbons and petals; (2) top-right: three fast parallel rightward wind blade slashes stacked vertically, pointing RIGHT, with streaking air ribbons; (3) bottom-left: a circular spinning slash vortex, several curved blades whirling around a bright core; (4) bottom-right: a wide rightward iaijutsu fan of light, a flat blade arc opening to the RIGHT with a brilliant edge.",
+  "referenceImages": [
+    {
+      "path": "dist/assets/skill-effects-v051.webp",
+      "sha256": "0e37f149cb758a608c7eeb0cf39d9847e7fb0e14e3083c4212ced29e3d9648d8"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": false,
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": 0.28,
+      "parts": 6,
+      "reason": "missing real transparency",
+      "seconds": 79,
+      "sha256": "935857e8d17bd2e10f5c8254efcba689a84fd3cddecc4dc882f4b078e5064ccc"
+    },
+    {
+      "attempt": 2,
+      "ok": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": 0.345,
+      "parts": 6,
+      "seconds": 71,
+      "sha256": "23764ad604fbc8f5128df16a9afc25137a89aff553ac880cb0f25d1328d43590"
+    }
+  ],
+  "final": {
+    "path": "art/skills0137/fx-1.png",
+    "sha256": "23764ad604fbc8f5128df16a9afc25137a89aff553ac880cb0f25d1328d43590"
+  }
+}

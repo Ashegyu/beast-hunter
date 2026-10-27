@@ -1,0 +1,29 @@
+{
+  "id": "fx-4",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production game VFX sprite sheet for a dark fantasy 2D action RPG (skill effects of Lilian, a silver-haired crimson swordswoman). Image1 is the game's CURRENT skill effect atlas: keep the same identity, palette and each effect's basic silhouette, but make every effect FAR MORE SPECTACULAR and lavish: multi-layered luminous ribbons, a blinding silver-white core, deep crimson and rose-magenta body, violet and gold accent sparks, crackling energy filaments, glowing petal and crystal shards, motion streaks, soft outer bloom halo, high material richness, AAA anime gacha game quality. Create ONE transparent RGBA square image (2048x2048 if possible) split into an invisible 2 columns x 2 rows grid with exactly FOUR independent effects, one centered in each quadrant with about 8% transparent padding; nothing may cross into another quadrant or touch the canvas edge. Shapes are drawn in the flat picture plane (top-down readable), not isometric. No characters, no hands, no sword handles, no ground, no background, no text, no frames, no checkerboard; genuine alpha transparency around every effect. Effects: (1) top-left: an inward pulling vortex of crimson chains and energy spiraling toward a bright center; (2) top-right: an elegant silvery moon stance ring, a thin glowing ring with crescent ornaments and drifting motes; (3) bottom-left: a detailed crescent target sigil, a crosshair of crescents and runes marking a target; (4) bottom-right: a tall vertical blood-red blade aura, a giant upright sword of crimson flame and light.",
+  "referenceImages": [
+    {
+      "path": "dist/assets/skill-effects-v051.webp",
+      "sha256": "0e37f149cb758a608c7eeb0cf39d9847e7fb0e14e3083c4212ced29e3d9648d8"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": 0.3,
+      "parts": 4,
+      "seconds": 72,
+      "sha256": "56a05b10e81618ec3b8b997ed06f3dea7ee84330d8a0bdab6ddd7f789ea4e51c"
+    }
+  ],
+  "final": {
+    "path": "art/skills0137/fx-4.png",
+    "sha256": "56a05b10e81618ec3b8b997ed06f3dea7ee84330d8a0bdab6ddd7f789ea4e51c"
+  }
+}

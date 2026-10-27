@@ -1,0 +1,29 @@
+{
+  "id": "anim-draw",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is the finished key art of this exact effect at its peak: a wide iaijutsu fan of light opening to the RIGHT. Keep its design, palette (silver-white core, deep crimson, rose-magenta, violet and gold sparks), orientation and lavish detail, and animate it. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size releasing an extra flare and flying shards, (5) breaking apart and dissipating into ribbons and petals, (6) faint fading wisps and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. Spectacular high-end quality: layered luminous ribbons, crackling filaments, glowing shards, soft bloom halo. Flat picture-plane shapes, not isometric. No characters, no hands, no sword handles, no ground, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "referenceImages": [
+    {
+      "path": "art/skills0137/keys/draw.png",
+      "sha256": "787aaa5dc4fb28970fe15e98fbbcc2fbcfdba496a0dcdd2fc3e2f860fd233071"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1536,
+        1024
+      ],
+      "transparent": 0.344,
+      "parts": 6,
+      "seconds": 59,
+      "sha256": "6a8b20c774b0f85a5817519b5a5fff4008e8f3697276786d242b39af3f55bd71"
+    }
+  ],
+  "final": {
+    "path": "art/skills0137/anim-draw.png",
+    "sha256": "6a8b20c774b0f85a5817519b5a5fff4008e8f3697276786d242b39af3f55bd71"
+  }
+}

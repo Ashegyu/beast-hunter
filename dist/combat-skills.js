@@ -58,7 +58,9 @@ const RADIAL_REACH=new Set(['circle','cone','echo','gather','ultimateArea']);
 // Levels widen area attacks, while targeting distance and dash travel stay fixed.
 // The 괴수 기술 grade (0.125) and the chosen 갈래 (0.126) widen areas on top of the level bonus.
 const NO_BRANCH=Object.freeze({});
-export function skillAreaScale(p,id){const d=SKILL_BY_ID[id];return AREA_SHAPES.has(d?.shape)?(1+Math.min(4,Math.floor(int(p.level,1,50)/10))*.1)*(d.kind==='beast'?BEAST_GRADES[beastGrade(p,id)]?.area??1:1)*(branchMods(p,id).area??1)*(d.kind==='gear'?1:1+treeBonus(p).skillArea):1;}
+// Alpha 0.137 (사용자 요청 '범위도 좀 늘리고'): every area skill reaches SKILL_AREA_BOOST further, on top of level/grade/branch/tree.
+export const SKILL_AREA_BOOST=1.2;
+export function skillAreaScale(p,id){const d=SKILL_BY_ID[id];return AREA_SHAPES.has(d?.shape)?SKILL_AREA_BOOST*(1+Math.min(4,Math.floor(int(p.level,1,50)/10))*.1)*(d.kind==='beast'?BEAST_GRADES[beastGrade(p,id)]?.area??1:1)*(branchMods(p,id).area??1)*(d.kind==='gear'?1:1+treeBonus(p).skillArea):1;}
 export function skillReach(p,id){const d=SKILL_BY_ID[id];return d?d.range*(RADIAL_REACH.has(d.shape)?skillAreaScale(p,id):1):0;}
 // Alpha 0.126 스킬 갈래: `branchOwned[id]` is a bit mask of bought branches, `branchPick[id]` the one in use.
 export const ownsBranch=(p,id,i)=>!!((p?.skillBook?.branchOwned?.[id]??0)&(1<<i));
