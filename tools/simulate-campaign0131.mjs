@@ -7,7 +7,7 @@ const SEED=Number(process.argv[3]||0),LAST=Number(process.argv[4]||30);
 function prepare(s){const p=s.profile;
  for(const pos of g.EQUIPMENT_KEYS){const slot=g.itemSlotForPosition(pos);const used=Object.entries(p.equipment).filter(([k])=>k!==pos).map(([,v])=>v);const rows=p.inventory.filter(i=>i.slot===slot&&!used.includes(i.id)).sort((a,b)=>loot.itemPower(b)-loot.itemPower(a));if(rows[0]&&p.equipment[pos]!==rows[0].id&&loot.itemPower(rows[0])>(p.inventory.find(i=>i.id===p.equipment[pos])?loot.itemPower(p.inventory.find(i=>i.id===p.equipment[pos])):-1))g.equipItem(s,rows[0].id,pos);}
  for(let round=0;round<400;round++){let any=false;for(const id of Object.values(p.equipment)){if(!id)continue;const r=g.enhanceItem(s,id);if(r.ok)any=true;else if(g.promoteItem(s,id).ok)any=true;}if(!any)break;}
- for(const id of (process.env.TREE??'blade1,blade2,ward1,ward2,blade3,blade4,blade5,ward3,ward4,ward5').split(','))g.learnGrowthNode(s,id);
+ {const tree=process.env.TREE?process.env.TREE.split(','):g.TREE_ORDER.filter(id=>/^(blade|ward)-/.test(id));for(let any=true;any;){any=false;for(const id of tree)if(!s.profile.growthTree.includes(id)&&g.learnGrowthNode(s,id))any=true;}}
  {let any=true;while(any){any=false;for(const id of (process.env.TRAIN??'power,vitality,guard,tempo,precision').split(','))if(g.trainStat(s,id))any=true;}}
  g.applySkillExample(s,1);
  if(g.skillRank(p,'bloodmoon')&&!p.skillBook.loadout.ultimate[0])g.equipSkill(s,'bloodmoon',0);

@@ -11,9 +11,9 @@ function gear(id,slot='weapon'){return{id,slot,rarity:1,tier:1,name:'시험 장�
 test('version one migrates without losing progress; unsafe equipment and malformed saves are rejected',()=>{
   for(const raw of [null,'broken','{}',{version:9},[]])assert.deepEqual(g.restoreProfile(raw,1000),g.createProfile(1000));
   const old=g.createProfile(1000);old.version=1;old.gold=80;old.level=7;old.skills={edge:2};delete old.training;old.clearedStage=1;old.unlockedStage=2;delete old.inventory;delete old.equipment;
-  const migrated=g.restoreProfile(old,1000);assert.equal(migrated.version,16);assert.equal(migrated.gold,80);assert.equal(migrated.level,7);assert.deepEqual(migrated.training,g.emptyTraining());assert.equal(g.growthPoints(migrated),6);assert.equal(migrated.unlockedStage,2);assert.deepEqual(migrated.inventory,[]);
+  const migrated=g.restoreProfile(old,1000);assert.equal(migrated.version,16);assert.equal(migrated.gold,80);assert.equal(migrated.level,7);assert.deepEqual(migrated.training,g.emptyTraining());assert.equal(g.trainingPoints(migrated),6);assert.equal(migrated.unlockedStage,2);assert.deepEqual(migrated.inventory,[]);
   const p=g.restoreProfile({version:2,gold:Infinity,level:999,skills:{edge:99},forge:{blade:99},unlockedStage:3,lastSeenAt:1e9,inventory:[gear(5),gear(5),{...gear(9),slot:'bogus'}],equipment:{armor:5,weapon:5}},1000);
-  assert.equal(p.gold,g.legacyForgeRefund({blade:8}).gold);assert.equal(p.level,g.MAX_LEVEL);assert.deepEqual(p.training,g.emptyTraining());assert.equal(g.growthPoints(p),g.MAX_LEVEL-1);assert.equal(p.unlockedStage,1);assert.equal(p.lastSeenAt,1000);assert.equal(p.inventory.length,1);assert.equal(p.equipment.weapon,5);assert.equal(p.equipment.armor,null);assert.equal(p.nextItemId,6);
+  assert.equal(p.gold,g.legacyForgeRefund({blade:8}).gold);assert.equal(p.level,g.MAX_LEVEL);assert.deepEqual(p.training,g.emptyTraining());assert.equal(g.trainingPoints(p),g.MAX_LEVEL-1);assert.equal(p.unlockedStage,1);assert.equal(p.lastSeenAt,1000);assert.equal(p.inventory.length,1);assert.equal(p.equipment.weapon,5);assert.equal(p.equipment.armor,null);assert.equal(p.nextItemId,6);
 });
 test('offline scouting requires a cleared boss, caps four hours, and claims once',()=>{
   const now=1e6,p=g.createProfile(now);assert.deepEqual(g.collectOffline(p,now+86400000),{minutes:0,gold:0,xp:0});p.clearedStage=1;p.lastSeenAt=now;
@@ -44,8 +44,8 @@ test('monster telegraphs resolve their marked ellipse and hurt causes a flinch',
 });
 test('level ups continue combat; permanent skill allocation is an explicit camp activity',()=>{
   const s=hunt();s.enemies=[];s.pickups=[{id:99,x:s.player.x,y:s.player.y,gold:4,xp:g.xpNeeded(1)+5,cores:1}];ticks(s,.05);
-  assert.equal(s.profile.level,2);assert.equal(s.profile.xp,5);assert.equal(g.growthPoints(s.profile),1);assert.equal(s.phase,'playing');assert.equal(s.pickups.length,0);assert.equal(s.profile.gold,4);
-  const time=s.run.time;ticks(s,.2);assert.ok(s.run.time>time);assert.equal(g.trainStat(s,'power'),false);g.returnToCamp(s);assert.equal(g.trainStat(s,'power'),true);assert.equal(s.profile.training.power,1);assert.equal(g.growthPoints(s.profile),0);assert.equal(g.trainStat(s,'vitality'),false);
+  assert.equal(s.profile.level,2);assert.equal(s.profile.xp,5);assert.equal(g.trainingPoints(s.profile),1);assert.equal(s.phase,'playing');assert.equal(s.pickups.length,0);assert.equal(s.profile.gold,4);
+  const time=s.run.time;ticks(s,.2);assert.ok(s.run.time>time);assert.equal(g.trainStat(s,'power'),false);g.returnToCamp(s);assert.equal(g.trainStat(s,'power'),true);assert.equal(s.profile.training.power,1);assert.equal(g.trainingPoints(s.profile),0);assert.equal(g.trainStat(s,'vitality'),false);
 });
 test('no manual interaction is required by random waves',()=>{const s=g.createGame();g.launch(s);assert.equal(g.interactionTarget(s),null);assert.equal(g.interact(s),false);assert.equal(s.run.items,0);});
 test('equipment changes combat stats, saves identity and only unequipped items can be salvaged',()=>{
@@ -57,7 +57,7 @@ test('equipment changes combat stats, saves identity and only unequipped items c
 test('old forge levels are refunded once and old 숙련 points come back as 성장 포인트 (Alpha 0.131)',()=>{
   const old=JSON.parse(g.encodeProfile(g.createProfile(1000),1000));delete old.training;delete old.growthTree;old.level=21;old.gold=100;old.cores=3;old.forge={blade:2,armor:1,core:3};old.skills={edge:4,haste:3};old.skillPoints=2;
   const p=g.restoreProfile(old,1000),refund=g.legacyForgeRefund(old.forge);assert.equal(refund.gold,Math.round(30*1)+Math.round(30*Math.pow(2,1.5))+25+60+Math.round(60*Math.pow(2,1.5))+Math.round(60*Math.pow(3,1.5)));assert.equal(refund.cores,1+1+2);
-  assert.equal(p.gold,100+refund.gold);assert.equal(p.cores,3+refund.cores);assert.equal(g.growthPoints(p),20);assert.equal(p.forge,undefined);assert.equal(p.skills,undefined);
+  assert.equal(p.gold,100+refund.gold);assert.equal(p.cores,3+refund.cores);assert.equal(g.trainingPoints(p),20);assert.equal(g.treePoints(p),10);assert.equal(p.forge,undefined);assert.equal(p.skills,undefined);
   // Saved again, the refund never repeats.
   const again=g.restoreProfile(JSON.parse(g.encodeProfile(p,1000)),1000);assert.equal(again.gold,p.gold);assert.equal(again.cores,p.cores);
 });

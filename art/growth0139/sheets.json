@@ -1,0 +1,114 @@
+{
+ "node-1": {
+  "kind": "sprite",
+  "minParts": 7,
+  "out": "art/growth0139/node-1.png",
+  "style": "art/growth0139/style-ref.png",
+  "prompt": "Use case: stylized-concept. Asset type: production skill-tree node icons (round medallion emblems) for a dark fantasy 2D action RPG whose heroine Lirian is a crimson-moon swordswoman. Image1 is the existing skill icon sheet of this game: match its painterly dark fantasy rendering, black-crimson mood, silver blades, glowing light and sharp detail, but each new icon is a ROUND MEDALLION, not a square card. Create ONE transparent RGBA square image (2048x2048 or larger) with exactly SEVEN separate round emblems in an invisible 4 columns x 2 rows grid, filled left to right, top row first; the bottom-right cell stays completely EMPTY. Each emblem is a perfect circle centered in its own cell, filling about 70% of the cell, with wide transparent margins, never touching other emblems or the canvas edge. Every emblem: a thin metal rim (blood-crimson enamel rim with dark iron), a dark inner disc, and ONE bold simple central symbol that stays readable when shrunk to 20 pixels (strong silhouette, high contrast, little clutter). Outside the circles: actual alpha transparency, no background, no floor, no shadow, no text, no letters, no numbers, no labels, no characters or faces.\nEMBLEMS in order: (1) crimson rim: a single honed sword blade with a bright cutting edge. (2) crimson rim: three quick overlapping sword slashes with speed streaks. (3) crimson rim: a sword striking down through a blood-red full moon. (4) KEYSTONE, larger ornate spiked crimson rim with a small crown of blades: a frenzied whirl of many blades in a red storm. (5) crimson rim: a narrowed glowing eye with a cross-hair weak-point mark. (6) crimson rim: an executioner great-axe-like sword over a cracked skull-free broken shield. (7) KEYSTONE, larger ornate spiked crimson rim with a small crown of blades: a guillotine-like falling blade severing a red line.",
+  "items": [
+   "blade-n",
+   "blade-a3",
+   "blade-a6",
+   "blade-a7",
+   "blade-b3",
+   "blade-b6",
+   "blade-b7"
+  ]
+ },
+ "node-2": {
+  "kind": "sprite",
+  "minParts": 7,
+  "out": "art/growth0139/node-2.png",
+  "style": "art/growth0139/style-ref.png",
+  "prompt": "Use case: stylized-concept. Asset type: production skill-tree node icons (round medallion emblems) for a dark fantasy 2D action RPG whose heroine Lirian is a crimson-moon swordswoman. Image1 is the existing skill icon sheet of this game: match its painterly dark fantasy rendering, black-crimson mood, silver blades, glowing light and sharp detail, but each new icon is a ROUND MEDALLION, not a square card. Create ONE transparent RGBA square image (2048x2048 or larger) with exactly SEVEN separate round emblems in an invisible 4 columns x 2 rows grid, filled left to right, top row first; the bottom-right cell stays completely EMPTY. Each emblem is a perfect circle centered in its own cell, filling about 70% of the cell, with wide transparent margins, never touching other emblems or the canvas edge. Every emblem: a thin metal rim (blood-crimson enamel rim with dark iron; warm gold rim), a dark inner disc, and ONE bold simple central symbol that stays readable when shrunk to 20 pixels (strong silhouette, high contrast, little clutter). Outside the circles: actual alpha transparency, no background, no floor, no shadow, no text, no letters, no numbers, no labels, no characters or faces.\nEMBLEMS in order: (1) crimson rim: a sword tip with a long reaching light ray. (2) crimson rim: a demon-sword spirit flame shaped like a blade. (3) gold rim: a sword crossed with a shield, warrior spirit. (4) gold rim: a gust of wind with a blade riding it. (5) gold rim: a winged running boot with dash lines. (6) gold rim: a ghostly afterimage of a dashing swordswoman silhouette shape made only of three fading blade outlines (no face). (7) LARGEST, radiant gold ornate rim: a glowing crimson moon with a silver sword vertically through its center, the heart of the tree.",
+  "items": [
+   "blade-m2",
+   "blade-m7",
+   "bw-2",
+   "ab-n",
+   "ab-l3",
+   "ab-r3",
+   "core"
+  ]
+ },
+ "node-3": {
+  "kind": "sprite",
+  "minParts": 7,
+  "out": "art/growth0139/node-3.png",
+  "style": "art/growth0139/style-ref.png",
+  "prompt": "Use case: stylized-concept. Asset type: production skill-tree node icons (round medallion emblems) for a dark fantasy 2D action RPG whose heroine Lirian is a crimson-moon swordswoman. Image1 is the existing skill icon sheet of this game: match its painterly dark fantasy rendering, black-crimson mood, silver blades, glowing light and sharp detail, but each new icon is a ROUND MEDALLION, not a square card. Create ONE transparent RGBA square image (2048x2048 or larger) with exactly SEVEN separate round emblems in an invisible 4 columns x 2 rows grid, filled left to right, top row first; the bottom-right cell stays completely EMPTY. Each emblem is a perfect circle centered in its own cell, filling about 70% of the cell, with wide transparent margins, never touching other emblems or the canvas edge. Every emblem: a thin metal rim (emerald-green enamel rim with old bronze), a dark inner disc, and ONE bold simple central symbol that stays readable when shrunk to 20 pixels (strong silhouette, high contrast, little clutter). Outside the circles: actual alpha transparency, no background, no floor, no shadow, no text, no letters, no numbers, no labels, no characters or faces.\nEMBLEMS in order: (1) emerald rim: a sturdy heart inside armor plates. (2) emerald rim: a raised hand over a shield, an oath. (3) emerald rim: a thick tower shield wall. (4) emerald rim: a cracked but unbroken shield with a defiant spark. (5) KEYSTONE, larger ornate bronze-and-emerald rim with towers: an unmoving fortress gate. (6) emerald rim: a green leaf with healing light droplets. (7) emerald rim: a sword dripping red blood into a green chalice.",
+  "items": [
+   "ward-n",
+   "ward-u2",
+   "ward-a2",
+   "ward-a4",
+   "ward-a6",
+   "ward-b2",
+   "ward-b4"
+  ]
+ },
+ "node-4": {
+  "kind": "sprite",
+  "minParts": 7,
+  "out": "art/growth0139/node-4.png",
+  "style": "art/growth0139/style-ref.png",
+  "prompt": "Use case: stylized-concept. Asset type: production skill-tree node icons (round medallion emblems) for a dark fantasy 2D action RPG whose heroine Lirian is a crimson-moon swordswoman. Image1 is the existing skill icon sheet of this game: match its painterly dark fantasy rendering, black-crimson mood, silver blades, glowing light and sharp detail, but each new icon is a ROUND MEDALLION, not a square card. Create ONE transparent RGBA square image (2048x2048 or larger) with exactly SEVEN separate round emblems in an invisible 4 columns x 2 rows grid, filled left to right, top row first; the bottom-right cell stays completely EMPTY. Each emblem is a perfect circle centered in its own cell, filling about 70% of the cell, with wide transparent margins, never touching other emblems or the canvas edge. Every emblem: a thin metal rim (emerald-green enamel rim with old bronze; sapphire-blue enamel rim with silver; warm gold rim), a dark inner disc, and ONE bold simple central symbol that stays readable when shrunk to 20 pixels (strong silhouette, high contrast, little clutter). Outside the circles: actual alpha transparency, no background, no floor, no shadow, no text, no letters, no numbers, no labels, no characters or faces.\nEMBLEMS in order: (1) KEYSTONE, larger ornate emerald-and-crimson rim with thorns: a vampire bat-wing heart drinking blood. (2) gold rim: a calm breath swirl around a lotus. (3) sapphire rim: a circular flowing energy loop. (4) sapphire rim: an hourglass with a blade, quick hands. (5) sapphire rim: a wide crescent sword wave spreading outward. (6) KEYSTONE, larger ornate silver-and-sapphire rim with runes: an overflowing burst of sword energy. (7) sapphire rim: a glowing sword rune sigil of power.",
+  "items": [
+   "ward-b6",
+   "wa-2",
+   "art-n",
+   "art-a3",
+   "art-a6",
+   "art-a7",
+   "art-b3"
+  ]
+ },
+ "node-5": {
+  "kind": "sprite",
+  "minParts": 7,
+  "out": "art/growth0139/node-5.png",
+  "style": "art/growth0139/style-ref.png",
+  "prompt": "Use case: stylized-concept. Asset type: production skill-tree node icons (round medallion emblems) for a dark fantasy 2D action RPG whose heroine Lirian is a crimson-moon swordswoman. Image1 is the existing skill icon sheet of this game: match its painterly dark fantasy rendering, black-crimson mood, silver blades, glowing light and sharp detail, but each new icon is a ROUND MEDALLION, not a square card. Create ONE transparent RGBA square image (2048x2048 or larger) with exactly SEVEN separate round emblems in an invisible 4 columns x 2 rows grid, filled left to right, top row first; the bottom-right cell stays completely EMPTY. Each emblem is a perfect circle centered in its own cell, filling about 70% of the cell, with wide transparent margins, never touching other emblems or the canvas edge. Every emblem: a thin metal rim (plain dark-silver rim, simpler and humbler than a major emblem; sapphire-blue enamel rim with silver), a dark inner disc, and ONE bold simple central symbol that stays readable when shrunk to 20 pixels (strong silhouette, high contrast, little clutter). Outside the circles: actual alpha transparency, no background, no floor, no shadow, no text, no letters, no numbers, no labels, no characters or faces.\nEMBLEMS in order: (1) sapphire rim: chained linked rings of blades, a combo chain. (2) KEYSTONE, larger ornate silver-and-sapphire rim with runes: a dancing sword ring of six floating blades. (3) sapphire rim: a flowing river shaped like a blade. (4) sapphire rim: a sword master spirit flame in blue. (5) SIMPLE stat emblem with plain dark-silver rim: an orange energy droplet refilling. (6) SIMPLE stat emblem with plain dark-silver rim: a clock arrow turning backwards. (7) SIMPLE stat emblem with plain dark-silver rim: expanding concentric rings.",
+  "items": [
+   "art-b6",
+   "art-b7",
+   "art-m2",
+   "art-m7",
+   "t-staminaRegen",
+   "t-skillCooldown",
+   "t-skillArea"
+  ]
+ },
+ "node-6": {
+  "kind": "sprite",
+  "minParts": 7,
+  "out": "art/growth0139/node-6.png",
+  "style": "art/growth0139/style-ref.png",
+  "prompt": "Use case: stylized-concept. Asset type: production skill-tree node icons (round medallion emblems) for a dark fantasy 2D action RPG whose heroine Lirian is a crimson-moon swordswoman. Image1 is the existing skill icon sheet of this game: match its painterly dark fantasy rendering, black-crimson mood, silver blades, glowing light and sharp detail, but each new icon is a ROUND MEDALLION, not a square card. Create ONE transparent RGBA square image (2048x2048 or larger) with exactly SEVEN separate round emblems in an invisible 4 columns x 2 rows grid, filled left to right, top row first; the bottom-right cell stays completely EMPTY. Each emblem is a perfect circle centered in its own cell, filling about 70% of the cell, with wide transparent margins, never touching other emblems or the canvas edge. Every emblem: a thin metal rim (plain dark-silver rim, simpler and humbler than a major emblem), a dark inner disc, and ONE bold simple central symbol that stays readable when shrunk to 20 pixels (strong silhouette, high contrast, little clutter). Outside the circles: actual alpha transparency, no background, no floor, no shadow, no text, no letters, no numbers, no labels, no characters or faces.\nEMBLEMS in order: (1) SIMPLE stat emblem with plain dark-silver rim: an upward sword. (2) SIMPLE stat emblem with plain dark-silver rim: double chevrons forward. (3) SIMPLE stat emblem with plain dark-silver rim: a four-point star spark. (4) SIMPLE stat emblem with plain dark-silver rim: a downward blade over a half-empty red bar. (5) SIMPLE stat emblem with plain dark-silver rim: three stacked slashes, the last bright. (6) SIMPLE stat emblem with plain dark-silver rim: a long arrow-tipped reach line. (7) SIMPLE stat emblem with plain dark-silver rim: a feather with motion lines.",
+  "items": [
+   "t-damagePct",
+   "t-attackSpeed",
+   "t-crit",
+   "t-execute",
+   "t-finisher",
+   "t-range",
+   "t-speed"
+  ]
+ },
+ "node-7": {
+  "kind": "sprite",
+  "minParts": 7,
+  "out": "art/growth0139/node-7.png",
+  "style": "art/growth0139/style-ref.png",
+  "prompt": "Use case: stylized-concept. Asset type: production skill-tree node icons (round medallion emblems) for a dark fantasy 2D action RPG whose heroine Lirian is a crimson-moon swordswoman. Image1 is the existing skill icon sheet of this game: match its painterly dark fantasy rendering, black-crimson mood, silver blades, glowing light and sharp detail, but each new icon is a ROUND MEDALLION, not a square card. Create ONE transparent RGBA square image (2048x2048 or larger) with exactly SEVEN separate round emblems in an invisible 4 columns x 2 rows grid, filled left to right, top row first; the bottom-right cell stays completely EMPTY. Each emblem is a perfect circle centered in its own cell, filling about 70% of the cell, with wide transparent margins, never touching other emblems or the canvas edge. Every emblem: a thin metal rim (plain dark-silver rim, simpler and humbler than a major emblem), a dark inner disc, and ONE bold simple central symbol that stays readable when shrunk to 20 pixels (strong silhouette, high contrast, little clutter). Outside the circles: actual alpha transparency, no background, no floor, no shadow, no text, no letters, no numbers, no labels, no characters or faces.\nEMBLEMS in order: (1) SIMPLE stat emblem with plain dark-silver rim: a red heart. (2) SIMPLE stat emblem with plain dark-silver rim: a small round shield. (3) SIMPLE stat emblem with plain dark-silver rim: a cracked heart with a shield. (4) SIMPLE stat emblem with plain dark-silver rim: a green plus with a sprout. (5) SIMPLE stat emblem with plain dark-silver rim: a blood drop flowing into a sword. (6) SIMPLE stat emblem with plain dark-silver rim: a blue rune star. (7) SIMPLE stat emblem with plain dark-silver rim: a blue flame igniting a blade.",
+  "items": [
+   "t-hpPct",
+   "t-reduction",
+   "t-lowHpGuard",
+   "t-regeneration",
+   "t-drain",
+   "t-skillDamage",
+   "t-skillFury"
+  ]
+ }
+}

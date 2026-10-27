@@ -21,7 +21,7 @@ test('every chapter has a boss gate of its biome type and one stage gate of anot
 test('the build counter: matching tree branch and skills remove up to 75% of the pressure',()=>{
  const p=g.createProfile(1000);p.level=150;p.skillBook=g.restoreSkillBook(null,150);p.skillBook.loadout={active:[null,null,null,null],passive:[null,null,null],ultimate:[null],beast:[null]};
  for(const id of g.GATE_IDS)assert.equal(g.gateCounter(p,id),0);
- p.growthTree=['ward1','ward2','ward3','ward4','ward5'];assert.equal(g.gateCounter(p,'survival'),.75);assert.equal(g.gateCounter(p,'single'),0);
+ p.growthTree=['ward-r','ward-1','ward-n','ward-a1','ward-a2','ward-a3','ward-a4','ward-u1','ward-u2','ward-b1','ward-b2'];assert.equal(g.branchPoints(p,'ward'),42);assert.equal(g.gateCounter(p,'survival'),.75);assert.equal(g.gateCounter(p,'single'),0);
  p.skillBook.loadout.active=['stance','parry',null,null];p.skillBook.loadout.passive=['resolve','reserve','breath'];assert.equal(g.gateCounter(p,'survival'),1);
  const gate={type:'survival',boss:false,pressure:1};assert.equal(g.gateEffect(p,gate).effect,.25);p.growthTree=[];p.skillBook.loadout.passive=[null,null,null];assert.ok(Math.abs(g.gateEffect(p,gate).effect-.85)<1e-9);
  assert.match(g.gateText(g.gateEffect(p,gate)),/^생존 관문 · 적이 주는 피해 \+85% · 대응 20%/);
@@ -44,7 +44,7 @@ test('gates act on spawned enemies: survival damage, swarm and single health, de
   if(type==='single'){assert.ok(Math.abs(elite.maxHp/elite0.maxHp/k-m)<.05);assert.ok(Math.abs(mob.maxHp/mob0.maxHp-k)<.05);}
   assert.ok(st.hpScale>0);}
  const {chapter,stage}=gateStage('defense');const s=arena(chapter,stage);s.enemies=[];const e=spawn(s,'bulwark');assert.ok(Math.abs(e.gateGuard-(1+s.run.gate.effect))<1e-9);
- const countered=arena(chapter,stage,p=>{p.growthTree=['art1','art2','art3','art4','art5'];});assert.ok(Math.abs(countered.run.gate.effect-countered.run.gate.pressure*(1-.75*.75))<1e-3);
+ const countered=arena(chapter,stage,p=>{p.growthTree=['art-r','art-1','art-n','art-a1','art-a2','art-a3','art-a4','art-b1','art-b2','art-b3','art-m1','art-m2'];});assert.ok(Math.abs(countered.run.gate.effect-countered.run.gate.pressure*(1-.75*.75))<1e-3);
  // Ordinary monsters hit THREAT.mob (2) times harder outside dungeons (0.134).
  {const s=arena(2,1);s.run.gate=null;s.enemies=[];const mob=spawn(s,'skitter');const d=g.createGame(g.createProfile(1000));g.launchDungeon(d,'gold',1);d.enemies=[];const dm=spawn(d,'skitter');assert.equal(g.THREAT.mob,2);const boss=arena(2,1);boss.run.gate=null;boss.enemies=[];boss.spawns=[{id:boss.nextId++,type:'skitter',boss:true,elite:false,x:boss.player.x+400,y:boss.player.y,delay:0,warning:0}];g.advanceGame(boss,.001);const b=boss.enemies.at(-1);assert.ok(Math.abs(b.damage-26*g.STAGES[1].damageScale)<1e-9,'bosses unchanged '+b.damage);assert.ok(mob.damage>8*g.STAGES[1].damageScale*1.1,'mob '+mob.damage);assert.ok(dm.damage<mob.damage);}
  // Dungeons and raids have no gates.

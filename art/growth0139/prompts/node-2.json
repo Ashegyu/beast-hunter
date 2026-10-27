@@ -1,0 +1,55 @@
+{
+  "id": "node-2",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production skill-tree node icons (round medallion emblems) for a dark fantasy 2D action RPG whose heroine Lirian is a crimson-moon swordswoman. Image1 is the existing skill icon sheet of this game: match its painterly dark fantasy rendering, black-crimson mood, silver blades, glowing light and sharp detail, but each new icon is a ROUND MEDALLION, not a square card. Create ONE transparent RGBA square image (2048x2048 or larger) with exactly SEVEN separate round emblems in an invisible 4 columns x 2 rows grid, filled left to right, top row first; the bottom-right cell stays completely EMPTY. Each emblem is a perfect circle centered in its own cell, filling about 70% of the cell, with wide transparent margins, never touching other emblems or the canvas edge. Every emblem: a thin metal rim (blood-crimson enamel rim with dark iron; warm gold rim), a dark inner disc, and ONE bold simple central symbol that stays readable when shrunk to 20 pixels (strong silhouette, high contrast, little clutter). Outside the circles: actual alpha transparency, no background, no floor, no shadow, no text, no letters, no numbers, no labels, no characters or faces.\nEMBLEMS in order: (1) crimson rim: a sword tip with a long reaching light ray. (2) crimson rim: a demon-sword spirit flame shaped like a blade. (3) gold rim: a sword crossed with a shield, warrior spirit. (4) gold rim: a gust of wind with a blade riding it. (5) gold rim: a winged running boot with dash lines. (6) gold rim: a ghostly afterimage of a dashing swordswoman silhouette shape made only of three fading blade outlines (no face). (7) LARGEST, radiant gold ornate rim: a glowing crimson moon with a silver sword vertically through its center, the heart of the tree.",
+  "referenceImages": [
+    {
+      "path": "art/growth0139/style-ref.png",
+      "sha256": "21cdf287f3369e3e322f0bdf611754a6349864a1a86ba3ea32b757b7dfe03952"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": false,
+      "size": [
+        1774,
+        887
+      ],
+      "transparent": 0.456,
+      "parts": 6,
+      "reason": "fewer than 7 separate objects",
+      "seconds": 75,
+      "sha256": "07883bf499e262741cb43e9cc9de781c0890c4a9ca7b71fd68e5e4dbf54237d1"
+    },
+    {
+      "attempt": 2,
+      "ok": false,
+      "size": [
+        1774,
+        887
+      ],
+      "transparent": 0.444,
+      "parts": 5,
+      "reason": "fewer than 7 separate objects",
+      "seconds": 53,
+      "sha256": "992f291802a6851c040c531a21116ea1c43e41367198d40c39b68a02b9ca78bc"
+    },
+    {
+      "attempt": 3,
+      "ok": true,
+      "size": [
+        1774,
+        887
+      ],
+      "transparent": 0.448,
+      "parts": 7,
+      "seconds": 50,
+      "sha256": "af8cf4a25e885ec0a7eb9f8590db9c2def7c786715416152790afd0882a17d91"
+    }
+  ],
+  "final": {
+    "path": "art/growth0139/node-2.png",
+    "sha256": "af8cf4a25e885ec0a7eb9f8590db9c2def7c786715416152790afd0882a17d91"
+  }
+}

@@ -520,3 +520,41 @@
  #game-shell .stats-sheet-group dl>div{padding:2px;font-size:11px}
  #game-shell #stat-sheet-note{padding:3px 10px 5px}
 }
+/* 0.139 성장 트리 그물: 트리 보기에서는 왼쪽 원화를 숨기고 판을 전체 폭으로 쓴다. 노드는 600×240 상자 비율 좌표(%)에 둔 원,
+   연결선은 같은 상자의 SVG(preserveAspectRatio=none). 아래 한 줄이 고른 노드의 설명과 습득·반환 버튼. */
+#game-shell #camp-growth-panel:has(.growth-board[data-view=tree])>:not(.growth-board){display:none}
+#game-shell #camp-growth-panel:has(.growth-board[data-view=tree])>.growth-board{grid-column:1/-1;grid-row:1/-1}
+#game-shell .growth-tree:not([hidden]){display:flex;flex-direction:column;gap:4px;flex:1 1 auto;min-height:0}
+#game-shell .tree-web{position:relative;flex:1 1 auto;min-height:0;margin:8px 14px 10px;background:radial-gradient(ellipse at 50% 58%,#3a1c2244,#0000 70%)}
+#game-shell .tree-lines{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+#game-shell .tree-lines line{stroke:#6d5b4366;stroke-width:2;vector-effect:non-scaling-stroke}
+#game-shell .tree-lines line[data-state=open]{stroke:#b08a4f99}
+#game-shell .tree-lines line[data-state=owned]{stroke:#f0b65e;stroke-width:3}
+#game-shell #growth-tree .tree-node{position:absolute;display:block;flex:none;width:var(--node,18px);height:var(--node,18px);min-width:0;min-height:0;padding:0;margin:0;transform:translate(-50%,-50%);border:0;border-radius:50%;background:url(assets/growth-tree-v0139.webp) 0 0/700% 700% no-repeat;box-shadow:none;opacity:1;cursor:pointer;filter:grayscale(.8) brightness(.55)}
+#game-shell #growth-tree .tree-node::after{content:'';position:absolute;inset:-7px;border-radius:50%}
+#game-shell #growth-tree .tree-node[data-kind=notable]{--node:26px}
+#game-shell #growth-tree .tree-node[data-kind=keystone]{--node:34px}
+#game-shell #growth-tree .tree-node[data-kind=core]{--node:34px;filter:none}
+#game-shell #growth-tree .tree-node[data-state=open]{filter:grayscale(.2) brightness(.8);box-shadow:0 0 0 1px #d7a75a99}
+#game-shell #growth-tree .tree-node[data-state=owned]{filter:none;box-shadow:0 0 6px 1px var(--glow,#ffd58a)}
+#game-shell #growth-tree .tree-node[data-branch=blade]{--glow:#ff6a5a}
+#game-shell #growth-tree .tree-node[data-branch=ward]{--glow:#6fe09a}
+#game-shell #growth-tree .tree-node[data-branch=art]{--glow:#7fa8ff}
+#game-shell #growth-tree .tree-node[data-branch=core]{box-shadow:0 0 10px 2px #ffd58a}
+#game-shell #growth-tree .tree-node[aria-pressed=true]{outline:2px solid #fff3c9;outline-offset:2px}
+#game-shell .tree-regions{position:absolute;left:0;bottom:0;display:flex;flex-direction:column;gap:2px;pointer-events:none}
+#game-shell .tree-region{display:flex;gap:5px;align-items:baseline;line-height:1.1}
+#game-shell .tree-region strong{font-size:11px;color:#f0dcb0}
+#game-shell .tree-region small{font-size:10px;color:#c9a96e}
+#game-shell .tree-region[data-branch=blade] strong{color:#ff9a8a}
+#game-shell .tree-region[data-branch=ward] strong{color:#9fe0b5}
+#game-shell .tree-region[data-branch=art] strong{color:#a8c6ff}
+#game-shell .tree-detail{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto auto;align-items:center;gap:8px;flex:none;min-height:30px;padding:3px 8px;border:1px solid #a78c5b55;border-radius:6px;background:#140f12cc}
+#game-shell .tree-detail>b{font-size:12px;color:#ffd58a;white-space:nowrap}
+#game-shell .tree-detail>small{font-size:11px;color:#d8d0c2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#game-shell .tree-detail>em{font-style:normal;font-size:11px;color:#ffd58a;white-space:nowrap}
+#game-shell .tree-detail>button{height:26px;min-height:0;padding:0 12px;font-size:11px;white-space:nowrap}
+#game-shell .tree-detail>button[hidden]{display:none}
+@media(max-height:360px){#game-shell .tree-web{margin:6px 12px 6px}#game-shell .tree-detail{min-height:26px;padding:2px 6px}#game-shell .tree-detail>button{height:22px}}
+#game-shell #camp-growth-panel .growth-board[data-view=tree] #offline-note{display:none}
+@media(max-height:360px){#game-shell .tree-regions{display:none}#game-shell #growth-tree .tree-node{--node:15px}#game-shell #growth-tree .tree-node[data-kind=notable]{--node:22px}#game-shell #growth-tree .tree-node:is([data-kind=keystone],[data-kind=core]){--node:28px}}

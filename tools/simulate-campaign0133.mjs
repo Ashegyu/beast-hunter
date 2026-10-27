@@ -16,8 +16,9 @@ const SEED=Number(process.argv[3]||0),LAST=Number(process.argv[4]||60),POLICY=pr
 const HPLOG=process.env.HPLOG==='1',hpLog=[];
 const STARS=process.env.STARS==='1',starSeen=new Set(),starLog=[];
 const SPEC=POLICY==='spec'||POLICY==='switch',SWITCH=POLICY==='switch'||POLICY==='adapt';
-const FIXED_TREE=['blade1','blade2','ward1','ward2','blade3','blade4','blade5','ward3','ward4','ward5'];
-const BRANCHES={blade:['blade1','blade2','blade3','blade4','blade5'],ward:['ward1','ward2','ward3','ward4','ward5'],art:['art1','art2','art3','art4','art5']};
+// 0.139 성장 트리 그물: a region's nodes in definition order (learnable in that order); the fixed build takes 검귀 then 수호자.
+const BRANCHES={blade:g.TREE_ORDER.filter(id=>id.startsWith('blade-')),ward:g.TREE_ORDER.filter(id=>id.startsWith('ward-')),art:g.TREE_ORDER.filter(id=>id.startsWith('art-'))};
+const FIXED_TREE=[...BRANCHES.blade,...BRANCHES.ward];
 const EXAMPLE={survival:2,swarm:1,single:0,defense:3,armor:0};
 function treeFor(type){if(!type)return FIXED_TREE;const first=type==='armor'?'blade':g.GATE_TYPES[type].branch;return [...BRANCHES[first],...FIXED_TREE.filter(id=>!id.startsWith(first)),...Object.values(BRANCHES).flat()];}
 // The first hard stage from the checkpoint: stage 4 (철갑 진군, 장갑) or a gate.
@@ -25,7 +26,7 @@ function nextGate(ch,from){for(let n=from;n<=10;n++){if(n===4)return 'armor';con
 function prepare(s,type){const p=s.profile;
  for(const pos of g.EQUIPMENT_KEYS){const slot=g.itemSlotForPosition(pos);const used=Object.entries(p.equipment).filter(([k])=>k!==pos).map(([,v])=>v);const rows=p.inventory.filter(i=>i.slot===slot&&!used.includes(i.id)).sort((a,b)=>loot.itemPower(b)-loot.itemPower(a));if(rows[0]&&p.equipment[pos]!==rows[0].id&&loot.itemPower(rows[0])>(p.inventory.find(i=>i.id===p.equipment[pos])?loot.itemPower(p.inventory.find(i=>i.id===p.equipment[pos])):-1))g.equipItem(s,rows[0].id,pos);}
  if(SPEC)for(let round=0;round<400;round++){let any=false;for(const id of Object.values(p.equipment)){if(!id)continue;const r=g.enhanceItem(s,id);if(r.ok)any=true;else if(g.promoteItem(s,id).ok)any=true;}if(!any)break;}
- const tree=SWITCH?treeFor(type):FIXED_TREE;if(SWITCH)g.resetGrowthTree(s);for(const id of tree)g.learnGrowthNode(s,id);
+ const tree=SWITCH?treeFor(type):FIXED_TREE;if(SWITCH)g.resetGrowthTree(s);for(let any=true;any;){any=false;for(const id of tree)if(!p.growthTree.includes(id)&&g.learnGrowthNode(s,id))any=true;}
  {let any=true;while(any){any=false;for(const id of ['power','vitality','guard','tempo','precision'])if(g.trainStat(s,id))any=true;}}
  g.applySkillExample(s,SWITCH&&type?EXAMPLE[type]:1);
  if(g.skillRank(p,'bloodmoon')&&!p.skillBook.loadout.ultimate[0])g.equipSkill(s,'bloodmoon',0);

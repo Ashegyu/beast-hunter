@@ -1,0 +1,29 @@
+{
+  "id": "node-3",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production skill-tree node icons (round medallion emblems) for a dark fantasy 2D action RPG whose heroine Lirian is a crimson-moon swordswoman. Image1 is the existing skill icon sheet of this game: match its painterly dark fantasy rendering, black-crimson mood, silver blades, glowing light and sharp detail, but each new icon is a ROUND MEDALLION, not a square card. Create ONE transparent RGBA square image (2048x2048 or larger) with exactly SEVEN separate round emblems in an invisible 4 columns x 2 rows grid, filled left to right, top row first; the bottom-right cell stays completely EMPTY. Each emblem is a perfect circle centered in its own cell, filling about 70% of the cell, with wide transparent margins, never touching other emblems or the canvas edge. Every emblem: a thin metal rim (emerald-green enamel rim with old bronze), a dark inner disc, and ONE bold simple central symbol that stays readable when shrunk to 20 pixels (strong silhouette, high contrast, little clutter). Outside the circles: actual alpha transparency, no background, no floor, no shadow, no text, no letters, no numbers, no labels, no characters or faces.\nEMBLEMS in order: (1) emerald rim: a sturdy heart inside armor plates. (2) emerald rim: a raised hand over a shield, an oath. (3) emerald rim: a thick tower shield wall. (4) emerald rim: a cracked but unbroken shield with a defiant spark. (5) KEYSTONE, larger ornate bronze-and-emerald rim with towers: an unmoving fortress gate. (6) emerald rim: a green leaf with healing light droplets. (7) emerald rim: a sword dripping red blood into a green chalice.",
+  "referenceImages": [
+    {
+      "path": "art/growth0139/style-ref.png",
+      "sha256": "21cdf287f3369e3e322f0bdf611754a6349864a1a86ba3ea32b757b7dfe03952"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1774,
+        887
+      ],
+      "transparent": 0.429,
+      "parts": 7,
+      "seconds": 73,
+      "sha256": "95e6f068f762de7f04691825dc9dc7a7a1d28310b2a03238ec079c07fdd28146"
+    }
+  ],
+  "final": {
+    "path": "art/growth0139/node-3.png",
+    "sha256": "95e6f068f762de7f04691825dc9dc7a7a1d28310b2a03238ec079c07fdd28146"
+  }
+}

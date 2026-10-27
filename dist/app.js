@@ -2,7 +2,7 @@ let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
 import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.136.2';
 import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js';
 import { createCombatAudio } from './sound.js?v=0.76.0';
-import * as game from './game-engine.js?v=0.137.1';
+import * as game from './game-engine.js?v=0.139.0';
 import {FrameMetrics} from './frame-metrics.js?v=0.98.1';
 import { frameIndex, frameRect, validateClip } from './engine.js';
 import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
@@ -252,21 +252,33 @@ function doThunder(){if(!ready||orientationBlocked||state.phase!=='playing'||sta
 function togglePause(){if(state.settlement||orientationBlocked||state.phase!=='playing')return;state.paused=!state.paused;if(state.paused)audio.suspend();else audio.unlock();clearInput();save();updateHud();}
 $('sound').addEventListener('click',()=>{soundEnabled=!soundEnabled;audio.mute(!soundEnabled);if(soundEnabled)audio.unlock();try{localStorage.setItem(STORAGE_KEY+':sound',soundEnabled?'on':'off');}catch{}updateHud();});
 $('start').addEventListener('click',()=>start());
-// Alpha 0.131 성장: 능력치 단련 (shared) and 성장 트리 (saved with each build), both paid with 성장 포인트 (one per level).
-let growthView='training',growthArmed='';
+// Alpha 0.139 성장: 능력치 단련 (shared, 능력치 포인트 one per level) and the 성장 트리 web (saved with each build, 트리 포인트 one per two levels).
+// A tree node is chosen with the first tap; the second tap (or 습득) learns it, 반환 gives back a node nothing else hangs on.
+let growthView='training',growthArmed='',treeSelected='core';
 for(const [id,v]of [['growth-tab-training','training'],['growth-tab-tree','tree']])$(id).addEventListener('click',()=>{if(state.phase!=='camp')return;growthView=v;growthArmed='';updateHud();});
 for(const id of game.TRAINING_IDS)$('train-'+id).addEventListener('click',()=>{if(game.trainStat(state,id)){save();$('growth-feedback').textContent=game.TRAINING[id].name+' '+profile.training[id]+'단계';updateHud();}});
-for(const id of Object.keys(game.TREE_NODES))$('tree-node-'+id).addEventListener('click',()=>{if(game.learnGrowthNode(state,id)){save();$('growth-feedback').textContent='성장 트리 · '+game.TREE_NODES[id].name+' 습득';updateHud();}});
+function learnTreeNode(id){if(game.learnGrowthNode(state,id)){save();$('growth-feedback').textContent='성장 트리 · '+game.TREE_NODES[id].name+' 습득';}else $('growth-feedback').textContent=game.TREE_NODES[id].name+' · '+game.nodeStatus(profile,id);updateHud();}
+for(const id of Object.keys(game.TREE_NODES))$('tree-node-'+id).addEventListener('click',()=>{if(state.phase!=='camp')return;growthArmed='';if(treeSelected===id&&!game.nodeStatus(profile,id)){learnTreeNode(id);return;}treeSelected=id;$('growth-feedback').textContent='';updateHud();});
+$('tree-learn').addEventListener('click',()=>{if(state.phase==='camp'&&game.isTreeNode(treeSelected))learnTreeNode(treeSelected);});
+$('tree-forget').addEventListener('click',()=>{if(state.phase!=='camp'||!game.isTreeNode(treeSelected))return;const name=game.TREE_NODES[treeSelected].name;if(game.forgetGrowthNode(state,treeSelected)){save();$('growth-feedback').textContent='성장 트리 · '+name+' 반환';}else $('growth-feedback').textContent=name+' · '+game.forgetStatus(profile,treeSelected);updateHud();});
 // Reset asks twice: the first tap arms it, the second clears the visible page.
 $('growth-reset').addEventListener('click',()=>{if(state.phase!=='camp')return;if(growthArmed!==growthView){growthArmed=growthView;$('growth-feedback').textContent=(growthView==='tree'?'성장 트리':'능력치 단련')+'를 초기화하려면 한 번 더 누르세요. 포인트는 모두 돌려받습니다.';updateHud();return;}growthArmed='';if(growthView==='tree'?game.resetGrowthTree(state):game.resetTrainingStats(state)){save();$('growth-feedback').textContent=(growthView==='tree'?'성장 트리':'능력치 단련')+' 초기화 완료';updateHud();}});
+// Both 0.139 pools in one short line (menus, result, stats sheet).
+function growthBudget(){return '능력치 '+game.trainingPoints(profile)+' · 트리 '+game.treePoints(profile);}
 function refreshGrowthBoard(){
- const points=game.growthPoints(profile),cap=game.trainingCap(profile.level),tree=profile.growthTree;
+ const tree=profile.growthTree,held=new Set([game.TREE_ROOT,...tree]);
  $('growth-board').setAttribute('data-view',growthView);$('growth-training').hidden=growthView!=='training';$('growth-tree').hidden=growthView!=='tree';
  for(const [id,v]of [['growth-tab-training','training'],['growth-tab-tree','tree']])$(id).setAttribute('aria-pressed',String(growthView===v));
- hudText($('growth-points'),'성장 포인트 '+points+' / '+game.growthPointsTotal(profile));hudText($('growth-reset'),growthArmed===growthView?'초기화 확인':'초기화');
- for(const id of game.TRAINING_IDS){const t=game.TRAINING[id],rank=profile.training[id],why=game.trainStatus(profile,id);hudText($('train-'+id+'-value'),t.unit+' +'+game.trainingValue(id,rank)+t.suffix+(why&&why!=='성장 포인트 부족'?' · '+why:''));hudText($('train-'+id+'-rank'),rank+'/'+cap);$('train-'+id).disabled=!!why;$('train-'+id).setAttribute('aria-label',t.name+' '+rank+'단계 · '+t.unit+' 단계당 +'+t.per+t.suffix+(why?' · '+why:''));}
- for(const b of game.GROWTH_TREE){hudText($('tree-branch-'+b.id+'-spent'),b.text+' · '+b.nodes.filter(n=>tree.includes(n.id)).reduce((a,n)=>a+n.cost,0)+'P');
-  for(const n of b.nodes){const why=game.nodeStatus(profile,n.id),state=tree.includes(n.id)?'owned':why?'locked':'open',node=$('tree-node-'+n.id);node.setAttribute('data-state',state);node.disabled=state!=='open';hudText($('tree-node-'+n.id+'-name'),n.name);hudText($('tree-node-'+n.id+'-text'),n.text);hudText($('tree-node-'+n.id+'-cost'),state==='owned'?'습득':n.cost+'P');node.setAttribute('aria-label',n.name+' · '+n.text+' · '+(state==='owned'?'습득':n.cost+'포인트'+(why?' · '+why:'')));}}
+ hudText($('growth-points'),growthView==='tree'?'트리 포인트 '+game.treePoints(profile)+' / '+game.treePointsTotal(profile):'능력치 포인트 '+game.trainingPoints(profile)+' / '+game.trainingPointsTotal(profile));hudText($('growth-reset'),growthArmed===growthView?'초기화 확인':'초기화');
+ for(const id of game.TRAINING_IDS){const t=game.TRAINING[id],rank=profile.training[id],why=game.trainStatus(profile,id),rate=game.trainingRate(rank);hudText($('train-'+id+'-value'),t.unit+' +'+game.trainingValue(id,rank)+t.suffix+(rate<1?' · 효율 '+Math.round(rate*100)+'%':''));hudText($('train-'+id+'-rank'),String(rank));$('train-'+id).disabled=!!why;$('train-'+id).setAttribute('aria-label',t.name+' '+rank+'단계 · '+t.unit+' 단계당 +'+Math.round(t.per*rate*100)/100+t.suffix+(why?' · '+why:''));}
+ if(growthView!=='tree')return;
+ for(const b of game.GROWTH_TREE)hudText($('tree-branch-'+b.id+'-spent'),game.branchPoints(profile,b.id)+'P');
+ for(const n of Object.values(game.TREE_NODES)){const why=n.kind==='core'?'':game.nodeStatus(profile,n.id),st=held.has(n.id)?'owned':why==='이어진 노드 필요'?'locked':'open',node=$('tree-node-'+n.id);node.setAttribute('data-state',st);node.setAttribute('aria-pressed',String(treeSelected===n.id));node.setAttribute('aria-label',n.name+' · '+n.text+(n.cost?' · '+n.cost+'포인트':'')+' · '+(st==='owned'?'습득':why||'습득 가능'));}
+ for(const [a,b]of game.TREE_EDGES)$('tree-edge-'+a+'--'+b).setAttribute('data-state',held.has(a)&&held.has(b)?'owned':held.has(a)||held.has(b)?'open':'locked');
+ const n=game.TREE_NODES[treeSelected]??game.TREE_NODES[game.TREE_ROOT],owned=held.has(n.id),why=n.kind==='core'?'':owned?game.forgetStatus(profile,n.id):game.nodeStatus(profile,n.id);
+ hudText($('tree-detail-name'),n.name+(n.kind==='notable'?' · 주요':n.kind==='keystone'?' · 핵심':''));hudText($('tree-detail-text'),n.kind==='core'?game.GROWTH_TREE.map(b=>b.name+' '+game.branchPoints(profile,b.id)+'P').join(' · '):n.kind==='keystone'?n.text.slice(5):n.text);hudText($('tree-detail-cost'),n.kind==='core'?'':owned?'습득':n.cost+'P');
+ $('tree-learn').hidden=owned||n.kind==='core';$('tree-learn').disabled=!!why;hudText($('tree-learn'),why&&!owned?why:'습득');
+ $('tree-forget').hidden=!owned||n.kind==='core';$('tree-forget').disabled=!!why;
 }
 // Regions group ten chapters; a region tab opens its furthest unlocked chapter.
 // The species a stage is known by on the map (rotates skitter/spitter/bulwark), and the stages a species appears in.
@@ -501,7 +513,7 @@ function refreshPreparation(){
  $('result-prepare-title').textContent=state.phase==='defeat'?'재도전 전 정비':'다음 사냥 전 정비';
  for(const where of ['map','result']){
   $(where+'-prepare-gear-note').textContent='보관 '+profile.inventory.length+'/'+game.INVENTORY_LIMIT+' · 장비와 시너지 확인';
-  $(where+'-prepare-growth-note').textContent='남은 성장 포인트 '+game.growthPoints(profile);
+  $(where+'-prepare-growth-note').textContent='남은 포인트 '+growthBudget();
   $(where+'-prepare-skills-note').textContent='남은 스킬 강화 '+points+'포인트';
  }
  $('result-storage-note').textContent='보관 '+profile.inventory.length+'/'+game.INVENTORY_LIMIT+' · 이번 사냥 자동 정리 '+state.run.autoSalvaged+'개';
@@ -522,7 +534,7 @@ let mapSceneKey='';
 // Alpha 0.132 별: ★ 획득 / ☆ 미획득 (클리어 · 30초 · 20초, 보스는 체력 50%; 0.134), 챕터 별 상자 10·20·30.
 const starText=mask=>[1,2,4].map(b=>mask&b?'★':'☆').join('');
 let starNote='',starNoteChapter=0;
-function starRewardText(r){const m=Object.entries(r.materials).map(([id,n])=>game.MATERIAL_BY_ID[id].name+' '+n);return ['골드 '+r.gold.toLocaleString('ko-KR'),'괴수 핵 '+r.cores,...m,...(r.growthPoints?['성장 포인트 +'+r.growthPoints]:[])].join(' · ');}
+function starRewardText(r){const m=Object.entries(r.materials).map(([id,n])=>game.MATERIAL_BY_ID[id].name+' '+n);return ['골드 '+r.gold.toLocaleString('ko-KR'),'괴수 핵 '+r.cores,...m,...(r.growthPoints?['트리 포인트 +'+r.growthPoints]:[])].join(' · ');}
 function refreshStarChests(selected){
  if(starNoteChapter!==selected.id){starNoteChapter=selected.id;starNote='';}
  const total=game.chapterStars(profile,selected.id);$('map-star-count').textContent=total+' / '+game.MAX_CHAPTER_STARS;
@@ -1417,7 +1429,7 @@ function refreshStatsSheet(){
   health:Math.round(stats.maxHp),reduction:(stats.reduction*100).toFixed(1)+'%',regeneration:Number(stats.regeneration.toFixed(2))+' / 초',drain:signed(tree.drain*100),guard:signed(-tree.lowHpGuard*100),
   speed:Math.round(stats.speed),collection:Math.round(stats.collection),stamina:signed(tree.staminaRegen*100),cooldown:signed(-tree.skillCooldown*100),area:signed((game.SKILL_AREA_BOOST*(1+tree.skillArea)-1)*100),'skill-damage':signed(tree.skillDamage*100)};
  for(const [k,v] of Object.entries(rows))hudText($('stat-sheet-'+k),String(v));
- hudText($('stat-sheet-note'),'남은 성장 포인트 '+game.growthPoints(profile)+' · 레벨·능력치 단련·성장 트리·장비·세트·인장을 합한 값');
+ hudText($('stat-sheet-note'),'남은 포인트 '+growthBudget()+' · 레벨·능력치 단련·성장 트리·장비·세트·인장을 합한 값');
 }
 function openStatsSheet(from){if(!ready||state.phase!=='camp')return;statsSheetReturn=from??null;$('stats-sheet').hidden=false;refreshStatsSheet();$('stats-sheet-close').focus({preventScroll:true});}
 function closeStatsSheet(){if($('stats-sheet').hidden)return;$('stats-sheet').hidden=true;const back=statsSheetReturn&&$(statsSheetReturn);statsSheetReturn=null;back?.focus({preventScroll:true});}
@@ -1542,11 +1554,11 @@ function refreshGrowthProgress(){
  if(key===growthRenderKey)return;growthRenderKey=key;
  const future=game.skillMilestones(profile.level),next=future[0]?.level,nextRows=future.filter(row=>row.level===next),nextText=next?'다음 해금 · Lv.'+next+' · '+nextRows.map(row=>row.label).join(' · '):'모든 검술과 슬롯 해금 완료';
  for(const id of ['growth-next-skill','skill-next-unlock']){$(id).textContent=nextText;$(id).setAttribute('title',nextText);}
- $('growth-skill-budget').textContent='성장 포인트 '+game.growthPoints(profile)+' · 스킬 강화 '+points;
+ $('growth-skill-budget').textContent=growthBudget()+' · 스킬 강화 '+points;
  const bandIndex=game.GROWTH_XP_BANDS.findIndex(row=>profile.level<row.until),band=game.GROWTH_XP_BANDS[bandIndex],nextBand=game.GROWTH_XP_BANDS[bandIndex+1];
  $('growth-xp-rate').textContent=profile.level===game.MAX_LEVEL?'최고 레벨 · 경험치 성장 완료':(game.growthXpMultiplier(profile.level)>1?'사냥·정찰 성장 경험치 '+game.growthXpMultiplier(profile.level)+'배 · ':'')+'다음 레벨까지 경험치 '+Math.max(0,game.xpNeeded(profile.level)-profile.xp)+(nextBand?' · Lv.'+band.until+'부터 '+nextBand.multiplier+'배':'');
  $('result-level').textContent=start<profile.level?'Lv.'+start+' → Lv.'+profile.level:'Lv.'+profile.level;
- $('result-points').textContent='남은 성장 포인트 '+game.growthPoints(profile)+' · 스킬 강화 '+points;
+ $('result-points').textContent='남은 '+growthBudget()+' · 스킬 강화 '+points;
  const unlocked=game.skillMilestones(start,profile.level),names=unlocked.map(row=>row.label),shown=names.slice(0,3).join(' · ')+(names.length>3?' 외 '+(names.length-3)+'개':'');
  $('result-unlocks').hidden=!names.length;$('result-unlocks').textContent=names.length?'새 해금 · '+shown:'';$('result-unlocks').setAttribute('title',names.join(' · '));
  $('result-skills').hidden=false;
@@ -1571,10 +1583,10 @@ function refreshBuildSystem(){
   $('build-tab-'+n).textContent=b?.name??game.BUILD_NAMES[n];$('build-tab-'+n).setAttribute('aria-pressed',String(n===buildTab));$('build-card-'+n).hidden=n!==buildTab;
   $('build-name-'+n).placeholder=game.BUILD_NAMES[n];
   if(b){
-   const load=b.skill?.loadout??profile.skillBook.loadout;$('build-skill-'+n).textContent='스킬 우선순위 · '+[...load.active,...load.passive,...load.ultimate].filter(Boolean).map(id=>game.SKILL_BY_ID[id]?.name??id).join(' → ');
+   const load=b.skill?.loadout??profile.skillBook.loadout;const tree={growthTree:b.tree??[]};$('build-skill-'+n).textContent='트리 '+game.GROWTH_TREE.map(r=>r.name+' '+game.branchPoints(tree,r.id)+'P').join(' ')+' · 스킬 '+[...load.active,...load.passive,...load.ultimate].filter(Boolean).map(id=>game.SKILL_BY_ID[id]?.name??id).join(' → ');
    const preview={...profile,equipment:game.restoreEquipment(b.equipment,profile.inventory,profile.characterId)},powers=game.buildEffects(preview);$('build-effects-'+n).textContent=Object.entries(powers).map(([id,count])=>game.BUILD_EFFECTS[id].name+' ×'+count).join(' · ')||'추가 각인 없음';
    const comparison=game.compareEquipment(profile,preview.equipment);$('build-compare-'+n).textContent='교체 후 공격 '+Math.round(comparison.after.damage)+' · 체력 '+Math.round(comparison.after.maxHp)+' · 치명타 '+Math.round(comparison.after.crit*100)+'%';
-  }else{$('build-skill-'+n).textContent='현재 장비·스킬·자동 정책을 함께 저장합니다.';$('build-effects-'+n).textContent='같은 장비는 여러 프리셋에서 공유합니다.';}
+  }else{$('build-skill-'+n).textContent='현재 장비·스킬·성장 트리·자동 정책을 함께 저장합니다.';$('build-effects-'+n).textContent='같은 장비는 여러 프리셋에서 공유합니다.';}
   $('build-save-'+n).disabled=state.phase!=='camp';$('build-delete-'+n).disabled=!b||state.phase!=='camp';
  }
  for(const id of ['entry-build','home-entry-build'])if(document.activeElement!==$(id))$(id).value=!match?'current':String(profile.selectedBuild);

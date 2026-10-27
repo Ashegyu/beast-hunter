@@ -1,0 +1,29 @@
+{
+  "id": "node-6",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production skill-tree node icons (round medallion emblems) for a dark fantasy 2D action RPG whose heroine Lirian is a crimson-moon swordswoman. Image1 is the existing skill icon sheet of this game: match its painterly dark fantasy rendering, black-crimson mood, silver blades, glowing light and sharp detail, but each new icon is a ROUND MEDALLION, not a square card. Create ONE transparent RGBA square image (2048x2048 or larger) with exactly SEVEN separate round emblems in an invisible 4 columns x 2 rows grid, filled left to right, top row first; the bottom-right cell stays completely EMPTY. Each emblem is a perfect circle centered in its own cell, filling about 70% of the cell, with wide transparent margins, never touching other emblems or the canvas edge. Every emblem: a thin metal rim (plain dark-silver rim, simpler and humbler than a major emblem), a dark inner disc, and ONE bold simple central symbol that stays readable when shrunk to 20 pixels (strong silhouette, high contrast, little clutter). Outside the circles: actual alpha transparency, no background, no floor, no shadow, no text, no letters, no numbers, no labels, no characters or faces.\nEMBLEMS in order: (1) SIMPLE stat emblem with plain dark-silver rim: an upward sword. (2) SIMPLE stat emblem with plain dark-silver rim: double chevrons forward. (3) SIMPLE stat emblem with plain dark-silver rim: a four-point star spark. (4) SIMPLE stat emblem with plain dark-silver rim: a downward blade over a half-empty red bar. (5) SIMPLE stat emblem with plain dark-silver rim: three stacked slashes, the last bright. (6) SIMPLE stat emblem with plain dark-silver rim: a long arrow-tipped reach line. (7) SIMPLE stat emblem with plain dark-silver rim: a feather with motion lines.",
+  "referenceImages": [
+    {
+      "path": "art/growth0139/style-ref.png",
+      "sha256": "21cdf287f3369e3e322f0bdf611754a6349864a1a86ba3ea32b757b7dfe03952"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1774,
+        887
+      ],
+      "transparent": 0.422,
+      "parts": 7,
+      "seconds": 69,
+      "sha256": "98cc7095836be6285f9fbc98704c2a83e9f16190b3ae2a9459436f86858471b5"
+    }
+  ],
+  "final": {
+    "path": "art/growth0139/node-6.png",
+    "sha256": "98cc7095836be6285f9fbc98704c2a83e9f16190b3ae2a9459436f86858471b5"
+  }
+}

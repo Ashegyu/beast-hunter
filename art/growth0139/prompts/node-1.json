@@ -1,0 +1,29 @@
+{
+  "id": "node-1",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production skill-tree node icons (round medallion emblems) for a dark fantasy 2D action RPG whose heroine Lirian is a crimson-moon swordswoman. Image1 is the existing skill icon sheet of this game: match its painterly dark fantasy rendering, black-crimson mood, silver blades, glowing light and sharp detail, but each new icon is a ROUND MEDALLION, not a square card. Create ONE transparent RGBA square image (2048x2048 or larger) with exactly SEVEN separate round emblems in an invisible 4 columns x 2 rows grid, filled left to right, top row first; the bottom-right cell stays completely EMPTY. Each emblem is a perfect circle centered in its own cell, filling about 70% of the cell, with wide transparent margins, never touching other emblems or the canvas edge. Every emblem: a thin metal rim (blood-crimson enamel rim with dark iron), a dark inner disc, and ONE bold simple central symbol that stays readable when shrunk to 20 pixels (strong silhouette, high contrast, little clutter). Outside the circles: actual alpha transparency, no background, no floor, no shadow, no text, no letters, no numbers, no labels, no characters or faces.\nEMBLEMS in order: (1) crimson rim: a single honed sword blade with a bright cutting edge. (2) crimson rim: three quick overlapping sword slashes with speed streaks. (3) crimson rim: a sword striking down through a blood-red full moon. (4) KEYSTONE, larger ornate spiked crimson rim with a small crown of blades: a frenzied whirl of many blades in a red storm. (5) crimson rim: a narrowed glowing eye with a cross-hair weak-point mark. (6) crimson rim: an executioner great-axe-like sword over a cracked skull-free broken shield. (7) KEYSTONE, larger ornate spiked crimson rim with a small crown of blades: a guillotine-like falling blade severing a red line.",
+  "referenceImages": [
+    {
+      "path": "art/growth0139/style-ref.png",
+      "sha256": "21cdf287f3369e3e322f0bdf611754a6349864a1a86ba3ea32b757b7dfe03952"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1774,
+        887
+      ],
+      "transparent": 0.46,
+      "parts": 7,
+      "seconds": 73,
+      "sha256": "051fda9447b5a1b001d624fe767d88772dc3915c90e37530bf8257053140de67"
+    }
+  ],
+  "final": {
+    "path": "art/growth0139/node-1.png",
+    "sha256": "051fda9447b5a1b001d624fe767d88772dc3915c90e37530bf8257053140de67"
+  }
+}

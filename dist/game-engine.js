@@ -18,8 +18,8 @@ export * from './monster-fx.js?v=0.70.0';
 export * from './combat-feedback.js';
 export * from './ultimate-video.js';
 export * from './skill-motion.js';
-import * as skills from './combat-skills.js?v=0.137.0';
-export * from './combat-skills.js?v=0.137.0';
+import * as skills from './combat-skills.js?v=0.139.0';
+export * from './combat-skills.js?v=0.139.0';
 import {MATERIALS,MATERIAL_BY_ID,MATERIAL_LIMIT,emptyMaterials,rollMaterials,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.136.0';
 export {MATERIALS,MATERIAL_BY_ID,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.136.0';
 import {equipmentSynergies} from './equipment-synergies.js?v=0.136.2';
@@ -34,15 +34,15 @@ import { WORLD_BOUNDS, GROUND_DEPTH_SCALE } from './world.js';
 import { CHAPTERS, CHAPTERS_PER_THEME, THEMES, THREAT, chapterTheme, MONSTERS, chapterMonsterPool, EQUIPMENT_ART, ALL_EQUIPMENT_ART, equipmentArt } from './chapters.js?v=0.136.2';
 import { STAGES_PER_CHAPTER, battlePlan, stageWaveCount, waveComposition } from './battle-plans.js?v=0.135.0';
 import { RAID_POWER_ROLL, raidPowerRoll } from './loot.js?v=0.136.2';
-import * as growth from './growth.js?v=0.135.0';
-export * from './growth.js?v=0.135.0';
+import * as growth from './growth.js?v=0.139.0';
+export * from './growth.js?v=0.139.0';
 import * as stars from './stage-stars.js?v=0.135.0';
 import * as seals from './seals.js?v=0.136.2';
 import * as rush from './boss-rush.js?v=0.136.0';
 export * from './boss-rush.js?v=0.136.0';
 export * from './seals.js?v=0.136.2';
-import * as gates from './stage-gates.js?v=0.135.0';
-export * from './stage-gates.js?v=0.135.0';
+import * as gates from './stage-gates.js?v=0.139.0';
+export * from './stage-gates.js?v=0.139.0';
 export * from './stage-stars.js?v=0.135.0';
 export { RAID_POWER_ROLL, RAID_ROLL_SKEW, raidPowerRoll } from './loot.js?v=0.136.2';
 import { affixCap, INVENTORY_LIMIT, MAX_PENDING_LOOT, LEGENDARY_PITY_LIMIT, huntGrade, ITEM_CATALOG, ANCIENT_CATALOG, ancientIdOfBase, rollAncient, BOSS_LOOT, bossLootPool, discoverAncient, targetAncient, setAncientTarget, ancientDefinition, ancientForLegacy, effectiveAffix, RARITIES, RARITY_INFO, rollItem, rollStageItem, rollAccessory, storeItem, salvageValue, uniqueEffect, uniqueLoadout, equippedUniqueEffect, UNIQUE_EFFECTS, itemSet, setBonusStats, EQUIPMENT_SETS, SET_SLOTS } from './loot.js?v=0.136.2';
@@ -192,7 +192,7 @@ export function restoreProfile(raw,now=Date.now()){
   p.difficultyProgress=[1,2].map(mode=>STAGES.map(({id})=>data.version>=9&&bossModeAvailable(p,id,mode)?integer(data.difficultyProgress?.[mode-1]?.[id-1],0,p.bossMastery[id-1]>=mode?STAGES_PER_CHAPTER:STAGES_PER_CHAPTER-1):0));
   // Alpha 0.132 별: only cleared stages keep stars; saves without the field get ★1 on every cleared stage. Chests need their stars.
   p.stageStars=stars.cleanStageStars(data.stageStars,STAGES.map(({id})=>Math.max(...[0,1,2].map(d=>completedStages(p,id,d)))));p.starChests=stars.cleanStarChests(data.starChests,p);
-  p.training=growth.cleanTraining(data.training,p.level,growth.bonusGrowthPoints(p));p.growthTree=growth.fitTree(p,data.growthTree);
+  p.training=growth.cleanTraining(data.training,p.level);p.growthTree=growth.fitTree(p,data.growthTree);
   p.totalKills=integer(data.totalKills,0,1e9);p.hunts=integer(data.hunts,0,1e7);p.lastSeenAt=clamp(number(data.lastSeenAt,now),0,number(now));
   const seen=new Set();for(const rawItem of (Array.isArray(data.inventory)?data.inventory:[])){const item=cleanItem(rawItem,data.version);if(item&&!seen.has(item.id)&&p.inventory.length<INVENTORY_LIMIT){p.inventory.push(item);seen.add(item.id);}}
   p.equipment=restoreEquipment(data.equipment,p.inventory,p.characterId);
@@ -224,10 +224,10 @@ export function equipmentBonuses(p){const result={damage:0,hp:0,speed:0,crit:0,r
 // Pieces worn per region set (Alpha 0.108), and each set's progress for the UI.
 export function equippedSetCounts(p){const counts={};for(const item of p.inventory??[]){const set=itemSet(item);if(set&&isEquippedItem(p,item))counts[set]=(counts[set]??0)+1;}return counts;}
 export function equippedSets(p){const counts=equippedSetCounts(p);return Object.entries(counts).map(([id,count])=>({set:EQUIPMENT_SETS[id],count,active:EQUIPMENT_SETS[id].bonuses.filter(b=>count>=b.pieces)})).sort((a,b)=>b.count-a.count);}
-export function playerStats(p){const b=equipmentBonuses(p),t=p.training??growth.emptyTraining(),tree=growth.treeBonus(p),base=growth.levelGrowth(p.level),attackSpeed=1+base.attackSpeed+t.tempo*.01+tree.attackSpeed+b.attackSpeed/100;return{
+export function playerStats(p){const b=equipmentBonuses(p),t=growth.trainingRanks(p),tree=growth.treeBonus(p),base=growth.levelGrowth(p.level),attackSpeed=1+base.attackSpeed+t.tempo*.01+tree.attackSpeed+b.attackSpeed/100;return{
   maxHp:(150+(p.level-1)*6+base.hp+t.vitality*12+b.hp)*(1+b.hpPct+tree.hpPct),
   damage:(24*(1+(p.level-1)*.035+base.damage+t.power*.05)+b.damage)*(1+b.damagePct+tree.damagePct),
-  range:135*(1+base.range+b.range/100),speed:280*(1+base.speed+t.stride*.01+b.speed/100),
+  range:135*(1+base.range+tree.range+b.range/100),speed:280*(1+base.speed+t.stride*.01+tree.speed+b.speed/100),
   attackDuration:.32/attackSpeed,attackSpeed,
   thunderCooldown:4.8,thunderDamage:62+b.damage*1.8,
   crit:Math.min(.5,.05+t.precision*.005+tree.crit+b.crit/100),reduction:Math.min(.5,base.reduction+t.guard*.01+tree.reduction+b.reduction/100),collection:110+t.stride*5+(equippedUniqueEffect(p,'charm')?.id==='magnet'?UNIQUE_EFFECTS.magnet.range:0)+b.collection,regeneration:.65+base.regeneration+tree.regeneration+b.regeneration};}
@@ -472,6 +472,8 @@ export function learnGrowthNode(s,id){if(s.phase!=='camp'||!growth.learnNode(s.p
 export function claimStarChest(s,chapter,tier){const p=s.profile;if(s.phase!=='camp'||stars.chestStatus(p,chapter,tier))return null;
  const r=stars.starChestReward(chapter,tier,STAGES[chapter-1].multiplier);p.starChests[chapter-1]|=1<<(tier-1);p.gold=Math.min(1e8,p.gold+r.gold);p.cores=Math.min(1e6,p.cores+r.cores);
  for(const [id,n] of Object.entries(r.materials))p.materials[id]=Math.min(MATERIAL_LIMIT,p.materials[id]+n);refreshStats(s,true);return r;}
+// Alpha 0.139: a learned node can be given back when nothing beyond it hangs on it.
+export function forgetGrowthNode(s,id){if(s.phase!=='camp'||!growth.forgetNode(s.profile,id))return false;refreshStats(s,true);return true;}
 export function resetGrowthTree(s){if(s.phase!=='camp')return false;growth.resetTree(s.profile);refreshStats(s,true);return true;}
 function refreshStats(s,heal=false){const old=s.player.maxHp,stats=playerStats(s.profile);s.player.maxHp=stats.maxHp;s.player.hp=heal?stats.maxHp:clamp(s.player.hp+Math.max(0,stats.maxHp-old),0,stats.maxHp);let remaining=stats.maxHp*.25;for(const slot of ANCIENT_SLOTS){const shield=s.uniqueState.ancientShields[slot];if(shield){shield.amount=Math.min(shield.amount,remaining);remaining-=shield.amount;if(shield.amount<=0)s.uniqueState.ancientShields[slot]=null;}}}
 // Alpha 0.136 인장 성장 (camp only): shards + gold per level; levels 5 and 10 add an effect.

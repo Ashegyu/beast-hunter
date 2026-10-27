@@ -58,8 +58,8 @@ test('chapter chests: 10·20·30 stars, camp only, once each; the 30-star chest 
  // Later chapters pay more.
  assert.ok(g.starChestReward(50,1,g.STAGES[49].multiplier).gold>g.starChestReward(1,1,g.STAGES[0].multiplier).gold*5);
  const points=g.growthPoints(p);for(let n=6;n<=10;n++)g.awardStars(p,12,n,7);g.launch(s,12);assert.equal(g.claimStarChest(s,12,3),null);g.returnToCamp(s);
- const three=g.claimStarChest(s,12,3);assert.equal(three.growthPoints,1);assert.equal(g.growthPoints(p),points+1);assert.equal(g.growthPointsTotal(p),p.level);
- // The bonus point survives a save: training that spends it is kept.
- for(const id of g.TRAINING_IDS)while(g.trainStat(s,id)){}assert.equal(g.growthPoints(p),0);
- const r=g.restoreProfile(g.encodeProfile(p,1000),1000);assert.equal(r.starChests[11],7);assert.equal(g.trainingSpent(r),g.trainingSpent(p));assert.equal(g.growthPoints(r),0);
+ const three=g.claimStarChest(s,12,3);assert.equal(three.growthPoints,1);assert.equal(g.growthPoints(p),points+1);assert.equal(g.treePointsTotal(p),Math.floor((p.level-1)/2)+1,'★30 상자는 트리 포인트');
+ // The bonus point survives a save: a tree that spends it is kept.
+ for(let any=true;any;){any=false;for(const id of g.TREE_ORDER)if(g.learnGrowthNode(s,id))any=true;}assert.equal(g.treePoints(p),0);
+ const r=g.restoreProfile(g.encodeProfile(p,1000),1000);assert.equal(r.starChests[11],7);assert.deepEqual(r.growthTree,p.growthTree);assert.equal(g.treePoints(r),0);
 });
