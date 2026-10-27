@@ -131,3 +131,11 @@ test('four regular skill slots open at Lv.1/5/15/30 and passives stay at three (
  // The camp milestone list announces the new slots.
  assert.ok(g.skillMilestones(14,30).some(r=>r.kind==='slot'&&r.level===15&&r.label==='일반 슬롯 3'));assert.ok(g.skillMilestones(29,30).some(r=>r.kind==='slot'&&r.label==='일반 슬롯 4'));
 });
+test('0.139: auto skills hold burst skills and the ultimate for a 방어 태세 boss weak point unless they would be ready again',()=>{
+ const p=g.createProfile(1000);p.level=200;p.clearedStage=60;p.unlockedStage=60;p.stageProgress=g.STAGES.map(()=>10);p.bossMastery=g.STAGES.map(()=>0);p.skillBook=g.restoreSkillBook(null,200);
+ const ch=g.STAGES.find(c=>c.bossRule==='defense').id,s=g.createGame(p);g.applySkillExample(s,3);for(const id of p.skillBook.loadout.active)while(g.upgradeSkill(s,id)){}
+ const run=g.createGame(p);run.auto=true;assert.ok(g.launch(run,ch,10));for(let i=0;i<120&&!run.enemies.some(e=>e.boss);i++)g.advanceGame(run,.025);
+ run.run.time=12;assert.equal(g.bossStanceLeft(run),8);run.run.time=21;assert.equal(g.bossStanceLeft(run),0,'약점 노출');
+ assert.ok(g.STANCE_BURST.has('bloodblade')&&!g.STANCE_BURST.has('mark'));
+ const normal=g.createGame(p);assert.ok(g.launch(normal,1,1));assert.equal(g.bossStanceLeft(normal),0);
+});

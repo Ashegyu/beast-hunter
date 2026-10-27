@@ -248,8 +248,12 @@ export function gearSkill(s,n,h){const list=h.gearSkills?.(s);if(!list?.length)r
  for(const g of list){if(!skillReady(s,g.id))continue;const target=nearestTarget(s,n,skillReach(s.profile,g.id));if(target&&castSkill(s,g.id,{x:n.x,y:n.y,targetId:target.id},h))return true;}
  return false;
 }
-export function autoSkill(s,n,h){const p=s.player,r=s.skillRuntime,b=s.profile.skillBook,near=s.enemies.filter(e=>live(e)&&distance(e,p)<240),boss=near.some(e=>e.boss||e.elite);
- const ultimate=b.loadout.ultimate[0];if(ultimate&&b.auto.ultimate!=='off'&&(b.auto.ultimate==='any'||boss)&&castSkill(s,ultimate,n,h))return true;
+// Alpha 0.139 방어 태세: while a defense-rule boss guards (70% less damage), burst skills and the ultimate wait for the 4-second
+// weak point unless they would be ready again before it opens (cooldown shorter than the guard left). 월영 표식 still goes early.
+export const STANCE_BURST=Object.freeze(new Set(['draw','eclipse','plunge','bloodblade','echo','imbalance','triple','crescent']));
+const holdForWeakPoint=(s,id,left)=>left>0&&skillCooldown(s.profile,id)>left;
+export function autoSkill(s,n,h){const p=s.player,r=s.skillRuntime,b=s.profile.skillBook,near=s.enemies.filter(e=>live(e)&&distance(e,p)<240),boss=near.some(e=>e.boss||e.elite),stance=h.stanceLeft?.(s)??0;
+ const ultimate=b.loadout.ultimate[0];if(ultimate&&b.auto.ultimate!=='off'&&(b.auto.ultimate==='any'||boss)&&!holdForWeakPoint(s,ultimate,stance)&&castSkill(s,ultimate,n,h))return true;
  // An equipped 파갑참 goes first whenever a guarded or still-armored enemy is within its reach.
  if(b.loadout.active.includes('breach')&&p.stamina>=skillCost(s.profile,'breach')+22){const reach=skillReach(s.profile,'breach'),shield=s.enemies.find(e=>live(e)&&(e.guard>0||e.plate>0&&!(e.plateBrokenUntil>s.run.time))&&distance(e,p)<=reach);if(shield&&castSkill(s,'breach',unit(shield.x-p.x,shield.y-p.y),h))return true;}
  // The 괴수 기술 goes whenever it is ready and something is in reach (it has its own slot and cooldown).
@@ -260,6 +264,7 @@ export function autoSkill(s,n,h){const p=s.player,r=s.skillRuntime,b=s.profile.s
   if(id==='gather'){let crowd=0;for(const e of s.enemies)if(live(e)&&distance(e,p)<=reach&&++crowd>=3)break;if(crowd<3)continue;}
   if(id==='parry'&&!near.some(e=>e.action==='windup'&&e.windup-e.actionTime<.24))continue;
   if(id==='mark'&&!boss)continue;
+  if(STANCE_BURST.has(id)&&holdForWeakPoint(s,id,stance))continue;
   const target=id==='mark'?s.enemies.find(e=>live(e)&&(e.boss||e.elite)&&distance(e,p)<=reach):nearestTarget(s,n,reach);if(reach&&!target)continue;if(id==='mark'&&target.skillMark?.expires>s.run.time)continue;
   if(['draw','eclipse'].includes(id)&&near.some(e=>e.action==='windup'))continue;
   if(r.stanceUntil>s.run.time&&(p.stamina<65||p.hp/p.maxHp<.5))continue;
