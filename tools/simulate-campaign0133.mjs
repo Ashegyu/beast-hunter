@@ -40,13 +40,21 @@ const p=g.createProfile(1000);p.hunts=SEED;const s=g.createGame(p);s.auto=true;l
 // only when every chapter of the one below is cleared, then chapter by chapter), with the same retry/farming/STUCK rules.
 const MODES=process.env.MODES==='1',TAG=['ch','e','n'];
 if(DUMP)fs.mkdirSync(DUMP,{recursive:true});
+// ENDGAME=1 (0.139): in 정예/악몽 every attempt is one in-game day: first that day's 보스 러시 entries (seal shards and seals) and,
+// across a week, the three raids three times each, then 인장 성장 on the worn seal as far as shards and gold allow.
+const ENDGAME=process.env.ENDGAME==='1';let simNow=Date.UTC(2026,0,5,3),rushes=0,raidRuns=0,raidClears=0;
+function fight(){for(let i=0;i<24000&&s.phase==='playing';i++)g.advanceGame(s,.05);const won=s.phase==='victory';g.returnToCamp(s);return won;}
+function endgameDay(){simNow+=864e5;
+ while(g.launchBossRush(s,simNow)){fight();rushes++;}
+ for(const r of g.RAIDS)while(g.launchRaid(s,r.id,simNow)){prepare(s,null);if(fight())raidClears++;raidRuns++;}
+ prepare(s,null);const seal=p.equipment.special;if(seal)while(g.growSealItem(s,seal).ok){}}
 const legs=[[0,LAST],...(MODES&&LAST>=g.STAGES.length?[[1,g.STAGES.length],[2,g.STAGES.length]]:[])];
 for(const [d,last] of legs){if(stuck)break;
 for(let ch=1;ch<=last&&!stuck;ch++){let won=false,tries=0;
  if(DUMP)fs.writeFileSync(path.join(DUMP,`${TAG[d]}${ch}.json`),g.encodeProfile(p,1000));
  if(d&&!g.bossModeAvailable(p,ch,d)){stuck={difficulty:d,chapter:ch,stage:0,gate:null,closed:true};break;}
  const failSeen={};
- for(let a=0;!won;a++){const from=g.stageLimit(p,ch,d)||1;prepare(s,nextGate(ch,from));attempts++;tries++;g.launch(s,ch,from,null,d);let hpStage=s.run.stage,hpPrev=s.player.hp,hurt=0,heal=0;for(let i=0;i<24000&&s.phase==='playing';i++){g.advanceGame(s,.05);if(HPLOG&&!d){if(s.run.stage!==hpStage||s.phase!=='playing'){hpLog.push([ch,hpStage,hurt/s.player.maxHp,heal/s.player.maxHp]);hpStage=s.run.stage;hurt=heal=0;hpPrev=s.player.hp;}else{const dh=s.player.hp-hpPrev;if(dh<0)hurt-=dh;else heal+=dh;hpPrev=s.player.hp;}}if(STARS&&!d)for(const f of s.effects)if(f.type==='stageClear'&&!starSeen.has(f.id)){starSeen.add(f.id);starLog.push([ch,f.stage,f.stars]);}}
+ for(let a=0;!won;a++){if(ENDGAME&&d)endgameDay();const from=g.stageLimit(p,ch,d)||1;prepare(s,nextGate(ch,from));attempts++;tries++;g.launch(s,ch,from,null,d);let hpStage=s.run.stage,hpPrev=s.player.hp,hurt=0,heal=0;for(let i=0;i<24000&&s.phase==='playing';i++){g.advanceGame(s,.05);if(HPLOG&&!d){if(s.run.stage!==hpStage||s.phase!=='playing'){hpLog.push([ch,hpStage,hurt/s.player.maxHp,heal/s.player.maxHp]);hpStage=s.run.stage;hurt=heal=0;hpPrev=s.player.hp;}else{const dh=s.player.hp-hpPrev;if(dh<0)hurt-=dh;else heal+=dh;hpPrev=s.player.hp;}}if(STARS&&!d)for(const f of s.effects)if(f.type==='stageClear'&&!starSeen.has(f.id)){starSeen.add(f.id);starLog.push([ch,f.stage,f.stars]);}}
   if(s.phase==='victory'){won=true;g.returnToCamp(s);break;}
   const st=s.run.stage,k=TAG[d]+ch+'-'+st,gate=g.stageGate(ch,st);fails[k]=(fails[k]??0)+1;failSeen[st]=(failSeen[st]??0)+1;g.returnToCamp(s);
   if(failSeen[st]>=(Number(process.env.STUCK_AFTER)||15)){stuck={difficulty:d,chapter:ch,stage:st,gate:gate?.type??null};break;}
@@ -54,10 +62,11 @@ for(let ch=1;ch<=last&&!stuck;ch++){let won=false,tries=0;
   if(SPEC)for(const id of ['enhance','gold','promote']){prepare(s,null);if(!g.launchDungeon(s,id,g.dungeonLimit(p,id)))continue;for(let i=0;i<2400&&s.phase==='playing';i++)g.advanceGame(s,.05);dungeons++;g.returnToCamp(s);}}
  const gear=Object.values(p.equipment).filter(Boolean).map(id=>p.inventory.find(i=>i.id===id));const enh=gear.reduce((a,i)=>a+(i.enhancement??0),0)/Math.max(1,gear.length),rar=gear.reduce((a,i)=>a+i.rarity,0)/Math.max(1,gear.length);
  const stt=g.playerStats(p);
- console.log(`${POLICY} seed${SEED} ${TAG[d]}${ch} ${won?'clear':'STUCK'} tries=${tries} Lv${p.level} dmg=${Math.round(stt.damage)} hp=${Math.round(stt.maxHp)} gear+${enh.toFixed(1)} r${rar.toFixed(1)} ${Math.round((Date.now()-t0)/1000)}s`);
+ console.log(`${POLICY} seed${SEED} ${TAG[d]}${ch} ${won?'clear':'STUCK'} tries=${tries} Lv${p.level} dmg=${Math.round(stt.damage)} hp=${Math.round(stt.maxHp)} gear+${enh.toFixed(1)} r${rar.toFixed(1)}${ENDGAME&&d?` day${Math.round((simNow-Date.UTC(2026,0,5,3))/864e5)} seal${p.inventory.find(i=>i.id===p.equipment.special)?.seal?.level??'-'} anc${p.inventory.filter(i=>i.rarity===5&&Object.values(p.equipment).includes(i.id)).length}`:''} ${Math.round((Date.now()-t0)/1000)}s`);
 }}
 console.log(`${POLICY} seed${SEED} attempts=${attempts} farms=${farms} dungeons=${dungeons} stuck=${JSON.stringify(stuck)} fails=${JSON.stringify(fails)}`);
 if(MODES){const cleared=d=>p.bossMastery.filter(m=>m>=d).length;console.log('난이도 진행: 일반',cleared(0),'· 정예',cleared(1),'· 악몽',cleared(2),'챕터');}
+if(ENDGAME){const seal=p.inventory.find(i=>i.id===p.equipment.special);console.log('엔드 콘텐츠:',Math.round((simNow-Date.UTC(2026,0,5,3))/864e5),'일 · 보스 러시',rushes,'회 · 레이드',raidRuns,'회(클리어',raidClears+') · 인장',seal?seal.seal.grade+' '+seal.seal.level+'단계':'없음','· 고대',p.inventory.filter(i=>i.rarity===5&&Object.values(p.equipment).includes(i.id)).length,'점 착용');}
 if(STARS){const rate=key=>{const out={};for(const [c,st,m] of starLog){const k=key(c,st);out[k]??={n:0,fast:0,hp:0};out[k].n++;if(m&2)out[k].fast++;if(m&4)out[k].hp++;}return Object.entries(out).map(([k,v])=>k+':'+v.n+'회 30초 '+Math.round(v.fast/v.n*100)+'% 체력 '+Math.round(v.hp/v.n*100)+'%').join(' | ');};
  console.log('별 스테이지별',rate((c,st)=>st));console.log('별 지역별',rate(c=>Math.ceil(c/10)+'지역'));}
 if(HPLOG){const by={};for(const [c,st,h,r] of hpLog){const k=Math.ceil(c/10)+'지역 '+(st===10?'보스':'일반');by[k]??={n:0,h:0,r:0};by[k].n++;by[k].h+=h;by[k].r+=r;}
