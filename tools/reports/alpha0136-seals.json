@@ -14,11 +14,16 @@
       "sheet": "seal-3",
       "source": "art/seals0136/seal-3.png",
       "sha256": "b3ab71a502c9722f952840bf8a37dbffa5c036247bba0b92a2b6ab264c18b289"
+    },
+    {
+      "sheet": "seal-4",
+      "source": "art/seals0136/seal-4.png",
+      "sha256": "62b9694a5701f52c0f9ea10486331b07a6527b18999fa07fa78ae375ea8a0577"
     }
   ],
   "page": [
     1240,
-    752
+    1000
   ],
   "frames": {
     "seal_life": {
@@ -160,7 +165,37 @@
       "pivotX": 113.0,
       "pivotY": 237,
       "bodyHeight": 236
+    },
+    "seal_lirian_crescent": {
+      "image": "equipment-seals-v0136.png",
+      "x": 921,
+      "y": 504,
+      "w": 203,
+      "h": 240,
+      "pivotX": 101.5,
+      "pivotY": 237,
+      "bodyHeight": 236
+    },
+    "seal_lirian_parry": {
+      "image": "equipment-seals-v0136.png",
+      "x": 8,
+      "y": 752,
+      "w": 204,
+      "h": 240,
+      "pivotX": 102.0,
+      "pivotY": 237,
+      "bodyHeight": 236
+    },
+    "seal_lirian_awaken": {
+      "image": "equipment-seals-v0136.png",
+      "x": 220,
+      "y": 752,
+      "w": 203,
+      "h": 240,
+      "pivotX": 101.5,
+      "pivotY": 237,
+      "bodyHeight": 236
     }
   },
-  "webpBytes": 1001376
+  "webpBytes": 1243074
 }

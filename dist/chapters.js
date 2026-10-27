@@ -1,5 +1,5 @@
 import {equipmentFamily} from './equipment-slots.js?v=0.136.0';
-import {SEAL_EFFECTS,sealArtId} from './seals.js?v=0.136.1';
+import {SEAL_EFFECTS,sealArtId} from './seals.js?v=0.136.2';
 import {EQUIPMENT_SETS,SET_SLOTS,CHAPTER_SETS,setArtId} from './equipment-sets.js?v=0.135.0';
 // Sixty chapters in six regions of ten: 1–10 forest, 11–20 fire and ice (11–15 fire,
 // 16–20 ice), 21–30 darkness (Alpha 0.107), 31–40 sunken kingdom, 41–50 storm sky isles,

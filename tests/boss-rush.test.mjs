@@ -12,13 +12,20 @@ function profile(cleared=10){const p=g.createProfile(1000);p.unlockedStage=clear
 function rush({cleared=10,durable=false,scale={hp:1e-4,damage:0}}={}){const s=g.createGame(profile(cleared),{durable});assert.equal(g.launchBossRush(s,now),true);s.enemyScale=scale;return s;}
 const run=(s,seconds,until=()=>false)=>{for(let t=0;t<seconds-1e-9&&!until();t+=.025)g.advanceGame(s,.025);};
 
-test('seal grades are effect kinds: 하옵 survival stats, 중옵 attack stats, 상옵 special effects, drawn 65/28/7',()=>{
- assert.deepEqual(g.SEAL_GRADES.map(r=>r.chance),[.65,.28,.07]);
- assert.equal(g.rollSealGrade(0),0);assert.equal(g.rollSealGrade(.6499),0);assert.equal(g.rollSealGrade(.65),1);assert.equal(g.rollSealGrade(.9299),1);assert.equal(g.rollSealGrade(.93),2);assert.equal(g.rollSealGrade(.99999),2);
+test('seal grades are effect kinds: 하옵 survival stats, 중옵 attack stats, 상옵 special effects, 전용 character effects, drawn 65/27/6/2',()=>{
+ assert.deepEqual(g.SEAL_GRADES.map(r=>r.chance),[.65,.27,.06,.02]);assert.ok(Math.abs(g.SEAL_GRADES.reduce((a,r)=>a+r.chance,0)-1)<1e-9);
+ assert.equal(g.rollSealGrade(0),0);assert.equal(g.rollSealGrade(.6499),0);assert.equal(g.rollSealGrade(.65),1);assert.equal(g.rollSealGrade(.9199),1);assert.equal(g.rollSealGrade(.9201),2);assert.equal(g.rollSealGrade(.9799),2);assert.equal(g.rollSealGrade(.9801),3);assert.equal(g.rollSealGrade(.99999),3);
  for(const e of g.sealPool(0))assert.ok(Object.keys(e.stats).every(k=>['hpPct','reduction','speed','collection'].includes(k)),e.id);
  for(const e of g.sealPool(1))assert.ok(Object.keys(e.stats).every(k=>['damagePct','crit','attackSpeed','range'].includes(k)),e.id);
  for(const e of g.sealPool(2))assert.ok(e.power&&!e.stats,e.id);
  const ids=g.SEAL_EFFECTS.map(e=>e.id);assert.equal(new Set(ids).size,ids.length);
+ // 전용 (Alpha 0.136.2): each character's own special effects, only for that character's seals.
+ const own=g.sealPool(3,'lirian');assert.equal(own.length,3);assert.ok(own.every(e=>e.character==='lirian'&&e.power));assert.equal(g.sealPool(3,'someone').length,0);assert.ok(g.sealPool(2,'someone').length===6);
+ const exclusive=g.rollSeal({id:8},(()=>{const v=[.99,.5];return ()=>v.shift();})());assert.equal(exclusive.seal.grade,3);assert.equal(exclusive.rarity,4);assert.equal(exclusive.characterId,'lirian');assert.match(exclusive.name,/^리리안의 /);assert.ok(own.some(e=>e.id===exclusive.seal.effects[0]));
+ // A character with no 전용 effects yet gets a 상옵 effect; growth never adds another character's effect.
+ const fallback=g.rollSeal({id:9,characterId:'someone'},(()=>{const v=[.99,.5];return ()=>v.shift();})());assert.equal(fallback.seal.grade,2);
+ const grown=g.makeSeal({id:10,effect:'lirian_parry'});for(let n=0;n<10;n++)g.growSeal(grown);assert.deepEqual(grown.seal.effects.map(id=>g.SEAL_EFFECT_BY_ID[id].grade),[3,1,2]);
+ const restored=g.restoreProfile({...JSON.parse(g.encodeProfile(g.createProfile(1000),1000)),inventory:[{...grown,characterId:'someone'}]},1000).inventory[0];assert.equal(restored.characterId,'lirian');assert.deepEqual(restored.seal,grown.seal);
  // A seal is a Lilian 전용장비 with no base stats; its grade sets name, art and rarity colour.
  const seal=g.rollSeal({id:7,tier:2},(()=>{const v=[.95,.4];return ()=>v.shift();})());
  assert.equal(seal.slot,'special');assert.equal(seal.characterId,'lirian');assert.deepEqual(seal.affixes,{});assert.equal(seal.seal.grade,2);assert.equal(seal.artId,'seal_'+seal.seal.effects[0]);assert.equal(seal.seal.effects.length,1);assert.ok(g.SEAL_EFFECT_BY_ID[seal.seal.effects[0]].power);
@@ -33,6 +40,8 @@ test('worn seals add their stats and 상옵 powers ride the ancient trigger path
  // 각성 고동 fires on its own in combat: timed fury and haste.
  g.launch(s,1,1);s.auto=true;s.enemyScale={hp:50,damage:0};run(s,11);
  assert.ok(s.uniqueState.ancientBuffs?.fury?.value>0);assert.ok(s.uniqueState.ancientBuffs?.haste?.value>0);
+ // Strike triggers (3연격 마무리) reach seals too: 0.136.1 skipped them, so 적월 낙하 and 적월 검무 never fired.
+ for(const effect of ['moonfall','lirian_crescent']){const q=profile(),t=g.createGame(q);q.inventory.push(g.makeSeal({id:904,effect}));assert.equal(g.equipItem(t,904),true);g.launch(t,1,1);t.auto=true;t.enemyScale={hp:50,damage:0};run(t,20);assert.ok(t.run.ancientProcs>0,effect);}
 });
 
 test('seal growth: +10% per level, a 중옵 effect at 5 and a 상옵 effect at 10, paid in 인장 조각 and gold',()=>{

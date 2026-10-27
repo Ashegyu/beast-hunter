@@ -84722,6 +84722,36 @@
         "pivotX": 113.0,
         "pivotY": 237,
         "bodyHeight": 236
+      },
+      "seal_lirian_crescent": {
+        "image": "equipment-seals-v0136.png",
+        "x": 921,
+        "y": 504,
+        "w": 203,
+        "h": 240,
+        "pivotX": 101.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "seal_lirian_parry": {
+        "image": "equipment-seals-v0136.png",
+        "x": 8,
+        "y": 752,
+        "w": 204,
+        "h": 240,
+        "pivotX": 102.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "seal_lirian_awaken": {
+        "image": "equipment-seals-v0136.png",
+        "x": 220,
+        "y": 752,
+        "w": 203,
+        "h": 240,
+        "pivotX": 101.5,
+        "pivotY": 237,
+        "bodyHeight": 236
       }
     },
     "pages": {
@@ -84755,7 +84785,7 @@
       },
       "equipment-seals-v0136.png": {
         "width": 1240,
-        "height": 752
+        "height": 1000
       }
     }
   },

@@ -39,5 +39,18 @@
    "seal_awakening",
    "seal_shard"
   ]
+ },
+ "seal-4": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/seals0136/seal-4.png",
+  "style": "art/seals0136/seal-2.png",
+  "reference": "dist/assets/equipment-armory-portrait-v040.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production equipment item icons (signet seal medallions) for a dark fantasy 2D action RPG. Image1 is this game's existing seal icon sheet: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting, medallion size and scale exactly. Image2 is the character these seals belong to (Lilian, a silver-haired swordswoman in black and crimson gothic armor with red rose petals): use it ONLY for colours and motifs, never draw the character. Create ONE transparent RGBA square image with exactly THREE separate items in an invisible 3 columns x 2 rows grid: the whole top row filled (cells 1-3) and the bottom row left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge, each item compact and filling about 60% of its cell. These are CHARACTER-EXCLUSIVE seals, rarer and more precious than the others: an obsidian-black medallion with a polished silver filigree rim, deep crimson enamel, small red rose petals and a thin glowing crimson outer aura, all three sharing that same frame style: (1) three crimson crescent sword-wave arcs sweeping out from a silver blade (red moon sword dance), (2) a slender silver rapier deflecting a strike with a bright spark, a black rose behind it (parry and riposte), (3) a crimson full moon pierced vertically by a silver sword, rose petals swirling around it (red moon awakening). Each item clearly readable at small icon size and clearly distinct from the others. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters, no faces.",
+  "items": [
+   "seal_lirian_crescent",
+   "seal_lirian_parry",
+   "seal_lirian_awaken"
+  ]
  }
 }

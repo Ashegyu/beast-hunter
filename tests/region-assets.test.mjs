@@ -101,9 +101,9 @@ test('every startup and chapter image resolves to a delivered file (Alpha 0.108)
 test('every chapter set item has a frame inside its atlas page (Alpha 0.109)', () => {
   const manifest = JSON.parse(fs.readFileSync(new URL('../dist/assets/manifest.json', import.meta.url)));
   const { setFrames, pages } = manifest.equipment;
-  // Six per chapter set plus the 15 accessory frames on their own page (Alpha 0.122) and 14 seal frames (Alpha 0.136:
+  // Six per chapter set plus the 15 accessory frames on their own page (Alpha 0.122) and 17 seal frames (Alpha 0.136:
   // one per boss rush seal effect and the 인장 조각 icon).
-  assert.equal(Object.keys(setFrames).length, CHAPTERS.length * 6 + 15 + 14);
+  assert.equal(Object.keys(setFrames).length, CHAPTERS.length * 6 + 15 + 17);
   for (const id of [...SEAL_EFFECTS.map(e => 'seal_' + e.id), 'seal_shard']) { const frame = setFrames[id], page = pages[frame?.image]; assert.ok(frame && page, id); assert.equal(frame.image, 'equipment-seals-v0136.png'); assert.ok(frame.x >= 0 && frame.y >= 0 && frame.x + frame.w <= page.width && frame.y + frame.h <= page.height && Math.max(frame.w, frame.h) <= 240, id); assert.ok(fs.existsSync(new URL('../dist/assets/' + manifest.delivery[frame.image], import.meta.url))); }
   for (const art of ACCESSORY_ART) { const frame = setFrames[art.id], page = pages[frame?.image]; assert.ok(frame && page, art.id); assert.equal(frame.image, 'equipment-accessories-v0122.png'); assert.ok(frame.x >= 0 && frame.y >= 0 && frame.x + frame.w <= page.width && frame.y + frame.h <= page.height, art.id); assert.ok(fs.existsSync(new URL('../dist/assets/' + manifest.delivery[frame.image], import.meta.url))); }
   for (const chapter of CHAPTERS) for (const part of ['sword', 'blade2', 'helmet', 'armor', 'pants', 'boots']) {

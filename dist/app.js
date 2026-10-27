@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.136.1';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.136.2';
 import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js';
 import { createCombatAudio } from './sound.js?v=0.76.0';
-import * as game from './game-engine.js?v=0.136.1';
+import * as game from './game-engine.js?v=0.136.2';
 import {FrameMetrics} from './frame-metrics.js?v=0.98.1';
 import { frameIndex, frameRect, validateClip } from './engine.js';
 import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
 import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.103.1';
 import { visibleTiles, createDecorations } from './terrain.js?v=0.135.0';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.136.1';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.136.1';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.136.1';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.136.2';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.136.2';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.136.2';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -1631,7 +1631,7 @@ function refreshSealGrowth(){
  $('rush-seal-art').hidden=!item;if(item)gearThumbnail($('rush-seal-art'),item,56);
  $('rush-seal-name').textContent=item?item.name:'보유한 인장이 없어.';$('rush-seal-name').style.color=item?game.SEAL_GRADES[item.seal.grade].color:'';
  $('rush-seal-level').textContent=item?game.SEAL_GRADES[item.seal.grade].name+' · 성장 '+item.seal.level+' / '+game.SEAL_MAX_LEVEL+(profile.equipment.special===item.id?' · 착용 중':''):'보스 러시에서 얻을 수 있어.';
- $('rush-seal-effects').textContent=item?game.sealEffectLines(item).join('\n'):'하옵 = 생존 능력치 · 중옵 = 공격 능력치 · 상옵 = 특수효과\n성장: 단계마다 효과 +10% · 5단계 중옵 · 10단계 상옵 추가';
+ $('rush-seal-effects').textContent=item?game.sealEffectLines(item).join('\n'):'하옵 = 생존 능력치 · 중옵 = 공격 능력치 · 상옵 = 특수효과 · 전용 = 캐릭터 전용 특수효과(2%)\n성장: 단계마다 효과 +10% · 5단계 중옵 · 10단계 상옵 추가';
  $('rush-seal-cost').textContent=(sealFeedback?sealFeedback+'\n':'')+(status?.cost?'다음 단계 · 인장 조각 '+status.cost.shards+' (보유 '+profile.materials.sealShard+') · 골드 '+status.cost.gold.toLocaleString('ko-KR')+' · '+status.reason:item?status.reason:'인장 조각 보유 '+profile.materials.sealShard);
  $('rush-seal-grow').disabled=!status?.ok||state.phase!=='camp';
 }

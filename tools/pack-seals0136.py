@@ -1,6 +1,6 @@
-"""Pack the Alpha 0.136 boss rush seal art (13 seals, one per effect, and the 인장 조각 icon) into one equipment page.
+"""Pack the Alpha 0.136 boss rush seal art (16 seals, one per effect incl. the 0.136.2 character 전용 seals, and the 인장 조각 icon) into one equipment page.
 
-art/seals0136/seal-<n>.png holds four or five items in a 3x2 grid filled left to right, top row first, with the
+art/seals0136/seal-<n>.png holds three to five items in a 3x2 grid filled left to right, top row first, with the
 remaining cells empty; sheets.json lists the design id of each cell in order (seal_<effect id>, seal_shard).
 Items are cut like tools/pack-ancient0119.py `items` (each opaque part joins the cell its centre falls in, a 6px
 halo keeps soft edges), scaled to at most 240px and shelf-packed onto equipment-seals-v0136. The frames go into
@@ -78,7 +78,7 @@ def main():
         page.paste(crop, (px, py))
         frames[design] = {'image': PAGE, 'x': px, 'y': py, 'w': crop.width, 'h': crop.height,
                           'pivotX': round(crop.width / 2, 1), 'pivotY': crop.height - 3, 'bodyHeight': crop.height - 4}
-    assert len(placed) == 14 and len({d for d, *_ in placed}) == 14
+    assert len(placed) == 17 and len({d for d, *_ in placed}) == 17
     out = ASSETS / PAGE.replace('.png', '.webp')
     page.save(out, lossless=True, exact=True, method=6)
     with Image.open(out) as decoded:
