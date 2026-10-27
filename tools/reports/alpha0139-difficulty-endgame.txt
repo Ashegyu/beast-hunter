@@ -1,0 +1,30 @@
+# 0.139 난이도 개편 뒤 정예 진행 (MODES=1 ENDGAME=1 STUCK_AFTER=30, 빌드 전환+스펙업, 레이드 난이도 추가 전 코드)
+# 정예·악몽 도전 1회 = 하루: 보스 러시 3회, 레이드 주 3회씩, 인장 성장. 제작·재굴림·각인·세트 맞추기는 안 함.
+switch seed0 attempts=245 farms=151 dungeons=453 stuck={"difficulty":1,"chapter":34,"stage":10,"gate":"swarm"} fails={"ch1-3":1,"ch41-7":1,"ch41-8":1,"ch41-10":1,"ch42-10":1,"ch43-7":1,"ch43-10":1,"ch44-10":1,"ch45-4":1,"ch45-10":1,"ch46-7":1,"ch46-8":2,"ch48-10":1,"ch49-10":1,"ch50-8":1,"ch50-10":1,"ch52-7":23,"ch52-8":1,"ch55-7":3,"ch55-8":2,"ch56-8":1,"ch56-10":1,"ch60-8":2,"ch60-10":9,"e1-7":2
+난이도 진행: 일반 60 · 정예 33 · 악몽 0 챕터
+엔드 콘텐츠: 126 일 · 보스 러시 378 회 · 레이드 171 회(클리어 171) · 인장 3 10단계 · 고대 5 점 착용
+switch seed0 e1 clear tries=3 Lv166 dmg=384 hp=3096 gear+8.6 r2.8 day3 seal1 anc1 786s
+switch seed0 e10 clear tries=2 Lv185 dmg=552 hp=3340 gear+8.1 r3.3 day17 seal3 anc2 1064s
+switch seed0 e20 clear tries=1 Lv200 dmg=697 hp=2839 gear+8.9 r3.7 day38 seal5 anc3 1442s
+switch seed0 e30 clear tries=10 Lv200 dmg=501 hp=3129 gear+8.6 r4.1 day66 seal7 anc5 1906s
+
+switch seed9 attempts=285 farms=198 dungeons=594 stuck={"difficulty":1,"chapter":27,"stage":10,"gate":"defense"} fails={"ch1-3":1,"ch35-4":1,"ch36-6":1,"ch36-7":1,"ch36-8":1,"ch41-7":2,"ch41-10":1,"ch42-4":1,"ch42-6":1,"ch42-10":1,"ch43-10":1,"ch44-8":1,"ch44-10":1,"ch45-8":1,"ch46-3":1,"ch46-10":1,"ch47-6":1,"ch47-7":1,"ch47-8":1,"ch47-10":1,"ch48-10":1,"ch49-10":1,"ch50-8":1,"ch50-10":1,"ch51-6"
+난이도 진행: 일반 60 · 정예 26 · 악몽 0 챕터
+엔드 콘텐츠: 109 일 · 보스 러시 327 회 · 레이드 144 회(클리어 144) · 인장 3 10단계 · 고대 4 점 착용
+switch seed9 e1 clear tries=1 Lv184 dmg=554 hp=2559 gear+7.4 r3.1 day1 seal- anc2 890s
+switch seed9 e10 clear tries=1 Lv200 dmg=604 hp=2491 gear+7.7 r3.1 day11 seal1 anc2 1074s
+switch seed9 e20 clear tries=3 Lv200 dmg=612 hp=2626 gear+8.2 r3.4 day28 seal0 anc3 1372s
+
+switch seed13 attempts=332 farms=226 dungeons=678 stuck={"difficulty":1,"chapter":46,"stage":7,"gate":"swarm"} fails={"ch1-3":1,"ch31-7":1,"ch37-7":1,"ch37-8":1,"ch41-4":1,"ch43-8":2,"ch44-10":1,"ch45-10":1,"ch46-6":1,"ch46-7":1,"ch46-8":1,"ch47-10":1,"ch48-8":1,"ch49-10":1,"ch50-10":1,"ch51-10":2,"ch53-7":3,"ch53-8":1,"ch53-10":4,"ch54-4":1,"ch54-7":1,"ch54-10":1,"ch55-6":1,"ch55-8":1,"ch59-4":1,
+난이도 진행: 일반 60 · 정예 45 · 악몽 0 챕터
+엔드 콘텐츠: 231 일 · 보스 러시 693 회 · 레이드 306 회(클리어 306) · 인장 3 10단계 · 고대 4 점 착용
+switch seed13 e1 clear tries=1 Lv157 dmg=538 hp=2561 gear+8.5 r3.0 day1 seal- anc2 603s
+switch seed13 e10 clear tries=1 Lv175 dmg=648 hp=2779 gear+6.4 r3.4 day11 seal1 anc3 820s
+switch seed13 e20 clear tries=1 Lv196 dmg=706 hp=2842 gear+7.3 r3.7 day26 seal2 anc4 1151s
+switch seed13 e30 clear tries=5 Lv200 dmg=515 hp=3092 gear+9.2 r3.8 day51 seal5 anc4 1608s
+switch seed13 e40 clear tries=38 Lv200 dmg=536 hp=3160 gear+11.1 r3.9 day144 seal10 anc4 3205s
+switch seed13 e45 clear tries=20 Lv200 dmg=637 hp=3920 gear+11.8 r3.9 day196 seal10 anc4 4192s
+
+# 엔드 콘텐츠 없이(MODES=1)
+switch seed0 attempts=165 farms=93 dungeons=279 stuck={"difficulty":1,"chapter":12,"stage":8,"gate":null} fails={"ch1-3":1,"ch41-7":1,"ch41-8":1,"ch41-10":1,"ch42-10":1,"ch43-7":1,"ch43-10":1,"ch44-10":1,"ch45-4":1,"ch45-10":1,"ch46-7":1,"ch46-8":2,"ch48-10":1,"ch49-10":1,"ch50-8":1,"ch50-10":1,"ch52-7":23,"ch52-8":1,"ch55-7":3,"ch55-8":2,"ch56-8":1,"ch56-10":1,"ch60-8":2,"ch60-10":9,"e3-4":1,"e11
+난이도 진행: 일반 60 · 정예 11 · 악몽 0 챕터
