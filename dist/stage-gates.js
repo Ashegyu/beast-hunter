@@ -21,15 +21,19 @@ export const GATE_STAGES=Object.freeze([7,9,6]);
 // Pressure (+share) of a chapter's gates: small at first, rising every chapter with a step at every region; bosses ×1.1.
 export const GATE_PRESSURE=Object.freeze({start:.4,ramp:.012,region:.15,boss:1.1});
 export const COUNTER_REDUCTION=.75;
+// Alpha 0.139 (사용자 결정): on 정예/악몽 the gates press ×0.8 — the chapter curve already rises there, and the 정예 51장 boss
+// (first chapter of region 6, a 방어 태세 boss) walled two of three endgame simulations.
+export const MODE_GATE_PRESSURE=.8;
 export const TREE_COUNTER_PER_POINT=.01875;
 export function gatePressure(chapter,boss=false){const i=chapter-1,region=Math.floor(i/CHAPTERS_PER_THEME);return Math.round((GATE_PRESSURE.start+GATE_PRESSURE.ramp*i+GATE_PRESSURE.region*region)*(boss?GATE_PRESSURE.boss:1)*1000)/1000;}
 // The gate of a chapter's stage, or null.
-export function stageGate(chapter,stage){
+export function stageGate(chapter,stage,difficulty=0){
  const row=CHAPTERS[chapter-1];if(!row)return null;
  const bossType=BOSS_GATE_BY_RULE[row.bossRule]??'single';
- if(stage===10)return Object.freeze({type:bossType,boss:true,pressure:gatePressure(chapter,true)});
+ const k=difficulty>0?MODE_GATE_PRESSURE:1;
+ if(stage===10)return Object.freeze({type:bossType,boss:true,pressure:Math.round(gatePressure(chapter,true)*k*1000)/1000});
  const others=GATE_IDS.filter(t=>t!==bossType),at=GATE_STAGES[(chapter-1)%GATE_STAGES.length];
- return stage===at?Object.freeze({type:others[(chapter-1)%others.length],boss:false,pressure:gatePressure(chapter)}):null;
+ return stage===at?Object.freeze({type:others[(chapter-1)%others.length],boss:false,pressure:Math.round(gatePressure(chapter)*k*1000)/1000}):null;
 }
 export function gateCounter(p,type){
  const g=GATE_TYPES[type];if(!g)return 0;const loadout=p?.skillBook?.loadout??{};

@@ -56,3 +56,8 @@ test('the automatic hunter dodges a monster attack or shot only 30% of the time,
  assert.ok(Math.abs(enemy/3000-.3)<.03&&Math.abs(shot/3000-.3)<.03,enemy+'/'+shot);
  for(let id=1;id<50;id++)assert.equal(g.autoDodges('enemy',id,2),g.autoDodges('enemy',id,2));
 });
+
+test('0.139: 정예/악몽 gates press ×0.8 of the same chapter on 일반',()=>{
+ for(const [c,n]of [[51,10],[12,6],[60,10]]){const base=g.stageGate(c,n);for(const d of [1,2]){const m=g.stageGate(c,n,d);assert.equal(m.type,base.type);assert.ok(Math.abs(m.pressure-base.pressure*.8)<.002,c+'-'+n+' '+d);}}
+ assert.equal(g.stageGate(12,1,1),null);
+});
