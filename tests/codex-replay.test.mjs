@@ -31,3 +31,7 @@ test('replay boss kill pays scaled bonus once and unlocks next difficulty',()=>{
 test('rage during an advanced volley cannot add untelegraphed shots to the committed attack',()=>{
  const {s,e}=replay(2,2);s.player.invulnerable=999;e.cooldown=0;e.pattern=0;g.advanceGame(s,.025);assert.equal(e.action,'windup');assert.equal(g.projectileCount(e),7);e.hp=e.maxHp*.49;g.advanceGame(s,.025);assert.equal(e.enraged,true);assert.equal(g.projectileCount(e),7);advance(s,1);assert.equal(s.projectiles.length,7);e.action='walk';assert.equal(g.projectileCount(e),9);
 });
+test('0.139: a 방어 태세 boss guards 70% on 일반 and 55% on 정예/악몽',()=>{
+ const ch=g.STAGES.find(c=>c.bossRule==='defense').id;assert.deepEqual([...g.STANCE_GUARD],[.7,.55,.55]);
+ for(const mode of [0,1,2]){const {s,e}=replay(ch,mode);assert.equal(g.stanceGuard(s),g.STANCE_GUARD[mode]);s.run.time=12;assert.match(g.bossRuleStatus(s),new RegExp('방어 태세 · 피해 '+Math.round(g.STANCE_GUARD[mode]*100)+'% 감소'));}
+});

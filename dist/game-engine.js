@@ -723,7 +723,7 @@ function damageEnemy(s,e,value,critical=false,kind='normal',origin=s.player,pier
   // A defense stance is armor too: weakening applies before its mitigation.
   // Stage armor (철갑 진군) is countered by skills: 파갑참 strips it for a while and 마지막 검끝 lets combo strikes ignore it.
   const armorIgnored=e.plateBrokenUntil>s.run.time||swing?.damage!=null&&skills.finisherGuardBonus(s)>0;
-  value*=(1-Math.max(0,(armorIgnored?0:e.plate??0)+(defending?.7:0)-shred))*(1+shred*BUILD_EFFECTS.shred.vulnerability);
+  value*=(1-Math.max(0,(armorIgnored?0:e.plate??0)+(defending?stanceGuard(s):0)-shred))*(1+shred*BUILD_EFFECTS.shred.vulnerability);
   if(e.boss&&ruleOf(s)==='defense'&&!defending)value*=1.5;
   if(e.raid==='queen'&&raidBroodAlive(s))value*=1-raidDefinition('queen').broodShield;
   let guarded=false,broken=false;
@@ -1151,6 +1151,10 @@ export function gearSkills(s){const p=s.profile,c=s.gearCache;if(c&&c.equipment=
  const list=[];for(const slot of EQUIPMENT_KEYS){const item=p.inventory.find(i=>i.id===p.equipment[slot]&&i.slot===itemSlotForPosition(slot)),row=item&&skills.GEAR_SKILL_BY_ANCIENT[item.catalogId];if(row)list.push({id:row.id,item,get power(){return raidPowerRoll(this.item);}});}
  s.gearCache={equipment:p.equipment,count:p.inventory.length,list};return list;}
 // Alpha 0.139: seconds left in a 방어 태세 boss's guarded 8 of every 12 seconds (0 outside it), so auto skills can wait for the weak point.
+// Alpha 0.139 (사용자 결정): a 방어 태세 boss guards 70% of damage on 일반 and 55% on 정예/악몽 — the 6지역 defense bosses walled
+// four of five endgame simulations at 정예 51~54장, while the 일반 51장 wall (spec-up alone cannot pass) stays as it was.
+export const STANCE_GUARD=Object.freeze([.7,.55,.55]);
+export const stanceGuard=s=>STANCE_GUARD[s.difficulty]??STANCE_GUARD[0];
 export function bossStanceLeft(s){if(ruleOf(s)!=='defense'||!s.enemies.some(e=>e.boss&&!e.dead))return 0;const t=s.run.time%12;return t<8?8-t:0;}
 const SKILL_HOOKS={stanceLeft:bossStanceLeft,cast:(s,id)=>{capacitorCast(s,id);ancientAll(s,'skill');},gearSkills,heal:(s,f)=>{s.player.hp=Math.min(s.player.maxHp,s.player.hp+s.player.maxHp*f);},status:(s,e,r,attack)=>ancientStatus(s,e,r,attack),shield:(s,f)=>{const u=s.uniqueState,amount=s.player.maxHp*f;if(amount>u.shield){u.shield=amount;u.shieldTime=3;u.shieldOwner=null;}},inscriptions:s=>s.buildEffects,capture:s=>equipmentSnapshot(s.profile),stats:playerStats,hit:damageEnemy,visual:effect,clamp:clampPosition,motion(s,n,duration,id){
  const momentum=s.uniqueState.momentum;startAttack(s,n,true,false);s.uniqueState.momentum=momentum;const p=s.player;p.swing.name=skills.SKILL_BY_ID[id]?.name??p.swing.name;p.swing.skillId=id;p.swing.skillVisualOnly=true;p.swing.step=0;p.swing.duration=duration;p.swing.impact=Math.min(duration,.1);p.attackCooldown=duration;p.queued=false;
@@ -1269,6 +1273,6 @@ export function bossRuleStatus(s){const e=s.enemies.find(e=>e.boss&&!e.dead);if(
   return (e.judgeWarning?'심판 임박':'심판까지 '+Math.max(1,Math.ceil(r.judgementEvery-(e.judgeClock??0)))+'초')+' · '+(e.judgements??0)+'회 · 위력 +'+Math.round(r.judgementGrowth*(e.judgements??0)*100)+'%';}
 const rule=ruleOf(s),escort=e.special&&rule!=='summon'?' · 호위 '+(e.summonPhase??0)+'/2':'',prefix=e.special?'특수 보스 · ':'';
  if(rule==='regen')return prefix+'재생 · '+Math.ceil(8-(e.recoveryClock??0))+'초'+escort;
- if(rule==='defense'){const shred=e.runeShredTime>0?e.runeShred:0;return prefix+(s.run.time%12<8?'방어 태세 · 피해 '+Math.round((.7-shred)*100)+'% 감소'+(shred?' · 약화 '+Math.round(shred*100)+'%p':''):'약점 노출 · 피해 50% 증가')+escort;}
+ if(rule==='defense'){const shred=e.runeShredTime>0?e.runeShred:0;return prefix+(s.run.time%12<8?'방어 태세 · 피해 '+Math.round((stanceGuard(s)-shred)*100)+'% 감소'+(shred?' · 약화 '+Math.round(shred*100)+'%p':''):'약점 노출 · 피해 50% 증가')+escort;}
  if(rule==='fury')return prefix+(s.run.time%12>=8?'화염 폭주 · 공격력 50% 증가':'폭주까지 '+Math.ceil(8-s.run.time%12)+'초')+escort;
  return prefix+'호위 소환 '+(e.summonPhase??0)+'/2';}
