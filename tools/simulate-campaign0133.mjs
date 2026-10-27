@@ -36,6 +36,14 @@ function prepare(s,type){const p=s.profile;
  for(const id of [...p.skillBook.loadout.active,...p.skillBook.loadout.passive,...p.skillBook.loadout.ultimate])if(id)while(g.upgradeSkill(s,id)){}
 }
 const p=g.createProfile(1000);p.hunts=SEED;const s=g.createGame(p);s.auto=true;let attempts=0,farms=0,dungeons=0;const fails={},t0=Date.now();let stuck=null;
+const MODES=process.env.MODES==='1',MODE_TRIES=Number(process.env.MODE_TRIES)||2,modeLog=[],modePending=[];
+// One 정예/악몽 window: '✓<try>' on a clear, '✗<stage>' when every try failed, '-' when the mode is still closed.
+function modeRun(ch,d,tries,late=false){if(!g.bossModeAvailable(p,ch,d))return '-';let res='-';
+ for(let t=0;t<tries;t++){const from=g.stageLimit(p,ch,d)||1;prepare(s,nextGate(ch,from));g.launch(s,ch,from,null,d);attempts++;
+  for(let i=0;i<24000&&s.phase==='playing';i++)g.advanceGame(s,.05);
+  const st=s.run.stage;if(s.phase==='victory'){res='✓'+(t+1);g.returnToCamp(s);break;}res='✗'+st;g.returnToCamp(s);}
+ const i=modePending.findIndex(([c,m])=>c===ch&&m===d);if(res[0]==='✓'){if(i>=0)modePending.splice(i,1);}else if(i<0)modePending.push([ch,d]);
+ modeLog.push({ch,d,res,late,level:p.level});return res;}
 if(DUMP)fs.mkdirSync(DUMP,{recursive:true});
 for(let ch=1;ch<=LAST&&!stuck;ch++){let won=false,tries=0;
  if(DUMP)fs.writeFileSync(path.join(DUMP,`c${ch}.json`),g.encodeProfile(p,1000));
@@ -46,11 +54,18 @@ for(let ch=1;ch<=LAST&&!stuck;ch++){let won=false,tries=0;
   if(failSeen[st]>=(Number(process.env.STUCK_AFTER)||15)){stuck={chapter:ch,stage:st,gate:gate?.type??null};break;}
   if(SPEC&&st>1){prepare(s,nextGate(ch,st-1));g.launch(s,ch,st-1);for(let i=0;i<2400&&s.phase==='playing'&&s.run.stage===st-1;i++)g.advanceGame(s,.05);farms++;g.returnToCamp(s);}
   if(SPEC)for(const id of ['enhance','gold','promote']){prepare(s,null);if(!g.launchDungeon(s,id,g.dungeonLimit(p,id)))continue;for(let i=0;i<2400&&s.phase==='playing';i++)g.advanceGame(s,.05);dungeons++;g.returnToCamp(s);}}
+ // MODES=1 (0.139): after the normal clear, try this chapter's 정예 then 악몽 (MODE_TRIES each, default 2) from their checkpoints,
+ // then retry the earliest earlier 정예/악몽 still not cleared once. Rewards of those runs carry on into the campaign.
+ let modeText='';
+ if(MODES&&won){for(const d of [1,2])modeText+=' '+'en'[d-1]+'='+modeRun(ch,d,MODE_TRIES);const back=modePending.find(([c,d])=>c<ch&&g.bossModeAvailable(p,c,d));if(back)modeRun(back[0],back[1],1,true);}
  const gear=Object.values(p.equipment).filter(Boolean).map(id=>p.inventory.find(i=>i.id===id));const enh=gear.reduce((a,i)=>a+(i.enhancement??0),0)/Math.max(1,gear.length),rar=gear.reduce((a,i)=>a+i.rarity,0)/Math.max(1,gear.length);
  const stt=g.playerStats(p);
- console.log(`${POLICY} seed${SEED} ch${ch} ${won?'clear':'STUCK'} tries=${tries} Lv${p.level} dmg=${Math.round(stt.damage)} hp=${Math.round(stt.maxHp)} gear+${enh.toFixed(1)} r${rar.toFixed(1)} ${Math.round((Date.now()-t0)/1000)}s`);
+ console.log(`${POLICY} seed${SEED} ch${ch} ${won?'clear':'STUCK'} tries=${tries} Lv${p.level} dmg=${Math.round(stt.damage)} hp=${Math.round(stt.maxHp)} gear+${enh.toFixed(1)} r${rar.toFixed(1)}${modeText} ${Math.round((Date.now()-t0)/1000)}s`);
 }
 console.log(`${POLICY} seed${SEED} attempts=${attempts} farms=${farms} dungeons=${dungeons} stuck=${JSON.stringify(stuck)} fails=${JSON.stringify(fails)}`);
+if(MODES){const by={};for(const r of modeLog){if(r.late||r.res==='-')continue;const k=Math.ceil(r.ch/10)+'지역 '+(r.d===1?'정예':'악몽');by[k]??={n:0,ok:0};by[k].n++;if(r.res[0]==='✓')by[k].ok++;}
+ console.log('난이도 첫 도전(일반 클리어 직후) 클리어율',Object.entries(by).sort().map(([k,v])=>k+' '+v.ok+'/'+v.n).join(' | '));
+ const cleared=d=>p.bossMastery.filter(m=>m>=d).length;console.log('난이도 최종 보스 처치 챕터 수: 정예',cleared(1),'· 악몽',cleared(2),'· 남은 미클리어',modePending.length);}
 if(STARS){const rate=key=>{const out={};for(const [c,st,m] of starLog){const k=key(c,st);out[k]??={n:0,fast:0,hp:0};out[k].n++;if(m&2)out[k].fast++;if(m&4)out[k].hp++;}return Object.entries(out).map(([k,v])=>k+':'+v.n+'회 30초 '+Math.round(v.fast/v.n*100)+'% 체력 '+Math.round(v.hp/v.n*100)+'%').join(' | ');};
  console.log('별 스테이지별',rate((c,st)=>st));console.log('별 지역별',rate(c=>Math.ceil(c/10)+'지역'));}
 if(HPLOG){const by={};for(const [c,st,h,r] of hpLog){const k=Math.ceil(c/10)+'지역 '+(st===10?'보스':'일반');by[k]??={n:0,h:0,r:0};by[k].n++;by[k].h+=h;by[k].r+=r;}
