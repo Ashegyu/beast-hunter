@@ -7,7 +7,7 @@ import {ANCIENT_POWER_BY_ID,NIGHTMARE_POWERS,RAID_POWERS,describePower} from './
 import {RAID_ANCIENTS,RAID_REGION,RAID_ANCIENT_STATS} from './raids.js?v=0.135.0';
 import {REGION_ANCIENTS,REGION_ANCIENT_BOSSES} from './ancient-regions.js?v=0.135.0';
 import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.135.0';
-import {isSeal,sealSignatures,SEAL_GRADES} from './seals.js?v=0.136.0';
+import {isSeal,sealSignatures,SEAL_GRADES} from './seals.js?v=0.136.1';
 export {EQUIPMENT_SETS,SET_SLOTS,SET_STATS,CHAPTER_SETS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.135.0';
 export {UNIQUE_EFFECTS,uniquePower} from './unique-effects.js?v=0.135.0';
 // Item definitions and pure rolls; the combat state owns identities and delivery.

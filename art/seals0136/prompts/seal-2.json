@@ -1,0 +1,29 @@
+{
+  "id": "seal-2",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production equipment item icons (signet seal medallions, a swordswoman's personal relic) for a dark fantasy 2D action RPG. Image1 is the existing equipment sheet of this game: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting and scale. Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, filled left to right, top row first, and the remaining cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge, each item compact and filling about 60% of its cell: (1) MID grade seal: three chained slash marks sigil (attack speed), (2) MID grade seal: a long thrusting spear-blade sigil (reach), (3) HIGH grade seal: a blood-red crescent moon falling as a blade of light, (4) HIGH grade seal: a crimson moon dripping a drop of blood, (5) HIGH grade seal: a golden dome barrier of light with a small shield. Grade language (keep it consistent): LOW grade seals are tarnished silver with frost-blue enamel and simple engraving; MID grade seals are dark bronze with crimson enamel and sharp blade motifs; HIGH grade seals are radiant gold with glowing gems, small floating light motes and an ornate halo frame. Each item is a single round or shield-shaped medallion, clearly readable at small icon size and clearly distinct from the others. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "referenceImages": [
+    {
+      "path": "dist/assets/equipment_chapters-v09.webp",
+      "sha256": "99f0495a7004767706f9fe38dad276fea039d514d886e08f3363661b67bb0929"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": 0.633,
+      "parts": 5,
+      "seconds": 60,
+      "sha256": "5417049b7e4e9781b78592bf874a8329bfd4c3782ef61e6b502c98af1dfa961d"
+    }
+  ],
+  "final": {
+    "path": "art/seals0136/seal-2.png",
+    "sha256": "5417049b7e4e9781b78592bf874a8329bfd4c3782ef61e6b502c98af1dfa961d"
+  }
+}

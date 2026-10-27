@@ -1,0 +1,166 @@
+{
+  "sources": [
+    {
+      "sheet": "seal-1",
+      "source": "art/seals0136/seal-1.png",
+      "sha256": "65de040bf559cc9788b07b59e3a40a9e7eda50c0032ea87d140e7bf3a37f6ef6"
+    },
+    {
+      "sheet": "seal-2",
+      "source": "art/seals0136/seal-2.png",
+      "sha256": "5417049b7e4e9781b78592bf874a8329bfd4c3782ef61e6b502c98af1dfa961d"
+    },
+    {
+      "sheet": "seal-3",
+      "source": "art/seals0136/seal-3.png",
+      "sha256": "b3ab71a502c9722f952840bf8a37dbffa5c036247bba0b92a2b6ab264c18b289"
+    }
+  ],
+  "page": [
+    1240,
+    752
+  ],
+  "frames": {
+    "seal_life": {
+      "image": "equipment-seals-v0136.png",
+      "x": 8,
+      "y": 8,
+      "w": 206,
+      "h": 240,
+      "pivotX": 103.0,
+      "pivotY": 237,
+      "bodyHeight": 236
+    },
+    "seal_guard": {
+      "image": "equipment-seals-v0136.png",
+      "x": 222,
+      "y": 8,
+      "w": 188,
+      "h": 240,
+      "pivotX": 94.0,
+      "pivotY": 237,
+      "bodyHeight": 236
+    },
+    "seal_stride": {
+      "image": "equipment-seals-v0136.png",
+      "x": 418,
+      "y": 8,
+      "w": 229,
+      "h": 240,
+      "pivotX": 114.5,
+      "pivotY": 237,
+      "bodyHeight": 236
+    },
+    "seal_might": {
+      "image": "equipment-seals-v0136.png",
+      "x": 655,
+      "y": 8,
+      "w": 228,
+      "h": 240,
+      "pivotX": 114.0,
+      "pivotY": 237,
+      "bodyHeight": 236
+    },
+    "seal_keen": {
+      "image": "equipment-seals-v0136.png",
+      "x": 891,
+      "y": 8,
+      "w": 215,
+      "h": 240,
+      "pivotX": 107.5,
+      "pivotY": 237,
+      "bodyHeight": 236
+    },
+    "seal_tempo": {
+      "image": "equipment-seals-v0136.png",
+      "x": 8,
+      "y": 256,
+      "w": 198,
+      "h": 240,
+      "pivotX": 99.0,
+      "pivotY": 237,
+      "bodyHeight": 236
+    },
+    "seal_reach": {
+      "image": "equipment-seals-v0136.png",
+      "x": 214,
+      "y": 256,
+      "w": 190,
+      "h": 240,
+      "pivotX": 95.0,
+      "pivotY": 237,
+      "bodyHeight": 236
+    },
+    "seal_moonfall": {
+      "image": "equipment-seals-v0136.png",
+      "x": 412,
+      "y": 256,
+      "w": 199,
+      "h": 240,
+      "pivotX": 99.5,
+      "pivotY": 237,
+      "bodyHeight": 236
+    },
+    "seal_bloodthirst": {
+      "image": "equipment-seals-v0136.png",
+      "x": 619,
+      "y": 256,
+      "w": 195,
+      "h": 240,
+      "pivotX": 97.5,
+      "pivotY": 237,
+      "bodyHeight": 236
+    },
+    "seal_aegis": {
+      "image": "equipment-seals-v0136.png",
+      "x": 822,
+      "y": 256,
+      "w": 216,
+      "h": 240,
+      "pivotX": 108.0,
+      "pivotY": 237,
+      "bodyHeight": 236
+    },
+    "seal_afterimage": {
+      "image": "equipment-seals-v0136.png",
+      "x": 8,
+      "y": 504,
+      "w": 229,
+      "h": 240,
+      "pivotX": 114.5,
+      "pivotY": 237,
+      "bodyHeight": 236
+    },
+    "seal_verdict": {
+      "image": "equipment-seals-v0136.png",
+      "x": 245,
+      "y": 504,
+      "w": 220,
+      "h": 240,
+      "pivotX": 110.0,
+      "pivotY": 237,
+      "bodyHeight": 236
+    },
+    "seal_awakening": {
+      "image": "equipment-seals-v0136.png",
+      "x": 473,
+      "y": 504,
+      "w": 206,
+      "h": 240,
+      "pivotX": 103.0,
+      "pivotY": 237,
+      "bodyHeight": 236
+    },
+    "seal_shard": {
+      "image": "equipment-seals-v0136.png",
+      "x": 687,
+      "y": 504,
+      "w": 226,
+      "h": 240,
+      "pivotX": 113.0,
+      "pivotY": 237,
+      "bodyHeight": 236
+    }
+  },
+  "webpBytes": 1001376
+}

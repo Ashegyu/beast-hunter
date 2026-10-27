@@ -4,9 +4,9 @@
 import {describePower} from './ancient-powers.js?v=0.135.0';
 
 export const SEAL_GRADES=Object.freeze([
- {id:0,name:'하옵',chance:.65,color:'#9ad1ff',artId:'acc_t3_seal',rarity:1,salvage:3},
- {id:1,name:'중옵',chance:.28,color:'#ff9a8a',artId:'acc_t1_seal',rarity:2,salvage:5},
- {id:2,name:'상옵',chance:.07,color:'#ffd27a',artId:'acc_t6_seal',rarity:3,salvage:8},
+ {id:0,name:'하옵',chance:.65,color:'#9ad1ff',rarity:1,salvage:3},
+ {id:1,name:'중옵',chance:.28,color:'#ff9a8a',rarity:2,salvage:5},
+ {id:2,name:'상옵',chance:.07,color:'#ffd27a',rarity:3,salvage:8},
 ].map(r=>Object.freeze(r)));
 export const SEAL_MAX_LEVEL=10,SEAL_LEVEL_POWER=.1,SEAL_CATALOG_ID='seal';
 // Growth adds one effect of this grade at these levels (a different effect from those the seal already has).
@@ -56,9 +56,11 @@ export const sealEffectLines=item=>sealEffects(item).map(e=>sealEffectLine(item,
 
 // Effect grade is drawn first (하옵 65% · 중옵 28% · 상옵 7%), then one effect of that grade.
 export function rollSealGrade(n){let v=n;for(const g of SEAL_GRADES){v-=g.chance;if(v<0)return g.id;}return SEAL_GRADES.length-1;}
+// Alpha 0.136 art (art/seals0136, page equipment-seals-v0136): one seal per effect.
+export const sealArtId=effect=>'seal_'+effect;
 export function makeSeal({id,tier=1,effect}){
  const row=SEAL_EFFECT_BY_ID[effect],grade=SEAL_GRADES[row.grade];
- return {id,slot:'special',tier,rarity:grade.rarity,name:'리리안의 '+row.name+' 인장',catalogId:SEAL_CATALOG_ID,artId:grade.artId,characterId:'lirian',affixes:{},seal:{grade:row.grade,effects:[row.id],level:0,shards:0}};
+ return {id,slot:'special',tier,rarity:grade.rarity,name:'리리안의 '+row.name+' 인장',catalogId:SEAL_CATALOG_ID,artId:sealArtId(row.id),characterId:'lirian',affixes:{},seal:{grade:row.grade,effects:[row.id],level:0,shards:0}};
 }
 export function rollSeal({id,tier=1},rng){const grade=rollSealGrade(rng()),pool=sealPool(grade);return makeSeal({id,tier,effect:pool[Math.min(pool.length-1,Math.floor(rng()*pool.length))].id});}
 

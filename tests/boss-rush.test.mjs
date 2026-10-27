@@ -21,7 +21,7 @@ test('seal grades are effect kinds: 하옵 survival stats, 중옵 attack stats, 
  const ids=g.SEAL_EFFECTS.map(e=>e.id);assert.equal(new Set(ids).size,ids.length);
  // A seal is a Lilian 전용장비 with no base stats; its grade sets name, art and rarity colour.
  const seal=g.rollSeal({id:7,tier:2},(()=>{const v=[.95,.4];return ()=>v.shift();})());
- assert.equal(seal.slot,'special');assert.equal(seal.characterId,'lirian');assert.deepEqual(seal.affixes,{});assert.equal(seal.seal.grade,2);assert.equal(seal.artId,'acc_t6_seal');assert.equal(seal.seal.effects.length,1);assert.ok(g.SEAL_EFFECT_BY_ID[seal.seal.effects[0]].power);
+ assert.equal(seal.slot,'special');assert.equal(seal.characterId,'lirian');assert.deepEqual(seal.affixes,{});assert.equal(seal.seal.grade,2);assert.equal(seal.artId,'seal_'+seal.seal.effects[0]);assert.equal(seal.seal.effects.length,1);assert.ok(g.SEAL_EFFECT_BY_ID[seal.seal.effects[0]].power);
 });
 
 test('worn seals add their stats and 상옵 powers ride the ancient trigger path',()=>{

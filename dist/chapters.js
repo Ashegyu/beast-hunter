@@ -1,4 +1,5 @@
 import {equipmentFamily} from './equipment-slots.js?v=0.136.0';
+import {SEAL_EFFECTS,sealArtId} from './seals.js?v=0.136.1';
 import {EQUIPMENT_SETS,SET_SLOTS,CHAPTER_SETS,setArtId} from './equipment-sets.js?v=0.135.0';
 // Sixty chapters in six regions of ten: 1–10 forest, 11–20 fire and ice (11–15 fire,
 // 16–20 ice), 21–30 darkness (Alpha 0.107), 31–40 sunken kingdom, 41–50 storm sky isles,
@@ -272,10 +273,12 @@ const ACCESSORY_REGIONS=['붉은 숲','폐성','서리','해류','뇌운','성�
 export const ACCESSORY_ART = ACCESSORY_REGIONS.flatMap((name,i)=>[
   ...(i>=3?[{id:`acc_t${i+1}_charm`,tier:i+1,slot:'charm',name:name+' 목걸이'}]:[]),
   {id:`acc_t${i+1}_earring`,tier:i+1,slot:'charm',name:name+' 귀걸이'},{id:`acc_t${i+1}_seal`,tier:i+1,slot:'charm',name:name+' 인장'}]);
-export const ALL_EQUIPMENT_ART = [...EQUIPMENT_ART,...SET_ART,...ACCESSORY_ART];
+// Boss rush seals (Alpha 0.136): one art per seal effect on the equipment-seals-v0136 page; a seal shows it at any tier.
+export const SEAL_ART = SEAL_EFFECTS.map(e=>({id:sealArtId(e.id),tier:1,slot:'charm',name:'리리안의 '+e.name+' 인장',seal:true}));
+export const ALL_EQUIPMENT_ART = [...EQUIPMENT_ART,...SET_ART,...ACCESSORY_ART,...SEAL_ART];
 export function equipmentArt(item){
   // Ancients keep their family's base art, whose tier differs from the region tier for tiers 2/3 (Alpha 0.112).
-  const explicit=ALL_EQUIPMENT_ART.find(a=>a.id===item?.artId&&a.slot===equipmentFamily(item.slot)&&(a.tier===item.tier||item.ancient||item.rarity===5));
+  const explicit=ALL_EQUIPMENT_ART.find(a=>a.id===item?.artId&&a.slot===equipmentFamily(item.slot)&&(a.tier===item.tier||item.ancient||item.rarity===5||a.seal&&!!item.seal));
   return explicit??EQUIPMENT_ART.find(a=>a.slot===equipmentFamily(item?.slot??'weapon')&&a.tier===(item?.tier??1));
 }
 for(const biome of Object.values(BIOMES)){
