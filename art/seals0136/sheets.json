@@ -1,0 +1,43 @@
+{
+ "seal-1": {
+  "kind": "sprite",
+  "minParts": 5,
+  "out": "art/seals0136/seal-1.png",
+  "style": "dist/assets/equipment_chapters-v09.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production equipment item icons (signet seal medallions, a swordswoman's personal relic) for a dark fantasy 2D action RPG. Image1 is the existing equipment sheet of this game: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting and scale. Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, filled left to right, top row first, and the remaining cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge, each item compact and filling about 60% of its cell: (1) LOW grade seal: a pale green heart-shaped leaf sigil (vitality), (2) LOW grade seal: a raised tower-shield sigil (protection), (3) LOW grade seal: a swirling wind and winged-boot sigil (speed), (4) MID grade seal: a crossed great-sword sigil (attack power), (5) MID grade seal: a piercing eye over a dagger tip sigil (critical strike). Grade language (keep it consistent): LOW grade seals are tarnished silver with frost-blue enamel and simple engraving; MID grade seals are dark bronze with crimson enamel and sharp blade motifs; HIGH grade seals are radiant gold with glowing gems, small floating light motes and an ornate halo frame. Each item is a single round or shield-shaped medallion, clearly readable at small icon size and clearly distinct from the others. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "items": [
+   "seal_life",
+   "seal_guard",
+   "seal_stride",
+   "seal_might",
+   "seal_keen"
+  ]
+ },
+ "seal-2": {
+  "kind": "sprite",
+  "minParts": 5,
+  "out": "art/seals0136/seal-2.png",
+  "style": "dist/assets/equipment_chapters-v09.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production equipment item icons (signet seal medallions, a swordswoman's personal relic) for a dark fantasy 2D action RPG. Image1 is the existing equipment sheet of this game: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting and scale. Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, filled left to right, top row first, and the remaining cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge, each item compact and filling about 60% of its cell: (1) MID grade seal: three chained slash marks sigil (attack speed), (2) MID grade seal: a long thrusting spear-blade sigil (reach), (3) HIGH grade seal: a blood-red crescent moon falling as a blade of light, (4) HIGH grade seal: a crimson moon dripping a drop of blood, (5) HIGH grade seal: a golden dome barrier of light with a small shield. Grade language (keep it consistent): LOW grade seals are tarnished silver with frost-blue enamel and simple engraving; MID grade seals are dark bronze with crimson enamel and sharp blade motifs; HIGH grade seals are radiant gold with glowing gems, small floating light motes and an ornate halo frame. Each item is a single round or shield-shaped medallion, clearly readable at small icon size and clearly distinct from the others. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "items": [
+   "seal_tempo",
+   "seal_reach",
+   "seal_moonfall",
+   "seal_bloodthirst",
+   "seal_aegis"
+  ]
+ },
+ "seal-3": {
+  "kind": "sprite",
+  "minParts": 4,
+  "out": "art/seals0136/seal-3.png",
+  "style": "dist/assets/equipment_chapters-v09.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production equipment item icons (signet seal medallions, a swordswoman's personal relic) for a dark fantasy 2D action RPG. Image1 is the existing equipment sheet of this game: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting and scale. Create ONE transparent RGBA square image with exactly FOUR separate items in an invisible 3 columns x 2 rows grid, filled left to right, top row first, and the remaining cells (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge, each item compact and filling about 60% of its cell: (1) HIGH grade seal: three ghostly afterimage sword silhouettes, (2) HIGH grade seal: a judge's branding sigil with scales and a downward blade, (3) HIGH grade seal: a beating golden heart with radiating pulse rings, (4) NOT a whole seal: a single broken jagged fragment of a gold-and-crimson seal medallion with a faint glow (crafting material). Grade language (keep it consistent): LOW grade seals are tarnished silver with frost-blue enamel and simple engraving; MID grade seals are dark bronze with crimson enamel and sharp blade motifs; HIGH grade seals are radiant gold with glowing gems, small floating light motes and an ornate halo frame. Each item is a single round or shield-shaped medallion, clearly readable at small icon size and clearly distinct from the others. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "items": [
+   "seal_afterimage",
+   "seal_verdict",
+   "seal_awakening",
+   "seal_shard"
+  ]
+ }
+}
