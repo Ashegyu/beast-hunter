@@ -612,9 +612,11 @@ document.addEventListener('keydown',event=>{
   if(!event.repeat&&k==='shift')doDash();if(!event.repeat&&k==='q')doThunder();if(!event.repeat&&k==='f'){game.interact(state);save();updateHud();}
 });
 document.addEventListener('keyup',event=>{keys.delete(event.key.toLowerCase());if(event.key===' '&&suppressHeldSpace){suppressHeldSpace=false;event.preventDefault();}});
-function suspend(){audio.suspend();clearInput();previous=0;if(state.phase==='playing')state.paused=true;save();updateHud();}
-window.addEventListener('blur',suspend);
-document.addEventListener('visibilitychange',()=>{if(document.hidden)suspend();previous=0;});
+// Alpha 0.135.5 (사용자 요청): losing focus or hiding the tab no longer pauses the hunt. Input is released and the game is
+// saved; a hidden tab simply stops advancing (the loop skips hidden frames, previous=0 drops the gap) and continues on return.
+function suspend(){audio.suspend();clearInput();previous=0;save();updateHud();}
+window.addEventListener('blur',()=>{clearInput();save();});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)suspend();else if(state.phase==='playing')audio.unlock();previous=0;});
 window.addEventListener('pagehide',suspend);
 
 function pointerPoint(event){

@@ -759,10 +759,10 @@ test('keyboard and action buttons operate real combat, movement and recovery',as
   ui.state.enemies=[{id:99,type:'skitter',boss:false,x:ui.state.player.x+100,y:ui.state.player.y,hp:100,maxHp:100,action:'walk',actionTime:0,dead:false,facing:1,speed:0,cooldown:99,damage:9,radius:58,windup:.5,pattern:0}];
   ui.emit('thunder','click');assert.equal(ui.state.player.thunderCooldown,0);ui.run(.2);ui.state.enemies[0].x=ui.state.player.x+100;ui.state.enemies[0].y=ui.state.player.y;ui.emit('thunder','click');ui.run(.4);assert.ok(ui.state.enemies[0].hp<100);assert.ok(ui.state.player.thunderCooldown>0);
 });
-test('pause and blur freeze combat and resume never applies hidden-tab elapsed time',async()=>{
+test('pause freezes combat, while blur or a hidden tab never pauses and never applies hidden-tab elapsed time',async()=>{
   const ui=await host();ui.emit('start','click');ui.run(.2);ui.emit('pause','click');const time=ui.state.run.time;ui.run(1);assert.equal(ui.state.run.time,time);assert.equal(ui.nodes.get('pause-content').hidden,false);
-  ui.emit('resume','click');ui.tick();assert.ok(ui.state.run.time>time);ui.emit('window','blur');const before=ui.state.run.time;ui.tick(200);assert.equal(ui.state.run.time,before);assert.equal(ui.state.paused,true);
-  ui.emit('resume','click');ui.tick(.05);assert.ok(ui.state.run.time-before<=.050001);
+  ui.emit('resume','click');ui.tick();assert.ok(ui.state.run.time>time);ui.emit('window','blur');assert.equal(ui.state.paused,false);let before=ui.state.run.time;ui.tick(.05);assert.ok(ui.state.run.time>before);
+  ui.document.hidden=true;ui.emit('document','visibilitychange');assert.equal(ui.state.paused,false);before=ui.state.run.time;ui.document.hidden=false;ui.emit('document','visibilitychange');ui.tick(200);assert.equal(ui.state.paused,false);assert.equal(ui.nodes.get('pause-content').hidden,true);assert.ok(ui.state.run.time-before<=.100001);
 });
 test('training happens at camp and never interrupts the hunt (Alpha 0.131 성장)',async()=>{
   const p=game.createProfile(1_000_000);p.level=7;
@@ -846,12 +846,12 @@ test('touching the battlefield does not discard a held mobile direction',async()
   ui.emit('joystick','lostpointercapture',{pointerId:1});const stopped=ui.state.player.y;ui.run(.1);assert.equal(ui.state.player.y,stopped);
 });
 
-test('mobile page cache transition pauses the hunt and releases every held control',async()=>{
+test('mobile page cache transition keeps the hunt running, drops the hidden gap and releases every held control',async()=>{
   const ui=await host();ui.emit('start','click');ui.state.enemies=[];ui.state.barrels=[];ui.state.spawnTimer=999;
   ui.stick(1,0,1);ui.emit('attack','pointerdown',{pointerId:2});ui.run(.1);
   ui.emit('window','pagehide');const time=ui.state.run.time;ui.tick(120);
-  assert.equal(ui.state.paused,true);assert.equal(ui.state.run.time,time);
-  ui.emit('resume','click');ui.run(1);const x=ui.state.player.x;ui.run(.2);assert.equal(ui.state.player.x,x);assert.equal(ui.state.player.action,'idle');
+  assert.equal(ui.state.paused,false);assert.ok(ui.state.run.time-time<=.100001);
+  ui.run(1);const x=ui.state.player.x;ui.run(.2);assert.equal(ui.state.player.x,x);assert.equal(ui.state.player.action,'idle');
 });
 
 test('joystick rejects a second owner and ignores moves after capture loss',async()=>{
