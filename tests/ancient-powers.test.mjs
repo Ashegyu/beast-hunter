@@ -24,7 +24,9 @@ test('150 ancient identities have their own authored recipes and partitioned reg
  assert.equal(new Set(ANCIENT_POWERS.map(r=>r.index)).size,150);assert.ok(ANCIENT_POWERS.every(r=>!['heavy','counter','idle'].includes(r.trigger)&&!r.thunderRefund));
  for(const row of g.ANCIENT_CATALOG)assert.equal(row.signature.id,row.id);
  assert.equal(new Set(BOSS_LOOT.flatMap(b=>b.items.map(r=>r.id))).size,150);assert.equal(BOSS_LOOT.length,6);
- for(const boss of BOSS_LOOT){assert.equal(boss.items.length,25);assert.equal(bossLootPool(boss.id,boss.tier),boss.items);for(const row of boss.items){assert.equal(row.signature.id,row.id);assert.equal(row.bossId,boss.id);assert.ok(Object.isFrozen(row.signature));const item=rollAncient({id:2,tier:boss.tier,bossId:boss.id},(boss.items.indexOf(row)+.5)/boss.items.length);assert.equal(item.catalogId,row.id);assert.equal(item.rarity,5);}}
+ for(const boss of BOSS_LOOT){assert.equal(boss.items.length,25);assert.equal(bossLootPool(boss.id,boss.tier),boss.items);const drops=boss.items.filter(r=>r.slot!=='special');for(const row of boss.items){assert.equal(row.signature.id,row.id);assert.equal(row.bossId,boss.id);assert.ok(Object.isFrozen(row.signature));const item=row.slot==='special'?rollAncient({id:2,tier:boss.tier,bossId:boss.id,slot:'special'},.5):rollAncient({id:2,tier:boss.tier,bossId:boss.id},(drops.indexOf(row)+.5)/drops.length);assert.equal(item.catalogId,row.id);assert.equal(item.rarity,5);}}
+ // Alpha 0.136: an unslotted boss drop never picks the region's seal (seals come only from the boss rush).
+ for(const boss of BOSS_LOOT)for(let n=0;n<50;n++)assert.notEqual(rollAncient({id:2,tier:boss.tier,bossId:boss.id},n/50).slot,'special');
  let calls=0;assert.throws(()=>rollItem({id:1,tier:1,bossId:'frost_king'},()=>++calls),RangeError);assert.equal(calls,0);assert.throws(()=>rollAncient({id:1,tier:2,bossId:'bad'},.5),RangeError);
 });
 for(const row of g.ANCIENT_CATALOG)test(row.id+' activates via '+row.signature.trigger+' with real combat effects',()=>{

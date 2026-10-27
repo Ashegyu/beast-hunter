@@ -16,6 +16,7 @@ export const MATERIALS=Object.freeze([
  {id:'refineEssence',name:'순수결정',color:'#ffbf76',refining:true,normal:0,elite:.02,boss:.2,quantity:[1,1,1],where:'강화 던전 7단계부터 확정 보상 / 모든 사냥터 · 정예 2% / 보스 20% · 1개'},
  {id:'skillPage',name:'검술서',color:'#e7c59a',normal:0,elite:0,boss:0,where:'스킬 던전 확정 보상 · 스킬 화면에서 강화 포인트 연구에 사용'},
  {id:'promotionStone',name:'승급석',color:'#f0d586',promotion:true,normal:.02,elite:.2,boss:1,quantity:[1,1,3],where:'승급 던전 확정 보상 / 모든 사냥터 · 일반 2% / 정예 20% / 보스 100% · 1 / 1 / 3개'},
+ {id:'sealShard',name:'인장 조각',color:'#ffd27a',normal:0,elite:0,boss:0,where:'보스 러시 보상 · 인장 분해 · 인장 성장에 사용'},
 ].map(r=>Object.freeze({...r,quantity:Object.freeze(r.quantity??[1,1,1])})));
 export const MATERIAL_BY_ID=Object.freeze(Object.fromEntries(MATERIALS.map(r=>[r.id,r])));
 export const emptyMaterials=()=>Object.fromEntries(MATERIALS.map(r=>[r.id,0]));
@@ -49,6 +50,8 @@ export function craftProgress(profile){const row=targetCraft(profile);if(!row)re
 }
 export function craftedDefinition(item){const row=BY_ID.get(item?.catalogId);return item?.rarity===6&&row&&row.slot===item.slot&&row.tier===item.tier&&row.artId===item.artId?row:null;}
 export function craftStatus(profile,id){const row=BY_ID.get(id);if(!row)return {ok:false,reason:'없는 제작법이야.'};
+ // Alpha 0.136: seals come only from the boss rush; the old seal recipe stays for owned copies but can't be made.
+ if(row.slot==='special')return {ok:false,reason:'인장은 던전 → 보스 러시에서만 얻을 수 있어.'};
  if(profile.inventory.filter(i=>i.rarity===6&&i.catalogId===id).length>=(row.slot==='earring'?2:1))return {ok:false,reason:'이미 보유한 고유 장비야.'};
  if(profile.unlockedStage<row.tier)return {ok:false,reason:'해당 사냥터를 먼저 열어줘.'};
  if(profile.inventory.length>=INVENTORY_LIMIT)return {ok:false,reason:'장비 가방에 빈 칸이 필요해.'};

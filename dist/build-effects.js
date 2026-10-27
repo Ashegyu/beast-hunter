@@ -1,4 +1,4 @@
-import {isEquippedItem} from './equipment-slots.js?v=0.135.0';
+import {isEquippedItem} from './equipment-slots.js?v=0.136.0';
 // One optional inscription per owned instance. Innate legacy powers remain intact.
 export const BUILD_EFFECTS=Object.freeze(Object.fromEntries([
  {id:'chain',name:'번개 전이',event:'hit',damage:.4,targets:3,targetCap:5,radius:230,color:'#9edee9'},
@@ -28,6 +28,6 @@ export function buildEffects(profile){const counts={};for(const item of profile.
 export const INSCRIPTION_COST=Object.freeze({gold:1500,materials:Object.freeze({boneIron:12,crystal:2})});
 export const INSCRIPTION_DROP_CHANCE=Object.freeze({normal:0,special:.2,elite:.3,boss:.5});
 export function inscriptionStatus(profile,itemId,id){const item=profile.inventory.find(i=>i.id===itemId),definition=BUILD_EFFECTS[id];
- const ok=!!item&&!!definition&&!item.rerollCandidate&&profile.gold>=INSCRIPTION_COST.gold&&Object.entries(INSCRIPTION_COST.materials).every(([k,v])=>profile.materials[k]>=v);
- return {ok,item,definition,cost:INSCRIPTION_COST,reason:!item?'보유 장비를 선택해줘.':!definition?'각인을 선택해줘.':item.rerollCandidate?'수치작 결과를 먼저 선택해줘.':!ok?'골드 또는 각인 재료가 부족해.':'기본·강화 수치와 장비 ID 유지 · 추가 각인 1개 교체'};
+ const ok=!!item&&!item.seal&&!!definition&&!item.rerollCandidate&&profile.gold>=INSCRIPTION_COST.gold&&Object.entries(INSCRIPTION_COST.materials).every(([k,v])=>profile.materials[k]>=v);
+ return {ok,item,definition,cost:INSCRIPTION_COST,reason:!item?'보유 장비를 선택해줘.':item.seal?'인장에는 각인할 수 없어.':!definition?'각인을 선택해줘.':item.rerollCandidate?'수치작 결과를 먼저 선택해줘.':!ok?'골드 또는 각인 재료가 부족해.':'기본·강화 수치와 장비 ID 유지 · 추가 각인 1개 교체'};
 }

@@ -1,12 +1,13 @@
-import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily} from './equipment-slots.js?v=0.135.0';
-import {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.135.0';
-export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.135.0';
+import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily} from './equipment-slots.js?v=0.136.0';
+import {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.136.0';
+export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.136.0';
 import {huntMode,BOSS_DROP_TABLES} from './hunt-modes.js';
 import {UNIQUE_EFFECTS,EFFECT_ROWS,uniquePower} from './unique-effects.js?v=0.135.0';
 import {ANCIENT_POWER_BY_ID,NIGHTMARE_POWERS,RAID_POWERS,describePower} from './ancient-powers.js?v=0.135.0';
 import {RAID_ANCIENTS,RAID_REGION,RAID_ANCIENT_STATS} from './raids.js?v=0.135.0';
 import {REGION_ANCIENTS,REGION_ANCIENT_BOSSES} from './ancient-regions.js?v=0.135.0';
 import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.135.0';
+import {isSeal,sealSignatures,SEAL_GRADES} from './seals.js?v=0.136.0';
 export {EQUIPMENT_SETS,SET_SLOTS,SET_STATS,CHAPTER_SETS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.135.0';
 export {UNIQUE_EFFECTS,uniquePower} from './unique-effects.js?v=0.135.0';
 // Item definitions and pure rolls; the combat state owns identities and delivery.
@@ -122,8 +123,9 @@ export function ancientSignatures(item){
  if(hunt===2){const family=equipmentFamily(row.slot);list.push(scalePower(NIGHTMARE_POWERS[family],ANCIENT_TIER_POWER[row.tier-1]*ANCIENT_HUNT_POWER[hunt],{id:row.id+'-nightmare',color:NIGHTMARE_POWERS[family].color}));}
  return list;
 }
+// Alpha 0.136: ancient seals no longer drop (seals come only from the boss rush); a caller naming the slot still gets one.
 export function rollAncient({id,tier,slot,bossId,hunt=0,raid=null},pick,rng=null){
- const pool=raid?ANCIENT_CATALOG.filter(r=>r.raid===raid):bossId?bossLootPool(bossId,tier):ANCIENT_CATALOG.filter(r=>!r.raid),choices=pool.filter(r=>r.tier===tier&&(!slot||r.slot===slot)),base=choices[Math.min(choices.length-1,Math.floor(pick*choices.length))];
+ const pool=raid?ANCIENT_CATALOG.filter(r=>r.raid===raid):bossId?bossLootPool(bossId,tier):ANCIENT_CATALOG.filter(r=>!r.raid),choices=pool.filter(r=>r.tier===tier&&(slot?r.slot===slot:r.slot!=='special')),base=choices[Math.min(choices.length-1,Math.floor(pick*choices.length))];
  if(!base)throw new RangeError('Unknown ancient chapter/slot');
  const power=HUNT_POWER[hunt]??1,item={id,slot:base.slot,tier:base.tier,rarity:5,name:base.name,catalogId:base.id,artId:base.artId,affixes:Object.fromEntries(Object.entries(base.base).map(([k,v])=>[k,Math.min(affixCap(k),Math.round(v*power))])),rollVersion:1,...(hunt?{hunt}:{}),...(base.characterId?{characterId:base.characterId}:{})};
  if(rng){const forced=(pick*choices.length)%1<PERFECT_ROLL_CHANCE;for(const [key,range]of Object.entries(itemRollRanges(item))){const n=skewed(item,rng());item.affixes[key]=rollWithin(range,n,forced);}if(base.raid)item.powerRoll=rollRaidPower(rng(),forced);}
@@ -159,16 +161,16 @@ export function rollStageItem({id,tier,slot=null,set=null,hunt=0},rng){
  let quality=0;if(grade){const table=HUNT_GRADE_TABLES[grade];let value=rng()*100;quality=table.length-1;for(let i=0;i<table.length;i++){value-=table[i];if(value<0){quality=i;break;}}}
  return rollItem({id,tier,slot:type,set,source:'stage',quality,hunt:grade},rng);
 }
-// Accessories (necklace, earring, Lilian seal) come from growth dungeons (Alpha 0.122): a chance per clear, never guaranteed.
+// Accessories (necklace, earring) come from growth dungeons (Alpha 0.122): a chance per clear, never guaranteed. Alpha 0.136: Lilian seals left this pool (보스 러시 only).
 // `grade` picks the rarity table like a hunt mode (dungeon 4+ → 정예 table, 7+ → 악몽 table) but stats stay hunt 0.
-export const DUNGEON_ACCESSORY_CHANCE=.4,ACCESSORY_SLOT_WEIGHTS=Object.freeze([['charm',.45],['earring',.45],['special',.1]]);
+export const DUNGEON_ACCESSORY_CHANCE=.4,ACCESSORY_SLOT_WEIGHTS=Object.freeze([['charm',.5],['earring',.5]]);
 export function rollAccessory({id,tier,grade=0},rng){
- let value=rng(),slot='special';for(const [s,w]of ACCESSORY_SLOT_WEIGHTS){value-=w;if(value<0){slot=s;break;}}
+ let value=rng(),slot='earring';for(const [s,w]of ACCESSORY_SLOT_WEIGHTS){value-=w;if(value<0){slot=s;break;}}
  let quality=0;if(grade>0&&grade<HUNT_GRADE_TABLES.length){const table=HUNT_GRADE_TABLES[grade];let roll=rng()*100;quality=table.length-1;for(let i=0;i<table.length;i++){roll-=table[i];if(roll<0){quality=i;break;}}}
  return rollItem({id,tier,slot,source:'stage',quality,hunt:0},rng);
 }
 const SCORE_WEIGHT=Object.freeze({damage:5,hp:.5,speed:3,crit:4,reduction:5});
-export function itemPower(item){let score=item.rarity*10000+item.tier*1000;for(const [k,v]of Object.entries(item.affixes))score+=(SCORE_WEIGHT[k]??0)*effectiveAffix(item,k);return score;}
+export function itemPower(item){if(isSeal(item))return 1e6+item.seal.grade*1e5+item.seal.level*1e3;let score=item.rarity*10000+item.tier*1000;for(const [k,v]of Object.entries(item.affixes))score+=(SCORE_WEIGHT[k]??0)*effectiveAffix(item,k);return score;}
 export const salvageValue=item=>12+(item.rarity===5?6:item.rarity)*14+item.tier*4;
 export function itemProtection(profile,item){
  if(isEquippedItem(profile,item))return '착용 중';
@@ -180,7 +182,7 @@ export function itemProtection(profile,item){
 export function storeItem(profile,item){
  if(profile.inventory.some(i=>i.id===item.id))return {duplicate:true,kept:false,gold:0};
  discoverAncient(profile,item);let discard=null;
- if(profile.inventory.length>=INVENTORY_LIMIT){discard=item;for(const owned of profile.inventory)if(!itemProtection(profile,owned)&&!(owned.enhancement>0)&&!(owned.promotionCount>0)&&itemPower(owned)<itemPower(discard))discard=owned;
+ if(profile.inventory.length>=INVENTORY_LIMIT){discard=item;for(const owned of profile.inventory)if(!itemProtection(profile,owned)&&!isSeal(owned)&&!(owned.enhancement>0)&&!(owned.promotionCount>0)&&itemPower(owned)<itemPower(discard))discard=owned;
   if(discard!==item)profile.inventory=profile.inventory.filter(i=>i.id!==discard.id);
  }
  const gold=discard?salvageValue(discard):0;profile.gold+=gold;if(discard!==item)profile.inventory.push(item);
@@ -262,7 +264,9 @@ export function uniqueEffect(item){
  const definition=UNIQUE_EFFECTS[matching?row.effectId:LEGACY_EFFECT[item.artId]];
  return definition?.slot===item.slot?definition:null;
 }
-export function uniqueLoadout(profile){const result=Object.fromEntries(EQUIPMENT_KEYS.map(key=>[key,null]));for(const slot of EQUIPMENT_KEYS){const item=profile.inventory?.find(i=>i.id===profile.equipment?.[slot]&&i.slot===itemSlotForPosition(slot));if(!item)continue;const definition=uniqueEffect(item);if(definition)result[slot]=Object.freeze({definition,power:uniquePower(item.rarity),itemId:item.id,slot,ancient:ancientDefinition(item),crafted:craftedDefinition(item),signatures:Object.freeze(ancientSignatures(item))});}return result;}
+// Alpha 0.136: a seal's 상옵 effects ride the ancient power path (spec.seal plays the role of spec.ancient).
+const SEAL_DEFINITION=Object.freeze({id:'seal',name:'인장 특수효과',description:'보스 러시 인장의 상옵 효과',slot:'special',color:SEAL_GRADES[2].color});
+export function uniqueLoadout(profile){const result=Object.fromEntries(EQUIPMENT_KEYS.map(key=>[key,null]));for(const slot of EQUIPMENT_KEYS){const item=profile.inventory?.find(i=>i.id===profile.equipment?.[slot]&&i.slot===itemSlotForPosition(slot));if(!item)continue;if(isSeal(item)){const signatures=sealSignatures(item);if(signatures.length)result[slot]=Object.freeze({definition:SEAL_DEFINITION,power:1,itemId:item.id,slot,ancient:null,crafted:null,seal:Object.freeze({id:'seal-'+item.id,signature:signatures[0]}),signatures:Object.freeze(signatures)});continue;}const definition=uniqueEffect(item);if(definition)result[slot]=Object.freeze({definition,power:uniquePower(item.rarity),itemId:item.id,slot,ancient:ancientDefinition(item),crafted:craftedDefinition(item),signatures:Object.freeze(ancientSignatures(item))});}return result;}
 
 export function equippedUniqueEffect(profile,slot){return uniqueEffect((profile.inventory??[]).find(item=>item.slot===itemSlotForPosition(slot)&&profile.equipment[slot]===item.id));}
 

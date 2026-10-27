@@ -1,5 +1,5 @@
-import {EQUIPMENT_KEYS} from './equipment-slots.js?v=0.135.0';
-import {uniqueLoadout} from './loot.js?v=0.135.0';
+import {EQUIPMENT_KEYS} from './equipment-slots.js?v=0.136.0';
+import {uniqueLoadout} from './loot.js?v=0.136.0';
 import {equipmentArt} from './chapters.js?v=0.135.0';
 
 export const EQUIPMENT_SYNERGIES=Object.freeze([
@@ -17,7 +17,7 @@ export function equipmentSynergies(profile){
  const weapon=profile.inventory.find(i=>i.slot==='weapon'&&i.id===profile.equipment.weapon),art=weapon?equipmentArt(weapon)?.id:null;
  if(art==='frost_blade')tags.weapon.push('frost');
  if(art==='forest_blade'||art==='ruins_blade')tags.weapon.push('bleed');
- for(const slot of SLOTS){const spec=loadout[slot],id=spec?.definition.id,r=(spec?.ancient??spec?.crafted)?.signature;
+ for(const slot of SLOTS){const spec=loadout[slot],id=spec?.definition.id,r=(spec?.ancient??spec?.crafted??spec?.seal)?.signature;
   if(id==='frostNova'||id==='frostWard'||r?.chill)tags[slot].push('frost');
   if(r?.bleed)tags[slot].push('bleed');
   if(['focus','capacitor','storm','whirlwind'].includes(id))tags[slot].push('shatter');

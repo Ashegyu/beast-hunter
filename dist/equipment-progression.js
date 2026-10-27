@@ -1,4 +1,4 @@
-import {itemRollRanges,isPerfectRoll,effectiveAffix,enhancementBonus,rollItemAffixes,rollRaidPowerFor,promotionPreview,ENHANCEMENT_CAPS,MAX_ENHANCEMENT,enhancementCap,enhancementLevel} from './loot.js?v=0.135.0';
+import {itemRollRanges,isPerfectRoll,effectiveAffix,enhancementBonus,rollItemAffixes,rollRaidPowerFor,promotionPreview,ENHANCEMENT_CAPS,MAX_ENHANCEMENT,enhancementCap,enhancementLevel} from './loot.js?v=0.136.0';
 export {itemRollRanges,isPerfectRoll,effectiveAffix,enhancementBonus,ENHANCEMENT_CAPS,MAX_ENHANCEMENT,enhancementCap,enhancementLevel};
 const CHANCE_BANDS=[[[100,92]],[[95,77.9]],[[90,73.8],[54,46.8]],[[80,65.6],[48,33.6]],[[65,53.3],[39,27.3],[13,1]],[[60,49.2],[36,25.2],[12,3],[1.5,.5]],[[55,45.1],[33,23.1],[11,3],[2,.8],[.6,.3]]];
 const bounded=(n,min,max,fallback=0)=>Number.isInteger(n)?Math.max(min,Math.min(max,n)):fallback;
@@ -13,8 +13,10 @@ const owned=(p,id)=>p.inventory.find(i=>i.id===id);
 function bonusData(item,addStep=false){const result={};for(const key of Object.keys(item.affixes))result[key]=(Math.round(enhancementBonus(item,key)*100)+(addStep?item.affixes[key]*3:0))/100;return result;}
 function payable(p,cost){return Number.isFinite(p.gold)&&p.gold>=cost.gold&&Number.isFinite(p.cores)&&p.cores>=cost.cores&&Object.entries(cost.materials).every(([k,v])=>Number.isInteger(p.materials?.[k])&&p.materials[k]>=v);}
 function spend(p,cost){p.gold-=cost.gold;p.cores-=cost.cores;for(const [k,v]of Object.entries(cost.materials))p.materials[k]-=v;}
+// Alpha 0.136: seals grow on the boss rush screen instead of the workshop.
+const SEAL_REASON='인장은 던전 → 보스 러시에서 성장시켜.';
 export function enhancementStatus(p,id){
- const item=owned(p,id);if(!item)return {ok:false,reason:'보유하지 않은 장비야.'};
+ const item=owned(p,id);if(!item)return {ok:false,reason:'보유하지 않은 장비야.'};if(item.seal)return {ok:false,item,level:0,cap:0,cost:{gold:0,cores:0,materials:{}},ranges:{},preview:null,reason:SEAL_REASON};
  const level=enhancementLevel(item),cap=enhancementCap(item.rarity),target=level+1,rule=enhancementRule(target,item.rarity);
  if(!rule)return {ok:false,item,level,cap,reason:'최대 강화 +'+cap+(item.rarity<4?' · 승급 가능':'')};
  const failures=bounded(item.enhanceFailures,0,failureLimit(rule)),guaranteed=rule.mode==='guaranteed'&&failures+1>=rule.attempts,bonusChance=failures*rule.bonusPerFailure,chance=guaranteed?1:Math.round((rule.chance+bonusChance)*10000)/10000;
@@ -41,7 +43,7 @@ export function enhanceOwned(p,id,rng){
 }
 const PROMOTION_GOLD=[2000,8000,30000,100000],PROMOTION_STONES=[2,5,12,30],PROMOTION_CRYSTALS=[1,3,8,20];
 export function promotionStatus(p,id){
- const item=owned(p,id);if(!item)return {ok:false,reason:'보유하지 않은 장비야.'};
+ const item=owned(p,id);if(!item)return {ok:false,reason:'보유하지 않은 장비야.'};if(item.seal)return {ok:false,item,level:0,cap:0,cost:{gold:0,cores:0,materials:{}},ranges:{},preview:null,reason:SEAL_REASON};
  const preview=promotionPreview(item),level=enhancementLevel(item),cap=enhancementCap(item.rarity);
  if(!preview)return {ok:false,item,level,cap,reason:item.rarity<4?'장비 원형을 확인할 수 없어 승급할 수 없어.':item.rarity===4?'신화는 일반 장비의 최종 등급이야.':'고대·제작 장비는 별도 체계로 승급하지 않아.'};
  const materials={promotionStone:PROMOTION_STONES[item.rarity],crystal:PROMOTION_CRYSTALS[item.rarity]};
@@ -56,7 +58,7 @@ export function promoteOwned(p,id){
  return {ok:true,item,cost:status.cost,reason:'승급 성공 · '+item.name+' · 강화 +0'};
 }
 export function rerollStatus(p,id){
- const item=owned(p,id);if(!item)return {ok:false,reason:'보유하지 않은 장비야.'};
+ const item=owned(p,id);if(!item)return {ok:false,reason:'보유하지 않은 장비야.'};if(item.seal)return {ok:false,item,level:0,cap:0,cost:{gold:0,cores:0,materials:{}},ranges:{},preview:null,reason:SEAL_REASON};
  const ranges=itemRollRanges(item),cost={gold:Math.round((180+item.rarity*60)*item.tier),cores:1,materials:{boneIron:3+item.rarity}};
  const reason=item.rarity<4?'신화 이상 장비부터 수치작 가능':!Object.keys(ranges).length?'장비의 수치 범위를 확인할 수 없어.':item.rerollCandidate?'새 수치 적용 또는 기존 유지를 선택해줘.':!payable(p,cost)?'수치작 비용이 부족해.':'옵션 종류와 강화는 유지 · 새 수치 확인 후 선택';
  return {ok:item.rarity>=4&&!!Object.keys(ranges).length&&!item.rerollCandidate&&payable(p,cost),item,ranges,cost,reason,pending:!!item.rerollCandidate};

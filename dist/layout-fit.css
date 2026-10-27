@@ -445,3 +445,41 @@
 #game-shell#game-shell #overlay[data-panel=result] #result-content[data-loot-expanded=true] .result-loot-grid{flex:1 1 auto;min-height:0;grid-template-rows:none!important;grid-auto-rows:var(--result-cell)!important;row-gap:4px!important;align-content:start}
 #game-shell#game-shell #overlay[data-panel=result] #result-content[data-loot-expanded=true] #result-loot-pager:not([hidden]){display:flex!important;flex:none;justify-content:center;align-items:center;gap:10px;margin-top:4px;font-size:11px}
 #game-shell#game-shell #overlay[data-panel=result] #result-loot-gallery .result-loot-grid[hidden]{display:none!important}
+/* Alpha 0.136.0 보스 러시: 던전 화면 세 번째 탭. 왼쪽은 '오늘의 상대'(보스 5) | '인장 성장' 2열, 오른쪽 입장 패널은 레이드처럼 공유.
+   인장 조각 아이콘은 황혼 인장 원화(equipment-accessories-v0122, acc_t6_seal 199×240 @ 8,504 / 1200×752)를 잘라 쓴다. */
+#game-shell .craft-material-icon.seal-shard-icon{background-image:url('assets/equipment-accessories-v0122.webp')!important;background-size:500% 313.333%!important;background-position:-1.302% 98.4375%!important;filter:none!important}
+#game-shell #rush-panel:not([hidden]){display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:8px;min-height:0;overflow:hidden}
+#game-shell #rush-panel>section{display:flex;flex-direction:column;gap:4px;min-width:0;min-height:0;padding:7px 8px;border:1px solid #9e835356;border-radius:8px;background:#0b1216b3;overflow:hidden}
+#game-shell #rush-panel header{display:flex;align-items:center;justify-content:space-between;gap:6px;margin:0}
+#game-shell #rush-panel header small{font-size:10px;color:#aeb4af;white-space:nowrap}
+#game-shell #rush-panel header strong{font-size:11px;color:#ffe7c2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#game-shell #rush-bosses{display:grid;gap:2px;margin:0;padding:0;list-style:none}
+#game-shell #rush-bosses li{display:grid;grid-template-columns:14px minmax(0,1fr) auto;align-items:baseline;gap:5px;font-size:11px;line-height:1.35;color:#e6dccb}
+#game-shell #rush-bosses li b{color:#ddac69;font-size:10px;text-align:center}
+#game-shell #rush-bosses li span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#game-shell #rush-bosses li small{font-size:9.5px;color:#9aa39d;white-space:nowrap}
+#game-shell #rush-day{margin:auto 0 0;font-size:10px;line-height:1.35;color:#b6bcb5;white-space:pre-line}
+#game-shell .rush-seal-pager{display:flex;align-items:center;gap:4px}
+#game-shell .rush-seal-pager button{min-height:0!important;height:20px;width:22px;padding:0!important;border:1px solid #9e835366;border-radius:4px;background:#160f12cc;color:#ffe7c2;font-size:12px;line-height:1}
+#game-shell .rush-seal-pager button:disabled{opacity:.4}
+#game-shell .rush-seal-pager em{font-size:10px;font-style:normal;color:#aeb4af;min-width:26px;text-align:center}
+#game-shell .rush-seal-body{display:flex;align-items:center;gap:7px;min-width:0}
+#game-shell #rush-seal-art{flex:none;width:40px!important;height:40px!important}
+#game-shell #rush-seal-art[hidden]{display:none!important}
+#game-shell .rush-seal-body>div{display:grid;min-width:0}
+#game-shell #rush-seal-name{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#game-shell #rush-seal-level{font-size:10px;color:#aeb4af;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#game-shell :is(#rush-seal-effects,#rush-seal-cost){margin:0;font-size:10px;line-height:1.35;color:#d9d0bf;white-space:pre-line;overflow:hidden}
+#game-shell #rush-seal-effects{flex:1 1 auto;min-height:0}
+#game-shell #rush-seal-cost{flex:none;color:#b6bcb5}
+#game-shell #rush-seal-grow{flex:none;min-height:0!important;height:26px;padding:0 8px!important;border:1px solid #ddac69;border-radius:5px;background:linear-gradient(145deg,#701d25,#2a1418);color:#ffe7c2;font-size:11px}
+#game-shell #rush-seal-grow:disabled{opacity:.45;border-color:#9e835366;background:#160f12cc}
+#game-shell #camp-dungeons-panel[data-mode=rush] #dungeon-hint{font-size:11px}
+@media(max-height:360px){#game-shell #camp-dungeons-panel[data-mode=rush] .dungeon-library-note{display:none}#game-shell #rush-panel>section{padding:5px 6px;gap:3px}#game-shell #rush-bosses li{font-size:10px;line-height:1.25}#game-shell #rush-seal-art{width:32px!important;height:32px!important}#game-shell #rush-seal-grow{height:22px}#game-shell #camp-dungeons-panel[data-mode=rush] #dungeon-rule{font-size:10px;line-height:1.35}#game-shell #camp-dungeons-panel[data-mode=rush] .dungeon-reward-preview>small{display:none}#game-shell #camp-dungeons-panel[data-mode=rush] #dungeon-hint{display:none}}
+/* Alpha 0.136.0 결과 창(던전·레이드·보스 러시): '확정 보상' 칸이 수치·획득·레벨 칸 위에 더해져 아래가 잘렸다.
+   확정 보상을 한 줄(제목 | 목록 | 던전 선택으로)로 줄이고, 그 목록과 겹치는 수치 4칸은 숨긴다. */
+#game-shell#game-shell #overlay[data-panel=result] #result-content:has(#dungeon-result-rewards:not([hidden])) .result-stats{display:none!important}
+#game-shell#game-shell #overlay[data-panel=result] #dungeon-result-rewards:not([hidden]){display:grid!important;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:8px;flex:none;margin:0!important;padding:6px 8px!important;border-radius:4px}
+#game-shell#game-shell #overlay[data-panel=result] #dungeon-result-rewards>strong{font-size:11px;white-space:nowrap}
+#game-shell#game-shell #overlay[data-panel=result] #dungeon-result-list{margin:0!important;font-size:12px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#game-shell#game-shell #overlay[data-panel=result] #dungeon-result-exit{min-height:0!important;height:26px;padding:0 10px!important;font-size:11px;white-space:nowrap}
