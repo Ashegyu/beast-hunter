@@ -208,4 +208,16 @@ export const RAID_POWERS=Object.freeze(Object.fromEntries([
  ['judge-special',{name:'최후의 판결',trigger:'lowHp',cooldown:25,damage:1.2,invuln:2,radius:300}],
 ].map(([key,r],i)=>{const id='ancient-raid-'+key;return [id,Object.freeze({...r,id,index:153+i,radius:r.radius??0,color:RAID_COLORS[key.split('-')[0]],description:describePower(r)})];})));
 
+// Alpha 0.139 레이드 난이도: a 정예 raid ancient adds its raid's 각성 power, a 악몽 raid ancient also the 심연 power of its slot family.
+export const RAID_AWAKEN_POWERS=Object.freeze(Object.fromEntries([
+ ['colossus',{name:'거신 각성',trigger:'hurt',cooldown:10,shield:.1,damage:.8,push:40,radius:240}],
+ ['queen',{name:'여왕 각성',trigger:'kill',cooldown:4,shots:4,damage:.5,bleed:2,radius:300}],
+ ['judge',{name:'심판 각성',trigger:'skill',cooldown:6,damage:1,execute:.2,center:'target',radius:260}],
+].map(([raid,r],i)=>{const id='raid-awaken-'+raid;return [raid,Object.freeze({...r,id,index:168+i,radius:r.radius??0,color:RAID_COLORS[raid],description:describePower(r)})];})));
+export const RAID_ABYSS_POWERS=Object.freeze(Object.fromEntries([
+ ['weapon',{name:'심연의 칼날',trigger:'kill',cooldown:3,fury:.2,furyTime:4}],
+ ['armor',{name:'심연의 갑주',trigger:'hurt',cooldown:7,shield:.1,heal:.04}],
+ ['charm',{name:'심연의 메아리',trigger:'skill',cooldown:5,cdr:.8,stamina:8}],
+].map(([family,r],i)=>{const id='raid-abyss-'+family;return [family,Object.freeze({...r,id,index:171+i,radius:0,color:'#7a5cff',description:describePower(r)})];})));
+
 export const ANCIENT_POWER_BY_ID=Object.freeze(Object.fromEntries(ANCIENT_POWERS.map(r=>[r.id,r])));

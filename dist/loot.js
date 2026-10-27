@@ -3,11 +3,11 @@ import {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.136.0';
 export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.136.0';
 import {huntMode,BOSS_DROP_TABLES} from './hunt-modes.js?v=0.139.0';
 import {UNIQUE_EFFECTS,EFFECT_ROWS,uniquePower} from './unique-effects.js?v=0.135.0';
-import {ANCIENT_POWER_BY_ID,NIGHTMARE_POWERS,RAID_POWERS,describePower} from './ancient-powers.js?v=0.135.0';
-import {RAID_ANCIENTS,RAID_REGION,RAID_ANCIENT_STATS} from './raids.js?v=0.135.0';
+import {ANCIENT_POWER_BY_ID,NIGHTMARE_POWERS,RAID_POWERS,RAID_AWAKEN_POWERS,RAID_ABYSS_POWERS,describePower} from './ancient-powers.js?v=0.139.0';
+import {RAID_ANCIENTS,RAID_REGION,RAID_ANCIENT_STATS} from './raids.js?v=0.139.0';
 import {REGION_ANCIENTS,REGION_ANCIENT_BOSSES} from './ancient-regions.js?v=0.135.0';
 import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.135.0';
-import {isSeal,sealSignatures,SEAL_GRADES} from './seals.js?v=0.136.2';
+import {isSeal,sealSignatures,SEAL_GRADES} from './seals.js?v=0.139.0';
 export {EQUIPMENT_SETS,SET_SLOTS,SET_STATS,CHAPTER_SETS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.135.0';
 export {UNIQUE_EFFECTS,uniquePower} from './unique-effects.js?v=0.135.0';
 // Item definitions and pure rolls; the combat state owns identities and delivery.
@@ -91,6 +91,8 @@ const ANCIENT_STATS=Object.freeze({weapon:{damage:13,crit:3,speed:3},armor:{hp:3
 // shield, fury, haste); triggers, cooldowns, radii and control effects stay as authored.
 export const ANCIENT_TIER_POWER=Object.freeze([1,1.1,1.2,1.3,1.4,1.5]);
 export const ANCIENT_HUNT_POWER=Object.freeze([1,1.15,1.3]);
+// Alpha 0.139: raid ancients of the 정예/악몽 raid tiers (their `hunt`): signature power ×1.2/×1.4 (stats use HUNT_POWER).
+export const RAID_TIER_POWER=Object.freeze([1,1.2,1.4]);
 const SCALED_POWER_KEYS=['damage','heal','shield','fury','haste'];
 function scalePower(r,factor,extra={}){
  const out={...r,...extra};for(const k of SCALED_POWER_KEYS)if(r[k])out[k]=Math.round(r[k]*factor*1000)/1000;
@@ -118,7 +120,11 @@ export function ancientForLegacy(item){const row=CATALOG_BY_ID.get(item.catalogI
 export const raidPowerRoll=item=>Number.isInteger(item?.powerRoll)?Math.max(RAID_POWER_ROLL.min,Math.min(RAID_POWER_ROLL.max,item.powerRoll)):100;
 export function ancientSignatures(item){
  const crafted=item?.rarity===6?craftedDefinition(item):null;if(crafted)return [crafted.signature];
- const row=ancientDefinition(item);if(!row)return [];if(row.raid)return [scalePower(row.signature,raidPowerRoll(item)/100)];const hunt=huntGrade(item);if(!hunt)return [row.signature];
+ const row=ancientDefinition(item);if(!row)return [];if(row.raid){const tier=huntGrade(item),roll=raidPowerRoll(item)/100,list=[scalePower(row.signature,roll*RAID_TIER_POWER[tier])];
+  // Alpha 0.139: 정예 raid ancients add the raid's 각성 power, 악몽 ones also the slot family's 심연 power (both follow the roll).
+  if(tier>=1)list.push(scalePower(RAID_AWAKEN_POWERS[row.raid],roll*RAID_TIER_POWER[tier],{id:row.id+'-awaken',color:RAID_AWAKEN_POWERS[row.raid].color}));
+  if(tier>=2){const family=equipmentFamily(row.slot);list.push(scalePower(RAID_ABYSS_POWERS[family],roll*RAID_TIER_POWER[tier],{id:row.id+'-abyss',color:RAID_ABYSS_POWERS[family].color}));}
+  return list;}const hunt=huntGrade(item);if(!hunt)return [row.signature];
  const list=[scalePower(row.signature,ANCIENT_HUNT_POWER[hunt])];
  if(hunt===2){const family=equipmentFamily(row.slot);list.push(scalePower(NIGHTMARE_POWERS[family],ANCIENT_TIER_POWER[row.tier-1]*ANCIENT_HUNT_POWER[hunt],{id:row.id+'-nightmare',color:NIGHTMARE_POWERS[family].color}));}
  return list;

@@ -3,7 +3,7 @@
 // mode alike) and their damage follows the item's effect power roll (`powerRoll`, 60~120%). Pure data; combat-skills.js
 // adds them to SKILL_BY_ID as kind 'gear' (not to SKILL_CATALOG, so the skill screen and loadouts are unchanged).
 import {SKILL_TEMPLATES,beastElementText} from './beast-techniques.js?v=0.135.0';
-import {RAID_ANCIENTS,RAIDS} from './raids.js?v=0.135.0';
+import {RAID_ANCIENTS,RAIDS} from './raids.js?v=0.139.0';
 const ROWS={
  'colossus-weapon':['파쇄 강타','slam',420,9,{breach:15}],
  'colossus-helmet':['강철 포효','roar',160,14,{shield:.1}],

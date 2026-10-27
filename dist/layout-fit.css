@@ -558,3 +558,6 @@
 @media(max-height:360px){#game-shell .tree-web{margin:6px 12px 6px}#game-shell .tree-detail{min-height:26px;padding:2px 6px}#game-shell .tree-detail>button{height:22px}}
 #game-shell #camp-growth-panel .growth-board[data-view=tree] #offline-note{display:none}
 @media(max-height:360px){#game-shell .tree-regions{display:none}#game-shell #growth-tree .tree-node{--node:15px}#game-shell #growth-tree .tree-node[data-kind=notable]{--node:22px}#game-shell #growth-tree .tree-node:is([data-kind=keystone],[data-kind=core]){--node:28px}}
+/* 0.139 레이드 난이도: 레이드 모드에서는 '단계' 줄(입장 횟수는 카드에 있음) 대신 난이도 선택 줄을 둔다. */
+#game-shell #camp-dungeons-panel[data-mode=raid] .dungeon-level-label:not(.raid-tier-label){display:none}
+#game-shell #camp-dungeons-panel .raid-tier-label[hidden]{display:none}

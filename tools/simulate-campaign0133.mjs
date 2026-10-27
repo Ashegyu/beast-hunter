@@ -46,7 +46,7 @@ const ENDGAME=process.env.ENDGAME==='1';let simNow=Date.UTC(2026,0,5,3),rushes=0
 function fight(){for(let i=0;i<24000&&s.phase==='playing';i++)g.advanceGame(s,.05);const won=s.phase==='victory';g.returnToCamp(s);return won;}
 function endgameDay(){simNow+=864e5;
  while(g.launchBossRush(s,simNow)){fight();rushes++;}
- for(const r of g.RAIDS)while(g.launchRaid(s,r.id,simNow)){prepare(s,null);if(fight())raidClears++;raidRuns++;}
+ for(const r of g.RAIDS)while(g.launchRaid(s,r.id,simNow,null,g.raidTopTier(p))){prepare(s,null);if(fight())raidClears++;raidRuns++;}
  prepare(s,null);const seal=p.equipment.special;if(seal)while(g.growSealItem(s,seal).ok){}}
 const legs=[[0,LAST],...(MODES&&LAST>=g.STAGES.length?[[1,g.STAGES.length],[2,g.STAGES.length]]:[])];
 for(const [d,last] of legs){if(stuck)break;

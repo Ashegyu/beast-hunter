@@ -20,6 +20,13 @@ export const RAIDS=Object.freeze([
   rule:'12초마다 피할 수 없는 심판(최대 체력의 40%, 매번 +10%)을 내립니다. 피해 감소·보호막·회복으로 버티세요.',
   build:'체력 · 보호막 · 회복',cycle:['charge','slam','volley','slam','charge','volley'],judgementEvery:12,judgementWarning:2,judgementDamage:.4,judgementGrowth:.1},
 ].map(r=>Object.freeze({...r,cycle:Object.freeze(r.cycle)})));
+// Alpha 0.139 레이드 난이도 (사용자 결정): 일반 opens after 일반 60장, 정예 after every 정예 chapter, 악몽 after every 악몽 chapter.
+// The weekly entries are shared by the three tiers. A tier fights like the 정예/악몽 curve at chapter 60 (game-engine modeScale)
+// and its ancients carry the hunt grade of the tier (stats ×1.25/×1.6, power ×1.2/×1.4, plus 각성 and 심연 powers).
+export const RAID_TIERS=Object.freeze(['일반','정예','악몽']);
+export function raidTierUnlocked(profile,tier){if(!Number.isInteger(tier)||tier<0||tier>=RAID_TIERS.length||(profile?.clearedStage??0)<60)return false;
+ const m=profile?.bossMastery;return !tier||Array.isArray(m)&&m.length>0&&m.every(v=>v>=tier);}
+export const raidTopTier=profile=>RAID_TIERS.reduce((a,_,t)=>raidTierUnlocked(profile,t)?t:a,0);
 export const RAID_BY_ID=Object.freeze(Object.fromEntries(RAIDS.map(r=>[r.id,r])));
 export const raidDefinition=id=>RAID_BY_ID[id]??null;
 // Weeks start on Monday 00:00 in Korea (UTC+9). 1970-01-05 was a Monday.

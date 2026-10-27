@@ -59,13 +59,16 @@ test('황혼의 심판자 judgement ignores dodge frames, grows each time and is
  s.player.hp=max;e.judgeClock=11.99;s.player.invulnerable=2;run(s,.05);assert.equal(s.player.hp,max);assert.equal(e.judgements,3);
 });
 
-test('raid ancients: fifteen authored identities, never in chapter boss pools, fixed power at every hunt mode',()=>{
+test('raid ancients: fifteen authored identities, never in chapter boss pools; 정예/악몽 raid tiers add 각성 and 심연 powers (0.139)',()=>{
  const rows=g.ANCIENT_CATALOG.filter(r=>r.raid);assert.equal(rows.length,15);
  for(const r of g.RAIDS){const own=rows.filter(a=>a.raid===r.id);assert.deepEqual(own.map(a=>a.slot),['weapon','helmet','armor','charm','special']);assert.ok(own.every(a=>a.region===7&&a.tier===6));for(const a of own)assert.deepEqual(a.signature,RAID_POWERS[a.id]);}
  for(const b of g.BOSS_LOOT)assert.ok(b.items.every(a=>!a.raid));
  const keys=new Set(rows.map(a=>JSON.stringify({...a.signature,id:0,index:0,name:0,color:0,description:0})));assert.equal(keys.size,15);
  const row=rows[0],item={id:1,slot:row.slot,tier:row.tier,rarity:5,catalogId:row.id,artId:row.artId,name:row.name,affixes:{}};
- for(const hunt of [0,1,2])assert.deepEqual(g.ancientSignatures({...item,...(hunt?{hunt}:{})}),[row.signature]);
+ assert.deepEqual(g.ancientSignatures(item),[row.signature]);
+ const elite=g.ancientSignatures({...item,hunt:1}),nightmare=g.ancientSignatures({...item,hunt:2});
+ assert.deepEqual(elite.map(r=>r.name),[row.signature.name,'거신 각성']);assert.deepEqual(nightmare.map(r=>r.name),[row.signature.name,'거신 각성','심연의 칼날']);
+ assert.ok(nightmare[0].damage>elite[0].damage&&elite[0].damage>row.signature.damage,'위력 ×1.2/×1.4');assert.equal(new Set(nightmare.map(r=>r.id)).size,3);
  assert.match(g.equipmentAcquisition(item),/레이드 전용/);
  const tier6=g.ANCIENT_CATALOG.find(a=>a.tier===6&&a.slot==='weapon'&&!a.raid);assert.ok(row.base.damage>tier6.base.damage);
 });
@@ -83,4 +86,19 @@ test('raid ancient rolls are wide and skewed low: stats 60~125%, effect power 60
  const s=g.createGame(saved);const res=g.rerollItem(s,7);assert.ok(res.ok,res.reason);const cand=s.profile.inventory[0].rerollCandidate;assert.ok(Number.isInteger(cand.powerRoll)&&cand.powerRoll>=60&&cand.powerRoll<=120);
  const kept=g.restoreProfile(g.encodeProfile(s.profile,1000),1000).inventory[0].rerollCandidate;assert.equal(kept.powerRoll,cand.powerRoll);
  assert.ok(g.resolveItemReroll(s,7,true).ok);assert.equal(s.profile.inventory[0].powerRoll,cand.powerRoll);
+});
+test('0.139 raid tiers: 정예/악몽 open after every chapter of that mode, share the weekly entries, scale like chapter 120/180 and drop tier ancients',()=>{
+ const base=profile();base.bossMastery=g.STAGES.map(()=>0);
+ assert.equal(g.raidTierUnlocked(base,0),true);assert.equal(g.raidTierUnlocked(base,1),false);assert.equal(g.raidTierUnlocked(base,3),false);assert.equal(g.raidTopTier(base),0);
+ assert.equal(g.launchRaid(g.createGame(structuredClone(base)),'judge',now,null,1),false);
+ const elite=structuredClone(base);elite.bossMastery=elite.bossMastery.map(()=>1);elite.bossMastery[59]=0;assert.equal(g.raidTierUnlocked(elite,1),false,'정예 60장 전부');elite.bossMastery[59]=1;assert.equal(g.raidTierUnlocked(elite,1),true);assert.equal(g.raidTierUnlocked(elite,2),false);assert.equal(g.raidTopTier(elite),1);
+ const top=structuredClone(base);top.bossMastery=top.bossMastery.map(()=>2);assert.equal(g.raidTopTier(top),2);
+ const hp=tier=>{const s=g.createGame(structuredClone(top));assert.equal(g.launchRaid(s,'judge',now,null,tier),true);assert.equal(s.run.raidTier,tier);return boss(s).maxHp;};
+ const h0=hp(0);for(const tier of [1,2])assert.ok(Math.abs(hp(tier)/h0-g.modeScale(g.MODE_CHAPTERS,tier).hp)<.01,'tier '+tier);
+ // Shared entries: two tiers draw from the same three a week.
+ const s=g.createGame(structuredClone(top),{durable:true});for(const tier of [2,1,0]){assert.equal(g.launchRaid(s,'queen',now,null,tier),true);g.returnToCamp(s);}assert.equal(g.launchRaid(s,'queen',now,null,2),false);
+ // A cleared 악몽 raid pays tier gold and materials and its ancient carries hunt 2 (stats ×1.6, three powers).
+ const win=g.createGame(structuredClone(top));assert.equal(g.launchRaid(win,'colossus',now,null,2),true);win.lootRates={raid:1};const e=boss(win);e.plate=0;e.hp=1;win.projectiles.push({id:win.nextId++,x:e.x,y:e.y,vx:0,vy:0,damage:1e9,ttl:1,friendly:true});run(win,.1);
+ const reward=win.run.dungeonReward,plain=g.raidRewards(60);assert.equal(reward.gold,Math.round(plain.gold*g.modeScale(60,2).reward));assert.equal(reward.materials.promotionStone,plain.materials.promotionStone*3);
+ const item=reward.item;assert.equal(item.hunt,2);assert.equal(g.ancientSignatures(item).length,3);assert.equal(g.restoreProfile(g.encodeProfile(win.profile,1000),1000).inventory.find(i=>i.id===item.id).hunt,2);
 });
