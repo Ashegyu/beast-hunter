@@ -16,8 +16,10 @@ const SEED=Number(process.argv[3]||0),LAST=Number(process.argv[4]||60),POLICY=pr
 const HPLOG=process.env.HPLOG==='1',hpLog=[];
 const STARS=process.env.STARS==='1',starSeen=new Set(),starLog=[];
 const SPEC=POLICY==='spec'||POLICY==='switch',SWITCH=POLICY==='switch'||POLICY==='adapt';
-// 0.139 성장 트리 그물: a region's nodes in definition order (learnable in that order); the fixed build takes 검귀 then 수호자.
-const BRANCHES={blade:g.TREE_ORDER.filter(id=>id.startsWith('blade-')),ward:g.TREE_ORDER.filter(id=>id.startsWith('ward-')),art:g.TREE_ORDER.filter(id=>id.startsWith('art-'))};
+// 0.139 성장 트리 그물: a region's nodes in definition order (learnable in that order), keystones (핵심, mostly with a drawback) last;
+// the fixed build takes 검귀 then 수호자.
+const region=r=>{const ids=g.TREE_ORDER.filter(id=>id.startsWith(r+'-'));return [...ids.filter(id=>g.TREE_NODES[id].kind!=='keystone'),...ids.filter(id=>g.TREE_NODES[id].kind==='keystone')];};
+const BRANCHES={blade:region('blade'),ward:region('ward'),art:region('art')};
 const FIXED_TREE=[...BRANCHES.blade,...BRANCHES.ward];
 const EXAMPLE={survival:2,swarm:1,single:0,defense:3,armor:0};
 function treeFor(type){if(!type)return FIXED_TREE;const first=type==='armor'?'blade':g.GATE_TYPES[type].branch;return [...BRANCHES[first],...FIXED_TREE.filter(id=>!id.startsWith(first)),...Object.values(BRANCHES).flat()];}
