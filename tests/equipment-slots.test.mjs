@@ -1,5 +1,6 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import * as g from '../dist/game-engine.js';
+import {openMode} from './mode-fixture.mjs';
 import {rollItem,rollStageItem,rollAncient} from '../dist/loot.js';
 import {createBackup,readBackup} from '../dist/profile-backup.js';
 const rng=(seed=53981)=>()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};
@@ -65,7 +66,7 @@ test('crafted earrings can be created twice with distinct IDs, never a third; ev
 
 test('actual normal and elite kills, stage clears and every boss mode deliver only stage types graded by hunt mode, with once-only settlement',()=>{
  for(let tier=1;tier<=3;tier++)for(let mode=0;mode<=2;mode++){
-  const p=g.createProfile(1000);p.clearedStage=3;p.unlockedStage=3;p.stageProgress=[10,10,10];p.bossMastery=[2,2,2];p.difficultyProgress=[[9,9,9],[9,9,9]];
+  const p=g.createProfile(1000);p.clearedStage=3;p.unlockedStage=3;p.stageProgress=[10,10,10];p.bossMastery=[2,2,2];p.difficultyProgress=[[9,9,9],[9,9,9]];openMode(g,p,2,1);
   const s=g.createGame(p);assert.equal(g.launch(s,tier,10,null,mode),true);s.lootRates={normal:1,elite:1,stage:1,boss:1};s.spawns=[];s.barrels=[];s.run.bossSpawned=true;s.player.invulnerable=999;
   const e={id:s.nextId++,species:g.STAGES[tier-1].bossSpecies,type:'bulwark',elite:false,boss:true,x:s.player.x+300,y:s.player.y,hp:1,maxHp:1,action:'walk',actionTime:0,speed:0,cooldown:999,aggro:true,guard:0,dead:false,wave:s.run.wave,runStage:s.run.stage,damage:8,radius:58};s.enemies=[e];
   s.projectiles.push({id:s.nextId++,x:e.x,y:e.y,vx:0,vy:0,damage:1e9,ttl:1,friendly:true});g.advanceGame(s,.025);assert.equal(s.phase,'victory');

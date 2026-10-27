@@ -118,9 +118,16 @@ export const chapterMultiplier=id=>Math.round((1+(id-1)*.16)*100)/100;
 // Alpha 0.134: ordinary monsters (not bosses, not in dungeons or raids) hit `mob` (2) times harder; they barely dented an auto
 // battle before (1~8% of max health per stage).
 export const THREAT=Object.freeze({hp:Object.freeze({growth:1.012,jump:1.12}),damage:Object.freeze({growth:1.014,jump:1.12}),mob:2});
-const threat=(id,t)=>Math.round(chapterMultiplier(id)*Math.pow(t.growth,id-1)*Math.pow(t.jump,Math.floor((id-1)/10))*1000)/1000;
+// Region jumps stop after the sixth region, so 정예/악몽 (virtual chapters 61~180, modeChapter) only keep the per-chapter growth.
+const threat=(id,t)=>Math.round(chapterMultiplier(id)*Math.pow(t.growth,id-1)*Math.pow(t.jump,Math.min(MODE_CHAPTERS/CHAPTERS_PER_THEME-1,Math.floor((id-1)/10)))*1000)/1000;
 export const enemyHpScale=id=>threat(id,THREAT.hp);
 export const enemyDamageScale=id=>threat(id,THREAT.damage);
+// Alpha 0.139 난이도 개편 (사용자 결정): 정예 N장 is fought like chapter 60+N and 악몽 N장 like chapter 120+N — enemy health,
+// damage and boss gold continue the curve; the chapter's land, monsters and bosses stay its own.
+export const MODE_CHAPTERS=60;
+export const modeChapter=(id,difficulty=0)=>id+MODE_CHAPTERS*Math.max(0,difficulty|0);
+export function modeScale(id,difficulty=0){if(!difficulty)return {hp:1,damage:1,reward:1,chapter:id};const v=modeChapter(id,difficulty);
+ return {hp:enemyHpScale(v)/enemyHpScale(id),damage:enemyDamageScale(v)/enemyDamageScale(id),reward:chapterMultiplier(v)/chapterMultiplier(id),chapter:v};}
 // Each chapter takes two species per role from its biome pool (pairs rotate by chapter,
 // offset per role). Stages 1–8 visit all eight role combinations in an order where every
 // stage changes at least two roles; stage 9 (swarm, skitters only) differs from stage 8.

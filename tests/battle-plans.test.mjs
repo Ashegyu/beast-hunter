@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as g from '../dist/game-engine.js';
+import {openMode} from './mode-fixture.mjs';
 import {BATTLE_PLANS,waveComposition} from '../dist/battle-plans.js';
 function stage(n,seed=0,view=null){const p=g.createProfile(1000);p.stageProgress[0]=9;p.hunts=seed;const s=g.createGame(p);assert.ok(g.launch(s,1,n,view));return s;}
 function advance(s,seconds){for(let t=0;t<seconds;t+=.025)g.advanceGame(s,.025);}
@@ -49,7 +50,7 @@ test('delayed arrivals follow movement until their warning begins, then keep the
 });
 test('all three chapters and all replay modes launch a boss with no adds or props',()=>{
  for(let chapter=1;chapter<=3;chapter++)for(let mode=0;mode<=2;mode++){
-  const p=g.createProfile();p.clearedStage=3;p.unlockedStage=3;p.bossMastery=[2,2,2];p.difficultyProgress=[[9,9,9],[9,9,9]];const s=g.createGame(p);assert.ok(g.launch(s,chapter,10,null,mode));assert.equal(s.spawns.length,1);assert.ok(s.spawns[0].boss);assert.equal(s.barrels.length,0);advance(s,1.4);assert.equal(s.enemies.length,1);assert.equal(s.enemies[0].species,g.STAGES[chapter-1].bossSpecies);s.player.invulnerable=100;advance(s,20);assert.equal(s.enemies.filter(e=>!e.dead).length,1);assert.equal(s.spawns.length,0);assert.equal(s.run.wave,1);
+  const p=g.createProfile();p.clearedStage=3;p.unlockedStage=3;p.bossMastery=[2,2,2];p.difficultyProgress=[[9,9,9],[9,9,9]];openMode(g,p,2,1);const s=g.createGame(p);assert.ok(g.launch(s,chapter,10,null,mode));assert.equal(s.spawns.length,1);assert.ok(s.spawns[0].boss);assert.equal(s.barrels.length,0);advance(s,1.4);assert.equal(s.enemies.length,1);assert.equal(s.enemies[0].species,g.STAGES[chapter-1].bossSpecies);s.player.invulnerable=100;advance(s,20);assert.equal(s.enemies.filter(e=>!e.dead).length,1);assert.equal(s.spawns.length,0);assert.equal(s.run.wave,1);
  }
 });
 test('legacy checkpoints migrate once and current ten-stage saves retain gear, materials and progression',()=>{

@@ -2,7 +2,7 @@ import {RAIDS,RAID_WEEKLY_ENTRIES,RAID_DAMAGE,raidScale,RAID_ANCIENT_CHANCE,raid
 export * from './raids.js?v=0.135.0';
 import {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonPlan,dungeonActors,emptyDungeonProgress} from './dungeons.js?v=0.135.0';
 export {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards};
-export {THREAT} from './chapters.js?v=0.136.2';
+export {THREAT,MODE_CHAPTERS,modeChapter,modeScale} from './chapters.js?v=0.139.0';
 import {beginStageJournal,profileForSave,strictBattle,cancelStageJournal,prepareStageCommit,finishStageJournal,stageTransactionId,ownedAtStageStart} from './battle-progress.js?v=0.136.0';
 import {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_DROP_CHANCE,INSCRIPTION_COST} from './build-effects.js?v=0.136.0';
 import {stageRule,STAGE_TYPE_NAMES} from './battle-plans.js?v=0.135.0';
@@ -26,12 +26,12 @@ import {equipmentSynergies} from './equipment-synergies.js?v=0.136.2';
 import {itemProtection} from './loot.js?v=0.136.2';
 export {itemProtection,salvageValue} from './loot.js?v=0.136.2';
 export {equipmentSynergies,EQUIPMENT_SYNERGIES} from './equipment-synergies.js?v=0.136.2';
-import {HUNT_MODES,huntMode,REPLAY_CYCLES} from './hunt-modes.js';
-export {HUNT_MODES} from './hunt-modes.js';
+import {HUNT_MODES,huntMode,REPLAY_CYCLES} from './hunt-modes.js?v=0.139.0';
+export {HUNT_MODES} from './hunt-modes.js?v=0.139.0';
 // Pure combat, random waves and persistent RPG rules. No rendering or storage dependencies.
 import { directionIndex, recoilProgress, ACTION_DURATIONS } from './motion.js';
 import { WORLD_BOUNDS, GROUND_DEPTH_SCALE } from './world.js';
-import { CHAPTERS, CHAPTERS_PER_THEME, THEMES, THREAT, chapterTheme, MONSTERS, chapterMonsterPool, EQUIPMENT_ART, ALL_EQUIPMENT_ART, equipmentArt } from './chapters.js?v=0.136.2';
+import { CHAPTERS, CHAPTERS_PER_THEME, THEMES, THREAT, modeScale, chapterTheme, MONSTERS, chapterMonsterPool, EQUIPMENT_ART, ALL_EQUIPMENT_ART, equipmentArt } from './chapters.js?v=0.139.0';
 import { STAGES_PER_CHAPTER, battlePlan, stageWaveCount, waveComposition } from './battle-plans.js?v=0.135.0';
 import { RAID_POWER_ROLL, raidPowerRoll } from './loot.js?v=0.136.2';
 import * as growth from './growth.js?v=0.139.0';
@@ -128,7 +128,7 @@ export function growthXp(profile,value){
  return Math.min(Number.MAX_SAFE_INTEGER,awarded+remaining);
 }
 export function createProfile(now=Date.now()){
-  return {version:PROFILE_VERSION,dungeonProgress:emptyDungeonProgress(),raids:emptyRaidProgress(),bossRush:rush.emptyRushProgress(),beastSkills:{},battleSerial:0,settledBattleIds:[],activeBattle:null,lastInterruptedBattle:null,selectedBuild:null,characterId:'lirian',equipmentRng:246813579,difficultyProgress:[STAGES.map(()=>0),STAGES.map(()=>0)],skillBook:skills.restoreSkillBook(null,1),favoriteItemIds:[],savedBuilds:[null,null,null,null,null],targetCraftId:null,craftTrackerVisible:true,materials:emptyMaterials(),discoveredAncients:[],targetAncientId:null,bossMastery:STAGES.map(()=>-1),lootPity:0,legendaryPity:0,pendingGold:0,pendingMaterials:emptyMaterials(),pendingLoot:[],stageProgress:STAGES.map(()=>0),stageStars:stars.emptyStageStars(STAGES.length),starChests:stars.emptyStageStars(STAGES.length),gold:0,cores:0,level:1,xp:0,training:growth.emptyTraining(),growthTree:[],unlockedStage:1,clearedStage:0,totalKills:0,hunts:0,lastSeenAt:number(now),inventory:[],equipment:emptyEquipment(),nextItemId:1};
+  return {version:PROFILE_VERSION,dungeonProgress:emptyDungeonProgress(),raids:emptyRaidProgress(),bossRush:rush.emptyRushProgress(),beastSkills:{},battleSerial:0,settledBattleIds:[],activeBattle:null,lastInterruptedBattle:null,selectedBuild:null,characterId:'lirian',equipmentRng:246813579,difficultyProgress:[STAGES.map(()=>0),STAGES.map(()=>0)],nightmareRecords:STAGES.map(()=>0),skillBook:skills.restoreSkillBook(null,1),favoriteItemIds:[],savedBuilds:[null,null,null,null,null],targetCraftId:null,craftTrackerVisible:true,materials:emptyMaterials(),discoveredAncients:[],targetAncientId:null,bossMastery:STAGES.map(()=>-1),lootPity:0,legendaryPity:0,pendingGold:0,pendingMaterials:emptyMaterials(),pendingLoot:[],stageProgress:STAGES.map(()=>0),stageStars:stars.emptyStageStars(STAGES.length),starChests:stars.emptyStageStars(STAGES.length),gold:0,cores:0,level:1,xp:0,training:growth.emptyTraining(),growthTree:[],unlockedStage:1,clearedStage:0,totalKills:0,hunts:0,lastSeenAt:number(now),inventory:[],equipment:emptyEquipment(),nextItemId:1};
 }
 const EQUIPMENT_DEFINITIONS=new Map([...ITEM_CATALOG,...ANCIENT_CATALOG,...CRAFTED_CATALOG].map(row=>[row.id,row]));
 function cleanItem(item,version){
@@ -191,6 +191,8 @@ export function restoreProfile(raw,now=Date.now()){
   // credit ordinary stages that were never played in that difficulty.
   p.difficultyProgress=[1,2].map(mode=>STAGES.map(({id})=>data.version>=9&&bossModeAvailable(p,id,mode)?integer(data.difficultyProgress?.[mode-1]?.[id-1],0,p.bossMastery[id-1]>=mode?STAGES_PER_CHAPTER:STAGES_PER_CHAPTER-1):0));
   // Alpha 0.132 별: only cleared stages keep stars; saves without the field get ★1 on every cleared stage. Chests need their stars.
+  // Alpha 0.139 악몽 기록: fastest 악몽 boss stage clear in seconds (0 = none), only for chapters whose 악몽 boss fell.
+  p.nightmareRecords=STAGES.map(({id})=>p.bossMastery[id-1]>=2?Math.round(clamp(number(data.nightmareRecords?.[id-1],0),0,600)*10)/10:0);
   p.stageStars=stars.cleanStageStars(data.stageStars,STAGES.map(({id})=>Math.max(...[0,1,2].map(d=>completedStages(p,id,d)))));p.starChests=stars.cleanStarChests(data.starChests,p);
   p.training=growth.cleanTraining(data.training,p.level);p.growthTree=growth.fitTree(p,data.growthTree);
   p.totalKills=integer(data.totalKills,0,1e9);p.hunts=integer(data.hunts,0,1e7);p.lastSeenAt=clamp(number(data.lastSeenAt,now),0,number(now));
@@ -319,8 +321,9 @@ function spawnEnemy(s,type,x,y,group,elite=false,boss=false,speciesId=null){
   if(s.run.dungeonId){const plan=activePlan(s);e.hp=e.maxHp=Math.max(1,Math.round(e.maxHp*plan.hpScale/hpBase));e.damage*=plan.damageScale/damageBase;e.damageBase=plan.damageScale;}
   // Alpha 0.133 관문 (stage-gates.js): the remaining pressure after the build's counter.
   const gate=s.run.gate;if(gate&&!raid&&!s.run.dungeonId){const k=1+gate.effect;if(gate.type==='survival'){e.damage*=k;e.damageBase*=k;}else if(gate.type==='swarm'&&!elite&&!boss)e.hp=e.maxHp=Math.round(e.maxHp*k);else if(gate.type==='single'&&(elite||boss))e.hp=e.maxHp=Math.round(e.maxHp*k);else if(gate.type==='defense'){e.gateGuard=k;e.gateCounter=gate.counter;}}
-  if(s.difficulty>0){const mode=HUNT_MODES[s.difficulty];e.hp=e.maxHp=Math.round(e.maxHp*mode.hp);e.damage*=mode.damage;
-   if(boss){e.radius+=s.difficulty*10;e.shotSpeed=420*mode.shotSpeed;e.projectileDamageScale=mode.damage;e.bossCycle=REPLAY_CYCLES[s.difficulty][REPLAY_ROW[st.biome]??0];e.huntMode=s.difficulty;}}
+  // Alpha 0.139: 정예/악몽 continue the chapter curve (chapters.js modeScale: chapter 60+N / 120+N).
+  if(s.difficulty>0){const mode=HUNT_MODES[s.difficulty],k=modeScale(st.id,s.difficulty);e.hp=e.maxHp=Math.round(e.maxHp*k.hp);e.damage*=k.damage;
+   if(boss){e.radius+=s.difficulty*10;e.shotSpeed=420*mode.shotSpeed;e.projectileDamageScale=k.damage;e.bossCycle=REPLAY_CYCLES[s.difficulty][REPLAY_ROW[st.biome]??0];e.huntMode=s.difficulty;}}
   s.enemies.push(e);return e;
 }
 export function launch(s,chapterId=1,substage=1,view=null,difficulty=0){
@@ -699,7 +702,7 @@ function kill(s,e,inscriptions=s.buildEffects,explode=true){if(e.dead)return;e.d
   if(s.run.rush&&e.boss&&e.wave===s.run.wave)s.run.rushKills++;
   if((s.run.raidId||s.run.rush)&&e.boss)for(const q of s.enemies)if(q!==e&&!q.dead){q.dead=true;q.hp=0;q.action='death';q.actionTime=0;}
   if(s.run.dungeonId||s.run.raidId||s.run.rush){inscriptionKill(s,e,inscriptions,explode);return;}
-  if(e.boss){if(s.run.stage!==STAGES_PER_CHAPTER||s.run.wave!==stageWaveCount(s.run.stage)||e.runStage!==s.run.stage||e.wave!==s.run.wave)return;{const drops=[0,1].filter(()=>lootRandom(s)<dropRate(s,'boss')).length;if(drops)dropEquipment(s,e,'boss',drops);}dropBossAncient(s,e);dropMaterials(s,e);collectRemainder(s);s.run.rooms++;s.run.seals=s.run.rooms;recordStageClear(s,STAGES_PER_CHAPTER);const st=stageOf(s);const mode=HUNT_MODES[s.difficulty],gold=Math.round(st.reward*mode.reward),cores=bossCores(st.id,s.difficulty);s.profile.gold+=gold;s.profile.cores+=cores;s.run.gold+=gold;s.run.cores+=cores;s.profile.bossMastery[st.id-1]=Math.max(s.profile.bossMastery[st.id-1],s.difficulty);s.run.bossKilled=true;learnBeastTechnique(s,st);awardItem(s,STAGE_SLOTS[(st.id-1)%STAGE_SLOTS.length],1,{gold,cores,healed:0},'boss');if(s.difficulty===0){s.profile.clearedStage=Math.max(s.profile.clearedStage,st.id);s.profile.unlockedStage=Math.min(STAGES.length,Math.max(s.profile.unlockedStage,st.id+1));}s.run.flow='complete';s.spawns.length=0;s.projectiles.length=0;s.phase='victory';s.hitStop=0;skills.clearSkillStage(s);clearAncient(s);s.resultDelay=1.15;queueSettlement(s,true);effect(s,'stageClear',{chapterId:s.stageId,stage:s.run.stage,stars:s.run.stars?.earned??0,gained:s.run.stars?.gained??0},1.6);effect(s,'bossDeath',{x:e.x,y:e.y},2);return;}
+  if(e.boss){if(s.run.stage!==STAGES_PER_CHAPTER||s.run.wave!==stageWaveCount(s.run.stage)||e.runStage!==s.run.stage||e.wave!==s.run.wave)return;{const drops=[0,1].filter(()=>lootRandom(s)<dropRate(s,'boss')).length;if(drops)dropEquipment(s,e,'boss',drops);}dropBossAncient(s,e);dropMaterials(s,e);collectRemainder(s);s.run.rooms++;s.run.seals=s.run.rooms;recordStageClear(s,STAGES_PER_CHAPTER);const st=stageOf(s);const gold=Math.round(st.reward*modeScale(st.id,s.difficulty).reward),cores=bossCores(st.id,s.difficulty);s.profile.gold+=gold;s.profile.cores+=cores;s.run.gold+=gold;s.run.cores+=cores;s.profile.bossMastery[st.id-1]=Math.max(s.profile.bossMastery[st.id-1],s.difficulty);if(s.difficulty===2){const t=Math.round(Math.max(.1,s.run.timeLimit-s.run.timeRemaining)*10)/10,old=s.profile.nightmareRecords[st.id-1];s.run.nightmareRecord={time:t,best:!old||t<old};if(!old||t<old)s.profile.nightmareRecords[st.id-1]=t;}s.run.bossKilled=true;learnBeastTechnique(s,st);awardItem(s,STAGE_SLOTS[(st.id-1)%STAGE_SLOTS.length],1,{gold,cores,healed:0},'boss');if(s.difficulty===0){s.profile.clearedStage=Math.max(s.profile.clearedStage,st.id);s.profile.unlockedStage=Math.min(STAGES.length,Math.max(s.profile.unlockedStage,st.id+1));}s.run.flow='complete';s.spawns.length=0;s.projectiles.length=0;s.phase='victory';s.hitStop=0;skills.clearSkillStage(s);clearAncient(s);s.resultDelay=1.15;queueSettlement(s,true);effect(s,'stageClear',{chapterId:s.stageId,stage:s.run.stage,stars:s.run.stars?.earned??0,gained:s.run.stars?.gained??0},1.6);effect(s,'bossDeath',{x:e.x,y:e.y},2);return;}
   // The old ten-kill pity (lootPity) is gone with the guarantees; the save field stays unused.
   if(lootRandom(s)<dropRate(s,e.elite?'elite':'normal'))dropEquipment(s,e,e.elite?'elite':'normal');
   inscriptionKill(s,e,inscriptions,explode);if(s.settlement||s.phase!=='playing')return;dropMaterials(s,e);dropGold(s,e,e.elite?16:e.type==='bulwark'?10:4);s.pickups.push({id:s.nextId++,x:e.x,y:e.y,gold:0,xp:e.elite?28:e.type==='bulwark'?18:9,cores:e.elite?1:0});
@@ -1044,7 +1047,7 @@ function updatePickups(s,dt,force=false){
     if(d>28)return true;
     if(isResourcePickup(drop)){claimResource(s,drop);return false;}
     if(drop.kind==='equipment'){receiveItem(s,drop.item);return false;}
-    if(drop.cores)lootPulse(s);const baseXp=Math.round(drop.xp),xp=growthXp(s.profile,baseXp);s.profile.gold+=drop.gold;s.profile.cores+=drop.cores;s.run.gold+=drop.gold;s.run.cores+=drop.cores;s.run.xp+=xp;s.run.xpBonus+=xp-baseXp;
+    if(drop.cores)lootPulse(s);const baseXp=Math.round(drop.xp*(HUNT_MODES[s.difficulty]?.xp??1)),xp=growthXp(s.profile,baseXp);s.profile.gold+=drop.gold;s.profile.cores+=drop.cores;s.run.gold+=drop.gold;s.run.cores+=drop.cores;s.run.xp+=xp;s.run.xpBonus+=xp-baseXp;
     if(gainXp(s.profile,xp)){refreshStats(s);p.hp=Math.min(p.maxHp,p.hp+22);effect(s,'levelUp',{x:p.x,y:p.y},1);}
     effect(s,'collect',{x:drop.x,y:drop.y},.3);return false;
   });
@@ -1130,10 +1133,13 @@ export function advanceGame(s,elapsed,input={}){
   }
 }
 
+export function modeOpen(profile,difficulty){return !!huntMode(difficulty)&&STAGES.every((_,i)=>(profile.bossMastery?.[i]??-1)>=difficulty-1);}
 export function bossModeAvailable(profile,chapter,difficulty){
  if(!huntMode(difficulty)||!Number.isInteger(chapter)||chapter<1||chapter>STAGES.length)return false;
  if(!difficulty)return stageLimit(profile,chapter)>=STAGES_PER_CHAPTER;
- return chapter<=profile.clearedStage&&Math.max(profile.bossMastery?.[chapter-1]??-1,0)>=difficulty-1;
+ // Alpha 0.139 (사용자 결정): 정예 opens once every chapter is cleared on 일반, 악몽 once every chapter is cleared on 정예;
+ // inside a mode the chapters open one by one.
+ return modeOpen(profile,difficulty)&&(chapter===1||(profile.bossMastery?.[chapter-2]??-1)>=difficulty);
 }
 export function projectileCount(e,chapter=1){return e.boss?((e.action==='windup'||e.action==='attack')&&Number.isInteger(e.volleyShots)?e.volleyShots:(e.enraged?5:3)+(HUNT_MODES[e.huntMode??0]?.shots??0)):e.shots??(chapter>1?3:1);}
 

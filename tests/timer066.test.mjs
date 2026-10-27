@@ -1,11 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as g from '../dist/game-engine.js';
+import {openMode} from './mode-fixture.mjs';
 const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-8,`${a} != ${b}`);
 function advance(s,seconds){for(let left=seconds;left>1e-8;left-=.025)g.advanceGame(s,Math.min(.025,left));}
 function idle(s){s.enemies=[];s.spawns=[];s.barrels=[];s.run.flow='break';s.run.timer=999;s.player.invulnerable=999;return s;}
 function fresh(stage=1,chapter=1,mode=0){
- const p=g.createProfile(1000);if(stage>1||chapter>1||mode){p.clearedStage=3;p.unlockedStage=3;p.stageProgress=[10,10,10];p.bossMastery=[1,1,1];p.difficultyProgress=[[9,9,9],[9,9,9]];}
+ const p=g.createProfile(1000);if(stage>1||chapter>1||mode){p.clearedStage=3;p.unlockedStage=3;p.stageProgress=[10,10,10];p.bossMastery=[1,1,1];p.difficultyProgress=[[9,9,9],[9,9,9]];if(mode)openMode(g,p,mode,chapter);}
  const s=g.createGame(p);assert.equal(g.launch(s,chapter,stage,null,mode),true);return s;
 }
 function actor(s,boss=false){

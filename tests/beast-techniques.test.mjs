@@ -22,7 +22,7 @@ test('sixty techniques: one per chapter boss, region element, own icon, three gr
 });
 
 test('the first kill teaches the basic technique; 정예/악몽 kills may teach 강화/극 and never lower a grade',()=>{
- const p=profile(59);p.beastSkills={};const s=killBoss(p,31);assert.equal(s.profile.beastSkills['beast-crabking'],1);assert.deepEqual(s.run.beastLearned,{id:'beast-crabking',grade:1,before:0});
+ const p=profile(60);p.beastSkills={};const s=killBoss(p,31);assert.equal(s.profile.beastSkills['beast-crabking'],1);assert.deepEqual(s.run.beastLearned,{id:'beast-crabking',grade:1,before:0});
  const again=killBoss(s.profile,31);assert.equal(again.run.beastLearned,null);assert.equal(again.profile.beastSkills['beast-crabking'],1);
  // Find hunts whose deterministic roll teaches the next grade (12% 정예, 8% 악몽).
  const find=(difficulty,hit)=>{for(let h=0;h<500;h++){const q=structuredClone(s.profile);q.hunts=h;const probe=g.createGame(q);probe.profile.hunts=h+1;probe.difficulty=difficulty;if((g.beastRoll(probe,31)<g.BEAST_GRADE_CHANCE[difficulty])===hit)return h;}throw Error('no seed');};

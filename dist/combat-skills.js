@@ -1,5 +1,5 @@
 import {createSkillMotion} from './skill-motion.js';
-import {CHAPTERS,CHAPTER_BOSSES} from './chapters.js?v=0.136.2';
+import {CHAPTERS,CHAPTER_BOSSES} from './chapters.js?v=0.139.0';
 import {beastTechniques,BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE,beastElementText} from './beast-techniques.js?v=0.135.0';
 export {BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE} from './beast-techniques.js?v=0.135.0';
 import {SKILL_BRANCHES,SKILL_BRANCH_COST,EXECUTE_HEALTH,branchSummary} from './skill-branches.js?v=0.135.0';

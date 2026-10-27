@@ -1,8 +1,10 @@
 // Only a captured hunt mode controls combat and rewards. Selection consumes no RNG.
 export const HUNT_MODES=Object.freeze([
- {id:0,name:'일반',hp:1,damage:1,shots:0,shotSpeed:1,reward:1,extraCore:0,ancientChance:0},
- {id:1,name:'정예',hp:1.5,damage:1.25,shots:2,shotSpeed:1.05,reward:1.5,extraCore:1,ancientChance:0},
- {id:2,name:'악몽',hp:2.2,damage:1.55,shots:4,shotSpeed:1.1,reward:2,extraCore:2,ancientChance:0},
+ // Alpha 0.139: health, damage and boss gold come from chapters.js modeScale (정예 N장 = chapter 60+N, 악몽 = 120+N);
+// `xp` scales the experience of kills (악몽 gives none: records and rewards only).
+ {id:0,name:'일반',shots:0,shotSpeed:1,xp:1,extraCore:0,ancientChance:0},
+ {id:1,name:'정예',shots:2,shotSpeed:1.05,xp:1,extraCore:1,ancientChance:0},
+ {id:2,name:'악몽',shots:4,shotSpeed:1.1,xp:0,extraCore:2,ancientChance:0},
 ].map(m=>Object.freeze(m)));
 export function huntMode(id){return Number.isInteger(id)&&id>=0&&id<HUNT_MODES.length?HUNT_MODES[id]:null;}
 export const REPLAY_CYCLES=Object.freeze([

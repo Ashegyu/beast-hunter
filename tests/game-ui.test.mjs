@@ -10,6 +10,9 @@ import v8 from 'node:v8';
 import * as motion from '../dist/motion.js';
 import * as sound from '../dist/sound.js';
 import * as game from '../dist/game-engine.js';
+import {openMode} from './mode-fixture.mjs';
+// Alpha 0.139: the boss-view multipliers as app.js timesText prints them.
+const timesText=v=>(v>=10?Math.round(v):Math.round(v*10)/10)+'배';
 import {rollItem} from '../dist/loot.js';
 import {freezeCombat} from './combat-fixture.mjs';
 import * as animation from '../dist/engine.js';
@@ -20,7 +23,7 @@ import * as chapters from '../dist/chapters.js';
 import * as equipmentVisuals from '../dist/equipment-visuals.js';
 
 test('hunting map scene follows real checkpoint limits and boss rewards without changing the profile',async()=>{
- const p=game.createProfile(1_000_000);p.unlockedStage=3;p.clearedStage=3;p.stageProgress=[10,10,10];p.bossMastery=[1,0,-1];p.difficultyProgress=[[4,2,0],[1,0,0]];widen(p);
+ const p=game.createProfile(1_000_000);p.unlockedStage=3;p.clearedStage=3;p.stageProgress=[10,10,10];p.bossMastery=[1,0,-1];p.difficultyProgress=[[4,2,0],[1,0,0]];widen(p);openMode(game,p,1,1);
  const ui=await host({saved:p,campaign:true}),before=ui.profile();ui.emit('nav-hunt','click');pickChapter(ui,1);ui.emit('map-mode-0','click');ui.emit('run-stage-10','click');
  assert.equal(ui.nodes.get('map-boss-rewards').hidden,false);
  assert.equal(ui.nodes.get('map-boss-gold').textContent,'+'+game.STAGES[0].reward);
@@ -306,7 +309,7 @@ test('skill details start at their heading and list return restores the active f
  ui.emit('page-back','click');ui.emit('start','click');const focus=ui.document.activeElement;ui.emit('skill-list-back','click');assert.equal(ui.document.activeElement,focus);assert.equal(ui.state.phase,'playing');
 });
 test('all ten stage buttons preserve selected identity through redraws, repeated chapter taps and navigation',async()=>{
- const p=game.createProfile(1_000_000);p.clearedStage=3;p.unlockedStage=3;p.stageProgress=[10,10,10];p.bossMastery=[1,1,1];p.difficultyProgress=[[9,9,9],[9,9,9]];widen(p);
+ const p=game.createProfile(1_000_000);p.clearedStage=3;p.unlockedStage=3;p.stageProgress=[10,10,10];p.bossMastery=[1,1,1];p.difficultyProgress=[[9,9,9],[9,9,9]];widen(p);openMode(game,p,2,1);
  const ui=await host({saved:p,campaign:true});ui.emit('nav-hunt','click');pickChapter(ui,1);const before=ui.profile();
  for(const mode of [0,1,2]){ui.emit('map-mode-'+mode,'click');for(let n=1;n<=10;n++){
   ui.emit('run-stage-'+n,'click');ui.tick(0);ui.emit('stage-1','click');ui.emit('map-mode-'+mode,'click');
@@ -322,38 +325,42 @@ test('map difficulty remains visible before boss clearance and locked activation
  assert.equal(ui.nodes.get('camp-map-panel').hidden,false);assert.equal(ui.nodes.get('replay-panel').hidden,true);
  assert.equal(ui.nodes.get('map-mode-0').disabled,false);assert.equal(ui.nodes.get('map-mode-0').attributes['aria-pressed'],'true');
  assert.equal(ui.nodes.get('map-mode-1').disabled,true);assert.equal(ui.nodes.get('map-mode-2').disabled,true);
- assert.match(ui.nodes.get('map-mode-status-1').textContent,/일반 보스 처치/);assert.match(ui.nodes.get('map-mode-status-2').textContent,/정예 보스 처치/);
+ assert.match(ui.nodes.get('map-mode-status-1').textContent,/일반 60장 클리어/);assert.match(ui.nodes.get('map-mode-status-2').textContent,/정예 60장 클리어/);
  ui.emit('map-mode-1','click');ui.emit('map-mode-2','click');assert.equal(ui.nodes.get('run-stage-1').attributes['aria-pressed'],'true');assert.deepEqual(ui.profile(),before);
  ui.emit('camp-map-start','click');assert.equal(ui.state.difficulty,0);assert.equal(ui.state.run.stage,1);
  ui.emit('map-mode-2','click');assert.equal(ui.state.difficulty,0);assert.equal(ui.state.run.stage,1);
 });
-test('map difficulty applies chapter-specific unlocks and launches the selected difficulty from stage one',async()=>{
- const p=game.createProfile(1_000_000);p.clearedStage=3;p.unlockedStage=3;p.stageProgress=[10,10,10];p.bossMastery=[0,1,2];widen(p);
- for(const chapter of [1,11,21]){
-  const ui=await host({saved:p,campaign:true});ui.emit('nav-hunt','click');pickChapter(ui,chapter);ui.emit('run-stage-3','click');const before=ui.profile();
-  assert.equal(ui.nodes.get('map-mode-1').disabled,false);assert.equal(ui.nodes.get('map-mode-2').disabled,chapter===1);
-  const mode=chapter===1?1:2;ui.emit('map-mode-'+mode,'click');assert.equal(ui.nodes.get('run-stage-1').attributes['aria-pressed'],'true');assert.equal(ui.nodes.get('hunt-mode-'+mode).attributes['aria-pressed'],'true');assert.equal(ui.nodes.get('map-mode-'+mode).attributes['aria-pressed'],'true');
+test('map difficulty applies the 0.139 unlock order (all of the mode below, then one chapter at a time) and launches from stage one',async()=>{
+ const elite=openMode(game,game.createProfile(1_000_000),1,11),nightmare=openMode(game,game.createProfile(1_000_000),2,2);
+ for(const [p,chapter,mode,closed,why]of [[elite,11,1,12,'정예 11장 처치 필요'],[nightmare,2,2,3,'악몽 2장 처치 필요']]){
+  const ui=await host({saved:p,campaign:true});ui.emit('nav-hunt','click');pickChapter(ui,closed);
+  assert.equal(ui.nodes.get('map-mode-'+mode).disabled,true);assert.equal(ui.nodes.get('map-mode-status-'+mode).textContent,why);
+  if(mode===1)assert.equal(ui.nodes.get('map-mode-status-2').textContent,'정예 60장 클리어 필요');
+  pickChapter(ui,chapter);ui.emit('run-stage-3','click');const before=ui.profile();
+  assert.equal(ui.nodes.get('map-mode-'+mode).disabled,false);assert.equal(ui.nodes.get('map-mode-2').disabled,mode===1);
+  ui.emit('map-mode-'+mode,'click');assert.equal(ui.nodes.get('run-stage-1').attributes['aria-pressed'],'true');assert.equal(ui.nodes.get('hunt-mode-'+mode).attributes['aria-pressed'],'true');assert.equal(ui.nodes.get('map-mode-'+mode).attributes['aria-pressed'],'true');
   assert.match(ui.nodes.get('hub-route-meta').textContent,new RegExp(game.HUNT_MODES[mode].name));assert.deepEqual(ui.profile(),before);
+  if(mode===2)assert.match(ui.nodes.get('map-difficulty-note').textContent,/경험치 없음 · 보스 기록 없음/);
   ui.emit('camp-map-start','click');await ui.settle();assert.equal(ui.state.phase,'playing');assert.equal(ui.state.stageId,chapter);assert.equal(ui.state.run.stage,1);assert.equal(ui.state.difficulty,mode);
  }
 });
 test('map and reward difficulty share a campaign choice while switching modes starts at one',async()=>{
- const p=game.createProfile(1_000_000);p.clearedStage=2;p.unlockedStage=2;p.stageProgress=[10,10,0];p.bossMastery=[1,0,-1];p.difficultyProgress=[[3,2,0],[0,0,0]];widen(p);const ui=await host({saved:p});ui.emit('nav-hunt','click');pickChapter(ui,1);ui.emit('map-mode-2','click');ui.emit('camp-tactics-open','click');assert.equal(ui.nodes.get('hunt-mode-2').attributes['aria-pressed'],'true');
+ const p=game.createProfile(1_000_000);p.clearedStage=2;p.unlockedStage=2;p.stageProgress=[10,10,0];p.bossMastery=[1,0,-1];p.difficultyProgress=[[3,2,0],[0,0,0]];widen(p);openMode(game,p,2,2);const ui=await host({saved:p});ui.emit('nav-hunt','click');pickChapter(ui,1);ui.emit('map-mode-2','click');ui.emit('camp-tactics-open','click');assert.equal(ui.nodes.get('hunt-mode-2').attributes['aria-pressed'],'true');
  ui.emit('hunt-mode-1','click');assert.equal(ui.nodes.get('map-mode-1').attributes['aria-pressed'],'true');ui.emit('document','keydown',{key:'Escape'});ui.emit('run-stage-4','click');assert.equal(ui.nodes.get('map-mode-1').attributes['aria-pressed'],'true');assert.equal(ui.nodes.get('hunt-mode-1').attributes['aria-pressed'],'true');
  ui.emit('map-mode-0','click');assert.equal(ui.nodes.get('run-stage-1').attributes['aria-pressed'],'true','changing difficulty starts from stage one');
  ui.emit('map-mode-2','click');pickChapter(ui,11);assert.equal(ui.nodes.get('map-mode-0').attributes['aria-pressed'],'true');assert.equal(ui.nodes.get('map-mode-2').disabled,true,'previous chapter mastery must not unlock this chapter');
 });
 test('changing map difficulty cancels a pending cold launch and a fresh click uses the new mode',async()=>{
- const p=game.createProfile(1_000_000);p.clearedStage=1;p.unlockedStage=1;p.stageProgress=[10,0,0];p.bossMastery=[1,-1,-1];const ui=await host({saved:p,coldStart:true,campaign:true,deferredAsset:'assets/lirian_death-v06.webp'});
+ const p=game.createProfile(1_000_000);p.clearedStage=1;p.unlockedStage=1;p.stageProgress=[10,0,0];p.bossMastery=[1,-1,-1];openMode(game,p,2,1);const ui=await host({saved:p,coldStart:true,campaign:true,deferredAsset:'assets/lirian_death-v06.webp'});
  ui.emit('nav-hunt','click');ui.emit('map-mode-2','click');ui.emit('camp-map-start','click');await ui.settle();assert.equal(ui.state.phase,'camp');
  ui.emit('map-mode-1','click');await ui.completeDeferredAssets();assert.equal(ui.state.phase,'camp');assert.equal(ui.profile().hunts,p.hunts);assert.equal(ui.nodes.get('map-mode-1').attributes['aria-pressed'],'true');
  ui.emit('camp-map-start','click');assert.equal(ui.state.phase,'playing');assert.equal(ui.state.run.stage,1);assert.equal(ui.state.difficulty,1);
 });
 test('boss reward view shows actual selected mode values and prepares the map without launching',async()=>{
- const p=game.createProfile(1_000_000);p.clearedStage=1;p.unlockedStage=1;p.stageProgress=[10,0,0];p.bossMastery=[1,-1,-1];const ui=await host({saved:p,campaign:true});const before=ui.profile();ui.emit('nav-hunt','click');ui.emit('run-stage-2','click');ui.emit('camp-tactics-open','click');assert.equal(ui.nodes.get('camp-tactics-panel').hidden,false);assert.equal(ui.nodes.get('camp-map-panel').hidden,true);assert.equal(ui.document.activeElement.id,'page-back');assert.equal(ui.nodes.get('replay-ancient').textContent,'1%');ui.emit('hunt-mode-2','click');assert.equal(ui.nodes.get('replay-hp').textContent,'2.2배');assert.equal(ui.nodes.get('replay-damage').textContent,'1.55배');assert.equal(ui.nodes.get('replay-gold').textContent,'2배');assert.equal(ui.nodes.get('replay-ancient').textContent,'3%');assert.match(ui.nodes.get('replay-combat-note').textContent,/탄막 \+4발.*핵 \+2/);assert.deepEqual(ui.profile(),before);ui.emit('replay-prepare','click');assert.equal(ui.state.phase,'camp');assert.equal(ui.nodes.get('camp-map-panel').hidden,false);assert.equal(ui.nodes.get('camp-tactics-panel').hidden,true);assert.equal(ui.nodes.get('run-stage-1').attributes['aria-pressed'],'true');assert.equal(ui.document.activeElement.id,'camp-map-start');ui.emit('camp-map-start','click');assert.equal(ui.state.difficulty,2);assert.equal(ui.state.run.stage,1);
+ const p=game.createProfile(1_000_000);p.clearedStage=1;p.unlockedStage=1;p.stageProgress=[10,0,0];p.bossMastery=[1,-1,-1];openMode(game,p,2,1);const ui=await host({saved:p,campaign:true});const before=ui.profile();ui.emit('nav-hunt','click');pickChapter(ui,1);ui.emit('run-stage-2','click');ui.emit('camp-tactics-open','click');assert.equal(ui.nodes.get('camp-tactics-panel').hidden,false);assert.equal(ui.nodes.get('camp-map-panel').hidden,true);assert.equal(ui.document.activeElement.id,'page-back');assert.equal(ui.nodes.get('replay-ancient').textContent,'1%');ui.emit('hunt-mode-2','click');{const k=game.modeScale(1,2);assert.equal(ui.nodes.get('replay-hp').textContent,timesText(k.hp));assert.equal(ui.nodes.get('replay-damage').textContent,timesText(k.damage));assert.equal(ui.nodes.get('replay-gold').textContent,timesText(k.reward));}assert.equal(ui.nodes.get('replay-ancient').textContent,'3%');assert.match(ui.nodes.get('replay-combat-note').textContent,/탄막 \+4발.*핵 \+2/);assert.deepEqual(ui.profile(),before);ui.emit('replay-prepare','click');assert.equal(ui.state.phase,'camp');assert.equal(ui.nodes.get('camp-map-panel').hidden,false);assert.equal(ui.nodes.get('camp-tactics-panel').hidden,true);assert.equal(ui.nodes.get('run-stage-1').attributes['aria-pressed'],'true');assert.equal(ui.document.activeElement.id,'camp-map-start');ui.emit('camp-map-start','click');await ui.settle();assert.equal(ui.state.difficulty,2);assert.equal(ui.state.run.stage,1);
 });
 test('boss reward view preserves unlocks and backs out to the same selected map checkpoint',async()=>{
- const p=game.createProfile(1_000_000);p.clearedStage=1;p.unlockedStage=1;p.stageProgress=[10,0,0];p.bossMastery=[0,-1,-1];const ui=await host({saved:p,campaign:true});ui.emit('nav-hunt','click');ui.emit('run-stage-3','click');ui.emit('camp-tactics-open','click');assert.equal(ui.nodes.get('hunt-mode-2').disabled,true);ui.emit('hunt-mode-2','click');assert.equal(ui.nodes.get('replay-ancient').textContent,'1%');ui.emit('hunt-mode-1','click');assert.equal(ui.nodes.get('replay-hp').textContent,'1.5배');assert.equal(ui.nodes.get('replay-ancient').textContent,'2%');assert.equal(ui.nodes.get('replay-step-0').attributes['data-done'],'true');assert.equal(ui.nodes.get('replay-step-2').attributes['data-done'],'false');ui.emit('document','keydown',{key:'Escape'});assert.equal(ui.nodes.get('camp-map-panel').hidden,false);assert.equal(ui.document.activeElement.id,'camp-tactics-open');assert.equal(ui.nodes.get('run-stage-1').attributes['aria-pressed'],'true');
+ const p=game.createProfile(1_000_000);p.clearedStage=1;p.unlockedStage=1;p.stageProgress=[10,0,0];p.bossMastery=[0,-1,-1];openMode(game,p,1,1);const ui=await host({saved:p,campaign:true});ui.emit('nav-hunt','click');pickChapter(ui,1);ui.emit('run-stage-3','click');ui.emit('camp-tactics-open','click');assert.equal(ui.nodes.get('hunt-mode-2').disabled,true);ui.emit('hunt-mode-2','click');assert.equal(ui.nodes.get('replay-ancient').textContent,'1%');ui.emit('hunt-mode-1','click');assert.equal(ui.nodes.get('replay-hp').textContent,timesText(game.modeScale(1,1).hp));assert.equal(ui.nodes.get('replay-ancient').textContent,'2%');assert.equal(ui.nodes.get('replay-step-0').attributes['data-done'],'true');assert.equal(ui.nodes.get('replay-step-2').attributes['data-done'],'false');ui.emit('document','keydown',{key:'Escape'});assert.equal(ui.nodes.get('camp-map-panel').hidden,false);assert.equal(ui.document.activeElement.id,'camp-tactics-open');assert.equal(ui.nodes.get('run-stage-1').attributes['aria-pressed'],'true');
 });
 test('uncleared boss reward view explains its gate and cannot open during a hunt',async()=>{
  const ui=await host();ui.emit('nav-hunt','click');ui.emit('camp-tactics-open','click');assert.equal(ui.nodes.get('replay-panel').hidden,true);assert.equal(ui.nodes.get('replay-locked').hidden,false);ui.emit('replay-prepare','click');assert.equal(ui.state.phase,'camp');ui.emit('tactics-map-back','click');assert.equal(ui.nodes.get('camp-map-panel').hidden,false);ui.emit('camp-map-start','click');assert.equal(ui.state.run.stage,1);ui.emit('camp-tactics-open','click');assert.equal(ui.nodes.get('camp-content').hidden,true);const failed=await host({failedAssets:true});failed.emit('camp-tactics-open','click');assert.equal(failed.nodes.get('camp-tactics-panel').hidden,true);
@@ -1404,7 +1411,7 @@ test('archive hunt action opens the real map without starting or changing owners
 });
 
 test('advanced victory offers another hunt of the same boss and captured difficulty',async()=>{
- const p=game.createProfile(1_000_000);p.clearedStage=3;p.unlockedStage=3;p.bossMastery=[1,1,1];const ui=await host({saved:p,campaign:true});ui.state.phase='victory';ui.state.stageId=3;ui.state.run.stage=10;ui.state.difficulty=2;ui.state.resultDelay=0;ui.tick();assert.equal(ui.nodes.get('next-stage').hidden,false);assert.equal(ui.nodes.get('next-stage').textContent,'같은 난이도로 처음부터');assert.match(ui.nodes.get('result-note').textContent,/악몽 공략/);ui.emit('next-stage','click');assert.equal(ui.state.phase,'playing');assert.equal(ui.state.stageId,3);assert.equal(ui.state.run.stage,1);assert.equal(ui.state.difficulty,2);
+ const p=game.createProfile(1_000_000);p.clearedStage=3;p.unlockedStage=3;p.bossMastery=[1,1,1];openMode(game,p,2,3);const ui=await host({saved:p,campaign:true});ui.state.phase='victory';ui.state.stageId=3;ui.state.run.stage=10;ui.state.difficulty=2;ui.state.resultDelay=0;ui.tick();assert.equal(ui.nodes.get('next-stage').hidden,false);assert.equal(ui.nodes.get('next-stage').textContent,'같은 난이도로 처음부터');assert.match(ui.nodes.get('result-note').textContent,/악몽 공략/);ui.emit('next-stage','click');await ui.settle();assert.equal(ui.state.phase,'playing');assert.equal(ui.state.stageId,3);assert.equal(ui.state.run.stage,1);assert.equal(ui.state.difficulty,2);
 });
 
 
@@ -1675,8 +1682,8 @@ test('crowded contact feedback and guard sounds are bounded without replay on th
 });
 
 test('boss reward notice uses the actual chapter and difficulty payout receipt',async()=>{
- const p=game.createProfile(1_000_000);p.clearedStage=3;p.unlockedStage=3;p.stageProgress=[10,10,10];p.bossMastery=[2,2,2];p.difficultyProgress=[[9,9,9],[9,9,9]];widen(p);const gold=Math.round(game.STAGES[20].reward*2),cores=game.bossCores(21,2);
- const ui=await host({saved:p,campaign:true});ui.emit('nav-hunt','click');ui.emit('camp-tactics-open','click');ui.emit('hunt-mode-2','click');ui.emit('replay-prepare','click');ui.emit('run-stage-10','click');ui.emit('camp-map-start','click');
+ const p=game.createProfile(1_000_000);p.clearedStage=3;p.unlockedStage=3;p.stageProgress=[10,10,10];p.bossMastery=[2,2,2];p.difficultyProgress=[[9,9,9],[9,9,9]];widen(p);openMode(game,p,2,21);const gold=Math.round(game.STAGES[20].reward*game.modeScale(21,2).reward),cores=game.bossCores(21,2);
+ const ui=await host({saved:p,campaign:true});ui.emit('nav-hunt','click');pickChapter(ui,21);ui.emit('camp-tactics-open','click');ui.emit('hunt-mode-2','click');ui.emit('replay-prepare','click');ui.emit('run-stage-10','click');ui.emit('camp-map-start','click');await ui.settle();
  const s=ui.state;assert.equal(s.difficulty,2);assert.equal(s.stageId,21);s.enemies=[];s.barrels=[];s.run.wave=1;s.run.bossSpawned=true;s.spawns=[{id:900,type:'bulwark',boss:true,x:s.player.x+100,y:s.player.y,delay:0,warning:1,locked:true}];game.advanceGame(s,.001);
  const boss=s.enemies[0];s.projectiles=[{id:901,x:boss.x,y:boss.y,vx:0,vy:0,damage:1e9,ttl:1,friendly:true}];game.advanceGame(s,.025);assert.equal(s.phase,'playing');assert.ok(s.settlement);ui.tick(0);assert.equal(s.phase,'victory');assert.equal(ui.nodes.get('hunt-stage').textContent,game.STAGES[20].name+' · 21-10 스테이지');assert.equal(ui.nodes.get('stage-complete').hidden,false);assert.match(ui.nodes.get('stage-complete').textContent,/^21-10 스테이지 완료 [★☆]{3}$/);
  const reward=s.effects.findLast(f=>f.type==='loot'&&f.origin==='stage');s.effects=[reward];ui.tick(0);

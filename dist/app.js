@@ -8,7 +8,7 @@ import { frameIndex, frameRect, validateClip } from './engine.js';
 import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
 import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.103.1';
 import { visibleTiles, createDecorations } from './terrain.js?v=0.135.0';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.136.2';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.139.0';
 import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.136.2';
 import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.136.2';
 
@@ -264,6 +264,10 @@ $('tree-forget').addEventListener('click',()=>{if(state.phase!=='camp'||!game.is
 // Reset asks twice: the first tap arms it, the second clears the visible page.
 $('growth-reset').addEventListener('click',()=>{if(state.phase!=='camp')return;if(growthArmed!==growthView){growthArmed=growthView;$('growth-feedback').textContent=(growthView==='tree'?'성장 트리':'능력치 단련')+'를 초기화하려면 한 번 더 누르세요. 포인트는 모두 돌려받습니다.';updateHud();return;}growthArmed='';if(growthView==='tree'?game.resetGrowthTree(state):game.resetTrainingStats(state)){save();$('growth-feedback').textContent=(growthView==='tree'?'성장 트리':'능력치 단련')+' 초기화 완료';updateHud();}});
 // Both 0.139 pools in one short line (menus, result, stats sheet).
+// Alpha 0.139: 정예/악몽 multipliers against the same chapter on 일반.
+// Why a 정예/악몽 chapter is still closed (0.139: every chapter of the mode below first, then one by one).
+function modeLockText(d,chapter){if(!d)return '';const below=['일반','정예'][d-1];if(!game.modeOpen(profile,d))return below+' 60장 클리어 필요';return game.HUNT_MODES[d].name+' '+(chapter-1)+'장 처치 필요';}
+function timesText(v){return (v>=10?Math.round(v):Math.round(v*10)/10)+'배';}
 function growthBudget(){return '능력치 '+game.trainingPoints(profile)+' · 트리 '+game.treePoints(profile);}
 function refreshGrowthBoard(){
  const tree=profile.growthTree,held=new Set([game.TREE_ROOT,...tree]);
@@ -555,7 +559,7 @@ function refreshMapScene(selected,plan,species,completed,limit){
  refreshStarChests(selected);
  const boss=selectedRunStage===game.STAGES_PER_CHAPTER,mode=game.HUNT_MODES[selectedDifficulty];
  $('camp-map-panel').setAttribute('data-boss',String(boss));$('map-boss-rewards').hidden=!boss;
- $('map-boss-gold').textContent='+'+Math.round(selected.reward*mode.reward).toLocaleString('ko-KR');
+ $('map-boss-gold').textContent='+'+Math.round(selected.reward*game.modeScale(selected.id,selectedDifficulty).reward).toLocaleString('ko-KR');
  $('map-boss-cores').textContent='+'+game.bossCores(selected.id,selectedDifficulty);
  for(let n=1;n<game.STAGES_PER_CHAPTER;n++)$('map-path-'+n).setAttribute('data-open',String(n<limit));
  for(const slot of ['weapon','armor','charm']){
@@ -1264,18 +1268,18 @@ function refreshFarmCamp(){
  $('farm-target-note').textContent=target?'파밍 목표 · '+target.name+' / '+(target.raid?ancientSourceName(target):ancientRegionChapters(target).join('~')+'장 보스')+(profile.discoveredAncients.includes(target.id)?' · 발견 완료':' · 미발견'):'도감에서 원하는 고대 유물을 파밍 목표로 지정해.';
  if(!game.stageLimit(profile,selectedStage,selectedDifficulty))selectedDifficulty=0;
  $('replay-panel').hidden=selectedStage>profile.clearedStage;$('replay-locked').hidden=selectedStage<=profile.clearedStage;const mode=game.HUNT_MODES[selectedDifficulty];
- const chapter=game.STAGES[selectedStage-1];$('replay-chapter').textContent=chapter.name+' · CHAPTER '+String(selectedStage).padStart(2,'0');$('replay-boss').textContent=chapter.bossName;$('tactics-launch-meta').textContent=mode.name+' · '+chapter.bossName;$('replay-rewards-title').textContent='주요 보상 · '+mode.name;$('replay-hp').textContent=mode.hp+'배';$('replay-damage').textContent=mode.damage+'배';$('replay-gold').textContent=mode.reward+'배';$('replay-ancient').textContent=Math.round(game.ANCIENT_BOSS_CHANCE[selectedDifficulty]*100)+'%';$('replay-combat-note').textContent=(mode.shots?'탄막 +'+mode.shots+'발 · 패턴 순환 변경':'기본 공격 패턴')+' · 추가 괴수 핵 +'+mode.extraCore+(selectedDifficulty?' · 장비 능력치 ×'+game.HUNT_POWER[selectedDifficulty]+' · 희귀 이상 '+(100-game.HUNT_GRADE_TABLES[selectedDifficulty][0])+'%':'');$('replay-prepare').disabled=!ready||state.phase!=='camp'||!game.stageLimit(profile,selectedStage,selectedDifficulty);
+ const chapter=game.STAGES[selectedStage-1];$('replay-chapter').textContent=chapter.name+' · CHAPTER '+String(selectedStage).padStart(2,'0');$('replay-boss').textContent=chapter.bossName;$('tactics-launch-meta').textContent=mode.name+' · '+chapter.bossName;$('replay-rewards-title').textContent='주요 보상 · '+mode.name;{const k=game.modeScale(chapter.id,selectedDifficulty);$('replay-hp').textContent=timesText(k.hp);$('replay-damage').textContent=timesText(k.damage);$('replay-gold').textContent=timesText(k.reward);}$('replay-ancient').textContent=Math.round(game.ANCIENT_BOSS_CHANCE[selectedDifficulty]*100)+'%';$('replay-combat-note').textContent=(mode.shots?'탄막 +'+mode.shots+'발 · 패턴 순환 변경':'기본 공격 패턴')+' · 추가 괴수 핵 +'+mode.extraCore+(selectedDifficulty?' · 장비 능력치 ×'+game.HUNT_POWER[selectedDifficulty]+' · 희귀 이상 '+(100-game.HUNT_GRADE_TABLES[selectedDifficulty][0])+'%':'');$('replay-prepare').disabled=!ready||state.phase!=='camp'||!game.stageLimit(profile,selectedStage,selectedDifficulty);
  const mastery=profile.bossMastery[selectedStage-1],done=[selectedStage<=profile.clearedStage,game.bossModeAvailable(profile,selectedStage,1),mastery>=1,game.bossModeAvailable(profile,selectedStage,2)];for(let n=0;n<4;n++){$('replay-step-'+n).setAttribute('data-done',String(done[n]));$('replay-step-state-'+n).textContent=done[n]?'완료':'미완료';}
  for(const m of game.HUNT_MODES){
   const available=game.stageLimit(profile,selectedStage,m.id)>0,button=$('hunt-mode-'+m.id),mapButton=$('map-mode-'+m.id);
-  const locked=m.id===1?'일반 보스 처치 필요':'정예 보스 처치 필요';
+  const locked=modeLockText(m.id,selectedStage);
   button.disabled=!available;button.setAttribute('aria-pressed',String(m.id===selectedDifficulty));$('hunt-mode-status-'+m.id).textContent=button.disabled?locked:['기본 난도','더 강한 적','최고의 도전'][m.id];
   mapButton.disabled=!ready||!available;
   mapButton.setAttribute('aria-pressed',String(m.id===selectedDifficulty));$('map-mode-status-'+m.id).textContent=available?'완료 '+game.completedStages(profile,selectedStage,m.id)+'/10':locked;
  }
- $('map-difficulty-note').textContent=mode.name+' · '+selectedRunStage+'스테이지 선택 · 난이도를 바꾸면 1단계부터 시작해. 공략 기록은 난이도별로 저장돼.';
- $('replay-info').textContent=mode.name+' · 보스 체력 '+mode.hp+'배 / 피해 '+mode.damage+'배 · 보스 보너스 골드 '+mode.reward+'배 · 추가 장비당 고대 '+mode.ancientChance.toFixed(2)+'%'+(mode.shots?' · 탄막 +'+mode.shots+'발 · 패턴 순환 변경':'');
- $('replay-unlock').textContent=game.bossModeAvailable(profile,selectedStage,2)?'악몽 해금 완료 · 원하는 난이도로 재도전할 수 있어.':'일반 보스 처치 → 정예 해금 · 정예 처치 → 악몽 해금.';
+ {const record=selectedDifficulty===2?profile.nightmareRecords[selectedStage-1]:0;$('map-difficulty-note').textContent=mode.name+' · '+selectedRunStage+'스테이지 선택 · '+(selectedDifficulty===2?'경험치 없음 · '+(record?'보스 기록 '+record+'초':'보스 기록 없음'):'난이도를 바꾸면 1단계부터 시작해. 공략 기록은 난이도별로 저장돼.');}
+ {const k=game.modeScale(selectedStage,selectedDifficulty);$('replay-info').textContent=mode.name+(selectedDifficulty?' · 일반 '+k.chapter+'장 강도':'')+' · 보스 체력 '+timesText(k.hp)+' / 피해 '+timesText(k.damage)+' · 보스 골드 '+timesText(k.reward)+' · 추가 장비당 고대 '+mode.ancientChance.toFixed(2)+'%'+(mode.shots?' · 탄막 +'+mode.shots+'발 · 패턴 순환 변경':'');}
+ $('replay-unlock').textContent=game.bossModeAvailable(profile,selectedStage,2)?'악몽 해금 완료 · 원하는 난이도로 재도전할 수 있어.':'일반 60장을 모두 깨면 정예 1장부터, 정예 60장을 모두 깨면 악몽 1장부터 하나씩 열려.';
 }
 // Fit whole cards to the gallery instead of scrolling: columns come from the CSS grid, rows from the free height.
 function codexPageSize(){

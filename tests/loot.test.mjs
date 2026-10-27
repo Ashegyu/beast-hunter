@@ -90,7 +90,7 @@ test('all chapter and difficulty boss receipts match the actual once-only payout
  for(const chapter of [1,5,6,11,30])for(let mode=0;mode<3;mode++){
   const p=g.createProfile(),all=g.STAGES.length;p.clearedStage=all;p.unlockedStage=all;p.stageProgress=g.STAGES.map(()=>10);p.bossMastery=g.STAGES.map(()=>2);p.difficultyProgress=[g.STAGES.map(()=>9),g.STAGES.map(()=>9)];const s=g.createGame(p);assert.ok(g.launch(s,chapter,10,null,mode));s.lootRates=ALWAYS;
   s.enemies=[];s.spawns=[];s.barrels=[];s.run.wave=1;s.run.waveQuota=1;s.run.bossSpawned=true;kill(s,{boss:true});
-  const receipt=s.effects.findLast(f=>f.type==='loot'&&f.origin==='stage').stageReward,expected={gold:Math.round(g.STAGES[chapter-1].reward*g.HUNT_MODES[mode].reward),cores:Math.ceil(chapter/5)+g.HUNT_MODES[mode].extraCore,healed:0};
+  const receipt=s.effects.findLast(f=>f.type==='loot'&&f.origin==='stage').stageReward,expected={gold:Math.round(g.STAGES[chapter-1].reward*g.modeScale(chapter,mode).reward),cores:Math.ceil(chapter/5)+g.HUNT_MODES[mode].extraCore,healed:0};
   assert.deepEqual(receipt,expected);assert.equal(p.gold,expected.gold);assert.equal(s.run.gold,expected.gold);assert.equal(p.cores,expected.cores);
   const saved=g.encodeProfile(p,1000);advance(s,2);assert.equal(g.encodeProfile(p,1000),saved);
  }
