@@ -37,9 +37,9 @@ test('training ranks count less past 20 and 60, so one stat cannot run away',()=
 test('levels bring the old forge/숙련 values by Lv.25; training and tree bonuses add on top',()=>{
  const l1=g.levelGrowth(1),l25=g.levelGrowth(25),l90=g.levelGrowth(90);assert.equal(l1.damage,0);assert.deepEqual(l25,l90);assert.ok(Math.abs(l25.damage-1.36)<1e-9&&Math.abs(l25.reduction-.27)<1e-9&&Math.abs(l25.hp-208)<1e-9);
  const base=g.playerStats(profile(150)),p=profile(150);p.training={power:10,vitality:10,guard:10,precision:10,tempo:10,stride:10};p.growthTree=['blade-r','blade-1','blade-n','ward-r','ward-1','ab-r','ab-1'];const st=g.playerStats(p);
- assert.ok(Math.abs(base.damage-24*(1+149*.035+1.36))<1e-9);assert.ok(Math.abs(st.damage-24*(1+149*.035+1.36+10*.05)*1.13)<1e-9,base.damage+' → '+st.damage);
- assert.ok(Math.abs(st.maxHp-(base.maxHp+120)*1.05)<.01);assert.ok(Math.abs(st.reduction-(.27+.1))<1e-9);assert.ok(Math.abs(st.crit-(.05+.05))<1e-9);
- assert.ok(Math.abs(st.attackSpeed-(1+.3+.1))<1e-9);assert.ok(Math.abs(st.speed-280*(1+.18+.1+.04))<1e-9);assert.ok(Math.abs(st.range-135*(1+.32+.02))<1e-9);assert.equal(st.collection,base.collection+50);
+ assert.ok(Math.abs(base.damage-24*(1+149*.035+1.36))<1e-9);assert.ok(Math.abs(st.damage-24*(1+149*.035+1.36+10*.05)*1.165)<1e-9,base.damage+' → '+st.damage);
+ assert.ok(Math.abs(st.maxHp-(base.maxHp+120)*1.065)<.01);assert.ok(Math.abs(st.reduction-(.27+.1))<1e-9);assert.ok(Math.abs(st.crit-(.05+.05))<1e-9);
+ assert.ok(Math.abs(st.attackSpeed-(1+.3+.1))<1e-9);assert.ok(Math.abs(st.speed-280*(1+.18+.1+.05))<1e-9);assert.ok(Math.abs(st.range-135*(1+.32+.025))<1e-9);assert.equal(st.collection,base.collection+50);
 });
 
 test('saves keep training and the tree, trim hostile values, and builds remember their own tree',()=>{
@@ -68,11 +68,11 @@ test('tree keystones and branch nodes act in combat: execute, finisher, drain, l
  const plain=swing(),finisher=swing(p=>p.growthTree=BLADE_FINISHER);assert.ok(finisher>plain*1.13*1.55,plain+' → '+finisher);
  const low=swing(null,3e6),exec=swing(p=>p.growthTree=BLADE_EXECUTE,3e6);assert.ok(exec>low*1.13*1.25,low+' → '+exec);
  {const {s,e}=arena(p=>p.growthTree=['ward-r','ward-1','ward-n','ward-b1','ward-b2','ward-b3']);s.player.hp=100;s.player.action='idle';s.player.attackCooldown=0;g.attack(s,{x:1,y:0});for(let i=0;i<20;i++)g.advanceGame(s,.025);assert.ok(s.player.hp>100,'흡혈');}
- assert.equal(g.treeBonus({growthTree:['ward-r','ward-1','ward-n','ward-a1','ward-a2','ward-a3','ward-a4']}).lowHpGuard,.15);
+ assert.equal(g.treeBonus({growthTree:['ward-r','ward-1','ward-n','ward-a1','ward-a2','ward-a3','ward-a4']}).lowHpGuard,.19);
  const stamina=tree=>{const {s}=arena(p=>p.growthTree=tree);s.enemies=[];s.player.stamina=10;for(let i=0;i<40;i++)g.advanceGame(s,.025);return s.player.stamina;};assert.ok(stamina(['art-r','art-1'])>stamina([])+1);
- const cd=g.skillCooldown(profile(60),'crescent'),p=profile(60);p.growthTree=['art-r','art-1','art-n','art-a1','art-a2','art-a3','art-a4'];assert.ok(Math.abs(g.skillCooldown(p,'crescent')-cd*.9)<1e-9);assert.ok(Math.abs(g.skillAreaScale(p,'dance')/g.skillAreaScale(profile(60),'dance')-1.03)<1e-9);
+ const cd=g.skillCooldown(profile(60),'crescent'),p=profile(60);p.growthTree=['art-r','art-1','art-n','art-a1','art-a2','art-a3','art-a4'];assert.ok(Math.abs(g.skillCooldown(p,'crescent')-cd*.875)<1e-9);assert.ok(Math.abs(g.skillAreaScale(p,'dance')/g.skillAreaScale(profile(60),'dance')-1.04)<1e-9);
  const skill=tree=>{const {s,e}=arena(p=>{p.growthTree=tree;p.skillBook.loadout.active=['crescent',null,null,null];});s.player.action='idle';assert.ok(g.useSkill(s,'crescent',{x:1,y:0,targetId:e.id}));for(let i=0;i<20;i++)g.advanceGame(s,.025);return {dealt:1e7-e.hp,s};};
- const a=skill([]),b=skill(['art-r','art-1','art-n','art-b1','art-b2','art-b3']);assert.ok(Math.abs(b.dealt/a.dealt-1.18)<.03,a.dealt+' → '+b.dealt);
+ const a=skill([]),b=skill(['art-r','art-1','art-n','art-b1','art-b2','art-b3']);assert.ok(Math.abs(b.dealt/a.dealt-1.23)<.03,a.dealt+' → '+b.dealt);
  const fury=skill(['art-r','art-1','art-n','art-b1','art-b2','art-b3','art-b4']);assert.ok(fury.s.skillRuntime.treeFuryUntil>fury.s.run.time,'연환');
 });
 
