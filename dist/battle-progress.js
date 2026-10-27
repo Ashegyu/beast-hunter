@@ -10,7 +10,7 @@ export function beginStageJournal(s){
  const strict=s.run.stageType!=='normal',checkpoint={};
  for(const key of strict?REWARD_FIELDS:PROGRESS_FIELDS)checkpoint[key]=structuredClone(s.profile[key]);
  const totals=Object.fromEntries(RUN_FIELDS.map(k=>[k,s.run[k]]));
- journals.set(s.profile,{strict,checkpoint,totals,lootLength:s.run.lootLedger.length,committing:false});
+ journals.set(s.profile,{strict,checkpoint,totals,lootLength:s.run.lootLedger.length,materialLedger:{...s.run.materialLedger},committing:false});
  s.profile.activeBattle={id:stageTransactionId(s),chapter:s.stageId,stage:s.run.stage,difficulty:s.difficulty,strict,...(s.run.dungeonId?{dungeon:s.run.dungeonId}:{} ),...(s.run.raidId?{raid:s.run.raidId}:{} )};
 }
 export function profileForSave(profile){
@@ -22,7 +22,7 @@ export function strictBattle(profile){const j=journals.get(profile);return !!j?.
 export function cancelStageJournal(s){
  const j=journals.get(s.profile);if(j?.strict){
   for(const key of REWARD_FIELDS)s.profile[key]=j.checkpoint[key];
-  for(const key of RUN_FIELDS)s.run[key]=j.totals[key];s.run.lootLedger.length=j.lootLength;
+  for(const key of RUN_FIELDS)s.run[key]=j.totals[key];s.run.lootLedger.length=j.lootLength;s.run.materialLedger=j.materialLedger;
  }
  s.profile.activeBattle=null;journals.delete(s.profile);return !!j?.strict;
 }

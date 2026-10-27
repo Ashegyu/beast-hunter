@@ -422,3 +422,26 @@
 #game-shell#game-shell #overlay[data-panel=result] #result-content{position:relative}
 #game-shell#game-shell #overlay[data-panel=result] #result-boss-ancients{position:absolute;right:0;bottom:0;width:189px!important;box-sizing:border-box;margin:0!important;padding:5px 8px!important;border:1px solid #d2be8d55!important;border-radius:4px!important;background:#0b1216cc!important;font-size:10.5px!important;line-height:1.4!important;color:#e9d6a4!important;white-space:pre-line;overflow:hidden}
 @media(max-height:360px){#game-shell#game-shell #overlay[data-panel=result] #result-boss-ancients{padding:3px 6px!important;font-size:10px!important;line-height:1.3!important;white-space:pre!important;text-overflow:ellipsis}}
+/* 0.136.3 결과 창 획득 칸: '장비 | 재료' 탭(수는 탭 안), 한 줄을 넘으면 오른쪽 '더보기 +N'. 더보기를 누르면 왼쪽 칸 전체를
+   획득 칸으로 펼치고(수치·레벨 줄 숨김) 들어가는 만큼 한 페이지로 ‹ › 넘김. 칸 크기 --result-cell은 app.js가 읽어 한 페이지 수를 정한다. */
+#game-shell#game-shell #overlay[data-panel=result] .result-loot-grid{--result-cell:40px}
+@media(max-height:360px){#game-shell#game-shell #overlay[data-panel=result] .result-loot-grid{--result-cell:34px}}
+#game-shell#game-shell #overlay[data-panel=result] .result-loot-gallery>header{align-items:center!important;gap:6px}
+#game-shell#game-shell #overlay[data-panel=result] .result-loot-tabs{display:flex;gap:4px;margin-right:auto}
+#game-shell#game-shell #overlay[data-panel=result] :is(.result-loot-tabs>button,#result-loot-more,#result-loot-pager>button){box-sizing:border-box;height:22px!important;min-height:22px!important;min-width:0!important;margin:0!important;padding:0 8px!important;border:1px solid #a78c5b55!important;border-radius:3px!important;background:#0f171c!important;color:#b9ad8c!important;font-size:11px!important;line-height:20px!important;white-space:nowrap;box-shadow:none!important}
+#game-shell#game-shell #overlay[data-panel=result] :is(.result-loot-tabs>button,#result-loot-more,#result-loot-pager>button)::before,#game-shell#game-shell #overlay[data-panel=result] :is(.result-loot-tabs>button,#result-loot-more,#result-loot-pager>button)::after{display:none!important}
+#game-shell#game-shell #overlay[data-panel=result] #result-loot-gallery .result-loot-tabs>button[aria-pressed=true]{background:#3a2a14!important;border-color:#d2be8d!important;color:#f3dca0!important}
+#game-shell#game-shell #overlay[data-panel=result] .result-loot-tabs b{margin-left:2px;font-weight:600}
+#game-shell#game-shell #overlay[data-panel=result] #result-loot-count{display:none}
+#game-shell#game-shell #overlay[data-panel=result] #result-loot-more[hidden]{display:none!important}
+#game-shell#game-shell #overlay[data-panel=result] #result-loot-more{color:#f3dca0!important}
+#game-shell#game-shell #overlay[data-panel=result] #result-loot-empty{margin:0!important;font-size:11px;line-height:var(--result-cell,40px);height:40px}
+#game-shell#game-shell #overlay[data-panel=result] .result-material-grid>figure{position:relative;box-sizing:border-box;border:1px solid #a78c5b66;border-radius:4px;background:#0b1216}
+#game-shell#game-shell #overlay[data-panel=result] .result-material-grid>figure>i{display:block!important;width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;margin:0!important}
+#game-shell#game-shell #overlay[data-panel=result] .result-material-grid>figure>b{position:absolute;right:2px;bottom:0;font-size:10px;line-height:1.2;color:#fff1cf;text-shadow:0 0 2px #000,0 0 3px #000}
+#game-shell#game-shell #overlay[data-panel=result] #result-content[data-loot-expanded=true] .result-report{height:100%!important}
+#game-shell#game-shell #overlay[data-panel=result] #result-content[data-loot-expanded=true] .result-report>:not(#result-loot-gallery):not(#result-boss-ancients){display:none!important}
+#game-shell#game-shell #overlay[data-panel=result] #result-content[data-loot-expanded=true] #result-loot-gallery{flex:1 1 auto!important;min-height:0;display:flex!important;flex-direction:column}
+#game-shell#game-shell #overlay[data-panel=result] #result-content[data-loot-expanded=true] .result-loot-grid{flex:1 1 auto;min-height:0;grid-template-rows:none!important;grid-auto-rows:var(--result-cell)!important;row-gap:4px!important;align-content:start}
+#game-shell#game-shell #overlay[data-panel=result] #result-content[data-loot-expanded=true] #result-loot-pager:not([hidden]){display:flex!important;flex:none;justify-content:center;align-items:center;gap:10px;margin-top:4px;font-size:11px}
+#game-shell#game-shell #overlay[data-panel=result] #result-loot-gallery .result-loot-grid[hidden]{display:none!important}

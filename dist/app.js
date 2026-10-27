@@ -2,7 +2,7 @@ let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
 import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.135.0';
 import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js';
 import { createCombatAudio } from './sound.js?v=0.76.0';
-import * as game from './game-engine.js?v=0.135.0';
+import * as game from './game-engine.js?v=0.135.4';
 import {FrameMetrics} from './frame-metrics.js?v=0.98.1';
 import { frameIndex, frameRect, validateClip } from './engine.js';
 import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
@@ -10,7 +10,7 @@ import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLand
 import { visibleTiles, createDecorations } from './terrain.js?v=0.135.0';
 import { MONSTERS, equipmentArt } from './chapters.js?v=0.135.0';
 import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.135.0';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.135.0';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.135.4';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -26,10 +26,10 @@ const audio=createCombatAudio(()=>{const Type=window.AudioContext||window.webkit
 let soundEnabled=true;try{soundEnabled=localStorage.getItem(STORAGE_KEY+':sound')!=='off';}catch{}audio.mute(!soundEnabled);
 let lastAudioHunt=0,lastAudioId=0,growthRenderKey='';
 // The page reuses the 48 tile/detail nodes in index.html, independently of storage capacity.
-const RESULT_LOOT_PAGE_SIZE=12,BAG_SLOT_COUNT=48;
+const RESULT_LOOT_PAGE_SIZE=12,RESULT_LOOT_FIGURES=40,BAG_SLOT_COUNT=48;
 const ITEM_AFFIX_FIELDS=Object.entries(game.AFFIXES);
 const ITEM_COMPARISON_FIELDS=[['damage','공격',1],['maxHp','체력',1],['speed','이동',1],['crit','치명타',100],['reduction','피해 감소',100],['thunderDamage','강공격',1]];
-let resultLootSource=null,resultLootRows=[],resultLootPage=0,resultLootRenderPage=-1,resultLootInventory=null;
+let resultLootSource=null,resultLootRows=[],resultLootPage=0,resultLootRenderKey='',resultLootLayoutKey='',resultLootPageSize=12,resultLootTab='gear',resultLootExpanded=false,resultLootInventory=null;
 let saved=null,storageBlocked=false,recoveredSave=false,storageReadFailed=false;
 let restoreCommitted=false,backupCandidate=null,backupReading=false,backupRevision=0,previousBackup=null;
 try{saved=localStorage.getItem(STORAGE_KEY);previousBackup=localStorage.getItem(STORAGE_KEY+':before-restore');}catch{storageBlocked=true;storageReadFailed=true;}
@@ -973,26 +973,55 @@ function gearThumbnail(node,item,size=64,illustrated=false){
   const source=display?.frames[displayId]?{image:display.image,frame:display.frames[displayId],dimensions:display,grip:display.weaponAnchors?.[displayId]}:gearFrame(manifest.equipment,design,manifest.equipmentRarities);
   atlasThumbnail(node,source.image,source.frame,size,source.dimensions);node.setAttribute('aria-label',item?.name?game.RARITIES[item.rarity]+' '+item.name:design.name);node.style.filter=item?.rarity?'drop-shadow(0 0 2px '+game.RARITY_INFO[item.rarity].color+')':'';node.setAttribute('data-art-id',design.id);node.setAttribute('data-visual-id',design.variant??design.id);return source;
 }
+// Alpha 0.135.4: the result shows 장비 and 재료 on separate tabs. Collapsed it is one row; 더보기 widens the gallery over the
+// left column and pages it by how many cells fit (12 per page when the layout cannot be measured).
+function resultLootFit(grid){
+  const box=grid.getBoundingClientRect?.();if(!(box?.width>0&&box.height>0))return null;
+  const style=window.getComputedStyle?.(grid),cell=parseFloat(style?.getPropertyValue?.('--result-cell'))||40,gap=parseFloat(style?.columnGap)||4;
+  const columns=Math.max(1,Math.floor((box.width+gap)/(cell+gap))),rows=Math.max(1,Math.floor((box.height+gap)/(cell+gap)));
+  return Math.min(RESULT_LOOT_FIGURES,resultLootExpanded?columns*rows:columns);
+}
 function refreshResultLoot(){
-  const ledger=state.run.lootLedger;
+  const ledger=state.run.lootLedger,gained=state.run.materialLedger??{};
   if(resultLootSource!==ledger||resultLootRows.length!==ledger.length){
-    resultLootSource=ledger;resultLootRows=[...ledger].sort((a,b)=>b.rarity-a.rarity||Number(!!b.perfect)-Number(!!a.perfect));resultLootPage=0;resultLootRenderPage=-1;
+    resultLootSource=ledger;resultLootRows=[...ledger].sort((a,b)=>b.rarity-a.rarity||Number(!!b.perfect)-Number(!!a.perfect));resultLootPage=0;resultLootRenderKey='';resultLootLayoutKey='';
   }
-  const pages=Math.max(1,Math.ceil(resultLootRows.length/RESULT_LOOT_PAGE_SIZE));resultLootPage=clamp(resultLootPage,0,pages-1);
-  if(resultLootRenderPage===resultLootPage&&resultLootInventory===profile.inventory)return;
-  resultLootRenderPage=resultLootPage;resultLootInventory=profile.inventory;
-  $('result-loot-count').textContent=resultLootRows.length+'개';$('result-loot-empty').hidden=!!resultLootRows.length;$('result-loot-grid').hidden=!resultLootRows.length;
+  const materialRows=game.MATERIALS.filter(m=>gained[m.id]>0),gear=resultLootTab==='gear',total=gear?resultLootRows.length:materialRows.length;
+  const gallery=$('result-loot-gallery'),grid=$(gear?'result-loot-grid':'result-material-grid');
+  gallery.setAttribute('data-tab',resultLootTab);$('result-content').setAttribute('data-loot-expanded',String(resultLootExpanded));
+  $('result-loot-tab-gear').setAttribute('aria-pressed',String(gear));$('result-loot-tab-materials').setAttribute('aria-pressed',String(!gear));
+  $('result-loot-gear-count').textContent=String(resultLootRows.length);$('result-loot-material-count').textContent=String(materialRows.reduce((n,m)=>n+gained[m.id],0));
+  $('result-loot-empty').textContent=gear?'획득한 장비가 없어.':'획득한 재료가 없어.';$('result-loot-empty').hidden=!!total;
+  $('result-loot-grid').hidden=!gear||!resultLootRows.length;$('result-material-grid').hidden=gear||!materialRows.length;
+  const layoutKey=[resultLootTab,resultLootExpanded,window.innerWidth,window.innerHeight].join('|');
+  if(resultLootLayoutKey!==layoutKey){const fit=total?resultLootFit(grid):null;resultLootPageSize=fit??RESULT_LOOT_PAGE_SIZE;if(fit)resultLootLayoutKey=layoutKey;}
+  const size=resultLootPageSize,pages=Math.max(1,Math.ceil(total/size));resultLootPage=clamp(resultLootPage,0,pages-1);
+  const more=$('result-loot-more');more.hidden=!resultLootExpanded&&total<=size;more.textContent=resultLootExpanded?'접기':'더보기 +'+Math.max(0,total-size);more.setAttribute('aria-expanded',String(resultLootExpanded));
+  const key=[layoutKey,size,resultLootPage,materialRows.map(m=>m.id+gained[m.id]).join()].join('|');
+  if(resultLootRenderKey===key&&resultLootInventory===profile.inventory)return;
+  resultLootRenderKey=key;resultLootInventory=profile.inventory;
+  $('result-loot-count').textContent=gear?resultLootRows.length+'개':materialRows.length+'종';
   $('result-loot-pager').hidden=pages===1;$('result-loot-prev').disabled=resultLootPage===0;$('result-loot-next').disabled=resultLootPage===pages-1;$('result-loot-page').textContent=(resultLootPage+1)+' / '+pages;
-  for(let i=0;i<RESULT_LOOT_PAGE_SIZE;i++){
-    const card=$('result-loot-'+i),item=resultLootRows[resultLootPage*RESULT_LOOT_PAGE_SIZE+i];card.hidden=!item;if(!item)continue;
+  const first=resultLootPage*size;
+  for(let i=0;i<RESULT_LOOT_FIGURES;i++){
+    const card=$('result-loot-'+i),item=gear&&i<size?resultLootRows[first+i]:null;card.hidden=!item;if(!item)continue;
     const kept=profile.inventory.some(owned=>owned.id===item.id&&owned.catalogId===item.catalogId&&owned.artId===item.artId&&owned.name===item.name),status=kept?'보관':'분해됨',name=(item.perfect?'극옵 · ':'')+game.RARITIES[item.rarity]+' '+item.name;
     card.style.borderColor=game.RARITY_INFO[item.rarity].color;card.setAttribute('data-kept',String(kept));card.setAttribute('aria-label',name+' · '+status);card.setAttribute('title',name+' · '+status);
     gearThumbnail($('result-loot-art-'+i),item,40);$('result-loot-name-'+i).textContent=item.name;$('result-loot-state-'+i).textContent=status;$('result-loot-state-'+i).style.color=kept?game.RARITY_INFO[item.rarity].color:'#8f9494';
   }
+  for(const m of game.MATERIALS){
+    const card=$('result-mat-'+m.id),at=materialRows.indexOf(m),shown=!gear&&at>=first&&at<first+size;card.hidden=!shown;if(!shown)continue;
+    const label=m.name+' '+gained[m.id].toLocaleString('ko-KR')+'개';$('result-mat-count-'+m.id).textContent=gained[m.id].toLocaleString('ko-KR');card.style.borderColor=m.color+'99';card.setAttribute('aria-label',label);card.setAttribute('title',label);
+  }
 }
+const resultLootOpen=()=>['victory','defeat'].includes(state.phase)&&game.resultReady(state);
 for(const [id,step]of [['result-loot-prev',-1],['result-loot-next',1]])$(id).addEventListener('click',()=>{
-  if(!['victory','defeat'].includes(state.phase)||!game.resultReady(state))return;resultLootPage+=step;refreshResultLoot();
+  if(!resultLootOpen())return;resultLootPage+=step;refreshResultLoot();
 });
+for(const [id,tab]of [['result-loot-tab-gear','gear'],['result-loot-tab-materials','materials']])$(id).addEventListener('click',()=>{
+  if(!resultLootOpen()||resultLootTab===tab)return;resultLootTab=tab;resultLootPage=0;refreshResultLoot();
+});
+$('result-loot-more').addEventListener('click',()=>{if(!resultLootOpen())return;resultLootExpanded=!resultLootExpanded;resultLootPage=0;refreshResultLoot();});
 const HOME_ROUTE_TEXT=['붉은 달이 비추는 숲, 사방에서 괴수들이 몰려온다.','불길과 눈보라가 갈라 놓은 땅, 원소의 괴수들이 깨어난다.','무너진 성문 너머, 잠들지 않는 망자들이 기다린다.','가라앉은 왕국의 물결 아래, 바다의 괴수들이 떠오른다.','번개가 몰아치는 하늘섬에서, 폭풍의 괴수들이 내려온다.','무너진 신들의 땅에서, 타락한 신의 군세가 일어선다.'];
 // Alpha 0.121: an ancient's powers follow its tier and the hunt mode it was earned on (악몽 adds a second power).
 function ancientPowerText(item){const row=game.ancientDefinition(item);if(!row)return '';const hunt=game.huntGrade(item),lines=game.ancientSignatures(item).map(r=>'✦ '+r.name+' · '+r.description).join('\n');
@@ -1003,7 +1032,7 @@ function ancientPowerText(item){const row=game.ancientDefinition(item);if(!row)r
 function updateHud(){
   $('start').disabled=!ready;if(!ready)return;
   refreshCombatSkills();if(state.phase==='camp'||game.resultReady(state))refreshPreparation();
-  if((state.phase==='camp'||state.phase==='playing')&&resultLootSource){resultLootSource=null;resultLootRows=[];resultLootInventory=null;resultLootRenderPage=-1;resultLootPage=0;}
+  if((state.phase==='camp'||state.phase==='playing')&&resultLootSource){resultLootSource=null;resultLootRows=[];resultLootInventory=null;resultLootRenderKey='';resultLootLayoutKey='';resultLootPage=0;resultLootTab='gear';resultLootExpanded=false;}
   if(state.phase==='camp'&&campDrawer==='map'&&!combatReady&&!combatWork&&!combatError)ensureCombatAssets();
   if(!dungeonBusy&&campDrawer!=='dungeons'&&state.phase==='camp'&&(campDrawer==='map'||combatReady)&&regionAssets.requestedId!==selectedStage)prepareRegion(selectedStage);
   const p=state.player,trait=game.equippedWeaponTrait(profile),stats=game.playerStats(profile),stage=game.STAGES[state.stageId-1],plan=game.battlePlan(state.run.stage);

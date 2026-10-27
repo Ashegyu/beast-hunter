@@ -50,7 +50,7 @@
 - `art/`: 원화 원본, 생성 프롬프트, 검수 자료. Codex 생성 원화: `art/monsters0106`(보스 27·일반 18), `art/terrain0106`(지형 6), `art/monsters0107`(불 12·어둠 6·불 보스 5·특수 보스 3), `art/terrain0107`(지형 21), `art/fire0107`(불 장식물·공격 효과), `art/equipment0108`(지역 세트 4장), `art/equipment0109`(챕터 세트 26장, 장당 6점), `art/ancient0111`(고대 신규 부위 3장, 장당 5점), `art/accessories0122`(장신구 15점, 장당 5점), `art/raid0123`(레이드 보스 3·레이드 고대 15), 0.118의 `art/monsters0118`·`art/terrain0118`·`art/env0118`·`art/equipment0118`. 각 폴더에 사양 JSON, `prompts/<id>.json`, PROVENANCE.md. 사용자 몬스터 백과 참고 이미지는 `art/monsters065/references/encyclopedia-1~5.png`. `tools/reports/`: 버전별 측정·검수 결과.
 
 ## 버전 표기
-- README는 0.103.2부터 다시 최신(그 사이 0.98~0.103.1 기록은 없음), `index.html`은 `app.js?v=0.135.0`, 모듈 import 쿼리는 0.70~0.124 혼재(0.105~0.135에서 바꾼 모듈과 그 import 사슬은 `?v=0.135.0`, unique-effects.js도 0.120부터), `PROFILE_VERSION=16`(0.105 v14 진행 배열 30칸, 0.112 v15 고대 번호 재배정, 0.118 v16 진행 배열 60칸·레벨 상한 200; 테스트의 복원 버전 단언은 16). 코드가 문서보다 앞서 있다. README_LOCAL은 폴더 이름 때문에 "Alpha 0.45"라고 부른다.
+- README는 0.103.2부터 다시 최신(그 사이 0.98~0.103.1 기록은 없음), `index.html`은 `app.js?v=0.135.4`, 모듈 import 쿼리는 0.70~0.124 혼재(0.105~0.135에서 바꾼 모듈과 그 import 사슬은 `?v=0.135.0`, unique-effects.js도 0.120부터), `PROFILE_VERSION=16`(0.105 v14 진행 배열 30칸, 0.112 v15 고대 번호 재배정, 0.118 v16 진행 배열 60칸·레벨 상한 200; 테스트의 복원 버전 단언은 16). 코드가 문서보다 앞서 있다. README_LOCAL은 폴더 이름 때문에 "Alpha 0.45"라고 부른다.
 - 파일명 버전: 점 제거(063=0.63, 0844=0.84.4, v0970=0.97.0, v01002=0.100.2). 단 alpha09/alpha091은 0.9/0.9.1.
 
 ## 게임 규칙 요약
@@ -83,7 +83,7 @@
 - 장비 화면 귀걸이 2 칸 옆 검은 모루는 배경 원화의 일부다(버그 아님).
 - 공통 스킨 '선택됨' 장식은 `common-ui-v2.css`의 `#game-shell :is(#camp-map-panel,…) [data-common-skin][data-common-skin][data-common-skin=tab][aria-pressed=true]::before`(아이디 2개)가 그린다. 화면별로 모양을 바꾸려면 `#game-shell#game-shell #<패널>`처럼 아이디를 3개 이상 써야 이긴다(0.117 사냥 지도 난이도 알약 모양).
 - 홈(0.116, 사용자 요청): 메뉴는 오른쪽 `.home-shortcuts` 한 묶음 4×2(nav-hunt·lobby-equipment·lobby-bag·lobby-skills·hub-growth·lobby-craft·lobby-summon·camp-codex)만 보인다. `.lobby-side`·`.lobby-bottom`·`#home-intel`(가을 사냥 안내)·`#home-build-control`(빌드 선택)은 `layout-fit.css`에서 숨김(버튼과 리스너는 DOM에 남음, lobby-character는 lobby-bottom으로 옮김). 홈에 메뉴를 흩어 놓지 말 것.
-- 결과 창(0.129, 사용자 요청 '정보가 너무 많아, 스크롤 없이'): 수치 4칸·장비 아이콘 한 줄·레벨 한 줄 + 오른쪽 버튼만 보이고 나머지는 layout-fit.css 0.129 블록에서 숨김(DOM·갱신 코드는 남음). 결과 창 검수는 Playwright `page.clock.install()` 후 `clock.runFor`로 빨리 감아 판을 끝낸다(실시간으론 수 분). 숨긴 요소에 정보를 다시 늘리지 말 것.
+- 결과 창(0.129, 사용자 요청 '정보가 너무 많아, 스크롤 없이'): 수치 4칸·장비 아이콘 한 줄·레벨 한 줄 + 오른쪽 버튼만 보이고 나머지는 layout-fit.css 0.129 블록에서 숨김(DOM·갱신 코드는 남음). 0.135.3: 보스 고대·괴수 기술 줄(`#result-boss-ancients`)은 오른쪽 버튼 칸 아래에 absolute로 띄움(왼쪽 칸에 두면 잘림). 0.135.4: 획득 칸은 '장비 | 재료' 탭(`result-loot-tab-gear/materials`, 재료 칸 `result-mat-<id>`, 엔진 `s.run.materialLedger`)과 '더보기'(`result-loot-more`, `#result-content[data-loot-expanded]`로 왼쪽 칸 전체를 펼쳐 페이지 넘김). 결과 창 검수는 Playwright `page.clock.install()` 후 `clock.runFor`로 빨리 감아 판을 끝낸다(실시간으론 수 분). 숨긴 요소에 정보를 다시 늘리지 말 것.
 - 틀 맞춤 점검(0.130): 자식이 부모의 테두리 안쪽을 넘는지(위치 absolute 제외)와 `[data-common-skin]`의 ::before/::after 장식 틀 크기가 요소와 다른지를 재는 스크립트로 확인한다. 공통 스킨 틀이 작게 그려지면 옛 CSS의 `:before{margin-right}` 같은 잔재를 의심(제작 목표 버튼). `#game-shell`은 `word-break:keep-all`.
 - 자동 레이아웃 점검: 저장 프로필을 만들어 localStorage에 넣고 Playwright로 각 화면을 돌며 화면 밖 버튼·가림·글자 잘림·스크롤 영역을 측정했다. 접힌 `<details>` 내용과 2px로 접어 둔 예전 버튼(#codex-back, #inventory-note)은 오탐이다.
 

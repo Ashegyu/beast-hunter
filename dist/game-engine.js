@@ -3,7 +3,7 @@ export * from './raids.js?v=0.135.0';
 import {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonPlan,dungeonActors,emptyDungeonProgress} from './dungeons.js?v=0.135.0';
 export {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards};
 export {THREAT} from './chapters.js?v=0.135.0';
-import {beginStageJournal,profileForSave,strictBattle,cancelStageJournal,prepareStageCommit,finishStageJournal,stageTransactionId,ownedAtStageStart} from './battle-progress.js?v=0.135.0';
+import {beginStageJournal,profileForSave,strictBattle,cancelStageJournal,prepareStageCommit,finishStageJournal,stageTransactionId,ownedAtStageStart} from './battle-progress.js?v=0.135.4';
 import {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_DROP_CHANCE,INSCRIPTION_COST} from './build-effects.js?v=0.135.0';
 import {stageRule,STAGE_TYPE_NAMES} from './battle-plans.js?v=0.135.0';
 export {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_COST,stageRule,STAGE_TYPE_NAMES};
@@ -265,7 +265,7 @@ export function createGame(profile=createProfile(),{durable=false}={}){
   profile.skillBook??=skills.restoreSkillBook(null,profile.level);
   const stats=playerStats(profile),s={profile,durable,settlement:null,buildEffects:buildEffects(profile),inscriptionState:{furyUntil:0,furyPower:0},effectBudget:50,skillRuntime:skills.createSkillRuntime(),phase:'camp',auto:false,paused:false,stageId:1,difficulty:0,bounds:{width:WORLD_BOUNDS.width,height:WORLD_BOUNDS.height,padding:80},
     player:{x:350,y:1160,hp:stats.maxHp,maxHp:stats.maxHp,stamina:100,action:'idle',actionTime:0,aimX:0,aimY:1,facing:1,attackHit:false,attackCooldown:0,dashCooldown:0,thunderCooldown:0,invulnerable:0,lastDamage:0,dashX:1,dashY:0,combo:0,comboWindow:0,queued:false,queuedAim:null,swing:null,counterReady:0,lookX:0,lookY:1,heading:2,motionDistance:0,lastAimRevision:0,moving:false},
-    synergies:equipmentSynergies(profile),loadout:uniqueLoadout(profile),uniqueState:{cooldowns:{},cooldownKeys:[],momentum:0,momentumPower:0,capacitor:0,shield:0,shieldTime:0,shieldOwner:null,lastStand:false,still:0,orbit:null,ancientZones:[],ancientShields:emptyEquipment(),ancientBuffs:{}},spawnView:{width:720,height:1280},spawns:[],assist:{targetId:null,approaching:false,evade:null},enemies:[],projectiles:[],barrels:[],pickups:[],effects:[],nodes:[],encounters:[],caches:[],encounterIndex:0,run:{stage:1,startStage:1,wave:0,waveTime:0,waveKills:0,waveQuota:0,stageKills:0,stageQuota:0,timeLimit:0,timeRemaining:0,timedOut:false,flow:'idle',timer:0,kills:0,rooms:0,seals:0,gold:0,xp:0,xpBonus:0,trainingGold:0,startLevel:profile.level,cores:0,items:0,lootLedger:[],resourceRevision:0,stageItems:0,monsterItems:0,autoSalvaged:0,perfectDodges:0,guardBreaks:0,explosions:0,time:0,ancientProcs:0,craftedProcs:0,materials:0,synergyProcs:{shatter:0,execute:0},bossAncients:[],bossSpawned:false,bossKilled:false,beastLearned:null,stars:null,lowestHp:1},rng:12345,materialRng:98765,refiningRng:13579,promotionRng:97531,lootRng:54321,resultDelay:0,nextId:1,hitStop:0,shake:0,lastLoot:null};
+    synergies:equipmentSynergies(profile),loadout:uniqueLoadout(profile),uniqueState:{cooldowns:{},cooldownKeys:[],momentum:0,momentumPower:0,capacitor:0,shield:0,shieldTime:0,shieldOwner:null,lastStand:false,still:0,orbit:null,ancientZones:[],ancientShields:emptyEquipment(),ancientBuffs:{}},spawnView:{width:720,height:1280},spawns:[],assist:{targetId:null,approaching:false,evade:null},enemies:[],projectiles:[],barrels:[],pickups:[],effects:[],nodes:[],encounters:[],caches:[],encounterIndex:0,run:{stage:1,startStage:1,wave:0,waveTime:0,waveKills:0,waveQuota:0,stageKills:0,stageQuota:0,timeLimit:0,timeRemaining:0,timedOut:false,flow:'idle',timer:0,kills:0,rooms:0,seals:0,gold:0,xp:0,xpBonus:0,trainingGold:0,startLevel:profile.level,cores:0,items:0,lootLedger:[],materialLedger:{},resourceRevision:0,stageItems:0,monsterItems:0,autoSalvaged:0,perfectDodges:0,guardBreaks:0,explosions:0,time:0,ancientProcs:0,craftedProcs:0,materials:0,synergyProcs:{shatter:0,execute:0},bossAncients:[],bossSpawned:false,bossKilled:false,beastLearned:null,stars:null,lowestHp:1},rng:12345,materialRng:98765,refiningRng:13579,promotionRng:97531,lootRng:54321,resultDelay:0,nextId:1,hitStop:0,shake:0,lastLoot:null};
   return s;
 }
 const random=s=>{s.rng=(Math.imul(1664525,s.rng)+1013904223)>>>0;return s.rng/4294967296;};
@@ -516,7 +516,7 @@ function claimResource(s,drop,visual=true){
   held=Math.min(Math.max(0,drop.amount??0),p.pendingGold);p.pendingGold-=held;amount=Math.max(0,Math.min(held,1e8-p.gold));p.gold+=amount;s.run.gold+=amount;
  }else{
   const row=MATERIAL_BY_ID[drop.materialId];if(!row)return;
-  held=Math.min(Math.max(0,drop.amount??0),p.pendingMaterials[row.id]);p.pendingMaterials[row.id]-=held;amount=Math.max(0,Math.min(held,MATERIAL_LIMIT-p.materials[row.id]));p.materials[row.id]+=amount;s.run.materials+=amount;
+  held=Math.min(Math.max(0,drop.amount??0),p.pendingMaterials[row.id]);p.pendingMaterials[row.id]-=held;amount=Math.max(0,Math.min(held,MATERIAL_LIMIT-p.materials[row.id]));p.materials[row.id]+=amount;s.run.materials+=amount;if(amount)s.run.materialLedger[row.id]=(s.run.materialLedger[row.id]??0)+amount;
   if(visual&&row.rare&&amount)effect(s,'loot',{name:row.name+' ×'+amount,rarity:5,material:true,materialId:row.id},3);
  }
  if(held)s.run.resourceRevision++;
@@ -1113,7 +1113,7 @@ function completeRaid(s){
  if(s.settlement||s.run.flow!=='combat')return false;
  const r=raidDefinition(s.run.raidId),reward=raidRewards(s.run.raidChapter);s.run.dungeonReward={gold:Math.min(reward.gold,Math.max(0,1e8-s.profile.gold)),cores:Math.min(reward.cores,Math.max(0,1e6-s.profile.cores)),materials:{}};
  s.profile.gold+=s.run.dungeonReward.gold;s.run.gold+=s.run.dungeonReward.gold;s.profile.cores+=s.run.dungeonReward.cores;s.run.cores+=s.run.dungeonReward.cores;
- for(const [id,n]of Object.entries(reward.materials)){const amount=Math.min(n,Math.max(0,MATERIAL_LIMIT-s.profile.materials[id]));s.profile.materials[id]+=amount;s.run.materials+=amount;s.run.dungeonReward.materials[id]=amount;}
+ for(const [id,n]of Object.entries(reward.materials)){const amount=Math.min(n,Math.max(0,MATERIAL_LIMIT-s.profile.materials[id]));s.profile.materials[id]+=amount;s.run.materials+=amount;if(amount)s.run.materialLedger[id]=(s.run.materialLedger[id]??0)+amount;s.run.dungeonReward.materials[id]=amount;}
  s.profile.raids.clears[r.id]++;s.run.rooms=1;s.run.seals=1;
  if(lootRandom(s)<dropRate(s,RAID_LOOT_KEY)){const item=rollAncient({id:allocateItemId(s),tier:6,raid:r.id},lootRandom(s),()=>lootRandom(s));if(receiveItem(s,item,'stage')){s.run.dungeonReward.item=item;discoverAncient(s.profile,item);s.run.bossAncients.push(item.catalogId);}}
  s.projectiles.length=0;s.spawns.length=0;s.player.queued=false;s.player.swing=null;s.player.action='idle';s.hitStop=0;skills.clearSkillStage(s);clearUniqueTransient(s);clearAncient(s);s.resultDelay=.5;return queueSettlement(s,true);
@@ -1121,7 +1121,7 @@ function completeRaid(s){
 function completeDungeon(s){
  if(s.settlement||s.run.flow!=='combat')return false;
  const reward=dungeonRewards(s.run.dungeonId,s.run.stage);s.run.dungeonReward={gold:Math.min(reward.gold,Math.max(0,1e8-s.profile.gold)),materials:{}};s.profile.gold+=s.run.dungeonReward.gold;s.run.gold+=s.run.dungeonReward.gold;
- for(const [id,n]of Object.entries(reward.materials)){const amount=Math.min(n,Math.max(0,MATERIAL_LIMIT-s.profile.materials[id]));s.profile.materials[id]+=amount;s.run.materials+=amount;s.run.dungeonReward.materials[id]=amount;}
+ for(const [id,n]of Object.entries(reward.materials)){const amount=Math.min(n,Math.max(0,MATERIAL_LIMIT-s.profile.materials[id]));s.profile.materials[id]+=amount;s.run.materials+=amount;if(amount)s.run.materialLedger[id]=(s.run.materialLedger[id]??0)+amount;s.run.dungeonReward.materials[id]=amount;}
  s.profile.dungeonProgress[s.run.dungeonId]=Math.max(s.profile.dungeonProgress[s.run.dungeonId],s.run.stage);s.run.rooms=1;s.run.seals=1;
  if(lootRandom(s)<dropRate(s,'dungeon')){const chapter=STAGES[Math.min(STAGES.length,Math.max(1,s.profile.unlockedStage))-1],item=rollAccessory({id:allocateItemId(s),tier:chapter?.theme??1,grade:s.run.stage>=7?2:s.run.stage>=4?1:0},()=>lootRandom(s));if(receiveItem(s,item,'stage'))s.run.dungeonReward.item=item;}
  s.projectiles.length=0;s.spawns.length=0;s.player.queued=false;s.player.swing=null;s.player.action='idle';s.hitStop=0;skills.clearSkillStage(s);clearUniqueTransient(s);clearAncient(s);s.resultDelay=.5;return queueSettlement(s,true);

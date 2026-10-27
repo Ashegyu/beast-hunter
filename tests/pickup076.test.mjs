@@ -13,7 +13,7 @@ test('gold and materials land without payment, remain beyond eight seconds and p
  const s=arena();kill(s);assert.equal(s.profile.gold,0);assert.equal(s.profile.pendingGold,16);assert.equal(s.run.materials,0);assert.ok(materialTotal(s.profile.pendingMaterials)>0);assert.equal(materialTotal(s.profile.materials),0);
  const gold=s.pickups.find(d=>d.kind==='gold'),material=s.pickups.find(d=>d.kind==='material'),owed=materialTotal(s.profile.pendingMaterials);assert.ok(gold&&material);advance(s,.2);assert.equal(s.profile.gold,0);advance(s,8.1);assert.ok(s.pickups.includes(gold)&&s.pickups.includes(material));assert.equal(s.profile.gold,0);
  for(const d of s.pickups)if(d.kind==='gold'||d.kind==='material'){d.x=s.player.x;d.y=s.player.y;}
- advance(s,.025);assert.equal(s.profile.gold,16);assert.equal(s.profile.pendingGold,0);assert.equal(s.run.materials,owed);assert.equal(materialTotal(s.profile.materials),owed);assert.equal(materialTotal(s.profile.pendingMaterials),0);advance(s,.1);assert.equal(s.profile.gold,16);
+ advance(s,.025);assert.equal(s.profile.gold,16);assert.equal(s.profile.pendingGold,0);assert.equal(s.run.materials,owed);assert.equal(materialTotal(s.profile.materials),owed);assert.deepEqual(s.run.materialLedger,Object.fromEntries(Object.entries(s.profile.materials).filter(([,n])=>n)));assert.equal(materialTotal(s.profile.pendingMaterials),0);advance(s,.1);assert.equal(s.profile.gold,16);
 });
 test('reservation changes save a bounded once-only recovery budget without needing floor coordinates',()=>{
  const s=arena();kill(s);const pending=structuredClone(s.profile.pendingMaterials),gold=s.profile.pendingGold,revision=s.run.resourceRevision;assert.ok(revision>0);const restored=g.restoreProfile(g.encodeProfile(s.profile,1000),1000);
