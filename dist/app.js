@@ -1278,7 +1278,7 @@ function refreshFarmCamp(){
   mapButton.setAttribute('aria-pressed',String(m.id===selectedDifficulty));$('map-mode-status-'+m.id).textContent=available?'완료 '+game.completedStages(profile,selectedStage,m.id)+'/10':locked;
  }
  {const record=selectedDifficulty===2?profile.nightmareRecords[selectedStage-1]:0;$('map-difficulty-note').textContent=mode.name+' · '+selectedRunStage+'스테이지 선택 · '+(selectedDifficulty===2?'경험치 없음 · '+(record?'보스 기록 '+record+'초':'보스 기록 없음'):'난이도를 바꾸면 1단계부터 시작해. 공략 기록은 난이도별로 저장돼.');}
- {const k=game.modeScale(selectedStage,selectedDifficulty);$('replay-info').textContent=mode.name+(selectedDifficulty?' · 일반 '+k.chapter+'장 강도':'')+' · 보스 체력 '+timesText(k.hp)+' / 피해 '+timesText(k.damage)+' · 보스 골드 '+timesText(k.reward)+' · 추가 장비당 고대 '+mode.ancientChance.toFixed(2)+'%'+(mode.shots?' · 탄막 +'+mode.shots+'발 · 패턴 순환 변경':'');}
+ {const k=game.modeScale(selectedStage,selectedDifficulty);$('replay-info').textContent=mode.name+(selectedDifficulty?' · 일반 '+Math.round(k.chapter)+'장 강도':'')+' · 보스 체력 '+timesText(k.hp)+' / 피해 '+timesText(k.damage)+' · 보스 골드 '+timesText(k.reward)+' · 추가 장비당 고대 '+mode.ancientChance.toFixed(2)+'%'+(mode.shots?' · 탄막 +'+mode.shots+'발 · 패턴 순환 변경':'');}
  $('replay-unlock').textContent=game.bossModeAvailable(profile,selectedStage,2)?'악몽 해금 완료 · 원하는 난이도로 재도전할 수 있어.':'일반 60장을 모두 깨면 정예 1장부터, 정예 60장을 모두 깨면 악몽 1장부터 하나씩 열려.';
 }
 // Fit whole cards to the gallery instead of scrolling: columns come from the CSS grid, rows from the free height.

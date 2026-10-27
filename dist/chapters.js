@@ -122,10 +122,12 @@ export const THREAT=Object.freeze({hp:Object.freeze({growth:1.012,jump:1.12}),da
 const threat=(id,t)=>Math.round(chapterMultiplier(id)*Math.pow(t.growth,id-1)*Math.pow(t.jump,Math.min(MODE_CHAPTERS/CHAPTERS_PER_THEME-1,Math.floor((id-1)/10)))*1000)/1000;
 export const enemyHpScale=id=>threat(id,THREAT.hp);
 export const enemyDamageScale=id=>threat(id,THREAT.damage);
-// Alpha 0.139 난이도 개편 (사용자 결정): 정예 N장 is fought like chapter 60+N and 악몽 N장 like chapter 120+N — enemy health,
-// damage and boss gold continue the curve; the chapter's land, monsters and bosses stay its own.
-export const MODE_CHAPTERS=60;
-export const modeChapter=(id,difficulty=0)=>id+MODE_CHAPTERS*Math.max(0,difficulty|0);
+// Alpha 0.139 난이도 개편 (사용자 결정): 정예/악몽 continue the curve past chapter 60 at MODE_STEP chapters per chapter —
+// 정예 N장 is fought like chapter 60+N/2 (정예 60장 = chapter 90, ×2.1 health of chapter 60) and 악몽 N장 like 90+N/2
+// (악몽 60장 = chapter 120, ×3.9). Enemy health, damage and boss gold follow; land, monsters and bosses stay the chapter's own.
+// MODE_STEP 1 (chapter 60+N / 120+N) walled the endgame simulation at 정예 26~45장 (tools/reports/alpha0139-difficulty-endgame.txt).
+export const MODE_CHAPTERS=60,MODE_STEP=.5;
+export const modeChapter=(id,difficulty=0)=>{const d=Math.max(0,difficulty|0);return d?MODE_CHAPTERS+((d-1)*MODE_CHAPTERS+id)*MODE_STEP:id;};
 export function modeScale(id,difficulty=0){if(!difficulty)return {hp:1,damage:1,reward:1,chapter:id};const v=modeChapter(id,difficulty);
  return {hp:enemyHpScale(v)/enemyHpScale(id),damage:enemyDamageScale(v)/enemyDamageScale(id),reward:chapterMultiplier(v)/chapterMultiplier(id),chapter:v};}
 // Each chapter takes two species per role from its biome pool (pairs rotate by chapter,
