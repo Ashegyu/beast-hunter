@@ -1,0 +1,29 @@
+{
+  "id": "stat-2",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production UI stat emblem icons for a dark fantasy 2D action RPG growth screen. Image1 is the existing skill-tree icon atlas of this game: match its painterly dark-metal style, glowing accents, dark outlines and readability at small size; never copy its icons. Create ONE transparent RGBA square image with exactly FIVE separate round emblem medallions in an invisible 3 columns x 2 rows grid, row 1 cells 1-3, row 2 cells 4-5, and the sixth cell (bottom-right) left completely EMPTY. Each emblem is a circular dark iron medallion with an ornate rim and ONE clear symbol in the middle, centered in its own cell with wide transparent margins, never touching each other or the canvas edge, filling about 60% of its cell. Actual alpha transparency, no background, no text, no letters, no numbers, no characters. EMBLEMS: (1) a winged boot with green wind swirl (MOVE SPEED), (2) a radiant violet-gold sword surrounded by a halo of stars (TRANSCENDENT MIGHT), (3) a glowing white-gold heart with a crown of light (TRANSCENDENT LIFE), (4) a horned demon skull pierced by a golden spear (BOSS SLAYER), (5) a swirling cyan sword-aura vortex with rune ring (TRANSCENDENT SWORD ARTS)",
+  "referenceImages": [
+    {
+      "path": "dist/assets/growth-tree-v0139.webp",
+      "sha256": "852ab4b5282d6b3923d297193afa0232d5c160fde593753b5ff8c90088a703d8"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1536,
+        1024
+      ],
+      "transparent": 0.509,
+      "parts": 5,
+      "seconds": 59,
+      "sha256": "b211f15cb1ad657a0e72fd0abe20d5d6fcb0ab599955357fbcf5a58eb2310b65"
+    }
+  ],
+  "final": {
+    "path": "art/growth0141/stat-2.png",
+    "sha256": "b211f15cb1ad657a0e72fd0abe20d5d6fcb0ab599955357fbcf5a58eb2310b65"
+  }
+}

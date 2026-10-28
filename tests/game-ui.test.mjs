@@ -1936,3 +1936,12 @@ test('Alpha 0.141 dungeon controls are buttons: level pager, preset grid and rai
  ui.emit('dungeon-mode-raid','click');assert.match(ui.nodes.get('camp-dungeons-panel').attributes['data-dungeon'],/^raid-/);assert.equal(ui.nodes.get('raid-tier-pick-0').attributes['aria-pressed'],'true');assert.equal(ui.nodes.get('raid-tier-pick-1').disabled,true);
  ui.emit('dungeon-mode-rush','click');assert.equal(ui.nodes.get('camp-dungeons-panel').attributes['data-dungeon'],'rush');
 });
+test('Alpha 0.141 growth screen: stat rows train with the ＋ button, the tree zooms and saves/loads tree presets',async()=>{
+ const p=bagFixture();p.level=40;const ui=await host({saved:p});ui.emit('hub-growth','click');
+ ui.emit('train-power','click');assert.equal(ui.profile().training.power,1);assert.equal(ui.nodes.get('train-power-rank').textContent,'1');assert.match(ui.nodes.get('train-power-gauge').style.width,/%$/);
+ ui.emit('growth-tab-tree','click');assert.equal(ui.nodes.get('tree-zoom-level').textContent,'100%');assert.equal(ui.nodes.get('tree-zoom-out').disabled,true);ui.emit('tree-zoom-in','click');assert.equal(ui.nodes.get('tree-zoom-level').textContent,'135%');assert.match(ui.nodes.get('tree-web').style.transform,/scale\(1\.35/);ui.emit('tree-zoom-reset','click');assert.equal(ui.nodes.get('tree-zoom-level').textContent,'100%');
+ for(const id of ['blade-r','blade-1']){ui.emit('tree-node-'+id,'click');ui.emit('tree-learn','click');}const saved=[...ui.profile().growthTree];assert.equal(ui.nodes.get('tree-preset-load').disabled,true);
+ ui.emit('tree-preset-save','click');assert.deepEqual(ui.profile().treePresets[0].tree,saved);assert.equal(ui.nodes.get('tree-preset-0').attributes['data-saved'],'true');
+ ui.emit('growth-reset','click');ui.emit('growth-reset','click');assert.deepEqual(ui.profile().growthTree,[]);ui.emit('tree-preset-load','click');assert.deepEqual(ui.profile().growthTree,saved);
+ ui.emit('tree-preset-save','click');assert.match(ui.nodes.get('growth-feedback').textContent,/덮어쓰/);ui.emit('tree-preset-1','click');assert.equal(ui.nodes.get('tree-preset-load').disabled,true);
+});

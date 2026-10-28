@@ -697,3 +697,53 @@
 #game-shell#game-shell .raid-tier-grid button:disabled{opacity:.35}
 #game-shell#game-shell .raid-tier-grid button[aria-pressed=true]{border-color:#f2c97a!important;background:linear-gradient(180deg,#8a2a2c,#3a1418)!important;color:#ffe9c4!important;box-shadow:0 0 8px #e0a04a55!important;font-weight:700}
 #game-shell #camp-dungeons-panel:not([data-mode=growth]) .dungeon-level-word{display:none}
+/* Alpha 0.141 성장 트리 도구: 왼쪽 위 프리셋 5칸(저장·불러오기), 오른쪽 위 확대(−·배율·＋·전체), 확대하면 끌어서 이동 */
+#game-shell #growth-tree{position:relative;overflow:hidden}
+#game-shell .tree-tools{position:absolute;z-index:5;top:4px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:center;gap:8px;pointer-events:none}
+#game-shell .tree-tools>div{display:flex;align-items:center;gap:3px;padding:3px 5px;border:1px solid #9e835355;border-radius:7px;background:#0b0f14d9;box-shadow:0 2px 8px #0008;pointer-events:auto}
+#game-shell .tree-tools small{font-size:10px;color:#aeb4af;margin-right:2px}
+#game-shell#game-shell .tree-tools button{min-height:0!important;height:22px!important;min-width:22px;padding:0 6px!important;border:1px solid #9e835366!important;border-radius:5px!important;background:#160f12!important;background-image:none!important;color:#e6dccb!important;font-size:11px!important;line-height:1!important;box-shadow:none!important}
+#game-shell#game-shell .tree-tools button:disabled{opacity:.35}
+#game-shell#game-shell .tree-presets button[data-saved=false]{color:#7d8580!important;border-style:dashed!important}
+#game-shell#game-shell .tree-presets button[data-current=true]{color:#9fe0a5!important}
+#game-shell#game-shell .tree-presets button[aria-pressed=true]{border-color:#f2c97a!important;background:linear-gradient(180deg,#8a2a2c,#3a1418)!important;color:#ffe9c4!important;box-shadow:0 0 8px #e0a04a55!important}
+#game-shell#game-shell .tree-presets #tree-preset-save{border-color:#c98d3c!important;color:#ffd99a!important}
+#game-shell .tree-zoom b{min-width:38px;text-align:center;font-size:10px;color:#ffe7c2}
+#game-shell .tree-web{transform-origin:50% 50%;transition:transform .12s ease-out;touch-action:none;will-change:transform}
+#game-shell .tree-web[data-zoomed=true]{cursor:grab}
+#game-shell .tree-web[data-zoomed=true] .tree-regions{opacity:0}
+@media(max-height:360px){#game-shell#game-shell .tree-tools button{height:19px!important;min-width:19px;font-size:10px!important}}
+#game-shell #growth-tree .tree-detail{position:relative;z-index:6;background:#0b0f14f2!important}
+/* Alpha 0.141 능력치 단련·초월 새 디자인(사용자 요청 '버튼 모양 말고'): 큰 버튼 대신 문장 아이콘 + 이름·효과 + 효율 구간 게이지
+   + 단계 숫자 + 작은 둥근 ＋ 버튼. 아이콘은 growth-stats-v0141(5×2, 128px 칸, data-stat 순서). */
+#game-shell #growth-training,#game-shell #growth-transcend{gap:6px 10px!important;align-content:stretch}
+#game-shell .stat-row{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;align-items:center;gap:10px;min-width:0;min-height:0;padding:6px 10px 6px 6px;border:0;border-bottom:1px solid #9e835333;border-radius:0;background:linear-gradient(90deg,#1a1216cc 0%,#0e1216a0 55%,#0e121600 100%)}
+#game-shell .stat-row::before{content:'';position:absolute;left:0;top:18%;bottom:18%;width:2px;border-radius:2px;background:#c98d3c88}
+#game-shell .stat-emblem{width:44px;height:44px;flex:none;background:url('assets/growth-stats-v0141.webp') no-repeat;background-size:500% 200%;filter:drop-shadow(0 2px 4px #000c)}
+#game-shell .stat-row[data-stat=power] .stat-emblem{background-position:0 0}
+#game-shell .stat-row[data-stat=vitality] .stat-emblem{background-position:25% 0}
+#game-shell .stat-row[data-stat=guard] .stat-emblem{background-position:50% 0}
+#game-shell .stat-row[data-stat=precision] .stat-emblem{background-position:75% 0}
+#game-shell .stat-row[data-stat=tempo] .stat-emblem{background-position:100% 0}
+#game-shell .stat-row[data-stat=stride] .stat-emblem{background-position:0 100%}
+#game-shell .stat-row[data-stat=might] .stat-emblem{background-position:25% 100%}
+#game-shell .stat-row[data-stat=life] .stat-emblem{background-position:50% 100%}
+#game-shell .stat-row[data-stat=slayer] .stat-emblem{background-position:75% 100%}
+#game-shell .stat-row[data-stat=arts] .stat-emblem{background-position:100% 100%}
+#game-shell .stat-text{display:grid;gap:3px;min-width:0}
+#game-shell .stat-text strong{font-size:13px;line-height:1.2;color:#f3e3c3;letter-spacing:.3px}
+#game-shell .stat-text small{font-size:10.5px;line-height:1.25;color:#b9bfb7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#game-shell .stat-gauge{position:relative;display:block;height:4px;border-radius:3px;background:#ffffff14;overflow:hidden}
+#game-shell .stat-gauge i{position:absolute;inset:0 auto 0 0;width:0;border-radius:3px;background:linear-gradient(90deg,#c98d3c,#f6d58f);box-shadow:0 0 6px #f2c97a88;transition:width .2s}
+#game-shell .stat-gauge[data-tier="1"] i{background:linear-gradient(90deg,#b0582e,#f0a060)}
+#game-shell .stat-gauge[data-tier="2"] i{background:linear-gradient(90deg,#6f6a8a,#b9b0e0);box-shadow:none}
+#game-shell .stat-rank{min-width:30px;text-align:right;font:700 20px/1 var(--serif,serif);color:#ffe3a8;text-shadow:0 0 8px #e0a04a55}
+#game-shell#game-shell .stat-plus{flex:none;width:30px!important;height:30px!important;min-height:0!important;padding:0!important;border:1px solid #f2c97a!important;border-radius:50%!important;background:radial-gradient(circle at 50% 35%,#a8382f,#4a1418)!important;background-image:radial-gradient(circle at 50% 35%,#a8382f,#4a1418)!important;color:#ffe9c4!important;font-size:17px!important;line-height:1!important;box-shadow:0 0 0 2px #2a1408,0 0 10px #e0a04a55!important}
+#game-shell#game-shell .stat-plus:disabled{border-color:#6d5c45!important;background:#1b1618!important;background-image:none!important;color:#6d6660!important;box-shadow:none!important}
+#game-shell#game-shell .stat-plus::before,#game-shell#game-shell .stat-plus::after{display:none!important}
+#game-shell .transcend-head{grid-column:1/-1;display:grid;gap:4px}
+#game-shell .transcend-xp{height:5px}
+#game-shell .transcend-xp i{background:linear-gradient(90deg,#7a4fd0,#f6d58f)}
+@media(max-height:360px){#game-shell .stat-emblem{width:34px;height:34px}#game-shell .stat-text strong{font-size:12px}#game-shell .stat-rank{font-size:16px}#game-shell#game-shell .stat-plus{width:26px!important;height:26px!important}}
+/* 좁은 화면(폭 700 이하): 성장 소개 그림·요약 칸을 접고 단련·초월 판을 화면 전체 폭으로 */
+@media(max-width:700px){#game-shell #camp-growth-panel{grid-template-columns:minmax(0,1fr)!important}#game-shell #camp-growth-panel>:is(.growth-hero,.growth-progress){display:none!important}#game-shell #camp-growth-panel>#growth-board{grid-column:1/-1!important;width:auto!important}}

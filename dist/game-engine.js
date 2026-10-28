@@ -130,7 +130,7 @@ export function growthXp(profile,value){
  return Math.min(Number.MAX_SAFE_INTEGER,awarded+remaining);
 }
 export function createProfile(now=Date.now()){
-  return {version:PROFILE_VERSION,dungeonProgress:emptyDungeonProgress(),raids:emptyRaidProgress(),bossRush:rush.emptyRushProgress(),beastSkills:{},battleSerial:0,settledBattleIds:[],activeBattle:null,lastInterruptedBattle:null,selectedBuild:null,characterId:'lirian',equipmentRng:246813579,difficultyProgress:[STAGES.map(()=>0),STAGES.map(()=>0)],nightmareRecords:STAGES.map(()=>0),skillBook:skills.restoreSkillBook(null,1),favoriteItemIds:[],savedBuilds:[null,null,null,null,null],targetCraftId:null,craftTrackerVisible:true,materials:emptyMaterials(),tower:{best:0},dungeonWeek:emptyDungeonWeek(),transcendXp:0,transcendence:transcend.emptyTranscendence(),discoveredAncients:[],targetAncientId:null,bossMastery:STAGES.map(()=>-1),lootPity:0,legendaryPity:0,pendingGold:0,pendingMaterials:emptyMaterials(),pendingLoot:[],stageProgress:STAGES.map(()=>0),stageStars:stars.emptyStageStars(STAGES.length),starChests:stars.emptyStageStars(STAGES.length),gold:0,cores:0,level:1,xp:0,training:growth.emptyTraining(),growthTree:[],unlockedStage:1,clearedStage:0,totalKills:0,hunts:0,lastSeenAt:number(now),inventory:[],equipment:emptyEquipment(),nextItemId:1};
+  return {version:PROFILE_VERSION,dungeonProgress:emptyDungeonProgress(),raids:emptyRaidProgress(),bossRush:rush.emptyRushProgress(),beastSkills:{},battleSerial:0,settledBattleIds:[],activeBattle:null,lastInterruptedBattle:null,selectedBuild:null,characterId:'lirian',equipmentRng:246813579,difficultyProgress:[STAGES.map(()=>0),STAGES.map(()=>0)],nightmareRecords:STAGES.map(()=>0),skillBook:skills.restoreSkillBook(null,1),favoriteItemIds:[],savedBuilds:[null,null,null,null,null],targetCraftId:null,craftTrackerVisible:true,materials:emptyMaterials(),treePresets:[null,null,null,null,null],tower:{best:0},dungeonWeek:emptyDungeonWeek(),transcendXp:0,transcendence:transcend.emptyTranscendence(),discoveredAncients:[],targetAncientId:null,bossMastery:STAGES.map(()=>-1),lootPity:0,legendaryPity:0,pendingGold:0,pendingMaterials:emptyMaterials(),pendingLoot:[],stageProgress:STAGES.map(()=>0),stageStars:stars.emptyStageStars(STAGES.length),starChests:stars.emptyStageStars(STAGES.length),gold:0,cores:0,level:1,xp:0,training:growth.emptyTraining(),growthTree:[],unlockedStage:1,clearedStage:0,totalKills:0,hunts:0,lastSeenAt:number(now),inventory:[],equipment:emptyEquipment(),nextItemId:1};
 }
 const EQUIPMENT_DEFINITIONS=new Map([...ITEM_CATALOG,...ANCIENT_CATALOG,...CRAFTED_CATALOG].map(row=>[row.id,row]));
 function cleanItem(item,version){
@@ -200,6 +200,8 @@ export function restoreProfile(raw,now=Date.now()){
   // Alpha 0.141 초월: only a Lv.200 profile keeps 초월 경험치; ranks never exceed the points it gives.
   p.transcendXp=p.level>=MAX_LEVEL?integer(data.transcendXp,0,transcend.TRANSCEND_XP_LIMIT):0;p.transcendence=transcend.cleanTranscendence(data.transcendence,transcend.transcendLevel(p.transcendXp));
   p.training=growth.cleanTraining(data.training,p.level);p.growthTree=growth.fitTree(p,data.growthTree);
+  // Alpha 0.141 트리 프리셋: five tree-only slots (a node list that stays connected to the core; points are checked on load).
+  p.treePresets=Array.from({length:TREE_PRESETS},(_,n)=>{const r=data.treePresets?.[n];if(!r||typeof r!=='object')return null;const tree=growth.cleanTree(r.tree);return {name:typeof r.name==='string'&&r.name.trim()?r.name.trim().slice(0,12):'트리 '+(n+1),tree};});
   p.totalKills=integer(data.totalKills,0,1e9);p.hunts=integer(data.hunts,0,1e7);p.lastSeenAt=clamp(number(data.lastSeenAt,now),0,number(now));
   const seen=new Set();for(const rawItem of (Array.isArray(data.inventory)?data.inventory:[])){const item=cleanItem(rawItem,data.version);if(item&&!seen.has(item.id)&&p.inventory.length<INVENTORY_LIMIT){p.inventory.push(item);seen.add(item.id);}}
   p.equipment=restoreEquipment(data.equipment,p.inventory,p.characterId);
@@ -257,6 +259,13 @@ export function saveBuild(s,n,name){
  if(!buildIndex(n)||s.phase!=='camp')return false;
  s.profile.savedBuilds[n]={name:String(name??'').trim().slice(0,24)||BUILD_NAMES[n],equipment:{...s.profile.equipment},skill:skillSelection(s.profile.skillBook),tree:[...s.profile.growthTree]};s.profile.selectedBuild=n;return true;
 }
+// Alpha 0.141 성장 트리 프리셋 (사용자 요청): save the current tree into slot n, or load slot n (fitTree trims it to the
+// tree points like a build does). Camp only; independent of the equipment/skill builds, which keep their own tree too.
+export const TREE_PRESETS=5;
+const treePresetIndex=n=>Number.isInteger(n)&&n>=0&&n<TREE_PRESETS;
+export function saveTreePreset(s,n,name){if(!treePresetIndex(n)||s.phase!=='camp')return false;s.profile.treePresets??=Array(TREE_PRESETS).fill(null);s.profile.treePresets[n]={name:String(name??'').trim().slice(0,12)||s.profile.treePresets[n]?.name||'트리 '+(n+1),tree:[...s.profile.growthTree]};return true;}
+export function loadTreePreset(s,n){const preset=treePresetIndex(n)?s.profile.treePresets?.[n]:null;if(!preset||s.phase!=='camp')return {ok:false,reason:preset?'트리는 거점에서만 바꿀 수 있어.':'저장된 트리가 없어.'};const tree=growth.fitTree(s.profile,preset.tree);s.profile.growthTree=tree;refreshStats(s,true);return {ok:true,trimmed:tree.length<preset.tree.length,reason:tree.length<preset.tree.length?'트리 포인트가 모자라 바깥 노드 '+(preset.tree.length-tree.length)+'개를 빼고 불러왔어.':preset.name+' 불러오기 완료'};}
+export function deleteTreePreset(s,n){if(!treePresetIndex(n)||s.phase!=='camp'||!s.profile.treePresets?.[n])return false;s.profile.treePresets[n]=null;return true;}
 export function deleteBuild(s,n){if(!buildIndex(n)||s.phase!=='camp')return false;s.profile.savedBuilds[n]=null;if(s.profile.selectedBuild===n)s.profile.selectedBuild=null;return true;}
 export function applyBuild(s,n){
  if(s.phase!=='camp')return {ok:false,reason:'빌드 교체는 캠프에서만 가능해.'};
