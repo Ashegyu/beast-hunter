@@ -4,8 +4,8 @@ import * as g from '../dist/game-engine.js';
 import {freezeCombat} from './combat-fixture.mjs';
 
 // Alpha 0.126 스킬 갈래 → 0.142 단계 갈래: three branches per tier, a tier per 5 skill levels (ultimates 4 tiers), one used per tier.
-// The fixture raises every active·passive skill to Lv.5 so the first tier counts (ultimates rank with the level).
-function profile(level=150){const p=g.createProfile(1000);p.level=level;p.unlockedStage=60;p.clearedStage=59;p.skillBook=g.restoreSkillBook(null,level);for(const d of g.SKILL_CATALOG)if((d.kind==='active'||d.kind==='passive')&&d.unlock<=level)p.skillBook.ranks[d.id]=4;p.materials.skillPage=100;p.gold=1e6;return p;}
+// The fixture raises every active·passive·ultimate skill to Lv.5 so the first tier counts (ultimates use points too since 0.142).
+function profile(level=150){const p=g.createProfile(1000);p.level=level;p.unlockedStage=60;p.clearedStage=59;p.skillBook=g.restoreSkillBook(null,level);for(const d of g.SKILL_CATALOG)if(d.kind!=='beast'&&d.unlock<=level)p.skillBook.ranks[d.id]=4;p.materials.skillPage=100;p.gold=1e6;return p;}
 const own=(p,id,i)=>{p.skillBook.branchOwned[id]=(p.skillBook.branchOwned[id]??0)|(1<<i);p.skillBook.branchPick[id]=i;return p;};
 
 test('every active, passive and ultimate has three distinct branches per tier; 괴수 기술 have none',()=>{

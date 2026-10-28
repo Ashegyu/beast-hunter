@@ -9,8 +9,9 @@ test('skill levels: actives and passives reach 15, ultimates 20; ranks past 5 gr
  const gates=Array.from({length:15},(_,i)=>g.skillLevelGate('crescent',i+1));for(let i=1;i<gates.length;i++)assert.ok(gates[i]>=gates[i-1]);assert.ok(gates[14]<=150);
  const s=camp(200),p=s.profile;let n=0;while(g.upgradeSkill(s,'crescent'))n++;assert.equal(n,14);assert.equal(g.skillRank(p,'crescent'),15);assert.equal(g.upgradeSkill(s,'crescent'),false);
  const d=g.SKILL_BY_ID.crescent;assert.equal(g.skillValue(p,'crescent'),d.damage+d.step*9);
- assert.equal(g.skillRank(p,'bloodmoon'),20);assert.equal(g.skillLevelGate('bloodmoon',20),198);const young=camp(100).profile;assert.ok(g.skillRank(young,'bloodmoon')<20);
- const restored=g.restoreProfile(g.encodeProfile(p,1000),1000);assert.equal(restored.skillBook.ranks.crescent,14,'rank 15 survives a save');
+ assert.equal(g.skillRank(p,'bloodmoon'),1,'ultimates start at Lv.1 and take points');let u=0;while(g.upgradeSkill(s,'bloodmoon'))u++;assert.equal(u,19);assert.equal(g.skillRank(p,'bloodmoon'),20);assert.equal(g.skillLevelGate('bloodmoon',20),198);
+ const young=camp(100);while(g.upgradeSkill(young,'bloodmoon'));assert.ok(g.skillRank(young.profile,'bloodmoon')<20);assert.ok(g.skillPoints(young.profile)>0,'the level gate, not points, stops it');
+ const restored=g.restoreProfile(g.encodeProfile(p,1000),1000);assert.equal(restored.skillBook.ranks.crescent,14,'rank 15 survives a save');assert.equal(g.skillRank(restored,'bloodmoon'),20);
 });
 
 test('a tier opens at its skill level, picks of all tiers add up, and a lowered skill loses the upper tiers',()=>{
@@ -24,7 +25,7 @@ test('a tier opens at its skill level, picks of all tiers add up, and a lowered 
  g.chooseSkillBranch(s,'crescent',0,1);assert.equal(g.skillBranchIndex(p,'crescent',1),-1,'tapping the branch in use turns its tier off');assert.equal(g.activeBranches(p,'crescent').length,2);
  g.chooseSkillBranch(s,'crescent',0,1);p.skillBook.ranks.crescent=8;assert.equal(g.activeBranches(p,'crescent').length,1,'Lv.9 keeps only the Lv.5 tier');
  // Ultimates: four tiers, the last at Lv.20.
- assert.equal(g.branchTierCount('bloodmoon'),4);assert.equal(g.unlockSkillBranch(s,'bloodmoon',0,3),true);assert.ok(g.branchMods(p,'bloodmoon').damage>=1.3);
+ assert.equal(g.branchTierCount('bloodmoon'),4);while(g.upgradeSkill(s,'bloodmoon'));assert.equal(g.unlockSkillBranch(s,'bloodmoon',0,3),true);assert.ok(g.branchMods(p,'bloodmoon').damage>=1.3);
  const young=camp(150);assert.equal(g.branchStatus(young.profile,'bloodmoon',0,3),'스킬 Lv.20 필요');
 });
 

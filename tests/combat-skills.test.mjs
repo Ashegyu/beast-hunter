@@ -47,7 +47,7 @@ test('last stand respects internal cooldown and parry excludes area explosion wi
 });
 test('ultimate level gates and 60 second cooldown cannot be bypassed',()=>{
  const p=profile(19),s=g.createGame(p);p.skillBook.loadout.ultimate=['bloodmoon'];g.launch(s);assert.equal(g.useSkill(s,'bloodmoon'),false);
- const f=fixture('eclipse');assert.ok(g.skillReady(f.s,'eclipse'));assert.ok(g.useSkill(f.s,'eclipse',{x:0,y:1}));assert.equal(f.s.skillRuntime.cooldowns.eclipse,60);assert.equal(g.useSkill(f.s,'eclipse'),false);for(const id of ['bloodmoon','eclipse','phantoms'])assert.equal(g.skillRank(profile(),id),5);
+ const f=fixture('eclipse');assert.ok(g.skillReady(f.s,'eclipse'));assert.ok(g.useSkill(f.s,'eclipse',{x:0,y:1}));assert.equal(f.s.skillRuntime.cooldowns.eclipse,60);assert.equal(g.useSkill(f.s,'eclipse'),false);for(const id of ['bloodmoon','eclipse','phantoms'])assert.equal(g.skillRank(profile(),id),1,'ultimates take skill points since 0.142');
 });
 
 test('passive timing, combo preparation, reduction cap and kill cooldown do not recursively amplify',()=>{

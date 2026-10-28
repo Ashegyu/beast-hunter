@@ -1294,17 +1294,180 @@
 #game-shell#game-shell .battle .top-hud .mission.hunt-status{grid-template-rows:13px minmax(0,1fr)!important;height:48px!important;min-height:48px!important;max-height:48px!important;width:204px!important;row-gap:1px!important;padding-top:3px!important}
 #game-shell#game-shell .battle .top-hud #hunt-stage{grid-column:1/-1;grid-row:1;align-self:center;font-size:10.5px!important;line-height:13px!important;text-align:center;color:#e8d6b0!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 /* Alpha 0.142 스킬 단계 갈래(사용자 요청): 갈래 보기 위에 단계 탭(Lv.5·10·15·20), 그 아래 그 단계의 갈래 3칸. */
-#game-shell #camp-skills-panel .skill-branch-tiers{display:flex;gap:4px;flex:none}
-#game-shell#game-shell #camp-skills-panel .skill-branch-tiers button{flex:1 1 0;min-width:0;height:24px!important;min-height:0!important;margin:0!important;padding:0 4px!important;border:1px solid #9e835366!important;border-radius:4px!important;background:#151a20!important;background-image:none!important;box-shadow:none!important;color:#a99a7c!important;font-size:10.5px!important;line-height:22px!important;position:relative}
-#game-shell#game-shell #camp-skills-panel .skill-branch-tiers button::before,#game-shell#game-shell #camp-skills-panel .skill-branch-tiers button::after{display:none!important}
-#game-shell#game-shell #camp-skills-panel .skill-branch-tiers button[hidden]{display:none!important}
-#game-shell#game-shell #camp-skills-panel .skill-branch-tiers button[data-open=true]{color:#e6dccb!important}
-#game-shell#game-shell #camp-skills-panel .skill-branch-tiers button[data-picked=true]{border-color:#c79a52!important}
-#game-shell#game-shell #camp-skills-panel .skill-branch-tiers button[aria-selected=true]{border-color:#ffd58a!important;background:linear-gradient(#6d1f2a,#35121b)!important;color:#ffe9c4!important}
-/* 0.142 스킬 갈래 3단: 카드는 이름·효과 각 한 줄, 설명은 높이가 될 때만, 안내는 한 줄 */
-#game-shell#game-shell #camp-skills-panel .skill-branch-tiers button{height:20px!important;line-height:18px!important}
-#game-shell #camp-skills-panel .skill-branches{gap:4px}
-#game-shell #camp-skills-panel .skill-branches>button{gap:1px;padding:2px 7px;line-height:1.2}
-#game-shell #camp-skills-panel .skill-branches>button>:is(b,small,.skill-branch-text){display:block;flex:none;white-space:nowrap;-webkit-line-clamp:unset}
-#game-shell #camp-skills-panel .skill-branch-note{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-@media(max-height:360px){#game-shell #camp-skills-panel .skill-branches>button>.skill-branch-text{display:none}#game-shell #camp-skills-panel .skill-branches>button{padding:2px 5px}#game-shell #camp-skills-panel .skill-branches>button>b{font-size:10px;letter-spacing:-.2px}#game-shell #camp-skills-panel .skill-branches>button>small{font-size:9.5px}}
+
+/* Alpha 0.142 스킬 화면 새 디자인(사용자 요청 '스킬 UI 디자인·레이아웃·스타일 다 바꿔, 접고 펴기·검술서 연구 없애고 빌드 저장 간편하게').
+   옛 스킬 CSS(skills*.css·landscape·common-ui-v2·이 파일 앞쪽)가 id·클래스로 수백 줄 걸려 있어서, 새 판 #skill-board 안은 all:revert로 한 번 지우고
+   여기서만 그린다. 짜임: [종류 탭 줄(전체·일반·패시브·궁극기·괴수 기술·자동 설정)] / [왼쪽 장착 9칸 + 빌드 3칸 | 가운데 스킬 3×3 + 넘김 | 오른쪽 상세(정보·수치·갈래) + 강화·장착]. */
+#game-shell#game-shell#game-shell #camp-skills-panel:not([hidden]){display:block!important;padding:0!important;overflow:hidden!important;background:none!important;border:0!important;box-shadow:none!important}
+#game-shell#game-shell#game-shell #camp-skills-panel::before,#game-shell#game-shell#game-shell #camp-skills-panel::after{display:none!important}
+#game-shell#game-shell#game-shell#game-shell #skill-board *,#game-shell#game-shell#game-shell#game-shell #skill-board *::before,#game-shell#game-shell#game-shell#game-shell #skill-board *::after{all:revert!important}
+#game-shell#game-shell#game-shell#game-shell #skill-board{all:revert!important;display:grid!important;box-sizing:border-box!important;width:100%!important;height:100%!important;grid-template-columns:minmax(0,.92fr) minmax(0,1.04fr) minmax(0,1.2fr)!important;grid-template-rows:28px minmax(0,1fr)!important;gap:7px 8px!important;padding:6px 12px 8px!important;color:#e6dccb!important;font-size:11px!important;line-height:1.3!important;word-break:keep-all!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board *{box-sizing:border-box!important;min-width:0!important;margin:0!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board button{font:inherit!important;color:inherit!important;cursor:pointer!important;border:0!important;background:none!important;padding:0!important;text-align:inherit!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board button:disabled{cursor:default!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board img{display:block!important}
+/* 패널 공통: 어두운 판 + 금빛 가는 테두리 */
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board :is(.sb-side,.sb-lib,.sb-detail){position:relative!important;display:flex!important;flex-direction:column!important;gap:5px!important;min-height:0!important;padding:7px!important;border:1px solid #9e835366!important;border-radius:8px!important;background:linear-gradient(180deg,#141b22f2,#0b1016f2)!important;box-shadow:inset 0 1px 0 #ffffff0a,0 4px 14px #0008!important;overflow:hidden!important}
+/* 종류 탭 */
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-tabs{grid-column:1/-1!important;display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:5px!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-tab{display:flex!important;align-items:center!important;justify-content:center!important;height:28px!important;border:1px solid #9e835355!important;border-radius:6px!important;background:linear-gradient(180deg,#151a20f0,#0b0f14f0)!important;color:#c9bda6!important;font-size:11.5px!important;font-weight:600!important;white-space:nowrap!important;overflow:hidden!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-tab[aria-pressed=true]{border-color:#f2c97a!important;background:linear-gradient(180deg,#7a2a26,#3c1216)!important;color:#ffe9c4!important;box-shadow:0 0 0 1px #2a1408,0 0 10px #e0a04a55!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board #skill-tab-settings{color:#9fc3c9!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board #skill-tab-settings[aria-pressed=true]{color:#ffe9c4!important}
+/* 왼쪽: 장착 */
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-who{display:flex!important;align-items:baseline!important;justify-content:space-between!important;gap:6px!important;flex:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-who b{font-weight:700!important;font-size:12px!important;color:#f0dcb0!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board #skill-budget{font-size:10px!important;color:#ffd58a!important;white-space:nowrap!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board :is(.sb-next,.sb-feedback){flex:none!important;font-size:9.5px!important;line-height:1.25!important;color:#a99a7c!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-feedback{color:#ffd58a!important;white-space:normal!important;display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-feedback:empty{display:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-side:has(.sb-feedback:not(:empty)) .sb-next{display:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-slots{flex:1 1 auto!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-template-rows:repeat(3,minmax(0,1fr))!important;gap:4px!important;min-height:0!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-slot{position:relative!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:1px!important;min-height:0!important;padding:3px 2px!important;border:1px solid #9e835340!important;border-radius:6px!important;background:radial-gradient(ellipse at 50% 35%,#1f2a33,#0d1218 75%)!important;overflow:hidden!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-slot::before{content:""!important;position:absolute!important;left:0!important;top:0!important;bottom:0!important;width:3px!important;background:var(--slot-color,#8c7a5a)!important;opacity:.85!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-slot[data-kind=passive]{--slot-color:#5aa0c8}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-slot[data-kind=ultimate]{--slot-color:#e0503c}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-slot[data-kind=beast]{--slot-color:#7fbf6a}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-slot-art{display:grid!important;place-items:center!important;flex:none!important;width:min(30px,48%)!important;aspect-ratio:1!important;border-radius:50%!important;background:#0006!important;box-shadow:inset 0 0 0 1px #9e835355!important;overflow:hidden!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-slot[data-empty=true] .sb-slot-art::after{content:"+"!important;color:#9e835399!important;font-size:15px!important;line-height:1!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-slot-art img{width:100%!important;height:100%!important;object-fit:cover!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-slot-art img[hidden]{display:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-slot small{font-size:8.5px!important;color:#8f8672!important;line-height:1.1!important;white-space:nowrap!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-slot strong{max-width:100%!important;font-size:10px!important;font-weight:600!important;line-height:1.15!important;color:#e6dccb!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-slot[data-empty=true] strong{color:#7d7563!important;font-weight:400!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-slot:disabled{opacity:.45!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-slot:not(:disabled):hover{border-color:#c79a52!important}
+/* 왼쪽 아래: 빌드 3칸 */
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-builds{flex:none!important;display:flex!important;flex-direction:column!important;gap:3px!important;padding-top:5px!important;border-top:1px solid #9e835340!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-builds-head{display:flex!important;align-items:center!important;justify-content:space-between!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-builds-head b{font-size:11px!important;color:#f0dcb0!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board #skill-preset-save{height:18px!important;padding:0 9px!important;border:1px solid #c79a52aa!important;border-radius:9px!important;font-size:9.5px!important;color:#ffe3a8!important;background:#1a1410!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board #skill-preset-save[aria-pressed=true]{background:#6d1f2a!important;border-color:#ffd58a!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-preset-row{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:4px!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-preset{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:1px!important;height:40px!important;padding:2px!important;border:1px dashed #9e835355!important;border-radius:6px!important;background:#0c1116!important;overflow:hidden!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-preset b{font-size:10px!important;font-weight:700!important;color:#d8cdb6!important;line-height:1.1!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-preset-icons{display:flex!important;gap:1px!important;height:13px!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-preset-icons img{width:13px!important;height:13px!important;border-radius:3px!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-preset-icons img[hidden]{display:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-preset small{font-size:8.5px!important;color:#8f8672!important;line-height:1.1!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;max-width:100%!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-preset small:empty{display:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-preset[data-saved=true]{border-style:solid!important;background:linear-gradient(180deg,#1b232b,#10161c)!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-preset[data-current=true]{border-color:#f2c97a!important;box-shadow:0 0 0 1px #2a1408,0 0 8px #e0a04a55!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-preset[data-armed=true]{border-color:#ffd58a!important;border-style:solid!important;background:#3a1418!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-preset[data-armed=true] small{color:#ffd58a!important}
+/* 가운데: 스킬 목록 */
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-grid{flex:1 1 auto!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-template-rows:repeat(3,minmax(0,1fr))!important;gap:5px!important;min-height:0!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-grid[hidden]{display:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-card{position:relative!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:2px!important;min-height:0!important;padding:4px 3px!important;border:1px solid #9e835344!important;border-radius:7px!important;background:radial-gradient(ellipse at 50% 30%,#22303a,#0d1218 78%)!important;overflow:hidden!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-card[hidden]{display:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-card img{flex:0 1 auto!important;width:auto!important;height:min(40px,52%)!important;aspect-ratio:1!important;min-height:18px!important;border-radius:7px!important;box-shadow:0 0 0 1px #00000088,0 2px 6px #000a!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-card strong{max-width:100%!important;font-size:10.5px!important;font-weight:700!important;line-height:1.15!important;color:#efe4cf!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-card small{max-width:100%!important;font-size:9px!important;line-height:1.1!important;color:#ffd58a!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-card[data-locked=true] img{filter:grayscale(.85) brightness(.55)!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-card[data-locked=true] small{color:#8f8672!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-card[aria-pressed=true]{border-color:#f2c97a!important;background:radial-gradient(ellipse at 50% 35%,#6a2a2acc,#1a0e12ee 78%)!important;box-shadow:0 0 0 1px #2a1408,0 0 12px #e0a04a66!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-pager{flex:none!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:10px!important;height:22px!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-pager[hidden]{display:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-pager button{display:grid!important;place-items:center!important;width:30px!important;height:22px!important;border:1px solid #9e835366!important;border-radius:5px!important;background:#151a20!important;color:#f0dcb0!important;font-size:15px!important;line-height:1!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-pager button:disabled{opacity:.35!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board #skill-page-label{font-size:10px!important;color:#a99a7c!important;white-space:nowrap!important}
+/* 가운데: 자동 설정 */
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-settings{flex:1 1 auto!important;display:flex!important;flex-direction:column!important;justify-content:space-between!important;gap:4px!important;min-height:0!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-settings[hidden]{display:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board #skill-awakening-label[hidden]{display:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-set-row{display:flex!important;flex-direction:column!important;gap:2px!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-set-row>span{font-size:10px!important;color:#f0dcb0!important;font-weight:600!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-set-row>span small{font-size:8.5px!important;color:#8f8672!important;font-weight:400!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board :is(.sb-seg,.sb-examples){display:grid!important;grid-auto-flow:column!important;grid-auto-columns:minmax(0,1fr)!important;gap:3px!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-examples{grid-auto-flow:row!important;grid-template-columns:repeat(2,minmax(0,1fr))!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board :is(.sb-seg,.sb-examples) button{display:flex!important;align-items:center!important;justify-content:center!important;height:22px!important;padding:0 3px!important;border:1px solid #9e835355!important;border-radius:5px!important;background:#121820!important;color:#d8cdb6!important;font-size:9.5px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-seg button[aria-pressed=true]{border-color:#f2c97a!important;background:linear-gradient(180deg,#7a2a26,#3c1216)!important;color:#ffe9c4!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-examples button:hover{border-color:#c79a52!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-hidden-select{display:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-reset{flex:none!important;height:22px!important;border:1px solid #6d5c45!important;border-radius:5px!important;background:#0d1116!important;color:#a99a7c!important;font-size:9.5px!important;text-align:center!important}
+/* 오른쪽: 상세 */
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-detail{gap:5px!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-detail-head{flex:none!important;display:flex!important;align-items:center!important;gap:8px!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board #skill-detail-icon{flex:none!important;width:40px!important;height:40px!important;border-radius:8px!important;box-shadow:0 0 0 1px #c79a5288,0 2px 8px #000!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-detail-head div{display:flex!important;flex-direction:column!important;gap:1px!important;min-width:0!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board #skill-detail-kind{align-self:flex-start!important;padding:0 6px!important;border-left:3px solid #e0503c!important;background:#5a1a1acc!important;font-size:9.5px!important;color:#ffd9b0!important;white-space:nowrap!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board #skill-detail-name{font:700 15px/1.2 var(--serif,serif)!important;color:#ffe9c4!important;text-shadow:0 2px 6px #000!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board #skill-detail-unlock{font-size:9.5px!important;color:#a99a7c!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-views{flex:none!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:4px!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-views button{display:flex!important;align-items:center!important;justify-content:center!important;height:22px!important;border:1px solid #9e835355!important;border-radius:5px!important;background:#121820!important;color:#c9bda6!important;font-size:10.5px!important;white-space:nowrap!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-views button[aria-pressed=true]{border-color:#f2c97a!important;background:linear-gradient(180deg,#7a2a26,#3c1216)!important;color:#ffe9c4!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-views button:disabled{opacity:.4!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board :is(.sb-info,.sb-levels,.sb-branches){flex:1 1 auto!important;display:flex!important;flex-direction:column!important;gap:4px!important;min-height:0!important;overflow:hidden!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board :is(.sb-info,.sb-levels,.sb-branches)[hidden]{display:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board #skill-detail-description{font-size:10.5px!important;line-height:1.35!important;color:#d8cdb6!important;display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:4!important;overflow:hidden!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board #skill-detail-resource{font-size:10px!important;color:#9fc3c9!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-effect{padding:4px 7px!important;border:1px solid #c79a5266!important;border-radius:5px!important;background:#1a2430!important;font-size:10.5px!important;line-height:1.3!important;color:#ffe3a8!important;display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:3!important;overflow:hidden!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-levels table{display:table!important;width:100%!important;border-collapse:collapse!important;font-size:9.5px!important;line-height:1.2!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-levels thead{display:table-header-group!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-levels tbody{display:table-row-group!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-levels tr{display:table-row!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-levels tr[hidden]{display:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-levels :is(th,td){display:table-cell!important;padding:2px 4px!important;border-bottom:1px solid #9e835330!important;text-align:left!important;white-space:nowrap!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-levels thead th{color:#8f8672!important;font-weight:400!important;font-size:9px!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-levels tbody th{color:#f0dcb0!important;font-weight:700!important;width:1%!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-levels td:nth-child(2){color:#e6dccb!important;white-space:normal!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-levels td:nth-child(3){color:#a99a7c!important;width:1%!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-levels tr[data-current=true] :is(th,td){background:#6d1f2a88!important;color:#ffe9c4!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board #skill-detail-note{font-size:9px!important;line-height:1.3!important;color:#8f8672!important;display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:3!important;overflow:hidden!important}
+/* 갈래 */
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-tiers{flex:none!important;display:flex!important;gap:4px!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-tiers button{flex:1 1 0!important;height:20px!important;border:1px solid #9e835355!important;border-radius:4px!important;background:#121820!important;color:#7d7563!important;font-size:10px!important;text-align:center!important;white-space:nowrap!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-tiers button[hidden]{display:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-tiers button[data-open=true]{color:#e6dccb!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-tiers button[data-picked=true]{border-color:#c79a52!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-tiers button[aria-selected=true]{border-color:#ffd58a!important;background:linear-gradient(180deg,#7a2a26,#3c1216)!important;color:#ffe9c4!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-branch{flex:1 1 0!important;display:flex!important;flex-direction:column!important;justify-content:center!important;gap:1px!important;min-height:0!important;padding:2px 7px!important;border:1px solid #9e835355!important;border-radius:5px!important;background:linear-gradient(180deg,#1a222a,#10161c)!important;overflow:hidden!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-branch>*{display:block!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-branch b{font-size:10.5px!important;font-weight:700!important;color:#f0dcb0!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-branch small{font-size:9.5px!important;color:#ffd58a!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-branch-text{font-size:9px!important;color:#a9b4b8!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-branch[data-state=active]{border-color:#f2c97a!important;background:linear-gradient(180deg,#6d1f2a,#35121b)!important;box-shadow:inset 0 0 0 1px #ffd58a55!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-branch:is([data-state=buyable],[data-state=owned]){border-color:#c79a52!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-branch[data-state=armed]{border-color:#ffd58a!important;box-shadow:0 0 0 1px #ffd58a88!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-branch:disabled{opacity:.5!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-branch-note{flex:none!important;font-size:9px!important;color:#a99a7c!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+/* 아래: 강화 + 장착 */
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-actions{flex:none!important;display:flex!important;gap:4px!important;height:28px!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-upgrade{flex:1.3 1 0!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:0 6px!important;border:1px solid #f2c97a!important;border-radius:6px!important;background:linear-gradient(180deg,#9a3328,#4a1416)!important;color:#ffe9c4!important;font-size:10.5px!important;font-weight:700!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;box-shadow:0 0 8px #e0a04a44!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-upgrade[hidden]{display:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-upgrade:disabled{border-color:#6d5c45!important;background:#1a1816!important;color:#8f8672!important;box-shadow:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-equips{flex:1 1 0!important;display:flex!important;gap:3px!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-equips button{flex:1 1 0!important;display:flex!important;align-items:center!important;justify-content:center!important;border:1px solid #9e835377!important;border-radius:6px!important;background:#121820!important;color:#e6dccb!important;font-size:9.5px!important;white-space:nowrap!important;overflow:hidden!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-equips button[hidden]{display:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-equips button:disabled{opacity:.4!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board [hidden]{display:none!important}
+@media(max-height:360px){
+ #game-shell#game-shell#game-shell#game-shell#game-shell #skill-board{grid-template-rows:24px minmax(0,1fr)!important;gap:5px 6px!important;padding:4px 8px 5px!important}
+ #game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-tab{height:24px!important;font-size:10.5px!important}
+ #game-shell#game-shell#game-shell#game-shell#game-shell #skill-board :is(.sb-side,.sb-lib,.sb-detail){padding:5px!important;gap:4px!important}
+ #game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-next{display:none!important}
+ #game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-slot small{display:none!important}
+ #game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-preset{height:32px!important}
+ #game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-preset small{display:none!important}
+ #game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-branch-text{display:none!important}
+ #game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-branch b{font-size:10px!important;letter-spacing:-.2px!important}
+ #game-shell#game-shell#game-shell#game-shell#game-shell #skill-board #skill-detail-icon{width:32px!important;height:32px!important}
+ #game-shell#game-shell#game-shell#game-shell#game-shell #skill-board #skill-detail-name{font-size:13px!important}
+ #game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-actions{height:24px!important}
+ #game-shell#game-shell#game-shell#game-shell#game-shell #skill-board #skill-detail-description{-webkit-line-clamp:3!important}
+ #game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-card small{font-size:8.5px!important}
+ #game-shell#game-shell#game-shell#game-shell#game-shell #skill-board :is(.sb-seg,.sb-examples) button{height:19px!important}
+ #game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-reset{height:19px!important}
+}
+@media(max-width:700px){
+ #game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-tab{font-size:10px!important}
+ #game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-equips button{font-size:9px!important}
+}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-slot-art{width:24px!important;height:24px!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-equips::before{content:"장착"!important;display:flex!important;align-items:center!important;padding:0 2px 0 3px!important;font-size:9px!important;color:#a99a7c!important;white-space:nowrap!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-equips button{font-size:11px!important;font-weight:700!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-equips button[aria-pressed=true]{border-color:#f2c97a!important;background:linear-gradient(180deg,#7a2a26,#3c1216)!important;color:#ffe9c4!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-card strong{white-space:normal!important;text-align:center!important;display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important;text-overflow:clip!important}
+@media(max-width:700px){#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-card img{height:min(30px,44%)!important}#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-card strong{font-size:9.5px!important;letter-spacing:-.2px!important}}
+@media(max-height:360px){#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board #skill-detail-note{display:none!important}}
+@media(max-height:380px){#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board :is(.sb-slot small,.sb-branch-text,#skill-detail-note){display:none!important}}

@@ -182,6 +182,8 @@ export function restoreProfile(raw,now=Date.now()){
   p.skillBook=skills.restoreSkillBook(data.skillBook,p.level);
   p.xp=integer(data.xp,0,xpNeeded(p.level)-1);
   // Alpha 0.131 성장: saves without `training` refund their old 대장간 levels once; old 숙련 points simply return as 성장 포인트.
+  // Alpha 0.142: 검술서 연구가 없어져 예전에 연구한 횟수만큼 검술서 3장·골드 500을 한 번 돌려준다(포인트는 레벨에서 다시 계산).
+  {const studied=integer(data.skillBook?.trainingPoints,0,49);if(studied){p.gold=Math.min(1e8,p.gold+studied*500);p.materials.skillPage=Math.min(MATERIAL_LIMIT,p.materials.skillPage+studied*3);}}
   if(!data.training&&data.forge){const refund=growth.legacyForgeRefund(data.forge);p.gold=Math.min(1e8,p.gold+refund.gold);p.cores=Math.min(1e6,p.cores+refund.cores);}
   p.clearedStage=integer(data.clearedStage,0,STAGES.length);p.unlockedStage=clamp(integer(data.unlockedStage,1,STAGES.length,1),1,Math.min(STAGES.length,p.clearedStage+1));
   // Legacy five-stage checkpoints retain their completion ratio; v8 is already ten-stage.

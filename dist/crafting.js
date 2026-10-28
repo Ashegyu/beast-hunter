@@ -14,7 +14,7 @@ export const MATERIALS=Object.freeze([
  {id:'refineStone',name:'재련석',color:'#e3cf94',refining:true,normal:.25,elite:.75,boss:1,quantity:[1,2,6],where:'강화 던전 확정 보상 / 모든 사냥터 · 일반 25% / 정예 75% / 보스 100% · 1 / 2 / 6개'},
  {id:'refineCrystal',name:'정제석',color:'#b8a5ef',refining:true,normal:0,elite:.15,boss:.65,quantity:[1,1,3],where:'강화 던전 4단계부터 확정 보상 / 모든 사냥터 · 정예 15% / 보스 65% · 1 / 3개'},
  {id:'refineEssence',name:'순수결정',color:'#ffbf76',refining:true,normal:0,elite:.02,boss:.2,quantity:[1,1,1],where:'강화 던전 7단계부터 확정 보상 / 모든 사냥터 · 정예 2% / 보스 20% · 1개'},
- {id:'skillPage',name:'검술서',color:'#e7c59a',normal:0,elite:0,boss:0,where:'스킬 던전 확정 보상 · 스킬 화면에서 강화 포인트 연구에 사용'},
+ {id:'skillPage',name:'검술서',color:'#e7c59a',normal:0,elite:0,boss:0,where:'스킬 던전 확정 보상 · 스킬 갈래 해금에 사용'},
  {id:'promotionStone',name:'승급석',color:'#f0d586',promotion:true,normal:.02,elite:.2,boss:1,quantity:[1,1,3],where:'승급 던전 확정 보상 / 모든 사냥터 · 일반 2% / 정예 20% / 보스 100% · 1 / 1 / 3개'},
  {id:'sealShard',name:'인장 조각',color:'#ffd27a',normal:0,elite:0,boss:0,where:'보스 러시 보상 · 인장 분해 · 인장 성장에 사용'},
 ].map(r=>Object.freeze({...r,quantity:Object.freeze(r.quantity??[1,1,1])})));
@@ -31,7 +31,7 @@ const MATERIAL_INFO=Object.freeze({
  refineStone:{text:'장비를 벼리는 기본 숫돌.',use:'장비 강화',dungeon:'철갑의 제련소'},
  refineCrystal:{text:'강화를 깊게 새기는 정제된 결정.',use:'장비 강화(높은 단계)',dungeon:'철갑의 제련소(4단계부터)'},
  refineEssence:{text:'한계를 넘는 강화에 쓰는 순수한 결정.',use:'장비 강화(최고 단계)',dungeon:'철갑의 제련소(7단계부터)'},
- skillPage:{text:'옛 검사들의 검술을 적은 책.',use:'스킬 연구 · 스킬 갈래 해금',dungeon:'잔상의 수련장'},
+ skillPage:{text:'옛 검사들의 검술을 적은 책.',use:'스킬 갈래 해금',dungeon:'잔상의 수련장'},
  promotionStone:{text:'최대 강화 장비를 한 등급 위로 올리는 돌.',use:'장비 승급',dungeon:'정예의 시련'},
  sealShard:{text:'인장을 이루는 조각.',use:'인장 성장',dungeon:'보스 러시 · 인장 분해'},
 });

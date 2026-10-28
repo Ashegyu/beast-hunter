@@ -127,17 +127,19 @@ export const powerRank=rank=>rank<=5?rank:5+(rank-5)*.5;
 export function skillLevelGate(id,rank){const d=SKILL_BY_ID[id];if(!d)return 201;if(d.kind==='beast')return 1;const r=Math.max(1,Math.min(maxSkillRank(id),rank)),gate5=d.unlock+Math.ceil(4*Math.min(d.kind==='ultimate'?7:3,(50-d.unlock)/4));if(r<=5)return d.unlock+Math.ceil((r-1)*Math.min(d.kind==='ultimate'?7:3,(50-d.unlock)/4));return d.kind==='ultimate'?gate5+(r-5)*10:gate5+Math.ceil((r-5)*Math.max(0,150-gate5)/10);}
 // A 괴수 기술's rank is its learned grade (1 기본, 2 강화, 3 극); 0 until its boss is defeated.
 export const beastGrade=(profile,id)=>{const g=profile?.beastSkills?.[id];return Number.isInteger(g)&&g>=1&&g<=3?g:0;};
-export function skillRank(profile,id){const d=SKILL_BY_ID[id];if(!d)return 0;if(d.kind==='gear')return 1;if(d.kind==='beast')return beastGrade(profile,id);if(profile.level<d.unlock)return 0;if(d.kind==='ultimate'){let rank=1;while(rank<MAX_ULTIMATE_RANK&&profile.level>=skillLevelGate(id,rank+1))rank++;return rank;}return 1+(profile.skillBook?.ranks?.[id]??0);}
+export function skillRank(profile,id){const d=SKILL_BY_ID[id];if(!d)return 0;if(d.kind==='gear')return 1;if(d.kind==='beast')return beastGrade(profile,id);if(profile.level<d.unlock)return 0;if(d.kind==='ultimate')return Math.min(MAX_ULTIMATE_RANK,1+(profile.skillBook?.ranks?.[id]??0));return 1+(profile.skillBook?.ranks?.[id]??0);}
 export function skillValue(profile,id){const d=SKILL_BY_ID[id],rank=skillRank(profile,id);if(d?.kind==='beast')return rank?Math.round(d.damage*BEAST_GRADES[rank].damage):0;return rank?(d.damage??d.value)+d.step*(powerRank(rank)-1):0;}
-export function skillPoints(profile){return Math.max(0,profile.level-1+(profile.skillBook?.trainingPoints??0)-Object.values(profile.skillBook?.ranks??{}).reduce((a,b)=>a+b,0));}
+// Alpha 0.142: 검술서 연구가 없어지고 그 몫(최대 49)은 레벨 4마다 1점으로 들어온다.
+export const skillPointsTotal=level=>Math.max(0,level-1)+Math.floor(Math.max(0,level-1)/4);
+export function skillPoints(profile){return Math.max(0,skillPointsTotal(profile.level)-Object.values(profile.skillBook?.ranks??{}).reduce((a,b)=>a+b,0));}
 function cleanLoadout(raw,level){const slots=skillSlots(level),used=new Set();const list=(kind,n)=>Array.from({length:n},(_,i)=>{const id=raw?.[kind]?.[i],d=SKILL_BY_ID[id];if(i>=slots[kind]||!d||d.kind!==kind||d.unlock>level||used.has(id))return null;used.add(id);return id;});return {active:list('active',MAX_SLOTS.active),passive:list('passive',MAX_SLOTS.passive),ultimate:list('ultimate',MAX_SLOTS.ultimate),beast:list('beast',MAX_SLOTS.beast)};}
 export function restoreSkillBook(raw,level){
- const ranks={},trainingPoints=int(raw?.trainingPoints,0,49,0);let budget=level-1+trainingPoints;
- for(const d of SKILL_CATALOG){if(d.kind==='ultimate'||d.kind==='beast'||d.unlock>level)continue;let maximum=0;while(maximum<MAX_SKILL_RANK-1&&level>=skillLevelGate(d.id,maximum+2))maximum++;const n=int(raw?.ranks?.[d.id],0,maximum);ranks[d.id]=Math.min(n,budget);budget-=ranks[d.id];}
+ const ranks={};let budget=skillPointsTotal(level);
+ for(const d of SKILL_CATALOG){if(d.kind==='beast'||d.unlock>level)continue;let maximum=0;while(maximum<maxSkillRank(d.id)-1&&level>=skillLevelGate(d.id,maximum+2))maximum++;const n=int(raw?.ranks?.[d.id],0,maximum);ranks[d.id]=Math.min(n,budget);budget-=ranks[d.id];}
  const defaults={active:['crescent',level>=5?'gale':null,level>=15?'triple':null,level>=30?'returning':null],passive:[level>=3?'breath':null,level>=10?'finisher':null,level>=25?'reserve':null],ultimate:[level>=20?'bloodmoon':null],beast:[null]};
- return {ranks,trainingPoints,...cleanBranches(raw),loadout:cleanLoadout(raw?.loadout??defaults,level),presets:Array.from({length:3},(_,i)=>raw?.presets?.[i]?{...cleanLoadout(raw.presets[i],level),auto:cleanAuto(raw.presets[i].auto)}:null),auto:cleanAuto(raw?.auto),awakening:raw?.awakening==='execution'?'execution':'area'};
+ return {ranks,...cleanBranches(raw),loadout:cleanLoadout(raw?.loadout??defaults,level),presets:Array.from({length:3},(_,i)=>raw?.presets?.[i]?{...cleanLoadout(raw.presets[i],level),auto:cleanAuto(raw.presets[i].auto)}:null),auto:cleanAuto(raw?.auto),awakening:raw?.awakening==='execution'?'execution':'area'};
 }
-export function upgradeSkill(s,id){const d=SKILL_BY_ID[id],p=s.profile;if(s.phase!=='camp'||!d||d.kind==='ultimate'||d.kind==='beast'||!skillRank(p,id)||skillRank(p,id)>=MAX_SKILL_RANK||!skillPoints(p)||p.level<skillLevelGate(id,skillRank(p,id)+1))return false;p.skillBook.ranks[id]=(p.skillBook.ranks[id]??0)+1;return true;}
+export function upgradeSkill(s,id){const d=SKILL_BY_ID[id],p=s.profile;if(s.phase!=='camp'||!d||d.kind==='beast'||!skillRank(p,id)||skillRank(p,id)>=maxSkillRank(id)||!skillPoints(p)||p.level<skillLevelGate(id,skillRank(p,id)+1))return false;p.skillBook.ranks[id]=(p.skillBook.ranks[id]??0)+1;return true;}
 export function equipSkill(s,id,slot){const p=s.profile,d=SKILL_BY_ID[id];if(s.phase!=='camp'||!d||!skillRank(p,id)||!Number.isInteger(slot)||slot<0||slot>=skillSlots(p.level)[d.kind])return false;const list=p.skillBook.loadout[d.kind],prior=list.indexOf(id);if(prior===slot){list[slot]=null;return true;}if(prior>=0)list[prior]=list[slot];list[slot]=id;return true;}
 export function resetSkills(s){if(s.phase!=='camp')return false;s.profile.skillBook.ranks={};return true;}
 export function skillPreset(s,index,action){if(s.phase!=='camp'||!Number.isInteger(index)||index<0||index>=3)return false;const b=s.profile.skillBook;if(action==='save'){b.presets[index]={...cleanLoadout(b.loadout,s.profile.level),auto:cleanAuto(b.auto)};return true;}if(action==='load'&&b.presets[index]){b.loadout=cleanLoadout(b.presets[index],s.profile.level);b.auto=cleanAuto(b.presets[index].auto);return true;}return false;}
@@ -305,6 +307,3 @@ export function autoSkill(s,n,h){const p=s.player,r=s.skillRuntime,b=s.profile.s
  return false;
 }
 
-export const SKILL_STUDY_COST=Object.freeze({gold:500,pages:3,max:49});
-export function skillStudyStatus(p){const c=SKILL_STUDY_COST;return (p.skillBook.trainingPoints??0)>=c.max?'연구 포인트 최대 달성':p.materials.skillPage<c.pages?'검술서 부족':p.gold<c.gold?'골드 부족':'';}
-export function studySkill(s){if(s.phase!=='camp'||skillStudyStatus(s.profile))return false;const p=s.profile,c=SKILL_STUDY_COST;p.gold-=c.gold;p.materials.skillPage-=c.pages;p.skillBook.trainingPoints=(p.skillBook.trainingPoints??0)+1;return true;}

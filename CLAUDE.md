@@ -19,7 +19,7 @@
 - `dist/index.html` (389KB, 정적 DOM 3704 id, CSS 45개 순차 로드) → `menu-pages.js`, `app.js`.
 - `dist/app.js` (207KB, 1469줄 압축형): UI 컨트롤러. DOM을 생성하지 않고 기존 노드 재사용. rAF `tick`(app.js:1078) → `game.advanceGame` → Canvas2D `draw()` + 매 프레임 DOM `updateHud()`. 화면 전환은 `modal()`(:887) 단일 오버레이 상태기계 + `campDrawer`, `navigateCamp()`(:1280).
 - `dist/game-engine.js` (108KB, 허브): 순수 로직(DOM·저장소 없음). 다른 로직 모듈을 import하고, 시각 모듈(skill-vfx, skill-image-fx, monster-fx, combat-feedback, ultimate-video)과 combat-skills 등을 `export *`로 재노출.
-- 로직 모듈: transcendence(0.141 초월), loot, equipment-progression/slots/synergies, crafting, chapters, battle-plans, battle-progress(정산 저널), dungeons, hunt-modes(난이도), combat-skills(35종, 0.142 최대 Lv.15·궁극 20), skill-branches(갈래 3단계×3, 궁극 4단계), skill-motion, ancient-powers, unique-effects, build-effects(각인), profile-backup, world(카메라·좌표), terrain, motion.
+- 로직 모듈: transcendence(0.141 초월), loot, equipment-progression/slots/synergies, crafting, chapters, battle-plans, battle-progress(정산 저널), dungeons, hunt-modes(난이도), combat-skills(35종, 0.142 최대 Lv.15·궁극 20, 궁극기도 포인트 강화, 검술서 연구 삭제), skill-branches(갈래 3단계×3, 궁극 4단계), skill-motion, ancient-powers, unique-effects, build-effects(각인), profile-backup, world(카메라·좌표), terrain, motion.
 - `engine.js` + `lab.html/lab.js`: 구형 모션 검사 도구(MOTION LAB). 실게임과 무관.
 - `sound.js`: 오디오 파일 없이 WebAudio로 효과음 합성 (동시 10음).
 - dist 어셋(0.130.1): 런타임 사용 집합(`regionAssetPlan`+`campAssetPaths`+manifest의 클립 외 이미지+html/css/js 경로+스킬 아이콘)에 없는 파일은 지웠다(webp로 대체된 PNG 원본, 옛 UI 시안, 프롬프트 txt, 안 쓰는 글꼴). 단 MOTION LAB(lab.html)이 쓰는 옛 클립 PNG 10장(hunter_walk 등)은 남김. 새 어셋을 넣으면 manifest/코드에서 참조되게 할 것.
