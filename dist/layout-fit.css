@@ -960,3 +960,14 @@
 #game-shell#game-shell #codex-content[data-view=materials] #codex-paging{display:none!important}
 @media(max-height:360px){#game-shell#game-shell #codex-content:not([hidden]){grid-template-rows:26px 24px minmax(0,1fr) 6px!important}#game-shell#game-shell #codex-content #codex-paging button{width:22px!important;height:22px!important}}
 #game-shell#game-shell #codex-content:not([hidden]){grid-template-rows:30px 28px minmax(0,1fr) 12px!important}@media(max-height:360px){#game-shell#game-shell #codex-content:not([hidden]){grid-template-rows:26px 24px minmax(0,1fr) 8px!important}}
+/* Alpha 0.141 단련·초월 행 한 열(사용자 지적 '수치 글이 잘린다'): 넓은 화면의 2열은 효과 문구 칸이 90px뿐이라 줄이 꺾이고
+   잘렸다. 모든 폭에서 한 열 목록으로 두고 효과 문구는 한 줄 그대로 보인다. */
+#game-shell#game-shell #growth-training,#game-shell#game-shell #growth-transcend{grid-template-columns:minmax(0,1fr)!important;gap:4px!important}
+#game-shell#game-shell #growth-training{grid-template-rows:repeat(6,minmax(0,1fr))!important}
+#game-shell#game-shell .stat-row{padding:3px 10px 3px 4px;gap:10px}
+#game-shell#game-shell .stat-emblem{width:36px;height:36px}
+#game-shell#game-shell .stat-text small{white-space:nowrap!important;display:block;overflow:visible}
+#game-shell#game-shell .stat-text{gap:2px}
+@media(max-height:360px){#game-shell#game-shell .stat-emblem{width:30px;height:30px}#game-shell#game-shell .stat-row{padding:2px 8px 2px 4px}}
+#game-shell .growth-board-head{min-width:0}#game-shell .growth-board-head>*{white-space:nowrap}
+@media(max-width:700px){#game-shell#game-shell .growth-board-head{gap:4px}#game-shell#game-shell #growth-points{font-size:10.5px;overflow:visible;text-overflow:clip}#game-shell#game-shell .growth-board-head button{padding-left:7px!important;padding-right:7px!important}}
