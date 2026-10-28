@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import * as g from '../dist/game-engine.js';
 const ALWAYS=Object.freeze({normal:1,elite:1,stage:1,boss:1});// Alpha 0.115: drops are rolls; force them where a test needs one.
 const advance=(s,seconds)=>{for(let n=0;n<Math.ceil(seconds/.025);n++)g.advanceGame(s,.025);};
-function arena(){const s=g.createGame(g.createProfile(1000));g.launch(s);s.enemies=[];s.spawns=[];s.barrels=[];s.run.waveQuota=1000;s.player.invulnerable=999;s.lootRates=ALWAYS;return s;}
+function arena(){const s=g.createGame(g.createProfile(1000));g.launch(s);s.enemies=[];s.spawns=[];s.barrels=[];s.run.waveQuota=1e6;s.player.invulnerable=999;s.lootRates=ALWAYS;return s;}
 function kill(s,{boss=false,elite=true,offset=300}={}){
  const e={id:s.nextId++,type:boss?'bulwark':'skitter',boss,elite:!boss&&elite,x:s.player.x+offset,y:s.player.y,hp:1,maxHp:1,action:'walk',actionTime:0,speed:0,cooldown:999,aggro:true,guard:0,dead:false,wave:s.run.wave,runStage:s.run.stage,damage:8,radius:58};s.enemies=[e];s.materialRng=2000;
  s.projectiles.push({id:s.nextId++,x:e.x,y:e.y,vx:0,vy:0,damage:1e9,ttl:1,friendly:true});g.advanceGame(s,.025);assert.ok(e.dead);return e;

@@ -121,7 +121,7 @@ $('backup-file').addEventListener('change',async()=>{
  if(!backupAllowed())return;
  const file=$('backup-file').files?.[0];cancelBackup();if(!file)return;const revision=backupRevision;backupReading=true;$('backup-feedback').textContent='백업 파일을 확인하는 중…';
  try{
-  if(file.size>MAX_BACKUP_BYTES)throw Error('백업 파일은 256KB 이하여야 해.');
+  if(file.size>MAX_BACKUP_BYTES)throw Error('백업 파일은 2MB 이하여야 해.');
   const text=await file.text();if(revision!==backupRevision||!backupAllowed())return;
   const candidate=readBackup(text,Date.now());backupCandidate=candidate;
   $('backup-summary').textContent='백업: Lv.'+candidate.profile.level+' · 장비 '+candidate.profile.inventory.length+'개 · 골드 '+candidate.profile.gold+' · 완료 챕터 '+candidate.profile.clearedStage+'\n현재: Lv.'+profile.level+' · 장비 '+profile.inventory.length+'개 · 골드 '+profile.gold;
@@ -345,8 +345,8 @@ $('bag-slot').addEventListener('change',e=>setBagCategory(e.target.value));
 $('bag-sort').addEventListener('change',e=>{bagSort=['pickup','rarity','slot'].includes(e.target.value)?e.target.value:'pickup';bagReviewIds=null;updateHud();});
 $('bag-favorites').addEventListener('click',()=>{favoritesOnly=!favoritesOnly;bagReviewIds=null;updateHud();});
 $('bag-organize').addEventListener('click',()=>{if(bagSlot==='materials')return;bagOrganizing=!bagOrganizing;bagSelectedIds.clear();bagReviewIds=null;updateHud();});
-// 보관 개수 단계: 5…30 by 5, then 40·50·75·100·제한 없음.
-const BAG_LIMIT_STEPS=[5,10,15,20,25,30,40,50,75,100,game.BAG_LIMIT_MAX];
+// 보관 개수 단계: 5…30 by 5, then 40·50·75·100·200·500·제한 없음.
+const BAG_LIMIT_STEPS=[5,10,15,20,25,30,40,50,75,100,200,500,game.BAG_LIMIT_MAX];
 function stepBagLimit(slot,dir){const now=profile.bagRules.limits[slot],next=dir>0?BAG_LIMIT_STEPS.find(v=>v>now):[...BAG_LIMIT_STEPS].reverse().find(v=>v<now);if(next===undefined||!game.setBagRules(state,{slot,limit:next}))return;bagFeedback=game.SLOTS[slot]+' 보관 '+(next>=game.BAG_LIMIT_MAX?'제한 없음':next+'개')+' · 다음 획득부터 적용';save();updateHud();}
 for(const slot of game.BAG_SLOTS){$('bag-limit-down-'+slot).addEventListener('click',()=>stepBagLimit(slot,-1));$('bag-limit-up-'+slot).addEventListener('click',()=>stepBagLimit(slot,1));}
 for(let n=0;n<=game.BAG_GRADE_MAX;n++)$('bag-grade-'+n).addEventListener('click',()=>{if(game.setBagRules(state,{grade:n})){bagReviewIds=null;save();updateHud();}});
@@ -447,10 +447,13 @@ for(const [id,step]of [['bag-page-prev',-1],['bag-page-next',1]])$(id).addEventL
  if(!inventoryOpen||inventoryPanel!=='gear'||bagSlot==='materials'||bagSelectedId!==null&&!wideLayout||state.phase!=='camp'&&!state.paused)return;
  const page=bagPage+step;if(page<0||page>=bagPageCount)return;bagPage=page;bagSelectedId=null;bagRenderKey='';updateHud();
 });
+// Alpha 0.142 (가방 2000칸): the redraw key folds what a bag cell can show instead of stringifying every item each frame
+// (2000 items were ~350 KB of JSON per frame). Items change in place only through these fields.
+function inventorySignature(inv){let h=inv.length|0;for(const i of inv){let a=0;for(const k in i.affixes)a=a*7+(i.affixes[k]|0)|0;h=Math.imul(h,31)+i.id+i.rarity*7+(i.tier|0)*13+(i.enhancement|0)*131+(i.promotionCount|0)*17+(i.inscription?i.inscription.length*19:0)+(i.rerollCandidate?23:0)+(i.perfect?29:0)+(i.seal?(i.seal.level|0)*37+(i.seal.shards|0):0)+a|0;}return h;}
 function refreshBag(){
  const chosenEarring=profile.inventory.find(i=>i.id===bagSelectedId);if(chosenEarring?.slot==='earring'&&earringChoiceItemId!==chosenEarring.id){earringChoiceItemId=chosenEarring.id;earringPosition=game.equippedPosition(profile,chosenEarring)??(profile.equipment.earringLeft==null?'earringLeft':'earringRight');}
  const filters=rarityFilter+':'+bagSlot+':'+bagSort+':'+favoritesOnly;if(filters!==bagFilterKey){bagFilterKey=filters;bagPage=0;}
- const key=JSON.stringify([profile.bagRules,profile.gold,profile.cores,profile.inventory,profile.legendaryPity,profile.equipment,profile.favoriteItemIds,profile.savedBuilds,profile.skills,profile.forge,profile.level,profile.materials,state.phase,state.paused,rarityFilter,bagSlot,bagPart,earringPosition,bagSort,favoritesOnly,bagSelectedId,bagOrganizing,[...bagSelectedIds],bagReviewIds,bagFeedback,inventoryPanel,bagFiltersOpen,bagPage,bagPageSize,bagMaterialPageSize,bagFocusRequested,workshopItemId,workshopMode,workshopFeedback]);
+ const key=JSON.stringify([profile.bagRules,profile.gold,profile.cores,inventorySignature(profile.inventory),profile.legendaryPity,profile.equipment,profile.favoriteItemIds,profile.savedBuilds,profile.skills,profile.forge,profile.level,profile.materials,state.phase,state.paused,rarityFilter,bagSlot,bagPart,earringPosition,bagSort,favoritesOnly,bagSelectedId,bagOrganizing,[...bagSelectedIds],bagReviewIds,bagFeedback,inventoryPanel,bagFiltersOpen,bagPage,bagPageSize,bagMaterialPageSize,bagFocusRequested,workshopItemId,workshopMode,workshopFeedback]);
  if(key===bagRenderKey)return;bagRenderKey=key;
  inventoryView=profile.inventory.filter(i=>i.rarity>=rarityFilter&&game.matchesEquipmentCategory(i,bagSlot)&&(bagPart==='all'||i.slot===bagPart)&&(!favoritesOnly||profile.favoriteItemIds.includes(i.id)));
  if(bagSort==='rarity')inventoryView.sort((a,b)=>b.rarity-a.rarity||b.tier-a.tier||a.id-b.id);
@@ -1390,7 +1393,7 @@ function refreshCodex(){
 }
 
 function refreshCraft(){
- const key=[craftSelected,craftSlot,profile.gold,profile.inventory.map(i=>i.id+':'+i.catalogId).join(','),Object.values(profile.materials).join(','),profile.unlockedStage,Object.values(profile.equipment).join(','),craftFeedback,profile.targetCraftId].join('|');if(key===craftRenderKey)return;craftRenderKey=key;
+ const key=[craftSelected,craftSlot,profile.gold,inventorySignature(profile.inventory),Object.values(profile.materials).join(','),profile.unlockedStage,Object.values(profile.equipment).join(','),craftFeedback,profile.targetCraftId].join('|');if(key===craftRenderKey)return;craftRenderKey=key;
  const row=game.CRAFTED_CATALOG.find(r=>r.id===craftSelected),status=game.craftStatus(profile,row.id),copies=profile.inventory.filter(i=>i.rarity===6&&i.catalogId===row.id),owned=copies.find(i=>!game.isEquippedItem(profile,i))??copies[0],complete=copies.length>=(row.slot==='earring'?2:1);
  for(const slot of ['all','weapon','armor','charm','special'])$('craft-slot-'+slot).setAttribute('aria-pressed',String(slot===craftSlot));
  for(const [n,r]of game.CRAFTED_CATALOG.entries()){const node=$('craft-recipe-'+n);node.hidden=r.slot==='special'||craftSlot!=='all'&&!game.matchesEquipmentCategory(r,craftSlot);node.setAttribute('aria-pressed',String(r.id===row.id));gearThumbnail($('craft-recipe-art-'+n),{...r,catalogId:r.id},56,true);if(!node.hidden){const have=profile.inventory.filter(i=>i.rarity===6&&i.catalogId===r.id).length,need=r.slot==='earring'?2:1,costs=Object.entries(r.cost),met=costs.filter(([id,c])=>profile.materials[id]>=c).length,state=have>=need?'owned':game.craftStatus(profile,r.id).ok?'ready':'short';node.setAttribute('data-state',state);$('craft-recipe-state-'+n).textContent=state==='owned'?'보유':(have?'보유 '+have+' / '+need+' · ':profile.targetCraftId===r.id?'목표 · ':'')+(state==='ready'?'제작 가능':'재료 '+met+' / '+costs.length);}}
@@ -1458,7 +1461,7 @@ for(const m of game.MATERIALS)$('craft-material-'+m.id).addEventListener('click'
 let homeDashboardKey='';
 function refreshHomeDashboard(selected){
  const stats=game.playerStats(profile),weapon=profile.inventory.find(i=>i.id===profile.equipment.weapon&&i.slot==='weapon');
- const key=JSON.stringify([selectedStage,selectedRunStage,selectedDifficulty,profile.stageProgress,profile.difficultyProgress,profile.level,profile.xp,profile.training,profile.growthTree,profile.inventory,profile.equipment,profile.skills,profile.forge]);if(key===homeDashboardKey)return;homeDashboardKey=key;
+ const key=JSON.stringify([selectedStage,selectedRunStage,selectedDifficulty,profile.stageProgress,profile.difficultyProgress,profile.level,profile.xp,profile.training,profile.growthTree,inventorySignature(profile.inventory),profile.equipment,profile.skills,profile.forge]);if(key===homeDashboardKey)return;homeDashboardKey=key;
  $('lobby-growth-badge').hidden=game.growthPoints(profile)<=0;
  const xpPercent=profile.level===game.MAX_LEVEL?100:Math.floor(clamp(profile.xp/game.xpNeeded(profile.level)*100,0,100));
  $('home-xp-label').textContent=profile.level===game.MAX_LEVEL?'MAX':xpPercent+'%';$('home-xp-fill').style.width=xpPercent+'%';$('home-xp').setAttribute('aria-valuenow',String(xpPercent));

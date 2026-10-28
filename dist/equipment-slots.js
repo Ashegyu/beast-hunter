@@ -36,3 +36,13 @@ export function equipmentAcquisition(item){
  if(item?.slot==='charm'||item?.slot==='earring')return '성장 던전 완료 시 장신구 확률 보상';
  return item?.rarity>0?'일반 장비에서 승급':'스테이지 · 일반 등급 드롭';
 }
+// Alpha 0.142 (가방 2000칸): id → item index per inventory array. The bag only ever grows by push or is replaced by a new
+// array, so the array identity, length and first/last items are enough to know the index is current.
+const inventoryIndex=new WeakMap();
+export function inventoryItem(profile,id){
+ const inv=profile?.inventory;if(id===null||id===undefined||!Array.isArray(inv))return null;
+ let c=inventoryIndex.get(inv);if(!c||c.length!==inv.length||c.first!==inv[0]||c.last!==inv[inv.length-1]){c={length:inv.length,first:inv[0],last:inv[inv.length-1],map:new Map(inv.map(i=>[i.id,i]))};inventoryIndex.set(inv,c);}
+ const item=c.map.get(id);return item&&item.id===id?item:null;
+}
+// The items worn right now (each once), found through the nine equipment positions instead of the whole bag.
+export function equippedItems(profile){const out=[],seen=new Set();for(const key of EQUIPMENT_KEYS){const item=inventoryItem(profile,profile?.equipment?.[key]);if(item&&!seen.has(item.id)&&equippedPosition(profile,item)!==null){seen.add(item.id);out.push(item);}}return out;}

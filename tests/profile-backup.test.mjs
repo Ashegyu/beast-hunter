@@ -15,7 +15,7 @@ test('reserved resources are recovered once when a combat backup is restored',()
  const second=readBackup(createBackup(r,2000),3000).profile;assert.equal(second.gold,18);assert.equal(second.materials.boneIron,5);
 });
 test('unrelated, incomplete, oversized and damaged backup files are rejected',()=>{
- assert.throws(()=>readBackup('{}'),/백업 파일/);assert.throws(()=>readBackup('{'),/JSON/);assert.throws(()=>readBackup('x'.repeat(MAX_BACKUP_BYTES+1)),/256KB/);
+ assert.throws(()=>readBackup('{}'),/백업 파일/);assert.throws(()=>readBackup('{'),/JSON/);assert.throws(()=>readBackup('x'.repeat(MAX_BACKUP_BYTES+1)),/2MB/);
  const f=JSON.parse(createBackup(game.createProfile(1000),1000));f.payload=f.payload.replace('"gold":0','"gold":99');assert.throws(()=>readBackup(JSON.stringify(f)),/손상/);
  const unsupported=JSON.parse(createBackup(game.createProfile(1000),1000));unsupported.version=99;assert.throws(()=>readBackup(JSON.stringify(unsupported)),/백업 파일/);
  const incomplete=game.createProfile(1000);delete incomplete.inventory;assert.throws(()=>readBackup(createBackup(incomplete,1000)),/형식/);

@@ -1,4 +1,4 @@
-import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily} from './equipment-slots.js?v=0.142.0';
+import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily,inventoryItem} from './equipment-slots.js?v=0.142.0';
 import {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.142.0';
 export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.142.0';
 import {huntMode,BOSS_DROP_TABLES} from './hunt-modes.js?v=0.142.0';
@@ -302,7 +302,7 @@ export function uniqueEffect(item){
 }
 // Alpha 0.136: a seal's 상옵 effects ride the ancient power path (spec.seal plays the role of spec.ancient).
 const SEAL_DEFINITION=Object.freeze({id:'seal',name:'인장 특수효과',description:'보스 러시 인장의 상옵 효과',slot:'special',color:SEAL_GRADES[2].color});
-export function uniqueLoadout(profile){const result=Object.fromEntries(EQUIPMENT_KEYS.map(key=>[key,null]));for(const slot of EQUIPMENT_KEYS){const item=profile.inventory?.find(i=>i.id===profile.equipment?.[slot]&&i.slot===itemSlotForPosition(slot));if(!item)continue;if(isSeal(item)){const signatures=sealSignatures(item);if(signatures.length)result[slot]=Object.freeze({definition:SEAL_DEFINITION,power:1,itemId:item.id,slot,ancient:null,crafted:null,seal:Object.freeze({id:'seal-'+item.id,signature:signatures[0]}),signatures:Object.freeze(signatures)});continue;}const definition=uniqueEffect(item);if(definition)result[slot]=Object.freeze({definition,power:uniquePower(item.rarity),itemId:item.id,slot,ancient:ancientDefinition(item),crafted:craftedDefinition(item),signatures:Object.freeze(ancientSignatures(item))});}return result;}
+export function uniqueLoadout(profile){const result=Object.fromEntries(EQUIPMENT_KEYS.map(key=>[key,null]));for(const slot of EQUIPMENT_KEYS){const found=inventoryItem(profile,profile.equipment?.[slot]),item=found?.slot===itemSlotForPosition(slot)?found:null;if(!item)continue;if(isSeal(item)){const signatures=sealSignatures(item);if(signatures.length)result[slot]=Object.freeze({definition:SEAL_DEFINITION,power:1,itemId:item.id,slot,ancient:null,crafted:null,seal:Object.freeze({id:'seal-'+item.id,signature:signatures[0]}),signatures:Object.freeze(signatures)});continue;}const definition=uniqueEffect(item);if(definition)result[slot]=Object.freeze({definition,power:uniquePower(item.rarity),itemId:item.id,slot,ancient:ancientDefinition(item),crafted:craftedDefinition(item),signatures:Object.freeze(ancientSignatures(item))});}return result;}
 
 export function equippedUniqueEffect(profile,slot){return uniqueEffect((profile.inventory??[]).find(item=>item.slot===itemSlotForPosition(slot)&&profile.equipment[slot]===item.id));}
 

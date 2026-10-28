@@ -1,7 +1,7 @@
 import {SLOTS,EQUIPMENT_KEYS,itemSlotForPosition} from './equipment-slots.js?v=0.142.0';
 import {encodeProfile,restoreProfile,INVENTORY_LIMIT,MAX_LEVEL,STAGES} from './game-engine.js?v=0.142.0';
 
-export const MAX_BACKUP_BYTES=262144;
+export const MAX_BACKUP_BYTES=2097152; // 0.142: 2 MB for the 2000-item bag
 const FORMAT='beast-hunter-backup',VERSION=1;
 const plain=value=>value!==null&&typeof value==='object'&&!Array.isArray(value);
 // Detect accidental file changes; this is not an anti-cheat signature.
@@ -28,7 +28,7 @@ export function createBackup(profile,now=Date.now()){
  return text;
 }
 export function readBackup(text,now=Date.now()){
- if(typeof text!=='string'||text.length>MAX_BACKUP_BYTES||new TextEncoder().encode(text).byteLength>MAX_BACKUP_BYTES)throw Error('백업 파일은 256KB 이하여야 해.');
+ if(typeof text!=='string'||text.length>MAX_BACKUP_BYTES||new TextEncoder().encode(text).byteLength>MAX_BACKUP_BYTES)throw Error('백업 파일은 2MB 이하여야 해.');
  let file;try{file=JSON.parse(text);}catch{throw Error('올바른 JSON 백업 파일이 아니야.');}
  if(!plain(file)||file.format!==FORMAT||file.version!==VERSION||typeof file.payload!=='string'||!Number.isFinite(file.createdAt))throw Error('괴수 사냥꾼에서 만든 백업 파일을 선택해줘.');
  if(file.checksum!==checksum(file.payload))throw Error('백업 내용이 손상되었어. 원래 백업 파일을 다시 선택해줘.');

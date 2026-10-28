@@ -1,5 +1,6 @@
 // One bound shared by loot storage, crafting, recovery and UI.
-export const INVENTORY_LIMIT=200,MAX_PENDING_LOOT=24;
+// Alpha 0.142: 200 -> 2000 (사용자 요청). About 206 bytes per saved item (more for 고대), so a full bag is ~0.4-0.6 MB.
+export const INVENTORY_LIMIT=2000,MAX_PENDING_LOOT=24;
 
 // Alpha 0.142 가방 정리 규칙 (사용자 요청 '특정 등급 이하 전체 분해 + 장비별 개수 설정, 개수를 넘으면 새 장비와 기존 장비를
 // 합쳐 등급 낮은 순으로 자동 분해'). profile.bagRules = {grade, auto, limits}: grade is the chosen 등급 (0 일반 … 4 신화) for the

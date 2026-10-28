@@ -8,7 +8,7 @@ import {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionS
 import {stageRule,STAGE_TYPE_NAMES} from './battle-plans.js?v=0.142.0';
 export {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_COST,stageRule,STAGE_TYPE_NAMES};
 export const PROFILE_VERSION=16,MAX_LEVEL=200,BUILD_NAMES=Object.freeze(['일반 사냥','보스','광역','생존','실험']);
-import {SLOTS,EQUIPMENT_SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,equipmentFamily,emptyEquipment,restoreEquipment,equipmentAfterEquip,equippedPosition,isEquippedItem} from './equipment-slots.js?v=0.142.0';
+import {SLOTS,EQUIPMENT_SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,equipmentFamily,emptyEquipment,restoreEquipment,equipmentAfterEquip,equippedPosition,isEquippedItem,inventoryItem,equippedItems} from './equipment-slots.js?v=0.142.0';
 export * from './equipment-slots.js?v=0.142.0';
 import {enhanceOwned,promoteOwned,rerollOwned,resolveOwnedReroll,restoreEquipmentProgress} from './equipment-progression.js?v=0.142.0';
 export * from './equipment-progression.js?v=0.142.0';
@@ -93,7 +93,7 @@ export const WEAPON_TRAITS=Object.freeze({
 });
 const TRAIT_BY_ART=Object.freeze({forest_blade:'bleed',forest_fang:'pierce',ruins_blade:'bleed',ruins_rune:'pierce',frost_blade:'frost',frost_fang:'pierce'});
 export function weaponTrait(item){return item?.slot==='weapon'?WEAPON_TRAITS[TRAIT_BY_ART[equipmentArt(item)?.id]]??null:null;}
-export function equippedWeaponTrait(profile){return weaponTrait(profile.inventory.find(i=>i.id===profile.equipment.weapon&&i.slot==='weapon'));}
+export function equippedWeaponTrait(profile){const w=inventoryItem(profile,profile.equipment.weapon);return weaponTrait(w?.slot==='weapon'?w:undefined);}
 export function equipmentSnapshot(profile){
  const result=emptyEquipment();for(const position of EQUIPMENT_KEYS){const item=profile.inventory.find(i=>i.id===profile.equipment[position]&&i.slot===itemSlotForPosition(position));if(!item)continue;const art=equipmentArt(item);if(art)result[position]=Object.freeze({id:item.id,slot:item.slot,tier:item.rarity===5?item.tier:art.tier,artId:art.id,catalogId:item.catalogId,rarity:Number.isInteger(item.rarity)?Math.max(0,Math.min(6,item.rarity)):0});}return Object.freeze(result);
 }
@@ -230,12 +230,12 @@ export function collectOffline(p,now=Date.now()){
   const minutes=Math.floor(clamp((number(now)-p.lastSeenAt)/60000,0,240));p.lastSeenAt=number(now,p.lastSeenAt);
   if(!p.clearedStage||!minutes)return{minutes:0,gold:0,xp:0};const gold=minutes*2*p.clearedStage,xp=growthXp(p,minutes*p.clearedStage);p.gold+=gold;gainXp(p,xp);return{minutes,gold,xp};
 }
-export function equipmentBonuses(p){const result={damage:0,hp:0,speed:0,crit:0,reduction:0};for(const item of p.inventory??[]){if(!isEquippedItem(p,item))continue;for(const[k,v]of Object.entries(item.affixes))result[k]+=effectiveAffix(item,k);}const set=setBonusStats(equippedSetCounts(p));for(const k of ['speed','crit','reduction'])result[k]+=set[k];for(const k of ['damagePct','hpPct','attackSpeed','range','regeneration','collection'])result[k]=set[k];
+export function equipmentBonuses(p){const result={damage:0,hp:0,speed:0,crit:0,reduction:0},worn=equippedItems(p);for(const item of worn){for(const[k,v]of Object.entries(item.affixes))result[k]+=effectiveAffix(item,k);}const set=setBonusStats(equippedSetCounts(p));for(const k of ['speed','crit','reduction'])result[k]+=set[k];for(const k of ['damagePct','hpPct','attackSpeed','range','regeneration','collection'])result[k]=set[k];
  // Alpha 0.136: the worn seal's stat effects (하옵·중옵) at its growth level.
- for(const item of p.inventory??[])if(seals.isSeal(item)&&isEquippedItem(p,item))for(const [k,v]of Object.entries(seals.sealStats(item)))result[k]=(result[k]??0)+v;
+ for(const item of worn)if(seals.isSeal(item))for(const [k,v]of Object.entries(seals.sealStats(item)))result[k]=(result[k]??0)+v;
  return result;}
 // Pieces worn per region set (Alpha 0.108), and each set's progress for the UI.
-export function equippedSetCounts(p){const counts={};for(const item of p.inventory??[]){const set=itemSet(item);if(set&&isEquippedItem(p,item))counts[set]=(counts[set]??0)+1;}return counts;}
+export function equippedSetCounts(p){const counts={};for(const item of equippedItems(p)){const set=itemSet(item);if(set)counts[set]=(counts[set]??0)+1;}return counts;}
 export function equippedSets(p){const counts=equippedSetCounts(p);return Object.entries(counts).map(([id,count])=>({set:EQUIPMENT_SETS[id],count,active:EQUIPMENT_SETS[id].bonuses.filter(b=>count>=b.pieces)})).sort((a,b)=>b.count-a.count);}
 export function playerStats(p){const b=equipmentBonuses(p),t=growth.trainingRanks(p),tree=growth.treeBonus(p),tr=transcend.transcendBonus(p),tw=towerBonus(p.tower?.best),base=growth.levelGrowth(p.level),attackSpeed=1+base.attackSpeed+t.tempo*.01+tree.attackSpeed+b.attackSpeed/100;return{
   maxHp:(150+(p.level-1)*6+base.hp+t.vitality*12+b.hp)*(1+b.hpPct+tree.hpPct+tr.hpPct+tw.hpPct),

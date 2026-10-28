@@ -118,7 +118,7 @@ test('legacy stats survive migration and forged progression or candidates cannot
  const p=profile();p.inventory[0].enhancement=900;p.inventory[0].enhanceFailures=999;p.inventory[0].rerollCandidate={affixes:{damage:1e9}};const r=g.restoreProfile(p,1000).inventory[0];assert.equal(r.enhancement,30);assert.equal(r.enhanceFailures,undefined);assert.equal(r.rerollCandidate,undefined);
 });
 test('upgraded and pending gear survive automatic full-bag cleanup while manual ownership rules stay explicit',()=>{
- const p=profile(ordinary(0));p.inventory[0].enhancement=1;for(let id=2;id<=200;id++)p.inventory.push(ordinary(0,id));const upgraded=p.inventory[0];const drop=ordinary(4,201),result=storeItem(p,drop);assert.equal(result.kept,true);assert.ok(p.inventory.includes(upgraded));assert.equal(p.inventory.length,200);
+ const p=profile(ordinary(0));p.inventory[0].enhancement=1;const L=g.INVENTORY_LIMIT;for(let id=2;id<=L;id++)p.inventory.push(ordinary(0,id));const upgraded=p.inventory[0];const drop=ordinary(4,L+1),result=storeItem(p,drop);assert.equal(result.kept,true);assert.ok(p.inventory.includes(upgraded));assert.equal(p.inventory.length,L);
  const s=g.createGame(p);assert.equal(g.salvageItem(s,1),true);assert.ok(!p.inventory.some(i=>i.id===1));
  const q=profile();rerollOwned(q,1,()=>.2);assert.equal(g.salvageItem(g.createGame(q),1),false);
 });

@@ -31,12 +31,12 @@ test('legacy defaults, invalid builds and stale identities are bounded and never
  clean.gold=10000;clean.clearedStage=3;clean.unlockedStage=3;for(const m of g.MATERIALS)clean.materials[m.id]=100;const s=g.createGame(clean),crafted=g.craftItem(s,g.CRAFTED_CATALOG[0].id);assert.equal(crafted.ok,true);assert.equal(crafted.item.id,2);assert.equal(g.buildStatus(clean,0).ok,true);
 });
 
-test('legacy 48-item saves can grow through 49 to 200 and recover without item loss',()=>{
+test('legacy 48-item saves can grow through 49 to the bag limit and recover without item loss',()=>{
  const p=g.createProfile(1000);p.inventory=Array.from({length:48},(_,n)=>({...item(n+1,'1-weapon-1'),rarity:0}));p.nextItemId=49;
- const loaded=g.restoreProfile(g.encodeProfile(p,1000),1000),gold=loaded.gold;
- for(let id=49;id<=200;id++){const result=storeItem(loaded,item(id,'1-weapon-1'));assert.equal(result.kept,true);assert.equal(result.discardedId,null);}
- assert.equal(loaded.inventory.length,200);assert.equal(loaded.gold,gold);
- loaded.equipment.weapon=200;loaded.favoriteItemIds=loaded.inventory.map(i=>i.id);loaded.nextItemId=201;
- const restored=g.restoreProfile(g.encodeProfile(loaded,1000),1000);assert.deepEqual(restored.inventory,loaded.inventory);assert.equal(restored.equipment.weapon,200);assert.equal(restored.favoriteItemIds.length,200);
- const overflow=storeItem(restored,item(201,'1-weapon-1'));assert.equal(overflow.kept,false);assert.equal(overflow.discardedId,201);assert.equal(restored.inventory.length,200);assert.ok(restored.inventory.some(i=>i.id===200));
+ const L=g.INVENTORY_LIMIT,loaded=g.restoreProfile(g.encodeProfile(p,1000),1000),gold=loaded.gold;
+ for(let id=49;id<=L;id++){const result=storeItem(loaded,item(id,'1-weapon-1'));assert.equal(result.kept,true);assert.equal(result.discardedId,null);}
+ assert.equal(loaded.inventory.length,L);assert.equal(loaded.gold,gold);
+ loaded.equipment.weapon=L;loaded.favoriteItemIds=loaded.inventory.map(i=>i.id);loaded.nextItemId=L+1;
+ const restored=g.restoreProfile(g.encodeProfile(loaded,1000),1000);assert.deepEqual(restored.inventory,loaded.inventory);assert.equal(restored.equipment.weapon,L);assert.equal(restored.favoriteItemIds.length,L);
+ const overflow=storeItem(restored,item(L+1,'1-weapon-1'));assert.equal(overflow.kept,false);assert.equal(overflow.discardedId,L+1);assert.equal(restored.inventory.length,L);assert.ok(restored.inventory.some(i=>i.id===L));
 });

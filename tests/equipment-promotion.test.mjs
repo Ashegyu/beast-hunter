@@ -45,5 +45,5 @@ test('legacy out-of-range levels and new progression metadata restore within eac
  for(let grade=0;grade<=6;grade++){const i=item(grade);i.enhancement=999;i.enhanceFailures=999;i.promotionCount=999;const p=g.restoreProfile(profile(i),1000),clean=p.inventory[0];assert.equal(clean.enhancement,g.enhancementCap(grade));assert.equal(clean.enhanceFailures,undefined);assert.equal(clean.promotionCount,grade>0&&grade<5?Math.min(4,grade):undefined);assert.deepEqual(g.restoreProfile(g.encodeProfile(p,1000),1000),p);}
 });
 test('promoted +0 equipment stays protected from automatic overflow cleanup',()=>{
- const i=item(0);i.enhancement=5;const p=profile(i);promoteOwned(p,1);for(let id=2;id<=200;id++)p.inventory.push(item(0,id));assert.equal(storeItem(p,item(4,201)).kept,true);assert.ok(p.inventory.includes(i));assert.equal(p.inventory.length,200);assert.equal(g.salvageItem(g.createGame(p),1),true);
+ const i=item(0);i.enhancement=5;const p=profile(i);promoteOwned(p,1);const L=g.INVENTORY_LIMIT;for(let id=2;id<=L;id++)p.inventory.push(item(0,id));assert.equal(storeItem(p,item(4,L+1)).kept,true);assert.ok(p.inventory.includes(i));assert.equal(p.inventory.length,L);assert.equal(g.salvageItem(g.createGame(p),1),true);
 });

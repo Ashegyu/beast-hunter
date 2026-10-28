@@ -160,7 +160,7 @@ test('workshop keeps ordinary grade rerolls and paused-combat upgrades disabled'
 test('cold camp opens equipment and backup menus without downloading battle images',async()=>{
  const ui=await host({coldStart:true,saved:bagFixture()}),before=ui.profile();
  assert.equal(ui.requestedImages.length,3);assert.equal(ui.nodes.get('loading').hidden,true);assert.equal(ui.nodes.get('game-shell').attributes['data-combat-ready'],'false');
- ui.emit('nav-bag','click');assert.equal(ui.nodes.get('inventory-content').hidden,false);assert.equal(ui.nodes.get('bag-capacity').textContent,'5 / 200');
+ ui.emit('nav-bag','click');assert.equal(ui.nodes.get('inventory-content').hidden,false);assert.equal(ui.nodes.get('bag-capacity').textContent,'5 / '+game.INVENTORY_LIMIT);
  ui.emit('nav-more','click');ui.emit('backup-export','click');assert.equal(ui.downloads.length,1);assert.equal(ui.requestedImages.length,3);assert.deepEqual(ui.profile(),before);
 });
 test('first hunt waits for validated images, reuses pending work and starts its timer only once',async()=>{
@@ -200,18 +200,18 @@ test('preparation shortcuts use live point budgets, open the requested page and 
  ui.emit('nav-home','click');ui.emit('start','click');ui.emit('map-prepare-gear','click');assert.equal(ui.state.phase,'playing');assert.equal(ui.state.paused,false);
  ui.state.phase='defeat';ui.state.run.timedOut=true;ui.tick(0);assert.match(ui.nodes.get('result-note').textContent,/장비.*스킬.*01:00/);ui.emit('result-prepare-growth','click');assert.equal(ui.state.phase,'camp');assert.equal(ui.nodes.get('camp-growth-panel').hidden,false);
 });
-test('200th item retains action identity, protection and ownership through backup and reload',async()=>{
- const capacity=200,lastIndex=(capacity-1)%9,lastPage=Math.ceil(capacity/9)-1,p=game.createProfile(1_000_000);
+test('the last bag item (bag limit) retains action identity, protection and ownership through backup and reload',async()=>{
+ const capacity=game.INVENTORY_LIMIT,lastIndex=(capacity-1)%9,lastPage=Math.ceil(capacity/9)-1,p=game.createProfile(1_000_000);
  p.inventory=Array.from({length:capacity},(_,n)=>({id:n+1,slot:'weapon',tier:1,artId:'forest_blade',name:'검 '+(n+1),rarity:1,affixes:{damage:8}}));p.nextItemId=capacity+1;
- const ui=await host({saved:p});ui.emit('nav-bag','click');assert.equal(ui.nodes.get('bag-capacity').textContent,'200 / 200');
+ const ui=await host({saved:p});ui.emit('nav-bag','click');assert.equal(ui.nodes.get('bag-capacity').textContent,capacity+' / '+game.INVENTORY_LIMIT);
  for(let page=0;page<lastPage;page++)ui.emit('bag-page-next','click');
- assert.equal(ui.nodes.get('bag-page-next').disabled,true);ui.emit('bag-'+lastIndex,'click');assert.match(ui.nodes.get('item-name-'+lastIndex).textContent,/검 200/);
+ assert.equal(ui.nodes.get('bag-page-next').disabled,true);ui.emit('bag-'+lastIndex,'click');assert.match(ui.nodes.get('item-name-'+lastIndex).textContent,new RegExp('검 '+capacity+'$'));
  ui.emit('equip-'+lastIndex,'click');assert.equal(ui.profile().equipment.weapon,capacity);ui.emit('favorite-'+lastIndex,'click');assert.ok(ui.profile().favoriteItemIds.includes(capacity));
  const loaded=profileBackup.readBackup(profileBackup.createBackup(ui.profile(),1_000_000),1_000_000).profile;
  assert.equal(loaded.inventory.length,capacity);assert.equal(loaded.equipment.weapon,capacity);assert.ok(loaded.favoriteItemIds.includes(capacity));
- const again=await host({saved:loaded});again.emit('nav-bag','click');assert.equal(again.nodes.get('bag-capacity').textContent,'200 / 200');assert.match(again.nodes.get('bag-storage-note').textContent,/가득/);
+ const again=await host({saved:loaded});again.emit('nav-bag','click');assert.equal(again.nodes.get('bag-capacity').textContent,capacity+' / '+game.INVENTORY_LIMIT);assert.match(again.nodes.get('bag-storage-note').textContent,/가득/);
  for(let page=0;page<lastPage;page++)again.emit('bag-page-next','click');
- assert.equal(again.nodes.get('bag-'+lastIndex).hidden,false);again.emit('bag-'+lastIndex,'click');assert.match(again.nodes.get('item-name-'+lastIndex).textContent,/검 200/);assert.equal(again.nodes.get('bag-47').hidden,true);
+ assert.equal(again.nodes.get('bag-'+lastIndex).hidden,false);again.emit('bag-'+lastIndex,'click');assert.match(again.nodes.get('item-name-'+lastIndex).textContent,new RegExp('검 '+capacity+'$'));assert.equal(again.nodes.get('bag-47').hidden,true);
 });
 test('save failures expose a reachable banner and retry keeps live progress',async()=>{
  const ui=await host();ui.setWriteFailure(KEY);ui.emit('start','click');ui.tick();assert.equal(ui.nodes.get('save-banner').hidden,false);assert.equal(ui.nodes.get('game-shell').attributes['data-save-error'],'true');assert.match(ui.nodes.get('save-status').textContent,/자동 저장에 실패/);
@@ -427,7 +427,7 @@ test('crafted earrings expose a second craft then route each owned instance to e
 });
 test('nine-slot inventory groups armor parts, chooses either earring position and preserves ownership after resize',async()=>{
  const p=game.createProfile(1_000_000);p.inventory=['helmet','armor','pants','boots','charm','earring','earring','special'].map((slot,n)=>rollItem({id:n+1,tier:1,slot,quality:0},()=>.5));p.equipment.earringLeft=6;p.equipment.earringRight=7;
- const ui=await host({saved:p});ui.emit('nav-bag','click');ui.emit('bag-tab-armor','click');assert.equal(ui.nodes.get('bag-capacity').textContent,'8 / 200');assert.equal(ui.nodes.get('bag-3').attributes['data-empty'],'false');assert.equal(ui.nodes.get('bag-4').attributes['data-empty'],'true');
+ const ui=await host({saved:p});ui.emit('nav-bag','click');ui.emit('bag-tab-armor','click');assert.equal(ui.nodes.get('bag-capacity').textContent,'8 / '+game.INVENTORY_LIMIT);assert.equal(ui.nodes.get('bag-3').attributes['data-empty'],'false');assert.equal(ui.nodes.get('bag-4').attributes['data-empty'],'true');
  ui.nodes.get('bag-part').value='helmet';ui.emit('bag-part','change');assert.equal(ui.nodes.get('bag-0').attributes['data-empty'],'false');assert.equal(ui.nodes.get('bag-1').attributes['data-empty'],'true');
  ui.emit('bag-tab-charm','click');ui.emit('bag-1','click');assert.equal(ui.nodes.get('earring-target-1').hidden,false);assert.equal(ui.nodes.get('equip-position-1').value,'earringLeft');
  ui.nodes.get('equip-position-1').value='earringRight';ui.emit('equip-position-1','change');assert.equal(ui.nodes.get('equip-1').disabled,false);ui.emit('equip-1','click');assert.equal(ui.profile().equipment.earringLeft,null);assert.equal(ui.profile().equipment.earringRight,6);assert.equal(ui.nodes.get('salvage-1').disabled,true);
@@ -526,14 +526,14 @@ test('unified detail reading follows selected identity through resize and resets
 });
 
 test('bag views and layered back actions preserve the profile and never open details on exploration',async()=>{
- const ui=await host({saved:bagFixture()}),before=ui.profile();ui.emit('nav-bag','click');assert.equal(ui.nodes.get('inventory-gear-view').hidden,false);assert.equal(ui.nodes.get('inventory-build-view').hidden,true);assert.equal(ui.document.activeElement.id,'page-back');assert.equal(ui.nodes.get('bag-capacity').textContent,'5 / 200');
+ const ui=await host({saved:bagFixture()}),before=ui.profile();ui.emit('nav-bag','click');assert.equal(ui.nodes.get('inventory-gear-view').hidden,false);assert.equal(ui.nodes.get('inventory-build-view').hidden,true);assert.equal(ui.document.activeElement.id,'page-back');assert.equal(ui.nodes.get('bag-capacity').textContent,'5 / '+game.INVENTORY_LIMIT);
  ui.emit('bag-2','pointerenter');ui.emit('bag-2','focus');assert.equal(ui.nodes.get('bag-detail').hidden,true);ui.emit('bag-2','click');assert.equal(ui.document.activeElement.id,'bag-detail-close');assert.equal(ui.nodes.get('bag-detail').hidden,false);ui.emit('page-back','click');assert.equal(ui.nodes.get('bag-detail').hidden,true);assert.equal(ui.nodes.get('inventory-content').hidden,false);assert.equal(ui.document.activeElement.id,'bag-2');
  ui.emit('bag-organize','click');assert.equal(ui.nodes.get('bag-bulk').hidden,false);ui.emit('loadout-build-open','click');assert.equal(ui.nodes.get('inventory-gear-view').hidden,true);assert.equal(ui.nodes.get('inventory-build-view').hidden,false);assert.equal(ui.nodes.get('bag-bulk').hidden,true);assert.equal(ui.nodes.get('page-title').textContent,'빌드');ui.emit('document','keydown',{key:'Escape'});assert.equal(ui.nodes.get('inventory-gear-view').hidden,false);assert.equal(ui.nodes.get('bag-bulk').hidden,false);ui.emit('bag-organize','click');ui.emit('page-back','click');assert.equal(ui.nodes.get('inventory-content').hidden,true);assert.deepEqual(ui.profile(),before);
 });
 
 test('armory category shortcuts and folded filters act on real identities without changing ownership',async()=>{
  const ui=await host({saved:bagFixture()}),before=ui.profile();ui.emit('nav-bag','click');ui.emit('bag-tab-weapon','click');assert.equal(ui.nodes.get('bag-slot').value,'weapon');assert.equal(ui.nodes.get('bag-1').hidden,false);assert.equal(ui.nodes.get('bag-2').hidden,false);assert.equal(ui.nodes.get('bag-2').disabled,true);ui.emit('bag-1','click');assert.match(ui.nodes.get('item-name-1').textContent,/붉은 잎 검/);ui.emit('bag-detail-close','click');
- ui.emit('bag-filter-toggle','click');assert.equal(ui.nodes.get('bag-filters').hidden,false);ui.nodes.get('bag-slot').value='charm';ui.emit('bag-slot','change');assert.equal(ui.nodes.get('bag-tab-charm').attributes['aria-pressed'],'true');ui.emit('bag-favorites','click');assert.equal(ui.nodes.get('inventory-empty').hidden,false);ui.emit('bag-filter-reset','click');assert.equal(ui.nodes.get('bag-slot').value,'all');assert.equal(ui.nodes.get('bag-tab-all').attributes['aria-pressed'],'true');assert.equal(ui.nodes.get('bag-filter-dot').hidden,true);assert.equal(ui.nodes.get('bag-capacity').textContent,'5 / 200');assert.deepEqual(ui.profile(),before);
+ ui.emit('bag-filter-toggle','click');assert.equal(ui.nodes.get('bag-filters').hidden,false);ui.nodes.get('bag-slot').value='charm';ui.emit('bag-slot','change');assert.equal(ui.nodes.get('bag-tab-charm').attributes['aria-pressed'],'true');ui.emit('bag-favorites','click');assert.equal(ui.nodes.get('inventory-empty').hidden,false);ui.emit('bag-filter-reset','click');assert.equal(ui.nodes.get('bag-slot').value,'all');assert.equal(ui.nodes.get('bag-tab-all').attributes['aria-pressed'],'true');assert.equal(ui.nodes.get('bag-filter-dot').hidden,true);assert.equal(ui.nodes.get('bag-capacity').textContent,'5 / '+game.INVENTORY_LIMIT);assert.deepEqual(ui.profile(),before);
 });
 
 test('armory slot icons and statistics follow equips and saved builds without a character weapon overlay',async()=>{
@@ -543,7 +543,7 @@ test('armory slot icons and statistics follow equips and saved builds without a 
 });
 
 test('armory empty and paused states stay truthful and detail back never resumes combat',async()=>{
- const empty=await host();empty.emit('nav-bag','click');assert.equal(empty.nodes.get('bag-capacity').textContent,'0 / 200');assert.equal(empty.nodes.get('inventory-empty').hidden,false);assert.equal(empty.nodes.get('equipped-open-weapon').disabled,false);assert.equal(empty.nodes.get('equipment-synergy-status').textContent,'조합 찾기');
+ const empty=await host();empty.emit('nav-bag','click');assert.equal(empty.nodes.get('bag-capacity').textContent,'0 / '+game.INVENTORY_LIMIT);assert.equal(empty.nodes.get('inventory-empty').hidden,false);assert.equal(empty.nodes.get('equipped-open-weapon').disabled,false);assert.equal(empty.nodes.get('equipment-synergy-status').textContent,'조합 찾기');
  const ui=await host({saved:bagFixture()});ui.emit('start','click');ui.tick();ui.emit('pause','click');ui.emit('document','keydown',{key:'i'});const time=ui.state.run.time;ui.emit('bag-2','click');ui.emit('document','keydown',{key:'Escape'});assert.equal(ui.nodes.get('inventory-content').hidden,false);assert.equal(ui.nodes.get('bag-detail').hidden,true);ui.run(.5);assert.equal(ui.state.run.time,time);assert.equal(ui.state.paused,true);ui.emit('loadout-build-open','click');ui.emit('document','keydown',{key:'Escape'});assert.equal(ui.nodes.get('inventory-gear-view').hidden,false);ui.emit('document','keydown',{key:'Escape'});assert.equal(ui.nodes.get('pause-content').hidden,false);assert.equal(ui.state.paused,true);
 });
 
@@ -554,7 +554,7 @@ test('armory display atlas covers every base identity without adding combat boot
 });
 
 test('live home panels mirror ownership and opening an item does not equip it',async()=>{
- const p=bagFixture(),ui=await host({saved:p});assert.equal(ui.nodes.get('dashboard-capacity').textContent,'5 / 200');assert.equal(ui.nodes.get('dashboard-weapon-name').textContent,p.inventory[0].name);assert.equal(ui.nodes.get('dashboard-item-5').hidden,true);
+ const p=bagFixture(),ui=await host({saved:p});assert.equal(ui.nodes.get('dashboard-capacity').textContent,'5 / '+game.INVENTORY_LIMIT);assert.equal(ui.nodes.get('dashboard-weapon-name').textContent,p.inventory[0].name);assert.equal(ui.nodes.get('dashboard-item-5').hidden,true);
  ui.emit('dashboard-item-2','click');assert.equal(ui.nodes.get('inventory-content').hidden,false);assert.match(ui.nodes.get('item-name-2').textContent,/붉은 잎 검/);assert.equal(ui.profile().equipment.weapon,1);ui.emit('equip-2','click');ui.emit('inventory-back','click');assert.equal(ui.nodes.get('dashboard-weapon-name').textContent,p.inventory[2].name);assert.equal(ui.nodes.get('dashboard-damage').textContent,Math.round(game.playerStats(ui.profile()).damage));
 });
 
@@ -1919,7 +1919,7 @@ test('bag rules: grade chips pick the bulk dismantle grade, auto dismantle toggl
  assert.equal(ui.nodes.get('bag-grade-0').attributes['aria-checked'],'true');assert.match(ui.nodes.get('bag-grade-salvage').textContent,/일반 이하 1개 분해/);
  ui.emit('bag-grade-1','click');assert.equal(ui.profile().bagRules.grade,1);assert.match(ui.nodes.get('bag-grade-salvage').textContent,/희귀 이하 2개 분해/);
  ui.emit('bag-auto','click');assert.equal(ui.profile().bagRules.auto,true);assert.match(ui.nodes.get('bag-auto').textContent,/켬/);
- assert.equal(ui.nodes.get('bag-limit-weapon').textContent,'2/∞');ui.emit('bag-limit-down-weapon','click');assert.equal(ui.profile().bagRules.limits.weapon,100);ui.emit('bag-limit-down-weapon','click');assert.equal(ui.profile().bagRules.limits.weapon,75);ui.emit('bag-limit-up-weapon','click');assert.equal(ui.profile().bagRules.limits.weapon,100);
+ assert.equal(ui.nodes.get('bag-limit-weapon').textContent,'2/∞');ui.emit('bag-limit-down-weapon','click');assert.equal(ui.profile().bagRules.limits.weapon,500);ui.emit('bag-limit-down-weapon','click');assert.equal(ui.profile().bagRules.limits.weapon,200);ui.emit('bag-limit-up-weapon','click');assert.equal(ui.profile().bagRules.limits.weapon,500);
  const gold=ui.profile().gold;ui.emit('bag-grade-salvage','click');assert.equal(ui.nodes.get('bag-confirmation').hidden,false);ui.emit('bag-confirm','click');
  assert.deepEqual(ui.profile().inventory.map(i=>i.id).sort(),[1,2,5]);assert.ok(ui.profile().gold>gold);
 });

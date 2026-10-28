@@ -1,5 +1,10 @@
 # 괴수 사냥꾼 — Alpha 0.142.0
 
+## 가방 2000칸 · 백업 2MB (Alpha 0.142.0, 사용자 요청 '200개 한도는 너무 낮다')
+- `INVENTORY_LIMIT` 200 → 2000(inventory-rules.js). 장비 1개가 저장에서 약 206바이트라 가득 차면 0.4~0.6MB. 백업 파일 상한 `MAX_BACKUP_BYTES` 256KB → 2MB(가져오기 안내 '2MB 이하'). 부위별 보관 개수의 '제한 없음'(∞)도 2000이 되고 단계에 200·500을 더했다(5…100·200·500·∞).
+- 성능(장비 2000개, CPU 4배 감속): 가방 페이지 넘김 1.1초 → 0.33초, 가방을 연 동안 프레임 시간은 60개일 때와 같음. 고친 곳: ① 착용 능력치·세트·고유 효과·무기 특성이 착용 9칸을 찾으려고 가방 전체를 돌던 것을 id 색인(`equipment-slots.js` `inventoryItem`/`equippedItems`, 배열 동일성·길이·처음/끝 원소로 무효화 — 가방은 push나 새 배열 대입으로만 바뀐다)으로, ② 가방·홈 대시보드·제작 화면이 매 프레임 다시 그릴지 판단하려고 장비 전체를 JSON으로 만들던(2000개면 약 350KB) 키를 `inventorySignature`(번호·등급·티어·강화·승급·각인·옵션 합)로.
+- 테스트: 200을 직접 쓰던 곳을 `INVENTORY_LIMIT`로(bag-builds·equipment-progression·equipment-promotion·game-ui '마지막 가방 칸'·화면 '5 / 2000' 글자), pickup076 연습장 웨이브 목표 1000 → 1e6(2012마리 처치). 954/954, 전체 약 140초(그중 'ancient slot icons …' 60초는 이전부터).
+
 ## 가방 분해 규칙: 등급 이하 일괄 분해 · 자동 분해 · 부위별 보관 개수 (Alpha 0.142.0, 사용자 요청)
 사용자 요청 '특정 등급 이하 전체 분해 + 각 장비별 개수 설정, 개수 초과 시 획득 장비는 기존 장비와 더해서 등급 낮은 순으로 자동 분해'.
 - 저장 `profile.bagRules`={grade 0일반~4신화, auto, limits{weapon·helmet·armor·pants·boots·charm·earring·special}}(`inventory-rules.js` `cleanBagRules`, 보관 개수 5~200, **기본 200 = 제한 없음**이라 업데이트만으로 장비가 사라지지 않음). 엔진 `setBagRules(s,{grade|auto|slot,limit})`(거점 전용, 바꿔도 즉시 분해하지 않고 다음 획득부터 적용).
