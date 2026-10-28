@@ -67,7 +67,7 @@ const reducedMotion=window.matchMedia?.('(prefers-reduced-motion: reduce)').matc
 function designsForSwing(swing){if(!swing?.equipmentAtStart)return appearance;let result=swingDesignCache.get(swing);if(!result){result=snapshotDesigns(swing.equipmentAtStart);swingDesignCache.set(swing,result);}return result;}
 let trackOpen=false,trackMaterial=null,trackViewKey='',goalCache=null;
 let campDrawer='',campDrawerOrigin='hub-map';
-let selectedRaidTier=0,selectedDungeon='gold',selectedDungeonLevel=1,dungeonBusy=false,dungeonMode='growth',selectedRaid='colossus',selectedSealId=null,sealFeedback='';
+let selectedTowerFloor=1,selectedRaidTier=0,selectedDungeon='gold',selectedDungeonLevel=1,dungeonBusy=false,dungeonMode='growth',selectedRaid='colossus',selectedSealId=null,sealFeedback='';
 let selectedSkill='crescent',skillTab='all',skillRenderKey='',skillFeedback='';
 const skillKinds={active:'일반 스킬',passive:'패시브',ultimate:'궁극기',beast:'괴수 기술'};
 let craftSlot='all',trackRecipeId=null,trackReturnCraft=false,trackOrigin='craft-track';
@@ -203,7 +203,7 @@ function updateRegionUi(){
   $('game-shell').setAttribute('data-resident-region',String(regionAssets.residentId??''));
   $('game-shell').setAttribute('data-loaded-images',String(images.size));
 }
-$('region-retry').addEventListener('click',()=>{if(!ready){boot();return;}ensureCombatAssets();prepareRegion(state.phase==='camp'&&campDrawer==='dungeons'?game.dungeonDefinition(selectedDungeon).chapter:state.phase==='camp'?selectedStage:regionAssets.requestedId??selectedStage,true);});
+$('region-retry').addEventListener('click',()=>{if(!ready){boot();return;}ensureCombatAssets();prepareRegion(state.phase==='camp'&&campDrawer==='dungeons'?(dungeonMode==='tower'?game.towerChapter(selectedTowerFloor):game.dungeonDefinition(selectedDungeon).chapter):state.phase==='camp'?selectedStage:regionAssets.requestedId??selectedStage,true);});
 function releaseJoystick(){joystickId=null;touch=null;stickThumb.style.transform='translate(0px,0px)';joystick.setAttribute('data-active','false');}
 function clearInput(){keys.clear();moveTarget=null;attackTarget=null;aim=null;releaseJoystick();heldAttacks.clear();pursuitInRange=false;}
 function resizeViewport(){
@@ -1069,7 +1069,7 @@ function updateHud(){
   $('xp-fill').style.width=(profile.level===game.MAX_LEVEL?100:profile.xp/game.xpNeeded(profile.level)*100)+'%';hudText($('xp-text'),profile.level===game.MAX_LEVEL?'최고 레벨':'다음 성장까지 '+(game.xpNeeded(profile.level)-profile.xp));refreshGrowthProgress();
   refreshBuildSystem();
   const monsters=game.remainingMonsters(state),timeText=countdown(state.run.timeRemaining),timeRatio=state.run.timeLimit?clamp(state.run.timeRemaining/state.run.timeLimit,0,1):0;
-  const stageText=state.run.raidId?'레이드 · '+game.raidDefinition(state.run.raidId).name+' · '+state.run.raidChapter+'장 기준':state.run.rush?'보스 러시 · '+clamp(state.run.wave,1,game.RUSH_BOSSES)+' / '+game.RUSH_BOSSES+' · '+state.run.rushChapter+'장 기준':state.run.dungeonId?game.dungeonDefinition(state.run.dungeonId).kind+' · '+state.run.stage+'단계':stage.name+' · '+state.stageId+'-'+state.run.stage+' 스테이지';
+  const stageText=state.run.raidId?'레이드 · '+game.raidDefinition(state.run.raidId).name+' · '+state.run.raidChapter+'장 기준':state.run.rush?'보스 러시 · '+clamp(state.run.wave,1,game.RUSH_BOSSES)+' / '+game.RUSH_BOSSES+' · '+state.run.rushChapter+'장 기준':state.run.dungeonId==='tower'?'무한의 탑 · '+state.run.stage+'층':state.run.dungeonId?game.dungeonDefinition(state.run.dungeonId).kind+' · '+state.run.stage+'단계':stage.name+' · '+state.stageId+'-'+state.run.stage+' 스테이지';
   if($('hunt-stage').textContent!==stageText)hudText($('hunt-stage'),stageText);
   hudText($('time-left'),timeText);$('hunt-clock').setAttribute('aria-label','남은 시간 '+timeText);
   $('hunt-clock').setAttribute('data-urgency',state.run.timeRemaining<=10?'critical':state.run.timeRemaining<=30?'warning':'normal');
@@ -1169,7 +1169,7 @@ function updateHud(){
     hudText($('result-stages'),String(state.run.rooms)+'개');
     hudText($('next-stage'),victory&&state.difficulty?'같은 난이도로 처음부터':victory?'다음 챕터로':'현재 스테이지 재도전');
     $('next-stage').hidden=victory&&state.stageId>=3&&!state.difficulty;
-    if(dungeon){modal('result',dungeon.kind+(victory?' 완료!':' 실패'),victory?'모든 적을 처치했습니다. 보상을 저장했습니다.':timedOut?'제한 시간 60초를 넘겼습니다. 이번 던전의 보상은 없습니다.':'전투에서 쓰러졌습니다. 이번 던전의 보상은 없습니다.',dungeon.name+' · '+state.run.stage+'단계');hudText($('dungeon-result-list'),victory?dungeonRewardText(state.run.dungeonReward):'획득 보상 없음');hudText($('result-note'),victory?'보상을 성장에 사용하거나 같은 단계에 다시 도전하세요.':'장비·스킬이나 프리셋을 바꿔 01:00으로 재도전하세요.');hudText($('next-stage'),'같은 던전 재입장');$('next-stage').hidden=false;hudText($('result-loot'),'성장 재료 확정 보상 · 장신구 40% 확률');
+    if(dungeon){modal('result',dungeon.kind+(victory?' 완료!':' 실패'),victory?'모든 적을 처치했습니다. 보상을 저장했습니다.':timedOut?'제한 시간 60초를 넘겼습니다. 이번 던전의 보상은 없습니다.':'전투에서 쓰러졌습니다. 이번 던전의 보상은 없습니다.',dungeon.name+' · '+state.run.stage+(state.run.dungeonId==='tower'?'층':'단계'));hudText($('dungeon-result-list'),!victory?'획득 보상 없음':state.run.dungeonId==='tower'?(state.run.dungeonReward.firstClear?'첫 클리어 · '+dungeonRewardText(state.run.dungeonReward)+(game.towerBonusAt(state.run.stage)?' · 영구 '+game.towerBonusAt(state.run.stage).text:''):'이미 오른 층 · 보상 없음'):dungeonRewardText(state.run.dungeonReward));hudText($('result-note'),victory?'보상을 성장에 사용하거나 같은 단계에 다시 도전하세요.':'장비·스킬이나 프리셋을 바꿔 01:00으로 재도전하세요.');hudText($('next-stage'),'같은 던전 재입장');$('next-stage').hidden=false;hudText($('result-loot'),'성장 재료 확정 보상 · 장신구 40% 확률');
      if(raidRun){const left=game.raidEntriesLeft(profile,raidRun.id,Date.now());modal('result','레이드 '+(victory?'완료!':'실패'),victory?raidRun.name+'을(를) 쓰러뜨렸습니다. 보상을 저장했습니다.':timedOut?'제한 시간 '+game.RAID_TIME_LIMIT+'초를 넘겼습니다. 입장 횟수는 돌아오지 않습니다.':'전투에서 쓰러졌습니다. 입장 횟수는 돌아오지 않습니다.',raidRun.name+' · '+state.run.raidChapter+'장 기준');hudText($('result-note'),(victory?'':'추천 빌드 · '+raidRun.build+' · ')+'이번 주 남은 입장 '+left+'회');hudText($('next-stage'),'같은 레이드 재입장 ('+left+'회 남음)');$('next-stage').hidden=left<1;hudText($('result-loot'),'레이드 확정 보상 · 레이드 고대 '+Math.round(game.DROP_CHANCE.raid*100)+'% 확률');}
      // Alpha 0.136 보스 러시: a run with a boss felled always settles; the end reason is the run's own.
      if(rushRun){const left=game.rushEntriesLeft(profile,Date.now()),kills=state.run.rushKills,item=state.run.dungeonReward?.item;modal('result','보스 러시 '+kills+' / '+game.RUSH_BOSSES,kills===game.RUSH_BOSSES?'다섯 보스를 모두 쓰러뜨렸습니다. 인장 확정 보상.':state.run.rushEnd==='timeout'?'제한 시간이 끝났습니다. 쓰러뜨린 보스만큼 보상을 받았습니다.':kills?'쓰러졌지만 쓰러뜨린 보스만큼 보상을 받았습니다.':'보스를 하나도 쓰러뜨리지 못했습니다. 입장 횟수는 돌아오지 않습니다.',state.run.rushChapter+'장 기준');hudText($('dungeon-result-list'),kills?dungeonRewardText(state.run.dungeonReward):'획득 보상 없음');hudText($('result-note'),(item?game.SEAL_GRADES[item.seal.grade].name+' 인장 획득 · ':'')+'오늘 남은 입장 '+left+'회');hudText($('next-stage'),'보스 러시 재입장 ('+left+'회 남음)');$('next-stage').hidden=left<1;hudText($('result-loot'),'보스 러시 · 인장 조각 · 인장 '+Math.round(game.RUSH_SEAL_CHANCE[kills]*100)+'% 확률');}}
@@ -1632,11 +1632,12 @@ function refreshRaids(){
  $('dungeon-enter').disabled=dungeonBusy||!!combatWork||!!combatError||!unlocked||left<1;$('dungeon-enter').textContent=dungeonBusy?'전투 준비 중…':!unlocked?'잠김':left<1?'이번 주 입장 완료':'레이드 입장 ›';
 }
 function refreshDungeons(){
- const raid=dungeonMode==='raid',rushMode=dungeonMode==='rush';$('camp-dungeons-panel').setAttribute('data-mode',dungeonMode);for(const mode of ['growth','raid','rush'])$('dungeon-mode-'+mode).setAttribute('aria-pressed',String(dungeonMode===mode));
- $('raid-cards').hidden=!raid;$('raid-tier-label').hidden=!raid;$('rush-panel').hidden=!rushMode;$('dungeon-use').hidden=raid||rushMode;$('dungeon-growth-cards').hidden=raid||rushMode;$('dungeon-level').hidden=raid||rushMode;
- $('dungeon-hall-title').textContent=rushMode?'다섯 보스, 하나의 인장':raid?'하나의 보스, 맞춤 빌드':'사냥을 넘어, 성장으로';$('dungeon-hall-desc').textContent=rushMode?game.RUSH_TIME_LIMIT+'초 안에 보스 다섯 연전 · 쓰러뜨린 수만큼 보상 · 하루 '+game.RUSH_DAILY_ENTRIES+'회':raid?'패턴에 맞는 빌드로 120초 안에 처치 · 주간 입장 '+game.RAID_WEEKLY_ENTRIES+'회':'60초 안에 모든 적 처치 · 실패 보상 없음 · 반복 입장';
- $('dungeon-library-note').textContent=rushMode?'인장(캐릭터 전용장비)은 보스 러시에서만 나옵니다. 입장할 때 횟수가 차감됩니다.':raid?'입장할 때 횟수가 차감되고, 실패해도 돌려받지 않습니다.':'입장 비용·횟수 제한 없음 · 보상은 성공 후 저장됩니다.';
+ const raid=dungeonMode==='raid',rushMode=dungeonMode==='rush',towerMode=dungeonMode==='tower';$('camp-dungeons-panel').setAttribute('data-mode',dungeonMode);for(const mode of ['growth','raid','rush','tower'])$('dungeon-mode-'+mode).setAttribute('aria-pressed',String(dungeonMode===mode));
+ $('raid-cards').hidden=!raid;$('raid-tier-label').hidden=!raid;$('rush-panel').hidden=!rushMode;$('tower-panel').hidden=!towerMode;$('dungeon-use').hidden=raid||rushMode;$('dungeon-growth-cards').hidden=raid||rushMode||towerMode;$('dungeon-level').hidden=raid||rushMode||towerMode;
+ $('dungeon-hall-title').textContent=towerMode?'한 층씩, 한계를 넘어':rushMode?'다섯 보스, 하나의 인장':raid?'하나의 보스, 맞춤 빌드':'사냥을 넘어, 성장으로';$('dungeon-hall-desc').textContent=towerMode?'60초 안에 모든 적 처치 · 5층마다 정예 · 10층마다 보스 · 층마다 강해짐':rushMode?game.RUSH_TIME_LIMIT+'초 안에 보스 다섯 연전 · 쓰러뜨린 수만큼 보상 · 하루 '+game.RUSH_DAILY_ENTRIES+'회':raid?'패턴에 맞는 빌드로 120초 안에 처치 · 주간 입장 '+game.RAID_WEEKLY_ENTRIES+'회':'60초 안에 모든 적 처치 · 실패 보상 없음 · 반복 입장';
+ $('dungeon-library-note').textContent=towerMode?'입장 제한 없음 · 보상은 층마다 처음 깰 때 한 번 · 10층마다 영구 능력치':rushMode?'인장(캐릭터 전용장비)은 보스 러시에서만 나옵니다. 입장할 때 횟수가 차감됩니다.':raid?'입장할 때 횟수가 차감되고, 실패해도 돌려받지 않습니다.':'입장 비용·횟수 제한 없음 · 보상은 성공 후 저장됩니다.';
  if(rushMode){refreshDungeonBuild();refreshRush();return;}
+ if(towerMode){refreshDungeonBuild();refreshTower();return;}
  if(raid){refreshDungeonBuild();refreshRaids();return;}
  const d=game.dungeonDefinition(selectedDungeon),limit=game.dungeonLimit(profile,d.id);selectedDungeonLevel=Math.min(selectedDungeonLevel,limit);const reward=game.dungeonRewards(d.id,selectedDungeonLevel);
  for(const row of game.DUNGEONS){$('dungeon-card-'+row.id).setAttribute('aria-pressed',String(row.id===d.id));$('dungeon-stage-'+row.id).textContent='최고 '+profile.dungeonProgress[row.id]+' / '+game.DUNGEON_MAX_LEVEL+'단계';const r=game.dungeonRewards(row.id,Math.min(selectedDungeonLevel,game.dungeonLimit(profile,row.id)));$('dungeon-owned-'+row.id).textContent=row.id==='gold'?'보유 '+profile.gold.toLocaleString('ko-KR')+' 골드':row.id==='xp'?'Lv.'+profile.level:Object.keys(r.materials).slice(0,3).map(id=>game.MATERIAL_BY_ID[id].name+' '+profile.materials[id]).join(' · ');}
@@ -1644,6 +1645,19 @@ function refreshDungeons(){
  for(let n=1;n<=game.DUNGEON_MAX_LEVEL;n++){$('dungeon-level-'+n).disabled=n>limit;$('dungeon-level-'+n).textContent=n+'단계'+(n>limit?' · 이전 단계 완료 필요':profile.dungeonProgress[d.id]>=n?' · 완료':'');}
  refreshDungeonBuild();
  $('dungeon-enter').disabled=dungeonBusy||!!combatWork||!!combatError;$('dungeon-enter').textContent=dungeonBusy?'전투 준비 중…':'던전 입장 ›';
+}
+// Alpha 0.141 무한의 탑 tab: floor pager (best+1 at most), the floor's land/kind/strength and the permanent bonuses.
+function refreshTower(){
+ const best=profile.tower.best,limit=game.dungeonLimit(profile,'tower');selectedTowerFloor=clamp(selectedTowerFloor,1,limit);const floor=selectedTowerFloor,plan=game.towerPlan(floor),st=game.STAGES[plan.chapter-1],kind={normal:'일반 층',elite:'정예 층',boss:'보스 층'}[plan.floorKind],first=floor>best,reward=game.dungeonRewards('tower',floor);
+ $('tower-best').textContent=best?best+'층':'기록 없음';$('tower-floor').textContent=floor+'층';
+ $('tower-floor-down10').disabled=$('tower-floor-down').disabled=floor<=1;$('tower-floor-up').disabled=$('tower-floor-up10').disabled=floor>=limit;
+ $('tower-floor-info').textContent=kind+(plan.floorKind==='boss'?' · '+st.bossName:'')+'\n'+plan.chapter+'장 '+st.name+' 지형 · 일반 '+floor+'장 강도\n'+(first?'첫 클리어 보상 있음':'이미 오른 층 · 보상 없음');
+ const b=game.towerBonus(best),next=Math.floor(best/10)*10+10,at=game.towerBonusAt(next);
+ $('tower-next-bonus').textContent=next+'층 · '+at.text;
+ $('tower-bonus').textContent=[['공격력',b.damagePct],['최대 체력',b.hpPct],['치명',b.crit],['피해 감소',b.reduction]].map(([n,v])=>n+' +'+Math.round(v*1000)/10+(n==='치명'||n==='피해 감소'?'%p':'%')).join('\n');
+ $('dungeon-kind').textContent='무한의 탑 · 60초';$('dungeon-name').textContent='무한의 탑 '+floor+'층';$('dungeon-rule').textContent=game.TOWER.rule;$('dungeon-hint').textContent=kind+' · '+game.TOWER.hint;
+ $('dungeon-rewards').textContent=first?'첫 클리어 · '+dungeonRewardText(reward)+(game.towerBonusAt(floor)?' · 영구 '+game.towerBonusAt(floor).text:''):'이미 오른 층 · 보상 없음';$('dungeon-use').hidden=true;$('dungeon-progress').textContent='1~'+limit+'층';
+ $('dungeon-enter').disabled=dungeonBusy||!!combatWork||!!combatError;$('dungeon-enter').textContent=dungeonBusy?'전투 준비 중…':'탑 오르기 ›';
 }
 function refreshDungeonBuild(){
  const selected=profile.selectedBuild!==null?profile.savedBuilds[profile.selectedBuild]:null,match=selected&&JSON.stringify(selected.equipment)===JSON.stringify(profile.equipment)&&JSON.stringify(selected.skill)===JSON.stringify({loadout:profile.skillBook.loadout,auto:profile.skillBook.auto,awakening:profile.skillBook.awakening});
@@ -1698,22 +1712,24 @@ function startRaid(id=selectedRaid){
 function startDungeon(id=selectedDungeon,level=selectedDungeonLevel){
  const d=game.dungeonDefinition(id);if(!d||!ready||orientationBlocked||dungeonBusy||state.settlement||state.phase!=='camp'&&!game.resultReady(state)||level>game.dungeonLimit(profile,id))return;
  audio.unlock();
- if(!combatReady||!regionReady(d.chapter)){
+ const chapter=game.dungeonStageId(id,level);
+ if(!combatReady||!regionReady(chapter)){
   const token=++launchRevision,phase=state.phase,run=state.run,drawer=campDrawer;dungeonBusy=true;$('dungeon-feedback').textContent='전투 이미지를 준비하는 중…';refreshDungeons();
-  Promise.all([ensureCombatAssets(),prepareRegion(d.chapter,regionAssets.status==='error')]).then(([shared,region])=>{dungeonBusy=false;if(shared&&region&&token===launchRevision&&state.phase===phase&&state.run===run&&campDrawer===drawer)startDungeon(id,level);else if(campDrawer==='dungeons'){$('dungeon-feedback').textContent=shared&&region?'입장 준비가 취소되었습니다. 다시 입장하세요.':'전투 준비에 실패했습니다. 다시 시도하세요.';refreshDungeons();}});return;
+  Promise.all([ensureCombatAssets(),prepareRegion(chapter,regionAssets.status==='error')]).then(([shared,region])=>{dungeonBusy=false;if(shared&&region&&token===launchRevision&&state.phase===phase&&state.run===run&&campDrawer===drawer)startDungeon(id,level);else if(campDrawer==='dungeons'){$('dungeon-feedback').textContent=shared&&region?'입장 준비가 취소되었습니다. 다시 입장하세요.':'전투 준비에 실패했습니다. 다시 시도하세요.';refreshDungeons();}});return;
  }
- if(game.launchDungeon(state,id,level,viewport)){selectedDungeon=id;selectedDungeonLevel=level;clearInput();inventoryOpen=codexOpen=craftOpen=trackOpen=campChoices=false;save();canvas.focus({preventScroll:true});updateHud();}
+ if(game.launchDungeon(state,id,level,viewport)){if(id==='tower')selectedTowerFloor=level;else{selectedDungeon=id;selectedDungeonLevel=level;}clearInput();inventoryOpen=codexOpen=craftOpen=trackOpen=campChoices=false;save();canvas.focus({preventScroll:true});updateHud();}
 }
 $('lobby-summon').addEventListener('click',()=>openDungeons());$('more-dungeons').addEventListener('click',()=>openDungeons('nav-more'));
 for(const d of game.DUNGEONS)$('dungeon-card-'+d.id).addEventListener('click',()=>{if(state.phase!=='camp'||campDrawer!=='dungeons')return;launchRevision++;selectedDungeon=d.id;selectedDungeonLevel=Math.min(selectedDungeonLevel,game.dungeonLimit(profile,d.id));$('dungeon-feedback').textContent='';refreshDungeons();});
 $('dungeon-level').addEventListener('change',()=>{const n=Number($('dungeon-level').value);if(state.phase!=='camp'||campDrawer!=='dungeons'||!Number.isInteger(n)||n<1||n>game.dungeonLimit(profile,selectedDungeon))return;launchRevision++;selectedDungeonLevel=n;refreshDungeons();});
 $('dungeon-build').addEventListener('change',()=>{if(state.phase!=='camp'||campDrawer!=='dungeons'||$('dungeon-build').value==='current')return;const r=game.applyBuild(state,Number($('dungeon-build').value));$('dungeon-feedback').textContent=r.reason;if(r.ok){appearance=equippedDesigns(profile);save();}skillRenderKey='';updateHud();});
-$('dungeon-enter').addEventListener('click',()=>{if(state.phase==='camp'&&campDrawer==='dungeons'){if(dungeonMode==='raid')startRaid();else if(dungeonMode==='rush')startRush();else startDungeon();}});
-for(const mode of ['growth','raid','rush'])$('dungeon-mode-'+mode).addEventListener('click',()=>{if(state.phase!=='camp'||campDrawer!=='dungeons'||dungeonMode===mode)return;launchRevision++;dungeonMode=mode;sealFeedback='';$('dungeon-feedback').textContent='';refreshDungeons();});
+$('dungeon-enter').addEventListener('click',()=>{if(state.phase==='camp'&&campDrawer==='dungeons'){if(dungeonMode==='raid')startRaid();else if(dungeonMode==='rush')startRush();else if(dungeonMode==='tower')startDungeon('tower',selectedTowerFloor);else startDungeon();}});
+for(const [id,step]of [['tower-floor-down10',-10],['tower-floor-down',-1],['tower-floor-up',1],['tower-floor-up10',10]])$(id).addEventListener('click',()=>{if(state.phase!=='camp'||campDrawer!=='dungeons'||dungeonMode!=='tower')return;launchRevision++;selectedTowerFloor=clamp(selectedTowerFloor+step,1,game.dungeonLimit(profile,'tower'));refreshDungeons();});
+for(const mode of ['growth','raid','rush','tower'])$('dungeon-mode-'+mode).addEventListener('click',()=>{if(state.phase!=='camp'||campDrawer!=='dungeons'||dungeonMode===mode)return;launchRevision++;dungeonMode=mode;if(mode==='tower')selectedTowerFloor=game.dungeonLimit(profile,'tower');sealFeedback='';$('dungeon-feedback').textContent='';refreshDungeons();});
 // Alpha 0.139 레이드 난이도: the three tiers share the weekly entries; a closed tier stays listed but disabled.
 $('raid-tier').addEventListener('change',()=>{const t=Number($('raid-tier').value);if(state.phase!=='camp'||campDrawer!=='dungeons'||!game.raidTierUnlocked(profile,t))return;launchRevision++;selectedRaidTier=t;refreshDungeons();});
 for(const r of game.RAIDS)$('raid-card-'+r.id).addEventListener('click',()=>{if(state.phase!=='camp'||campDrawer!=='dungeons')return;launchRevision++;selectedRaid=r.id;$('dungeon-feedback').textContent=game.raidUnlocked(profile,r.id)?'':r.unlock+'장을 클리어하면 열립니다.';refreshDungeons();});
-$('dungeon-result-exit').addEventListener('click',()=>{if(!game.resultReady(state)||!state.run.dungeonId&&!state.run.raidId&&!state.run.rush)return;if(state.run.rush)dungeonMode='rush';else if(state.run.raidId){dungeonMode='raid';selectedRaid=state.run.raidId;}else{dungeonMode='growth';selectedDungeon=state.run.dungeonId;selectedDungeonLevel=state.run.stage;}returnCamp();openDungeons();});
+$('dungeon-result-exit').addEventListener('click',()=>{if(!game.resultReady(state)||!state.run.dungeonId&&!state.run.raidId&&!state.run.rush)return;if(state.run.rush)dungeonMode='rush';else if(state.run.raidId){dungeonMode='raid';selectedRaid=state.run.raidId;}else if(state.run.dungeonId==='tower'){dungeonMode='tower';selectedTowerFloor=Math.min(state.run.stage+1,game.dungeonLimit(profile,'tower'));}else{dungeonMode='growth';selectedDungeon=state.run.dungeonId;selectedDungeonLevel=state.run.stage;}returnCamp();openDungeons();});
 // The first tap on an unbought branch shows its full text (buttons are clipped on phones); the second tap buys it.
 for(const [id,v]of [['skill-view-info','info'],['skill-view-branch','branch']])$(id).addEventListener('click',()=>{if(state.phase!=='camp'||campDrawer!=='skills')return;skillDetailView=v;branchArmed='';skillRenderKey='';refreshSkills();});
 for(let i=0;i<2;i++)$('skill-branch-'+i).addEventListener('click',()=>{if(state.phase!=='camp'||campDrawer!=='skills')return;const b=game.SKILL_BRANCHES[selectedSkill]?.[i];if(!b)return;const owned=game.ownsBranch(profile,selectedSkill,i),key=selectedSkill+':'+i,full=b.name+' · '+b.text+' '+game.branchSummary(b.mods);

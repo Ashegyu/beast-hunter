@@ -1920,3 +1920,10 @@ test('skill library pages all 35 skills without changing the loadout and resets 
  ui.emit('skill-tab-ultimate','click');assert.equal(ui.nodes.get('skill-tab-ultimate').attributes['aria-pressed'],'true');assert.equal(ui.nodes.get('skill-tab-all').attributes['aria-pressed'],'false');assert.equal(ui.nodes.get('skill-page-prev').disabled,true);assert.equal(ui.nodes.get('skill-page-next').disabled,true);assert.ok(visible().every(id=>game.SKILL_BY_ID[id].kind==='ultimate'));
  ui.emit('skill-tab-all','click');assert.equal(visible()[0],game.SKILL_CATALOG.filter(r=>r.kind!=='beast')[0].id);assert.deepEqual(ui.profile(),before);
 });
+test('Alpha 0.141 dungeon hall: six growth dungeons, the 무한의 탑 tab pages floors up to best+1, growth has a 초월 tab',async()=>{
+ const p=bagFixture();p.tower={best:12};const ui=await host({saved:p});ui.emit('lobby-summon','click');
+ for(const id of ['xp','craft'])assert.match(ui.nodes.get('dungeon-stage-'+id).textContent,/0 \/ 100단계/);assert.equal(ui.nodes.get('dungeon-level-100').disabled,true);
+ ui.emit('dungeon-mode-tower','click');assert.equal(ui.nodes.get('tower-panel').hidden,false);assert.equal(ui.nodes.get('dungeon-growth-cards').hidden,true);assert.equal(ui.nodes.get('tower-floor').textContent,'13층');assert.equal(ui.nodes.get('tower-floor-up').disabled,true);
+ assert.match(ui.nodes.get('dungeon-rewards').textContent,/첫 클리어/);ui.emit('tower-floor-down10','click');assert.equal(ui.nodes.get('tower-floor').textContent,'3층');assert.match(ui.nodes.get('dungeon-rewards').textContent,/보상 없음/);assert.match(ui.nodes.get('tower-bonus').textContent,/공격력 \+1%/);
+ ui.emit('nav-home','click');ui.emit('nav-growth','click');ui.emit('growth-tab-transcend','click');assert.equal(ui.nodes.get('growth-transcend').hidden,false);assert.equal(ui.nodes.get('transcend-might').disabled,true);assert.match(ui.nodes.get('transcend-level').textContent,/Lv\.200부터/);
+});

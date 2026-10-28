@@ -14,12 +14,38 @@ export const DUNGEONS=Object.freeze([
  {id:'xp',name:'수련의 회랑',kind:'경험치 던전',chapter:31,icon:'growth',tag:'TRAIN',rule:'정예가 섞인 무리가 쉬지 않고 밀려옵니다.',hint:'광역 화력·기력 회복·연격',use:'레벨 · Lv.200 이후 초월 경험치',hp:.9,damage:.8,formation:'surge',waves:[wave(14,2,1,['skitter']),wave(12,3,2,['spitter']),wave(12,3,3,['bulwark'])]},
  {id:'craft',name:'괴수 해체장',kind:'제작 재료 던전',chapter:41,icon:'bag',tag:'SALVAGE',rule:'단단한 중갑 괴수를 해체하세요.',hint:'방어 약화·단일 화력·장갑 무시',use:'제작 → 고유 장비 재료',hp:1.6,damage:.85,armor:.15,formation:'front',waves:[wave(6,0,4,['bulwark']),wave(4,2,5),wave(4,2,6,['bulwark','skitter'])]},
 ].map(d=>Object.freeze({...d,waves:Object.freeze(d.waves.map(w=>Object.freeze({...w,elites:Object.freeze(w.elites)})))})));
-export const dungeonDefinition=id=>DUNGEONS.find(d=>d.id===id)??null;
+// Alpha 0.141 무한의 탑 (사용자 결정): one 60-second battle per floor on the dungeon machinery (s.run.dungeonId 'tower',
+// s.run.stage = floor). Floor F is fought like chapter F (탑 60층 = 60장, 120층 = 악몽 60장; the curve keeps going) on
+// chapter ((F−1) mod 60)+1's land and monsters, with the THREAT.mob damage of a campaign stage and no gates. Every fifth
+// floor brings elites, every tenth is that chapter's boss alone. Rewards are paid once, on the first clear of a floor
+// (profile.tower.best), and every tenth floor cleared adds a permanent bonus (towerBonus).
+export const TOWER_MAX_FLOOR=9999;
+export const TOWER=Object.freeze({id:'tower',name:'무한의 탑',kind:'무한의 탑',chapter:1,icon:'ranking',tag:'TOWER',rule:'한 층씩 올라갈수록 강해집니다. 5층마다 정예, 10층마다 보스.',hint:'지금 빌드의 한계 점검',use:'첫 클리어 보상 · 10층마다 영구 능력치'});
+export const towerChapter=floor=>(Math.max(1,floor|0)-1)%60+1;
+export const towerFloorKind=floor=>floor%10===0?'boss':floor%5===0?'elite':'normal';
+const TOWER_FORMATIONS=['hunt','crossfire','front','ring','pincer','barrage','surge'];
+const TOWER_WAVES={normal:[wave(14,3,2),wave(16,3,2),wave(16,4,3)],elite:[wave(10,2,2,['skitter']),wave(10,3,3,['spitter','bulwark']),wave(8,3,4,['skitter','bulwark'])],boss:[{...wave(0,0,0),boss:true}]};
+// Permanent floor bonuses: 10층 공격력 +1%, 20층 최대 체력 +1%, 30층 치명 +0.5%p, 40층 피해 감소 +0.5%p, then again.
+export const TOWER_BONUS=Object.freeze([{key:'damagePct',value:.01,text:'공격력 +1%'},{key:'hpPct',value:.01,text:'최대 체력 +1%'},{key:'crit',value:.005,text:'치명 +0.5%p'},{key:'reduction',value:.005,text:'피해 감소 +0.5%p'}].map(Object.freeze));
+export const towerBonusAt=floor=>floor%10===0?TOWER_BONUS[(floor/10-1)%TOWER_BONUS.length]:null;
+export function towerBonus(best){const out={damagePct:0,hpPct:0,crit:0,reduction:0},n=Math.floor(Math.max(0,best|0)/10);for(let i=0;i<TOWER_BONUS.length;i++){const times=Math.floor(n/TOWER_BONUS.length)+(i<n%TOWER_BONUS.length?1:0);out[TOWER_BONUS[i].key]=Math.round(times*TOWER_BONUS[i].value*1e6)/1e6;}return out;}
+export function towerRewards(floor){
+ if(!Number.isInteger(floor)||floor<1||floor>TOWER_MAX_FLOOR)return null;const kind=towerFloorKind(floor);
+ return {gold:200+floor*50,materials:kind==='boss'?{promotionStone:1+Math.floor(floor/30),refineCrystal:1+Math.floor(floor/20),skillPage:2}:kind==='elite'?{refineStone:5+Math.floor(floor/5)}:{}};
+}
+export function towerPlan(floor){
+ if(!towerRewards(floor))return null;const kind=towerFloorKind(floor);
+ return {...TOWER,chapter:towerChapter(floor),floorKind:kind,stageType:'dungeon',timeLimit:60,barrels:0,interval:kind==='boss'?0:.1,minimumTime:0,levelChapter:floor,formation:kind==='boss'?'boss':TOWER_FORMATIONS[floor%TOWER_FORMATIONS.length],hpScale:enemyHpScale(floor),damageScale:enemyDamageScale(floor),waves:TOWER_WAVES[kind]};
+}
+export const dungeonDefinition=id=>id==='tower'?TOWER:DUNGEONS.find(d=>d.id===id)??null;
+// The chapter whose land and monsters a dungeon level is fought on.
+export const dungeonStageId=(id,level)=>id==='tower'?towerChapter(level):dungeonDefinition(id)?.chapter??1;
 export const emptyDungeonProgress=()=>Object.fromEntries(DUNGEONS.map(d=>[d.id,0]));
-export function dungeonLimit(profile,id){return dungeonDefinition(id)?Math.min(DUNGEON_MAX_LEVEL,(profile.dungeonProgress?.[id]??0)+1):0;}
+export function dungeonLimit(profile,id){if(id==='tower')return Math.min(TOWER_MAX_FLOOR,(profile.tower?.best??0)+1);return dungeonDefinition(id)?Math.min(DUNGEON_MAX_LEVEL,(profile.dungeonProgress?.[id]??0)+1):0;}
 // Levels 1~10 pay exactly what they paid before 0.141; past 10 every reward keeps growing more slowly (`past`).
 const past=(level,every)=>Math.floor(Math.max(0,level-10)/every);
 export function dungeonRewards(id,level){
+ if(id==='tower')return towerRewards(level);
  if(!dungeonDefinition(id)||!Number.isInteger(level)||level<1||level>DUNGEON_MAX_LEVEL)return null;
  const early=Math.min(level,10);
  if(id==='gold')return {gold:400+early*200+Math.max(0,level-10)*150,materials:{}};
@@ -32,11 +58,12 @@ export function dungeonRewards(id,level){
  return {gold:0,materials:{boneIron:4+Math.floor(level/2),hide:2+Math.floor(level/3),crystal:1+Math.floor(level/5),...(level>=5?{[region]:1+Math.floor(level/30)}:{}),...(level>=50?{source:Math.floor(level/50)}:{})}};
 }
 export function dungeonPlan(id,level){
+ if(id==='tower')return towerPlan(level);
  const d=dungeonDefinition(id);if(!d||!dungeonRewards(id,level))return null;
  const chapter=dungeonChapter(level);
  return {...d,stageType:'dungeon',timeLimit:60,barrels:0,interval:id==='gold'?.065:.14,minimumTime:0,chapter:d.chapter,levelChapter:chapter,hpScale:d.hp*enemyHpScale(chapter),damageScale:d.damage*enemyDamageScale(chapter)};
 }
 export function dungeonActors(plan,waveNumber){
  const w=plan?.waves[waveNumber-1];if(!w)return [];
- const actors=[];for(const type of ['skitter','spitter','bulwark'])for(let i=0;i<w[type];i++)actors.push({type,boss:false,elite:i===0&&w.elites.includes(type)});return actors;
+ const actors=[];if(w.boss)actors.push({type:'bulwark',boss:true,elite:false});for(const type of ['skitter','spitter','bulwark'])for(let i=0;i<w[type];i++)actors.push({type,boss:false,elite:i===0&&w.elites.includes(type)});return actors;
 }
