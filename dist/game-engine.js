@@ -1,7 +1,7 @@
 import {RAIDS,RAID_WEEKLY_ENTRIES,RAID_DAMAGE,raidScale,RAID_ANCIENT_CHANCE,raidDefinition,raidPlan,raidRewards,raidWeek,raidEntriesLeft,raidUnlocked,raidChapter,emptyRaidProgress,raidTierUnlocked,raidTopTier,RAID_TIERS} from './raids.js?v=0.140.0';
 export * from './raids.js?v=0.140.0';
 import {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonPlan,dungeonActors,emptyDungeonProgress} from './dungeons.js?v=0.140.0';
-export {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards};
+export {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonChapter,DUNGEON_CHAPTER_STEP} from './dungeons.js?v=0.140.0';
 export {THREAT,MODE_CHAPTERS,modeChapter,modeScale} from './chapters.js?v=0.140.0';
 import {beginStageJournal,profileForSave,strictBattle,cancelStageJournal,prepareStageCommit,finishStageJournal,stageTransactionId,ownedAtStageStart} from './battle-progress.js?v=0.140.0';
 import {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_DROP_CHANCE,INSCRIPTION_COST} from './build-effects.js?v=0.140.0';
@@ -320,7 +320,8 @@ function spawnEnemy(s,type,x,y,elite=false,boss=false,speciesId=null){
   // Alpha 0.136 보스 러시: boss n has RUSH_HP[n] × the furthest cleared chapter's boss health and RUSH_DAMAGE[n] × its damage,
   // everything in a rush (bosses, escorts, projectiles via damageBase) is eased by rushScale(chapter).
   if(s.run.rush&&boss){const n=clamp(s.run.wave,1,rush.RUSH_BOSSES)-1;e.hp=e.maxHp=Math.round(st.bossHp*rush.RUSH_HP[n]*rushK*(s.enemyScale?.hp??1));e.damage*=rush.RUSH_DAMAGE[n];e.rushChapter=s.run.rushBoss;}
-  if(s.run.dungeonId){const plan=activePlan(s);e.hp=e.maxHp=Math.max(1,Math.round(e.maxHp*plan.hpScale/hpBase));e.damage*=plan.damageScale/damageBase;e.damageBase=plan.damageScale;}
+  // Alpha 0.141: dungeon levels carry their whole strength in plan.hpScale (chapter curve), not the stage factor of s.run.stage.
+  if(s.run.dungeonId){const plan=activePlan(s);e.hp=e.maxHp=Math.max(1,Math.round(e.maxHp*plan.hpScale/(hpBase*(boss?1:factor))));e.damage*=plan.damageScale/damageBase;e.damageBase=plan.damageScale;}
   // Alpha 0.133 관문 (stage-gates.js): the remaining pressure after the build's counter.
   const gate=s.run.gate;if(gate&&!raid&&!s.run.dungeonId){const k=1+gate.effect;if(gate.type==='survival'){e.damage*=k;e.damageBase*=k;}else if(gate.type==='swarm'&&!elite&&!boss)e.hp=e.maxHp=Math.round(e.maxHp*k);else if(gate.type==='single'&&(elite||boss))e.hp=e.maxHp=Math.round(e.maxHp*k);else if(gate.type==='defense'){e.gateGuard=k;e.gateCounter=gate.counter;}}
   // Alpha 0.139: 정예/악몽 continue the chapter curve (chapters.js modeScale: chapter 60+N / 120+N).
@@ -1179,6 +1180,7 @@ function completeDungeon(s){
  if(s.settlement||s.run.flow!=='combat')return false;
  const reward=dungeonRewards(s.run.dungeonId,s.run.stage);s.run.dungeonReward={gold:Math.min(reward.gold,Math.max(0,1e8-s.profile.gold)),materials:{}};s.profile.gold+=s.run.dungeonReward.gold;s.run.gold+=s.run.dungeonReward.gold;
  for(const [id,n]of Object.entries(reward.materials)){const amount=Math.min(n,Math.max(0,MATERIAL_LIMIT-s.profile.materials[id]));s.profile.materials[id]+=amount;s.run.materials+=amount;if(amount)s.run.materialLedger[id]=(s.run.materialLedger[id]??0)+amount;s.run.dungeonReward.materials[id]=amount;}
+ if(reward.xp){const xp=growthXp(s.profile,reward.xp);s.run.xp+=xp;s.run.dungeonReward.xp=xp;if(gainXp(s.profile,xp))refreshStats(s);}
  s.profile.dungeonProgress[s.run.dungeonId]=Math.max(s.profile.dungeonProgress[s.run.dungeonId],s.run.stage);s.run.rooms=1;s.run.seals=1;
  if(lootRandom(s)<dropRate(s,'dungeon')){const chapter=STAGES[Math.min(STAGES.length,Math.max(1,s.profile.unlockedStage))-1],item=rollAccessory({id:allocateItemId(s),tier:chapter?.theme??1,grade:s.run.stage>=7?2:s.run.stage>=4?1:0},()=>lootRandom(s));if(receiveItem(s,item,'stage'))s.run.dungeonReward.item=item;}
  s.projectiles.length=0;s.spawns.length=0;s.player.queued=false;s.player.swing=null;s.player.action='idle';s.hitStop=0;skills.clearSkillStage(s);clearUniqueTransient(s);clearAncient(s);s.resultDelay=.5;return queueSettlement(s,true);

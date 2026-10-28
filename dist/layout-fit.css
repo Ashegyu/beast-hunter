@@ -561,3 +561,15 @@
 /* 0.139 레이드 난이도: 레이드 모드에서는 '단계' 줄(입장 횟수는 카드에 있음) 대신 난이도 선택 줄을 둔다. */
 #game-shell #camp-dungeons-panel[data-mode=raid] .dungeon-level-label:not(.raid-tier-label){display:none}
 #game-shell #camp-dungeons-panel .raid-tier-label[hidden]{display:none}
+
+/* Alpha 0.141 성장 던전 6종: 카드 3열×2행, 아이콘은 제목 줄 왼쪽에 작게 */
+#game-shell #dungeon-growth-cards{grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-template-rows:repeat(2,minmax(0,1fr))!important;gap:6px!important}
+#game-shell #dungeon-growth-cards .dungeon-card{padding:6px 8px!important;gap:6px!important;align-items:flex-start!important}
+#game-shell #dungeon-growth-cards .dungeon-card{position:relative!important}
+#game-shell #dungeon-growth-cards .dungeon-card .lobby-icon{position:absolute!important;top:5px;right:6px;width:22px!important;height:22px!important;opacity:.75}
+#game-shell #dungeon-growth-cards .dungeon-card>span{width:100%}
+#game-shell #dungeon-growth-cards .dungeon-card :is(strong,b,small){white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:700px){#game-shell #dungeon-growth-cards .dungeon-card em{display:none}}
+#game-shell #dungeon-growth-cards .dungeon-card>span{gap:2px!important}
+#game-shell #dungeon-growth-cards .dungeon-card strong{font-size:clamp(11px,1.5vw,15px)!important}
+#game-shell #dungeon-growth-cards .dungeon-card em{font-size:9px!important;line-height:1.3!important}

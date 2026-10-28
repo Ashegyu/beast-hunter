@@ -1610,7 +1610,7 @@ $('craft-inscription').addEventListener('change',()=>{$('craft-inscription-cost'
 // The material hall uses the same profile and durable settlement as chapter play.
 // Seals (Alpha 0.136) are named by effect grade (하옵·중옵·상옵), not by rarity.
 function itemGradeName(item){return game.isSeal(item)?game.SEAL_GRADES[item.seal.grade].name:game.RARITIES[item.rarity];}
-function dungeonRewardText(reward){if(!reward)return '보상 없음';const list=[];if(reward.gold)list.push('골드 '+reward.gold.toLocaleString('ko-KR'));if(reward.cores)list.push('핵 '+reward.cores);for(const [id,n]of Object.entries(reward.materials))list.push(game.MATERIAL_BY_ID[id].name+' ×'+n);if(reward.item)list.push(itemGradeName(reward.item)+' '+reward.item.name);return list.join(' · ')||'보관 한도 도달 · 추가 보상 없음';}
+function dungeonRewardText(reward){if(!reward)return '보상 없음';const list=[];if(reward.gold)list.push('골드 '+reward.gold.toLocaleString('ko-KR'));if(reward.xp)list.push('경험치 '+reward.xp.toLocaleString('ko-KR'));if(reward.cores)list.push('핵 '+reward.cores);for(const [id,n]of Object.entries(reward.materials))list.push(game.MATERIAL_BY_ID[id].name+' ×'+n);if(reward.item)list.push(itemGradeName(reward.item)+' '+reward.item.name);return list.join(' · ')||'보관 한도 도달 · 추가 보상 없음';}
 function openDungeons(origin='lobby-summon'){
  if(!ready||state.phase!=='camp')return;inventoryOpen=codexOpen=craftOpen=trackOpen=campChoices=false;openCampDrawer('dungeons',origin);
 }
@@ -1635,7 +1635,7 @@ function refreshDungeons(){
  if(rushMode){refreshDungeonBuild();refreshRush();return;}
  if(raid){refreshDungeonBuild();refreshRaids();return;}
  const d=game.dungeonDefinition(selectedDungeon),limit=game.dungeonLimit(profile,d.id);selectedDungeonLevel=Math.min(selectedDungeonLevel,limit);const reward=game.dungeonRewards(d.id,selectedDungeonLevel);
- for(const row of game.DUNGEONS){$('dungeon-card-'+row.id).setAttribute('aria-pressed',String(row.id===d.id));$('dungeon-stage-'+row.id).textContent='최고 완료 '+profile.dungeonProgress[row.id]+' / '+game.DUNGEON_MAX_LEVEL+'단계';const r=game.dungeonRewards(row.id,Math.min(selectedDungeonLevel,game.dungeonLimit(profile,row.id)));$('dungeon-owned-'+row.id).textContent=row.id==='gold'?'보유 '+profile.gold.toLocaleString('ko-KR')+' 골드':Object.keys(r.materials).map(id=>game.MATERIAL_BY_ID[id].name+' '+profile.materials[id]).join(' · ');}
+ for(const row of game.DUNGEONS){$('dungeon-card-'+row.id).setAttribute('aria-pressed',String(row.id===d.id));$('dungeon-stage-'+row.id).textContent='최고 '+profile.dungeonProgress[row.id]+' / '+game.DUNGEON_MAX_LEVEL+'단계';const r=game.dungeonRewards(row.id,Math.min(selectedDungeonLevel,game.dungeonLimit(profile,row.id)));$('dungeon-owned-'+row.id).textContent=row.id==='gold'?'보유 '+profile.gold.toLocaleString('ko-KR')+' 골드':row.id==='xp'?'Lv.'+profile.level:Object.keys(r.materials).slice(0,3).map(id=>game.MATERIAL_BY_ID[id].name+' '+profile.materials[id]).join(' · ');}
  $('dungeon-kind').textContent=d.kind+' · 60초';$('dungeon-name').textContent=d.name;$('dungeon-rule').textContent=d.rule;$('dungeon-hint').textContent=d.hint+' 유리';$('dungeon-rewards').textContent=dungeonRewardText(reward)+' · 장신구 '+Math.round(game.DROP_CHANCE.dungeon*100)+'%';$('dungeon-use').textContent=d.use;$('dungeon-progress').textContent='1~'+limit+'단계';$('dungeon-level').value=String(selectedDungeonLevel);
  for(let n=1;n<=game.DUNGEON_MAX_LEVEL;n++){$('dungeon-level-'+n).disabled=n>limit;$('dungeon-level-'+n).textContent=n+'단계'+(n>limit?' · 이전 단계 완료 필요':profile.dungeonProgress[d.id]>=n?' · 완료':'');}
  refreshDungeonBuild();
