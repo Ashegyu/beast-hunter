@@ -2,8 +2,8 @@ import {createSkillMotion} from './skill-motion.js?v=0.142.0';
 import {CHAPTERS,CHAPTER_BOSSES} from './chapters.js?v=0.142.0';
 import {beastTechniques,BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE,beastElementText} from './beast-techniques.js?v=0.142.0';
 export {BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE} from './beast-techniques.js?v=0.142.0';
-import {SKILL_BRANCHES,SKILL_BRANCH_COST,EXECUTE_HEALTH,branchSummary} from './skill-branches.js?v=0.142.0';
-export {SKILL_BRANCHES,SKILL_BRANCH_COST,EXECUTE_HEALTH,branchSummary} from './skill-branches.js?v=0.142.0';
+import {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary} from './skill-branches.js?v=0.142.0';
+export {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary} from './skill-branches.js?v=0.142.0';
 import {GEAR_SKILLS} from './raid-skills.js?v=0.142.0';
 import {treeBonus} from './growth.js?v=0.142.0';
 import {transcendBonus} from './transcendence.js?v=0.142.0';
@@ -63,18 +63,41 @@ const NO_BRANCH=Object.freeze({});
 export const SKILL_AREA_BOOST=1.2;
 export function skillAreaScale(p,id){const d=SKILL_BY_ID[id];return AREA_SHAPES.has(d?.shape)?SKILL_AREA_BOOST*(1+Math.min(4,Math.floor(int(p.level,1,50)/10))*.1)*(d.kind==='beast'?BEAST_GRADES[beastGrade(p,id)]?.area??1:1)*(branchMods(p,id).area??1)*(d.kind==='gear'?1:1+treeBonus(p).skillArea):1;}
 export function skillReach(p,id){const d=SKILL_BY_ID[id];return d?d.range*(RADIAL_REACH.has(d.shape)?skillAreaScale(p,id):1):0;}
-// Alpha 0.126 스킬 갈래: `branchOwned[id]` is a bit mask of bought branches, `branchPick[id]` the one in use.
-export const ownsBranch=(p,id,i)=>!!((p?.skillBook?.branchOwned?.[id]??0)&(1<<i));
-export function skillBranchIndex(p,id){const i=p?.skillBook?.branchPick?.[id];return (i===0||i===1)&&ownsBranch(p,id,i)?i:-1;}
-export function skillBranch(p,id){const i=skillBranchIndex(p,id);return i<0?null:SKILL_BRANCHES[id][i];}
-export function branchMods(p,id){return skillBranch(p,id)?.mods??NO_BRANCH;}
+// Alpha 0.126 스킬 갈래 → 0.142 단계 갈래: `branchOwned[id]` is a bit mask (bit tier×3+option) of bought branches and
+// `branchPick[id]` an array with the option in use per tier (null = none). Tier t counts only while the skill is at least
+// Lv.(t+1)×5, so a reset skill keeps its branches but loses their effect until it is raised again. The tier argument comes last
+// and defaults to the first tier, so 0.126 calls (ownsBranch(p,id,i) …) keep their meaning.
+export const branchTierLevel=t=>(t+1)*SKILL_BRANCH_TIER_LEVEL;
+export const branchTierCount=id=>SKILL_BRANCHES[id]?.length??0;
+export const ownsBranch=(p,id,i,t=0)=>!!((p?.skillBook?.branchOwned?.[id]??0)&(1<<(t*3+i)));
+export function skillBranchIndex(p,id,t=0){const raw=p?.skillBook?.branchPick?.[id],i=Array.isArray(raw)?raw[t]:t===0?raw:null;return Number.isInteger(i)&&i>=0&&i<3&&SKILL_BRANCHES[id]?.[t]?.[i]&&ownsBranch(p,id,i,t)?i:-1;}
+export function skillBranch(p,id,t=0){const i=skillBranchIndex(p,id,t);return i<0?null:SKILL_BRANCHES[id][t][i];}
+// Branches in effect: the pick of every tier the skill's level has reached.
+export function activeBranches(p,id){const out=[],n=branchTierCount(id);if(!n)return out;const rank=skillRank(p,id);for(let t=0;t<n;t++){if(rank<branchTierLevel(t))break;const b=skillBranch(p,id,t);if(b)out.push(b);}return out;}
+const MULTIPLY=['damage','cooldown','area','duration','value'],ADD=['cost','hits','boss','execute','power'];
+export function combineBranchMods(list){
+ if(!list.length)return NO_BRANCH;if(list.length===1)return list[0].mods;const out={};
+ for(const {mods} of list){for(const k of MULTIPLY)if(mods[k]!==undefined)out[k]=(out[k]??1)*mods[k];for(const k of ADD)if(mods[k]!==undefined)out[k]=(out[k]??0)+mods[k];
+  if(mods.markHits)out.markHits=Math.min(out.markHits??99,mods.markHits);if(mods.element)out.element=mergeElements(out.element,mods.element);
+  if(mods.stat){out.stat={...(out.stat??{})};for(const [k,v] of Object.entries(mods.stat))out.stat[k]=(out.stat[k]??0)+v;}}
+ return out;
+}
+export function branchMods(p,id){return SKILL_BRANCHES[id]?combineBranchMods(activeBranches(p,id)):NO_BRANCH;}
 export function skillCost(p,id){const d=SKILL_BY_ID[id];return d?Math.max(0,d.cost+(branchMods(p,id).cost??0)):0;}
 export function skillCooldown(p,id){const d=SKILL_BY_ID[id];return d?d.cooldown*(d.kind==='beast'?BEAST_GRADES[beastGrade(p,id)]?.cooldown??1:1)*(branchMods(p,id).cooldown??1)*(d.kind==='gear'?1:1-treeBonus(p).skillCooldown):0;}
-export function branchStatus(p,id,i){const c=SKILL_BRANCH_COST;if(!SKILL_BRANCHES[id]?.[i])return '갈래 없음';if(ownsBranch(p,id,i))return '보유 중';if(!skillRank(p,id))return '스킬 미습득';if((p.materials?.skillPage??0)<c.pages)return '검술서 부족';if(p.gold<c.gold)return '골드 부족';return '';}
-export function unlockSkillBranch(s,id,i){const p=s.profile;if(s.phase!=='camp'||branchStatus(p,id,i))return false;const c=SKILL_BRANCH_COST;p.gold-=c.gold;p.materials.skillPage-=c.pages;p.skillBook.branchOwned[id]=(p.skillBook.branchOwned[id]??0)|(1<<i);p.skillBook.branchPick[id]=i;return true;}
-// Switching between owned branches is free in camp; choosing the branch in use again turns branches off for that skill.
-export function chooseSkillBranch(s,id,i){const p=s.profile;if(s.phase!=='camp'||!SKILL_BRANCHES[id]||!ownsBranch(p,id,i))return false;if(skillBranchIndex(p,id)===i)delete p.skillBook.branchPick[id];else p.skillBook.branchPick[id]=i;return true;}
-function cleanBranches(raw){const owned={},pick={};for(const id of Object.keys(SKILL_BRANCHES)){const m=int(raw?.branchOwned?.[id],0,3,0);if(m)owned[id]=m;const i=raw?.branchPick?.[id];if((i===0||i===1)&&m&(1<<i))pick[id]=i;}return {branchOwned:owned,branchPick:pick};}
+export const branchCost=t=>SKILL_BRANCH_COSTS[Math.max(0,Math.min(SKILL_BRANCH_COSTS.length-1,t))];
+export function branchStatus(p,id,i,t=0){const c=branchCost(t);if(!SKILL_BRANCHES[id]?.[t]?.[i])return '갈래 없음';if(ownsBranch(p,id,i,t))return '보유 중';const rank=skillRank(p,id);if(!rank)return '스킬 미습득';if(rank<branchTierLevel(t))return '스킬 Lv.'+branchTierLevel(t)+' 필요';if((p.materials?.skillPage??0)<c.pages)return '검술서 부족';if(p.gold<c.gold)return '골드 부족';return '';}
+function pickList(p,id){const raw=p.skillBook.branchPick[id],n=branchTierCount(id),list=Array.from({length:n},(_,t)=>Array.isArray(raw)?raw[t]??null:t===0&&Number.isInteger(raw)?raw:null);p.skillBook.branchPick[id]=list;return list;}
+export function unlockSkillBranch(s,id,i,t=0){const p=s.profile;if(s.phase!=='camp'||branchStatus(p,id,i,t))return false;const c=branchCost(t);p.gold-=c.gold;p.materials.skillPage-=c.pages;p.skillBook.branchOwned[id]=(p.skillBook.branchOwned[id]??0)|(1<<(t*3+i));pickList(p,id)[t]=i;return true;}
+// Switching between owned branches of a tier is free in camp; choosing the branch in use again turns that tier off.
+export function chooseSkillBranch(s,id,i,t=0){const p=s.profile;if(s.phase!=='camp'||!SKILL_BRANCHES[id]?.[t]||!ownsBranch(p,id,i,t))return false;const list=pickList(p,id);list[t]=skillBranchIndex(p,id,t)===i?null:i;if(list.every(v=>v===null))delete p.skillBook.branchPick[id];return true;}
+// Restore: owned bits only for existing branches; picks per tier only when owned. A 0.126 save (pick = 0|1) becomes tier 1.
+function cleanBranches(raw){const owned={},pick={};for(const [id,rows] of Object.entries(SKILL_BRANCHES)){let valid=0;rows.forEach((row,t)=>row.forEach((_,i)=>{valid|=1<<(t*3+i);}));const v=raw?.branchOwned?.[id],m=Number.isInteger(v)&&v>0?v&valid:0;if(m)owned[id]=m;
+ const r=raw?.branchPick?.[id],list=rows.map((row,t)=>{const i=Array.isArray(r)?r[t]:t===0?r:null;return Number.isInteger(i)&&i>=0&&i<row.length&&m&(1<<(t*3+i))?i:null;});if(list.some(v=>v!==null))pick[id]=list;}
+ return {branchOwned:owned,branchPick:pick};}
+// Passive branches: the passive's number × value (적월의 결의 divides: its number is a wait time) and stats while equipped.
+export function passiveValueScale(p,id){const v=branchMods(p,id).value??1;return id==='resolve'?1/v:v;}
+export function passiveBranchStats(p){const out={damagePct:0,hpPct:0,attackSpeed:0,speed:0,crit:0,reduction:0,regeneration:0};for(const id of p?.skillBook?.loadout?.passive??[])if(id)for(const [k,v] of Object.entries(branchMods(p,id).stat??{}))out[k]+=v;return out;}
 const cleanAuto=raw=>({mode:['balanced','boss','farm','safe'].includes(raw?.mode)?raw.mode:'balanced',ultimate:['elite','any','off'].includes(raw?.ultimate)?raw.ultimate:'elite'});
 const int=(n,min,max,fallback=min)=>Number.isFinite(n)?Math.max(min,Math.min(max,Math.floor(n))):fallback;
 export const SKILL_SLOT_UNLOCKS=Object.freeze([
@@ -95,24 +118,30 @@ export function skillMilestones(afterLevel,throughLevel=50){
  if(afterLevel<50&&throughLevel>=50)rows.push({level:50,label:'적월난무 각성',kind:'awakening'});
  return rows.sort((a,b)=>a.level-b.level);
 }
-export function skillLevelGate(id,rank){const d=SKILL_BY_ID[id];if(!d)return 51;if(d.kind==='beast')return 1;return d.unlock+Math.ceil((Math.max(1,Math.min(5,rank))-1)*Math.min(d.kind==='ultimate'?7:3,(50-d.unlock)/4));}
+// Alpha 0.142 (사용자 요청 '스킬 최대 15, 궁극기 20'): ranks 1~5 keep their old level gates; later ranks spread to about
+// Lv.150 (active·passive) or one rank per 10 levels (ultimate, Lv.20 at 198). Above rank 5 each rank adds half the old step
+// (powerRank), so rank 15 adds 9 steps over rank 1 instead of 14.
+export const MAX_SKILL_RANK=15,MAX_ULTIMATE_RANK=20;
+export const maxSkillRank=id=>SKILL_BY_ID[id]?.kind==='ultimate'?MAX_ULTIMATE_RANK:SKILL_BY_ID[id]?.kind==='beast'?3:MAX_SKILL_RANK;
+export const powerRank=rank=>rank<=5?rank:5+(rank-5)*.5;
+export function skillLevelGate(id,rank){const d=SKILL_BY_ID[id];if(!d)return 201;if(d.kind==='beast')return 1;const r=Math.max(1,Math.min(maxSkillRank(id),rank)),gate5=d.unlock+Math.ceil(4*Math.min(d.kind==='ultimate'?7:3,(50-d.unlock)/4));if(r<=5)return d.unlock+Math.ceil((r-1)*Math.min(d.kind==='ultimate'?7:3,(50-d.unlock)/4));return d.kind==='ultimate'?gate5+(r-5)*10:gate5+Math.ceil((r-5)*Math.max(0,150-gate5)/10);}
 // A 괴수 기술's rank is its learned grade (1 기본, 2 강화, 3 극); 0 until its boss is defeated.
 export const beastGrade=(profile,id)=>{const g=profile?.beastSkills?.[id];return Number.isInteger(g)&&g>=1&&g<=3?g:0;};
-export function skillRank(profile,id){const d=SKILL_BY_ID[id];if(!d)return 0;if(d.kind==='gear')return 1;if(d.kind==='beast')return beastGrade(profile,id);if(profile.level<d.unlock)return 0;if(d.kind==='ultimate'){let rank=1;while(rank<5&&profile.level>=skillLevelGate(id,rank+1))rank++;return rank;}return 1+(profile.skillBook?.ranks?.[id]??0);}
-export function skillValue(profile,id){const d=SKILL_BY_ID[id],rank=skillRank(profile,id);if(d?.kind==='beast')return rank?Math.round(d.damage*BEAST_GRADES[rank].damage):0;return rank?(d.damage??d.value)+d.step*(rank-1):0;}
+export function skillRank(profile,id){const d=SKILL_BY_ID[id];if(!d)return 0;if(d.kind==='gear')return 1;if(d.kind==='beast')return beastGrade(profile,id);if(profile.level<d.unlock)return 0;if(d.kind==='ultimate'){let rank=1;while(rank<MAX_ULTIMATE_RANK&&profile.level>=skillLevelGate(id,rank+1))rank++;return rank;}return 1+(profile.skillBook?.ranks?.[id]??0);}
+export function skillValue(profile,id){const d=SKILL_BY_ID[id],rank=skillRank(profile,id);if(d?.kind==='beast')return rank?Math.round(d.damage*BEAST_GRADES[rank].damage):0;return rank?(d.damage??d.value)+d.step*(powerRank(rank)-1):0;}
 export function skillPoints(profile){return Math.max(0,profile.level-1+(profile.skillBook?.trainingPoints??0)-Object.values(profile.skillBook?.ranks??{}).reduce((a,b)=>a+b,0));}
 function cleanLoadout(raw,level){const slots=skillSlots(level),used=new Set();const list=(kind,n)=>Array.from({length:n},(_,i)=>{const id=raw?.[kind]?.[i],d=SKILL_BY_ID[id];if(i>=slots[kind]||!d||d.kind!==kind||d.unlock>level||used.has(id))return null;used.add(id);return id;});return {active:list('active',MAX_SLOTS.active),passive:list('passive',MAX_SLOTS.passive),ultimate:list('ultimate',MAX_SLOTS.ultimate),beast:list('beast',MAX_SLOTS.beast)};}
 export function restoreSkillBook(raw,level){
  const ranks={},trainingPoints=int(raw?.trainingPoints,0,49,0);let budget=level-1+trainingPoints;
- for(const d of SKILL_CATALOG){if(d.kind==='ultimate'||d.kind==='beast'||d.unlock>level)continue;let maximum=0;while(maximum<4&&level>=skillLevelGate(d.id,maximum+2))maximum++;const n=int(raw?.ranks?.[d.id],0,maximum);ranks[d.id]=Math.min(n,budget);budget-=ranks[d.id];}
+ for(const d of SKILL_CATALOG){if(d.kind==='ultimate'||d.kind==='beast'||d.unlock>level)continue;let maximum=0;while(maximum<MAX_SKILL_RANK-1&&level>=skillLevelGate(d.id,maximum+2))maximum++;const n=int(raw?.ranks?.[d.id],0,maximum);ranks[d.id]=Math.min(n,budget);budget-=ranks[d.id];}
  const defaults={active:['crescent',level>=5?'gale':null,level>=15?'triple':null,level>=30?'returning':null],passive:[level>=3?'breath':null,level>=10?'finisher':null,level>=25?'reserve':null],ultimate:[level>=20?'bloodmoon':null],beast:[null]};
  return {ranks,trainingPoints,...cleanBranches(raw),loadout:cleanLoadout(raw?.loadout??defaults,level),presets:Array.from({length:3},(_,i)=>raw?.presets?.[i]?{...cleanLoadout(raw.presets[i],level),auto:cleanAuto(raw.presets[i].auto)}:null),auto:cleanAuto(raw?.auto),awakening:raw?.awakening==='execution'?'execution':'area'};
 }
-export function upgradeSkill(s,id){const d=SKILL_BY_ID[id],p=s.profile;if(s.phase!=='camp'||!d||d.kind==='ultimate'||d.kind==='beast'||!skillRank(p,id)||skillRank(p,id)>=5||!skillPoints(p)||p.level<skillLevelGate(id,skillRank(p,id)+1))return false;p.skillBook.ranks[id]=(p.skillBook.ranks[id]??0)+1;return true;}
+export function upgradeSkill(s,id){const d=SKILL_BY_ID[id],p=s.profile;if(s.phase!=='camp'||!d||d.kind==='ultimate'||d.kind==='beast'||!skillRank(p,id)||skillRank(p,id)>=MAX_SKILL_RANK||!skillPoints(p)||p.level<skillLevelGate(id,skillRank(p,id)+1))return false;p.skillBook.ranks[id]=(p.skillBook.ranks[id]??0)+1;return true;}
 export function equipSkill(s,id,slot){const p=s.profile,d=SKILL_BY_ID[id];if(s.phase!=='camp'||!d||!skillRank(p,id)||!Number.isInteger(slot)||slot<0||slot>=skillSlots(p.level)[d.kind])return false;const list=p.skillBook.loadout[d.kind],prior=list.indexOf(id);if(prior===slot){list[slot]=null;return true;}if(prior>=0)list[prior]=list[slot];list[slot]=id;return true;}
 export function resetSkills(s){if(s.phase!=='camp')return false;s.profile.skillBook.ranks={};return true;}
 export function skillPreset(s,index,action){if(s.phase!=='camp'||!Number.isInteger(index)||index<0||index>=3)return false;const b=s.profile.skillBook;if(action==='save'){b.presets[index]={...cleanLoadout(b.loadout,s.profile.level),auto:cleanAuto(b.auto)};return true;}if(action==='load'&&b.presets[index]){b.loadout=cleanLoadout(b.presets[index],s.profile.level);b.auto=cleanAuto(b.presets[index].auto);return true;}return false;}
-export function skillNumbers(p,id,rank=skillRank(p,id)){const d=SKILL_BY_ID[id];if(!d)return '';const v=(d.damage??d.value)+d.step*(Math.max(1,rank)-1);if(d.kind==='passive')return v+(d.unit==='%'?'%':d.unit==='초'?'초':d.unit==='회'?'회':' 기력');if(id==='stance')return '기력 +'+(9+rank*3)+'/초 · 피해 감소 '+(15+rank*3+(branchMods(p,id).power??0))+'%';if(id==='bloodblade')return '연격 피해 +'+(20+rank*5+(branchMods(p,id).power??0))+'%';if(id==='breach')return '피해 '+v+'% · 약화 '+(10+rank*2)+'%';if(d.kind==='beast'){const g=BEAST_GRADES[Math.max(1,Math.min(3,rank))],e=BEAST_ELEMENTS[d.element];return g.name+' · 총 피해 '+Math.round(d.damage*g.damage)+'%'+(g.area>1?' · 범위 +'+Math.round((g.area-1)*100)+'%':'')+(g.cooldown<1?' · 재사용 '+Math.round(d.cooldown*g.cooldown*10)/10+'초':'')+(g.hits?' · 타격 +'+g.hits:'')+' · '+beastElementText(scaleElement(e,g.element));}return '총 피해 '+v+'%';}
+export function skillNumbers(p,id,rank=skillRank(p,id)){const d=SKILL_BY_ID[id];if(!d)return '';const pr=d.kind==='beast'?rank:powerRank(Math.max(1,rank)),v=(d.damage??d.value)+d.step*(pr-1);if(d.kind==='passive'){const shown=d.unit==='초'&&Math.abs(v)<10?Math.round(v*10)/10:Math.round(v);return shown+(d.unit==='%'?'%':d.unit==='초'?'초':d.unit==='회'?'회':' 기력');}if(id==='stance')return '기력 +'+Math.round(9+pr*3)+'/초 · 피해 감소 '+Math.round(15+pr*3+(branchMods(p,id).power??0))+'%';if(id==='bloodblade')return '연격 피해 +'+Math.round(20+pr*5+(branchMods(p,id).power??0))+'%';if(id==='breach')return '피해 '+Math.round(v)+'% · 약화 '+Math.round(10+pr*2)+'%';if(d.kind==='beast'){const g=BEAST_GRADES[Math.max(1,Math.min(3,rank))],e=BEAST_ELEMENTS[d.element];return g.name+' · 총 피해 '+Math.round(d.damage*g.damage)+'%'+(g.area>1?' · 범위 +'+Math.round((g.area-1)*100)+'%':'')+(g.cooldown<1?' · 재사용 '+Math.round(d.cooldown*g.cooldown*10)/10+'초':'')+(g.hits?' · 타격 +'+g.hits:'')+' · '+beastElementText(scaleElement(e,g.element));}return '총 피해 '+Math.round(v)+'%';}
 export function mergeElements(a,b){if(!a&&!b)return null;const out={...(a??{})};for(const [k,v] of Object.entries(b??{}))out[k]=k==='breach'||k==='shield'||k==='push'?Math.max(out[k]??0,v):(out[k]??0)+v;return out;}
 export function scaleElement(e,f){const out={...e};for(const k of ['bleed','chill','push','breach','shield'])if(e[k])out[k]=k==='shield'?Math.round(e[k]*f*1000)/1000:Math.round(e[k]*f*10)/10;return out;}
 export const SKILL_BUILD_EXAMPLES=Object.freeze([
@@ -128,7 +157,7 @@ const unit=(x,y)=>{const n=Math.hypot(x,y);return n>.00001?{x:x/n,y:y/n}:{x:0,y:
 const live=e=>!e.dead;
 const capStamina=(s,n)=>{s.player.stamina=Math.min(100,s.player.stamina+n);};
 export function createSkillRuntime(){return {ultimatePresentation:null,motion:null,travel:null,fxReady:{},cooldowns:{},cooldownKeys:[],jobs:[],serial:0,token:0,casting:null,lastCast:null,flowReady:0,killReady:0,resolveReady:0,openingUntil:0,footworkUntil:0,finisherUntil:0,pursuitUntil:0,breathTime:0,stanceUntil:0,bloodbladeUntil:0,phantomUntil:0,phantomHits:0,phantomDamage:0,parryUntil:0,parryCast:null};}
-const pv=(s,id)=>s.profile.skillBook.loadout.passive.includes(id)?skillValue(s.profile,id):0;
+const pv=(s,id)=>s.profile.skillBook.loadout.passive.includes(id)?skillValue(s.profile,id)*passiveValueScale(s.profile,id):0;
 // Alpha 0.104 armor counters: 마지막 검끝 makes combo strikes ignore stage armor and adds finisher guard damage;
 // 파갑참 shatters a fresh guard and strips armor around its target.
 export const FINISHER_GUARD_BONUS=62;
@@ -146,7 +175,7 @@ export function skillReady(s,id){const d=SKILL_BY_ID[id],r=s.skillRuntime;return
 export function castSkill(s,id,aim,h){
  if(!skillReady(s,id))return false;const gear=SKILL_BY_ID[id].kind==='gear'?h.gearSkills?.(s)?.find(g=>g.id===id):null;if(SKILL_BY_ID[id].kind==='gear'&&!gear)return false;const d=SKILL_BY_ID[id],r=s.skillRuntime,p=s.player,beast=d.kind==='beast'?BEAST_GRADES[skillRank(s.profile,id)]:null,br=branchMods(s.profile,id),vid=d.visual??id,reach=skillReach(s.profile,id),areaScale=skillAreaScale(s.profile,id),n=unit(Number.isFinite(aim?.x)?aim.x:p.aimX,Number.isFinite(aim?.y)?aim.y:p.aimY),target=s.enemies.find(e=>e.id===aim?.targetId&&live(e)&&distance(e,p)<=reach)??nearestTarget(s,n,reach),rank=skillRank(s.profile,id),now=s.run.time;
  if(['mark','seeking'].includes(d.shape)&&!target||r.jobs.length+(d.hits??1)>64)return false;
- const attack=h.stats(s.profile).damage,root={id,serial:++r.serial,rank,attack,areaScale,range:reach,radius:d.radius?d.radius*areaScale:undefined,width:d.width?d.width*areaScale:undefined,equipmentAtStart:h.capture?.(s)??null,inscriptions:h.inscriptions?.(s)??null,damage:skillValue(s.profile,id)/100*attack*(br.damage??1)*(gear?gear.power/100:1+treeBonus(s.profile).skillDamage+transcendBonus(s.profile).skillDamage),boss:br.boss??0,execute:(br.execute??0)+(d.execute??0),x:p.x,y:p.y,n,targetId:target?.id,token:r.token,recovered:false,poise:(d.poise??12)*(r.finisherUntil>now?1+pv(s,'finisher')/100:1),castX:p.x,castY:p.y,count:(d.hits??1)+(beast?.hits??0)+(br.hits??0),...(beast||gear?{sigColor:d.color}:{})};
+ const attack=h.stats(s.profile).damage,root={id,serial:++r.serial,rank:powerRank(rank),attack,areaScale,range:reach,radius:d.radius?d.radius*areaScale:undefined,width:d.width?d.width*areaScale:undefined,equipmentAtStart:h.capture?.(s)??null,inscriptions:h.inscriptions?.(s)??null,damage:skillValue(s.profile,id)/100*attack*(br.damage??1)*(gear?gear.power/100:1+treeBonus(s.profile).skillDamage+transcendBonus(s.profile).skillDamage),boss:br.boss??0,execute:(br.execute??0)+(d.execute??0),x:p.x,y:p.y,n,targetId:target?.id,token:r.token,recovered:false,poise:(d.poise??12)*(r.finisherUntil>now?1+pv(s,'finisher')/100:1),castX:p.x,castY:p.y,count:(d.hits??1)+(beast?.hits??0)+(br.hits??0),...(beast||gear?{sigColor:d.color}:{})};
  const element=mergeElements(beast?scaleElement(BEAST_ELEMENTS[d.element],beast.element):gear?d.element:null,br.element);if(element)root.element=element;
  p.stamina-=skillCost(s.profile,id);if(!Object.hasOwn(r.cooldowns,id))r.cooldownKeys.push(id);r.cooldowns[id]=skillCooldown(s.profile,id);h.cast?.(s,id);if(!gear&&treeBonus(s.profile).skillFury)r.treeFuryUntil=now+3;r.stanceUntil=0;if(id!=='bloodblade')r.bloodbladeUntil=0;
  if(d.kind==='ultimate'){r.ultimatePresentation={id,startedAt:now,token:r.token,x:p.x,y:p.y,nx:n.x,ny:n.y};}
@@ -227,7 +256,7 @@ export function tickSkills(s,dt,h){const r=s.skillRuntime,p=s.player,now=s.run.t
  if(r.casting&&now>=r.casting.until)r.casting=null;
  if(r.parryUntil&&now>r.parryUntil){r.parryUntil=0;r.parryCast=null;}
  if(s.run.flow!=='combat'){if(r.jobs.length)r.jobs=r.jobs.filter(j=>j.at>now);return;}
- if(r.stanceUntil>now)capStamina(s,(9+skillRank(s.profile,'stance')*3)*dt);
+ if(r.stanceUntil>now)capStamina(s,(9+powerRank(skillRank(s.profile,'stance'))*3)*dt);
  // Compact first: a damage callback may finish a run; no deferred attack leaks to another stage.
  if(!r.jobs.length)return;const due=[],later=[];for(const j of r.jobs)(j.at<=now?due:later).push(j);r.jobs=later;
  for(const j of due){if(s.phase!=='playing'||s.run.flow!=='combat')break;if(j.interruptible&&j.rootToken!==r.token)continue;applyJob(s,j,h);}
@@ -235,7 +264,7 @@ export function tickSkills(s,dt,h){const r=s.skillRuntime,p=s.player,now=s.run.t
 export function afterSkillMovement(s,dt,moved,h){const r=s.skillRuntime,p=s.player;if(s.run.flow!=='combat')return;r.breathTime=moved>.0001&&!['attack','heavy','dash','hurt'].includes(p.action)&&!r.casting?r.breathTime+dt:0;if(r.breathTime>=1.5){capStamina(s,18*pv(s,'breath')/100*dt);passiveVisual(s,'breath',h);}}
 export function skillPerfect(s,h){passiveVisual(s,'opening',h);passiveVisual(s,'footwork',h);const r=s.skillRuntime;r.openingUntil=s.run.time+3;r.footworkUntil=s.run.time+2;}
 export function skillKill(s,h){const r=s.skillRuntime;if(!r||!pv(s,'momentum')||s.run.time<r.killReady)return;r.killReady=s.run.time+1;passiveVisual(s,'momentum',h);for(const id of r.cooldownKeys)if(SKILL_BY_ID[id]?.kind==='active')r.cooldowns[id]=Math.max(0,r.cooldowns[id]-pv(s,'momentum'));}
-export function basicSkillBonus(s,swing){const r=s.skillRuntime;r.stanceUntil=0;let scale=1;if(!swing.heavy&&r.treeFuryUntil>s.run.time)scale+=treeBonus(s.profile).skillFury;if(!swing.heavy&&r.bloodbladeUntil>s.run.time)scale+=(20+skillRank(s.profile,'bloodblade')*5+(branchMods(s.profile,'bloodblade').power??0))/100;return scale;}
+export function basicSkillBonus(s,swing){const r=s.skillRuntime;r.stanceUntil=0;let scale=1;if(!swing.heavy&&r.treeFuryUntil>s.run.time)scale+=treeBonus(s.profile).skillFury;if(!swing.heavy&&r.bloodbladeUntil>s.run.time)scale+=(20+powerRank(skillRank(s.profile,'bloodblade'))*5+(branchMods(s.profile,'bloodblade').power??0))/100;return scale;}
 export function basicSkillContact(s,swing,targets,h){const r=s.skillRuntime,p=s.player;if(!targets.length)return;
  const pursuit=!swing.heavy&&r.pursuitUntil>s.run.time?pv(s,'pursuit'):0;if(pursuit){r.pursuitUntil=0;passiveVisual(s,'pursuit',h);}
  for(const e of targets){if(!live(e)||s.phase!=='playing')continue;markHit(s,e,h,true);if(p.combo===3&&!swing.heavy){r.finisherUntil=s.run.time+3;if(pv(s,'scar')){e.skillScarUntil=s.run.time+5;passiveVisual(s,'scar',h,e);}}if(pursuit&&live(e))h.hit(s,e,h.stats(s.profile).damage*pursuit/100,false,'proc',p);}
@@ -243,7 +272,7 @@ export function basicSkillContact(s,swing,targets,h){const r=s.skillRuntime,p=s.
 }
 export function incomingSkillDamage(s,value,source,h){const r=s.skillRuntime,p=s.player,now=s.run.time;
  if(r.parryCast&&r.parryUntil>=now&&source){const n=unit(source.x-p.x,source.y-p.y);if(n.x*p.lookX+n.y*p.lookY>=.1){const root=r.parryCast;if(r.motion){r.motion.reactionAt=now;r.motion.duration=Math.max(r.motion.duration,now-r.motion.startedAt+.3);}r.parryCast=null;r.parryUntil=0;skillPerfect(s,h);applyJob(s,{root,index:0,center:{x:p.x,y:p.y}},h);h.visual(s,'perfectDodge',{x:p.x,y:p.y},.5);return 0;}}
- let reduction=p.stamina>=40?pv(s,'reserve'):0;if(reduction)passiveVisual(s,'reserve',h);if(r.stanceUntil>now)reduction+=15+skillRank(s.profile,'stance')*3+(branchMods(s.profile,'stance').power??0);return value*(1-Math.min(.7,reduction/100+h.stats(s.profile).reduction));
+ let reduction=p.stamina>=40?pv(s,'reserve'):0;if(reduction)passiveVisual(s,'reserve',h);if(r.stanceUntil>now)reduction+=15+powerRank(skillRank(s.profile,'stance'))*3+(branchMods(s.profile,'stance').power??0);return value*(1-Math.min(.7,reduction/100+h.stats(s.profile).reduction));
 }
 export function skillLastStand(s,h){const r=s.skillRuntime,cooldown=pv(s,'resolve');if(!cooldown||s.run.time<r.resolveReady)return false;r.resolveReady=s.run.time+cooldown;passiveVisual(s,'resolve',h);s.player.hp=1;s.player.invulnerable=.6;return true;}
 // Worn raid ancients cast their 장비 기술 by themselves whenever one is ready and an enemy is in reach (Alpha 0.127).

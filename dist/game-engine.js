@@ -237,13 +237,13 @@ export function equipmentBonuses(p){const result={damage:0,hp:0,speed:0,crit:0,r
 // Pieces worn per region set (Alpha 0.108), and each set's progress for the UI.
 export function equippedSetCounts(p){const counts={};for(const item of equippedItems(p)){const set=itemSet(item);if(set)counts[set]=(counts[set]??0)+1;}return counts;}
 export function equippedSets(p){const counts=equippedSetCounts(p);return Object.entries(counts).map(([id,count])=>({set:EQUIPMENT_SETS[id],count,active:EQUIPMENT_SETS[id].bonuses.filter(b=>count>=b.pieces)})).sort((a,b)=>b.count-a.count);}
-export function playerStats(p){const b=equipmentBonuses(p),t=growth.trainingRanks(p),tree=growth.treeBonus(p),tr=transcend.transcendBonus(p),tw=towerBonus(p.tower?.best),base=growth.levelGrowth(p.level),attackSpeed=1+base.attackSpeed+t.tempo*.01+tree.attackSpeed+b.attackSpeed/100;return{
-  maxHp:(150+(p.level-1)*6+base.hp+t.vitality*12+b.hp)*(1+b.hpPct+tree.hpPct+tr.hpPct+tw.hpPct),
-  damage:(24*(1+(p.level-1)*.035+base.damage+t.power*.05)+b.damage)*(1+b.damagePct+tree.damagePct+tr.damagePct+tw.damagePct),
-  range:135*(1+base.range+tree.range+b.range/100),speed:280*(1+base.speed+t.stride*.01+tree.speed+b.speed/100),
+export function playerStats(p){const pb=skills.passiveBranchStats(p),b=equipmentBonuses(p),t=growth.trainingRanks(p),tree=growth.treeBonus(p),tr=transcend.transcendBonus(p),tw=towerBonus(p.tower?.best),base=growth.levelGrowth(p.level),attackSpeed=1+base.attackSpeed+t.tempo*.01+tree.attackSpeed+pb.attackSpeed+b.attackSpeed/100;return{
+  maxHp:(150+(p.level-1)*6+base.hp+t.vitality*12+b.hp)*(1+b.hpPct+tree.hpPct+tr.hpPct+tw.hpPct+pb.hpPct),
+  damage:(24*(1+(p.level-1)*.035+base.damage+t.power*.05)+b.damage)*(1+b.damagePct+tree.damagePct+tr.damagePct+tw.damagePct+pb.damagePct),
+  range:135*(1+base.range+tree.range+b.range/100),speed:280*(1+base.speed+t.stride*.01+tree.speed+pb.speed+b.speed/100),
   attackDuration:.32/attackSpeed,attackSpeed,
   thunderCooldown:4.8,thunderDamage:62+b.damage*1.8,
-  crit:Math.min(.5,.05+t.precision*.005+tree.crit+tw.crit+b.crit/100),reduction:Math.min(.5,base.reduction+t.guard*.01+tree.reduction+tw.reduction+b.reduction/100),collection:110+t.stride*5+(equippedUniqueEffect(p,'charm')?.id==='magnet'?UNIQUE_EFFECTS.magnet.range:0)+b.collection,regeneration:.65+base.regeneration+tree.regeneration+b.regeneration};}
+  crit:Math.min(.5,.05+t.precision*.005+tree.crit+tw.crit+pb.crit+b.crit/100),reduction:Math.min(.5,base.reduction+t.guard*.01+tree.reduction+tw.reduction+pb.reduction+b.reduction/100),collection:110+t.stride*5+(equippedUniqueEffect(p,'charm')?.id==='magnet'?UNIQUE_EFFECTS.magnet.range:0)+b.collection,regeneration:.65+base.regeneration+tree.regeneration+pb.regeneration+b.regeneration};}
 export function compareEquipment(profile,equipment){
  const next={...profile,equipment},before=playerStats(profile),after=playerStats(next),current=equipmentSynergies(profile),future=equipmentSynergies(next);
  const gained=future.filter(r=>!current.some(b=>b.id===r.id)),lost=current.filter(r=>!future.some(b=>b.id===r.id));
@@ -251,7 +251,7 @@ export function compareEquipment(profile,equipment){
 }
 export function compareItem(profile,id,position=null){const item=profile.inventory.find(i=>i.id===id),next=equipmentAfterEquip(profile,item,position);return next?compareEquipment(profile,next):null;}
 const buildIndex=n=>Number.isInteger(n)&&n>=0&&n<5;
-const skillSelection=b=>({loadout:structuredClone(b.loadout),auto:{...b.auto},awakening:b.awakening,branchPick:{...b.branchPick}});
+const skillSelection=b=>({loadout:structuredClone(b.loadout),auto:{...b.auto},awakening:b.awakening,branchPick:structuredClone(b.branchPick)});
 export function buildStatus(profile,n){
  const build=buildIndex(n)?profile.savedBuilds?.[n]:null;if(!build||!build.equipment||typeof build.equipment!=='object'||Array.isArray(build.equipment))return {ok:false,reason:'빈 빌드 슬롯이야.'};
  const used=new Set();for(const [slot,id]of Object.entries(build.equipment)){const owned=profile.inventory.find(i=>i.id===id);if(!EQUIPMENT_KEYS.includes(slot)||id!==null&&(used.has(id)||owned?.slot==='special'&&owned.characterId!==(profile.characterId??'lirian')))return {ok:false,reason:'빌드 장비 위치가 올바르지 않아.'};if(id!==null)used.add(id);}

@@ -1293,3 +1293,18 @@
 #game-shell#game-shell #result-next-level[hidden]{display:none!important}
 #game-shell#game-shell .battle .top-hud .mission.hunt-status{grid-template-rows:13px minmax(0,1fr)!important;height:48px!important;min-height:48px!important;max-height:48px!important;width:204px!important;row-gap:1px!important;padding-top:3px!important}
 #game-shell#game-shell .battle .top-hud #hunt-stage{grid-column:1/-1;grid-row:1;align-self:center;font-size:10.5px!important;line-height:13px!important;text-align:center;color:#e8d6b0!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* Alpha 0.142 스킬 단계 갈래(사용자 요청): 갈래 보기 위에 단계 탭(Lv.5·10·15·20), 그 아래 그 단계의 갈래 3칸. */
+#game-shell #camp-skills-panel .skill-branch-tiers{display:flex;gap:4px;flex:none}
+#game-shell#game-shell #camp-skills-panel .skill-branch-tiers button{flex:1 1 0;min-width:0;height:24px!important;min-height:0!important;margin:0!important;padding:0 4px!important;border:1px solid #9e835366!important;border-radius:4px!important;background:#151a20!important;background-image:none!important;box-shadow:none!important;color:#a99a7c!important;font-size:10.5px!important;line-height:22px!important;position:relative}
+#game-shell#game-shell #camp-skills-panel .skill-branch-tiers button::before,#game-shell#game-shell #camp-skills-panel .skill-branch-tiers button::after{display:none!important}
+#game-shell#game-shell #camp-skills-panel .skill-branch-tiers button[hidden]{display:none!important}
+#game-shell#game-shell #camp-skills-panel .skill-branch-tiers button[data-open=true]{color:#e6dccb!important}
+#game-shell#game-shell #camp-skills-panel .skill-branch-tiers button[data-picked=true]{border-color:#c79a52!important}
+#game-shell#game-shell #camp-skills-panel .skill-branch-tiers button[aria-selected=true]{border-color:#ffd58a!important;background:linear-gradient(#6d1f2a,#35121b)!important;color:#ffe9c4!important}
+/* 0.142 스킬 갈래 3단: 카드는 이름·효과 각 한 줄, 설명은 높이가 될 때만, 안내는 한 줄 */
+#game-shell#game-shell #camp-skills-panel .skill-branch-tiers button{height:20px!important;line-height:18px!important}
+#game-shell #camp-skills-panel .skill-branches{gap:4px}
+#game-shell #camp-skills-panel .skill-branches>button{gap:1px;padding:2px 7px;line-height:1.2}
+#game-shell #camp-skills-panel .skill-branches>button>:is(b,small,.skill-branch-text){display:block;flex:none;white-space:nowrap;-webkit-line-clamp:unset}
+#game-shell #camp-skills-panel .skill-branch-note{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-height:360px){#game-shell #camp-skills-panel .skill-branches>button>.skill-branch-text{display:none}#game-shell #camp-skills-panel .skill-branches>button{padding:2px 5px}#game-shell #camp-skills-panel .skill-branches>button>b{font-size:10px;letter-spacing:-.2px}#game-shell #camp-skills-panel .skill-branches>button>small{font-size:9.5px}}

@@ -3,16 +3,19 @@ import assert from 'node:assert/strict';
 import * as g from '../dist/game-engine.js';
 import {freezeCombat} from './combat-fixture.mjs';
 
-// Alpha 0.126 스킬 갈래: two branches per attacking active and ultimate, bought with 검술서, one used at a time.
-function profile(level=150){const p=g.createProfile(1000);p.level=level;p.unlockedStage=60;p.clearedStage=59;p.skillBook=g.restoreSkillBook(null,level);p.materials.skillPage=100;p.gold=1e6;return p;}
+// Alpha 0.126 스킬 갈래 → 0.142 단계 갈래: three branches per tier, a tier per 5 skill levels (ultimates 4 tiers), one used per tier.
+// The fixture raises every active·passive skill to Lv.5 so the first tier counts (ultimates rank with the level).
+function profile(level=150){const p=g.createProfile(1000);p.level=level;p.unlockedStage=60;p.clearedStage=59;p.skillBook=g.restoreSkillBook(null,level);for(const d of g.SKILL_CATALOG)if((d.kind==='active'||d.kind==='passive')&&d.unlock<=level)p.skillBook.ranks[d.id]=4;p.materials.skillPage=100;p.gold=1e6;return p;}
 const own=(p,id,i)=>{p.skillBook.branchOwned[id]=(p.skillBook.branchOwned[id]??0)|(1<<i);p.skillBook.branchPick[id]=i;return p;};
 
-test('every active and ultimate has two distinct branches with readable numbers; passives and 괴수 기술 have none',()=>{
- const ids=Object.keys(g.SKILL_BRANCHES);assert.deepEqual(ids.sort(),g.SKILL_CATALOG.filter(d=>d.kind==='active'||d.kind==='ultimate').map(d=>d.id).sort());
- const names=new Set();for(const id of ids){const rows=g.SKILL_BRANCHES[id];assert.equal(rows.length,2,id);assert.notDeepEqual(rows[0].mods,rows[1].mods);for(const b of rows){names.add(b.name);assert.ok(g.branchSummary(b.mods).length>4,b.name);assert.ok(b.text);}}
- assert.equal(names.size,ids.length*2);
+test('every active, passive and ultimate has three distinct branches per tier; 괴수 기술 have none',()=>{
+ const ids=Object.keys(g.SKILL_BRANCHES);assert.deepEqual(ids.sort(),g.SKILL_CATALOG.filter(d=>['active','passive','ultimate'].includes(d.kind)).map(d=>d.id).sort());
+ const names=new Set();let count=0;for(const id of ids){const tiers=g.SKILL_BRANCHES[id];assert.equal(tiers.length,g.SKILL_BY_ID[id].kind==='ultimate'?4:3,id);
+  for(const row of tiers){assert.equal(row.length,3,id);assert.equal(new Set(row.map(b=>JSON.stringify(b.mods))).size,3,id);for(const b of row){count++;names.add(b.name);assert.ok(g.branchSummary(b.mods).length>4,b.name);assert.ok(b.text);}}}
+ assert.equal(count,16*9+16*9+3*12);assert.equal(names.size,count,'every branch has its own name');
  // Branches never add hits to skills whose hits are individually weighted.
- for(const id of ['triple','echo','bloodmoon'])assert.ok(g.SKILL_BRANCHES[id].every(b=>!b.mods.hits));
+ for(const id of ['triple','echo','bloodmoon'])assert.ok(g.SKILL_BRANCHES[id].flat().every(b=>!b.mods.hits));
+ assert.equal(g.SKILL_BRANCHES['beast-'+Object.keys(g.CHAPTER_BOSSES??{})[0]],undefined);
 });
 
 test('branches cost 검술서 and gold, need the skill learned, auto-select, switch freely and survive saves and builds',()=>{
@@ -22,13 +25,13 @@ test('branches cost 검술서 and gold, need the skill learned, auto-select, swi
  assert.equal(g.unlockSkillBranch(s,'stance',0),false);assert.equal(g.chooseSkillBranch(s,'stance',1),false);
  assert.equal(g.unlockSkillBranch(s,'stance',1),true);assert.equal(g.skillBranchIndex(p,'stance'),1);
  assert.equal(g.chooseSkillBranch(s,'stance',0),true);assert.equal(g.skillBranchIndex(p,'stance'),0);assert.equal(g.chooseSkillBranch(s,'stance',0),true);assert.equal(g.skillBranchIndex(p,'stance'),-1);
- assert.equal(g.unlockSkillBranch(s,'finisher',0),false);assert.equal(g.branchStatus(p,'finisher',0),'갈래 없음');
+ const beast=g.SKILL_CATALOG.find(d=>d.kind==='beast').id;assert.equal(g.unlockSkillBranch(s,beast,0),false);assert.equal(g.branchStatus(p,beast,0),'갈래 없음');
  const low=g.createGame(profile(5));assert.equal(g.branchStatus(low.profile,'eclipse',0),'스킬 미습득');assert.equal(g.unlockSkillBranch(low,'eclipse',0),false);
  const poor=g.createGame(profile());poor.profile.materials.skillPage=c.pages-1;assert.equal(g.branchStatus(poor.profile,'gale',0),'검술서 부족');assert.equal(g.unlockSkillBranch(poor,'gale',0),false);
  g.chooseSkillBranch(s,'stance',1);
- const saved=g.restoreProfile(g.encodeProfile(p,1000),1000);assert.deepEqual(saved.skillBook.branchOwned,{stance:3});assert.deepEqual(saved.skillBook.branchPick,{stance:1});
- const hostile=g.restoreProfile({...JSON.parse(g.encodeProfile(p,1000)),skillBook:{...p.skillBook,branchOwned:{stance:9,gale:1,finisher:3,bogus:1},branchPick:{gale:1,stance:0,mark:0}}},1000);
- assert.deepEqual(hostile.skillBook.branchOwned,{stance:3,gale:1});assert.deepEqual(hostile.skillBook.branchPick,{stance:0});
+ const saved=g.restoreProfile(g.encodeProfile(p,1000),1000);assert.deepEqual(saved.skillBook.branchOwned,{stance:3});assert.deepEqual(saved.skillBook.branchPick,{stance:[1,null,null]});
+ const hostile=g.restoreProfile({...JSON.parse(g.encodeProfile(p,1000)),skillBook:{...p.skillBook,branchOwned:{stance:9|1<<9,gale:1,finisher:3,bogus:1},branchPick:{gale:1,stance:0,mark:0}}},1000);
+ assert.deepEqual(hostile.skillBook.branchOwned,{stance:9,gale:1,finisher:3},'bits past the last tier are dropped');assert.deepEqual(hostile.skillBook.branchPick,{stance:[0,null,null]},'a 0.126 single pick becomes tier 1');
  // A saved build remembers its branch picks; owned branches stay with the character.
  assert.equal(g.saveBuild(s,0,'갈래'),true);g.chooseSkillBranch(s,'stance',0);assert.equal(g.applyBuild(s,0).ok,true);assert.equal(g.skillBranchIndex(s.profile,'stance'),1);
 });

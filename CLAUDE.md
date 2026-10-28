@@ -13,13 +13,13 @@
 ## 실행
 - 게임: `PORT=8090 node serve-local.mjs` 후 `http://127.0.0.1:8090/` (기본 포트 8080). file:// 로는 안 된다.
 - 헤드리스 확인: 전역 playwright(`/opt/node22/lib/node_modules/playwright`)를 createRequire로 불러 Chromium 실행. 844×390에서 거점 → 사냥터 → 전투 준비 → 전투까지 콘솔 오류·404 없이 동작 확인함.
-- 테스트: `npm test` = `node --experimental-vm-modules --test tests/*.test.mjs` (약 140초, 'ancient slot icons …' 한 테스트가 60초). **955/955 통과** (0.142 기준). game-ui 테스트는 host마다 vm 문맥에 app.js를 컴파일하는데 V8 컴파일 캐시가 그 문맥을 붙잡아 메모리가 쌓였다(0.119에서 3.3GB, 기본 힙 약 2GB 초과). 테스트 파일 첫머리의 `v8.setFlagsFromString('--no-compilation-cache')`로 최대 RSS 약 0.73GB. 지우지 말 것. 어셋 개수 단언(클립 415+(45+26+66+3)×15, 프레임 907+(45+26+66+3)×25(+3은 0.123 레이드 보스), 시작 시 요청 이미지 26장 = 공유 18 + 1장 8장(세트 장비 페이지 포함))은 0.109 기준. region-assets 테스트가 모든 챕터 이미지 경로가 `delivery`를 거쳐 실제 파일로 이어지는지 검사한다(0.107에서 재사용 지형 6장 연결이 빠져 5·9·17·18·28·29장 입장이 막혔었다).
+- 테스트: `npm test` = `node --experimental-vm-modules --test tests/*.test.mjs` (약 140초, 'ancient slot icons …' 한 테스트가 60초). **959/959 통과** (0.142 기준). game-ui 테스트는 host마다 vm 문맥에 app.js를 컴파일하는데 V8 컴파일 캐시가 그 문맥을 붙잡아 메모리가 쌓였다(0.119에서 3.3GB, 기본 힙 약 2GB 초과). 테스트 파일 첫머리의 `v8.setFlagsFromString('--no-compilation-cache')`로 최대 RSS 약 0.73GB. 지우지 말 것. 어셋 개수 단언(클립 415+(45+26+66+3)×15, 프레임 907+(45+26+66+3)×25(+3은 0.123 레이드 보스), 시작 시 요청 이미지 26장 = 공유 18 + 1장 8장(세트 장비 페이지 포함))은 0.109 기준. region-assets 테스트가 모든 챕터 이미지 경로가 `delivery`를 거쳐 실제 파일로 이어지는지 검사한다(0.107에서 재사용 지형 6장 연결이 빠져 5·9·17·18·28·29장 입장이 막혔었다).
 
 ## 구조
 - `dist/index.html` (389KB, 정적 DOM 3704 id, CSS 45개 순차 로드) → `menu-pages.js`, `app.js`.
 - `dist/app.js` (207KB, 1469줄 압축형): UI 컨트롤러. DOM을 생성하지 않고 기존 노드 재사용. rAF `tick`(app.js:1078) → `game.advanceGame` → Canvas2D `draw()` + 매 프레임 DOM `updateHud()`. 화면 전환은 `modal()`(:887) 단일 오버레이 상태기계 + `campDrawer`, `navigateCamp()`(:1280).
 - `dist/game-engine.js` (108KB, 허브): 순수 로직(DOM·저장소 없음). 다른 로직 모듈을 import하고, 시각 모듈(skill-vfx, skill-image-fx, monster-fx, combat-feedback, ultimate-video)과 combat-skills 등을 `export *`로 재노출.
-- 로직 모듈: transcendence(0.141 초월), loot, equipment-progression/slots/synergies, crafting, chapters, battle-plans, battle-progress(정산 저널), dungeons, hunt-modes(난이도), combat-skills(35종), skill-motion, ancient-powers, unique-effects, build-effects(각인), profile-backup, world(카메라·좌표), terrain, motion.
+- 로직 모듈: transcendence(0.141 초월), loot, equipment-progression/slots/synergies, crafting, chapters, battle-plans, battle-progress(정산 저널), dungeons, hunt-modes(난이도), combat-skills(35종, 0.142 최대 Lv.15·궁극 20), skill-branches(갈래 3단계×3, 궁극 4단계), skill-motion, ancient-powers, unique-effects, build-effects(각인), profile-backup, world(카메라·좌표), terrain, motion.
 - `engine.js` + `lab.html/lab.js`: 구형 모션 검사 도구(MOTION LAB). 실게임과 무관.
 - `sound.js`: 오디오 파일 없이 WebAudio로 효과음 합성 (동시 10음).
 - dist 어셋(0.130.1): 런타임 사용 집합(`regionAssetPlan`+`campAssetPaths`+manifest의 클립 외 이미지+html/css/js 경로+스킬 아이콘)에 없는 파일은 지웠다(webp로 대체된 PNG 원본, 옛 UI 시안, 프롬프트 txt, 안 쓰는 글꼴). 단 MOTION LAB(lab.html)이 쓰는 옛 클립 PNG 10장(hunter_walk 등)은 남김. 새 어셋을 넣으면 manifest/코드에서 참조되게 할 것.
