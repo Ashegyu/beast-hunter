@@ -858,3 +858,40 @@
 #game-shell#game-shell #codex-detail #codex-list-back::before,#game-shell#game-shell #codex-detail #codex-list-back::after{display:none!important}
 #game-shell #codex-detail .codex-info dd{font-size:10.5px!important}
 @media(max-width:700px){#game-shell #codex-detail:not([hidden]){grid-template-columns:120px minmax(0,1fr);gap:5px 10px;padding:8px 10px!important}#game-shell #codex-detail #codex-detail-name{font-size:15px}#game-shell #codex-detail #codex-signature{font-size:10px;padding:4px 7px;line-height:1.35}#game-shell #codex-detail .codex-info{gap:1px}#game-shell #codex-detail .codex-info>div{grid-template-columns:56px minmax(0,1fr);padding:1px 0;font-size:9.5px;line-height:1.3}#game-shell #codex-detail .codex-info dd{font-size:9.5px!important}}
+/* Alpha 0.141 도감(고대 유물)도 재료 도감처럼(사용자 요청): 왼쪽 목록(검색·분류·카드 격자), 오른쪽 상세가 늘 함께 보인다.
+   카드를 누르면 오른쪽 상세만 바뀐다. 최근 발견 칸·발견 기록 칸은 숨기고 발견 수는 목록 머리에. */
+#game-shell #codex-content:not([hidden]):not([data-view=materials]){display:grid!important;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto;gap:8px 10px}
+#game-shell #codex-content:not([data-view=materials])>#codex-browser{grid-column:1;grid-row:1;display:flex!important;flex-direction:column;gap:6px;min-height:0;overflow:hidden}
+#game-shell #codex-content:not([data-view=materials])>#codex-detail{grid-column:2;grid-row:1}
+#game-shell #codex-content:not([data-view=materials])>.archive-footer{grid-column:1/-1;grid-row:2}
+#game-shell#game-shell #codex-content:not([data-view=materials]) #codex-browser::after{display:none!important}
+#game-shell #codex-content:not([data-view=materials]) :is(#codex-feature,.archive-record){display:none!important}
+#game-shell #codex-content:not([data-view=materials]) .archive-tools{flex:none;display:flex!important;gap:6px;height:28px}
+#game-shell #codex-content:not([data-view=materials]) .archive-categories{flex:none;height:28px!important;min-height:28px!important}
+#game-shell #codex-content:not([data-view=materials]) .archive-gallery{flex:1 1 auto;display:flex!important;flex-direction:column;min-height:0}
+#game-shell #codex-content:not([data-view=materials]) #codex-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+#game-shell #codex-content #codex-filters:not([hidden]){left:12px!important}
+#game-shell#game-shell #codex-content .codex-card[aria-pressed=true]{border-color:#f2c97a!important;box-shadow:0 0 0 1px #2a1408,0 0 12px #e0a04a66!important}
+/* 오른쪽 상세: 재료 상세와 같은 모양(머리에 그림 + 이름, 아래 고유 효과·정보 표) */
+#game-shell #codex-content #codex-detail:not([hidden]){display:flex!important;flex-direction:column;gap:6px;min-height:0;overflow:hidden;padding:10px 12px!important;border:1px solid #9e835366;border-radius:8px;background:linear-gradient(180deg,#160f12ee,#0b0f14ee)!important}
+#game-shell #codex-content #codex-detail #codex-list-back{display:none!important}
+#game-shell #codex-content #codex-detail .codex-detail-heading{display:flex!important;align-items:center;gap:10px}
+#game-shell #codex-content #codex-detail #codex-detail-art{flex:none;width:76px!important;height:76px!important;align-self:center;border-radius:8px}
+#game-shell #codex-content #codex-detail .codex-detail-heading>div{display:grid;gap:1px;min-width:0}
+#game-shell #codex-content #codex-detail #codex-detail-name{font-size:16px}
+#game-shell #codex-content #codex-detail #codex-signature{font-size:10.5px;line-height:1.45;padding:5px 8px}
+#game-shell #codex-content #codex-detail .codex-info{gap:2px}
+#game-shell #codex-content #codex-detail .codex-info>div{grid-template-columns:58px minmax(0,1fr);padding:2px 0}
+#game-shell #codex-content #codex-detail .codex-info dd{font-size:10px!important}
+@media(max-width:700px){#game-shell #codex-content:not([hidden]):not([data-view=materials]){grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}#game-shell #codex-content:not([data-view=materials]) #codex-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}#game-shell #codex-content #codex-detail #codex-detail-art{width:54px!important;height:54px!important}#game-shell #codex-content #codex-detail #codex-detail-name{font-size:13px}#game-shell #codex-content #codex-detail #codex-signature{font-size:9.5px}}
+#game-shell #codex-content #codex-detail .codex-detail-heading{flex-direction:row!important;justify-content:flex-start!important;text-align:left!important}
+#game-shell #codex-content #codex-detail .codex-detail-heading>div{justify-items:start;text-align:left}
+#game-shell #codex-content #codex-detail{gap:5px!important}
+#game-shell #codex-content #codex-detail .codex-info{overflow:hidden}
+@media(max-width:700px){#game-shell #codex-content:not([data-view=materials]) .archive-categories svg{display:none!important}#game-shell #codex-content:not([data-view=materials]) .archive-categories button{font-size:10px!important;padding:0 2px!important;white-space:nowrap}}
+/* 성장 화면(단련·초월): 아래 정찰 보상 안내 줄이 잘려 보여 숨기고, 효과 설명은 두 줄까지 보이게 */
+#game-shell #camp-growth-panel #offline-note{display:none!important}
+#game-shell .stat-text small{white-space:normal!important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#game-shell #camp-growth-panel>#growth-board{padding-bottom:10px!important;box-sizing:border-box}
+#game-shell #camp-growth-panel>#growth-stats{margin-bottom:10px}
+#game-shell :is(#growth-training,#growth-transcend){min-height:0;overflow:hidden}

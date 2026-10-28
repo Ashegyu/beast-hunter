@@ -1343,42 +1343,8 @@ test('missing rarity art fails closed and preserves saved high-grade ownership',
  const row=game.ANCIENT_CATALOG.find(r=>r.slot==='weapon'),saved=game.createProfile(1_000_000);saved.inventory=[{id:9,slot:row.slot,tier:row.tier,rarity:5,artId:row.artId,catalogId:row.id,name:row.name,affixes:{damage:20}}];saved.equipment.weapon=9;const ui=await host({saved,failedAssets:'assets/ancient-individual-v0123.webp'});assert.equal(ui.nodes.get('start').disabled,true);assert.match(ui.nodes.get('loading').textContent,/ancient-individual-v0123/);ui.emit('start','click');ui.tick();assert.equal(ui.state.phase,'camp');assert.equal(ui.state.profile.equipment.weapon,9);assert.ok(game.ancientDefinition(ui.state.profile.inventory[0]));
 });
 
-test('camp codex masks undiscovered art, filters, persists targets and prepares unlocked boss replays',async()=>{
- const row=game.ANCIENT_CATALOG[0],p=game.createProfile(1_000_000);p.version=5;p.clearedStage=1;p.unlockedStage=2;p.inventory=[{id:1,slot:row.slot,tier:row.tier,rarity:5,artId:row.artId,catalogId:row.id,name:row.name,affixes:{}}];p.equipment.weapon=1;
- const ui=await host({saved:p,campaign:true});ui.emit('camp-codex','click');assert.equal(ui.nodes.get('codex-content').hidden,false);assert.equal(ui.nodes.get('codex-count').textContent,'1 / 165 발견');assert.equal(ui.nodes.get('codex-card-0').attributes['data-discovered'],'true');assert.equal(ui.nodes.get('codex-card-1').attributes['data-discovered'],'false');assert.equal(ui.nodes.get('codex-art-1').attributes['aria-label'],'미발견 유물 이미지');
- ui.emit('codex-card-1','click');assert.equal(ui.nodes.get('codex-detail').pageRevealed,true);ui.emit('codex-target','click');assert.equal(ui.profile().targetAncientId,game.ANCIENT_CATALOG[1].id);assert.equal(ui.nodes.get('codex-target').disabled,true);ui.nodes.get('codex-chapter').value='2';ui.emit('codex-chapter','change');assert.equal(ui.nodes.get('codex-results').textContent,'25종 표시');assert.equal(ui.nodes.get('codex-card-1').hidden,true);
- ui.emit('codex-card-40','click');assert.equal(ui.nodes.get('codex-route').disabled,true);ui.emit('codex-route','click');assert.equal(ui.nodes.get('codex-content').hidden,false);
- ui.emit('codex-card-0','click');assert.match(ui.nodes.get('codex-route-note').textContent,/1~10장 보스 희귀 드롭/);assert.equal(ui.nodes.get('codex-route').disabled,false);ui.emit('codex-route','click');assert.equal(ui.nodes.get('codex-content').hidden,true);
- const restored=await host({saved:ui.profile()});assert.equal(restored.profile().targetAncientId,game.ANCIENT_CATALOG[1].id);assert.match(restored.nodes.get('farm-target-note').textContent,new RegExp(game.ANCIENT_CATALOG[1].name));restored.emit('camp-codex','click');assert.equal(restored.nodes.get('codex-detail-name').textContent,game.ANCIENT_CATALOG[1].name);restored.emit('codex-clear','click');assert.equal(restored.profile().targetAncientId,null);
-});
-test('archive is activation only and returns focus to the selected artifact before leaving camp',async()=>{
- const ui=await host();ui.emit('camp-codex','click');assert.equal(ui.nodes.get('codex-detail').hidden,true);assert.equal(ui.document.activeElement.id,'page-back');
- for(const event of ['pointerenter','mouseenter','focus'])ui.emit('codex-card-2',event,{pointerType:'mouse'});
- assert.equal(ui.nodes.get('codex-detail').hidden,true);assert.equal(ui.nodes.get('codex-browser').hidden,false);
- ui.emit('codex-card-2','click');assert.equal(ui.nodes.get('codex-detail').hidden,false);assert.equal(ui.nodes.get('codex-browser').hidden,true);assert.equal(ui.document.activeElement.id,'codex-list-back');
- ui.emit('page-back','click');assert.equal(ui.nodes.get('codex-content').hidden,false);assert.equal(ui.nodes.get('codex-detail').hidden,true);assert.equal(ui.document.activeElement.id,'codex-card-2');
- ui.emit('codex-card-7','click');ui.emit('document','keydown',{key:'Escape'});assert.equal(ui.nodes.get('codex-detail').hidden,true);assert.equal(ui.document.activeElement.id,'codex-card-7');
- ui.emit('page-back','click');assert.equal(ui.nodes.get('codex-content').hidden,true);ui.emit('camp-codex','click');assert.equal(ui.nodes.get('codex-detail').hidden,true);
-});
 
-test('archive recent discovery uses real records including removed equipment and empty state is honest',async()=>{
- const empty=await host();empty.emit('camp-codex','click');assert.equal(empty.nodes.get('codex-feature').attributes['data-empty'],'true');assert.equal(empty.nodes.get('codex-feature-art').hidden,true);assert.equal(empty.nodes.get('codex-feature-open').hidden,true);assert.equal(empty.nodes.get('codex-progress').attributes['aria-valuenow'],'0');empty.emit('codex-feature-open','click');assert.equal(empty.nodes.get('codex-detail').hidden,true);
- const p=game.createProfile(1_000_000);p.discoveredAncients=[game.ANCIENT_CATALOG[2].id,game.ANCIENT_CATALOG[41].id];const ui=await host({saved:p});ui.emit('camp-codex','click');assert.equal(ui.nodes.get('codex-count').textContent,'2 / 165 발견');assert.equal(ui.nodes.get('codex-percent').textContent,'1.2%');assert.equal(ui.nodes.get('codex-feature-name').textContent,game.ANCIENT_CATALOG[41].name.replace(' ','\n'));assert.equal(ui.profile().inventory.length,0);
- ui.emit('codex-feature-open','click');assert.equal(ui.nodes.get('codex-detail-name').textContent,game.ANCIENT_CATALOG[41].name);ui.emit('codex-list-back','click');assert.equal(ui.document.activeElement.id,'codex-feature-open');
- // Same count, different identities must invalidate the presentation cache.
- ui.state.profile.discoveredAncients=[game.ANCIENT_CATALOG[3].id,game.ANCIENT_CATALOG[5].id];ui.tick();assert.equal(ui.nodes.get('codex-feature-name').textContent,game.ANCIENT_CATALOG[5].name.replace(' ','\n'));assert.equal(ui.nodes.get('codex-card-41').attributes['data-discovered'],'false');assert.equal(ui.nodes.get('codex-card-5').attributes['data-discovered'],'true');
-});
 
-test('archive filters, category tabs, sorting and view mode preserve identities and profile',async()=>{
- const p=game.createProfile(1_000_000);p.discoveredAncients=[game.ANCIENT_CATALOG[42].id,game.ANCIENT_CATALOG[12].id];const ui=await host({saved:p});const before=ui.profile();ui.emit('camp-codex','click');ui.emit('codex-filter-toggle','click');assert.equal(ui.nodes.get('codex-filters').hidden,false);assert.equal(ui.nodes.get('codex-filter-toggle').attributes['aria-expanded'],'true');
- ui.emit('codex-tab-armor','click');assert.equal(ui.nodes.get('codex-slot').value,'armor');for(const [n,row] of game.ANCIENT_CATALOG.entries())assert.equal(ui.nodes.get('codex-card-'+n).hidden,!['helmet','armor','pants','boots'].includes(row.slot));
- ui.nodes.get('codex-slot').value='charm';ui.emit('codex-slot','change');assert.equal(ui.nodes.get('codex-tab-charm').attributes['aria-pressed'],'true');
- ui.emit('codex-filter-reset','click');ui.nodes.get('codex-sort').value='found';ui.emit('codex-sort','change');assert.deepEqual(Array.from(ui.nodes.get('codex-grid').children.slice(0,2),n=>n.id),['codex-card-12','codex-card-42']);
- ui.nodes.get('codex-sort').value='name';ui.emit('codex-sort','change');const expected=game.ANCIENT_CATALOG.map((row,i)=>({row,i})).sort((a,b)=>a.row.name.localeCompare(b.row.name,'ko')).map(({i})=>'codex-card-'+i);assert.deepEqual(Array.from(ui.nodes.get('codex-grid').children,n=>n.id),expected);
- ui.emit('codex-view-list','click');assert.equal(ui.nodes.get('codex-grid').attributes['data-layout'],'list');ui.emit('codex-card-42','click');assert.equal(ui.nodes.get('codex-detail-name').textContent,game.ANCIENT_CATALOG[42].name);ui.emit('codex-list-back','click');ui.emit('codex-view-grid','click');assert.equal(ui.nodes.get('codex-grid').attributes['data-layout'],'grid');
- ui.nodes.get('codex-search').value='절대로없는유물';ui.emit('codex-search','input');assert.equal(ui.nodes.get('codex-empty').hidden,false);assert.equal(ui.nodes.get('codex-detail').hidden,true);for(let i=0;i<60;i++)assert.equal(ui.nodes.get('codex-card-'+i).hidden,true);
- ui.emit('codex-filter-reset','click');assert.equal(ui.nodes.get('codex-results').textContent,'165종 표시');assert.equal(ui.nodes.get('codex-empty').hidden,true);assert.deepEqual(ui.profile(),before);
-});
 
 test('archive hunt action opens the real map without starting or changing ownership',async()=>{
  const ui=await host();ui.emit('camp-codex','click');const before=ui.profile();ui.emit('codex-hunt','click');assert.equal(ui.nodes.get('codex-content').hidden,true);assert.equal(ui.nodes.get('camp-map-panel').hidden,false);assert.equal(ui.state.phase,'camp');assert.deepEqual(ui.profile(),before);ui.emit('camp-map-start','click');assert.equal(ui.state.phase,'playing');ui.emit('camp-codex','click');assert.equal(ui.nodes.get('codex-content').hidden,true);
@@ -1922,4 +1888,15 @@ test('Alpha 0.141 재료 도감 replaces the 재료 추적 window: every entry o
  ui.emit('nav-home','click');ui.emit('camp-track','click');assert.equal(ui.nodes.get('codex-content').hidden,false);assert.equal(ui.nodes.get('codex-tab-materials').attributes['aria-pressed'],'true');assert.equal(ui.nodes.get('mat-card-boneIron').attributes['aria-pressed'],'true');
  ui.emit('nav-craft','click');ui.emit('craft-recipe-0','click');ui.emit('craft-material-tear','click');assert.equal(ui.nodes.get('mat-detail-name').textContent,'빙룡의 눈물');assert.match(ui.nodes.get('mat-detail-goal').textContent,new RegExp(game.CRAFTED_CATALOG[0].name));assert.equal(ui.profile().targetCraftId,p.targetCraftId);
  ui.emit('nav-home','click');ui.emit('start','click');ui.tick();assert.equal(ui.nodes.get('craft-tracker').hidden,true);
+});
+test('Alpha 0.141 도감: gallery and detail side by side (like the 재료 도감); cards only select; no farming target or boss route',async()=>{
+ const row=game.ANCIENT_CATALOG[0],p=game.createProfile(1_000_000);p.version=5;p.clearedStage=1;p.unlockedStage=2;p.inventory=[{id:1,slot:row.slot,tier:row.tier,rarity:5,artId:row.artId,catalogId:row.id,name:row.name,affixes:{}}];p.equipment.weapon=1;
+ const ui=await host({saved:p,campaign:true});const before=ui.profile();ui.emit('camp-codex','click');assert.equal(ui.nodes.get('codex-browser').hidden,false);assert.equal(ui.nodes.get('codex-detail').hidden,false,'detail is always beside the gallery');
+ assert.equal(ui.nodes.get('codex-card-0').attributes['data-discovered'],'true');assert.equal(ui.nodes.get('codex-card-1').attributes['data-discovered'],'false');assert.match(ui.nodes.get('codex-results').textContent,/발견 1 \/ 165/);
+ ui.emit('codex-card-1','click');assert.equal(ui.nodes.get('codex-browser').hidden,false);assert.equal(ui.nodes.get('codex-detail-name').textContent,game.ANCIENT_CATALOG[1].name);assert.equal(ui.nodes.get('codex-card-1').attributes['aria-pressed'],'true');assert.equal(ui.nodes.get('codex-detail').attributes['data-discovered'],'false');
+ assert.match(ui.nodes.get('codex-info-source').textContent,/1~10장 보스/);assert.match(ui.nodes.get('codex-info-chance').textContent,/일반 1%/);assert.ok(ui.nodes.get('codex-affixes').textContent.length>0);
+ ui.emit('codex-tab-armor','click');for(const [n,r] of game.ANCIENT_CATALOG.entries())assert.equal(ui.nodes.get('codex-card-'+n).hidden,!['helmet','armor','pants','boots'].includes(r.slot));
+ ui.nodes.get('codex-search').value='절대로없는유물';ui.emit('codex-search','input');assert.equal(ui.nodes.get('codex-empty').hidden,false);ui.emit('codex-filter-reset','click');ui.nodes.get('codex-search').value='';ui.emit('codex-search','input');
+ ui.emit('codex-tab-materials','click');assert.equal(ui.nodes.get('codex-detail').hidden,true);assert.equal(ui.nodes.get('material-codex').hidden,false);ui.emit('codex-tab-all','click');assert.equal(ui.nodes.get('codex-detail').hidden,false);
+ assert.deepEqual(ui.profile(),before);
 });

@@ -1265,7 +1265,8 @@ resizeViewport();updateHud();boot();requestAnimationFrame(tick);
 function openCodex(keepSlot=false){if(!ready||state.phase!=='camp')return;if(keepSlot!==true&&codexSlot==='materials')codexSlot='all';trackOpen=false;craftOpen=false;campDrawer=campDrawer==='more'?'':campDrawer;codexOpen=true;inventoryOpen=false;campChoices=false;codexDetailOpen=false;codexFiltersOpen=false;codexSelection=profile.targetAncientId??codexSelection;codexRenderKey='';updateHud();window.hunterPages?.first($('codex-content'));}
 function openCodexDetail(id,origin){
  if(!codexOpen||state.phase!=='camp'||!game.ANCIENT_CATALOG.some(r=>r.id===id))return;
- codexSelection=id;codexOrigin=origin;codexDetailOpen=true;updateHud();window.hunterPages?.first($('codex-content'));window.hunterPages?.reveal($('codex-detail'));$('codex-list-back').focus({preventScroll:true});
+ // Alpha 0.141 (재료 도감처럼): the detail sits beside the gallery, so a card only selects.
+ codexSelection=id;codexOrigin=origin;codexDetailOpen=false;codexRenderKey='';updateHud();
 }
 function closeCodexDetail(){
  if(!codexOpen||state.phase!=='camp')return;codexDetailOpen=false;updateHud();
@@ -1340,7 +1341,7 @@ function refreshCodex(){
  const pageSize=codexPageSize(),pageFilter=[codexChapter,codexSlot,codexFound,codexSearch,codexSort,codexLayout].join('|');if(pageFilter!==codexPageFilter){codexPageFilter=pageFilter;codexPage=0;}
  const key=[profile.discoveredAncients.join(','),profile.targetAncientId,codexSelection,codexChapter,codexSlot,codexFound,codexSearch,codexDetailOpen,codexFiltersOpen,codexLayout,codexSort,codexPage,pageSize,codexSlot==='materials'?materialSelected+':'+materialRecipeId+':'+profile.targetCraftId+':'+JSON.stringify(profile.materials)+':'+profile.unlockedStage:''].join('|');if(key===codexRenderKey)return;codexRenderKey=key;
  const found=new Set(profile.discoveredAncients),catalog=game.ANCIENT_CATALOG;let visible=0;
- $('codex-content').setAttribute('data-detail',String(codexDetailOpen));$('codex-browser').hidden=codexDetailOpen;$('codex-detail').hidden=!codexDetailOpen;
+ $('codex-content').setAttribute('data-detail',String(codexDetailOpen));$('codex-browser').hidden=false;$('codex-detail').hidden=codexSlot==='materials';
  $('codex-filters').hidden=!codexFiltersOpen;$('codex-filter-toggle').setAttribute('aria-expanded',String(codexFiltersOpen));
  $('codex-chapter').value=codexChapter;$('codex-slot').value=codexSlot;$('codex-found').value=codexFound;$('codex-sort').value=codexSort;
  $('codex-filter-dot').hidden=codexChapter==='0'&&codexFound==='all'&&codexSort==='catalog';
@@ -1359,10 +1360,10 @@ function refreshCodex(){
  $('codex-paging').hidden=pages<=1;$('codex-page-label').textContent=(codexPage+1)+' / '+pages;$('codex-page-prev').disabled=codexPage<=0;$('codex-page-next').disabled=codexPage>=pages-1;
  for(const [i,row]of catalog.entries()){
   const discovered=found.has(row.id),match=codexMatch(row,discovered);
-  const node=$('codex-card-'+i);node.hidden=!shown.has(i);if(match)visible++;node.setAttribute('data-discovered',String(discovered));node.setAttribute('data-goal',String(profile.targetAncientId===row.id));node.setAttribute('aria-pressed',String(codexDetailOpen&&row.id===codexSelection));$('codex-name-'+i).textContent=row.name;$('codex-state-'+i).textContent=(profile.targetAncientId===row.id?'목표 · ':'')+(discovered?'발견':'미발견')+' · '+game.SLOTS[row.slot];gearThumbnail($('codex-art-'+i),{...row,catalogId:row.id,rarity:5},144);if(!discovered)$('codex-art-'+i).setAttribute('aria-label','미발견 유물 이미지');
+  const node=$('codex-card-'+i);node.hidden=!shown.has(i);if(match)visible++;node.setAttribute('data-discovered',String(discovered));node.setAttribute('data-goal',String(profile.targetAncientId===row.id));node.setAttribute('aria-pressed',String(row.id===codexSelection));$('codex-name-'+i).textContent=row.name;$('codex-state-'+i).textContent=(profile.targetAncientId===row.id?'목표 · ':'')+(discovered?'발견':'미발견')+' · '+game.SLOTS[row.slot];gearThumbnail($('codex-art-'+i),{...row,catalogId:row.id,rarity:5},144);if(!discovered)$('codex-art-'+i).setAttribute('aria-label','미발견 유물 이미지');
  }
  const percent=Number((found.size/catalog.length*100).toFixed(1));
- $('codex-count').textContent=found.size+' / '+catalog.length+' 발견';$('codex-percent').textContent=percent+'%';$('codex-progress').setAttribute('aria-valuenow',String(found.size));$('codex-progress-fill').style.width=percent+'%';$('codex-results').textContent=visible?visible+'종 표시':'검색 조건에 맞는 유물이 없어.';$('codex-empty').hidden=visible>0;
+ $('codex-count').textContent=found.size+' / '+catalog.length+' 발견';$('codex-percent').textContent=percent+'%';$('codex-progress').setAttribute('aria-valuenow',String(found.size));$('codex-progress-fill').style.width=percent+'%';$('codex-results').textContent=visible?'발견 '+found.size+' / '+catalog.length+' · '+visible+'종 표시':'검색 조건에 맞는 유물이 없어.';$('codex-empty').hidden=visible>0;
  const recentId=profile.discoveredAncients.filter(id=>catalog.some(r=>r.id===id)).at(-1),recent=catalog.find(r=>r.id===recentId);
  $('codex-feature').setAttribute('data-empty',String(!recent));$('codex-feature-open').hidden=!recent;$('codex-feature-empty').hidden=!!recent;$('codex-feature-art').hidden=!recent;
  $('codex-feature-kicker').textContent=recent?'최근 발견':'기록의 시작';$('codex-feature-name').textContent=recent?recent.name.replace(' ','\n'):'첫 고대 유물을 찾아서';$('codex-feature-meta').textContent=recent?ancientSourceName(recent)+' · '+game.SLOTS[recent.slot]:'고대 장비는 챕터 보스 희귀 드롭 · 레이드 고대는 레이드 클리어 보상';
