@@ -1288,3 +1288,8 @@
 @media(max-width:700px){#game-shell .bag-limit{grid-template-columns:auto minmax(0,1fr) 18px 18px;padding-left:4px;gap:2px}#game-shell#game-shell#game-shell #bag-rules .bag-limit button{width:18px!important}#game-shell .bag-limit :is(span,b){font-size:9px}#game-shell#game-shell#game-shell #bag-rules .bag-grade-chips button{font-size:9.5px!important}}
 @media(max-width:700px){#game-shell .bag-limit{grid-template-columns:auto minmax(0,1fr) 15px 15px;padding:0 1px 0 3px;gap:2px}#game-shell#game-shell#game-shell #bag-rules .bag-limit button{width:15px!important;font-size:10px!important}#game-shell .bag-limit span{font-size:8.5px;letter-spacing:-.3px}#game-shell .bag-limit b{font-size:9px;letter-spacing:-.3px}#game-shell .bag-limits{gap:3px 4px}}
 @media(max-width:620px){#game-shell .bag-limit span{font-size:8px;letter-spacing:-.5px}#game-shell .bag-limit b{font-size:8.5px;letter-spacing:-.5px}#game-shell .bag-limit{gap:1px}}
+/* Alpha 0.142 사냥 화면 현재 스테이지 표시(사용자 요청): combat-quiet.css가 숨기던 #hunt-stage를 시간·몬스터 판 위 줄에 다시 보인다. */
+#game-shell#game-shell .battle #hunt-stage{display:block!important}
+#game-shell#game-shell #result-next-level[hidden]{display:none!important}
+#game-shell#game-shell .battle .top-hud .mission.hunt-status{grid-template-rows:13px minmax(0,1fr)!important;height:48px!important;min-height:48px!important;max-height:48px!important;width:204px!important;row-gap:1px!important;padding-top:3px!important}
+#game-shell#game-shell .battle .top-hud #hunt-stage{grid-column:1/-1;grid-row:1;align-self:center;font-size:10.5px!important;line-height:13px!important;text-align:center;color:#e8d6b0!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
