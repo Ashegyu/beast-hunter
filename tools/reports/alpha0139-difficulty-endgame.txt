@@ -46,3 +46,24 @@ switch seed9 attempts=133 farms=75 dungeons=225 stuck={"difficulty":0,"chapter":
 난이도 진행: 일반 57 · 정예 0 · 악몽 0 챕터
 엔드 콘텐츠: 0 일 · 보스 러시 0 회 · 레이드 0 회(클리어 0) · 인장 없음 · 고대 0 점 착용
 switch seed13 n41 clear tries=11 Lv200 dmg=601 hp=3776 gear+13.8 r3.9 day366 seal10 anc4 7156s
+
+# 방어 태세 감소 정예·악몽 55% 적용 후 시드 5개 (시드 13은 기록 시점에 악몽 진행 중)
+switch seed0 attempts=310 farms=191 dungeons=573 stuck={"difficulty":1,"chapter":59,"stage":10,"gate":"defense"} fails={"ch1-3":1,"ch41-7":1
+난이도 진행: 일반 60 · 정예 58 · 악몽 0 챕터
+엔드 콘텐츠: 193 일 · 보스 러시 579 회 · 레이드 252 회(클리어 252) · 인장 3 10단계 · 고대 5 점 착용
+switch seed0 e59 STUCK tries=33 Lv200 dmg=461 hp=3162 gear+11.9 r4.1 day193 seal10 anc5 5927s
+switch seed1 attempts=238 farms=124 dungeons=372 stuck={"difficulty":1,"chapter":54,"stage":10,"gate":"defense"} fails={"ch1-4":1,"ch41-3":1
+난이도 진행: 일반 60 · 정예 53 · 악몽 0 챕터
+엔드 콘텐츠: 133 일 · 보스 러시 399 회 · 레이드 180 회(클리어 180) · 인장 3 10단계 · 고대 5 점 착용
+switch seed1 e54 STUCK tries=30 Lv200 dmg=428 hp=3018 gear+11.7 r4.1 day133 seal10 anc5 4613s
+switch seed2 attempts=229 farms=110 dungeons=330 stuck={"difficulty":1,"chapter":59,"stage":10,"gate":"defense"} fails={"ch1-3":1,"ch40-7":1
+난이도 진행: 일반 60 · 정예 58 · 악몽 0 챕터
+엔드 콘텐츠: 147 일 · 보스 러시 441 회 · 레이드 198 회(클리어 198) · 인장 3 10단계 · 고대 4 점 착용
+switch seed2 e59 STUCK tries=30 Lv200 dmg=505 hp=3039 gear+12.4 r4.0 day147 seal10 anc4 4926s
+switch seed3 attempts=296 farms=155 dungeons=465 stuck={"difficulty":2,"chapter":21,"stage":10,"gate":"defense"} fails={"ch1-3":1,"ch31-7":1
+난이도 진행: 일반 60 · 정예 60 · 악몽 20 챕터
+엔드 콘텐츠: 220 일 · 보스 러시 660 회 · 레이드 288 회(클리어 288) · 인장 3 10단계 · 고대 4 점 착용
+switch seed3 e60 clear tries=27 Lv200 dmg=578 hp=3011 gear+11.4 r3.7 day134 seal10 anc4 4337s
+switch seed3 n21 STUCK tries=34 Lv200 dmg=592 hp=3088 gear+12.8 r3.9 day220 seal10 anc4 6066s
+switch seed13 e60 clear tries=4 Lv200 dmg=482 hp=2946 gear+9.8 r3.8 day93 seal10 anc4 3592s
+switch seed13 n27 clear tries=3 Lv200 dmg=495 hp=2982 gear+12.1 r3.8 day203 seal10 anc4 6039s
