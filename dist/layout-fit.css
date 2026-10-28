@@ -949,3 +949,14 @@
 /* 도감 카드 이름은 자르지 않고 줄바꿈(두 보기 공통). 좁은 화면은 그림을 줄여 두세 줄이 들어가게 */
 #game-shell#game-shell #codex-content :is(.codex-card strong,.mat-card strong){white-space:normal!important;overflow:visible!important;text-overflow:clip!important;word-break:keep-all;overflow-wrap:anywhere;line-height:1.15!important;max-width:100%;-webkit-line-clamp:unset!important}
 @media(max-width:700px){#game-shell#game-shell #codex-content :is(.codex-card,.mat-card) :is(.equipment-icon,.mat-icon){width:22px!important;height:22px!important}#game-shell#game-shell #codex-content :is(.codex-card strong,.mat-card strong){font-size:8.5px!important;line-height:1.1!important}#game-shell#game-shell #codex-content :is(.codex-card,.mat-card){padding:2px!important;gap:0!important}}
+/* 도감 페이지 넘김: 맨 아래 대신 왼쪽 머리 줄(검색 오른쪽)로. 맨 아래 줄은 높이 0으로 접고 '사냥터로 이동'은 숨김. */
+#game-shell#game-shell #codex-content #codex-paging:not([hidden]){display:flex!important;align-items:center;gap:3px;flex:none;position:static!important;visibility:visible!important;pointer-events:auto!important;z-index:5}
+#game-shell#game-shell #codex-content #codex-paging button{min-height:0!important;width:26px!important;height:26px!important;padding:0!important;border:1px solid #9e835366!important;border-radius:5px!important;background:#160f12!important;background-image:none!important;color:#ffe7c2!important;font-size:14px!important;line-height:1!important;box-shadow:none!important}
+#game-shell#game-shell #codex-content #codex-paging button::before,#game-shell#game-shell #codex-content #codex-paging button::after{display:none!important}
+#game-shell#game-shell #codex-content #codex-paging button:disabled{opacity:.35}
+#game-shell#game-shell #codex-content #codex-page-label{min-width:44px;text-align:center;font-size:11px;color:#ffe7c2}
+#game-shell#game-shell #codex-content:not([hidden]){grid-template-rows:30px 28px minmax(0,1fr) 8px!important}
+#game-shell#game-shell #codex-content>.archive-footer{display:none!important}
+#game-shell#game-shell #codex-content[data-view=materials] #codex-paging{display:none!important}
+@media(max-height:360px){#game-shell#game-shell #codex-content:not([hidden]){grid-template-rows:26px 24px minmax(0,1fr) 6px!important}#game-shell#game-shell #codex-content #codex-paging button{width:22px!important;height:22px!important}}
+#game-shell#game-shell #codex-content:not([hidden]){grid-template-rows:30px 28px minmax(0,1fr) 12px!important}@media(max-height:360px){#game-shell#game-shell #codex-content:not([hidden]){grid-template-rows:26px 24px minmax(0,1fr) 8px!important}}
