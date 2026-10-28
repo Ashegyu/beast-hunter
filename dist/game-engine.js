@@ -660,7 +660,7 @@ function startAttack(s,aim,heavy=false,counter=false){
   setLook(p,p.swing.x,p.swing.y,true);p.action=heavy?'heavy':'attack';p.actionTime=0;p.attackHit=false;p.queued=false;p.queuedAim=null;p.attackCooldown=p.swing.duration;p.comboWindow=0;
   if(Math.abs(p.aimX)>.05)p.facing=p.aimX<0?-1:1;
 }
-export function attack(s,aim){const p=s.player;if(s.skillRuntime.casting)return false;if(s.phase!=='playing'||s.settlement||s.paused||s.run.flow==='stageClear'||p.hp<=0||['dash','hurt','heavy'].includes(p.action))return false;
+export function attack(s,aim){const p=s.player;if(s.phase!=='playing'||s.settlement||s.paused||s.run.flow==='stageClear'||p.hp<=0||['dash','hurt','heavy'].includes(p.action))return false;
   if(p.action==='attack'){if(p.actionTime>=p.swing.duration*.5){p.queued=true;p.queuedAim=attackDirection(s,aim);return true;}return false;}
   if(p.attackCooldown>0)return false;startAttack(s,aim);return true;
 }
@@ -1165,8 +1165,12 @@ export function gearSkills(s){const p=s.profile,c=s.gearCache;if(c&&c.equipment=
 export const STANCE_GUARD=Object.freeze([.7,.55,.55]);
 export const stanceGuard=s=>STANCE_GUARD[s.difficulty]??STANCE_GUARD[0];
 export function bossStanceLeft(s){if(ruleOf(s)!=='defense'||!s.enemies.some(e=>e.boss&&!e.dead))return 0;const t=s.run.time%12;return t<8?8-t:0;}
+export const SKILL_POSE_HOLD=.32;
 const SKILL_HOOKS={stanceLeft:bossStanceLeft,cast:(s,id)=>{capacitorCast(s,id);ancientAll(s,'skill');},gearSkills,heal:(s,f)=>{s.player.hp=Math.min(s.player.maxHp,s.player.hp+s.player.maxHp*f);},status:(s,e,r,attack)=>ancientStatus(s,e,r,attack),shield:(s,f)=>{const u=s.uniqueState,amount=s.player.maxHp*f;if(amount>u.shield){u.shield=amount;u.shieldTime=3;u.shieldOwner=null;}},inscriptions:s=>s.buildEffects,capture:s=>equipmentSnapshot(s.profile),stats:playerStats,hit:damageEnemy,visual:effect,clamp:clampPosition,motion(s,n,duration,id){
- const momentum=s.uniqueState.momentum;startAttack(s,n,true,false);s.uniqueState.momentum=momentum;const p=s.player;p.swing.name=skills.SKILL_BY_ID[id]?.name??p.swing.name;p.swing.skillId=id;p.swing.skillVisualOnly=true;p.swing.step=0;p.swing.duration=duration;p.swing.impact=Math.min(duration,.1);p.attackCooldown=duration;p.queued=false;
+ const momentum=s.uniqueState.momentum;startAttack(s,n,true,false);s.uniqueState.momentum=momentum;const p=s.player;p.swing.name=skills.SKILL_BY_ID[id]?.name??p.swing.name;p.swing.skillId=id;p.swing.skillVisualOnly=true;p.swing.step=0;
+ // Alpha 0.142 (사용자 요청 '스킬 쓰는 동안 캐릭터가 멈춰 있다'): the cast pose holds only a short moment (or a dash's travel);
+ // the skill's remaining hits keep firing from their jobs while the hunter walks and swings normally again.
+ const hold=Math.min(duration,Math.max(SKILL_POSE_HOLD,s.skillRuntime.travel?s.skillRuntime.travel.duration:0));p.swing.duration=hold;p.swing.impact=Math.min(hold,.1);p.attackCooldown=hold;p.queued=false;
 }};
 export function useSkill(s,id,aim){return skills.castSkill(s,id,aim,SKILL_HOOKS);}
 

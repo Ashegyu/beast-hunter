@@ -63,6 +63,7 @@ export function sampleSkillMotion(m,now){
 export function skillActorPose(s,a=s.player){
  const m=s.skillRuntime?.motion;if(!m||['hurt','death','dash'].includes(a.action))return null;
  if(['attack','heavy'].includes(a.action)&&(!a.swing?.skillVisualOnly||a.swing.skillId!==m.id))return null;
+ if(a.action==='walk'&&a.moving)return null; // 0.142: walking during the rest of a skill shows the walk, not a frozen pose
  return sampleSkillMotion(m,s.run.time);
 }
 export function skillGhosts(s){
