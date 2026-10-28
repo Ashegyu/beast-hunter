@@ -946,3 +946,6 @@
  #game-shell#game-shell #codex-content #codex-grid{--codex-card-row:62px}}
 #game-shell#game-shell #codex-content #codex-detail{overflow-y:auto!important;scrollbar-width:thin}
 @media(max-width:700px){#game-shell#game-shell #codex-content #codex-grid{--codex-card-row:50px}#game-shell#game-shell #material-codex .mat-detail{overflow-y:auto}}
+/* 도감 카드 이름은 자르지 않고 줄바꿈(두 보기 공통). 좁은 화면은 그림을 줄여 두세 줄이 들어가게 */
+#game-shell#game-shell #codex-content :is(.codex-card strong,.mat-card strong){white-space:normal!important;overflow:visible!important;text-overflow:clip!important;word-break:keep-all;overflow-wrap:anywhere;line-height:1.15!important;max-width:100%;-webkit-line-clamp:unset!important}
+@media(max-width:700px){#game-shell#game-shell #codex-content :is(.codex-card,.mat-card) :is(.equipment-icon,.mat-icon){width:22px!important;height:22px!important}#game-shell#game-shell #codex-content :is(.codex-card strong,.mat-card strong){font-size:8.5px!important;line-height:1.1!important}#game-shell#game-shell #codex-content :is(.codex-card,.mat-card){padding:2px!important;gap:0!important}}
