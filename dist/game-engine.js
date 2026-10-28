@@ -1,7 +1,7 @@
 import {RAIDS,RAID_WEEKLY_ENTRIES,RAID_DAMAGE,raidScale,RAID_ANCIENT_CHANCE,raidDefinition,raidPlan,raidRewards,raidWeek,raidEntriesLeft,raidUnlocked,raidChapter,emptyRaidProgress,raidTierUnlocked,raidTopTier,RAID_TIERS} from './raids.js?v=0.141.0';
 export * from './raids.js?v=0.141.0';
-import {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonPlan,dungeonActors,emptyDungeonProgress,dungeonStageId,towerBonus,TOWER_MAX_FLOOR} from './dungeons.js?v=0.141.0';
-export {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonChapter,DUNGEON_CHAPTER_STEP,dungeonStageId,TOWER,TOWER_MAX_FLOOR,TOWER_BONUS,towerBonus,towerBonusAt,towerChapter,towerFloorKind,towerPlan} from './dungeons.js?v=0.141.0';
+import {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonPlan,dungeonActors,emptyDungeonProgress,dungeonStageId,towerBonus,TOWER_MAX_FLOOR,emptyDungeonWeek,dungeonRepeatsLeft,isDungeonRepeat,repeatRewards,DUNGEON_WEEKLY_REPEATS,DUNGEON_REPEAT_RATE} from './dungeons.js?v=0.141.0';
+export {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonChapter,DUNGEON_CHAPTER_STEP,dungeonStageId,TOWER,TOWER_MAX_FLOOR,TOWER_BONUS,towerBonus,towerBonusAt,towerChapter,towerFloorKind,towerPlan,DUNGEON_WEEKLY_REPEATS,DUNGEON_REPEAT_RATE,dungeonRepeatsLeft,dungeonRepeatsUsed,isDungeonRepeat,repeatRewards} from './dungeons.js?v=0.141.0';
 export {THREAT,MODE_CHAPTERS,modeChapter,modeScale} from './chapters.js?v=0.141.0';
 import {beginStageJournal,profileForSave,strictBattle,cancelStageJournal,prepareStageCommit,finishStageJournal,stageTransactionId,ownedAtStageStart} from './battle-progress.js?v=0.141.0';
 import {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_DROP_CHANCE,INSCRIPTION_COST} from './build-effects.js?v=0.141.0';
@@ -130,7 +130,7 @@ export function growthXp(profile,value){
  return Math.min(Number.MAX_SAFE_INTEGER,awarded+remaining);
 }
 export function createProfile(now=Date.now()){
-  return {version:PROFILE_VERSION,dungeonProgress:emptyDungeonProgress(),raids:emptyRaidProgress(),bossRush:rush.emptyRushProgress(),beastSkills:{},battleSerial:0,settledBattleIds:[],activeBattle:null,lastInterruptedBattle:null,selectedBuild:null,characterId:'lirian',equipmentRng:246813579,difficultyProgress:[STAGES.map(()=>0),STAGES.map(()=>0)],nightmareRecords:STAGES.map(()=>0),skillBook:skills.restoreSkillBook(null,1),favoriteItemIds:[],savedBuilds:[null,null,null,null,null],targetCraftId:null,craftTrackerVisible:true,materials:emptyMaterials(),tower:{best:0},transcendXp:0,transcendence:transcend.emptyTranscendence(),discoveredAncients:[],targetAncientId:null,bossMastery:STAGES.map(()=>-1),lootPity:0,legendaryPity:0,pendingGold:0,pendingMaterials:emptyMaterials(),pendingLoot:[],stageProgress:STAGES.map(()=>0),stageStars:stars.emptyStageStars(STAGES.length),starChests:stars.emptyStageStars(STAGES.length),gold:0,cores:0,level:1,xp:0,training:growth.emptyTraining(),growthTree:[],unlockedStage:1,clearedStage:0,totalKills:0,hunts:0,lastSeenAt:number(now),inventory:[],equipment:emptyEquipment(),nextItemId:1};
+  return {version:PROFILE_VERSION,dungeonProgress:emptyDungeonProgress(),raids:emptyRaidProgress(),bossRush:rush.emptyRushProgress(),beastSkills:{},battleSerial:0,settledBattleIds:[],activeBattle:null,lastInterruptedBattle:null,selectedBuild:null,characterId:'lirian',equipmentRng:246813579,difficultyProgress:[STAGES.map(()=>0),STAGES.map(()=>0)],nightmareRecords:STAGES.map(()=>0),skillBook:skills.restoreSkillBook(null,1),favoriteItemIds:[],savedBuilds:[null,null,null,null,null],targetCraftId:null,craftTrackerVisible:true,materials:emptyMaterials(),tower:{best:0},dungeonWeek:emptyDungeonWeek(),transcendXp:0,transcendence:transcend.emptyTranscendence(),discoveredAncients:[],targetAncientId:null,bossMastery:STAGES.map(()=>-1),lootPity:0,legendaryPity:0,pendingGold:0,pendingMaterials:emptyMaterials(),pendingLoot:[],stageProgress:STAGES.map(()=>0),stageStars:stars.emptyStageStars(STAGES.length),starChests:stars.emptyStageStars(STAGES.length),gold:0,cores:0,level:1,xp:0,training:growth.emptyTraining(),growthTree:[],unlockedStage:1,clearedStage:0,totalKills:0,hunts:0,lastSeenAt:number(now),inventory:[],equipment:emptyEquipment(),nextItemId:1};
 }
 const EQUIPMENT_DEFINITIONS=new Map([...ITEM_CATALOG,...ANCIENT_CATALOG,...CRAFTED_CATALOG].map(row=>[row.id,row]));
 function cleanItem(item,version){
@@ -196,7 +196,7 @@ export function restoreProfile(raw,now=Date.now()){
   // Alpha 0.139 악몽 기록: fastest 악몽 boss stage clear in seconds (0 = none), only for chapters whose 악몽 boss fell.
   p.nightmareRecords=STAGES.map(({id})=>p.bossMastery[id-1]>=2?Math.round(clamp(number(data.nightmareRecords?.[id-1],0),0,600)*10)/10:0);
   p.stageStars=stars.cleanStageStars(data.stageStars,STAGES.map(({id})=>Math.max(...[0,1,2].map(d=>completedStages(p,id,d)))));p.starChests=stars.cleanStarChests(data.starChests,p);
-  p.tower={best:integer(data.tower?.best,0,TOWER_MAX_FLOOR)};
+  p.tower={best:integer(data.tower?.best,0,TOWER_MAX_FLOOR)};p.dungeonWeek=emptyDungeonWeek();p.dungeonWeek.week=integer(data.dungeonWeek?.week,-1,1e6,-1);for(const d of DUNGEONS)p.dungeonWeek.repeats[d.id]=integer(data.dungeonWeek?.repeats?.[d.id],0,DUNGEON_WEEKLY_REPEATS);
   // Alpha 0.141 초월: only a Lv.200 profile keeps 초월 경험치; ranks never exceed the points it gives.
   p.transcendXp=p.level>=MAX_LEVEL?integer(data.transcendXp,0,transcend.TRANSCEND_XP_LIMIT):0;p.transcendence=transcend.cleanTranscendence(data.transcendence,transcend.transcendLevel(p.transcendXp));
   p.training=growth.cleanTraining(data.training,p.level);p.growthTree=growth.fitTree(p,data.growthTree);
@@ -381,10 +381,11 @@ export function launchBossRush(s,now=Date.now(),view=null){
  s.rng=(12345+s.profile.hunts*97+chapter*1009+day*31)>>>0;s.lootRng=(s.rng^0x9e3779b9)>>>0;s.materialRng=(s.rng^0xa341316c)>>>0;s.phase='playing';s.run.stage=s.run.startStage=1;s.run.rush=true;s.run.rushChapter=chapter;s.run.rushLineup=rush.rushLineup(chapter);s.run.rushKills=0;s.run.rushEnd=null;s.run.battleId='b'+s.profile.battleSerial;s.run.buildAtStart=Object.freeze({equipment:Object.freeze({...s.profile.equipment}),skill:skillSelection(s.profile.skillBook)});
  s.spawnView.width=clamp(number(view?.width,720),360,1600);s.spawnView.height=clamp(number(view?.height,1280),400,1800);prepareStage(s);return true;
 }
-export function launchDungeon(s,id,level=1,view=null){
+export function launchDungeon(s,id,level=1,view=null,now=Date.now()){
  const d=dungeonDefinition(id);if(!d||s.settlement||!['camp','victory','defeat'].includes(s.phase)||!Number.isInteger(level)||level<1||level>dungeonLimit(s.profile,id)||s.profile.battleSerial>=Number.MAX_SAFE_INTEGER)return false;
+ const week=raidWeek(now);if(isDungeonRepeat(s.profile,id,level)&&!dungeonRepeatsLeft(s.profile,id,week))return false;
  const auto=true,durable=s.durable;Object.assign(s,createGame(s.profile,{durable}));s.auto=auto;s.stageId=dungeonStageId(id,level);s.difficulty=0;s.profile.hunts++;s.profile.lastInterruptedBattle=null;s.profile.battleSerial++;
- s.rng=(12345+s.profile.hunts*97+chapterTheme(d.chapter).id*1009+level*41)>>>0;s.lootRng=(s.rng^0x9e3779b9)>>>0;s.phase='playing';s.run.stage=s.run.startStage=level;s.run.dungeonId=id;s.run.battleId='b'+s.profile.battleSerial;s.run.buildAtStart=Object.freeze({equipment:Object.freeze({...s.profile.equipment}),skill:skillSelection(s.profile.skillBook)});
+ s.rng=(12345+s.profile.hunts*97+chapterTheme(d.chapter).id*1009+level*41)>>>0;s.lootRng=(s.rng^0x9e3779b9)>>>0;s.phase='playing';s.run.stage=s.run.startStage=level;s.run.dungeonId=id;s.run.dungeonWeek=week;s.run.battleId='b'+s.profile.battleSerial;s.run.buildAtStart=Object.freeze({equipment:Object.freeze({...s.profile.equipment}),skill:skillSelection(s.profile.skillBook)});
  s.spawnView.width=clamp(number(view?.width,720),360,1600);s.spawnView.height=clamp(number(view?.height,1280),400,1800);prepareStage(s);return true;
 }
 function prepareStage(s,immediate=false){
@@ -1188,11 +1189,13 @@ function completeRush(s){
 function completeDungeon(s){
  if(s.settlement||s.run.flow!=='combat')return false;
  if(s.run.dungeonId==='tower')return completeTower(s);
- const reward=dungeonRewards(s.run.dungeonId,s.run.stage);s.run.dungeonReward={gold:Math.min(reward.gold,Math.max(0,1e8-s.profile.gold)),materials:{}};s.profile.gold+=s.run.dungeonReward.gold;s.run.gold+=s.run.dungeonReward.gold;
+ const id=s.run.dungeonId,repeat=isDungeonRepeat(s.profile,id,s.run.stage),reward=repeat?repeatRewards(dungeonRewards(id,s.run.stage)):dungeonRewards(id,s.run.stage);
+ if(repeat){const w=s.profile.dungeonWeek;if(w.week!==s.run.dungeonWeek){w.week=s.run.dungeonWeek;for(const k of Object.keys(w.repeats))w.repeats[k]=0;}w.repeats[id]++;}
+ s.run.dungeonReward={repeat,gold:Math.min(reward.gold,Math.max(0,1e8-s.profile.gold)),materials:{}};s.profile.gold+=s.run.dungeonReward.gold;s.run.gold+=s.run.dungeonReward.gold;
  for(const [id,n]of Object.entries(reward.materials)){const amount=Math.min(n,Math.max(0,MATERIAL_LIMIT-s.profile.materials[id]));s.profile.materials[id]+=amount;s.run.materials+=amount;if(amount)s.run.materialLedger[id]=(s.run.materialLedger[id]??0)+amount;s.run.dungeonReward.materials[id]=amount;}
  if(reward.xp){const xp=growthXp(s.profile,reward.xp);s.run.xp+=xp;s.run.dungeonReward.xp=xp;if(gainXp(s.profile,xp))refreshStats(s);}
  s.profile.dungeonProgress[s.run.dungeonId]=Math.max(s.profile.dungeonProgress[s.run.dungeonId],s.run.stage);s.run.rooms=1;s.run.seals=1;
- if(lootRandom(s)<dropRate(s,'dungeon')){const chapter=STAGES[Math.min(STAGES.length,Math.max(1,s.profile.unlockedStage))-1],item=rollAccessory({id:allocateItemId(s),tier:chapter?.theme??1,grade:s.run.stage>=7?2:s.run.stage>=4?1:0},()=>lootRandom(s));if(receiveItem(s,item,'stage'))s.run.dungeonReward.item=item;}
+ if(lootRandom(s)<dropRate(s,'dungeon')*(repeat?DUNGEON_REPEAT_RATE:1)){const chapter=STAGES[Math.min(STAGES.length,Math.max(1,s.profile.unlockedStage))-1],item=rollAccessory({id:allocateItemId(s),tier:chapter?.theme??1,grade:s.run.stage>=7?2:s.run.stage>=4?1:0},()=>lootRandom(s));if(receiveItem(s,item,'stage'))s.run.dungeonReward.item=item;}
  s.projectiles.length=0;s.spawns.length=0;s.player.queued=false;s.player.swing=null;s.player.action='idle';s.hitStop=0;skills.clearSkillStage(s);clearUniqueTransient(s);clearAncient(s);s.resultDelay=.5;return queueSettlement(s,true);
 }
 // Alpha 0.141 무한의 탑: the floor's rewards only on its first clear; the best floor drives towerBonus (playerStats).

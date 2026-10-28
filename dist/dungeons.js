@@ -41,6 +41,19 @@ export const dungeonDefinition=id=>id==='tower'?TOWER:DUNGEONS.find(d=>d.id===id
 // The chapter whose land and monsters a dungeon level is fought on.
 export const dungeonStageId=(id,level)=>id==='tower'?towerChapter(level):dungeonDefinition(id)?.chapter??1;
 export const emptyDungeonProgress=()=>Object.fromEntries(DUNGEONS.map(d=>[d.id,0]));
+// Alpha 0.141 반복 수급 제한 (사용자 결정 '일주일 횟수로 제한, 첫 클리어 뒤에는 보상을 낮춰'): clearing a level above the
+// best pays in full and is free; clearing a level already cleared pays DUNGEON_REPEAT_RATE of it (rounded down, at least 1
+// of each paid item) and uses one of the dungeon's DUNGEON_WEEKLY_REPEATS for the week (raids' week: Monday 00:00 KST).
+// Entries are counted on the win only (a loss pays nothing). With none left, only new levels can be entered.
+export const DUNGEON_WEEKLY_REPEATS=14,DUNGEON_REPEAT_RATE=.5;
+export const emptyDungeonWeek=()=>({week:-1,repeats:Object.fromEntries(DUNGEONS.map(d=>[d.id,0]))});
+export function dungeonRepeatsUsed(profile,id,week){const w=profile?.dungeonWeek;return w&&w.week===week?w.repeats?.[id]??0:0;}
+export function dungeonRepeatsLeft(profile,id,week){return DUNGEONS.some(d=>d.id===id)?Math.max(0,DUNGEON_WEEKLY_REPEATS-dungeonRepeatsUsed(profile,id,week)):0;}
+export const isDungeonRepeat=(profile,id,level)=>id!=='tower'&&level<=(profile?.dungeonProgress?.[id]??0);
+export function repeatRewards(reward){
+ if(!reward)return null;const cut=n=>n>0?Math.max(1,Math.floor(n*DUNGEON_REPEAT_RATE)):0;
+ return {...reward,gold:cut(reward.gold),...(reward.xp?{xp:cut(reward.xp)}:{}),materials:Object.fromEntries(Object.entries(reward.materials).map(([k,n])=>[k,cut(n)])),repeat:true};
+}
 export function dungeonLimit(profile,id){if(id==='tower')return Math.min(TOWER_MAX_FLOOR,(profile.tower?.best??0)+1);return dungeonDefinition(id)?Math.min(DUNGEON_MAX_LEVEL,(profile.dungeonProgress?.[id]??0)+1):0;}
 // Levels 1~10 pay exactly what they paid before 0.141; past 10 every reward keeps growing more slowly (`past`).
 const past=(level,every)=>Math.floor(Math.max(0,level-10)/every);
