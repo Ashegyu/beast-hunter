@@ -832,3 +832,29 @@
 #game-shell#game-shell #codex-content[data-view=materials] #codex-browser::after{display:none!important}
 /* Alpha 0.141 전술·보상 창 제거: 입구 버튼과 패널을 숨긴다(입구는 사냥 지도로 연결). */
 #game-shell #camp-tactics-open,#game-shell #camp-tactics-panel{display:none!important}
+/* Alpha 0.141 고대 유물 상세(사용자 요청 '재료 도감 창처럼, 상세 정보만'): 왼쪽 큰 그림 칸, 오른쪽 이름·고유 효과·정보 표.
+   파밍 목표·보스 사냥 준비·목표 해제 버튼은 숨긴다. */
+#game-shell #codex-detail:not([hidden]){display:grid!important;grid-template-columns:minmax(150px,.75fr) minmax(0,1.6fr);grid-template-rows:auto auto minmax(0,1fr);gap:8px 14px;align-content:stretch;min-height:0;overflow:hidden;padding:10px 14px!important}
+#game-shell #codex-detail :is(.codex-buttons,#codex-route-note,#codex-clear,#codex-target,#codex-route){display:none!important}
+#game-shell #codex-detail #codex-list-back{grid-column:1/-1;justify-self:start;min-height:0!important;height:26px;padding:0 12px!important;border:1px solid #9e835366!important;border-radius:6px!important;background:#120d10!important;background-image:none!important;color:#ffe7c2!important;font-size:11px!important;box-shadow:none!important}
+#game-shell #codex-detail .codex-detail-heading{display:contents!important}
+#game-shell #codex-detail #codex-detail-art{grid-column:1;grid-row:2/4;align-self:stretch;justify-self:stretch;width:auto!important;height:auto!important;min-height:0;border:1px solid #9e835366;border-radius:8px;background-color:transparent;background-image:radial-gradient(ellipse at 50% 45%,#5a2a2acc,#0b0f14f0 72%)!important}
+#game-shell #codex-detail[data-discovered=false] #codex-detail-art{filter:grayscale(1) brightness(.45)}
+#game-shell #codex-detail .codex-detail-heading>div{grid-column:2;grid-row:2;display:grid;gap:2px;min-width:0}
+#game-shell #codex-detail #codex-detail-state{font-size:10.5px;color:#c98d3c;letter-spacing:.5px}
+#game-shell #codex-detail #codex-detail-name{margin:0;font:700 19px/1.25 var(--serif,serif);color:#ffe3a8}
+#game-shell #codex-detail #codex-detail-boss{margin:0;font-size:10.5px;color:#8f978f}
+#game-shell #codex-detail #codex-detail-boss:empty{display:none}
+#game-shell #codex-detail .codex-detail-body{display:contents}
+#game-shell #codex-detail #codex-signature{grid-column:2;grid-row:3;align-self:start;margin:0;padding:7px 10px;border-left:2px solid #c98d3c;border-radius:0 6px 6px 0;background:#2a1a1466;font-size:11.5px;line-height:1.5;color:#f0e2c6;white-space:normal}
+#game-shell #codex-detail .codex-info{grid-column:2;grid-row:4;display:grid;gap:4px;margin:0;align-self:start}
+#game-shell #codex-detail .codex-info>div{display:grid;grid-template-columns:68px minmax(0,1fr);gap:8px;padding:3px 0;border-bottom:1px dashed #ffffff14;font-size:10.5px;line-height:1.4}
+#game-shell #codex-detail .codex-info dt{color:#c98d3c}
+#game-shell #codex-detail .codex-info dd{margin:0;color:#e6dccb}
+#game-shell #codex-detail:not([hidden]){grid-template-rows:auto auto auto minmax(0,1fr)}
+#game-shell #codex-detail #codex-detail-art{grid-row:2/5}
+@media(max-height:360px){#game-shell #codex-detail #codex-detail-name{font-size:16px}#game-shell #codex-detail #codex-signature{font-size:10.5px;padding:5px 8px}#game-shell #codex-detail .codex-info>div{padding:1px 0;font-size:10px}}
+#game-shell#game-shell #codex-detail #codex-list-back{width:auto!important;height:24px!important}
+#game-shell#game-shell #codex-detail #codex-list-back::before,#game-shell#game-shell #codex-detail #codex-list-back::after{display:none!important}
+#game-shell #codex-detail .codex-info dd{font-size:10.5px!important}
+@media(max-width:700px){#game-shell #codex-detail:not([hidden]){grid-template-columns:120px minmax(0,1fr);gap:5px 10px;padding:8px 10px!important}#game-shell #codex-detail #codex-detail-name{font-size:15px}#game-shell #codex-detail #codex-signature{font-size:10px;padding:4px 7px;line-height:1.35}#game-shell #codex-detail .codex-info{gap:1px}#game-shell #codex-detail .codex-info>div{grid-template-columns:56px minmax(0,1fr);padding:1px 0;font-size:9.5px;line-height:1.3}#game-shell #codex-detail .codex-info dd{font-size:9.5px!important}}
