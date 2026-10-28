@@ -1,4 +1,4 @@
-import {INVENTORY_LIMIT} from './inventory-rules.js?v=0.140.0';
+import {INVENTORY_LIMIT} from './inventory-rules.js?v=0.141.0';
 // Alpha 0.122: 원질 핵 0.1%→2%, 무명의 기원 0.001%→0.3% so a recipe is reachable (still rare; crafting always succeeds).
 // Authored crafting identities. This catalogue is never part of equipment roll pools.
 export const MATERIAL_LIMIT=1_000_000;

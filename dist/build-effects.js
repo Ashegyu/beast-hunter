@@ -1,4 +1,4 @@
-import {isEquippedItem} from './equipment-slots.js?v=0.140.0';
+import {isEquippedItem} from './equipment-slots.js?v=0.141.0';
 // One optional inscription per owned instance. Innate legacy powers remain intact.
 export const BUILD_EFFECTS=Object.freeze(Object.fromEntries([
  {id:'chain',name:'번개 전이',event:'hit',damage:.4,targets:3,targetCap:5,radius:230,color:'#9edee9'},

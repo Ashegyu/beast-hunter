@@ -1,4 +1,4 @@
-import { VIEWPORT } from './world.js?v=0.140.0';
+import { VIEWPORT } from './world.js?v=0.141.0';
 
 // Landscape camera shows 50% more world in each direction; HUD and raster DPI stay unchanged.
 export function viewportFor(width,height){
