@@ -1,7 +1,7 @@
 """Pack the Alpha 0.141 dungeon hall scenes (art/dungeons0141/<id>.png, Codex CLI) into dist/assets/dungeon-<id>-v0141.webp.
 
 Each 1536x1024 scene is resized to 768x512 and saved as lossy WebP (painterly art). layout-fit.css uses them as the
-growth dungeon card backgrounds, the entry panel banner and the 무한의 탑 panel. Re-running overwrites them.
+growth dungeon and raid card backgrounds, the entry panel banner, the 무한의 탑 and 보스 러시 panels. Re-running overwrites them.
 """
 from pathlib import Path
 import hashlib
@@ -10,7 +10,7 @@ import json
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
-IDS = ['gold', 'enhance', 'promote', 'skill', 'xp', 'craft', 'tower']
+IDS = ['gold', 'enhance', 'promote', 'skill', 'xp', 'craft', 'tower', 'raid-colossus', 'raid-queen', 'raid-judge', 'rush']
 
 
 def main():

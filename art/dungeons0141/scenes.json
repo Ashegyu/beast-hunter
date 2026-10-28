@@ -40,5 +40,32 @@
   "out": "art/dungeons0141/tower.png",
   "style": "dist/assets/growth-forge-v042.webp",
   "prompt": "Use case: stylized-concept. Asset type: production UI illustration (a wide landscape banner) for a dark fantasy 2D action RPG dungeon select screen. Image1 is an existing illustration of this game: match its painterly dark fantasy rendering, dramatic warm/cool rim lighting, deep shadows, atmospheric haze and level of detail; never copy its subject. Create ONE opaque landscape image, 3:2 aspect (about 1536x1024), a single scene with no characters, no people, no text, no letters, no logo, no UI, no frame or border. Keep the main subject in the CENTER third and slightly above center (the image is cropped to wide and narrow banners and dark text sits on the lower part), with darker, calmer lower 30%. SCENE: an impossibly tall dark spire tower rising into a stormy sky pierced by light, endless floors with glowing windows spiraling up, lightning and clouds around its summit, viewed from its base on a cliff"
+ },
+ "raid-colossus": {
+  "kind": "scene",
+  "out": "art/dungeons0141/raid-colossus.png",
+  "style": "dist/assets/growth-forge-v042.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production UI illustration (a wide landscape banner) for a dark fantasy 2D action RPG dungeon select screen. Image1 is an existing illustration of this game: match its painterly dark fantasy rendering, dramatic warm/cool rim lighting, deep shadows, atmospheric haze and level of detail; never copy its subject. Create ONE opaque landscape image, 3:2 aspect (about 1536x1024), a single scene with no humans, no people, no text, no letters, no logo, no UI, no frame or border. Keep the main subject in the CENTER third and slightly above center (the image is cropped to wide and narrow banners and dark text sits on the lower part), with darker, calmer lower 30%. Image2 is the SUBJECT reference only: the raid boss of this game (an animation sheet); paint that same creature once, large, in the scene, matching its design and colors, not as a sprite sheet. SCENE: a towering armored iron colossus with glowing molten cracks and a giant stone-block fist stands in a ruined volcanic fortress forge, lava rivers and smoke, viewed from below so it looms huge",
+  "reference": "art/raid0123/bosses/raid_colossus.png"
+ },
+ "raid-queen": {
+  "kind": "scene",
+  "out": "art/dungeons0141/raid-queen.png",
+  "style": "dist/assets/growth-forge-v042.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production UI illustration (a wide landscape banner) for a dark fantasy 2D action RPG dungeon select screen. Image1 is an existing illustration of this game: match its painterly dark fantasy rendering, dramatic warm/cool rim lighting, deep shadows, atmospheric haze and level of detail; never copy its subject. Create ONE opaque landscape image, 3:2 aspect (about 1536x1024), a single scene with no humans, no people, no text, no letters, no logo, no UI, no frame or border. Keep the main subject in the CENTER third and slightly above center (the image is cropped to wide and narrow banners and dark text sits on the lower part), with darker, calmer lower 30%. Image2 is the SUBJECT reference only: the raid boss of this game (an animation sheet); paint that same creature once, large, in the scene, matching its design and colors, not as a sprite sheet. SCENE: a monstrous insect swarm queen rising in her organic hive cavern full of glowing green egg sacs and acid pools, small brood creatures crawling on the walls",
+  "reference": "art/raid0123/bosses/raid_queen.png"
+ },
+ "raid-judge": {
+  "kind": "scene",
+  "out": "art/dungeons0141/raid-judge.png",
+  "style": "dist/assets/growth-forge-v042.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production UI illustration (a wide landscape banner) for a dark fantasy 2D action RPG dungeon select screen. Image1 is an existing illustration of this game: match its painterly dark fantasy rendering, dramatic warm/cool rim lighting, deep shadows, atmospheric haze and level of detail; never copy its subject. Create ONE opaque landscape image, 3:2 aspect (about 1536x1024), a single scene with no humans, no people, no text, no letters, no logo, no UI, no frame or border. Keep the main subject in the CENTER third and slightly above center (the image is cropped to wide and narrow banners and dark text sits on the lower part), with darker, calmer lower 30%. Image2 is the SUBJECT reference only: the raid boss of this game (an animation sheet); paint that same creature once, large, in the scene, matching its design and colors, not as a sprite sheet. SCENE: a radiant twilight judge, a winged divine executioner hovering above a broken celestial courtroom of white marble and gold under a violet dusk sky with falling light pillars",
+  "reference": "art/raid0123/bosses/raid_judge.png"
+ },
+ "rush": {
+  "kind": "scene",
+  "out": "art/dungeons0141/rush.png",
+  "style": "dist/assets/growth-forge-v042.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production UI illustration (a wide landscape banner) for a dark fantasy 2D action RPG dungeon select screen. Image1 is an existing illustration of this game: match its painterly dark fantasy rendering, dramatic warm/cool rim lighting, deep shadows, atmospheric haze and level of detail; never copy its subject. Create ONE opaque landscape image, 3:2 aspect (about 1536x1024), a single scene with no humans, no people, no text, no letters, no logo, no UI, no frame or border. Keep the main subject in the CENTER third and slightly above center (the image is cropped to wide and narrow banners and dark text sits on the lower part), with darker, calmer lower 30%. SCENE: a grand gladiator gauntlet hall with five colossal sealed boss gates in a curved row, each gate glowing in a different color (crimson, ice blue, violet, sea green, gold), a golden seal emblem glowing on the central floor, braziers and banners"
  }
 }

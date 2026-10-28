@@ -1,0 +1,31 @@
+{
+  "id": "raid-queen",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production UI illustration (a wide landscape banner) for a dark fantasy 2D action RPG dungeon select screen. Image1 is an existing illustration of this game: match its painterly dark fantasy rendering, dramatic warm/cool rim lighting, deep shadows, atmospheric haze and level of detail; never copy its subject. Create ONE opaque landscape image, 3:2 aspect (about 1536x1024), a single scene with no humans, no people, no text, no letters, no logo, no UI, no frame or border. Keep the main subject in the CENTER third and slightly above center (the image is cropped to wide and narrow banners and dark text sits on the lower part), with darker, calmer lower 30%. Image2 is the SUBJECT reference only: the raid boss of this game (an animation sheet); paint that same creature once, large, in the scene, matching its design and colors, not as a sprite sheet. SCENE: a monstrous insect swarm queen rising in her organic hive cavern full of glowing green egg sacs and acid pools, small brood creatures crawling on the walls",
+  "referenceImages": [
+    {
+      "path": "dist/assets/growth-forge-v042.webp",
+      "sha256": "bb1e7e037225c4fa732abfdf4ea98016a948d0589462c92d6f98db5b08d41334"
+    },
+    {
+      "path": "art/raid0123/bosses/raid_queen.png",
+      "sha256": "d534173126f7f2918ca0b712cd2bbc4ce71fc0a92ebf9667c83b87d2f3c523fb"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1536,
+        1024
+      ],
+      "seconds": 49,
+      "sha256": "6d2b5c08d8e16c78c9aaab01a31891d1e89720d2e0449c3996edd9ac10c1d9e9"
+    }
+  ],
+  "final": {
+    "path": "art/dungeons0141/raid-queen.png",
+    "sha256": "6d2b5c08d8e16c78c9aaab01a31891d1e89720d2e0449c3996edd9ac10c1d9e9"
+  }
+}

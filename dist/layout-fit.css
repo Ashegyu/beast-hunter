@@ -639,3 +639,61 @@
 #game-shell .dungeon-modes button[aria-pressed=true]{border-color:#f2c97a!important;background:linear-gradient(180deg,#8a2a2c,#3a1418)!important;color:#ffe9c4!important;box-shadow:0 0 0 1px #2a1408,0 0 10px #e0a04a66,inset 0 1px 0 #ffd99a55!important;font-weight:700}
 #game-shell#game-shell #dungeon-growth-cards .dungeon-card[aria-pressed=true]::before{content:'선택'!important;display:block!important;position:absolute!important;inset:0 auto auto 50%!important;width:auto!important;height:auto!important;transform:translateX(-50%)!important;z-index:3!important;margin:0!important;padding:1px 10px 2px!important;border:0!important;border-radius:0 0 6px 6px!important;background:linear-gradient(180deg,#f6d58f,#c98d3c)!important;color:#2a1408!important;font-size:9px!important;font-weight:700!important;letter-spacing:1px!important;line-height:1.3!important;box-shadow:0 2px 6px #0008!important;opacity:1!important}
 #game-shell#game-shell #dungeon-growth-cards .dungeon-card[aria-pressed=true]::after{z-index:2!important}
+/* Alpha 0.141 던전 단계: 100줄 목록 대신 ±1/±10 넘김(탑과 같은 모양). 숨긴 select는 상태·테스트용으로 남김. */
+#game-shell #dungeon-level{display:none!important}
+#game-shell #camp-dungeons-panel:not([data-mode=growth]) .dungeon-level-pager{display:none!important}
+#game-shell .dungeon-level-pager{display:inline-flex!important;align-items:center;gap:4px;margin:0 6px}
+#game-shell .dungeon-level-pager button{min-height:0!important;height:24px!important;width:26px!important;padding:0!important;border:1px solid #9e835388!important;border-radius:5px!important;background:#160f12dd!important;color:#ffe7c2!important;font-size:13px!important;line-height:1!important}
+#game-shell .dungeon-level-pager button:disabled{opacity:.35}
+#game-shell #dungeon-level-value{display:inline-grid;justify-items:center;min-width:66px;font-size:16px;line-height:1.05;color:#ffe7c2;text-shadow:0 1px 3px #000}
+#game-shell #dungeon-level-value::after{font-size:9px;font-weight:600;letter-spacing:.5px}
+#game-shell #dungeon-level-value[data-state=new]::after{content:'첫 클리어';color:#f2c97a}
+#game-shell #dungeon-level-value[data-state=cleared]::after{content:'반복 50%';color:#9fb0aa}
+@media(max-height:360px){#game-shell .dungeon-level-pager button{height:20px!important;width:22px!important}#game-shell #dungeon-level-value{font-size:14px;min-width:56px}}
+/* Alpha 0.141 던전 프리셋: 목록 대신 5칸 격자(저장 안 된 칸은 흐리게, 지금 맞는 프리셋은 금테) */
+#game-shell .dungeon-build-label{display:none!important}
+#game-shell .dungeon-build-grid{display:grid;grid-template-columns:auto repeat(5,minmax(0,1fr));align-items:center;gap:4px}
+#game-shell .dungeon-build-grid small{font-size:10px;color:#aeb4af;white-space:nowrap;padding-right:2px}
+#game-shell .dungeon-build-grid button{min-height:0!important;height:26px!important;padding:0 3px!important;border:1px solid #9e835366!important;border-radius:5px!important;background:#120d10dd!important;color:#e6dccb!important;font-size:10px!important;line-height:1.1!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#game-shell .dungeon-build-grid button:disabled{opacity:.35}
+#game-shell .dungeon-build-grid button[aria-pressed=true]{border-color:#f2c97a!important;background:linear-gradient(180deg,#8a2a2c,#3a1418)!important;color:#ffe9c4!important;box-shadow:0 0 8px #e0a04a55!important;font-weight:700}
+@media(max-height:360px){#game-shell .dungeon-build-grid button{height:22px!important}}
+#game-shell#game-shell .dungeon-build-grid button{background:#120d10dd!important;background-image:none!important;color:#e6dccb!important;box-shadow:none!important}
+#game-shell#game-shell .dungeon-build-grid button[aria-pressed=true]{background:linear-gradient(180deg,#8a2a2c,#3a1418)!important;color:#ffe9c4!important;box-shadow:0 0 8px #e0a04a55!important}
+#game-shell #dungeon-progress{font-size:10px;color:#cdbf9f;white-space:nowrap}
+@media(max-width:700px){#game-shell .dungeon-build-grid{grid-template-columns:repeat(5,minmax(0,1fr))}#game-shell .dungeon-build-grid small{display:none}#game-shell .dungeon-build-grid button{font-size:9px!important;padding:0 1px!important}}
+/* Alpha 0.141 레이드·보스 러시도 같은 디자인: 보스 장면 원화(dungeon-raid-<id>/rush-v0141), 카드 그림·선택 표시·배경·입장 패널 머리 띠 */
+#game-shell #camp-dungeons-panel{--scene-raid-colossus:url('assets/dungeon-raid-colossus-v0141.webp');--scene-raid-queen:url('assets/dungeon-raid-queen-v0141.webp');--scene-raid-judge:url('assets/dungeon-raid-judge-v0141.webp');--scene-rush:url('assets/dungeon-rush-v0141.webp')}
+#game-shell #camp-dungeons-panel[data-dungeon=raid-colossus]{--scene:var(--scene-raid-colossus)}
+#game-shell #camp-dungeons-panel[data-dungeon=raid-queen]{--scene:var(--scene-raid-queen)}
+#game-shell #camp-dungeons-panel[data-dungeon=raid-judge]{--scene:var(--scene-raid-judge)}
+#game-shell #camp-dungeons-panel[data-dungeon=rush]{--scene:var(--scene-rush)}
+#game-shell #camp-dungeons-panel:is([data-dungeon=raid-colossus],[data-dungeon=raid-queen],[data-dungeon=raid-judge],[data-dungeon=rush]){background:linear-gradient(110deg,#080c10f2 0%,#0d0a10e6 55%,#140c12dd 100%),var(--scene) center/cover!important}
+#game-shell #raid-card-colossus{--card-scene:var(--scene-raid-colossus)}
+#game-shell #raid-card-queen{--card-scene:var(--scene-raid-queen)}
+#game-shell #raid-card-judge{--card-scene:var(--scene-raid-judge)}
+#game-shell #raid-cards .raid-card{position:relative!important;overflow:hidden!important;align-items:flex-end!important;border:1px solid #9e835366!important;border-radius:8px!important;padding:6px 8px!important;background:linear-gradient(180deg,#05070a10 0%,#05070a66 38%,#05070ae8 78%,#05070af5 100%),var(--card-scene) center 30%/cover no-repeat!important}
+#game-shell #raid-cards .raid-card::before,#game-shell #raid-cards .raid-card::after{display:none!important}
+#game-shell #raid-cards .raid-card .lobby-icon{position:absolute!important;top:5px;right:6px;width:22px!important;height:22px!important;opacity:.85;filter:drop-shadow(0 1px 2px #000)}
+#game-shell #raid-cards .raid-card :is(small,strong,b,em){text-shadow:0 1px 2px #000,0 0 6px #000c}
+#game-shell #raid-cards .raid-card>span{position:relative;z-index:1}
+#game-shell #raid-cards .raid-card[aria-pressed=false]{filter:saturate(.55) brightness(.7)!important;border-color:#6d5c4566!important}
+#game-shell #raid-cards .raid-card[aria-pressed=true]{filter:saturate(1.15) brightness(1.08)!important;border:1px solid #f2c97a!important;
+ background:radial-gradient(ellipse at 50% 112%,#c2412a88 0%,#c2412a00 60%),linear-gradient(180deg,#05070a00 0%,#05070a40 40%,#05070ad8 80%,#05070af2 100%),var(--card-scene) center 30%/cover no-repeat!important;
+ box-shadow:0 0 0 1px #2a1408,0 0 0 2px #f2c97aaa,0 0 18px #e0a04a77,0 4px 14px #000a!important}
+#game-shell#game-shell #raid-cards .raid-card[aria-pressed=true]::before{content:'선택'!important;display:block!important;position:absolute!important;inset:0 auto auto 50%!important;width:auto!important;height:auto!important;transform:translateX(-50%)!important;z-index:3!important;margin:0!important;padding:1px 10px 2px!important;border:0!important;border-radius:0 0 6px 6px!important;background:linear-gradient(180deg,#f6d58f,#c98d3c)!important;color:#2a1408!important;font-size:9px!important;font-weight:700!important;letter-spacing:1px!important;line-height:1.3!important;box-shadow:0 2px 6px #0008!important;opacity:1!important}
+#game-shell#game-shell #raid-cards .raid-card[aria-pressed=true]::after{content:''!important;display:block!important;position:absolute!important;inset:3px!important;border:1px solid #f6dca04d;border-radius:6px;pointer-events:none;z-index:2!important;
+ background:linear-gradient(#f6d58f,#f6d58f) left top/10px 2px no-repeat,linear-gradient(#f6d58f,#f6d58f) left top/2px 10px no-repeat,linear-gradient(#f6d58f,#f6d58f) right top/10px 2px no-repeat,linear-gradient(#f6d58f,#f6d58f) right top/2px 10px no-repeat,
+  linear-gradient(#f6d58f,#f6d58f) left bottom/10px 2px no-repeat,linear-gradient(#f6d58f,#f6d58f) left bottom/2px 10px no-repeat,linear-gradient(#f6d58f,#f6d58f) right bottom/10px 2px no-repeat,linear-gradient(#f6d58f,#f6d58f) right bottom/2px 10px no-repeat}
+#game-shell #raid-cards .raid-card[aria-pressed=true] strong{color:#ffe3a8!important}
+#game-shell #raid-week{background:linear-gradient(180deg,#0b1016e6,#0b1016c8)!important}
+/* 보스 러시: 오늘의 상대 칸에 관문 그림 */
+#game-shell #rush-panel .rush-lineup{background:linear-gradient(180deg,#0b1016e0 0%,#0b101670 40%,#0b1016ee 85%),var(--scene-rush) center 40%/cover no-repeat!important}
+#game-shell #rush-panel .rush-lineup :is(strong,span,small,b,p){text-shadow:0 1px 3px #000,0 0 6px #000}
+/* Alpha 0.141 레이드 난이도: 목록 대신 3칸 버튼(던전 프리셋과 같은 모양), 보스 러시·탑에서는 '단계' 글자 숨김 */
+#game-shell #raid-tier{display:none!important}
+#game-shell .raid-tier-grid{display:inline-grid;grid-template-columns:repeat(3,minmax(52px,1fr));gap:4px;margin-left:6px}
+#game-shell#game-shell .raid-tier-grid button{min-height:0!important;height:26px!important;padding:0 6px!important;border:1px solid #9e835366!important;border-radius:5px!important;background:#120d10dd!important;background-image:none!important;color:#e6dccb!important;font-size:11px!important;box-shadow:none!important}
+#game-shell#game-shell .raid-tier-grid button:disabled{opacity:.35}
+#game-shell#game-shell .raid-tier-grid button[aria-pressed=true]{border-color:#f2c97a!important;background:linear-gradient(180deg,#8a2a2c,#3a1418)!important;color:#ffe9c4!important;box-shadow:0 0 8px #e0a04a55!important;font-weight:700}
+#game-shell #camp-dungeons-panel:not([data-mode=growth]) .dungeon-level-word{display:none}

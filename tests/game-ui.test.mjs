@@ -1927,3 +1927,12 @@ test('Alpha 0.141 dungeon hall: six growth dungeons, the 무한의 탑 tab pages
  assert.match(ui.nodes.get('dungeon-rewards').textContent,/첫 클리어/);ui.emit('tower-floor-down10','click');assert.equal(ui.nodes.get('tower-floor').textContent,'3층');assert.match(ui.nodes.get('dungeon-rewards').textContent,/보상 없음/);assert.match(ui.nodes.get('tower-bonus').textContent,/공격력 \+1%/);
  ui.emit('nav-home','click');ui.emit('nav-growth','click');ui.emit('growth-tab-transcend','click');assert.equal(ui.nodes.get('growth-transcend').hidden,false);assert.equal(ui.nodes.get('transcend-might').disabled,true);assert.match(ui.nodes.get('transcend-level').textContent,/Lv\.200부터/);
 });
+test('Alpha 0.141 dungeon controls are buttons: level pager, preset grid and raid tier grid; scene attribute follows the selection',async()=>{
+ const p=bagFixture();p.dungeonProgress.gold=12;p.clearedStage=60;p.unlockedStage=60;const ui=await host({saved:p});ui.emit('lobby-summon','click');
+ assert.equal(ui.nodes.get('camp-dungeons-panel').attributes['data-dungeon'],'gold');ui.emit('dungeon-card-xp','click');assert.equal(ui.nodes.get('camp-dungeons-panel').attributes['data-dungeon'],'xp');ui.emit('dungeon-card-gold','click');
+ const before=ui.nodes.get('dungeon-level-value').textContent;ui.emit('dungeon-level-down10','click');const lowered=Number(ui.nodes.get('dungeon-level-value').textContent.replace('단계',''));assert.ok(lowered<Number(before.replace('단계',''))||lowered===1);assert.equal(ui.nodes.get('dungeon-level-value').attributes['data-state'],'cleared');
+ for(let n=0;n<20;n++)ui.emit('dungeon-level-up','click');assert.equal(ui.nodes.get('dungeon-level-value').textContent,'13단계');assert.equal(ui.nodes.get('dungeon-level-up').disabled,true);assert.equal(ui.nodes.get('dungeon-level-value').attributes['data-state'],'new');
+ for(let n=0;n<5;n++)assert.equal(ui.nodes.get('dungeon-build-pick-'+n).disabled,!p.savedBuilds[n]);
+ ui.emit('dungeon-mode-raid','click');assert.match(ui.nodes.get('camp-dungeons-panel').attributes['data-dungeon'],/^raid-/);assert.equal(ui.nodes.get('raid-tier-pick-0').attributes['aria-pressed'],'true');assert.equal(ui.nodes.get('raid-tier-pick-1').disabled,true);
+ ui.emit('dungeon-mode-rush','click');assert.equal(ui.nodes.get('camp-dungeons-panel').attributes['data-dungeon'],'rush');
+});

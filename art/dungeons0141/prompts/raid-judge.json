@@ -1,0 +1,31 @@
+{
+  "id": "raid-judge",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production UI illustration (a wide landscape banner) for a dark fantasy 2D action RPG dungeon select screen. Image1 is an existing illustration of this game: match its painterly dark fantasy rendering, dramatic warm/cool rim lighting, deep shadows, atmospheric haze and level of detail; never copy its subject. Create ONE opaque landscape image, 3:2 aspect (about 1536x1024), a single scene with no humans, no people, no text, no letters, no logo, no UI, no frame or border. Keep the main subject in the CENTER third and slightly above center (the image is cropped to wide and narrow banners and dark text sits on the lower part), with darker, calmer lower 30%. Image2 is the SUBJECT reference only: the raid boss of this game (an animation sheet); paint that same creature once, large, in the scene, matching its design and colors, not as a sprite sheet. SCENE: a radiant twilight judge, a winged divine executioner hovering above a broken celestial courtroom of white marble and gold under a violet dusk sky with falling light pillars",
+  "referenceImages": [
+    {
+      "path": "dist/assets/growth-forge-v042.webp",
+      "sha256": "bb1e7e037225c4fa732abfdf4ea98016a948d0589462c92d6f98db5b08d41334"
+    },
+    {
+      "path": "art/raid0123/bosses/raid_judge.png",
+      "sha256": "dde40d22c5c287d217fd55e42a2dc89c8a5918ddfc37ce8dfbade522c2210837"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1536,
+        1024
+      ],
+      "seconds": 64,
+      "sha256": "7e6d62ed5885137a2a828bbdb6caed1329f90a8fe6dfdd6fab35d646d35d176f"
+    }
+  ],
+  "final": {
+    "path": "art/dungeons0141/raid-judge.png",
+    "sha256": "7e6d62ed5885137a2a828bbdb6caed1329f90a8fe6dfdd6fab35d646d35d176f"
+  }
+}

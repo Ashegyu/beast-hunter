@@ -40,5 +40,29 @@
     "source": "art/dungeons0141/tower.png",
     "sha256": "b6c61886dbd8c2b294097ce55c738bd387ae02531551c4087b90b8f9f15a9b15",
     "webpBytes": 55562
+  },
+  {
+    "id": "raid-colossus",
+    "source": "art/dungeons0141/raid-colossus.png",
+    "sha256": "6ce0855b8548c95f5b4dc6ef6bafb7623a637bdd395830cfab79028744901d99",
+    "webpBytes": 110450
+  },
+  {
+    "id": "raid-queen",
+    "source": "art/dungeons0141/raid-queen.png",
+    "sha256": "6d2b5c08d8e16c78c9aaab01a31891d1e89720d2e0449c3996edd9ac10c1d9e9",
+    "webpBytes": 118474
+  },
+  {
+    "id": "raid-judge",
+    "source": "art/dungeons0141/raid-judge.png",
+    "sha256": "7e6d62ed5885137a2a828bbdb6caed1329f90a8fe6dfdd6fab35d646d35d176f",
+    "webpBytes": 121154
+  },
+  {
+    "id": "rush",
+    "source": "art/dungeons0141/rush.png",
+    "sha256": "ff25ebf7637d74f0f6dd1f878e842e18a6f38cf75ee87108f41ef5f9e9c1395d",
+    "webpBytes": 96556
   }
 ]

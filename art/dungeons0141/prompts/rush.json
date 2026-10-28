@@ -1,0 +1,27 @@
+{
+  "id": "rush",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production UI illustration (a wide landscape banner) for a dark fantasy 2D action RPG dungeon select screen. Image1 is an existing illustration of this game: match its painterly dark fantasy rendering, dramatic warm/cool rim lighting, deep shadows, atmospheric haze and level of detail; never copy its subject. Create ONE opaque landscape image, 3:2 aspect (about 1536x1024), a single scene with no humans, no people, no text, no letters, no logo, no UI, no frame or border. Keep the main subject in the CENTER third and slightly above center (the image is cropped to wide and narrow banners and dark text sits on the lower part), with darker, calmer lower 30%. SCENE: a grand gladiator gauntlet hall with five colossal sealed boss gates in a curved row, each gate glowing in a different color (crimson, ice blue, violet, sea green, gold), a golden seal emblem glowing on the central floor, braziers and banners",
+  "referenceImages": [
+    {
+      "path": "dist/assets/growth-forge-v042.webp",
+      "sha256": "bb1e7e037225c4fa732abfdf4ea98016a948d0589462c92d6f98db5b08d41334"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1536,
+        1024
+      ],
+      "seconds": 60,
+      "sha256": "ff25ebf7637d74f0f6dd1f878e842e18a6f38cf75ee87108f41ef5f9e9c1395d"
+    }
+  ],
+  "final": {
+    "path": "art/dungeons0141/rush.png",
+    "sha256": "ff25ebf7637d74f0f6dd1f878e842e18a6f38cf75ee87108f41ef5f9e9c1395d"
+  }
+}
