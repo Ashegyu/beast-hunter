@@ -1,0 +1,27 @@
+{
+  "sources": [
+    {
+      "sheet": "acc-1",
+      "source": "art/equipment0140/acc-1.png",
+      "sha256": "6c0a36ae0fda2a4a30bbdc975d63aceca731483caeedc24559d018f78c79f74e"
+    },
+    {
+      "sheet": "craft-1",
+      "source": "art/equipment0140/craft-1.png",
+      "sha256": "23ccaeedbd176d126f9f2ac45f6b38033ce7aabff1be5e6ad0789e2efaa2b639"
+    }
+  ],
+  "accessoryPage": [
+    1264,
+    256
+  ],
+  "craftPage": [
+    1536,
+    2048
+  ],
+  "craftItemSide": 469,
+  "webpBytes": {
+    "equipment-accessories-v0140.webp": 241472,
+    "craft-equipment-v0140.webp": 791034
+  }
+}

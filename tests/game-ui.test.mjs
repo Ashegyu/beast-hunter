@@ -283,7 +283,7 @@ test('equipped and crafting thumbnails reuse a responsive image when their actua
  const p=bagFixture(),ancient=game.ANCIENT_CATALOG.find(r=>r.slot==='weapon');p.inventory.push({...ancient,id:6,catalogId:ancient.id,rarity:5,affixes:{...ancient.base}});
  const ui=await host({saved:p}),slot=ui.nodes.get('equipped-art-weapon');ui.emit('nav-bag','click');const child=slot.atlasImage,firstId=slot.attributes['data-art-id'];ui.emit('bag-2','click');ui.emit('equip-2','click');assert.notEqual(slot.attributes['data-art-id'],firstId);assert.equal(slot.atlasImage,child);assert.deepEqual({...slot.atlasLayout.frame},{...manifest.equipmentPresentation.frames[slot.attributes['data-art-id']]});
  ui.emit('bag-5','click');ui.emit('equip-5','click');assert.equal(slot.atlasImage,child);assert.match(child.src,/ancient-individual-v0123/);assert.equal(child.hidden,false);assert.ok(child.style.width.endsWith('%'));assert.ok(slot.style.clipPath.includes('%'));
- ui.emit('nav-craft','click');const art=ui.nodes.get('craft-recipe-art-0');assert.ok(art.atlasImage.src.includes('craft-equipment-v041'));assert.ok(art.atlasImage.style.width.endsWith('%'));assert.ok(art.style.clipPath.includes('%'));
+ ui.emit('nav-craft','click');const art=ui.nodes.get('craft-recipe-art-0');assert.ok(art.atlasImage.src.includes('craft-equipment-v0140'));assert.ok(art.atlasImage.style.width.endsWith('%'));assert.ok(art.style.clipPath.includes('%'));
 });
 test('pause presents only resume and camp, traps focus, freezes the hunt and returns collected progress once',async()=>{
  const ui=await host({campaign:true});ui.emit('start','click');ui.tick();ui.stick(1,0);ui.tick();ui.emit('pause','click');

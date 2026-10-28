@@ -282,9 +282,15 @@ const ACCESSORY_REGIONS=['붉은 숲','폐성','서리','해류','뇌운','성�
 export const ACCESSORY_ART = ACCESSORY_REGIONS.flatMap((name,i)=>[
   ...(i>=3?[{id:`acc_t${i+1}_charm`,tier:i+1,slot:'charm',name:name+' 목걸이'}]:[]),
   {id:`acc_t${i+1}_earring`,tier:i+1,slot:'charm',name:name+' 귀걸이'},{id:`acc_t${i+1}_seal`,tier:i+1,slot:'charm',name:name+' 인장'}]);
+// Region 1-3 dungeon accessory art (Alpha 0.140, equipment-accessories-v0140 page): necklaces for regions 1-3 and
+// earrings for the regions 2-3 the 0.122 earrings got swapped with (불과 얼음 / 어둠의 심연).
+export const REGION_ACCESSORY_ART = [
+  {id:'acc_t1_charm',tier:1,slot:'charm',name:'붉은 숲 목걸이'},{id:'acc_t2_charm',tier:2,slot:'charm',name:'불과 얼음 목걸이'},
+  {id:'acc_t3_charm',tier:3,slot:'charm',name:'어둠의 심연 목걸이'},{id:'acc_r2_earring',tier:2,slot:'charm',name:'불과 얼음 귀걸이'},
+  {id:'acc_r3_earring',tier:3,slot:'charm',name:'어둠의 심연 귀걸이'}];
 // Boss rush seals (Alpha 0.136): one art per seal effect on the equipment-seals-v0136 page; a seal shows it at any tier.
 export const SEAL_ART = SEAL_EFFECTS.map(e=>({id:sealArtId(e.id),tier:1,slot:'charm',name:'리리안의 '+e.name+' 인장',seal:true}));
-export const ALL_EQUIPMENT_ART = [...EQUIPMENT_ART,...SET_ART,...ACCESSORY_ART,...SEAL_ART];
+export const ALL_EQUIPMENT_ART = [...EQUIPMENT_ART,...SET_ART,...ACCESSORY_ART,...REGION_ACCESSORY_ART,...SEAL_ART];
 export function equipmentArt(item){
   // Ancients keep their family's base art, whose tier differs from the region tier for tiers 2/3 (Alpha 0.112).
   const explicit=ALL_EQUIPMENT_ART.find(a=>a.id===item?.artId&&a.slot===equipmentFamily(item.slot)&&(a.tier===item.tier||item.ancient||item.rarity===5||a.seal&&!!item.seal));

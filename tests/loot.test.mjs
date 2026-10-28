@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as g from '../dist/game-engine.js';
 import {ITEM_CATALOG,DROP_TABLES,rollRarity,rollItem,storeItem,salvageValue,MAX_PENDING_LOOT,INVENTORY_LIMIT} from '../dist/loot.js';
-import {EQUIPMENT_ART,SET_ART,ACCESSORY_ART} from '../dist/chapters.js';
+import {EQUIPMENT_ART,SET_ART,ACCESSORY_ART,REGION_ACCESSORY_ART} from '../dist/chapters.js';
 import {freezeCombat} from './combat-fixture.mjs';
 const ALWAYS=Object.freeze({normal:1,elite:1,stage:1,boss:1});// Alpha 0.115: drops are rolls; force them where a test needs one.
 const generator=(seed=12345)=>()=>{seed=(Math.imul(1664525,seed)+1013904223)>>>0;return seed/4294967296;};
@@ -15,11 +15,13 @@ function kill(s,{elite=false,boss=false}={}){
 function advance(s,seconds){for(let i=0;i<Math.ceil(seconds/.025);i++)g.advanceGame(s,.025);}
 test('108 immutable item families cover all three slots in every chapter using valid art',()=>{
  // 123 original identities, 24 region 4-6 accessories (Alpha 0.122) and 720 chapter set pieces (Alpha 0.109: 12 per set; 0.118: 60 sets).
- assert.equal(ITEM_CATALOG.length,123+24+720);assert.equal(new Set(ITEM_CATALOG.map(i=>i.id)).size,867);assert.equal(new Set(ITEM_CATALOG.map(i=>i.name)).size,867);
+ assert.equal(ITEM_CATALOG.length,123+24+20+720);assert.equal(new Set(ITEM_CATALOG.map(i=>i.id)).size,887);assert.equal(new Set(ITEM_CATALOG.map(i=>i.name)).size,887);
  for(const tier of [4,5,6])assert.deepEqual(['charm','earring','special'].map(slot=>ITEM_CATALOG.filter(i=>!i.set&&i.tier===tier&&i.slot===slot).length),[6,1,1]);
- for(const tier of [1,2,3])for(const slot of ['weapon','armor','charm'])assert.equal(ITEM_CATALOG.filter(i=>!i.set&&i.tier===tier&&i.slot===slot).length,12);
+ for(const tier of [1,2,3])for(const slot of ['weapon','armor','charm'])assert.equal(ITEM_CATALOG.filter(i=>!i.set&&!i.dungeon&&i.tier===tier&&i.slot===slot).length,12);
+ // Alpha 0.140: region 1-3 dungeon accessories (six necklaces each, a region earring for regions 2-3).
+ assert.deepEqual([1,2,3].map(tier=>['charm','earring'].map(slot=>ITEM_CATALOG.filter(i=>i.dungeon&&i.tier===tier&&i.slot===slot).length)),[[6,0],[6,1],[6,1]]);
  for(const set of Object.keys(g.EQUIPMENT_SETS))assert.deepEqual([...new Set(ITEM_CATALOG.filter(i=>i.set===set).map(i=>i.slot))],['weapon','helmet','armor','pants','boots']);
- for(const row of ITEM_CATALOG)assert.ok([...EQUIPMENT_ART,...SET_ART,...ACCESSORY_ART].some(a=>a.id===row.artId&&a.slot===g.equipmentFamily(row.slot)&&a.tier===row.tier));
+ for(const row of ITEM_CATALOG)assert.ok([...EQUIPMENT_ART,...SET_ART,...ACCESSORY_ART,...REGION_ACCESSORY_ART].some(a=>a.id===row.artId&&a.slot===g.equipmentFamily(row.slot)&&a.tier===row.tier));
  assert.throws(()=>{ITEM_CATALOG[0].base.damage=999;},TypeError);
 });
 test('five qualities and ancient tables have measured frequencies and stronger enemies have higher quality floors',()=>{

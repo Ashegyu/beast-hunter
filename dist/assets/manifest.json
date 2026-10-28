@@ -84752,6 +84752,56 @@
         "pivotX": 101.5,
         "pivotY": 237,
         "bodyHeight": 236
+      },
+      "acc_t1_charm": {
+        "image": "equipment-accessories-v0140.png",
+        "x": 8,
+        "y": 8,
+        "w": 172,
+        "h": 240,
+        "pivotX": 86.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "acc_t2_charm": {
+        "image": "equipment-accessories-v0140.png",
+        "x": 188,
+        "y": 8,
+        "w": 155,
+        "h": 240,
+        "pivotX": 77.5,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "acc_t3_charm": {
+        "image": "equipment-accessories-v0140.png",
+        "x": 351,
+        "y": 8,
+        "w": 178,
+        "h": 240,
+        "pivotX": 89.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "acc_r2_earring": {
+        "image": "equipment-accessories-v0140.png",
+        "x": 537,
+        "y": 8,
+        "w": 102,
+        "h": 240,
+        "pivotX": 51.0,
+        "pivotY": 237,
+        "bodyHeight": 236
+      },
+      "acc_r3_earring": {
+        "image": "equipment-accessories-v0140.png",
+        "x": 647,
+        "y": 8,
+        "w": 110,
+        "h": 240,
+        "pivotX": 55.0,
+        "pivotY": 237,
+        "bodyHeight": 236
       }
     },
     "pages": {
@@ -84786,6 +84836,10 @@
       "equipment-seals-v0136.png": {
         "width": 1240,
         "height": 1000
+      },
+      "equipment-accessories-v0140.png": {
+        "width": 1264,
+        "height": 256
       }
     }
   },
@@ -85004,7 +85058,6 @@
     "equipment-rarities-v017.png": "equipment-rarities-v017.webp",
     "ancient-individual-v019.png": "ancient-individual-v019.webp",
     "armory-equipment-v040.png": "armory-equipment-v040.webp",
-    "craft-equipment-v041.png": "craft-equipment-v041.webp",
     "terrain-forest-v044.png": "terrain-forest-v044.webp",
     "terrain-ruins-v044.png": "terrain-ruins-v044.webp",
     "terrain-frost-v044.png": "terrain-frost-v044.webp",
@@ -85220,7 +85273,9 @@
     "monsters-raid_judge-v0123.png": "monsters-raid_judge-v0123.webp",
     "monsters-raid_queen-v0123.png": "monsters-raid_queen-v0123.webp",
     "ancient-individual-v0123.png": "ancient-individual-v0123.webp",
-    "equipment-seals-v0136.png": "equipment-seals-v0136.webp"
+    "equipment-seals-v0136.png": "equipment-seals-v0136.webp",
+    "equipment-accessories-v0140.png": "equipment-accessories-v0140.webp",
+    "craft-equipment-v0140.png": "craft-equipment-v0140.webp"
   },
   "equipmentSockets": {
     "lirian_idle_s_v05": [
@@ -89508,9 +89563,9 @@
     }
   },
   "craftedPresentation": {
-    "image": "craft-equipment-v041.png",
+    "image": "craft-equipment-v0140.png",
     "width": 1536,
-    "height": 1024,
+    "height": 2048,
     "frames": {
       "crafted-frost-blade": {
         "x": 0,
@@ -89545,6 +89600,36 @@
       "crafted-blood-charm": {
         "x": 1024,
         "y": 512,
+        "w": 512,
+        "h": 512
+      },
+      "crafted-helmet": {
+        "x": 0,
+        "y": 1024,
+        "w": 512,
+        "h": 512
+      },
+      "crafted-pants": {
+        "x": 512,
+        "y": 1024,
+        "w": 512,
+        "h": 512
+      },
+      "crafted-boots": {
+        "x": 1024,
+        "y": 1024,
+        "w": 512,
+        "h": 512
+      },
+      "crafted-earring": {
+        "x": 0,
+        "y": 1536,
+        "w": 512,
+        "h": 512
+      },
+      "crafted-special": {
+        "x": 512,
+        "y": 1536,
         "w": 512,
         "h": 512
       }

@@ -49,6 +49,14 @@ test('two real skill dungeon settlements supply the material used by research an
 test('invalid dungeon requests are inert and never consume a battle ID, gold or material',()=>{
  const s=make(),before=JSON.stringify(s);for(const [id,level]of [['bad',1],['gold',0],['gold',1.5],['gold',NaN],['gold',Infinity],['gold','1']])assert.equal(g.launchDungeon(s,id,level),false);assert.equal(JSON.stringify(s),before);
 });
+test('region 1-3 growth dungeons roll the 0.140 region accessories, not the 0.9 family charms',()=>{
+ for(const [stage,tier]of [[5,1],[15,2],[25,3]]){const arts=new Set(),names=new Set();
+  for(let seed=1;seed<=24;seed++){const p=g.createProfile(1000);p.unlockedStage=stage;p.clearedStage=stage-1;const s=g.createGame(p,{durable:true});assert.equal(g.launchDungeon(s,'gold',1),true);s.lootRates={dungeon:1};s.lootRng=seed*7919;finish(s);
+   const item=s.run.dungeonReward.item;assert.equal(item.tier,tier);arts.add(item.artId);names.add(item.name.replace(/^\S+ /,''));
+   if(item.slot==='charm')assert.match(item.catalogId,new RegExp(`^${tier}-necklace-`));if(item.slot==='earring'&&tier>1)assert.equal(item.catalogId,`${tier}-earring-2`);
+   g.confirmSettlement(s,s.settlement.id);const saved=g.restoreProfile(g.encodeProfile(s.profile,1000),1000);assert.deepEqual(saved.inventory.find(i=>i.id===item.id),item);}
+  assert.ok(arts.has(`acc_t${tier}_charm`),tier);assert.ok(arts.has(tier>1?`acc_r${tier}_earring`:'acc_t1_earring'),tier);assert.ok(![...arts].some(a=>/^(forest|ruins|frost)_/.test(a)),tier);}
+});
 test('growth dungeon clears roll one accessory of the furthest region; tier 1-3 earrings and seals move to their own art (Alpha 0.122)',()=>{
  const slots=new Set(),rarities=new Set();
  for(const seed of [1,2,3,4,5,6,7,8,9,10,11,12]){const p=g.createProfile(1000);p.unlockedStage=45;p.clearedStage=44;p.dungeonProgress.gold=9;const s=g.createGame(p,{durable:true});assert.equal(g.launchDungeon(s,'gold',10),true);s.lootRates={dungeon:1};s.lootRng=seed*7919;finish(s);

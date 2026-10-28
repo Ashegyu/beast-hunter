@@ -2,15 +2,15 @@ let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
 import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.136.2';
 import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js';
 import { createCombatAudio } from './sound.js?v=0.76.0';
-import * as game from './game-engine.js?v=0.139.0';
+import * as game from './game-engine.js?v=0.140.0';
 import {FrameMetrics} from './frame-metrics.js?v=0.98.1';
 import { frameIndex, frameRect, validateClip } from './engine.js';
 import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js';
 import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.103.1';
 import { visibleTiles, createDecorations } from './terrain.js?v=0.135.0';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.139.0';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.136.2';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.136.2';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.140.0';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.140.0';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.140.0';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -988,9 +988,10 @@ function atlasThumbnail(node,imageName,frame,size=64,dimensions=null){
 const PART_FRAMES={helmet:{x:0,y:0,w:512,h:532},pants:{x:512,y:0,w:512,h:512},boots:{x:1024,y:0,w:512,h:512},earring:{x:512,y:512,w:512,h:512},special:{x:1024,y:512,w:512,h:512}};
 function gearThumbnail(node,item,size=64,illustrated=false){
 
-  // Set pieces (0.109) and the 0.97-part ancients (0.111) have their own art; other parts use the shared part icons.
-  if(PART_FRAMES[item?.slot]&&!game.itemSet(item)&&!manifest.equipment.setFrames?.[item?.artId]&&!(item?.rarity===5&&manifest.equipmentRarities.designIds.includes(item.catalogId))){const frame=PART_FRAMES[item.slot],image='equipment-parts-v0970.png';atlasThumbnail(node,image,frame,size,{width:1536,height:1024});node.setAttribute('aria-label',item.name??game.SLOTS[item.slot]);node.setAttribute('data-art-id','part-'+item.slot);node.setAttribute('data-visual-id',item.catalogId??item.slot);node.style.filter=item.rarity?'drop-shadow(0 0 2px '+game.RARITY_INFO[item.rarity].color+')':'';return {frame,image};}
-  const design=visualDesign(item),craftedDisplay=illustrated&&design.craftId?manifest.craftedPresentation:null,display=craftedDisplay??(illustrated&&!design.variant?manifest.equipmentPresentation:null),displayId=craftedDisplay?design.craftId:design.id;
+  // Set pieces (0.109), the 0.97-part ancients (0.111) and crafted parts (0.140) have their own art; other parts use the shared part icons.
+  // Crafted gear always shows its crafted art (0.140; small icons used the 0.9 family art before).
+  if(PART_FRAMES[item?.slot]&&!game.itemSet(item)&&!(item?.rarity===6&&manifest.craftedPresentation.frames[item.catalogId])&&!manifest.equipment.setFrames?.[item?.artId]&&!(item?.rarity===5&&manifest.equipmentRarities.designIds.includes(item.catalogId))){const frame=PART_FRAMES[item.slot],image='equipment-parts-v0970.png';atlasThumbnail(node,image,frame,size,{width:1536,height:1024});node.setAttribute('aria-label',item.name??game.SLOTS[item.slot]);node.setAttribute('data-art-id','part-'+item.slot);node.setAttribute('data-visual-id',item.catalogId??item.slot);node.style.filter=item.rarity?'drop-shadow(0 0 2px '+game.RARITY_INFO[item.rarity].color+')':'';return {frame,image};}
+  const design=visualDesign(item),craftedDisplay=design.craftId&&manifest.craftedPresentation.frames[design.craftId]?manifest.craftedPresentation:null,display=craftedDisplay??(illustrated&&!design.variant?manifest.equipmentPresentation:null),displayId=craftedDisplay?design.craftId:design.id;
   const source=display?.frames[displayId]?{image:display.image,frame:display.frames[displayId],dimensions:display,grip:display.weaponAnchors?.[displayId]}:gearFrame(manifest.equipment,design,manifest.equipmentRarities);
   atlasThumbnail(node,source.image,source.frame,size,source.dimensions);node.setAttribute('aria-label',item?.name?itemGradeName(item)+' '+item.name:design.name);node.style.filter=item?.rarity?'drop-shadow(0 0 2px '+game.RARITY_INFO[item.rarity].color+')':'';node.setAttribute('data-art-id',design.id);node.setAttribute('data-visual-id',design.variant??design.id);return source;
 }

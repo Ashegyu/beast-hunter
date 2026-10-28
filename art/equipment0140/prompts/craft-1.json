@@ -1,0 +1,29 @@
+{
+  "id": "craft-1",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production equipment item icons (master-crafted unique gear) for a dark fantasy 2D action RPG. Image1 is the existing crafted unique gear sheet of this game: match its highly detailed painterly dark-steel style, sharp spiked silhouettes, glowing crystal inlays, dark outlines, lighting and scale exactly; never copy its items. Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, row 1 cells 1-3, row 2 cells 4-5, and the sixth cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge, each item compact and filling about 60% of its cell: (1) a master-forged closed guardian helmet of dark scaled steel with a glowing cyan crystal crest and ward runes (guardian craftsman), (2) master-forged armored leg greaves (one pair of trousers) of dark steel plates with crimson blood crystal inlays and spiked knees (tracker craftsman), (3) a pair of master-forged armored boots side by side of dark steel with frost-blue ice crystal spikes and a cold glow (frost craftsman), (4) a single drop earring of dark silver with a radiant star-shaped pink-violet crystal and tiny starlight sparks (starlight craftsman), (5) a sacred relic medallion of a blood-red crescent moon crystal in a spiked dark steel ring, a swordswoman's crimson-moon relic with a soft cyan rune glow. Each item clearly readable at small icon size and clearly distinct from the others. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "referenceImages": [
+    {
+      "path": "dist/assets/craft-equipment-v041.webp",
+      "sha256": "2b93a95a1c879deae0064c13d7fb36b82ae8cf2259fd8f5adf3c74e3e7e1cca0"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1536,
+        1024
+      ],
+      "transparent": 0.642,
+      "parts": 6,
+      "seconds": 104,
+      "sha256": "23ccaeedbd176d126f9f2ac45f6b38033ce7aabff1be5e6ad0789e2efaa2b639"
+    }
+  ],
+  "final": {
+    "path": "art/equipment0140/craft-1.png",
+    "sha256": "23ccaeedbd176d126f9f2ac45f6b38033ce7aabff1be5e6ad0789e2efaa2b639"
+  }
+}

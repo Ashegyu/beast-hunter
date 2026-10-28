@@ -57,6 +57,19 @@ export const ACCESSORY_CATALOG=Object.freeze(ACCESSORY_NAMES.flatMap((names,r)=>
  Object.freeze({id:`${tier}-earring-1`,name:names[6],slot:'earring',tier,artId:`acc_t${tier}_earring`,base:Object.freeze({damage:3,crit:1}),effectId:null,signatureOnly:true}),
  Object.freeze({id:`${tier}-special-1`,name:names[7],slot:'special',tier,artId:`acc_t${tier}_seal`,base:Object.freeze({damage:5,hp:10}),effectId:null,signatureOnly:true,characterId:'lirian'}),
 ];}));
+// Region 1-3 dungeon accessories (Alpha 0.140): the tier 1-3 base charms keep the 0.9 family art and the base tier 2/3
+// families (폐성/서리) sit in the wrong regions (불과 얼음/어둠의 심연), so growth dungeons of regions 1-3 roll these
+// region rows instead: six necklaces (one per charm power) and, for regions 2-3, a region earring. Base rows stay
+// for ancients, crafting and saved items.
+const REGION_ACCESSORY_NAMES=[
+ ['적엽 기세 목걸이','숲숨결 호박','가시덩굴 축전석','사냥개 추적 이빨','반딧불 별무리','낙엽 수집 호박'],
+ ['화빙 기세 목걸이','용암 호흡석','빙염 축전핵','불새 추적 깃','불티 별무리','서리불 수집석','화빙 결정 귀걸이'],
+ ['심연 기세 목걸이','망령 호흡석','공허 축전핵','그림자 추적 송곳니','혼불 별무리','심연 수집석','심연 혼불 귀걸이'],
+];
+export const REGION_ACCESSORY_CATALOG=Object.freeze(REGION_ACCESSORY_NAMES.flatMap((names,r)=>{const tier=r+1;return [
+ ...EFFECT_ROWS.charm.map((effectId,i)=>Object.freeze({id:`${tier}-necklace-${i+1}`,name:names[i],slot:'charm',tier,artId:`acc_t${tier}_charm`,base:Object.freeze(patterns.charm[i%4]),effectId,dungeon:true})),
+ ...(names[6]?[Object.freeze({id:`${tier}-earring-2`,name:names[6],slot:'earring',tier,artId:`acc_r${tier}_earring`,base:Object.freeze({damage:3,crit:1}),effectId:null,signatureOnly:true,dungeon:true})]:[]),
+];}));
 // Chapter set pieces (Alpha 0.108/0.109): per set two weapon designs × two names and two names per armor part.
 // They carry `set` and drop only in their chapter; ancient identities stay derived from the base catalog.
 // Base stats follow the set's style; `power` raises them slightly for later chapters of a region.
@@ -72,7 +85,7 @@ const setBase=(set,stats)=>Object.freeze(Object.fromEntries(Object.entries(stats
 export const SET_CATALOG=Object.freeze(Object.values(EQUIPMENT_SETS).flatMap(set=>SET_SLOTS.flatMap(slot=>slot==='weapon'
  ?set.names.weapon.flatMap((names,variant)=>names.map((name,i)=>Object.freeze({id:`set-${set.id}-weapon-${variant*2+i+1}`,name,slot,tier:set.tier,artId:setArtId(set.id,slot,variant),set:set.id,base:setBase(set,SET_STYLES[set.style].weapon[variant]),effectId:EFFECT_ROWS.weapon[(set.effectOffset+variant*2+i)%6]})))
  :set.names[slot].map((name,i)=>Object.freeze({id:`set-${set.id}-${slot}-${i+1}`,name,slot,tier:set.tier,artId:setArtId(set.id,slot),set:set.id,base:setBase(set,SET_STYLES[set.style][slot]),...(slot==='armor'?{effectId:EFFECT_ROWS.armor[(set.effectOffset+i)%6]}:{effectId:null,signatureOnly:true})})))));
-export const ITEM_CATALOG=Object.freeze([...BASE_CATALOG,...ACCESSORY_CATALOG,...SET_CATALOG]);
+export const ITEM_CATALOG=Object.freeze([...BASE_CATALOG,...ACCESSORY_CATALOG,...REGION_ACCESSORY_CATALOG,...SET_CATALOG]);
 // Ordinary identity and quality are independent. Ancient identities have no quality variants.
 const ancientKey=row=>[row.tier,row.slot,row.artId,row.effectId].join(':');
 const VISUAL_STYLE=Object.freeze({echo:3,storm:5,execution:6,blood:4,frostNova:5,whirlwind:6,barrier:3,thorns:4,pulse:6,frostWard:5,lastStand:6,recovery:3,momentum:3,focus:4,capacitor:5,hunter:4,orbit:6,magnet:5});
@@ -139,10 +152,12 @@ export function rollAncient({id,tier,slot,bossId,hunt=0,raid=null},pick,rng=null
  if(isPerfectRoll(item))item.perfect=true;return item;
 }
 export function rollRarity(source,rng,minimum=0,difficulty=0){const mode=huntMode(difficulty);if(!mode)throw new RangeError('Unknown hunt mode');const weights=source==='boss'?BOSS_DROP_TABLES[mode.id]:DROP_TABLES[source]??DROP_TABLES.normal,floor=Number.isInteger(minimum)?Math.max(0,Math.min(5,minimum)):0;let value=rng()*100;for(let i=0;i<weights.length;i++){value-=weights[i];if(value<0)return Math.max(floor,i);}return weights.length-1;}
-export function rollItem({id,tier,slot,set=null,source='normal',minimum=0,bossId,difficulty=0,quality=null,hunt=0},rng){
+export function rollItem({id,tier,slot,set=null,source='normal',minimum=0,bossId,difficulty=0,quality=null,hunt=0,dungeon=false},rng){
  if(!huntMode(difficulty))throw new RangeError('Unknown hunt mode');if(bossId)bossLootPool(bossId,tier);
  // A set asks for that set's pieces; otherwise only the original (pre-0.108) identities roll.
- const choices=ITEM_CATALOG.filter(i=>(set?i.set===set:!i.set&&i.tier===tier)&&(!slot||i.slot===slot));
+ // Alpha 0.140: dungeon accessories prefer the region rows of their tier when it has any for the slot.
+ let choices=ITEM_CATALOG.filter(i=>(set?i.set===set:!i.set&&i.tier===tier)&&(!slot||i.slot===slot));
+ if(dungeon&&choices.some(i=>i.dungeon))choices=choices.filter(i=>i.dungeon);
  const pick=rng(),base=choices[Math.min(choices.length-1,Math.floor(pick*choices.length))];
  if(!base)throw new RangeError('Unknown loot chapter/slot');
  const draw=rollRarity(source,rng,minimum,difficulty),rarity=quality===null?draw:quality;if(rarity===5)return rollAncient({id,tier,slot,bossId,hunt},pick,rng);
@@ -173,7 +188,7 @@ export const DUNGEON_ACCESSORY_CHANCE=.4,ACCESSORY_SLOT_WEIGHTS=Object.freeze([[
 export function rollAccessory({id,tier,grade=0},rng){
  let value=rng(),slot='earring';for(const [s,w]of ACCESSORY_SLOT_WEIGHTS){value-=w;if(value<0){slot=s;break;}}
  let quality=0;if(grade>0&&grade<HUNT_GRADE_TABLES.length){const table=HUNT_GRADE_TABLES[grade];let roll=rng()*100;quality=table.length-1;for(let i=0;i<table.length;i++){roll-=table[i];if(roll<0){quality=i;break;}}}
- return rollItem({id,tier,slot,source:'stage',quality,hunt:0},rng);
+ return rollItem({id,tier,slot,source:'stage',quality,hunt:0,dungeon:true},rng);
 }
 const SCORE_WEIGHT=Object.freeze({damage:5,hp:.5,speed:3,crit:4,reduction:5});
 export function itemPower(item){if(isSeal(item))return 1e6+item.seal.grade*1e5+item.seal.level*1e3;let score=item.rarity*10000+item.tier*1000;for(const [k,v]of Object.entries(item.affixes))score+=(SCORE_WEIGHT[k]??0)*effectiveAffix(item,k);return score;}

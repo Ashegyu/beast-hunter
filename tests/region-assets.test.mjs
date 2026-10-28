@@ -3,7 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { regionAssetPlan, createRegionAssets, campAssetPaths } from '../dist/region-assets.js';
-import { CHAPTERS, ACCESSORY_ART } from '../dist/chapters.js';
+import { CHAPTERS, ACCESSORY_ART, REGION_ACCESSORY_ART } from '../dist/chapters.js';
 
 test('cold camp decodes only preview images that are reused by the battle plan',()=>{
  const manifest=JSON.parse(fs.readFileSync(new URL('../dist/assets/manifest.json',import.meta.url))),camp=campAssetPaths(manifest),battle=regionAssetPlan(manifest,CHAPTERS);
@@ -102,9 +102,10 @@ test('every chapter set item has a frame inside its atlas page (Alpha 0.109)', (
   const manifest = JSON.parse(fs.readFileSync(new URL('../dist/assets/manifest.json', import.meta.url)));
   const { setFrames, pages } = manifest.equipment;
   // Six per chapter set plus the 15 accessory frames on their own page (Alpha 0.122) and 17 seal frames (Alpha 0.136:
-  // one per boss rush seal effect and the 인장 조각 icon).
-  assert.equal(Object.keys(setFrames).length, CHAPTERS.length * 6 + 15 + 17);
+  // one per boss rush seal effect and the 인장 조각 icon) and 5 region 1-3 dungeon accessories (Alpha 0.140).
+  assert.equal(Object.keys(setFrames).length, CHAPTERS.length * 6 + 15 + 17 + 5);
   for (const id of [...SEAL_EFFECTS.map(e => 'seal_' + e.id), 'seal_shard']) { const frame = setFrames[id], page = pages[frame?.image]; assert.ok(frame && page, id); assert.equal(frame.image, 'equipment-seals-v0136.png'); assert.ok(frame.x >= 0 && frame.y >= 0 && frame.x + frame.w <= page.width && frame.y + frame.h <= page.height && Math.max(frame.w, frame.h) <= 240, id); assert.ok(fs.existsSync(new URL('../dist/assets/' + manifest.delivery[frame.image], import.meta.url))); }
+  for (const art of REGION_ACCESSORY_ART) { const frame = setFrames[art.id], page = pages[frame?.image]; assert.ok(frame && page, art.id); assert.equal(frame.image, 'equipment-accessories-v0140.png'); assert.ok(frame.x >= 0 && frame.y >= 0 && frame.x + frame.w <= page.width && frame.y + frame.h <= page.height && Math.max(frame.w, frame.h) <= 240, art.id); assert.ok(fs.existsSync(new URL('../dist/assets/' + manifest.delivery[frame.image], import.meta.url))); }
   for (const art of ACCESSORY_ART) { const frame = setFrames[art.id], page = pages[frame?.image]; assert.ok(frame && page, art.id); assert.equal(frame.image, 'equipment-accessories-v0122.png'); assert.ok(frame.x >= 0 && frame.y >= 0 && frame.x + frame.w <= page.width && frame.y + frame.h <= page.height, art.id); assert.ok(fs.existsSync(new URL('../dist/assets/' + manifest.delivery[frame.image], import.meta.url))); }
   for (const chapter of CHAPTERS) for (const part of ['sword', 'blade2', 'helmet', 'armor', 'pants', 'boots']) {
     const f = setFrames[`set_${chapter.set}_${part}`], page = pages[f.image];
