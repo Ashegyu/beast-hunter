@@ -37,9 +37,9 @@ CLAUDE.md에서 옮겨 온 작업 메모. 내용이 바뀌면 이 파일을 고�
 - strict(normal이 아닌) 스테이지는 체크포인트 → 실패/이탈 시 롤백, 클리어 시 `confirmSettlement`로 2단계 정산.
 
 ## 알려진 문제 (코드에서 확인)
-- `makeItem`은 출처·보스·minimum 인자를 무시하고 등급은 난이도(`hunt`)로만 정한다 → DROP_TABLES, BOSS_DROP_TABLES, minimumRarity는 사실상 죽은 코드. 고대는 0.110부터 `dropBossAncient`가 따로 떨어뜨린다.
+- 스테이지 드롭 등급은 난이도(`hunt`)로만 정한다(0.140에서 `makeItem`/`awardItem`의 안 쓰던 인자 제거). `rollItem`의 `rollRarity`(DROP_TABLES, BOSS_DROP_TABLES)는 quality가 정해져도 난수 하나를 소비하므로 지우면 모든 드롭 순서가 바뀐다 → 남김(테스트가 rollItem({minimum})로 등급별 장비를 만든다). 고대는 0.110부터 `dropBossAncient`가 따로 떨어뜨린다.
 - 제작 재료(0.122): 원질 핵 보스 2%, 무명의 기원 보스 0.3%(예전 0.1%·0.001%로 제작이 사실상 불가능했음).
-- `s.encounters/caches/nodes`를 채우는 코드 없음 → interact·상자·그룹 어그로 로직이 죽어 있음. `flow==='break'` 설정처 없음.
+- 0.140에서 상자·조우 상호작용(`interact`, `s.encounters/caches/nodes`), 적 무리(group)·귀환(`homeX`), 세로 화면 전용 CSS를 지웠다. `flow==='break'`는 게임에서 설정하지 않지만 테스트(combat-fixture 등)가 웨이브를 멈추는 고리로 쓰므로 남김.
 - 궁극기 영상(mp4)·컷인(ultimate-video.js)은 런타임에 연결하지 않는다. game-ui 테스트 'ultimate buttons show world effects without video, portraits or full-screen fallback'이 영상·전체 화면 없이 월드 효과로만 연출하는 것을 단언한다(의도된 결정으로 봄, 0.122에서 연결을 시도했다가 되돌림). 바꾸려면 사용자 확인 필요.
 - 0.106 보스 중 독버섯 왕·얼음 정령왕·빙하 거북·대사령술사는 뒷모습 줄이 앞모습과 비슷하게 생성됨(사용 가능 수준이라 유지). 0.109부터 스테이지 드롭은 챕터 세트 장비다. 기본 카탈로그(`BASE_CATALOG`)의 2티어는 폐성, 3티어는 서리 계열이라 지역(2 불과 얼음, 3 어둠의 심연)과 어긋나지만 고대(0.111에서 지역에 맞춰 바꿈)·제작·기존 저장 때문에 남겼다. 0.140부터 1~3지역 성장 던전은 `REGION_ACCESSORY_CATALOG`(`dungeon:true`, 목걸이 `N-necklace-1~6`, 2·3지역 귀걸이 `N-earring-2`)만 굴리고, 제작 부위 5종은 `craft-equipment-v0140`의 고유 원화를 쓴다.
 - 파쇄 제거(0.104)로 '파쇄 적중 시' 발동하던 고유 효과 중 무기 2종(연쇄 번개·빙하 파쇄)은 0.120에서 연격으로 옮겼다. 0.122에서 부적 2종도 스킬로 옮겼다: focus는 3연격 마무리 때 장착 스킬 재사용 0.4초 감소, capacitor('스킬 축전기')는 스킬 2회 시전으로 충전돼 다음 스킬 재사용 40% 단축(`capacitorCast`, `SKILL_HOOKS.cast`). 엔진의 `thunder`는 더 이상 축전을 쓰지 않는다.

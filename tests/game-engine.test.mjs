@@ -19,7 +19,7 @@ test('offline scouting requires a cleared boss, caps four hours, and claims once
   const now=1e6,p=g.createProfile(now);assert.deepEqual(g.collectOffline(p,now+86400000),{minutes:0,gold:0,xp:0});p.clearedStage=1;p.lastSeenAt=now;
   assert.deepEqual(g.collectOffline(p,now+86400000),{minutes:240,gold:480,xp:240});assert.equal(p.level,1);assert.equal(p.xp,240);assert.equal(p.cores,0);assert.equal(g.collectOffline(p,now+86400000).gold,0);
 });
-test('random hunts queue warning markers without authored rooms or caches',()=>{const s=g.createGame();g.launch(s);assert.equal(s.spawns.length,16);assert.equal(s.enemies.length,0);assert.equal(s.encounters.length,0);assert.equal(s.caches.length,0);assert.equal(s.run.bossSpawned,false);});
+test('random hunts queue warning markers without authored rooms or caches',()=>{const s=g.createGame();g.launch(s);assert.equal(s.spawns.length,16);assert.equal(s.enemies.length,0);assert.ok(!('encounters' in s)&&!('caches' in s));assert.equal(s.run.bossSpawned,false);});
 test('three committed directional swings hit once, get stronger and reset after the chain window',()=>{
   const s=hunt(),e=dummy(s,95,0,2000),back=dummy(s,-95,0,2000);s.enemies=[e,back];
   const damages=[];for(let i=1;i<=3;i++){e.x=s.player.x+95;e.y=s.player.y;back.x=s.player.x-95;back.y=s.player.y;const hp=e.hp;assert.equal(g.attack(s,{x:1,y:0}),true);assert.equal(s.player.combo,i);ticks(s,g.COMBOS[i-1].duration+.12);damages.push(hp-e.hp);assert.equal(back.hp,2000);}
@@ -47,7 +47,7 @@ test('level ups continue combat; permanent skill allocation is an explicit camp 
   assert.equal(s.profile.level,2);assert.equal(s.profile.xp,5);assert.equal(g.trainingPoints(s.profile),1);assert.equal(s.phase,'playing');assert.equal(s.pickups.length,0);assert.equal(s.profile.gold,4);
   const time=s.run.time;ticks(s,.2);assert.ok(s.run.time>time);assert.equal(g.trainStat(s,'power'),false);g.returnToCamp(s);assert.equal(g.trainStat(s,'power'),true);assert.equal(s.profile.training.power,1);assert.equal(g.trainingPoints(s.profile),0);assert.equal(g.trainStat(s,'vitality'),false);
 });
-test('no manual interaction is required by random waves',()=>{const s=g.createGame();g.launch(s);assert.equal(g.interactionTarget(s),null);assert.equal(g.interact(s),false);assert.equal(s.run.items,0);});
+test('no manual interaction exists for random waves (chest interaction removed in Alpha 0.140)',()=>{const s=g.createGame();g.launch(s);assert.equal(g.interactionTarget,undefined);assert.equal(g.interact,undefined);assert.equal(s.run.items,0);});
 test('equipment changes combat stats, saves identity and only unequipped items can be salvaged',()=>{
   const s=g.createGame();s.profile.inventory=[gear(1),gear(2),gear(3,'armor')];const base=g.playerStats(s.profile);assert.equal(g.equipItem(s,1),true);assert.equal(g.playerStats(s.profile).damage,base.damage+10);assert.equal(g.salvageItem(s,1),false);
   assert.equal(g.salvageItem(s,2),true);assert.ok(s.profile.gold>0);assert.equal(g.equipItem(s,3),true);assert.equal(g.playerStats(s.profile).maxHp,base.maxHp+30);
@@ -116,7 +116,7 @@ test('assist keeps near-equal targets, switches for a clear improvement or inval
   const s=hunt();s.auto=true;s.barrels=[];s.player.attackCooldown=999;s.player.stamina=0;const right=dummy(s,80),left=dummy(s,-80);s.enemies=[right,left];
   for(let i=0;i<30;i++){right.x=s.player.x+80+(i%2?.3:0);left.x=s.player.x-80-(i%2?0:.3);g.advanceGame(s,.025);assert.equal(s.player.heading,0);assert.equal(s.assist.targetId,right.id);}
   right.x=s.player.x+300;g.advanceGame(s,.025);assert.equal(s.assist.targetId,left.id);
-  left.dead=true;g.advanceGame(s,.025);assert.equal(s.assist.targetId,right.id);right.group=1;g.advanceGame(s,.025);assert.equal(s.assist.targetId,null);
+  left.dead=true;g.advanceGame(s,.025);assert.equal(s.assist.targetId,right.id);right.dead=true;g.advanceGame(s,.025);assert.equal(s.assist.targetId,null);
   s.assist.evade={kind:'enemy',id:999};s.auto=false;g.advanceGame(s,.025,{y:-1});assert.equal(s.player.heading,6);assert.deepEqual(s.assist,{targetId:null,approaching:false,evade:null});
   assert.equal(Object.hasOwn(JSON.parse(g.encodeProfile(s.profile,2000)),'assist'),false);g.returnToCamp(s);g.launch(s,1);assert.deepEqual(s.assist,{targetId:null,approaching:false,evade:null});
 });

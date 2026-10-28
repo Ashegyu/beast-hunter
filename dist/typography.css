@@ -51,12 +51,7 @@
 #game-shell .chapter-roster strong{white-space:normal;overflow-wrap:anywhere;line-height:1.5}
 #game-shell #camp-drawer .forge button>span{min-width:0;overflow-wrap:anywhere;white-space:normal;font-size:13px}
 #game-shell #camp-drawer .forge button>strong{white-space:normal;overflow-wrap:anywhere;line-height:1.4;font-size:11px}
-@media(max-width:360px){
-  #game-shell .masthead{gap:5px;padding-inline:9px}
-  #game-shell .page-title{font-size:17px}
-  #game-shell .hub-identity strong{font-size:27px}
-  #game-shell .drawer-launch{padding-inline:12px}
-}
+
 @media(orientation:landscape) and (max-height:500px){
   #game-shell .battle .combat-announcements{top:calc(176px + env(safe-area-inset-top,0px));right:170px}
   #game-shell .battle .combat-announcements #reward-toast{justify-self:start}
@@ -91,13 +86,7 @@
 #game-shell .battle :is(#notice-detail,#reward-meta){font-size:12px;line-height:1.6}
 #game-shell .battle #notice-title{font-size:15px;line-height:1.5}
 #game-shell :is(.recipe-caption,.bag-detail,.codex-detail,.build-card,.skill-detail) :is(p,small,strong){max-width:100%;min-width:0;white-space:normal;overflow-wrap:anywhere;word-break:keep-all}
-@media(max-width:360px){
- #game-shell .page-title{font-size:19px}
- #game-shell .skill-catalog{grid-template-columns:repeat(3,minmax(0,1fr))}
- #game-shell .skill-detail h3{font-size:21px}
- #game-shell .skill-detail img{width:60px;height:60px}
- #game-shell .battle .skill-combat{width:228px;gap:6px}
-}
+
 @media(orientation:landscape) and (max-height:500px){
  #game-shell .battle .skill-combat{width:228px}
  #game-shell .battle .skill-combat-button{min-height:90px;padding-block:4px}

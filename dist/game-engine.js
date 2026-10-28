@@ -280,7 +280,7 @@ export function createGame(profile=createProfile(),{durable=false}={}){
   profile.skillBook??=skills.restoreSkillBook(null,profile.level);
   const stats=playerStats(profile),s={profile,durable,settlement:null,buildEffects:buildEffects(profile),inscriptionState:{furyUntil:0,furyPower:0},effectBudget:50,skillRuntime:skills.createSkillRuntime(),phase:'camp',auto:false,paused:false,stageId:1,difficulty:0,bounds:{width:WORLD_BOUNDS.width,height:WORLD_BOUNDS.height,padding:80},
     player:{x:350,y:1160,hp:stats.maxHp,maxHp:stats.maxHp,stamina:100,action:'idle',actionTime:0,aimX:0,aimY:1,facing:1,attackHit:false,attackCooldown:0,dashCooldown:0,thunderCooldown:0,invulnerable:0,lastDamage:0,dashX:1,dashY:0,combo:0,comboWindow:0,queued:false,queuedAim:null,swing:null,counterReady:0,lookX:0,lookY:1,heading:2,motionDistance:0,lastAimRevision:0,moving:false},
-    synergies:equipmentSynergies(profile),loadout:uniqueLoadout(profile),uniqueState:{cooldowns:{},cooldownKeys:[],momentum:0,momentumPower:0,capacitor:0,shield:0,shieldTime:0,shieldOwner:null,lastStand:false,still:0,orbit:null,ancientZones:[],ancientShields:emptyEquipment(),ancientBuffs:{}},spawnView:{width:720,height:1280},spawns:[],assist:{targetId:null,approaching:false,evade:null},enemies:[],projectiles:[],barrels:[],pickups:[],effects:[],nodes:[],encounters:[],caches:[],encounterIndex:0,run:{stage:1,startStage:1,wave:0,waveTime:0,waveKills:0,waveQuota:0,stageKills:0,stageQuota:0,timeLimit:0,timeRemaining:0,timedOut:false,flow:'idle',timer:0,kills:0,rooms:0,seals:0,gold:0,xp:0,xpBonus:0,trainingGold:0,startLevel:profile.level,cores:0,items:0,lootLedger:[],materialLedger:{},resourceRevision:0,stageItems:0,monsterItems:0,autoSalvaged:0,perfectDodges:0,guardBreaks:0,explosions:0,time:0,ancientProcs:0,craftedProcs:0,materials:0,synergyProcs:{shatter:0,execute:0},bossAncients:[],bossSpawned:false,bossKilled:false,beastLearned:null,stars:null,lowestHp:1},rng:12345,materialRng:98765,refiningRng:13579,promotionRng:97531,lootRng:54321,resultDelay:0,nextId:1,hitStop:0,shake:0,lastLoot:null};
+    synergies:equipmentSynergies(profile),loadout:uniqueLoadout(profile),uniqueState:{cooldowns:{},cooldownKeys:[],momentum:0,momentumPower:0,capacitor:0,shield:0,shieldTime:0,shieldOwner:null,lastStand:false,still:0,orbit:null,ancientZones:[],ancientShields:emptyEquipment(),ancientBuffs:{}},spawnView:{width:720,height:1280},spawns:[],assist:{targetId:null,approaching:false,evade:null},enemies:[],projectiles:[],barrels:[],pickups:[],effects:[],run:{stage:1,startStage:1,wave:0,waveTime:0,waveKills:0,waveQuota:0,stageKills:0,stageQuota:0,timeLimit:0,timeRemaining:0,timedOut:false,flow:'idle',timer:0,kills:0,rooms:0,seals:0,gold:0,xp:0,xpBonus:0,trainingGold:0,startLevel:profile.level,cores:0,items:0,lootLedger:[],materialLedger:{},resourceRevision:0,stageItems:0,monsterItems:0,autoSalvaged:0,perfectDodges:0,guardBreaks:0,explosions:0,time:0,ancientProcs:0,craftedProcs:0,materials:0,synergyProcs:{shatter:0,execute:0},bossAncients:[],bossSpawned:false,bossKilled:false,beastLearned:null,stars:null,lowestHp:1},rng:12345,materialRng:98765,refiningRng:13579,promotionRng:97531,lootRng:54321,resultDelay:0,nextId:1,hitStop:0,shake:0,lastLoot:null};
   return s;
 }
 const random=s=>{s.rng=(Math.imul(1664525,s.rng)+1013904223)>>>0;return s.rng/4294967296;};
@@ -295,10 +295,10 @@ function effect(s,type,data={},ttl=.6){if(s.effects.length>=400)return;s.effects
 function setLook(p,x,y,lock=false){if(Math.hypot(x,y)<.01)return;p.lookX=x;p.lookY=y;p.heading=directionIndex(x,y,lock?null:p.heading);}
 function setAction(p,action){if(p.action!==action){p.action=action;p.actionTime=0;}}
 function clampPosition(e,b){e.x=clamp(e.x,b.padding,b.width-b.padding);e.y=clamp(e.y,b.padding,b.height-b.padding);}
-function spawnEnemy(s,type,x,y,group,elite=false,boss=false,speciesId=null){
+function spawnEnemy(s,type,x,y,elite=false,boss=false,speciesId=null){
   // Alpha 0.133: health and damage follow the chapter's threat curve (raids keep the old scale); s.enemyScale is a test/sim override.
   const st=stageOf(s),raid=!!s.run.raidId,rushK=s.run.rush?rush.rushScale(st.id):1,hpBase=(raid?st.multiplier:st.hpScale)*(s.enemyScale?.hp??1)*rushK,damageBase=(raid?st.multiplier:st.damageScale)*(s.enemyScale?.damage??1)*rushK,factor=1+(s.run.stage-1)*.08,hp=boss?Math.round(st.bossHp*(s.enemyScale?.hp??1)):Math.round((elite?190:type==='bulwark'?110:type==='spitter'?62:48)*hpBase*factor);
-  const e={id:s.nextId++,type,boss,elite,group,wave:s.run.wave,runStage:s.run.stage,x,y,homeX:group===null?null:x,homeY:group===null?null:y,hp,maxHp:hp,action:'idle',actionTime:0,dead:false,facing:1,aggro:false,
+  const e={id:s.nextId++,type,boss,elite,wave:s.run.wave,runStage:s.run.stage,x,y,hp,maxHp:hp,action:'idle',actionTime:0,dead:false,facing:1,aggro:false,
     speed:boss?80:type==='bulwark'?82:type==='spitter'?90:112,cooldown:1,damage:(boss?26:elite?20:type==='bulwark'?15:type==='spitter'?10:8)*damageBase*(boss||raid||s.run.dungeonId?1:THREAT.mob),damageBase,
     radius:boss?145:type==='bulwark'?90:type==='spitter'?16:58,windup:.5,pattern:0,targetX:0,targetY:0,chargeX:0,chargeY:0,
     guardMax:type==='bulwark'&&!boss?100:0,guard:type==='bulwark'&&!boss?100:0,guardX:-1,guardY:0,exposed:0,perfectDodged:false,enraged:false,lookX:0,lookY:1,heading:2,motionDistance:0,backpedal:false,moving:false,bleedTicks:0,bleedTimer:0,bleedDamage:0,chillRemaining:0};
@@ -385,7 +385,7 @@ function prepareStage(s,immediate=false){
   beginStageJournal(s);const p=s.player;skills.clearSkillStage(s);clearUniqueTransient(s);s.enemies.length=0;s.spawns.length=0;s.projectiles.length=0;s.barrels.length=0;s.pickups=s.pickups.filter(isResourcePickup);s.effects.length=0;
   p.action='idle';p.actionTime=0;p.queued=false;p.queuedAim=null;p.combo=0;p.comboWindow=0;p.swing=null;p.attackCooldown=0;
   s.assist={targetId:null,approaching:false,evade:null};s.run.wave=0;s.run.bossSpawned=false;s.hitStop=0;s.shake=0;
-  for(let i=0;i<plan.barrels;i++){const pos=spawnPoint(s,s.barrels);s.barrels.push({id:s.nextId++,kind:'barrel',...pos,hp:18,status:'idle',fuse:0,radius:205,group:null});}
+  for(let i=0;i<plan.barrels;i++){const pos=spawnPoint(s,s.barrels);s.barrels.push({id:s.nextId++,kind:'barrel',...pos,hp:18,status:'idle',fuse:0,radius:205});}
   beginWave(s,immediate);
 }
 function beginWave(s,immediate=false){
@@ -425,7 +425,7 @@ function advanceSpawns(s,dt,rush=false){
   let write=0;for(const q of s.spawns){
     q.delay-=dt;
     if(q.locked===false&&q.delay<=q.warning){Object.assign(q,spawnPoint(s,s.spawns.filter(v=>v!==q&&v.locked),q.heading,q.spread));q.locked=true;}
-    if(q.delay<=0&&active<MAX_ACTIVE_ENEMIES){const e=spawnEnemy(s,q.type,q.x,q.y,null,q.elite,q.boss,q.species);e.aggro=true;active++;}
+    if(q.delay<=0&&active<MAX_ACTIVE_ENEMIES){const e=spawnEnemy(s,q.type,q.x,q.y,q.elite,q.boss,q.species);e.aggro=true;active++;}
     else s.spawns[write++]=q;
   }
   s.spawns.length=write;
@@ -443,7 +443,7 @@ function stageCleared(s){
   const gold=18+s.stageId*6+n*3;s.profile.gold+=gold;s.run.gold+=gold;s.profile.cores++;s.run.cores++;
   // Alpha 0.137.1 (사용자 요청): a cleared stage restores full health (it was +25% of max).
   const nextHp=s.player.maxHp,healed=nextHp-s.player.hp;
-  awardItem(s,STAGE_SLOTS[(n-1)%STAGE_SLOTS.length],n>=4?1:0,{gold,cores:1,healed});
+  awardItem(s,STAGE_SLOTS[(n-1)%STAGE_SLOTS.length],{gold,cores:1,healed});
   s.player.hp=nextHp;s.player.stamina=100;
   s.projectiles.length=0;s.spawns.length=0;s.barrels.length=0;s.player.queued=false;s.player.queuedAim=null;s.player.action='idle';s.player.actionTime=0;s.player.moving=false;s.player.swing=null;s.player.combo=0;s.player.comboWindow=0;s.player.attackCooldown=0;
   clearUniqueTransient(s);s.run.flow='stageClear';s.run.timer=0;queueSettlement(s,false);
@@ -576,7 +576,7 @@ function settleResources(s){
  for(const m of MATERIALS)claimResource(s,{kind:'material',materialId:m.id,amount:s.profile.pendingMaterials[m.id]},false);
  s.pickups=s.pickups.filter(drop=>!isResourcePickup(drop));
 }
-function makeItem(s,slot,source,minimum=0,bossId=null){const item=rollStageItem({id:allocateItemId(s),tier:themeOf(s),set:stageOf(s)?.set??null,slot:STAGE_SLOTS.includes(slot)?slot:null,hunt:s.run.dungeonId?0:s.difficulty},()=>lootRandom(s));const chance=INSCRIPTION_DROP_CHANCE[s.run.stageType]??0;if(chance&&chance>lootRandom(s))item.inscription=BUILD_EFFECT_IDS[Math.min(BUILD_EFFECT_IDS.length-1,Math.floor(lootRandom(s)*BUILD_EFFECT_IDS.length))];return item;}
+function makeItem(s,slot){const item=rollStageItem({id:allocateItemId(s),tier:themeOf(s),set:stageOf(s)?.set??null,slot:STAGE_SLOTS.includes(slot)?slot:null,hunt:s.run.dungeonId?0:s.difficulty},()=>lootRandom(s));const chance=INSCRIPTION_DROP_CHANCE[s.run.stageType]??0;if(chance&&chance>lootRandom(s))item.inscription=BUILD_EFFECT_IDS[Math.min(BUILD_EFFECT_IDS.length-1,Math.floor(lootRandom(s)*BUILD_EFFECT_IDS.length))];return item;}
 function receiveItem(s,item,origin='monster',stageReward=null){
   const result=storeItem(s.profile,item);
   s.profile.pendingLoot=s.profile.pendingLoot.filter(i=>i.id!==item.id);
@@ -592,7 +592,7 @@ function receiveItem(s,item,origin='monster',stageReward=null){
 // dungeon (Alpha 0.122): chance of one accessory (necklace/earring/Lilian seal) per growth dungeon clear.
 export const DROP_CHANCE=Object.freeze({normal:.16,elite:.7,stage:.7,boss:.75,dungeon:.4,raid:RAID_ANCIENT_CHANCE});
 const dropRate=(s,kind)=>(s.lootRates??DROP_CHANCE)[kind]??DROP_CHANCE[kind];
-function awardItem(s,slot,minimumRarity=0,stageReward=null,kind='stage'){if(lootRandom(s)>=dropRate(s,kind))return null;const item=makeItem(s,slot,'stage',minimumRarity);receiveItem(s,item,'stage',stageReward);if(s.run.bossKilled)effect(s,'gearDrop',{x:s.player.x,y:s.player.y,item,rarity:item.rarity},RARITY_INFO[item.rarity].ttl);return item;}
+function awardItem(s,slot,stageReward=null,kind='stage'){if(lootRandom(s)>=dropRate(s,kind))return null;const item=makeItem(s,slot);receiveItem(s,item,'stage',stageReward);if(s.run.bossKilled)effect(s,'gearDrop',{x:s.player.x,y:s.player.y,item,rarity:item.rarity},RARITY_INFO[item.rarity].ttl);return item;}
 // Alpha 0.110: chapter bosses rarely drop an ancient of their region (raid ancients come later; tier = region since 0.112).
 // 0.113: 1/2/3% by hunt mode. 0.114: no guaranteed drop (the old pity counter legendaryPity is kept in saves but unused).
 export const ANCIENT_BOSS_CHANCE=Object.freeze([.01,.02,.03]);
@@ -610,7 +610,7 @@ function dropBossAncient(s,e){
 function dropEquipment(s,e,source,count=1){
   for(let i=0;i<count;i++){
     if(s.profile.pendingLoot.length>=MAX_PENDING_LOOT)collectGear(s);
-    const item=makeItem(s,null,source);
+    const item=makeItem(s,null);
     // Count when ownership is reserved, never again on pickup or recovery.
     s.profile.pendingLoot.push(item);if(source==='boss'&&item.rarity===5)s.run.bossAncients.push(item.catalogId);
     const x=clamp(e.x+(i-(count-1)/2)*60,s.bounds.padding,s.bounds.width-s.bounds.padding),y=e.y;
@@ -621,20 +621,6 @@ function dropEquipment(s,e,source,count=1){
 function collectGear(s){
   for(const item of [...s.profile.pendingLoot])receiveItem(s,item);
   s.pickups=s.pickups.filter(drop=>drop.kind!=='equipment');
-}
-export function interactionTarget(s,includeOptional=true){
-  let target=null,best=Infinity;
-  for(const r of s.encounters){if(!r.completed||r.opened)continue;const d=length(r.chestX-s.player.x,r.chestY-s.player.y);if(d<best){target=r;best=d;}}
-  if(includeOptional)for(const cache of s.caches){if(cache.opened)continue;const d=length(cache.chestX-s.player.x,cache.chestY-s.player.y);if(d<=160&&d<best){target=cache;best=d;}}
-  return target;
-}
-export function interact(s,includeOptional=true){
-  const r=interactionTarget(s,includeOptional);if(s.phase!=='playing'||s.settlement||s.paused||s.run.flow==='stageClear'||!r||length(s.player.x-r.chestX,s.player.y-r.chestY)>125)return false;
-  r.opened=true;if(r.optional){awardItem(s,r.slot,1);s.profile.gold+=15;s.run.gold+=15;return true;}
-  s.run.rooms++;s.run.seals=s.run.rooms;while(s.encounters[s.encounterIndex]?.opened)s.encounterIndex++;
-  const gold=18+s.stageId*6;s.profile.gold+=gold;s.run.gold+=gold;s.profile.cores++;s.run.cores++;
-  awardItem(s,STAGE_SLOTS[r.id%STAGE_SLOTS.length],r.id===2?1:0);s.player.hp=Math.min(s.player.maxHp,s.player.hp+s.player.maxHp*.25);
-  return true;
 }
 function attackDirection(s,aim){
   const p=s.player,fallback=s.auto?{x:p.aimX,y:p.aimY}:{x:p.lookX,y:p.lookY};
@@ -704,7 +690,7 @@ function kill(s,e,inscriptions=s.buildEffects,explode=true){if(e.dead)return;e.d
   if(s.run.rush&&e.boss&&e.wave===s.run.wave)s.run.rushKills++;
   if((s.run.raidId||s.run.rush)&&e.boss)for(const q of s.enemies)if(q!==e&&!q.dead){q.dead=true;q.hp=0;q.action='death';q.actionTime=0;}
   if(s.run.dungeonId||s.run.raidId||s.run.rush){inscriptionKill(s,e,inscriptions,explode);return;}
-  if(e.boss){if(s.run.stage!==STAGES_PER_CHAPTER||s.run.wave!==stageWaveCount(s.run.stage)||e.runStage!==s.run.stage||e.wave!==s.run.wave)return;{const drops=[0,1].filter(()=>lootRandom(s)<dropRate(s,'boss')).length;if(drops)dropEquipment(s,e,'boss',drops);}dropBossAncient(s,e);dropMaterials(s,e);collectRemainder(s);s.run.rooms++;s.run.seals=s.run.rooms;recordStageClear(s,STAGES_PER_CHAPTER);const st=stageOf(s);const gold=Math.round(st.reward*modeScale(st.id,s.difficulty).reward),cores=bossCores(st.id,s.difficulty);s.profile.gold+=gold;s.profile.cores+=cores;s.run.gold+=gold;s.run.cores+=cores;s.profile.bossMastery[st.id-1]=Math.max(s.profile.bossMastery[st.id-1],s.difficulty);if(s.difficulty===2){const t=Math.round(Math.max(.1,s.run.timeLimit-s.run.timeRemaining)*10)/10,old=s.profile.nightmareRecords[st.id-1];s.run.nightmareRecord={time:t,best:!old||t<old};if(!old||t<old)s.profile.nightmareRecords[st.id-1]=t;}s.run.bossKilled=true;learnBeastTechnique(s,st);awardItem(s,STAGE_SLOTS[(st.id-1)%STAGE_SLOTS.length],1,{gold,cores,healed:0},'boss');if(s.difficulty===0){s.profile.clearedStage=Math.max(s.profile.clearedStage,st.id);s.profile.unlockedStage=Math.min(STAGES.length,Math.max(s.profile.unlockedStage,st.id+1));}s.run.flow='complete';s.spawns.length=0;s.projectiles.length=0;s.phase='victory';s.hitStop=0;skills.clearSkillStage(s);clearAncient(s);s.resultDelay=1.15;queueSettlement(s,true);effect(s,'stageClear',{chapterId:s.stageId,stage:s.run.stage,stars:s.run.stars?.earned??0,gained:s.run.stars?.gained??0},1.6);effect(s,'bossDeath',{x:e.x,y:e.y},2);return;}
+  if(e.boss){if(s.run.stage!==STAGES_PER_CHAPTER||s.run.wave!==stageWaveCount(s.run.stage)||e.runStage!==s.run.stage||e.wave!==s.run.wave)return;{const drops=[0,1].filter(()=>lootRandom(s)<dropRate(s,'boss')).length;if(drops)dropEquipment(s,e,'boss',drops);}dropBossAncient(s,e);dropMaterials(s,e);collectRemainder(s);s.run.rooms++;s.run.seals=s.run.rooms;recordStageClear(s,STAGES_PER_CHAPTER);const st=stageOf(s);const gold=Math.round(st.reward*modeScale(st.id,s.difficulty).reward),cores=bossCores(st.id,s.difficulty);s.profile.gold+=gold;s.profile.cores+=cores;s.run.gold+=gold;s.run.cores+=cores;s.profile.bossMastery[st.id-1]=Math.max(s.profile.bossMastery[st.id-1],s.difficulty);if(s.difficulty===2){const t=Math.round(Math.max(.1,s.run.timeLimit-s.run.timeRemaining)*10)/10,old=s.profile.nightmareRecords[st.id-1];s.run.nightmareRecord={time:t,best:!old||t<old};if(!old||t<old)s.profile.nightmareRecords[st.id-1]=t;}s.run.bossKilled=true;learnBeastTechnique(s,st);awardItem(s,STAGE_SLOTS[(st.id-1)%STAGE_SLOTS.length],{gold,cores,healed:0},'boss');if(s.difficulty===0){s.profile.clearedStage=Math.max(s.profile.clearedStage,st.id);s.profile.unlockedStage=Math.min(STAGES.length,Math.max(s.profile.unlockedStage,st.id+1));}s.run.flow='complete';s.spawns.length=0;s.projectiles.length=0;s.phase='victory';s.hitStop=0;skills.clearSkillStage(s);clearAncient(s);s.resultDelay=1.15;queueSettlement(s,true);effect(s,'stageClear',{chapterId:s.stageId,stage:s.run.stage,stars:s.run.stars?.earned??0,gained:s.run.stars?.gained??0},1.6);effect(s,'bossDeath',{x:e.x,y:e.y},2);return;}
   // The old ten-kill pity (lootPity) is gone with the guarantees; the save field stays unused.
   if(lootRandom(s)<dropRate(s,e.elite?'elite':'normal'))dropEquipment(s,e,e.elite?'elite':'normal');
   inscriptionKill(s,e,inscriptions,explode);if(s.settlement||s.phase!=='playing')return;dropMaterials(s,e);dropGold(s,e,e.elite?16:e.type==='bulwark'?10:4);s.pickups.push({id:s.nextId++,x:e.x,y:e.y,gold:0,xp:e.elite?28:e.type==='bulwark'?18:9,cores:e.elite?1:0});
@@ -966,8 +952,7 @@ function updateEnemy(s,e,dt){
   if(!eligible(s,e)){setAction(e,'idle');return;}
   if(e.exposed>0){e.exposed=Math.max(0,e.exposed-dt);if(!e.exposed&&e.guardMax)e.guard=e.guardMax;}
   if(e.boss&&!e.enraged&&e.hp<e.maxHp*.5){e.enraged=true;effect(s,'bossRage',{x:e.x,y:e.y},2);}
-  if(!e.aggro){if(d>330){setAction(e,'idle');return;}for(const v of s.enemies)if(v.group===e.group)v.aggro=true;}
-  if(!e.boss&&e.homeX!=null&&length(p.x-e.homeX,p.y-e.homeY)>700){const home=direction(e.homeX-e.x,e.homeY-e.y);setLook(e,home.x,home.y);e.backpedal=false;e.x+=home.x*e.speed*moveDt;e.y+=home.y*e.speed*moveDt;setAction(e,'walk');if(length(e.x-e.homeX,e.y-e.homeY)<10){e.aggro=false;setAction(e,'idle');}return;}
+  if(!e.aggro){if(d>330){setAction(e,'idle');return;}e.aggro=true;}
   if(e.action==='stagger'){if(e.actionTime<1.1)return;setAction(e,'walk');}
   if(e.action==='hurt'){if(e.actionTime<.28)return;setAction(e,'walk');}
   if(e.action==='windup'){
@@ -985,7 +970,7 @@ function updateEnemy(s,e,dt){
   if(d<range&&!e.cooldown){e.targetX=p.x;e.targetY=p.y;e.perfectDodged=false;setLook(e,n.x,n.y,true);setAction(e,'windup');if(e.boss&&e.huntMode>0)e.volleyShots=(e.enraged?5:3)+HUNT_MODES[e.huntMode].shots;e.windup=e.windupBase??(e.boss?(e.enraged?.8:1):e.type==='spitter'?.8:e.elite?.75:e.type==='bulwark'?.75:themeOf(s)===1?.58:.48);return;}
   let move=d>55?1:0;if(e.type==='spitter')move=d<(e.standoffMin??180)?-1:d>(e.standoffMax??340)?1:0;
   e.backpedal=move<0;if(move&&e.speed>0){setAction(e,'walk');e.x+=n.x*e.speed*move*moveDt;e.y+=n.y*e.speed*move*moveDt;
-    for(const other of s.enemies){if(other===e||other.dead||other.group!==e.group)continue;const ox=e.x-other.x,oy=e.y-other.y,od=length(ox,oy);if(od>0&&od<45){e.x+=ox/od*35*dt;e.y+=oy/od*35*dt;}}clampPosition(e,s.bounds);
+    for(const other of s.enemies){if(other===e||other.dead)continue;const ox=e.x-other.x,oy=e.y-other.y,od=length(ox,oy);if(od>0&&od<45){e.x+=ox/od*35*dt;e.y+=oy/od*35*dt;}}clampPosition(e,s.bounds);
   }else setAction(e,'idle');
 }
 function avoidCore(s,core){
@@ -1018,10 +1003,9 @@ function autoInput(s,input=null){
   if(held?.kind==='core'){const core=s.barrels.find(b=>b.id===held.id&&b.status==='armed');if(core)return avoidCore(s,core);}
   if(held?.kind==='enemy'){const enemy=s.enemies.find(e=>e.id===held.id&&eligible(s,e)&&e.action==='windup'&&autoDodges('enemy',e.id,e.pattern));if(enemy)return avoidEnemy(s,enemy);}
   s.assist.evade=null;
-  const chest=interactionTarget(s,false);if(chest){const n=direction(chest.chestX-p.x,chest.chestY-p.y);if(interact(s,false))return{x:0,y:0,attack:false};return{...n,attack:false};}
   let closest=null,closestScore=Infinity,current=null,currentScore=Infinity;
   for(const e of s.enemies){
-    if(!eligible(s,e)||e.group!==s.encounterIndex&&e.group!=null)continue;
+    if(!eligible(s,e))continue;
     const mode=s.profile.skillBook.auto.mode;let score=length(e.x-p.x,e.y-p.y)-(e.type==='spitter'?90:0);if(mode==='boss'&&(e.boss||e.elite))score-=220;if(mode==='farm'){let neighbors=0;for(const other of s.enemies)if(eligible(s,other)&&length(other.x-e.x,other.y-e.y)<200)neighbors++;score-=neighbors*35;}
     if(score<closestScore){closest=e;closestScore=score;}if(e.id===s.assist.targetId){current=e;currentScore=score;}
   }
@@ -1251,13 +1235,13 @@ function updateBossRule(s,e,dt){
  // Fire: 4 of every 12 seconds the boss burns hotter (contact and volley damage +50%).
  if(rule==='fury'){const active=s.run.time%12>=8;e.baseDamage??=e.damage;e.furyScale=active?1.5:1;e.damage=e.baseDamage*e.furyScale;if(active!==!!e.furyActive){e.furyActive=active;if(active)effect(s,'bossRage',{x:e.x,y:e.y},.8);}}
  // Frost bosses and every special boss (chapters 10/20/30) call escorts at 70% and 35%.
- if(rule==='summon'||e.special){const phase=e.hp/e.maxHp<=.35?2:e.hp/e.maxHp<=.7?1:0;if(phase>(e.summonPhase??0)){e.summonPhase=phase;for(let i=0;i<(e.special?4:3)&&s.enemies.filter(q=>!q.dead).length<MAX_ACTIVE_ENEMIES;i++){const add=spawnEnemy(s,'skitter',clamp(e.x+(i-1.5)*90,s.bounds.padding,s.bounds.width-s.bounds.padding),clamp(e.y+140,s.bounds.padding,s.bounds.height-s.bounds.padding),null);add.objective=false;add.aggro=true;}effect(s,'bossRage',{x:e.x,y:e.y},1.2);}}
+ if(rule==='summon'||e.special){const phase=e.hp/e.maxHp<=.35?2:e.hp/e.maxHp<=.7?1:0;if(phase>(e.summonPhase??0)){e.summonPhase=phase;for(let i=0;i<(e.special?4:3)&&s.enemies.filter(q=>!q.dead).length<MAX_ACTIVE_ENEMIES;i++){const add=spawnEnemy(s,'skitter',clamp(e.x+(i-1.5)*90,s.bounds.padding,s.bounds.width-s.bounds.padding),clamp(e.y+140,s.bounds.padding,s.bounds.height-s.bounds.padding));add.objective=false;add.aggro=true;}effect(s,'bossRage',{x:e.x,y:e.y},1.2);}}
 }
 // Raid patterns (Alpha 0.123). 강철 거신's armor is e.plate (damageEnemy); the queen calls a brood that shields her;
 // the judge's judgement is unavoidable (only real invulnerability, shields, reduction and health answer it).
 function raidRule(s,e,dt,r){
  if(r.mechanic==='swarm'){e.broodClock=(e.broodClock??r.broodEvery-3)+dt;if(e.broodClock>=r.broodEvery){e.broodClock-=r.broodEvery;
-  for(let i=0;i<r.broodSize&&s.enemies.filter(q=>!q.dead).length<MAX_ACTIVE_ENEMIES;i++){const a=i/r.broodSize*Math.PI*2,add=spawnEnemy(s,i%3===2?'spitter':'skitter',clamp(e.x+Math.cos(a)*170,s.bounds.padding,s.bounds.width-s.bounds.padding),clamp(e.y+Math.sin(a)*120,s.bounds.padding,s.bounds.height-s.bounds.padding),null);add.objective=false;add.aggro=true;add.raidBrood=true;const scale=raidScale(stageOf(s).id);add.hp=add.maxHp=Math.round(add.maxHp*r.broodHp*scale);add.damage*=scale;}
+  for(let i=0;i<r.broodSize&&s.enemies.filter(q=>!q.dead).length<MAX_ACTIVE_ENEMIES;i++){const a=i/r.broodSize*Math.PI*2,add=spawnEnemy(s,i%3===2?'spitter':'skitter',clamp(e.x+Math.cos(a)*170,s.bounds.padding,s.bounds.width-s.bounds.padding),clamp(e.y+Math.sin(a)*120,s.bounds.padding,s.bounds.height-s.bounds.padding));add.objective=false;add.aggro=true;add.raidBrood=true;const scale=raidScale(stageOf(s).id);add.hp=add.maxHp=Math.round(add.maxHp*r.broodHp*scale);add.damage*=scale;}
   effect(s,'bossRage',{x:e.x,y:e.y},1.2);}}
  if(r.mechanic==='judgement'){e.judgeClock=(e.judgeClock??0)+dt;const warn=e.judgeClock>=r.judgementEvery-r.judgementWarning;
   if(warn&&!e.judgeWarning){e.judgeWarning=true;effect(s,'bossRage',{x:e.x,y:e.y},r.judgementWarning);}

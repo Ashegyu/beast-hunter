@@ -322,7 +322,6 @@ for(let n=0;n<5;n++){
  $('build-apply-'+n).addEventListener('click',()=>{const result=game.applyBuild(state,n);bagFeedback=result.reason;if(result.ok){appearance=equippedDesigns(profile);bagReviewIds=null;save();}updateHud();});
 }
 $('inventory-back').addEventListener('click',()=>{inventoryOpen=false;updateHud();});
-$('interact').addEventListener('click',()=>{manual();if(game.interact(state)){save();updateHud();}});
 for(let i=0;i<BAG_SLOT_COUNT;i++){
   for(const [action,step]of [['prev',-1],['next',1]])$('item-read-'+action+'-'+i).addEventListener('click',()=>{if(!inventoryOpen||inventoryPanel!=='gear'||inventoryView[i]?.id!==bagSelectedId)return;const next=bagDetailPage+step;if(next<0||next>=bagDetailPages.length)return;bagDetailPage=next;refreshBagDetailReading();});
   $('bag-'+i).addEventListener('click',()=>{const item=inventoryView[i];if(!item)return;if(bagOrganizing){if(game.itemProtection(profile,item))return;if(bagSelectedIds.has(item.id))bagSelectedIds.delete(item.id);else bagSelectedIds.add(item.id);bagReviewIds=null;updateHud();}else{bagSelectedId=item.id;bagDetailReturn=null;updateHud();window.hunterPages?.reveal($('bag-detail-close'));$('bag-detail-close').focus({preventScroll:true});}});
@@ -628,7 +627,7 @@ document.addEventListener('keydown',event=>{
   audio.unlock();manual();keys.add(k);moveTarget=null;attackTarget=null;
   if(!event.repeat&&['w','a','s','d','arrowup','arrowleft','arrowdown','arrowright'].includes(k))aim=null;
   if(!event.repeat&&['e','r','t','f','g','h'].includes(k))useCombatSkill(['e','r','t','f','g','h'].indexOf(k));
-  if(!event.repeat&&k==='shift')doDash();if(!event.repeat&&k==='q')doThunder();if(!event.repeat&&k==='f'){game.interact(state);save();updateHud();}
+  if(!event.repeat&&k==='shift')doDash();if(!event.repeat&&k==='q')doThunder();
 });
 document.addEventListener('keyup',event=>{keys.delete(event.key.toLowerCase());if(event.key===' '&&suppressHeldSpace){suppressHeldSpace=false;event.preventDefault();}});
 // Alpha 0.135.5 (사용자 요청): losing focus or hiding the tab no longer pauses the hunt. Input is released and the game is
@@ -1076,7 +1075,6 @@ function updateHud(){
   $('weapon-trait').hidden=!trait;hudText($('weapon-trait'),trait?.name??'');$('weapon-trait').style.color=trait?.color??'';
   hudText($('lobby-energy-value'),Math.floor(p.stamina)+'/100');$('stamina-fill').style.width=p.stamina+'%';hudText($('stamina-text'),'기력 '+Math.floor(p.stamina));
   hudText($('combo'),p.counterReady>0?'Q 반격 '+p.counterReady.toFixed(1)+'초':['attack','heavy'].includes(p.action)?p.swing.name+(p.combo?' · '+p.combo+'/3':''):p.comboWindow>0?'다음 연격으로 연결':'방향 조준 · 3연격');
-  const chest=game.interactionTarget(state);$('interact').hidden=!chest;$('interact').disabled=!chest||Math.hypot(p.x-chest.chestX,p.y-chest.chestY)>125||state.paused||state.run.flow==='stageClear';
   $('inventory').disabled=!ready||['victory','defeat'].includes(state.phase)&&!game.resultReady(state);$('auto').disabled=['victory','defeat'].includes(state.phase)&&!game.resultReady(state);
   $('auto').setAttribute('aria-pressed',String(skillMode==='auto'));$('auto').setAttribute('data-skill-mode',skillMode);hudText($('auto-status'),skillMode==='auto'?'자동':'수동');
   for(const [id,key] of [['attack','attackCooldown'],['dash','dashCooldown'],['thunder','thunderCooldown']]){

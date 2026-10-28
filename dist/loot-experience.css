@@ -13,4 +13,4 @@
 #game-shell .result-loot-pager{display:flex;justify-content:center;align-items:center;gap:14px;margin-top:8px;font:11px var(--ui-font,sans-serif);color:#c3b492}
 #game-shell .result-loot-pager button{width:44px;min-height:44px;padding:0;border:1px solid #ac956a55;border-radius:3px;background:#1c262b;color:#e0c99d;font-size:22px;box-shadow:none}
 #game-shell .result-loot-pager button:disabled{opacity:.35}
-@media(max-width:360px){#game-shell .result-loot-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+

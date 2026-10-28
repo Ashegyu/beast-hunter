@@ -91,15 +91,5 @@
 #codex-content #codex-route-note{font:11px/1.8 var(--body);color:#93a1a2;margin:13px 0}
 #codex-content #codex-clear{font:11px var(--body);color:#b7a485;border:0;background:none;text-align:left;padding:0}
 #codex-content button:disabled{opacity:.42;cursor:default}
-@media(max-width:350px){
- #codex-browser{padding-left:14px;padding-right:14px}
- #codex-count{font-size:21px}
- #codex-content .archive-feature{margin-left:-14px;margin-right:-14px;padding-left:14px;min-height:166px}
- #codex-content #codex-feature-name{font-size:22px}
- #codex-content #codex-feature-art{right:-27px;transform:scale(.76) rotate(8deg)}
- #codex-content .codex-card .equipment-icon{transform:scale(.9);margin:-9px 0 -8px}
- #codex-content .codex-card{min-height:169px}
- #codex-content .archive-footer{padding-left:14px;padding-right:14px}
- #codex-content #codex-hunt{gap:14px;padding:0 12px}
-}
+
 @media(prefers-reduced-motion:reduce){.archive-progress i,#codex-content .codex-card{transition:none}}

@@ -132,23 +132,5 @@
 #inventory-content .armory-return button{width:100%;min-height:44px;font:13px var(--serif)}
 .game-shell[data-phase=camp] #inventory-content .armory-return{display:none}
 .game-shell:not([data-phase=camp]) #overlay[data-panel=inventory]{inset:12px 6px}
-@media(max-width:350px){
- #inventory-content #equipment-persona{height:250px;min-height:250px}
- #inventory-content .persona-caption{left:14px;width:111px;bottom:17px}
- #inventory-content .persona-caption>strong{font-size:25px}
- #inventory-content .persona-stats>div{font-size:10px}
- #inventory-content .persona-stats dd{font-size:12px}
- #inventory-content #equipped-open-weapon,#inventory-content #equipped-open-armor,#inventory-content #equipped-open-charm{right:12px;width:52px;height:59px}
- #inventory-content .equipped-slot>div{top:60px}
- #inventory-content #equipped-open-armor{top:92px!important}
- #inventory-content #equipped-open-charm{top:174px!important}
- #inventory-content .armory-bag{padding-left:12px;padding-right:12px}
- #inventory-content .armory-synergy{width:calc(100% - 24px);margin:0 12px;gap:7px;padding:0 8px}
- .armory-bag-heading{gap:4px}
- #inventory-content .armory-bag-heading h3{font-size:19px}
- #bag-capacity{font-size:10px;margin-left:4px}
- #inventory-content #bag-sort{width:67px;font-size:10px}
- #inventory-content .armory-categories button{font-size:11px;gap:3px}
- #inventory-content #bag-grid{gap:6px}
-}
+
 @media(max-height:500px){#inventory-content #equipment-persona{height:270px;min-height:270px}}

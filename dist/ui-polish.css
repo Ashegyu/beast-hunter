@@ -119,20 +119,7 @@
 #game-shell .backup-review{padding:10px;border:1px solid #d1b27788;background:#1e2524}
 #game-shell #backup-summary{white-space:pre-line;color:#eee1c3}
 
-@media(max-width:360px){
- #game-shell :is(.inventory-tabs,.armory-categories,.craft-categories,.archive-categories,.skill-tabs,.stage-tabs)>button{padding-inline:4px;font-size:11px}
- #game-shell .skill-equipped{gap:5px}
- #game-shell .skill-equipped>button{grid-template-columns:28px minmax(0,1fr);gap:3px 4px;padding:6px 3px}
- #game-shell .skill-equipped .skill-slot-art{width:28px;height:28px;padding:3px}
- #game-shell .skill-slot-art img{width:22px;height:22px}
- #game-shell .skill-equipped>button>strong{font-size:10px}
- #game-shell .skill-detail{padding:8px}
- #game-shell #overlay:is([data-panel=pause],[data-panel=result]) .modal{border-width:10px;border-image-width:10px;padding:10px}
- #game-shell #overlay:is([data-panel=pause],[data-panel=result]) #modal-title{font-size:24px}
- #game-shell #overlay:is([data-panel=pause],[data-panel=result]) .dialog-emblem{height:40px}
- #game-shell #pause-vitals b{font-size:11px}
- #game-shell #overlay[data-panel=result] .result-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
+
 @media(orientation:landscape) and (max-height:500px){
  #game-shell #overlay:is([data-panel=pause],[data-panel=result]) .modal{padding:10px 15px}
  #game-shell #overlay:is([data-panel=pause],[data-panel=result]) .dialog-emblem{display:none}

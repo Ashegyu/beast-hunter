@@ -28,7 +28,7 @@
 #game-shell #camp-drawer #stage-preview-kind{font:10px/1.6 var(--body);color:#bbaa86}
 #game-shell #camp-drawer #stage-preview-title{font:700 15px/1.6 var(--serif);color:#f2e2c0;margin:2px 0 4px;white-space:normal;overflow-wrap:anywhere}
 #game-shell #camp-drawer #stage-preview-description{font:11px/1.7 var(--body);color:#b7bbb0;white-space:normal;overflow-wrap:anywhere;margin:0}
-@media(max-width:360px){#game-shell #camp-drawer .stage-seal{font-size:16px}#game-shell #camp-drawer .stage-preview{grid-template-columns:50px minmax(0,1fr);gap:8px}#game-shell #camp-drawer #stage-preview-art{width:50px;height:50px}}
+
 #camp-map-panel .map-route-line{display:none}
 .dashboard-landmarks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(5,minmax(44px,1fr));gap:8px;padding:0 22px}
 .dashboard-landmarks button:nth-child(n){position:relative;left:auto;top:auto;transform:none;width:100%;height:auto;min-height:44px;border-radius:4px;display:flex;align-items:center;justify-content:space-between;gap:5px;padding:5px 10px;overflow:hidden}

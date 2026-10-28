@@ -19,7 +19,7 @@
 #game-shell #camp-drawer .forge button:disabled>strong:after{filter:grayscale(1) brightness(.5);opacity:.72}
 #game-shell #camp-drawer .forge button:enabled:active>strong:after{filter:brightness(.72)}
 @media(hover:hover){#game-shell .image-button:enabled:hover:not(:active):after,#game-shell #camp-drawer .forge button:enabled:hover:not(:active)>strong:after{filter:brightness(1.12)}}
-@media(max-width:360px){#game-shell .image-button-primary{padding-inline:16px!important}#game-shell .image-button-secondary{padding-inline:12px!important}#game-shell #camp-drawer .forge button>strong{padding:9px 6px}}
+
 
 /* Labels stay at the button's center; decorative edge icons do not consume layout width. */
 #game-shell button.image-button:has(>.button-edge){padding-inline:var(--button-label-padding,44px)!important}
@@ -33,7 +33,7 @@
 #game-shell .image-button{height:auto!important;min-height:var(--ui-action-size);padding-block:12px!important;font-size:13px;line-height:1.45;white-space:normal!important;text-align:center}
 #game-shell .image-button :where(strong,small,span){min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere}
 #game-shell :is(.pause-actions,.result-actions) button{height:auto;white-space:normal;font-size:14px;line-height:1.5}
-@media(max-width:360px){#game-shell .image-button{font-size:12px;padding-inline:12px!important}}
+
 
 /* Alpha 0.90: texture stays inside a fixed-corner painted frame. */
 #game-shell button.image-button{--button-texture:url('assets/button-primary-v043.webp');height:var(--ui-action-size)!important;min-height:var(--ui-action-size);padding-block:6px!important;font-size:12px;line-height:1.3}
