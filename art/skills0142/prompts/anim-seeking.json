@@ -1,0 +1,29 @@
+{
+  "id": "anim-seeking",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is ONLY a composition and orientation reference of an older version of this effect: keep its overall shape and direction, but completely restyle it. SUBJECT: a homing comet-like sword energy projectile flying RIGHT with a curved trail. NEW PALETTE (use these colors, not pink): emerald green and gold comet blade with yellow-green trail sparks. STYLE: crisp high-contrast cel-shaded anime game VFX with hard-edged sharp shapes, clean bright cores and saturated colored edges, readable at small size; angular faceted energy shards and fragments; NOT soft, NOT blurry, NOT watercolor, NOT feathery, NOT petals. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size EXPLODING with many sharp crystalline shards and debris fragments flying outward, (5) breaking apart into scattered shards and embers, (6) a few last fading shards and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. No characters, no hands, no sword handles, no ground texture, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "referenceImages": [
+    {
+      "path": "art/skills0137/keys/seeking.png",
+      "sha256": "1e9980f141bd90a31467adce22321c04e154dedd3e66da0ce6efb4865000ce8d"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1536,
+        1024
+      ],
+      "transparent": 0.472,
+      "parts": 11,
+      "seconds": 85,
+      "sha256": "c6a7e60d26c168a86423ec4bc1dd1f90ee273743211a30dc19416fee88a963a7"
+    }
+  ],
+  "final": {
+    "path": "art/skills0142/anim-seeking.png",
+    "sha256": "c6a7e60d26c168a86423ec4bc1dd1f90ee273743211a30dc19416fee88a963a7"
+  }
+}

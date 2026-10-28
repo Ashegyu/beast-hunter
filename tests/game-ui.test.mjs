@@ -1532,7 +1532,7 @@ test('all nineteen actual skill buttons render authored body frames and finite V
   const ui=await host({manual:true,saved:p,campaign:true,recordGeometry:true});ui.emit('start','click');ui.tick();const s=ui.state;s.spawns=[{id:s.nextId++,type:'bulwark',x:s.player.x+120,y:s.player.y,delay:0,warning:1}];game.advanceGame(s,.001);s.spawns=[];s.barrels=[];s.player.invulnerable=100;
   const e=s.enemies[0];Object.assign(e,{x:s.player.x+120,y:s.player.y,hp:100000,maxHp:100000,speed:0,cooldown:1000,guard:0});s.enemies=[e];ui.tick(0);
   ui.emit('combat-skill-'+(d.kind==='ultimate'?2:0),'click');assert.equal(s.skillRuntime.motion?.id,d.id);ui.calls.length=0;ui.geometry.length=0;
-  ui.tick(.03);assert.ok(ui.calls.some(c=>/lirian_/.test(c.image)),d.id+' actor');assert.ok(ui.calls.some(c=>/skill-effects-v0137/.test(c.image)),d.id+' bitmap VFX');assert.ok(!s.effects.some(f=>['heavySwing','counterSlash'].includes(f.type)),d.id+' shared cleave');
+  ui.tick(.03);assert.ok(ui.calls.some(c=>/lirian_/.test(c.image)),d.id+' actor');assert.ok(ui.calls.some(c=>/skill-effects-v0142/.test(c.image)),d.id+' bitmap VFX');assert.ok(!s.effects.some(f=>['heavySwing','counterSlash'].includes(f.type)),d.id+' shared cleave');
   ui.run(.9);for(const c of ui.calls)for(const n of [c.a,c.b,c.c,c.d,c.x,c.y,...c.args])if(typeof n==='number')assert.ok(Number.isFinite(n),d.id+' finite canvas');
   ui.emit('pause','click');const before=JSON.stringify(game.skillActorPose(s));ui.run(.2);assert.equal(JSON.stringify(game.skillActorPose(s)),before,d.id+' paused pose');
  }
@@ -1541,7 +1541,7 @@ test('all nineteen actual skill buttons render authored body frames and finite V
 test('ultimate buttons show world effects without video, portraits or full-screen fallback',async()=>{
  for(const id of ['bloodmoon','eclipse','phantoms'])for(const width of [568,844,1280]){
   const p=game.createProfile(1_000_000);p.level=50;p.skillBook=game.restoreSkillBook(null,50);p.skillBook.loadout.ultimate=[id];const ui=await host({saved:p,campaign:true,videoMode:'ready',box:{left:0,top:0,width,height:Math.round(width*9/16)}});assert.equal(ui.mediaVideos.length,0);assert.ok(!ui.requestedImages.some(x=>/skill-(bloodmoon|eclipse|phantoms)-v052/.test(x)));ui.emit('start','click');ui.tick();ui.emit('combat-skill-2','click');ui.calls.length=0;ui.tick(.15);
-  assert.equal(ui.state.skillRuntime.ultimatePresentation?.id,id);assert.ok(ui.calls.filter(c=>c.image.includes('skill-effects-v0137')).length>=6,id+' layered combat effects');assert.ok(!ui.calls.some(c=>/v053.mp4|skill-(bloodmoon|eclipse|phantoms)-v052/.test(c.image)));ui.emit('pause','click');const time=ui.state.run.time,cd=ui.state.skillRuntime.cooldowns[id];ui.run(.3);assert.equal(ui.state.run.time,time);assert.equal(ui.state.skillRuntime.cooldowns[id],cd);ui.emit('resume','click');assert.ok(game.dash(ui.state,{x:0,y:1}));ui.tick(.05);assert.equal(ui.state.skillRuntime.ultimatePresentation,null);assert.ok(ui.state.skillRuntime.cooldowns[id]>59);
+  assert.equal(ui.state.skillRuntime.ultimatePresentation?.id,id);assert.ok(ui.calls.filter(c=>c.image.includes('skill-effects-v0142')).length>=6,id+' layered combat effects');assert.ok(!ui.calls.some(c=>/v053.mp4|skill-(bloodmoon|eclipse|phantoms)-v052/.test(c.image)));ui.emit('pause','click');const time=ui.state.run.time,cd=ui.state.skillRuntime.cooldowns[id];ui.run(.3);assert.equal(ui.state.run.time,time);assert.equal(ui.state.skillRuntime.cooldowns[id],cd);ui.emit('resume','click');assert.ok(game.dash(ui.state,{x:0,y:1}));ui.tick(.05);assert.equal(ui.state.skillRuntime.ultimatePresentation,null);assert.ok(ui.state.skillRuntime.cooldowns[id]>59);
  }
 });
 
@@ -1603,7 +1603,7 @@ test('live hostile shots and contact accents remain above ultimate skill images 
  s.projectiles=[{id:901,x:p.x+60,y:p.y+30,vx:-100,vy:0,ttl:1,friendly:false}];
  s.effects=[{id:902,type:'impact',x:p.x+45,y:p.y-40,nx:1,ny:0,ttl:.12,maxTtl:.17},{id:903,type:'skillImpact',skillId:'bloodmoon',x:p.x,y:p.y,radius:260,n:{x:1,y:0},index:3,ttl:.2,maxTtl:.3}];
  s.paused=true;ui.geometry.length=0;ui.tick(0);
- const geo=ui.geometry,atlas=geo.findLastIndex(c=>c.kind==='drawImage'&&c.args[0].includes('skill-effects-v0137'));
+ const geo=ui.geometry,atlas=geo.findLastIndex(c=>c.kind==='drawImage'&&c.args[0].includes('skill-effects-v0142'));
  const shot=geo.findIndex(c=>c.kind==='stroke'&&c.strokeStyle==='#ffc17a');assert.ok(atlas>=0&&shot>atlas);
  const contact=geo.findIndex((c,i)=>i>atlas&&c.kind==='stroke'&&c.strokeStyle==='#f7dfe9');assert.ok(contact>atlas&&contact<shot);
  assert.equal(geo.some(c=>c.kind==='stroke'&&c.lineWidth===7&&c.strokeStyle==='#25101d'),false);

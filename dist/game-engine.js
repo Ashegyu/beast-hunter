@@ -1,56 +1,56 @@
-import {RAIDS,RAID_WEEKLY_ENTRIES,RAID_DAMAGE,raidScale,RAID_ANCIENT_CHANCE,raidDefinition,raidPlan,raidRewards,raidWeek,raidEntriesLeft,raidUnlocked,raidChapter,emptyRaidProgress,raidTierUnlocked,raidTopTier,RAID_TIERS} from './raids.js?v=0.141.0';
-export * from './raids.js?v=0.141.0';
-import {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonPlan,dungeonActors,emptyDungeonProgress,dungeonStageId,towerBonus,TOWER_MAX_FLOOR,emptyDungeonWeek,dungeonClearsLeft,isDungeonRepeat,repeatRewards,DUNGEON_WEEKLY_CLEARS,DUNGEON_REPEAT_RATE} from './dungeons.js?v=0.141.0';
-export {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonChapter,DUNGEON_CHAPTER_STEP,dungeonStageId,TOWER,TOWER_MAX_FLOOR,TOWER_BONUS,towerBonus,towerBonusAt,towerChapter,towerFloorKind,towerPlan,DUNGEON_WEEKLY_CLEARS,DUNGEON_REPEAT_RATE,dungeonClearsLeft,dungeonClearsUsed,isDungeonRepeat,repeatRewards} from './dungeons.js?v=0.141.0';
-export {THREAT,MODE_CHAPTERS,modeChapter,modeScale} from './chapters.js?v=0.141.0';
-import {beginStageJournal,profileForSave,strictBattle,cancelStageJournal,prepareStageCommit,finishStageJournal,stageTransactionId,ownedAtStageStart} from './battle-progress.js?v=0.141.0';
-import {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_DROP_CHANCE,INSCRIPTION_COST} from './build-effects.js?v=0.141.0';
-import {stageRule,STAGE_TYPE_NAMES} from './battle-plans.js?v=0.141.0';
+import {RAIDS,RAID_WEEKLY_ENTRIES,RAID_DAMAGE,raidScale,RAID_ANCIENT_CHANCE,raidDefinition,raidPlan,raidRewards,raidWeek,raidEntriesLeft,raidUnlocked,raidChapter,emptyRaidProgress,raidTierUnlocked,raidTopTier,RAID_TIERS} from './raids.js?v=0.142.0';
+export * from './raids.js?v=0.142.0';
+import {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonPlan,dungeonActors,emptyDungeonProgress,dungeonStageId,towerBonus,TOWER_MAX_FLOOR,emptyDungeonWeek,dungeonClearsLeft,isDungeonRepeat,repeatRewards,DUNGEON_WEEKLY_CLEARS,DUNGEON_REPEAT_RATE} from './dungeons.js?v=0.142.0';
+export {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonChapter,DUNGEON_CHAPTER_STEP,dungeonStageId,TOWER,TOWER_MAX_FLOOR,TOWER_BONUS,towerBonus,towerBonusAt,towerChapter,towerFloorKind,towerPlan,DUNGEON_WEEKLY_CLEARS,DUNGEON_REPEAT_RATE,dungeonClearsLeft,dungeonClearsUsed,isDungeonRepeat,repeatRewards} from './dungeons.js?v=0.142.0';
+export {THREAT,MODE_CHAPTERS,modeChapter,modeScale} from './chapters.js?v=0.142.0';
+import {beginStageJournal,profileForSave,strictBattle,cancelStageJournal,prepareStageCommit,finishStageJournal,stageTransactionId,ownedAtStageStart} from './battle-progress.js?v=0.142.0';
+import {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_DROP_CHANCE,INSCRIPTION_COST} from './build-effects.js?v=0.142.0';
+import {stageRule,STAGE_TYPE_NAMES} from './battle-plans.js?v=0.142.0';
 export {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_COST,stageRule,STAGE_TYPE_NAMES};
 export const PROFILE_VERSION=16,MAX_LEVEL=200,BUILD_NAMES=Object.freeze(['일반 사냥','보스','광역','생존','실험']);
-import {SLOTS,EQUIPMENT_SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,equipmentFamily,emptyEquipment,restoreEquipment,equipmentAfterEquip,equippedPosition,isEquippedItem} from './equipment-slots.js?v=0.141.0';
-export * from './equipment-slots.js?v=0.141.0';
-import {enhanceOwned,promoteOwned,rerollOwned,resolveOwnedReroll,restoreEquipmentProgress} from './equipment-progression.js?v=0.141.0';
-export * from './equipment-progression.js?v=0.141.0';
-export * from './skill-vfx.js?v=0.141.0';
-export * from './skill-image-fx.js?v=0.141.0';
-export * from './monster-fx.js?v=0.141.0';
-export * from './combat-feedback.js?v=0.141.0';
-export * from './ultimate-video.js?v=0.141.0';
-export * from './skill-motion.js?v=0.141.0';
-import * as skills from './combat-skills.js?v=0.141.0';
-export * from './combat-skills.js?v=0.141.0';
-import {MATERIALS,MATERIAL_BY_ID,MATERIAL_LIMIT,emptyMaterials,rollMaterials,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.141.0';
-export {MATERIALS,MATERIAL_BY_ID,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress,materialInfo,MATERIAL_ICON_INDEX} from './crafting.js?v=0.141.0';
-import {equipmentSynergies} from './equipment-synergies.js?v=0.141.0';
-import {itemProtection} from './loot.js?v=0.141.0';
-export {itemProtection,salvageValue} from './loot.js?v=0.141.0';
-export {equipmentSynergies,EQUIPMENT_SYNERGIES} from './equipment-synergies.js?v=0.141.0';
-import {HUNT_MODES,huntMode,REPLAY_CYCLES} from './hunt-modes.js?v=0.141.0';
-export {HUNT_MODES} from './hunt-modes.js?v=0.141.0';
+import {SLOTS,EQUIPMENT_SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,equipmentFamily,emptyEquipment,restoreEquipment,equipmentAfterEquip,equippedPosition,isEquippedItem} from './equipment-slots.js?v=0.142.0';
+export * from './equipment-slots.js?v=0.142.0';
+import {enhanceOwned,promoteOwned,rerollOwned,resolveOwnedReroll,restoreEquipmentProgress} from './equipment-progression.js?v=0.142.0';
+export * from './equipment-progression.js?v=0.142.0';
+export * from './skill-vfx.js?v=0.142.0';
+export * from './skill-image-fx.js?v=0.142.0';
+export * from './monster-fx.js?v=0.142.0';
+export * from './combat-feedback.js?v=0.142.0';
+export * from './ultimate-video.js?v=0.142.0';
+export * from './skill-motion.js?v=0.142.0';
+import * as skills from './combat-skills.js?v=0.142.0';
+export * from './combat-skills.js?v=0.142.0';
+import {MATERIALS,MATERIAL_BY_ID,MATERIAL_LIMIT,emptyMaterials,rollMaterials,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.142.0';
+export {MATERIALS,MATERIAL_BY_ID,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress,materialInfo,MATERIAL_ICON_INDEX} from './crafting.js?v=0.142.0';
+import {equipmentSynergies} from './equipment-synergies.js?v=0.142.0';
+import {itemProtection} from './loot.js?v=0.142.0';
+export {itemProtection,salvageValue} from './loot.js?v=0.142.0';
+export {equipmentSynergies,EQUIPMENT_SYNERGIES} from './equipment-synergies.js?v=0.142.0';
+import {HUNT_MODES,huntMode,REPLAY_CYCLES} from './hunt-modes.js?v=0.142.0';
+export {HUNT_MODES} from './hunt-modes.js?v=0.142.0';
 // Pure combat, random waves and persistent RPG rules. No rendering or storage dependencies.
-import { directionIndex, recoilProgress, ACTION_DURATIONS } from './motion.js?v=0.141.0';
-import { WORLD_BOUNDS, GROUND_DEPTH_SCALE } from './world.js?v=0.141.0';
-import { CHAPTERS, CHAPTERS_PER_THEME, THEMES, THREAT, modeScale, MODE_CHAPTERS, chapterTheme, MONSTERS, chapterMonsterPool, EQUIPMENT_ART, ALL_EQUIPMENT_ART, equipmentArt } from './chapters.js?v=0.141.0';
-import { STAGES_PER_CHAPTER, battlePlan, stageWaveCount, waveComposition } from './battle-plans.js?v=0.141.0';
-import { RAID_POWER_ROLL, raidPowerRoll } from './loot.js?v=0.141.0';
-import * as growth from './growth.js?v=0.141.0';
-import * as transcend from './transcendence.js?v=0.141.0';
-export {TRANSCEND,TRANSCEND_IDS,TRANSCEND_STEPS,transcendNeeded,transcendLevel,transcendProgress,transcendEffective,transcendPoints,transcendPointsTotal,transcendBonus,transcendStatus} from './transcendence.js?v=0.141.0';
-export * from './growth.js?v=0.141.0';
-import * as stars from './stage-stars.js?v=0.141.0';
-import * as seals from './seals.js?v=0.141.0';
-import * as rush from './boss-rush.js?v=0.141.0';
-export * from './boss-rush.js?v=0.141.0';
-export * from './seals.js?v=0.141.0';
-import * as gates from './stage-gates.js?v=0.141.0';
-export * from './stage-gates.js?v=0.141.0';
-export * from './stage-stars.js?v=0.141.0';
-export { RAID_POWER_ROLL, RAID_ROLL_SKEW, raidPowerRoll } from './loot.js?v=0.141.0';
-import { affixCap, INVENTORY_LIMIT, MAX_PENDING_LOOT, LEGENDARY_PITY_LIMIT, huntGrade, ITEM_CATALOG, ANCIENT_CATALOG, ancientIdOfBase, rollAncient, BOSS_LOOT, bossLootPool, discoverAncient, targetAncient, setAncientTarget, ancientDefinition, ancientForLegacy, effectiveAffix, RARITIES, RARITY_INFO, rollItem, rollStageItem, rollAccessory, storeItem, salvageValue, uniqueEffect, uniqueLoadout, equippedUniqueEffect, UNIQUE_EFFECTS, itemSet, setBonusStats, EQUIPMENT_SETS, SET_SLOTS } from './loot.js?v=0.141.0';
-export { ancientSignatures, ANCIENT_TIER_POWER, ANCIENT_HUNT_POWER, huntGrade, HUNT_POWER, HUNT_GRADE_TABLES, itemSet, setBonusStats, setBonusText, EQUIPMENT_SETS, SET_SLOTS, SET_STATS, CHAPTER_SETS, SET_CATALOG } from './loot.js?v=0.141.0';
-export { INVENTORY_LIMIT, LEGENDARY_PITY_LIMIT, ITEM_CATALOG, ANCIENT_CATALOG, BOSS_LOOT, RARITIES, RARITY_INFO, UNIQUE_EFFECTS, uniqueEffect, uniqueLoadout, targetAncient, setAncientTarget, ancientDefinition, gearDropPresentation, gearDropDuration } from './loot.js?v=0.141.0';
-export { STAGES_PER_CHAPTER, BATTLE_PLANS, battlePlan, stageWaveCount } from './battle-plans.js?v=0.141.0';
+import { directionIndex, recoilProgress, ACTION_DURATIONS } from './motion.js?v=0.142.0';
+import { WORLD_BOUNDS, GROUND_DEPTH_SCALE } from './world.js?v=0.142.0';
+import { CHAPTERS, CHAPTERS_PER_THEME, THEMES, THREAT, modeScale, MODE_CHAPTERS, chapterTheme, MONSTERS, chapterMonsterPool, EQUIPMENT_ART, ALL_EQUIPMENT_ART, equipmentArt } from './chapters.js?v=0.142.0';
+import { STAGES_PER_CHAPTER, battlePlan, stageWaveCount, waveComposition } from './battle-plans.js?v=0.142.0';
+import { RAID_POWER_ROLL, raidPowerRoll } from './loot.js?v=0.142.0';
+import * as growth from './growth.js?v=0.142.0';
+import * as transcend from './transcendence.js?v=0.142.0';
+export {TRANSCEND,TRANSCEND_IDS,TRANSCEND_STEPS,transcendNeeded,transcendLevel,transcendProgress,transcendEffective,transcendPoints,transcendPointsTotal,transcendBonus,transcendStatus} from './transcendence.js?v=0.142.0';
+export * from './growth.js?v=0.142.0';
+import * as stars from './stage-stars.js?v=0.142.0';
+import * as seals from './seals.js?v=0.142.0';
+import * as rush from './boss-rush.js?v=0.142.0';
+export * from './boss-rush.js?v=0.142.0';
+export * from './seals.js?v=0.142.0';
+import * as gates from './stage-gates.js?v=0.142.0';
+export * from './stage-gates.js?v=0.142.0';
+export * from './stage-stars.js?v=0.142.0';
+export { RAID_POWER_ROLL, RAID_ROLL_SKEW, raidPowerRoll } from './loot.js?v=0.142.0';
+import { affixCap, INVENTORY_LIMIT, MAX_PENDING_LOOT, LEGENDARY_PITY_LIMIT, huntGrade, ITEM_CATALOG, ANCIENT_CATALOG, ancientIdOfBase, rollAncient, BOSS_LOOT, bossLootPool, discoverAncient, targetAncient, setAncientTarget, ancientDefinition, ancientForLegacy, effectiveAffix, RARITIES, RARITY_INFO, rollItem, rollStageItem, rollAccessory, storeItem, salvageValue, uniqueEffect, uniqueLoadout, equippedUniqueEffect, UNIQUE_EFFECTS, itemSet, setBonusStats, EQUIPMENT_SETS, SET_SLOTS } from './loot.js?v=0.142.0';
+export { ancientSignatures, ANCIENT_TIER_POWER, ANCIENT_HUNT_POWER, huntGrade, HUNT_POWER, HUNT_GRADE_TABLES, itemSet, setBonusStats, setBonusText, EQUIPMENT_SETS, SET_SLOTS, SET_STATS, CHAPTER_SETS, SET_CATALOG } from './loot.js?v=0.142.0';
+export { INVENTORY_LIMIT, LEGENDARY_PITY_LIMIT, ITEM_CATALOG, ANCIENT_CATALOG, BOSS_LOOT, RARITIES, RARITY_INFO, UNIQUE_EFFECTS, uniqueEffect, uniqueLoadout, targetAncient, setAncientTarget, ancientDefinition, gearDropPresentation, gearDropDuration } from './loot.js?v=0.142.0';
+export { STAGES_PER_CHAPTER, BATTLE_PLANS, battlePlan, stageWaveCount } from './battle-plans.js?v=0.142.0';
 export const ARRIVAL_EPSILON=.001;
 export const STAGES = CHAPTERS;
 export {THEMES,CHAPTERS_PER_THEME};
@@ -716,6 +716,7 @@ function kill(s,e,inscriptions=s.buildEffects,explode=true){if(e.dead)return;e.d
   inscriptionKill(s,e,inscriptions,explode);if(s.settlement||s.phase!=='playing')return;dropMaterials(s,e);dropGold(s,e,e.elite?16:e.type==='bulwark'?10:4);s.pickups.push({id:s.nextId++,x:e.x,y:e.y,gold:0,xp:e.elite?28:e.type==='bulwark'?18:9,cores:e.elite?1:0});
 
 }
+const enemyHeightHint=e=>e.boss?150:e.elite?100:e.type==='bulwark'?95:70;
 function damageEnemy(s,e,value,critical=false,kind='normal',origin=s.player,piercing=false,synergy=null,swing=null){
   if(!eligible(s,e)||s.phase!=='playing'||s.settlement)return 'miss';value*=1+ancientBuff(s,'fury');if(e.boss)value*=1+transcend.transcendBonus(s.profile).bossDamage;
   // 관문 '방어 태세': damage taken is cut; while a defense-rule boss shows its weak point the cut shrinks by the build's
@@ -753,8 +754,12 @@ function damageEnemy(s,e,value,critical=false,kind='normal',origin=s.player,pier
   const amount=Math.min(e.hp,Math.max(1,Math.round(value)));e.hp-=amount;e.aggro=true;
   const recoil=recoilProgress(e,s.run.time);e.recoilX=(e.recoilX??0)*recoil;e.recoilY=(e.recoilY??0)*recoil;
   e.hitAt=s.run.time;e.hitDuration=guarded?.1:kind==='finisher'||kind==='heavy'?.22:.14;e.hitGuarded=guarded;
-  effect(s,'damage',{x:e.x,y:e.y-70,value:amount,critical,guarded},.65);
+  effect(s,'damage',{x:e.x,y:e.y-70,value:amount,critical,guarded,...(swing?.skill?{skill:swing.skill}:{})},.65);
   const hitDirection=direction(e.x-origin.x,e.y-origin.y);
+  // Alpha 0.142 스킬 피격(사용자 요청 '스킬로 데미지를 입는 느낌'): 화면 반응만 — 더 긴 번쩍임·떨림, 맞은 쪽 반대로 튕겼다 돌아오는
+  // 시각 반동(위치는 그대로), 맞은 몸에서 스킬 색 파편이 튄다. 파편 효과는 s.nextId를 쓰지 않아 적·드롭 번호가 바뀌지 않는다.
+  if(swing?.skill&&!guarded){const knock=e.boss?5:e.elite?10:16;e.hitDuration=Math.max(e.hitDuration,.3);e.skillHitAt=s.run.time;e.skillHitId=swing.skill;e.recoilX=(e.recoilX??0)+hitDirection.x*knock;e.recoilY=(e.recoilY??0)+hitDirection.y*knock*.6;
+   if(s.effects.length<300){s.fxSerial=(s.fxSerial??0)+1;s.effects.push({id:-s.fxSerial,type:'skillHit',ttl:.5,maxTtl:.5,skillId:swing.skill,x:e.x,y:e.y,nx:hitDirection.x,ny:hitDirection.y,boss:!!e.boss,heavy:kind!=='normal',critical,size:enemyHeightHint(e)});}}
   effect(s,'impact',{x:e.x,y:e.y-40,nx:hitDirection.x,ny:hitDirection.y,heavy:kind!=='normal',critical,guarded,combo:origin===s.player?s.player.combo:0},.17);
   if(e.hp<=0)kill(s,e,inscriptions,direct);else if(!e.boss&&!guarded&&!broken&&e.action!=='stagger'){setAction(e,'hurt');e.actionTime=0;e.cooldown=Math.max(e.cooldown,.4);}
   if(direct&&s.phase==='playing'&&!s.settlement)inscriptionHit(s,e,amount,inscriptions,origin);

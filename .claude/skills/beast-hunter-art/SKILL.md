@@ -22,6 +22,8 @@ CLAUDE.md에서 옮겨 온 작업 메모. 내용이 바뀌면 이 파일을 고�
 
 - 장면(0.141): `"kind":"scene"`(불투명 가로 그림, 폭 1024 이상·가로가 세로의 1.3배 이상) 사양 `art/dungeons0141/scenes.json` → `python3 tools/pack-dungeons0141.py`(768×512 webp). UI 배경으로 쓰는 그림은 '가운데 위쪽에 주제, 아래 30%는 어둡게, 글자·인물 없음'을 프롬프트에 넣는다.
 
+- 스킬 이펙트(0.142): `art/skills0142/anim.json`(0.137 키 아트를 '모양·방향 참고만'으로 첨부, 프롬프트에 스킬별 `palette`와 '선명한 셀 셰이딩·각진 파편, 깃털·꽃잎 금지') → `python3 tools/pack-skills0142.py`. 반복형 원(잔월진·표식·자세)은 광채가 칸을 채워 자동 검사(완전 투명 30%)에 늘 걸리니 실패본의 알파를 확인하고 눈으로 골라 `anim-<id>.png`로 복사한다. 생성기 프로세스를 멈출 땐 `kill <PID>`만 쓴다(`ps|grep|kill` 묶음이 셸을 죽였다).
+
 ## tools/ (0.140: `set-module-version.py X.Y.Z` = dist 전체 모듈 쿼리 통일·버전 올리기)
 
 ## tools/ 원래 목록 (0.130.1 정리 후 16개, 0.131에서 simulate-campaign0131, 0.136에서 benchmark-bossrush0136 추가)

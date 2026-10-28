@@ -1,13 +1,13 @@
-import {createSkillMotion} from './skill-motion.js?v=0.141.0';
-import {CHAPTERS,CHAPTER_BOSSES} from './chapters.js?v=0.141.0';
-import {beastTechniques,BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE,beastElementText} from './beast-techniques.js?v=0.141.0';
-export {BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE} from './beast-techniques.js?v=0.141.0';
-import {SKILL_BRANCHES,SKILL_BRANCH_COST,EXECUTE_HEALTH,branchSummary} from './skill-branches.js?v=0.141.0';
-export {SKILL_BRANCHES,SKILL_BRANCH_COST,EXECUTE_HEALTH,branchSummary} from './skill-branches.js?v=0.141.0';
-import {GEAR_SKILLS} from './raid-skills.js?v=0.141.0';
-import {treeBonus} from './growth.js?v=0.141.0';
-import {transcendBonus} from './transcendence.js?v=0.141.0';
-export {GEAR_SKILLS,GEAR_SKILL_BY_ANCIENT} from './raid-skills.js?v=0.141.0';
+import {createSkillMotion} from './skill-motion.js?v=0.142.0';
+import {CHAPTERS,CHAPTER_BOSSES} from './chapters.js?v=0.142.0';
+import {beastTechniques,BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE,beastElementText} from './beast-techniques.js?v=0.142.0';
+export {BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE} from './beast-techniques.js?v=0.142.0';
+import {SKILL_BRANCHES,SKILL_BRANCH_COST,EXECUTE_HEALTH,branchSummary} from './skill-branches.js?v=0.142.0';
+export {SKILL_BRANCHES,SKILL_BRANCH_COST,EXECUTE_HEALTH,branchSummary} from './skill-branches.js?v=0.142.0';
+import {GEAR_SKILLS} from './raid-skills.js?v=0.142.0';
+import {treeBonus} from './growth.js?v=0.142.0';
+import {transcendBonus} from './transcendence.js?v=0.142.0';
+export {GEAR_SKILLS,GEAR_SKILL_BY_ANCIENT} from './raid-skills.js?v=0.142.0';
 // Lirian skill rules: one catalog drives unlocks, rank values, UI and combat.
 const active=(id,name,unlock,damage,step,cost,cooldown,shape,description,extra={})=>({id,name,kind:'active',unlock,damage,step,cost,cooldown,shape,description,...extra});
 const passive=(id,name,unlock,value,step,unit,description)=>({id,name,kind:'passive',unlock,value,step,unit,description});
@@ -202,7 +202,7 @@ function applyJob(s,j,h){const r=s.skillRuntime,root=j.root,d=SKILL_BY_ID[root.i
   if(root.id==='bloodmoon'&&j.index===6&&s.profile.level>=50&&s.profile.skillBook.awakening==='execution'&&targets.length===1)value*=1.5;
   if(boost)passiveVisual(s,'lone',h);if(e.exposed>0||e.action==='stagger')passiveVisual(s,'imbalance',h,e);
   if(root.id==='breach'){if(e.guard>0)e.guard=Math.max(1,e.guard-breachGuardShatter(root.rank));if(e.plate)for(const o of s.enemies)if(live(o)&&o.plate&&distance(o,e)<=BREACH_ARMOR.radius)o.plateBrokenUntil=s.run.time+BREACH_ARMOR.seconds;}
-  const result=h.hit(s,e,value,false,root.poise>=35?'heavy':'normal',d.shape==='circle'||d.shape==='ultimateArea'?p:j.center,false,null,{inscriptions:root.inscriptions??s.buildEffects});
+  const result=h.hit(s,e,value,false,root.poise>=35?'heavy':'normal',d.shape==='circle'||d.shape==='ultimateArea'?p:j.center,false,null,{inscriptions:root.inscriptions??s.buildEffects,skill:d.visual??root.id});
   if(result==='miss')continue;count++;
   if(root.id==='breach'&&!e.dead)e.skillBreach={until:s.run.time+5,value:10+root.rank*2};
   if(root.element&&!e.dead){const el=root.element;h.status?.(s,e,el,root.attack);if(el.breach)e.skillBreach={until:s.run.time+5,value:Math.max(e.skillBreach?.until>s.run.time?e.skillBreach.value:0,el.breach)};}

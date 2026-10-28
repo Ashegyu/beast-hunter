@@ -67,7 +67,7 @@ test('crescent native art is corrected locally in eight directions without movin
 });
 test('seeking image follows the actual selected target in eight directions even when the original aim is opposite',()=>{
  const opts={atlas:{image:{width:1254,height:1254},width:1254,height:1254}};
- for(const n of directions){const c=canvas(),f={type:'skillCast',skillId:'seeking',fromX:20,fromY:30,targetX:20+n.x*200,targetY:30+n.y*200,n:{x:-n.x,y:-n.y}};drawImageSkillEffect(c,f,.5,opts);const d=c.calls[0];aligned(d.m[0],d.m[1],n);assert.ok(Math.abs(d.m[4]-(20+n.x*90))<1e-8);assert.ok(Math.abs(d.m[5]-(30+n.y*90))<1e-8);}
+ for(const n of directions){const c=canvas(),f={type:'skillCast',skillId:'seeking',fromX:20,fromY:30,targetX:20+n.x*200,targetY:30+n.y*200,n:{x:-n.x,y:-n.y}};drawImageSkillEffect(c,f,.5,opts);const d=c.calls[0];aligned(d.m[0],d.m[1],n);assert.ok(Math.abs(d.m[4]-(20+n.x*90))<1e-8);assert.ok(Math.abs(d.m[5]-(30+n.y*90-g.SKILL_LIFT.seeking))<1e-8);}
 });
 test('returning blade preserves intentional outbound and inbound reversal in all eight directions',()=>{
  const opts={atlas:{image:{width:1254,height:1254},width:1254,height:1254}};

@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.141.0';
-import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.141.0';
-import { createCombatAudio } from './sound.js?v=0.141.0';
-import * as game from './game-engine.js?v=0.141.0';
-import {FrameMetrics} from './frame-metrics.js?v=0.141.0';
-import { frameIndex, frameRect, validateClip } from './engine.js?v=0.141.0';
-import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.141.0';
-import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.141.0';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.141.0';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.141.0';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.141.0';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.141.0';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.142.0';
+import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.142.0';
+import { createCombatAudio } from './sound.js?v=0.142.0';
+import * as game from './game-engine.js?v=0.142.0';
+import {FrameMetrics} from './frame-metrics.js?v=0.142.0';
+import { frameIndex, frameRect, validateClip } from './engine.js?v=0.142.0';
+import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.142.0';
+import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.142.0';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.142.0';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.142.0';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.142.0';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.142.0';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -836,14 +836,14 @@ function damageNumbers(){
  // Player hits first, then newest enemy hits. Reuse bounded layout storage.
  for(let pass=0;pass<2;pass++)for(let i=state.effects.length-1;i>=0;i--){const f=state.effects[i],player=f.type==='playerDamage';if(!player&&f.type!=='damage'||player!==(pass===0)||f.ttl<=0||!visibleInCamera(f,camera,120))continue;if(player?playerCount>=3:enemyCount>=8)continue;
   const age=f.maxTtl-f.ttl,t=clamp(age/.6,0,1);if(t>=1)continue;
-  const size=player?24:f.guarded?17:f.status==='bleed'?16:f.critical?27:20,scale=1+(f.critical?.18:.09)*Math.max(0,1-age/.12),text=String(f.value)+(f.status==='bleed'?' · 출혈':f.guarded?' · 방어':f.critical?'!':''),lane=(f.id%5-2)*(player?12:16),foot=f.y+(player?115:70);
+  const size=player?24:f.guarded?17:f.status==='bleed'?16:f.critical?(f.skill?31:27):f.skill?24:20,scale=1+(f.critical?.18:f.skill?.22:.09)*Math.max(0,1-age/.12),text=String(f.value)+(f.status==='bleed'?' · 출혈':f.guarded?' · 방어':f.critical?'!':''),lane=(f.id%5-2)*(player?12:16),foot=f.y+(player?115:70);
   ctx.save();ctx.globalAlpha=t<.65?1:(1-t)/.35;ctx.font='600 '+size+'px "Hunter UI", sans-serif';ctx.textAlign='center';ctx.lineJoin='round';
   const half=ctx.measureText(text).width*scale/2,x=clamp(f.x+lane,camera.x+half+12,camera.x+camera.width-half-12);let y=f.y-8-Math.sin(Math.min(1,t*2)*Math.PI/2)*28-t*12,placed=false;
   for(let attempt=0;attempt<3;attempt++){const left=x-half,top=foot*GROUND_DEPTH_SCALE+y-foot-size*scale;let overlap=false;for(let b=0;b<boxCount;b++){const k=b*4;if(left<damageBoxes[k]+damageBoxes[k+2]+6&&left+half*2+6>damageBoxes[k]&&top<damageBoxes[k+1]+damageBoxes[k+3]+4&&top+size*scale+4>damageBoxes[k+1]){overlap=true;break;}}
    if(!overlap){const k=boxCount++*4;damageBoxes[k]=left;damageBoxes[k+1]=top;damageBoxes[k+2]=half*2;damageBoxes[k+3]=size*scale;placed=true;break;}y-=size*scale+6;
   }
   if(!placed){ctx.restore();continue;}if(player)playerCount++;else enemyCount++;
-  uprightAt(x,foot);ctx.translate(x,y);ctx.scale(scale,scale);ctx.strokeStyle=COMBAT_INK.edge;ctx.lineWidth=3;ctx.strokeText(text,0,0);ctx.fillStyle=player?'#ffa3b5':f.guarded?'#aac5d6':f.status==='bleed'?COMBAT_INK.rose:f.critical?'#ffe2ad':COMBAT_INK.silver;ctx.fillText(text,0,0);
+  uprightAt(x,foot);ctx.translate(x,y);ctx.scale(scale,scale);ctx.strokeStyle=COMBAT_INK.edge;ctx.lineWidth=3;ctx.strokeText(text,0,0);ctx.fillStyle=player?'#ffa3b5':f.guarded?'#aac5d6':f.status==='bleed'?COMBAT_INK.rose:f.skill?game.skillPalette(f.skill)[f.critical?3:1]:f.critical?'#ffe2ad':COMBAT_INK.silver;if(f.skill&&!player){ctx.lineWidth=5;ctx.strokeText(text,0,0);}ctx.fillText(text,0,0);
   if(f.critical&&!f.guarded){ctx.strokeStyle=COMBAT_INK.rose;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(-half/scale,-5);ctx.lineTo(-half/scale-5,-9);ctx.moveTo(half/scale,-5);ctx.lineTo(half/scale+5,-9);ctx.stroke();}
   ctx.restore();ctx.restore();
  }
@@ -924,7 +924,7 @@ function worldActors(){
       if(a.action==='dash')ring(a.x,a.y,36,COMBAT_INK.rose+'77');
       if(a.counterReady>0){ring(a.x,a.y,45,COMBAT_INK.silver,3);ctx.fillStyle=COMBAT_INK.silver;ctx.font='bold 14px "Hunter UI", sans-serif';ctx.textAlign='center';label('Q 완벽 반격',a.x,a.y-140,a.y);}
     }else{
-      const height=enemyHeight(a),reactionTime=a.dead?(a.hitAt??0)+a.actionTime:state.run.time,recoil=recoilProgress(a,reactionTime),offsetX=(a.recoilX??0)*recoil,offsetY=(a.recoilY??0)*recoil,age=reactionTime-a.hitAt,flash=!a.hitGuarded&&age>=0&&age<.07?1-age/.07:0;shadow(a.x+offsetX,a.y+offsetY,a.boss?65:a.type==='bulwark'?43:27);
+      let height=enemyHeight(a),reactionTime=a.dead?(a.hitAt??0)+a.actionTime:state.run.time,recoil=recoilProgress(a,reactionTime),offsetX=(a.recoilX??0)*recoil,offsetY=(a.recoilY??0)*recoil,age=reactionTime-a.hitAt,skillAge=reactionTime-(a.skillHitAt??-9),flash=Math.max(!a.hitGuarded&&age>=0&&age<.07?1-age/.07:0,!a.dead&&skillAge>=0&&skillAge<.18?1.1*(1-skillAge/.18):0),shake=!reducedMotion&&!a.dead&&skillAge>=0&&skillAge<.22?Math.sin(skillAge*95)*(a.boss?2:4)*(1-skillAge/.22):0;offsetX+=shake;shadow(a.x+offsetX,a.y+offsetY,a.boss?65:a.type==='bulwark'?43:27);
       const alpha=a.dead?deathAlpha:a.boss&&!state.run.bossSpawned?.45:1;
       if(state.phase==='playing'&&state.run.flow==='combat'&&!a.dead&&game.enemyAttackKind(a)==='charge')game.drawMonsterCharge(ctx,a,state.stageId,monsterArt);
       if(alpha>0)actorSprite(a.type,a,height,alpha,offsetX,offsetY,flash);
@@ -949,6 +949,7 @@ function worldActors(){
       let visual=f.type==='skillMark'?{...f,type:'skillCast'}:f;
       if(f.type==='skillCast'&&f.skillId==='seeking'){const target=state.enemies.find(e=>e.id===f.targetId&&!e.dead);if(target)visual={...f,targetX:target.x,targetY:target.y};}
       if(!game.drawImageSkillEffect(ctx,visual,alpha,skillArt))game.drawSkillEffect(ctx,visual,alpha);
+      if(f.type==='skillImpact')game.drawSkillImpactShards(ctx,visual,alpha,{reducedMotion});
     }else if(f.type==='gearDrop'){groundLoot(f.item,f.x,f.y,f.maxTtl-f.ttl,false,!f.source);if(f.maxTtl-f.ttl<dropBurstDuration(f)&&visibleInCamera(f,camera,240)&&(f===heroDrop||dropBursts++<3))dropBurst(f,f===heroDrop&&(f.item.rarity>=2||f.item.perfect));
      }else if(f.type==='materialDrop'){materialVisual(f.materialId,f.x,f.y,1-alpha,true);
     }else if(f.type==='synergy'){
@@ -983,6 +984,7 @@ function worldActors(){
   }
   // Contact accents and live shots must survive additive skill effects.
   let contacts=0;for(let i=state.effects.length-1;i>=0&&contacts<10;i--){const f=state.effects[i];if(f.type!=='impact'||f.ttl<=0||!visibleInCamera(f,camera,80))continue;game.drawHitImpact(ctx,f,reducedMotion);contacts++;}
+  let skillHits=0;for(let i=state.effects.length-1;i>=0&&skillHits<16;i--){const f=state.effects[i];if(f.type!=='skillHit'||f.ttl<=0||!visibleInCamera(f,camera,120))continue;game.drawSkillHit(ctx,f,{reducedMotion});skillHits++;}
   for(const q of state.projectiles)if(visibleInCamera(q,camera,120)){
     // A successful bitmap is the hostile shot. Legacy geometry is a fallback,
     // and still owns friendly/reflected shots; it must not cover the new art.

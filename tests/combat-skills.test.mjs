@@ -139,3 +139,11 @@ test('0.139: auto skills hold burst skills and the ultimate for a 방어 태세 
  assert.ok(g.STANCE_BURST.has('bloodblade')&&!g.STANCE_BURST.has('mark'));
  const normal=g.createGame(p);assert.ok(g.launch(normal,1,1));assert.equal(g.bossStanceLeft(normal),0);
 });
+test('skill hits shake the struck monster and spray skill-colored shards without touching ids or positions',()=>{
+ const {s,e}=fixture('crescent'),before={id:s.nextId,x:e.x,y:e.y};assert.ok(g.useSkill(s,'crescent',{x:0,y:1}));
+ for(let i=0;i<40&&!s.effects.some(f=>f.type==='skillHit');i++)g.advanceGame(s,.025);
+ const hit=s.effects.find(f=>f.type==='skillHit');assert.ok(hit,'skillHit effect');assert.equal(hit.skillId,'crescent');assert.ok(hit.id<0,'own serial, not s.nextId');
+ assert.equal(e.skillHitId,'crescent');assert.ok(e.hitDuration>=.3);assert.ok(Math.hypot(e.recoilX,e.recoilY)>0,'visual knock');assert.equal(e.x,before.x);assert.equal(e.y,before.y);
+ assert.ok(s.effects.some(f=>f.type==='damage'&&f.skill==='crescent'),'skill damage number');
+ assert.equal(g.skillPalette('crescent').length,4);assert.ok(g.SKILL_LIFT.crescent>0);
+});

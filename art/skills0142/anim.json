@@ -1,0 +1,194 @@
+{
+ "anim-crescent": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0142/anim-crescent.png",
+  "style": "art/skills0137/keys/crescent.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is ONLY a composition and orientation reference of an older version of this effect: keep its overall shape and direction, but completely restyle it. SUBJECT: a huge crescent sword slash whose pointed tip points RIGHT. NEW PALETTE (use these colors, not pink): icy silver-white core, bright cyan and sky-blue edges, small gold sparks. STYLE: crisp high-contrast cel-shaded anime game VFX with hard-edged sharp shapes, clean bright cores and saturated colored edges, readable at small size; angular faceted energy shards and fragments; NOT soft, NOT blurry, NOT watercolor, NOT feathery, NOT petals. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size EXPLODING with many sharp crystalline shards and debris fragments flying outward, (5) breaking apart into scattered shards and embers, (6) a few last fading shards and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. No characters, no hands, no sword handles, no ground texture, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "crescent"
+  ],
+  "loop": false,
+  "palette": "icy silver-white core, bright cyan and sky-blue edges, small gold sparks"
+ },
+ "anim-gale": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0142/anim-gale.png",
+  "style": "art/skills0137/keys/gale.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is ONLY a composition and orientation reference of an older version of this effect: keep its overall shape and direction, but completely restyle it. SUBJECT: three fast parallel wind-blade slashes stacked vertically, pointing RIGHT. NEW PALETTE (use these colors, not pink): emerald green and teal wind blades with white speed streaks and pale mint shards. STYLE: crisp high-contrast cel-shaded anime game VFX with hard-edged sharp shapes, clean bright cores and saturated colored edges, readable at small size; angular faceted energy shards and fragments; NOT soft, NOT blurry, NOT watercolor, NOT feathery, NOT petals. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size EXPLODING with many sharp crystalline shards and debris fragments flying outward, (5) breaking apart into scattered shards and embers, (6) a few last fading shards and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. No characters, no hands, no sword handles, no ground texture, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "gale"
+  ],
+  "loop": false,
+  "palette": "emerald green and teal wind blades with white speed streaks and pale mint shards"
+ },
+ "anim-dance": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0142/anim-dance.png",
+  "style": "art/skills0137/keys/dance.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is ONLY a composition and orientation reference of an older version of this effect: keep its overall shape and direction, but completely restyle it. SUBJECT: a circular whirlwind of sword slashes spinning around the center. NEW PALETTE (use these colors, not pink): deep crimson and bright gold spinning blade ring with orange sparks. STYLE: crisp high-contrast cel-shaded anime game VFX with hard-edged sharp shapes, clean bright cores and saturated colored edges, readable at small size; angular faceted energy shards and fragments; NOT soft, NOT blurry, NOT watercolor, NOT feathery, NOT petals. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size EXPLODING with many sharp crystalline shards and debris fragments flying outward, (5) breaking apart into scattered shards and embers, (6) a few last fading shards and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. No characters, no hands, no sword handles, no ground texture, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "dance"
+  ],
+  "loop": false,
+  "palette": "deep crimson and bright gold spinning blade ring with orange sparks"
+ },
+ "anim-draw": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0142/anim-draw.png",
+  "style": "art/skills0137/keys/draw.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is ONLY a composition and orientation reference of an older version of this effect: keep its overall shape and direction, but completely restyle it. SUBJECT: a single lightning-fast horizontal iaido draw slash pointing RIGHT. NEW PALETTE (use these colors, not pink): blinding white-gold flash with electric yellow and pale blue lightning arcs. STYLE: crisp high-contrast cel-shaded anime game VFX with hard-edged sharp shapes, clean bright cores and saturated colored edges, readable at small size; angular faceted energy shards and fragments; NOT soft, NOT blurry, NOT watercolor, NOT feathery, NOT petals. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size EXPLODING with many sharp crystalline shards and debris fragments flying outward, (5) breaking apart into scattered shards and embers, (6) a few last fading shards and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. No characters, no hands, no sword handles, no ground texture, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "draw"
+  ],
+  "loop": false,
+  "palette": "blinding white-gold flash with electric yellow and pale blue lightning arcs"
+ },
+ "anim-plunge": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0142/anim-plunge.png",
+  "style": "art/skills0137/keys/plunge.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is ONLY a composition and orientation reference of an older version of this effect: keep its overall shape and direction, but completely restyle it. SUBJECT: a ground-slam impact burst seen slightly from above, a wide shockwave dome erupting upward. NEW PALETTE (use these colors, not pink): molten orange and gold shockwave with lava-red cracks and flying brown-grey rock shards. STYLE: crisp high-contrast cel-shaded anime game VFX with hard-edged sharp shapes, clean bright cores and saturated colored edges, readable at small size; angular faceted energy shards and fragments; NOT soft, NOT blurry, NOT watercolor, NOT feathery, NOT petals. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size EXPLODING with many sharp crystalline shards and debris fragments flying outward, (5) breaking apart into scattered shards and embers, (6) a few last fading shards and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. No characters, no hands, no sword handles, no ground texture, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "plunge"
+  ],
+  "loop": false,
+  "palette": "molten orange and gold shockwave with lava-red cracks and flying brown-grey rock shards"
+ },
+ "anim-parry": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0142/anim-parry.png",
+  "style": "art/skills0137/keys/parry.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is ONLY a composition and orientation reference of an older version of this effect: keep its overall shape and direction, but completely restyle it. SUBJECT: a curved deflecting guard arc facing RIGHT, like a shield of light. NEW PALETTE (use these colors, not pink): sapphire blue and white flash with cyan glass-like shards. STYLE: crisp high-contrast cel-shaded anime game VFX with hard-edged sharp shapes, clean bright cores and saturated colored edges, readable at small size; angular faceted energy shards and fragments; NOT soft, NOT blurry, NOT watercolor, NOT feathery, NOT petals. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size EXPLODING with many sharp crystalline shards and debris fragments flying outward, (5) breaking apart into scattered shards and embers, (6) a few last fading shards and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. No characters, no hands, no sword handles, no ground texture, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "parry"
+  ],
+  "loop": false,
+  "palette": "sapphire blue and white flash with cyan glass-like shards"
+ },
+ "anim-echo": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0142/anim-echo.png",
+  "style": "art/skills0137/keys/echo.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is ONLY a composition and orientation reference of an older version of this effect: keep its overall shape and direction, but completely restyle it. SUBJECT: a slash with two ghostly afterimage copies trailing behind it to the LEFT, pointing RIGHT. NEW PALETTE (use these colors, not pink): violet and indigo afterimage blades with lilac ghost trails and white core. STYLE: crisp high-contrast cel-shaded anime game VFX with hard-edged sharp shapes, clean bright cores and saturated colored edges, readable at small size; angular faceted energy shards and fragments; NOT soft, NOT blurry, NOT watercolor, NOT feathery, NOT petals. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size EXPLODING with many sharp crystalline shards and debris fragments flying outward, (5) breaking apart into scattered shards and embers, (6) a few last fading shards and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. No characters, no hands, no sword handles, no ground texture, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "echo"
+  ],
+  "loop": false,
+  "palette": "violet and indigo afterimage blades with lilac ghost trails and white core"
+ },
+ "anim-triple": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0142/anim-triple.png",
+  "style": "art/skills0137/keys/triple.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is ONLY a composition and orientation reference of an older version of this effect: keep its overall shape and direction, but completely restyle it. SUBJECT: three crossing horizontal sword slashes pointing RIGHT. NEW PALETTE (use these colors, not pink): bright silver blades with crimson-red and gold edges. STYLE: crisp high-contrast cel-shaded anime game VFX with hard-edged sharp shapes, clean bright cores and saturated colored edges, readable at small size; angular faceted energy shards and fragments; NOT soft, NOT blurry, NOT watercolor, NOT feathery, NOT petals. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size EXPLODING with many sharp crystalline shards and debris fragments flying outward, (5) breaking apart into scattered shards and embers, (6) a few last fading shards and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. No characters, no hands, no sword handles, no ground texture, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "triple"
+  ],
+  "loop": false,
+  "palette": "bright silver blades with crimson-red and gold edges"
+ },
+ "anim-seeking": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0142/anim-seeking.png",
+  "style": "art/skills0137/keys/seeking.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is ONLY a composition and orientation reference of an older version of this effect: keep its overall shape and direction, but completely restyle it. SUBJECT: a homing comet-like sword energy projectile flying RIGHT with a curved trail. NEW PALETTE (use these colors, not pink): emerald green and gold comet blade with yellow-green trail sparks. STYLE: crisp high-contrast cel-shaded anime game VFX with hard-edged sharp shapes, clean bright cores and saturated colored edges, readable at small size; angular faceted energy shards and fragments; NOT soft, NOT blurry, NOT watercolor, NOT feathery, NOT petals. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size EXPLODING with many sharp crystalline shards and debris fragments flying outward, (5) breaking apart into scattered shards and embers, (6) a few last fading shards and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. No characters, no hands, no sword handles, no ground texture, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "seeking"
+  ],
+  "loop": false,
+  "palette": "emerald green and gold comet blade with yellow-green trail sparks"
+ },
+ "anim-returning": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0142/anim-returning.png",
+  "style": "art/skills0137/keys/returning.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is ONLY a composition and orientation reference of an older version of this effect: keep its overall shape and direction, but completely restyle it. SUBJECT: a spinning boomerang crescent blade flying RIGHT. NEW PALETTE (use these colors, not pink): turquoise and teal spinning crescent with white core and aqua sparks. STYLE: crisp high-contrast cel-shaded anime game VFX with hard-edged sharp shapes, clean bright cores and saturated colored edges, readable at small size; angular faceted energy shards and fragments; NOT soft, NOT blurry, NOT watercolor, NOT feathery, NOT petals. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size EXPLODING with many sharp crystalline shards and debris fragments flying outward, (5) breaking apart into scattered shards and embers, (6) a few last fading shards and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. No characters, no hands, no sword handles, no ground texture, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "returning"
+  ],
+  "loop": false,
+  "palette": "turquoise and teal spinning crescent with white core and aqua sparks"
+ },
+ "anim-field": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0142/anim-field.png",
+  "style": "art/skills0137/keys/field.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is ONLY a composition and orientation reference of an older version of this effect: keep its overall shape and direction, but completely restyle it. SUBJECT: a flat circular arcane sword sigil on the ground (wide ellipse) with floating blade shards. NEW PALETTE (use these colors, not pink): royal purple and electric blue magic circle with silver blade shards hovering. STYLE: crisp high-contrast cel-shaded anime game VFX with hard-edged sharp shapes, clean bright cores and saturated colored edges, readable at small size; angular faceted energy shards and fragments; NOT soft, NOT blurry, NOT watercolor, NOT feathery, NOT petals. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) the effect fading in at low brightness, (2) brightening, (3) full brilliance, (4) full brilliance with rotated/shifted details and extra sparks and shards, (5) pulsing slightly dimmer, (6) returning toward frame 1 so the six frames LOOP seamlessly. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. No characters, no hands, no sword handles, no ground texture, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "field"
+  ],
+  "loop": true,
+  "palette": "royal purple and electric blue magic circle with silver blade shards hovering"
+ },
+ "anim-breach": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0142/anim-breach.png",
+  "style": "art/skills0137/keys/breach.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is ONLY a composition and orientation reference of an older version of this effect: keep its overall shape and direction, but completely restyle it. SUBJECT: an armor-shattering explosive strike burst, radial. NEW PALETTE (use these colors, not pink): fiery orange-red burst with white-hot core and flying metallic grey-steel armor shards and sparks. STYLE: crisp high-contrast cel-shaded anime game VFX with hard-edged sharp shapes, clean bright cores and saturated colored edges, readable at small size; angular faceted energy shards and fragments; NOT soft, NOT blurry, NOT watercolor, NOT feathery, NOT petals. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size EXPLODING with many sharp crystalline shards and debris fragments flying outward, (5) breaking apart into scattered shards and embers, (6) a few last fading shards and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. No characters, no hands, no sword handles, no ground texture, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "breach"
+  ],
+  "loop": false,
+  "palette": "fiery orange-red burst with white-hot core and flying metallic grey-steel armor shards and sparks"
+ },
+ "anim-gather": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0142/anim-gather.png",
+  "style": "art/skills0137/keys/gather.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is ONLY a composition and orientation reference of an older version of this effect: keep its overall shape and direction, but completely restyle it. SUBJECT: a vortex pulling inward with four chain-like streaks converging on the center. NEW PALETTE (use these colors, not pink): gold and amber chains of light with white core. STYLE: crisp high-contrast cel-shaded anime game VFX with hard-edged sharp shapes, clean bright cores and saturated colored edges, readable at small size; angular faceted energy shards and fragments; NOT soft, NOT blurry, NOT watercolor, NOT feathery, NOT petals. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size EXPLODING with many sharp crystalline shards and debris fragments flying outward, (5) breaking apart into scattered shards and embers, (6) a few last fading shards and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. No characters, no hands, no sword handles, no ground texture, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "gather"
+  ],
+  "loop": false,
+  "palette": "gold and amber chains of light with white core"
+ },
+ "anim-stance": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0142/anim-stance.png",
+  "style": "art/skills0137/keys/stance.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is ONLY a composition and orientation reference of an older version of this effect: keep its overall shape and direction, but completely restyle it. SUBJECT: a calm defensive aura ring around the center like moonlight reflected on water (wide ellipse). NEW PALETTE (use these colors, not pink): aqua blue and silver ripples with pale moon-white glow. STYLE: crisp high-contrast cel-shaded anime game VFX with hard-edged sharp shapes, clean bright cores and saturated colored edges, readable at small size; angular faceted energy shards and fragments; NOT soft, NOT blurry, NOT watercolor, NOT feathery, NOT petals. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) the effect fading in at low brightness, (2) brightening, (3) full brilliance, (4) full brilliance with rotated/shifted details and extra sparks and shards, (5) pulsing slightly dimmer, (6) returning toward frame 1 so the six frames LOOP seamlessly. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. No characters, no hands, no sword handles, no ground texture, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "stance"
+  ],
+  "loop": true,
+  "palette": "aqua blue and silver ripples with pale moon-white glow"
+ },
+ "anim-mark": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0142/anim-mark.png",
+  "style": "art/skills0137/keys/mark.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is ONLY a composition and orientation reference of an older version of this effect: keep its overall shape and direction, but completely restyle it. SUBJECT: a moon-shaped target sigil, a crescent inside a crosshair circle. NEW PALETTE (use these colors, not pink): magenta and gold sigil with white core. STYLE: crisp high-contrast cel-shaded anime game VFX with hard-edged sharp shapes, clean bright cores and saturated colored edges, readable at small size; angular faceted energy shards and fragments; NOT soft, NOT blurry, NOT watercolor, NOT feathery, NOT petals. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) the effect fading in at low brightness, (2) brightening, (3) full brilliance, (4) full brilliance with rotated/shifted details and extra sparks and shards, (5) pulsing slightly dimmer, (6) returning toward frame 1 so the six frames LOOP seamlessly. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. No characters, no hands, no sword handles, no ground texture, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "mark"
+  ],
+  "loop": true,
+  "palette": "magenta and gold sigil with white core"
+ },
+ "anim-bloodblade": {
+  "kind": "sprite",
+  "minParts": 3,
+  "out": "art/skills0142/anim-bloodblade.png",
+  "style": "art/skills0137/keys/bloodblade.png",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is ONLY a composition and orientation reference of an older version of this effect: keep its overall shape and direction, but completely restyle it. SUBJECT: a tall vertical giant upright sword of flame and light. NEW PALETTE (use these colors, not pink): deep crimson and black-red flame blade with bright red and orange sparks. STYLE: crisp high-contrast cel-shaded anime game VFX with hard-edged sharp shapes, clean bright cores and saturated colored edges, readable at small size; angular faceted energy shards and fragments; NOT soft, NOT blurry, NOT watercolor, NOT feathery, NOT petals. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) the effect fading in at low brightness, (2) brightening, (3) full brilliance, (4) full brilliance with rotated/shifted details and extra sparks and shards, (5) pulsing slightly dimmer, (6) returning toward frame 1 so the six frames LOOP seamlessly. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. No characters, no hands, no sword handles, no ground texture, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "items": [
+   "bloodblade"
+  ],
+  "loop": true,
+  "palette": "deep crimson and black-red flame blade with bright red and orange sparks"
+ }
+}

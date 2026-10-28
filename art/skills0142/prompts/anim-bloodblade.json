@@ -1,0 +1,29 @@
+{
+  "id": "anim-bloodblade",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is ONLY a composition and orientation reference of an older version of this effect: keep its overall shape and direction, but completely restyle it. SUBJECT: a tall vertical giant upright sword of flame and light. NEW PALETTE (use these colors, not pink): deep crimson and black-red flame blade with bright red and orange sparks. STYLE: crisp high-contrast cel-shaded anime game VFX with hard-edged sharp shapes, clean bright cores and saturated colored edges, readable at small size; angular faceted energy shards and fragments; NOT soft, NOT blurry, NOT watercolor, NOT feathery, NOT petals. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) the effect fading in at low brightness, (2) brightening, (3) full brilliance, (4) full brilliance with rotated/shifted details and extra sparks and shards, (5) pulsing slightly dimmer, (6) returning toward frame 1 so the six frames LOOP seamlessly. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. No characters, no hands, no sword handles, no ground texture, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "referenceImages": [
+    {
+      "path": "art/skills0137/keys/bloodblade.png",
+      "sha256": "a77f0781350a825110757908b7a33f0524036e0e0a3feff88a057dcc7c864fcc"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1536,
+        1024
+      ],
+      "transparent": 0.436,
+      "parts": 7,
+      "seconds": 57,
+      "sha256": "b07c35216d2f1472b9c19c2a56cc8b05ef1964968b64b97b8abb46ac76450108"
+    }
+  ],
+  "final": {
+    "path": "art/skills0142/anim-bloodblade.png",
+    "sha256": "b07c35216d2f1472b9c19c2a56cc8b05ef1964968b64b97b8abb46ac76450108"
+  }
+}

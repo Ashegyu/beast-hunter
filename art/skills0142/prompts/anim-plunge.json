@@ -1,0 +1,29 @@
+{
+  "id": "anim-plunge",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production 2D game VFX ANIMATION SPRITE SHEET (frame-by-frame skill effect) for a dark fantasy anime action RPG. Image1 is ONLY a composition and orientation reference of an older version of this effect: keep its overall shape and direction, but completely restyle it. SUBJECT: a ground-slam impact burst seen slightly from above, a wide shockwave dome erupting upward. NEW PALETTE (use these colors, not pink): molten orange and gold shockwave with lava-red cracks and flying brown-grey rock shards. STYLE: crisp high-contrast cel-shaded anime game VFX with hard-edged sharp shapes, clean bright cores and saturated colored edges, readable at small size; angular faceted energy shards and fragments; NOT soft, NOT blurry, NOT watercolor, NOT feathery, NOT petals. Create ONE transparent RGBA LANDSCAPE image (1536x1024) split into an invisible grid of 3 columns x 2 rows of equal square cells, read left-to-right, top row first: SIX sequential animation frames of the SAME effect. Frames: (1) a small bright spark at the cell center as the effect is born, (2) the effect rapidly forming at about half size, (3) full size at peak brilliance, (4) full size EXPLODING with many sharp crystalline shards and debris fragments flying outward, (5) breaking apart into scattered shards and embers, (6) a few last fading shards and embers. Every frame is centered on its cell center with the same anchor, orientation and scale reference so the frames line up when played in place; the largest frame fills about 80% of its cell; nothing crosses into another cell or touches the canvas edge. No characters, no hands, no sword handles, no ground texture, no background, no text, no frame borders, no grid lines, no checkerboard; genuine alpha transparency around everything.",
+  "referenceImages": [
+    {
+      "path": "art/skills0137/keys/plunge.png",
+      "sha256": "e734a9079ce7e841e54cf765f98d70d1ba5693b162a145a41fd99a6b787595ab"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1536,
+        1024
+      ],
+      "transparent": 0.461,
+      "parts": 13,
+      "seconds": 52,
+      "sha256": "c078e0aa11907d732502c19d35feb052c5ce00e4db4eb396a4c8bd4fbc019c4d"
+    }
+  ],
+  "final": {
+    "path": "art/skills0142/anim-plunge.png",
+    "sha256": "c078e0aa11907d732502c19d35feb052c5ce00e4db4eb396a4c8bd4fbc019c4d"
+  }
+}
