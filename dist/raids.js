@@ -46,7 +46,8 @@ export function raidPlan(id){
 // Clear rewards are fixed materials and gold; the raid ancient is a separate chance roll.
 export function raidRewards(chapter){
  const c=Math.max(1,Math.min(60,chapter|0));
- return {gold:600+c*120,cores:2+Math.ceil(c/10),materials:{source:1,promotionStone:2+Math.floor(c/20),refineCrystal:2+Math.floor(c/15)}};
+ // Alpha 0.142: 승급석·정제석은 성장 던전에서만 나와 그 몫을 골드로 준다(사용자 결정).
+ return {gold:Math.round((600+c*120)*1.5),cores:2+Math.ceil(c/10),materials:{source:1}};
 }
 // Raid-only ancients (art/raid0123): five per raid, region 7 in the codex. They use the tier 6 stat rules ×1.1 and
 // carry their power as authored (RAID_POWERS in ancient-powers.js), without tier or hunt-mode scaling.

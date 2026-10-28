@@ -19,17 +19,12 @@ test('refining drops use their own RNG and do not consume legacy crafting rolls'
  }
  const old=g.createProfile(1000);delete old.materials.refineStone;delete old.materials.refineCrystal;delete old.materials.refineEssence;const clean=g.restoreProfile(old,1000);for(const m of g.MATERIALS.filter(m=>m.refining))assert.equal(clean.materials[m.id],0);
 });
-test('refining rewards reserve on elite death and reload or pickup claims each balance once',()=>{
- const s=prepare();arena(s);s.refiningRng=472;enemy(s,{elite:true});g.attack(s,{x:1,y:0});advance(s,.15);
- const amounts={refineStone:2,refineCrystal:1,refineEssence:1};for(const [key,count]of Object.entries(amounts)){assert.equal(s.profile.pendingMaterials[key],count);assert.equal(s.profile.materials[key],1000);}
- const restored=g.restoreProfile(g.encodeProfile(s.profile,1000),1000);for(const [key,count]of Object.entries(amounts))assert.equal(restored.materials[key],1000+count);
- assert.deepEqual(g.restoreProfile(g.encodeProfile(restored,1000),1000).materials,restored.materials);
- for(const q of s.pickups){q.x=s.player.x;q.y=s.player.y;}advance(s,.5);for(const [key,count]of Object.entries(amounts)){assert.equal(s.profile.materials[key],1000+count);assert.equal(s.profile.pendingMaterials[key],0);}
-});
-test('promotion stones have independent drops and reserved pickups restore exactly once',()=>{
- let old=0,refine=0,promote=0;const drops=rollMaterials({tier:1,elite:true},()=>{old++;return .999999;},()=>{refine++;return .999999;},()=>{promote++;return 0;});assert.deepEqual(drops,[{id:'promotionStone',amount:1}]);assert.equal(old,4);assert.equal(refine,3);assert.equal(promote,1);
- const s=prepare();arena(s);s.promotionRng=2000;enemy(s);g.attack(s,{x:1,y:0});advance(s,.15);assert.equal(s.profile.pendingMaterials.promotionStone,1);assert.equal(s.profile.materials.promotionStone,1000);
- const restored=g.restoreProfile(g.encodeProfile(s.profile,1000),1000);assert.equal(restored.materials.promotionStone,1001);assert.equal(restored.pendingMaterials.promotionStone,0);assert.deepEqual(g.restoreProfile(g.encodeProfile(restored,1000),1000).materials,restored.materials);
+// Alpha 0.142 (사용자 결정): 강화 재료·승급석·검술서는 성장 던전에서만 나온다 — 사냥터 처치는 그 RNG를 아예 쓰지 않는다.
+test('hunting drops no refining materials, promotion stones or skill pages even on a certain roll',()=>{
+ for(const id of ['refineStone','refineCrystal','refineEssence','promotionStone','skillPage']){const row=g.MATERIAL_BY_ID[id];assert.equal(row.normal+row.elite+row.boss,0,id);assert.match(row.where,/에서만 획득/,id);}
+ let old=0,refine=0,promote=0;const drops=rollMaterials({tier:1,elite:true},()=>{old++;return .999999;},()=>{refine++;return 0;},()=>{promote++;return 0;});assert.deepEqual(drops,[]);assert.equal(old,4);assert.equal(refine,0);assert.equal(promote,0);
+ for(const context of [{tier:1},{tier:2,elite:true},{tier:3,boss:true}])assert.ok(rollMaterials(context,()=>.999999,()=>0,()=>0).every(d=>!['refineStone','refineCrystal','refineEssence','promotionStone','skillPage'].includes(d.id)));
+ const s=prepare();arena(s);s.refiningRng=0;s.promotionRng=0;enemy(s,{elite:true});g.attack(s,{x:1,y:0});advance(s,.15);for(const key of ['refineStone','refineCrystal','refineEssence','promotionStone'])assert.equal(s.profile.pendingMaterials[key]??0,0,key);
 });
 test('six authored unique identities require multiple materials and never appear in any equipment drop path',()=>{
  assert.equal(g.CRAFTED_CATALOG.length,11);for(const row of g.CRAFTED_CATALOG){assert.ok(Object.keys(row.cost).length>=6);assert.equal(row.cost.origin,1);assert.ok(!ITEM_CATALOG.some(r=>r.id===row.id));assert.ok(!ANCIENT_CATALOG.some(r=>r.id===row.id));}

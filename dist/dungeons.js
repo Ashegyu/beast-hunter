@@ -31,7 +31,8 @@ export const towerBonusAt=floor=>floor%10===0?TOWER_BONUS[(floor/10-1)%TOWER_BON
 export function towerBonus(best){const out={damagePct:0,hpPct:0,crit:0,reduction:0},n=Math.floor(Math.max(0,best|0)/10);for(let i=0;i<TOWER_BONUS.length;i++){const times=Math.floor(n/TOWER_BONUS.length)+(i<n%TOWER_BONUS.length?1:0);out[TOWER_BONUS[i].key]=Math.round(times*TOWER_BONUS[i].value*1e6)/1e6;}return out;}
 export function towerRewards(floor){
  if(!Number.isInteger(floor)||floor<1||floor>TOWER_MAX_FLOOR)return null;const kind=towerFloorKind(floor);
- return {gold:200+floor*50,materials:kind==='boss'?{promotionStone:1+Math.floor(floor/30),refineCrystal:1+Math.floor(floor/20),skillPage:2}:kind==='elite'?{refineStone:5+Math.floor(floor/5)}:{}};
+ // Alpha 0.142: 강화 재료·검술서·승급석은 성장 던전에서만 나와 탑 보스·정예 층은 그 몫을 골드로 준다(사용자 결정).
+ return {gold:(200+floor*50)*(kind==='boss'?3:kind==='elite'?2:1),materials:{}};
 }
 export function towerPlan(floor){
  if(!towerRewards(floor))return null;const kind=towerFloorKind(floor);

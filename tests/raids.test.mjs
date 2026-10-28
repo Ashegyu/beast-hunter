@@ -99,6 +99,6 @@ test('0.139 raid tiers: 정예/악몽 open after every chapter of that mode, sha
  const s=g.createGame(structuredClone(top),{durable:true});for(const tier of [2,1,0]){assert.equal(g.launchRaid(s,'queen',now,null,tier),true);g.returnToCamp(s);}assert.equal(g.launchRaid(s,'queen',now,null,2),false);
  // A cleared 악몽 raid pays tier gold and materials and its ancient carries hunt 2 (stats ×1.6, three powers).
  const win=g.createGame(structuredClone(top));assert.equal(g.launchRaid(win,'colossus',now,null,2),true);win.lootRates={raid:1};const e=boss(win);e.plate=0;e.hp=1;win.projectiles.push({id:win.nextId++,x:e.x,y:e.y,vx:0,vy:0,damage:1e9,ttl:1,friendly:true});run(win,.1);
- const reward=win.run.dungeonReward,plain=g.raidRewards(60);assert.equal(reward.gold,Math.round(plain.gold*g.modeScale(60,2).reward));assert.equal(reward.materials.promotionStone,plain.materials.promotionStone*3);
+ const reward=win.run.dungeonReward,plain=g.raidRewards(60);assert.equal(reward.gold,Math.round(plain.gold*g.modeScale(60,2).reward));assert.equal(reward.materials.source,plain.materials.source*3);assert.equal(reward.materials.promotionStone,undefined,'승급석은 성장 던전에서만');
  const item=reward.item;assert.equal(item.hunt,2);assert.equal(g.ancientSignatures(item).length,3);assert.equal(g.restoreProfile(g.encodeProfile(win.profile,1000),1000).inventory.find(i=>i.id===item.id).hunt,2);
 });

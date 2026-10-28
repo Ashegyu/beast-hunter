@@ -11,11 +11,11 @@ export const MATERIALS=Object.freeze([
  {id:'tear',name:'빙룡의 눈물',color:'#96ecfa',tier:2,normal:0,elite:.006,boss:.06,where:'불과 얼음의 땅 · 정예 0.6% / 보스 6%'},
  {id:'source',name:'원질 핵',color:'#ffbf76',normal:0,elite:0,boss:.02,rare:true,where:'모든 지역 보스 · 처치당 2% · 평균 50회당 1개'},
  {id:'origin',name:'무명의 기원',color:'#8ffff1',normal:0,elite:0,boss:.003,rare:true,where:'모든 지역 보스 · 처치당 0.3% · 평균 약 330회당 1개'},
- {id:'refineStone',name:'재련석',color:'#e3cf94',refining:true,normal:.25,elite:.75,boss:1,quantity:[1,2,6],where:'강화 던전 확정 보상 / 모든 사냥터 · 일반 25% / 정예 75% / 보스 100% · 1 / 2 / 6개'},
- {id:'refineCrystal',name:'정제석',color:'#b8a5ef',refining:true,normal:0,elite:.15,boss:.65,quantity:[1,1,3],where:'강화 던전 4단계부터 확정 보상 / 모든 사냥터 · 정예 15% / 보스 65% · 1 / 3개'},
- {id:'refineEssence',name:'순수결정',color:'#ffbf76',refining:true,normal:0,elite:.02,boss:.2,quantity:[1,1,1],where:'강화 던전 7단계부터 확정 보상 / 모든 사냥터 · 정예 2% / 보스 20% · 1개'},
- {id:'skillPage',name:'검술서',color:'#e7c59a',normal:0,elite:0,boss:0,where:'스킬 던전 확정 보상 · 스킬 갈래 해금에 사용'},
- {id:'promotionStone',name:'승급석',color:'#f0d586',promotion:true,normal:.02,elite:.2,boss:1,quantity:[1,1,3],where:'승급 던전 확정 보상 / 모든 사냥터 · 일반 2% / 정예 20% / 보스 100% · 1 / 1 / 3개'},
+ {id:'refineStone',name:'재련석',color:'#e3cf94',refining:true,normal:0,elite:0,boss:0,where:'강화 던전 확정 보상에서만 획득'},
+ {id:'refineCrystal',name:'정제석',color:'#b8a5ef',refining:true,normal:0,elite:0,boss:0,where:'강화 던전 4단계부터 확정 보상에서만 획득'},
+ {id:'refineEssence',name:'순수결정',color:'#ffbf76',refining:true,normal:0,elite:0,boss:0,where:'강화 던전 7단계부터 확정 보상에서만 획득'},
+ {id:'skillPage',name:'검술서',color:'#e7c59a',normal:0,elite:0,boss:0,where:'스킬 던전 확정 보상에서만 획득 · 스킬 갈래 해금에 사용'},
+ {id:'promotionStone',name:'승급석',color:'#f0d586',promotion:true,normal:0,elite:0,boss:0,where:'승급 던전 확정 보상에서만 획득'},
  {id:'sealShard',name:'인장 조각',color:'#ffd27a',normal:0,elite:0,boss:0,where:'보스 러시 보상 · 인장 분해 · 인장 성장에 사용'},
 ].map(r=>Object.freeze({...r,quantity:Object.freeze(r.quantity??[1,1,1])})));
 // Alpha 0.141 재료 도감: what each material is for and which dungeon also pays it (the field `where` lists the hunting grounds).
