@@ -344,9 +344,9 @@ test('map difficulty applies the 0.139 unlock order (all of the mode below, then
   ui.emit('camp-map-start','click');await ui.settle();assert.equal(ui.state.phase,'playing');assert.equal(ui.state.stageId,chapter);assert.equal(ui.state.run.stage,1);assert.equal(ui.state.difficulty,mode);
  }
 });
-test('map and reward difficulty share a campaign choice while switching modes starts at one',async()=>{
- const p=game.createProfile(1_000_000);p.clearedStage=2;p.unlockedStage=2;p.stageProgress=[10,10,0];p.bossMastery=[1,0,-1];p.difficultyProgress=[[3,2,0],[0,0,0]];widen(p);openMode(game,p,2,2);const ui=await host({saved:p});ui.emit('nav-hunt','click');pickChapter(ui,1);ui.emit('map-mode-2','click');ui.emit('camp-tactics-open','click');assert.equal(ui.nodes.get('hunt-mode-2').attributes['aria-pressed'],'true');
- ui.emit('hunt-mode-1','click');assert.equal(ui.nodes.get('map-mode-1').attributes['aria-pressed'],'true');ui.emit('document','keydown',{key:'Escape'});ui.emit('run-stage-4','click');assert.equal(ui.nodes.get('map-mode-1').attributes['aria-pressed'],'true');assert.equal(ui.nodes.get('hunt-mode-1').attributes['aria-pressed'],'true');
+test('map difficulty pills keep the campaign choice while switching modes starts at one (0.141: the 전술 · 보상 drawer is gone)',async()=>{
+ const p=game.createProfile(1_000_000);p.clearedStage=2;p.unlockedStage=2;p.stageProgress=[10,10,0];p.bossMastery=[1,0,-1];p.difficultyProgress=[[3,2,0],[0,0,0]];widen(p);openMode(game,p,2,2);const ui=await host({saved:p});ui.emit('nav-hunt','click');pickChapter(ui,1);ui.emit('map-mode-2','click');ui.emit('camp-tactics-open','click');assert.equal(ui.nodes.get('camp-map-panel').hidden,false,'the old entry opens the map');assert.equal(ui.nodes.get('camp-tactics-panel').hidden,true);
+ ui.emit('map-mode-1','click');assert.equal(ui.nodes.get('map-mode-1').attributes['aria-pressed'],'true');ui.emit('run-stage-4','click');assert.equal(ui.nodes.get('map-mode-1').attributes['aria-pressed'],'true');
  ui.emit('map-mode-0','click');assert.equal(ui.nodes.get('run-stage-1').attributes['aria-pressed'],'true','changing difficulty starts from stage one');
  ui.emit('map-mode-2','click');pickChapter(ui,11);assert.equal(ui.nodes.get('map-mode-0').attributes['aria-pressed'],'true');assert.equal(ui.nodes.get('map-mode-2').disabled,true,'previous chapter mastery must not unlock this chapter');
 });
@@ -355,15 +355,6 @@ test('changing map difficulty cancels a pending cold launch and a fresh click us
  ui.emit('nav-hunt','click');ui.emit('map-mode-2','click');ui.emit('camp-map-start','click');await ui.settle();assert.equal(ui.state.phase,'camp');
  ui.emit('map-mode-1','click');await ui.completeDeferredAssets();assert.equal(ui.state.phase,'camp');assert.equal(ui.profile().hunts,p.hunts);assert.equal(ui.nodes.get('map-mode-1').attributes['aria-pressed'],'true');
  ui.emit('camp-map-start','click');assert.equal(ui.state.phase,'playing');assert.equal(ui.state.run.stage,1);assert.equal(ui.state.difficulty,1);
-});
-test('boss reward view shows actual selected mode values and prepares the map without launching',async()=>{
- const p=game.createProfile(1_000_000);p.clearedStage=1;p.unlockedStage=1;p.stageProgress=[10,0,0];p.bossMastery=[1,-1,-1];openMode(game,p,2,1);const ui=await host({saved:p,campaign:true});const before=ui.profile();ui.emit('nav-hunt','click');pickChapter(ui,1);ui.emit('run-stage-2','click');ui.emit('camp-tactics-open','click');assert.equal(ui.nodes.get('camp-tactics-panel').hidden,false);assert.equal(ui.nodes.get('camp-map-panel').hidden,true);assert.equal(ui.document.activeElement.id,'page-back');assert.equal(ui.nodes.get('replay-ancient').textContent,'1%');ui.emit('hunt-mode-2','click');{const k=game.modeScale(1,2);assert.equal(ui.nodes.get('replay-hp').textContent,timesText(k.hp));assert.equal(ui.nodes.get('replay-damage').textContent,timesText(k.damage));assert.equal(ui.nodes.get('replay-gold').textContent,timesText(k.reward));}assert.equal(ui.nodes.get('replay-ancient').textContent,'3%');assert.match(ui.nodes.get('replay-combat-note').textContent,/탄막 \+4발.*핵 \+2/);assert.deepEqual(ui.profile(),before);ui.emit('replay-prepare','click');assert.equal(ui.state.phase,'camp');assert.equal(ui.nodes.get('camp-map-panel').hidden,false);assert.equal(ui.nodes.get('camp-tactics-panel').hidden,true);assert.equal(ui.nodes.get('run-stage-1').attributes['aria-pressed'],'true');assert.equal(ui.document.activeElement.id,'camp-map-start');ui.emit('camp-map-start','click');await ui.settle();assert.equal(ui.state.difficulty,2);assert.equal(ui.state.run.stage,1);
-});
-test('boss reward view preserves unlocks and backs out to the same selected map checkpoint',async()=>{
- const p=game.createProfile(1_000_000);p.clearedStage=1;p.unlockedStage=1;p.stageProgress=[10,0,0];p.bossMastery=[0,-1,-1];openMode(game,p,1,1);const ui=await host({saved:p,campaign:true});ui.emit('nav-hunt','click');pickChapter(ui,1);ui.emit('run-stage-3','click');ui.emit('camp-tactics-open','click');assert.equal(ui.nodes.get('hunt-mode-2').disabled,true);ui.emit('hunt-mode-2','click');assert.equal(ui.nodes.get('replay-ancient').textContent,'1%');ui.emit('hunt-mode-1','click');assert.equal(ui.nodes.get('replay-hp').textContent,timesText(game.modeScale(1,1).hp));assert.equal(ui.nodes.get('replay-ancient').textContent,'2%');assert.equal(ui.nodes.get('replay-step-0').attributes['data-done'],'true');assert.equal(ui.nodes.get('replay-step-2').attributes['data-done'],'false');ui.emit('document','keydown',{key:'Escape'});assert.equal(ui.nodes.get('camp-map-panel').hidden,false);assert.equal(ui.document.activeElement.id,'camp-tactics-open');assert.equal(ui.nodes.get('run-stage-1').attributes['aria-pressed'],'true');
-});
-test('uncleared boss reward view explains its gate and cannot open during a hunt',async()=>{
- const ui=await host();ui.emit('nav-hunt','click');ui.emit('camp-tactics-open','click');assert.equal(ui.nodes.get('replay-panel').hidden,true);assert.equal(ui.nodes.get('replay-locked').hidden,false);ui.emit('replay-prepare','click');assert.equal(ui.state.phase,'camp');ui.emit('tactics-map-back','click');assert.equal(ui.nodes.get('camp-map-panel').hidden,false);ui.emit('camp-map-start','click');assert.equal(ui.state.run.stage,1);ui.emit('camp-tactics-open','click');assert.equal(ui.nodes.get('camp-content').hidden,true);const failed=await host({failedAssets:true});failed.emit('camp-tactics-open','click');assert.equal(failed.nodes.get('camp-tactics-panel').hidden,true);
 });
 test('portrait more drawer uses one camp view and closes to a visible navigation origin',async()=>{
  const ui=await host();const before=ui.profile();ui.emit('nav-more','click');assert.equal(ui.nodes.get('camp-more-panel').hidden,false);assert.equal(ui.nodes.get('camp-map-panel').hidden,true);assert.equal(ui.nodes.get('camp-growth-panel').hidden,true);assert.equal(ui.nodes.get('camp-map-launch').hidden,true);assert.equal(ui.nodes.get('game-shell').attributes['data-camp-view'],'more');
@@ -1660,7 +1651,7 @@ test('crowded contact feedback and guard sounds are bounded without replay on th
 
 test('boss reward notice uses the actual chapter and difficulty payout receipt',async()=>{
  const p=game.createProfile(1_000_000);p.clearedStage=3;p.unlockedStage=3;p.stageProgress=[10,10,10];p.bossMastery=[2,2,2];p.difficultyProgress=[[9,9,9],[9,9,9]];widen(p);openMode(game,p,2,21);const gold=Math.round(game.STAGES[20].reward*game.modeScale(21,2).reward),cores=game.bossCores(21,2);
- const ui=await host({saved:p,campaign:true});ui.emit('nav-hunt','click');pickChapter(ui,21);ui.emit('camp-tactics-open','click');ui.emit('hunt-mode-2','click');ui.emit('replay-prepare','click');ui.emit('run-stage-10','click');ui.emit('camp-map-start','click');await ui.settle();
+ const ui=await host({saved:p,campaign:true});ui.emit('nav-hunt','click');pickChapter(ui,21);ui.emit('map-mode-2','click');ui.emit('run-stage-10','click');ui.emit('camp-map-start','click');await ui.settle();
  const s=ui.state;assert.equal(s.difficulty,2);assert.equal(s.stageId,21);s.enemies=[];s.barrels=[];s.run.wave=1;s.run.bossSpawned=true;s.spawns=[{id:900,type:'bulwark',boss:true,x:s.player.x+100,y:s.player.y,delay:0,warning:1,locked:true}];game.advanceGame(s,.001);
  const boss=s.enemies[0];s.projectiles=[{id:901,x:boss.x,y:boss.y,vx:0,vy:0,damage:1e9,ttl:1,friendly:true}];game.advanceGame(s,.025);assert.equal(s.phase,'playing');assert.ok(s.settlement);ui.tick(0);assert.equal(s.phase,'victory');assert.equal(ui.nodes.get('hunt-stage').textContent,game.STAGES[20].name+' · 21-10 스테이지');assert.equal(ui.nodes.get('stage-complete').hidden,false);assert.match(ui.nodes.get('stage-complete').textContent,/^21-10 스테이지 완료 [★☆]{3}$/);
  const reward=s.effects.findLast(f=>f.type==='loot'&&f.origin==='stage');s.effects=[reward];ui.tick(0);
@@ -1809,7 +1800,7 @@ test('illustrated home mirrors saved XP and selection while its new shortcuts ke
  ui.emit('home-nav-growth','click');assert.equal(ui.nodes.get('camp-growth-panel').hidden,false);ui.emit('nav-home','click');
  ui.emit('home-nav-codex','click');assert.equal(ui.nodes.get('codex-content').hidden,false);ui.emit('nav-home','click');
  ui.emit('home-settings','click');assert.equal(ui.nodes.get('camp-more-panel').hidden,false);ui.emit('nav-home','click');
- ui.emit('home-intel','click');assert.equal(ui.nodes.get('camp-tactics-panel').hidden,false);ui.emit('nav-home','click');
+ ui.emit('home-intel','click');assert.equal(ui.nodes.get('camp-map-panel').hidden,false);ui.emit('nav-home','click');
  assert.deepEqual(ui.profile(),before);assert.equal(ui.nodes.get('home-route-title').textContent,game.STAGES[10].name);
  await ui.settle();ui.emit('start','click');await ui.settle();assert.equal(ui.state.phase,'playing');assert.equal(ui.state.stageId,11);assert.equal(ui.state.run.stage,3);
 });
@@ -1822,7 +1813,7 @@ test('mobile lobby shortcuts preserve profile ownership and reject navigation du
  }
  ui.emit('lobby-skills','click');assert.equal(ui.nodes.get('camp-skills-panel').hidden,false);ui.emit('nav-home','click');
  ui.emit('lobby-missions','click');assert.equal(ui.nodes.get('camp-map-panel').hidden,false);ui.emit('nav-home','click');
- for(const id of ['lobby-events','lobby-message']){ui.emit(id,'click');assert.equal(ui.nodes.get('camp-tactics-panel').hidden,false);ui.emit('nav-home','click');}
+ for(const id of ['lobby-events','lobby-message']){ui.emit(id,'click');assert.equal(ui.nodes.get('camp-map-panel').hidden,false);ui.emit('nav-home','click');}
  assert.deepEqual(ui.profile(),before);ui.emit('start','click');const run=ui.state.run;
  for(const id of ['lobby-character','lobby-bag','lobby-skills','lobby-craft','lobby-missions','lobby-events','lobby-message'])ui.emit(id,'click');
  assert.equal(ui.state.phase,'playing');assert.equal(ui.state.run,run);assert.equal(ui.nodes.get('camp-content').hidden,true);assert.equal(ui.nodes.get('lobby-energy-value').textContent,'100/100');

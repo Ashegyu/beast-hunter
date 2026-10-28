@@ -830,3 +830,5 @@
 #game-shell #codex-content[data-view=materials] .archive-categories{margin-bottom:0}
 @media(max-width:700px){#game-shell .mat-grid{grid-template-columns:repeat(4,minmax(0,1fr))}#game-shell .mat-card strong{font-size:9px}#game-shell #material-codex:not([hidden]){grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}}
 #game-shell#game-shell #codex-content[data-view=materials] #codex-browser::after{display:none!important}
+/* Alpha 0.141 전술·보상 창 제거: 입구 버튼과 패널을 숨긴다(입구는 사냥 지도로 연결). */
+#game-shell #camp-tactics-open,#game-shell #camp-tactics-panel{display:none!important}

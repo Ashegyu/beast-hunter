@@ -570,7 +570,9 @@ for(const where of ['map','result'])for(const target of (where==='result'?['gear
  if(state.phase!=='camp')returnCamp();
  if(target==='gear')openInventory('equipment');else if(target==='growth')openCampDrawer('growth','nav-hunt');else openSkills('nav-skills');
 });
-function openCampDrawer(name,origin){if(!ready||state.phase!=='camp')return;launchRevision++;campDrawer=name;campDrawerOrigin=origin;$('growth-feedback').textContent='';updateHud();if(name==='tactics')window.hunterPages?.first($('camp-tactics-panel'));$('page-back').focus({preventScroll:true});}
+// Alpha 0.141 (사용자 요청 '전술 보상 창 없애'): the 전술 · 보스 보상 drawer is gone; its entries open the hunting map,
+// which already has the difficulty pills and the boss reward preview.
+function openCampDrawer(name,origin){if(!ready||state.phase!=='camp')return;if(name==='tactics')name='map';launchRevision++;campDrawer=name;campDrawerOrigin=origin;$('growth-feedback').textContent='';updateHud();if(name==='tactics')window.hunterPages?.first($('camp-tactics-panel'));$('page-back').focus({preventScroll:true});}
 function closeCampDrawer(){launchRevision++;if(campDrawer==='tactics'){campDrawer='map';campDrawerOrigin='nav-hunt';updateHud();$('camp-tactics-open').focus({preventScroll:true});return;}const origin=campDrawerOrigin;campDrawer='';updateHud();$(origin).focus({preventScroll:true});}
 $('hub-map').addEventListener('click',()=>openCampDrawer('map','hub-map'));
 $('hub-route').addEventListener('click',()=>openCampDrawer('map','hub-route'));
