@@ -286,6 +286,21 @@ $('tree-forget').addEventListener('click',()=>{if(state.phase!=='camp'||!game.is
 // Alpha 0.141 stat rows: the gauge fills within the current efficiency band (단련 1~20·21~60·61~, 초월 1~50·51~150·151~),
 // data-tier colours it (0 full efficiency, 1 half/60%, 2 quarter/30%); past the last edge it cycles every 40 / 100 ranks.
 function statGauge(id,rank,edges){const fill=$(id+'-gauge');if(!fill)return;let tier=0;while(tier<edges.length&&rank>=edges[tier])tier++;const from=tier?edges[tier-1]:0,span=tier<edges.length?edges[tier]-from:(edges.at(-1)-edges[0]),inBand=tier<edges.length?rank-from:(rank-from)%span;fill.style.width=Math.round(inBand/span*1000)/10+'%';fill.parentElement?.setAttribute?.('data-tier',String(tier));$(id.replace(/-([a-z]+)$/,'-row-$1'))?.setAttribute('data-tier',String(tier));}
+// Alpha 0.141 성장 화면 왼쪽 캐릭터 능력치 (사용자 요청): the stats sheet's numbers, grouped, with the change of the last
+// 단련/초월/트리 step flashing beside the value for 1.6s.
+let growthStatsPrev=null,growthStatsFlash=0;
+function refreshGrowthStats(){
+ const st=game.playerStats(profile),tree=game.treeBonus(profile),tr=game.transcendBonus(profile);
+ const v={damage:Math.round(st.damage),crit:st.crit*100,aspd:st.attackSpeed*100,range:Math.round(st.range),hp:Math.round(st.maxHp),reduction:st.reduction*100,regen:st.regeneration,speed:Math.round(st.speed),boss:tr.bossDamage*100,skill:(tree.skillDamage+tr.skillDamage)*100};
+ const text={damage:String(v.damage),crit:v.crit.toFixed(1)+'%',aspd:Math.round(v.aspd)+'%',range:String(v.range),hp:v.hp.toLocaleString('ko-KR'),reduction:v.reduction.toFixed(1)+'%',regen:v.regen.toFixed(2)+'/초',speed:String(v.speed),boss:'+'+v.boss.toFixed(1)+'%',skill:'+'+v.skill.toFixed(1)+'%'};
+ const now=Date.now();
+ if(growthStatsPrev){let changed=false;for(const k of Object.keys(v)){const d=v[k]-growthStatsPrev[k];if(Math.abs(d)>1e-6){changed=true;const unit=['crit','aspd','reduction','boss','skill'].includes(k)?'%':'';hudText($('gstat-'+k+'-delta'),(d>0?'+':'')+(Number.isInteger(d)?d:d.toFixed(unit?1:2))+unit);$('gstat-'+k+'-delta').setAttribute('data-sign',d>0?'up':'down');}}if(changed)growthStatsFlash=now+1600;}
+ growthStatsPrev=v;
+ if(now>growthStatsFlash)for(const k of Object.keys(v))hudText($('gstat-'+k+'-delta'),'');
+ for(const [k,t]of Object.entries(text))hudText($('gstat-'+k),t);
+ hudText($('gstat-level'),'Lv.'+profile.level+(profile.level>=game.MAX_LEVEL&&game.transcendPointsTotal(profile)?' · 초월 '+game.transcendPointsTotal(profile):''));
+ hudText($('gstat-note'),'단련·트리·장비·초월을 합한 값');
+}
 const GROWTH_VIEW_NAMES={training:'능력치 단련',tree:'성장 트리',transcend:'초월'};
 $('growth-reset').addEventListener('click',()=>{if(state.phase!=='camp')return;const name=GROWTH_VIEW_NAMES[growthView];if(growthArmed!==growthView){growthArmed=growthView;$('growth-feedback').textContent=name+' 초기화는 한 번 더 누르세요. 포인트는 모두 돌려받습니다.';updateHud();return;}growthArmed='';if(growthView==='tree'?game.resetGrowthTree(state):growthView==='transcend'?game.resetTranscendence(state):game.resetTrainingStats(state)){save();$('growth-feedback').textContent=name+' 초기화 완료';updateHud();}});
 // Both 0.139 pools in one short line (menus, result, stats sheet).
@@ -296,7 +311,7 @@ function timesText(v){return (v>=10?Math.round(v):Math.round(v*10)/10)+'배';}
 function growthBudget(){return '능력치 '+game.trainingPoints(profile)+' · 트리 '+game.treePoints(profile);}
 function refreshGrowthBoard(){
  const tree=profile.growthTree,held=new Set([game.TREE_ROOT,...tree]);
- $('growth-board').setAttribute('data-view',growthView);$('growth-training').hidden=growthView!=='training';$('growth-tree').hidden=growthView!=='tree';$('growth-transcend').hidden=growthView!=='transcend';
+ $('growth-board').setAttribute('data-view',growthView);if(growthView!=='tree')refreshGrowthStats();else growthStatsPrev=null;$('growth-training').hidden=growthView!=='training';$('growth-tree').hidden=growthView!=='tree';$('growth-transcend').hidden=growthView!=='transcend';
  for(const [id,v]of [['growth-tab-training','training'],['growth-tab-tree','tree'],['growth-tab-transcend','transcend']])$(id).setAttribute('aria-pressed',String(growthView===v));
  hudText($('growth-points'),growthView==='transcend'?'초월 포인트 '+game.transcendPoints(profile)+' / '+game.transcendPointsTotal(profile):growthView==='tree'?'트리 포인트 '+game.treePoints(profile)+' / '+game.treePointsTotal(profile):'능력치 포인트 '+game.trainingPoints(profile)+' / '+game.trainingPointsTotal(profile));hudText($('growth-reset'),growthArmed===growthView?'초기화 확인':'초기화');
  for(const id of game.TRAINING_IDS){const t=game.TRAINING[id],rank=profile.training[id],why=game.trainStatus(profile,id),rate=game.trainingRate(rank);hudText($('train-'+id+'-value'),t.unit+' +'+game.trainingValue(id,rank)+t.suffix+(rate<1?' · 효율 '+Math.round(rate*100)+'%':''));hudText($('train-'+id+'-rank'),String(rank));$('train-'+id).disabled=!!why;$('train-'+id).setAttribute('aria-label',t.name+' '+rank+'단계 · '+t.unit+' 단계당 +'+Math.round(t.per*rate*100)/100+t.suffix+(why?' · '+why:''));statGauge('train-'+id,rank,[20,60]);}
