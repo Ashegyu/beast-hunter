@@ -1,4 +1,4 @@
-import {EQUIPMENT_KEYS} from './equipment-slots.js?v=0.136.0';
+import {EQUIPMENT_KEYS} from './equipment-slots.js?v=0.140.0';
 import {uniqueLoadout} from './loot.js?v=0.140.0';
 import {equipmentArt} from './chapters.js?v=0.140.0';
 

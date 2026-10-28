@@ -1,4 +1,4 @@
-import {SLOTS,EQUIPMENT_KEYS,itemSlotForPosition} from './equipment-slots.js?v=0.136.0';
+import {SLOTS,EQUIPMENT_KEYS,itemSlotForPosition} from './equipment-slots.js?v=0.140.0';
 import {encodeProfile,restoreProfile,INVENTORY_LIMIT,MAX_LEVEL,STAGES} from './game-engine.js?v=0.140.0';
 
 export const MAX_BACKUP_BYTES=262144;

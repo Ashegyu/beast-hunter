@@ -8,7 +8,7 @@
 // 대응 (counter, 0~1) = 트리 포인트 spent in the matching region × .01875 (max .75 at 40P, 0.139; bridges count for both sides) + matching equipped skills × .1 (max .4), at most 1;
 // the counter removes up to 75% of the pressure. Raw spec (gear, training) also gets through: it just takes more.
 import {CHAPTERS,CHAPTERS_PER_THEME} from './chapters.js?v=0.140.0';
-import {branchPoints} from './growth.js?v=0.139.0';
+import {branchPoints} from './growth.js?v=0.140.0';
 export const GATE_TYPES=Object.freeze({
  survival:Object.freeze({id:'survival',short:'수호자 갈래·방어 스킬',name:'생존 관문',effect:'적이 주는 피해',branch:'ward',branchName:'수호자',skills:Object.freeze(['stance','parry','resolve','reserve','breath']),hint:'수호자 갈래 · 수월의 자세 · 흘려베기 · 적월의 결의'}),
  swarm:Object.freeze({id:'swarm',short:'검술사 갈래·광역 스킬',name:'광역 관문',effect:'일반 괴수 체력',branch:'art',branchName:'검술사',skills:Object.freeze(['gather','dance','field','crescent','triple','bloodmoon','surrounded']),hint:'검술사 갈래 · 월쇄 · 윤무 · 잔월진 · 적월난무'}),
