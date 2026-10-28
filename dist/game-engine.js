@@ -24,7 +24,9 @@ import {MATERIALS,MATERIAL_BY_ID,MATERIAL_LIMIT,emptyMaterials,rollMaterials,CRA
 export {MATERIALS,MATERIAL_BY_ID,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress,materialInfo,MATERIAL_ICON_INDEX} from './crafting.js?v=0.142.0';
 import {equipmentSynergies} from './equipment-synergies.js?v=0.142.0';
 import {itemProtection} from './loot.js?v=0.142.0';
-export {itemProtection,salvageValue} from './loot.js?v=0.142.0';
+export {itemProtection,salvageValue,autoSalvageable,gradeSalvageIds} from './loot.js?v=0.142.0';
+import {cleanBagRules,emptyBagRules,BAG_SLOTS,BAG_LIMIT_MIN,BAG_LIMIT_MAX,BAG_GRADE_MAX} from './inventory-rules.js?v=0.142.0';
+export {cleanBagRules,emptyBagRules,BAG_SLOTS,BAG_LIMIT_DEFAULT,BAG_LIMIT_MIN,BAG_LIMIT_MAX,BAG_LIMIT_STEP,BAG_GRADE_MAX} from './inventory-rules.js?v=0.142.0';
 export {equipmentSynergies,EQUIPMENT_SYNERGIES} from './equipment-synergies.js?v=0.142.0';
 import {HUNT_MODES,huntMode,REPLAY_CYCLES} from './hunt-modes.js?v=0.142.0';
 export {HUNT_MODES} from './hunt-modes.js?v=0.142.0';
@@ -130,7 +132,7 @@ export function growthXp(profile,value){
  return Math.min(Number.MAX_SAFE_INTEGER,awarded+remaining);
 }
 export function createProfile(now=Date.now()){
-  return {version:PROFILE_VERSION,dungeonProgress:emptyDungeonProgress(),raids:emptyRaidProgress(),bossRush:rush.emptyRushProgress(),beastSkills:{},battleSerial:0,settledBattleIds:[],activeBattle:null,lastInterruptedBattle:null,selectedBuild:null,characterId:'lirian',equipmentRng:246813579,difficultyProgress:[STAGES.map(()=>0),STAGES.map(()=>0)],nightmareRecords:STAGES.map(()=>0),skillBook:skills.restoreSkillBook(null,1),favoriteItemIds:[],savedBuilds:[null,null,null,null,null],targetCraftId:null,craftTrackerVisible:true,materials:emptyMaterials(),treePresets:[null,null,null,null,null],tower:{best:0},dungeonWeek:emptyDungeonWeek(),transcendXp:0,transcendence:transcend.emptyTranscendence(),discoveredAncients:[],targetAncientId:null,bossMastery:STAGES.map(()=>-1),lootPity:0,legendaryPity:0,pendingGold:0,pendingMaterials:emptyMaterials(),pendingLoot:[],stageProgress:STAGES.map(()=>0),stageStars:stars.emptyStageStars(STAGES.length),starChests:stars.emptyStageStars(STAGES.length),gold:0,cores:0,level:1,xp:0,training:growth.emptyTraining(),growthTree:[],unlockedStage:1,clearedStage:0,totalKills:0,hunts:0,lastSeenAt:number(now),inventory:[],equipment:emptyEquipment(),nextItemId:1};
+  return {version:PROFILE_VERSION,dungeonProgress:emptyDungeonProgress(),raids:emptyRaidProgress(),bossRush:rush.emptyRushProgress(),beastSkills:{},battleSerial:0,settledBattleIds:[],activeBattle:null,lastInterruptedBattle:null,selectedBuild:null,characterId:'lirian',equipmentRng:246813579,difficultyProgress:[STAGES.map(()=>0),STAGES.map(()=>0)],nightmareRecords:STAGES.map(()=>0),skillBook:skills.restoreSkillBook(null,1),favoriteItemIds:[],bagRules:emptyBagRules(),savedBuilds:[null,null,null,null,null],targetCraftId:null,craftTrackerVisible:true,materials:emptyMaterials(),treePresets:[null,null,null,null,null],tower:{best:0},dungeonWeek:emptyDungeonWeek(),transcendXp:0,transcendence:transcend.emptyTranscendence(),discoveredAncients:[],targetAncientId:null,bossMastery:STAGES.map(()=>-1),lootPity:0,legendaryPity:0,pendingGold:0,pendingMaterials:emptyMaterials(),pendingLoot:[],stageProgress:STAGES.map(()=>0),stageStars:stars.emptyStageStars(STAGES.length),starChests:stars.emptyStageStars(STAGES.length),gold:0,cores:0,level:1,xp:0,training:growth.emptyTraining(),growthTree:[],unlockedStage:1,clearedStage:0,totalKills:0,hunts:0,lastSeenAt:number(now),inventory:[],equipment:emptyEquipment(),nextItemId:1};
 }
 const EQUIPMENT_DEFINITIONS=new Map([...ITEM_CATALOG,...ANCIENT_CATALOG,...CRAFTED_CATALOG].map(row=>[row.id,row]));
 function cleanItem(item,version){
@@ -203,6 +205,7 @@ export function restoreProfile(raw,now=Date.now()){
   // Alpha 0.141 트리 프리셋: five tree-only slots (a node list that stays connected to the core; points are checked on load).
   p.treePresets=Array.from({length:TREE_PRESETS},(_,n)=>{const r=data.treePresets?.[n];if(!r||typeof r!=='object')return null;const tree=growth.cleanTree(r.tree);return {name:typeof r.name==='string'&&r.name.trim()?r.name.trim().slice(0,12):'트리 '+(n+1),tree};});
   p.totalKills=integer(data.totalKills,0,1e9);p.hunts=integer(data.hunts,0,1e7);p.lastSeenAt=clamp(number(data.lastSeenAt,now),0,number(now));
+  p.bagRules=cleanBagRules(data.bagRules);
   const seen=new Set();for(const rawItem of (Array.isArray(data.inventory)?data.inventory:[])){const item=cleanItem(rawItem,data.version);if(item&&!seen.has(item.id)&&p.inventory.length<INVENTORY_LIMIT){p.inventory.push(item);seen.add(item.id);}}
   p.equipment=restoreEquipment(data.equipment,p.inventory,p.characterId);
   // Protection must be restored before reserved loot can evict existing equipment.
@@ -282,6 +285,14 @@ export function inscribeItem(s,itemId,id){
 }
 
 export function toggleFavorite(s,id){if(s.phase!=='camp'&&!s.paused||!s.profile.inventory.some(i=>i.id===id))return false;const p=s.profile;p.favoriteItemIds=p.favoriteItemIds.includes(id)?p.favoriteItemIds.filter(n=>n!==id):[...p.favoriteItemIds,id];return true;}
+// Alpha 0.142 가방 정리 규칙: camp only; limits/grade apply from the next item gained (nothing is dismantled by changing them).
+export function setBagRules(s,patch){
+ if(strictBattle(s.profile)||s.settlement||s.phase!=='camp'&&!s.paused||!patch||typeof patch!=='object')return false;
+ const r=s.profile.bagRules,next={grade:patch.grade??r.grade,auto:patch.auto??r.auto,limits:{...r.limits}};
+ if(patch.slot!==undefined){if(!BAG_SLOTS.includes(patch.slot)||!Number.isFinite(patch.limit))return false;next.limits[patch.slot]=patch.limit;}
+ if(!Number.isInteger(next.grade)||next.grade<0||next.grade>BAG_GRADE_MAX||typeof next.auto!=='boolean')return false;
+ s.profile.bagRules=cleanBagRules(next);return true;
+}
 export function bulkSalvage(s,ids){
  if(strictBattle(s.profile)||s.settlement||s.phase!=='camp'&&!s.paused||!Array.isArray(ids)||!ids.length||ids.length>INVENTORY_LIMIT)return {ok:false,reason:'정비 중에 장비를 선택해줘.'};
  const selected=new Set(ids);if(selected.size!==ids.length)return {ok:false,reason:'중복 선택은 분해할 수 없어.'};
@@ -602,7 +613,7 @@ function receiveItem(s,item,origin='monster',stageReward=null){
   s.profile.pendingLoot=s.profile.pendingLoot.filter(i=>i.id!==item.id);
   if(result.duplicate)return false;
   s.run.lootLedger.push(item);
-  if(origin==='monster')lootPulse(s);s.lastLoot=item;s.run.items++;s.run[origin==='stage'?'stageItems':'monsterItems']++;s.run.gold+=result.gold;if(result.gold)s.run.autoSalvaged++;
+  if(origin==='monster')lootPulse(s);s.lastLoot=item;s.run.items++;s.run[origin==='stage'?'stageItems':'monsterItems']++;s.run.gold+=result.gold;s.run.autoSalvaged+=result.salvaged??0;
   effect(s,'loot',{x:s.player.x,y:s.player.y,item,name:(seals.isSeal(item)?seals.SEAL_GRADES[item.seal.grade].name:RARITIES[item.rarity])+' '+item.name,rarity:item.rarity,origin,stageReward,converted:!result.kept,salvagedGold:result.gold},item.rarity>=3||item.perfect?4:2.5);
   if(result.kept)effect(s,'lootPickup',{x:s.player.x,y:s.player.y,rarity:item.rarity,perfect:!!item.perfect},item.rarity>=3||item.perfect?1.05:.6);
   return true;

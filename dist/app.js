@@ -345,6 +345,13 @@ $('bag-slot').addEventListener('change',e=>setBagCategory(e.target.value));
 $('bag-sort').addEventListener('change',e=>{bagSort=['pickup','rarity','slot'].includes(e.target.value)?e.target.value:'pickup';bagReviewIds=null;updateHud();});
 $('bag-favorites').addEventListener('click',()=>{favoritesOnly=!favoritesOnly;bagReviewIds=null;updateHud();});
 $('bag-organize').addEventListener('click',()=>{if(bagSlot==='materials')return;bagOrganizing=!bagOrganizing;bagSelectedIds.clear();bagReviewIds=null;updateHud();});
+// 보관 개수 단계: 5…30 by 5, then 40·50·75·100·제한 없음.
+const BAG_LIMIT_STEPS=[5,10,15,20,25,30,40,50,75,100,game.BAG_LIMIT_MAX];
+function stepBagLimit(slot,dir){const now=profile.bagRules.limits[slot],next=dir>0?BAG_LIMIT_STEPS.find(v=>v>now):[...BAG_LIMIT_STEPS].reverse().find(v=>v<now);if(next===undefined||!game.setBagRules(state,{slot,limit:next}))return;bagFeedback=game.SLOTS[slot]+' 보관 '+(next>=game.BAG_LIMIT_MAX?'제한 없음':next+'개')+' · 다음 획득부터 적용';save();updateHud();}
+for(const slot of game.BAG_SLOTS){$('bag-limit-down-'+slot).addEventListener('click',()=>stepBagLimit(slot,-1));$('bag-limit-up-'+slot).addEventListener('click',()=>stepBagLimit(slot,1));}
+for(let n=0;n<=game.BAG_GRADE_MAX;n++)$('bag-grade-'+n).addEventListener('click',()=>{if(game.setBagRules(state,{grade:n})){bagReviewIds=null;save();updateHud();}});
+$('bag-auto').addEventListener('click',()=>{if(game.setBagRules(state,{auto:!profile.bagRules.auto})){bagFeedback=profile.bagRules.auto?'획득 시 '+game.RARITIES[profile.bagRules.grade]+' 이하 장비를 바로 분해합니다.':'획득 시 자동 분해를 껐어.';save();updateHud();}});
+$('bag-grade-salvage').addEventListener('click',()=>{const ids=game.gradeSalvageIds(profile,profile.bagRules.grade);if(!ids.length)return;bagSelectedIds=new Set(ids);bagReviewIds=ids;updateHud();});
 $('bag-select-all').addEventListener('click',()=>{bagSelectedIds=new Set(bagFilteredItems.filter(i=>!game.itemProtection(profile,i)).map(i=>i.id));bagReviewIds=null;updateHud();});
 $('bag-review').addEventListener('click',()=>{bagReviewIds=[...bagSelectedIds];updateHud();});
 $('bag-cancel').addEventListener('click',()=>{bagReviewIds=null;updateHud();});
@@ -443,7 +450,7 @@ for(const [id,step]of [['bag-page-prev',-1],['bag-page-next',1]])$(id).addEventL
 function refreshBag(){
  const chosenEarring=profile.inventory.find(i=>i.id===bagSelectedId);if(chosenEarring?.slot==='earring'&&earringChoiceItemId!==chosenEarring.id){earringChoiceItemId=chosenEarring.id;earringPosition=game.equippedPosition(profile,chosenEarring)??(profile.equipment.earringLeft==null?'earringLeft':'earringRight');}
  const filters=rarityFilter+':'+bagSlot+':'+bagSort+':'+favoritesOnly;if(filters!==bagFilterKey){bagFilterKey=filters;bagPage=0;}
- const key=JSON.stringify([profile.gold,profile.cores,profile.inventory,profile.legendaryPity,profile.equipment,profile.favoriteItemIds,profile.savedBuilds,profile.skills,profile.forge,profile.level,profile.materials,state.phase,state.paused,rarityFilter,bagSlot,bagPart,earringPosition,bagSort,favoritesOnly,bagSelectedId,bagOrganizing,[...bagSelectedIds],bagReviewIds,bagFeedback,inventoryPanel,bagFiltersOpen,bagPage,bagPageSize,bagMaterialPageSize,bagFocusRequested,workshopItemId,workshopMode,workshopFeedback]);
+ const key=JSON.stringify([profile.bagRules,profile.gold,profile.cores,profile.inventory,profile.legendaryPity,profile.equipment,profile.favoriteItemIds,profile.savedBuilds,profile.skills,profile.forge,profile.level,profile.materials,state.phase,state.paused,rarityFilter,bagSlot,bagPart,earringPosition,bagSort,favoritesOnly,bagSelectedId,bagOrganizing,[...bagSelectedIds],bagReviewIds,bagFeedback,inventoryPanel,bagFiltersOpen,bagPage,bagPageSize,bagMaterialPageSize,bagFocusRequested,workshopItemId,workshopMode,workshopFeedback]);
  if(key===bagRenderKey)return;bagRenderKey=key;
  inventoryView=profile.inventory.filter(i=>i.rarity>=rarityFilter&&game.matchesEquipmentCategory(i,bagSlot)&&(bagPart==='all'||i.slot===bagPart)&&(!favoritesOnly||profile.favoriteItemIds.includes(i.id)));
  if(bagSort==='rarity')inventoryView.sort((a,b)=>b.rarity-a.rarity||b.tier-a.tier||a.id-b.id);
@@ -469,7 +476,13 @@ function refreshBag(){
  $('loot-luck').textContent='일반 드롭 → 최대 강화 → 승급';
  $('loot-filter').value=String(rarityFilter);$('bag-slot').value=bagSlot;$('bag-part').value=bagPart;$('bag-sort').value=bagSort;
  $('bag-favorites').setAttribute('aria-pressed',String(favoritesOnly));$('bag-organize').setAttribute('aria-pressed',String(bagOrganizing));$('bag-organize').textContent=bagOrganizing?'정리 마치기':'가방 정리';
- $('bag-bulk').hidden=inventoryPanel!=='gear'||!bagOrganizing;$('bag-hint').hidden=bagOrganizing||bagSelectedId!==null;$('bag-detail').hidden=bagOrganizing||bagSelectedId===null;$('bag-feedback').textContent=bagFeedback;
+ $('bag-bulk').hidden=inventoryPanel!=='gear'||!bagOrganizing;
+ // Alpha 0.142 분해 규칙: grade chips, bulk by grade, auto dismantle on gain, per-부위 보관 개수.
+ {const rules=profile.bagRules,camp=state.phase==='camp',grade=rules.grade,ids=game.gradeSalvageIds(profile,grade);$('bag-rules').hidden=!!bagReviewIds;
+  for(let n=0;n<=game.BAG_GRADE_MAX;n++)$('bag-grade-'+n).setAttribute('aria-checked',String(n===grade));
+  $('bag-grade-salvage').textContent=game.RARITIES[grade]+' 이하 '+ids.length+'개 분해';$('bag-grade-salvage').disabled=!camp||!ids.length;
+  $('bag-auto').setAttribute('aria-pressed',String(rules.auto));$('bag-auto').textContent='획득 시 자동 분해 · '+(rules.auto?'켬':'끔');$('bag-auto').setAttribute('aria-label','획득 시 '+game.RARITIES[grade]+' 이하 자동 분해 '+(rules.auto?'켜짐':'꺼짐'));$('bag-auto').disabled=!camp;
+  for(const slot of game.BAG_SLOTS){const limit=rules.limits[slot],count=profile.inventory.filter(i=>i.slot===slot).length;$('bag-limit-'+slot).textContent=count+'/'+(limit>=game.BAG_LIMIT_MAX?'∞':limit);$('bag-limit-row-'+slot).setAttribute('data-over',String(count>limit));$('bag-limit-down-'+slot).disabled=!camp||limit<=game.BAG_LIMIT_MIN;$('bag-limit-up-'+slot).disabled=!camp||limit>=game.BAG_LIMIT_MAX;}}$('bag-hint').hidden=bagOrganizing||bagSelectedId!==null;$('bag-detail').hidden=bagOrganizing||bagSelectedId===null;$('bag-feedback').textContent=bagFeedback;
  $('bag-hint').textContent=materials?'재료는 장비 보관 칸을 사용하지 않아.':'장비를 눌러 비교하기';
  $('bag-inspect-title').textContent=materials?'성장·제작 재료':bagOrganizing?'장비 정리':'장비 상세 정보';
  $('bag-inspect-description').textContent=materials?'검술서는 스킬 → 검술서 연구에서 사용합니다.':bagOrganizing?'목록에서 분해할 장비를 선택하세요.':bagSlot==='special'?'캐릭터 전용장비 · 던전에서 낮은 확률로 획득 예정. 제작 장비는 제작 탭에서 확인하세요.':bagSlot==='charm'?'목걸이 1개 · 귀걸이 2개. 일반 장신구는 추후 던전에서 획득. 제작 장신구는 제작 탭에서 확인하세요.':'목록에서 장비를 선택하세요.';

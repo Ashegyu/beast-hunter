@@ -11,7 +11,7 @@ import {isSeal,sealSignatures,SEAL_GRADES} from './seals.js?v=0.142.0';
 export {EQUIPMENT_SETS,SET_SLOTS,SET_STATS,CHAPTER_SETS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.142.0';
 export {UNIQUE_EFFECTS,uniquePower} from './unique-effects.js?v=0.142.0';
 // Item definitions and pure rolls; the combat state owns identities and delivery.
-import {INVENTORY_LIMIT,MAX_PENDING_LOOT} from './inventory-rules.js?v=0.142.0';
+import {INVENTORY_LIMIT,MAX_PENDING_LOOT,cleanBagRules} from './inventory-rules.js?v=0.142.0';
 export {INVENTORY_LIMIT,MAX_PENDING_LOOT} from './inventory-rules.js?v=0.142.0';
 // Alpha 0.120: 극옵 (every rolled stat at its maximum) comes only from this 1% draw; ordinary rolls stop one below the maximum.
 export const LEGENDARY_PITY_LIMIT=100,PERFECT_ROLL_CHANCE=.01;
@@ -200,14 +200,29 @@ export function itemProtection(profile,item){
  if(profile.savedBuilds?.some(b=>b&&Object.values(b.equipment).includes(item.id)))return '저장 빌드';
  return '';
 }
+// Alpha 0.142: only plain gear is ever dismantled automatically — never protected (착용·즐겨찾기·빌드·수치작 대기), 강화·승급한,
+// 고대·제작 장비, or 인장.
+export const autoSalvageable=(profile,item)=>!itemProtection(profile,item)&&!isSeal(item)&&item.rarity<5&&!(item.enhancement>0)&&!(item.promotionCount>0);
+// Bulk dismantle by grade: every plain item at or below `grade`.
+export const gradeSalvageIds=(profile,grade)=>profile.inventory.filter(i=>i.rarity<=grade&&autoSalvageable(profile,i)).map(i=>i.id);
 export function storeItem(profile,item){
- if(profile.inventory.some(i=>i.id===item.id))return {duplicate:true,kept:false,gold:0};
- discoverAncient(profile,item);let discard=null;
+ if(profile.inventory.some(i=>i.id===item.id))return {duplicate:true,kept:false,gold:0,salvaged:0};
+ discoverAncient(profile,item);const rules=profile.bagRules??cleanBagRules(null),removed=[];
+ // Auto dismantle on gain (bag rules): a new plain item at or below the chosen grade turns into gold at once.
+ if(rules.auto&&item.rarity<=rules.grade&&autoSalvageable(profile,item)){const gold=salvageValue(item);profile.gold+=gold;return {duplicate:false,kept:false,gold,salvaged:1,discardedId:item.id};}
+ let discard=null;
  if(profile.inventory.length>=INVENTORY_LIMIT){discard=item;for(const owned of profile.inventory)if(!itemProtection(profile,owned)&&!isSeal(owned)&&!(owned.enhancement>0)&&!(owned.promotionCount>0)&&itemPower(owned)<itemPower(discard))discard=owned;
   if(discard!==item)profile.inventory=profile.inventory.filter(i=>i.id!==discard.id);
  }
- const gold=discard?salvageValue(discard):0;profile.gold+=gold;if(discard!==item)profile.inventory.push(item);
- return {duplicate:false,kept:discard!==item,gold,discardedId:discard?.id??null};
+ if(discard)removed.push(discard);if(discard!==item)profile.inventory.push(item);
+ // Per-부위 limit: over it, the new item joins the others of its 부위 and the lowest grade (then weakest) plain ones go first.
+ const limit=rules.limits?.[item.slot];
+ if(discard!==item&&limit){const same=profile.inventory.filter(i=>i.slot===item.slot),over=same.length-limit;
+  if(over>0){const out=new Set(same.filter(i=>autoSalvageable(profile,i)).sort((a,b)=>a.rarity-b.rarity||itemPower(a)-itemPower(b)||a.id-b.id).slice(0,over).map(i=>i.id));
+   for(const i of same)if(out.has(i.id))removed.push(i);profile.inventory=profile.inventory.filter(i=>!out.has(i.id));}}
+ const gold=removed.reduce((sum,i)=>sum+salvageValue(i),0);profile.gold+=gold;
+ const kept=profile.inventory.some(i=>i.id===item.id);
+ return {duplicate:false,kept,gold,salvaged:removed.length,discardedId:removed[0]?.id??null};
 }
 
 const CATALOG_BY_ID=new Map([...ITEM_CATALOG,...ANCIENT_CATALOG,...CRAFTED_CATALOG].map(i=>[i.id,i]));

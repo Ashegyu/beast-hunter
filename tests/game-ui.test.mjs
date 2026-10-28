@@ -1914,3 +1914,12 @@ test('Alpha 0.141 도감: gallery and detail side by side (like the 재료 도�
  ui.emit('codex-tab-materials','click');assert.equal(ui.nodes.get('codex-detail').hidden,true);assert.equal(ui.nodes.get('material-codex').hidden,false);ui.emit('codex-tab-all','click');assert.equal(ui.nodes.get('codex-detail').hidden,false);
  assert.deepEqual(ui.profile(),before);
 });
+test('bag rules: grade chips pick the bulk dismantle grade, auto dismantle toggles and per-부위 limits step and persist',async()=>{
+ const p=bagFixture();p.inventory[2].rarity=0;p.inventory[3].rarity=1;const ui=await host({saved:p});ui.emit('nav-bag','click');ui.emit('bag-organize','click');
+ assert.equal(ui.nodes.get('bag-grade-0').attributes['aria-checked'],'true');assert.match(ui.nodes.get('bag-grade-salvage').textContent,/일반 이하 1개 분해/);
+ ui.emit('bag-grade-1','click');assert.equal(ui.profile().bagRules.grade,1);assert.match(ui.nodes.get('bag-grade-salvage').textContent,/희귀 이하 2개 분해/);
+ ui.emit('bag-auto','click');assert.equal(ui.profile().bagRules.auto,true);assert.match(ui.nodes.get('bag-auto').textContent,/켬/);
+ assert.equal(ui.nodes.get('bag-limit-weapon').textContent,'2/∞');ui.emit('bag-limit-down-weapon','click');assert.equal(ui.profile().bagRules.limits.weapon,100);ui.emit('bag-limit-down-weapon','click');assert.equal(ui.profile().bagRules.limits.weapon,75);ui.emit('bag-limit-up-weapon','click');assert.equal(ui.profile().bagRules.limits.weapon,100);
+ const gold=ui.profile().gold;ui.emit('bag-grade-salvage','click');assert.equal(ui.nodes.get('bag-confirmation').hidden,false);ui.emit('bag-confirm','click');
+ assert.deepEqual(ui.profile().inventory.map(i=>i.id).sort(),[1,2,5]);assert.ok(ui.profile().gold>gold);
+});
