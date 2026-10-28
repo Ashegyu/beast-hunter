@@ -1,0 +1,27 @@
+{
+  "id": "tower",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production UI illustration (a wide landscape banner) for a dark fantasy 2D action RPG dungeon select screen. Image1 is an existing illustration of this game: match its painterly dark fantasy rendering, dramatic warm/cool rim lighting, deep shadows, atmospheric haze and level of detail; never copy its subject. Create ONE opaque landscape image, 3:2 aspect (about 1536x1024), a single scene with no characters, no people, no text, no letters, no logo, no UI, no frame or border. Keep the main subject in the CENTER third and slightly above center (the image is cropped to wide and narrow banners and dark text sits on the lower part), with darker, calmer lower 30%. SCENE: an impossibly tall dark spire tower rising into a stormy sky pierced by light, endless floors with glowing windows spiraling up, lightning and clouds around its summit, viewed from its base on a cliff",
+  "referenceImages": [
+    {
+      "path": "dist/assets/growth-forge-v042.webp",
+      "sha256": "bb1e7e037225c4fa732abfdf4ea98016a948d0589462c92d6f98db5b08d41334"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1536,
+        1024
+      ],
+      "seconds": 86,
+      "sha256": "b6c61886dbd8c2b294097ce55c738bd387ae02531551c4087b90b8f9f15a9b15"
+    }
+  ],
+  "final": {
+    "path": "art/dungeons0141/tower.png",
+    "sha256": "b6c61886dbd8c2b294097ce55c738bd387ae02531551c4087b90b8f9f15a9b15"
+  }
+}

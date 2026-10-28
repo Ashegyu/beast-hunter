@@ -1,0 +1,44 @@
+[
+  {
+    "id": "gold",
+    "source": "art/dungeons0141/gold.png",
+    "sha256": "eff2b79e069e3ddd05f715c0b4e9a23b209584c442e82b38af6fd4597bcadfa3",
+    "webpBytes": 87792
+  },
+  {
+    "id": "enhance",
+    "source": "art/dungeons0141/enhance.png",
+    "sha256": "ee452b3983df6314fe27c7077e794587b7887dc69f814d9385d7f6b3f2b62c55",
+    "webpBytes": 91932
+  },
+  {
+    "id": "promote",
+    "source": "art/dungeons0141/promote.png",
+    "sha256": "028a5ee880eee96ddacc960ec32adf3de3b25bac499ee235d987f35ca6d7a4ae",
+    "webpBytes": 77026
+  },
+  {
+    "id": "skill",
+    "source": "art/dungeons0141/skill.png",
+    "sha256": "b8d7615b4d58b7352acf20df95230dd7b27b69fd94ea8ba7e21e9df5b69491be",
+    "webpBytes": 85594
+  },
+  {
+    "id": "xp",
+    "source": "art/dungeons0141/xp.png",
+    "sha256": "3845a313bb9a3dbf1be36d9892ca4b4159f169d1e1b7cb4e96fffc32a0da50e9",
+    "webpBytes": 87344
+  },
+  {
+    "id": "craft",
+    "source": "art/dungeons0141/craft.png",
+    "sha256": "26852c7e327e92c2c63aa9a125b67e5eddedcc8df27ce9c03fd2c2d52a8fb2d3",
+    "webpBytes": 88692
+  },
+  {
+    "id": "tower",
+    "source": "art/dungeons0141/tower.png",
+    "sha256": "b6c61886dbd8c2b294097ce55c738bd387ae02531551c4087b90b8f9f15a9b15",
+    "webpBytes": 55562
+  }
+]

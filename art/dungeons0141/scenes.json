@@ -1,0 +1,44 @@
+{
+ "gold": {
+  "kind": "scene",
+  "out": "art/dungeons0141/gold.png",
+  "style": "dist/assets/growth-forge-v042.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production UI illustration (a wide landscape banner) for a dark fantasy 2D action RPG dungeon select screen. Image1 is an existing illustration of this game: match its painterly dark fantasy rendering, dramatic warm/cool rim lighting, deep shadows, atmospheric haze and level of detail; never copy its subject. Create ONE opaque landscape image, 3:2 aspect (about 1536x1024), a single scene with no characters, no people, no text, no letters, no logo, no UI, no frame or border. Keep the main subject in the CENTER third and slightly above center (the image is cropped to wide and narrow banners and dark text sits on the lower part), with darker, calmer lower 30%. SCENE: a vast underground treasure cavern overflowing with heaps of gold coins and goblets, swarms of small glowing eyes of greedy monsters lurking in the dark edges, warm golden light beams from above"
+ },
+ "enhance": {
+  "kind": "scene",
+  "out": "art/dungeons0141/enhance.png",
+  "style": "dist/assets/growth-forge-v042.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production UI illustration (a wide landscape banner) for a dark fantasy 2D action RPG dungeon select screen. Image1 is an existing illustration of this game: match its painterly dark fantasy rendering, dramatic warm/cool rim lighting, deep shadows, atmospheric haze and level of detail; never copy its subject. Create ONE opaque landscape image, 3:2 aspect (about 1536x1024), a single scene with no characters, no people, no text, no letters, no logo, no UI, no frame or border. Keep the main subject in the CENTER third and slightly above center (the image is cropped to wide and narrow banners and dark text sits on the lower part), with darker, calmer lower 30%. SCENE: a colossal dwarven iron foundry forge hall, molten metal pouring from a giant crucible, glowing refining stones on an anvil, armored iron golem silhouettes standing guard, sparks and orange heat glow"
+ },
+ "promote": {
+  "kind": "scene",
+  "out": "art/dungeons0141/promote.png",
+  "style": "dist/assets/growth-forge-v042.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production UI illustration (a wide landscape banner) for a dark fantasy 2D action RPG dungeon select screen. Image1 is an existing illustration of this game: match its painterly dark fantasy rendering, dramatic warm/cool rim lighting, deep shadows, atmospheric haze and level of detail; never copy its subject. Create ONE opaque landscape image, 3:2 aspect (about 1536x1024), a single scene with no characters, no people, no text, no letters, no logo, no UI, no frame or border. Keep the main subject in the CENTER third and slightly above center (the image is cropped to wide and narrow banners and dark text sits on the lower part), with darker, calmer lower 30%. SCENE: an ancient colosseum trial arena at dusk, a raised stone ring with banners and a single heroic sword planted in the center pedestal, elite monster banners and torches, crimson and gold light"
+ },
+ "skill": {
+  "kind": "scene",
+  "out": "art/dungeons0141/skill.png",
+  "style": "dist/assets/growth-forge-v042.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production UI illustration (a wide landscape banner) for a dark fantasy 2D action RPG dungeon select screen. Image1 is an existing illustration of this game: match its painterly dark fantasy rendering, dramatic warm/cool rim lighting, deep shadows, atmospheric haze and level of detail; never copy its subject. Create ONE opaque landscape image, 3:2 aspect (about 1536x1024), a single scene with no characters, no people, no text, no letters, no logo, no UI, no frame or border. Keep the main subject in the CENTER third and slightly above center (the image is cropped to wide and narrow banners and dark text sits on the lower part), with darker, calmer lower 30%. SCENE: a ruined moonlit sword training hall with afterimages of glowing blue sword slashes frozen in the air, floating pages of an old sword manual, cherry petals and cyan spirit light"
+ },
+ "xp": {
+  "kind": "scene",
+  "out": "art/dungeons0141/xp.png",
+  "style": "dist/assets/growth-forge-v042.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production UI illustration (a wide landscape banner) for a dark fantasy 2D action RPG dungeon select screen. Image1 is an existing illustration of this game: match its painterly dark fantasy rendering, dramatic warm/cool rim lighting, deep shadows, atmospheric haze and level of detail; never copy its subject. Create ONE opaque landscape image, 3:2 aspect (about 1536x1024), a single scene with no characters, no people, no text, no letters, no logo, no UI, no frame or border. Keep the main subject in the CENTER third and slightly above center (the image is cropped to wide and narrow banners and dark text sits on the lower part), with darker, calmer lower 30%. SCENE: an endless corridor of a spirit training temple with rows of glowing rune pillars and floating motes of green-gold experience light rising upward, misty depth, a radiant gate at the far end"
+ },
+ "craft": {
+  "kind": "scene",
+  "out": "art/dungeons0141/craft.png",
+  "style": "dist/assets/growth-forge-v042.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production UI illustration (a wide landscape banner) for a dark fantasy 2D action RPG dungeon select screen. Image1 is an existing illustration of this game: match its painterly dark fantasy rendering, dramatic warm/cool rim lighting, deep shadows, atmospheric haze and level of detail; never copy its subject. Create ONE opaque landscape image, 3:2 aspect (about 1536x1024), a single scene with no characters, no people, no text, no letters, no logo, no UI, no frame or border. Keep the main subject in the CENTER third and slightly above center (the image is cropped to wide and narrow banners and dark text sits on the lower part), with darker, calmer lower 30%. SCENE: a grim monster butchery workshop hall: enormous beast skeletons and hides hung on chains, bone and crystal materials on worktables, hooks and saws, cold violet crystal glow mixed with lantern light"
+ },
+ "tower": {
+  "kind": "scene",
+  "out": "art/dungeons0141/tower.png",
+  "style": "dist/assets/growth-forge-v042.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production UI illustration (a wide landscape banner) for a dark fantasy 2D action RPG dungeon select screen. Image1 is an existing illustration of this game: match its painterly dark fantasy rendering, dramatic warm/cool rim lighting, deep shadows, atmospheric haze and level of detail; never copy its subject. Create ONE opaque landscape image, 3:2 aspect (about 1536x1024), a single scene with no characters, no people, no text, no letters, no logo, no UI, no frame or border. Keep the main subject in the CENTER third and slightly above center (the image is cropped to wide and narrow banners and dark text sits on the lower part), with darker, calmer lower 30%. SCENE: an impossibly tall dark spire tower rising into a stormy sky pierced by light, endless floors with glowing windows spiraling up, lightning and clouds around its summit, viewed from its base on a cliff"
+ }
+}

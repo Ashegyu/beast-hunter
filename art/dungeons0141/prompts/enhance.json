@@ -1,0 +1,27 @@
+{
+  "id": "enhance",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production UI illustration (a wide landscape banner) for a dark fantasy 2D action RPG dungeon select screen. Image1 is an existing illustration of this game: match its painterly dark fantasy rendering, dramatic warm/cool rim lighting, deep shadows, atmospheric haze and level of detail; never copy its subject. Create ONE opaque landscape image, 3:2 aspect (about 1536x1024), a single scene with no characters, no people, no text, no letters, no logo, no UI, no frame or border. Keep the main subject in the CENTER third and slightly above center (the image is cropped to wide and narrow banners and dark text sits on the lower part), with darker, calmer lower 30%. SCENE: a colossal dwarven iron foundry forge hall, molten metal pouring from a giant crucible, glowing refining stones on an anvil, armored iron golem silhouettes standing guard, sparks and orange heat glow",
+  "referenceImages": [
+    {
+      "path": "dist/assets/growth-forge-v042.webp",
+      "sha256": "bb1e7e037225c4fa732abfdf4ea98016a948d0589462c92d6f98db5b08d41334"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1536,
+        1024
+      ],
+      "seconds": 85,
+      "sha256": "ee452b3983df6314fe27c7077e794587b7887dc69f814d9385d7f6b3f2b62c55"
+    }
+  ],
+  "final": {
+    "path": "art/dungeons0141/enhance.png",
+    "sha256": "ee452b3983df6314fe27c7077e794587b7887dc69f814d9385d7f6b3f2b62c55"
+  }
+}

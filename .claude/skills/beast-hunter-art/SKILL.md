@@ -20,6 +20,8 @@ CLAUDE.md에서 옮겨 온 작업 메모. 내용이 바뀌면 이 파일을 고�
 - 생성본은 반드시 눈으로 검수한다(모아보기 이미지를 만들어 Read). 자동 검사는 배치만 본다. 실패 시도는 `art/*/.codex-work/`(gitignore).
 - 대기 루프에서 `pgrep -f "tools/codex-monster-sheet.py"`를 쓰면 루프 자신과 일치해 끝나지 않는다. `pkill -f`도 같은 이유로 셸을 죽일 수 있다.
 
+- 장면(0.141): `"kind":"scene"`(불투명 가로 그림, 폭 1024 이상·가로가 세로의 1.3배 이상) 사양 `art/dungeons0141/scenes.json` → `python3 tools/pack-dungeons0141.py`(768×512 webp). UI 배경으로 쓰는 그림은 '가운데 위쪽에 주제, 아래 30%는 어둡게, 글자·인물 없음'을 프롬프트에 넣는다.
+
 ## tools/ (0.140: `set-module-version.py X.Y.Z` = dist 전체 모듈 쿼리 통일·버전 올리기)
 
 ## tools/ 원래 목록 (0.130.1 정리 후 16개, 0.131에서 simulate-campaign0131, 0.136에서 benchmark-bossrush0136 추가)

@@ -1,0 +1,27 @@
+{
+  "id": "promote",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production UI illustration (a wide landscape banner) for a dark fantasy 2D action RPG dungeon select screen. Image1 is an existing illustration of this game: match its painterly dark fantasy rendering, dramatic warm/cool rim lighting, deep shadows, atmospheric haze and level of detail; never copy its subject. Create ONE opaque landscape image, 3:2 aspect (about 1536x1024), a single scene with no characters, no people, no text, no letters, no logo, no UI, no frame or border. Keep the main subject in the CENTER third and slightly above center (the image is cropped to wide and narrow banners and dark text sits on the lower part), with darker, calmer lower 30%. SCENE: an ancient colosseum trial arena at dusk, a raised stone ring with banners and a single heroic sword planted in the center pedestal, elite monster banners and torches, crimson and gold light",
+  "referenceImages": [
+    {
+      "path": "dist/assets/growth-forge-v042.webp",
+      "sha256": "bb1e7e037225c4fa732abfdf4ea98016a948d0589462c92d6f98db5b08d41334"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1536,
+        1024
+      ],
+      "seconds": 70,
+      "sha256": "028a5ee880eee96ddacc960ec32adf3de3b25bac499ee235d987f35ca6d7a4ae"
+    }
+  ],
+  "final": {
+    "path": "art/dungeons0141/promote.png",
+    "sha256": "028a5ee880eee96ddacc960ec32adf3de3b25bac499ee235d987f35ca6d7a4ae"
+  }
+}

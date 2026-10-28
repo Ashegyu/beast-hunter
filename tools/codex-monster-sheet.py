@@ -5,7 +5,8 @@ Usage:
 
 SPEC.json maps an id to {"out", "style", "subject", "reference"?} for a 25-pose sheet,
 or {"kind": "terrain", "out", "style", "prompt"} for one opaque square ground tile,
-or {"kind": "sprite", "minParts", "out", "style", "prompt"} for a transparent props/effects sheet.
+or {"kind": "sprite", "minParts", "out", "style", "prompt"} for a transparent props/effects sheet,
+or {"kind": "scene", "out", "style", "prompt"} for one opaque landscape illustration (UI banners, Alpha 0.141).
 Each run asks Codex to generate one sheet and copy the PNG to `out`. The sheet is
 accepted only when it has real transparency and 25 separate full-body poses in a
 5x5 layout; otherwise it is regenerated (up to --attempts). Prompts, reference
@@ -60,6 +61,17 @@ def validate_terrain(path):
         return False, {'reason': 'not a large square tile', 'size': im.size}
     if (alpha < 255).mean() > .001:
         return False, {'reason': 'terrain must be opaque', 'size': im.size}
+    return True, {'size': im.size}
+
+
+def validate_scene(path):
+    im = Image.open(path)
+    w, h = im.size
+    alpha = np.array(im.convert('RGBA'))[:, :, 3]
+    if w < 1024 or w < h * 1.3:
+        return False, {'reason': 'not a large landscape image', 'size': im.size}
+    if (alpha < 255).mean() > .001:
+        return False, {'reason': 'scene must be opaque', 'size': im.size}
     return True, {'size': im.size}
 
 
@@ -125,7 +137,8 @@ def generate(species, spec, attempts):
     images = [ROOT / spec['style']] + ([ROOT / spec['reference']] if spec.get('reference') else [])
     terrain = spec.get('kind') == 'terrain'
     sprite = spec.get('kind') == 'sprite'
-    prompt = spec['prompt'] if terrain or sprite else build_prompt(spec)
+    scene = spec.get('kind') == 'scene'
+    prompt = spec['prompt'] if terrain or sprite or scene else build_prompt(spec)
     log = []
     for attempt in range(1, attempts + 1):
         target = work / f'{species}-try{attempt}.png'
@@ -143,7 +156,7 @@ def generate(species, spec, attempts):
         if not target.exists():
             log.append({'attempt': attempt, 'ok': False, 'reason': 'no image produced', 'seconds': round(time.time() - started)})
             continue
-        ok, details = validate_terrain(target) if terrain else validate_sprite(target, spec['minParts']) if sprite else validate(target)
+        ok, details = validate_terrain(target) if terrain else validate_scene(target) if scene else validate_sprite(target, spec['minParts']) if sprite else validate(target)
         log.append({'attempt': attempt, 'ok': ok, **details, 'seconds': round(time.time() - started), 'sha256': sha256(target)})
         print(species, attempt, ok, details, flush=True)
         if ok:
