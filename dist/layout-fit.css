@@ -573,3 +573,7 @@
 #game-shell #dungeon-growth-cards .dungeon-card>span{gap:2px!important}
 #game-shell #dungeon-growth-cards .dungeon-card strong{font-size:clamp(11px,1.5vw,15px)!important}
 #game-shell #dungeon-growth-cards .dungeon-card em{font-size:9px!important;line-height:1.3!important}
+/* Alpha 0.141 초월 탭: 단련 줄과 같은 모양, 맨 위에 초월 레벨 한 줄 */
+#game-shell #growth-transcend .transcend-level{grid-column:1/-1;margin:0;padding:2px 4px;font-size:11px;line-height:1.4;color:#d8bc8b}
+#game-shell #growth-transcend[hidden]{display:none!important}
+#game-shell #growth-transcend{grid-template-rows:auto repeat(2,minmax(0,1fr))!important}

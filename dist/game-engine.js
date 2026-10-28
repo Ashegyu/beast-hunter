@@ -35,6 +35,8 @@ import { CHAPTERS, CHAPTERS_PER_THEME, THEMES, THREAT, modeScale, MODE_CHAPTERS,
 import { STAGES_PER_CHAPTER, battlePlan, stageWaveCount, waveComposition } from './battle-plans.js?v=0.140.0';
 import { RAID_POWER_ROLL, raidPowerRoll } from './loot.js?v=0.140.0';
 import * as growth from './growth.js?v=0.140.0';
+import * as transcend from './transcendence.js?v=0.140.0';
+export {TRANSCEND,TRANSCEND_IDS,TRANSCEND_STEPS,transcendNeeded,transcendLevel,transcendProgress,transcendEffective,transcendPoints,transcendPointsTotal,transcendBonus,transcendStatus} from './transcendence.js?v=0.140.0';
 export * from './growth.js?v=0.140.0';
 import * as stars from './stage-stars.js?v=0.140.0';
 import * as seals from './seals.js?v=0.140.0';
@@ -128,7 +130,7 @@ export function growthXp(profile,value){
  return Math.min(Number.MAX_SAFE_INTEGER,awarded+remaining);
 }
 export function createProfile(now=Date.now()){
-  return {version:PROFILE_VERSION,dungeonProgress:emptyDungeonProgress(),raids:emptyRaidProgress(),bossRush:rush.emptyRushProgress(),beastSkills:{},battleSerial:0,settledBattleIds:[],activeBattle:null,lastInterruptedBattle:null,selectedBuild:null,characterId:'lirian',equipmentRng:246813579,difficultyProgress:[STAGES.map(()=>0),STAGES.map(()=>0)],nightmareRecords:STAGES.map(()=>0),skillBook:skills.restoreSkillBook(null,1),favoriteItemIds:[],savedBuilds:[null,null,null,null,null],targetCraftId:null,craftTrackerVisible:true,materials:emptyMaterials(),discoveredAncients:[],targetAncientId:null,bossMastery:STAGES.map(()=>-1),lootPity:0,legendaryPity:0,pendingGold:0,pendingMaterials:emptyMaterials(),pendingLoot:[],stageProgress:STAGES.map(()=>0),stageStars:stars.emptyStageStars(STAGES.length),starChests:stars.emptyStageStars(STAGES.length),gold:0,cores:0,level:1,xp:0,training:growth.emptyTraining(),growthTree:[],unlockedStage:1,clearedStage:0,totalKills:0,hunts:0,lastSeenAt:number(now),inventory:[],equipment:emptyEquipment(),nextItemId:1};
+  return {version:PROFILE_VERSION,dungeonProgress:emptyDungeonProgress(),raids:emptyRaidProgress(),bossRush:rush.emptyRushProgress(),beastSkills:{},battleSerial:0,settledBattleIds:[],activeBattle:null,lastInterruptedBattle:null,selectedBuild:null,characterId:'lirian',equipmentRng:246813579,difficultyProgress:[STAGES.map(()=>0),STAGES.map(()=>0)],nightmareRecords:STAGES.map(()=>0),skillBook:skills.restoreSkillBook(null,1),favoriteItemIds:[],savedBuilds:[null,null,null,null,null],targetCraftId:null,craftTrackerVisible:true,materials:emptyMaterials(),transcendXp:0,transcendence:transcend.emptyTranscendence(),discoveredAncients:[],targetAncientId:null,bossMastery:STAGES.map(()=>-1),lootPity:0,legendaryPity:0,pendingGold:0,pendingMaterials:emptyMaterials(),pendingLoot:[],stageProgress:STAGES.map(()=>0),stageStars:stars.emptyStageStars(STAGES.length),starChests:stars.emptyStageStars(STAGES.length),gold:0,cores:0,level:1,xp:0,training:growth.emptyTraining(),growthTree:[],unlockedStage:1,clearedStage:0,totalKills:0,hunts:0,lastSeenAt:number(now),inventory:[],equipment:emptyEquipment(),nextItemId:1};
 }
 const EQUIPMENT_DEFINITIONS=new Map([...ITEM_CATALOG,...ANCIENT_CATALOG,...CRAFTED_CATALOG].map(row=>[row.id,row]));
 function cleanItem(item,version){
@@ -194,6 +196,8 @@ export function restoreProfile(raw,now=Date.now()){
   // Alpha 0.139 악몽 기록: fastest 악몽 boss stage clear in seconds (0 = none), only for chapters whose 악몽 boss fell.
   p.nightmareRecords=STAGES.map(({id})=>p.bossMastery[id-1]>=2?Math.round(clamp(number(data.nightmareRecords?.[id-1],0),0,600)*10)/10:0);
   p.stageStars=stars.cleanStageStars(data.stageStars,STAGES.map(({id})=>Math.max(...[0,1,2].map(d=>completedStages(p,id,d)))));p.starChests=stars.cleanStarChests(data.starChests,p);
+  // Alpha 0.141 초월: only a Lv.200 profile keeps 초월 경험치; ranks never exceed the points it gives.
+  p.transcendXp=p.level>=MAX_LEVEL?integer(data.transcendXp,0,transcend.TRANSCEND_XP_LIMIT):0;p.transcendence=transcend.cleanTranscendence(data.transcendence,transcend.transcendLevel(p.transcendXp));
   p.training=growth.cleanTraining(data.training,p.level);p.growthTree=growth.fitTree(p,data.growthTree);
   p.totalKills=integer(data.totalKills,0,1e9);p.hunts=integer(data.hunts,0,1e7);p.lastSeenAt=clamp(number(data.lastSeenAt,now),0,number(now));
   const seen=new Set();for(const rawItem of (Array.isArray(data.inventory)?data.inventory:[])){const item=cleanItem(rawItem,data.version);if(item&&!seen.has(item.id)&&p.inventory.length<INVENTORY_LIMIT){p.inventory.push(item);seen.add(item.id);}}
@@ -214,7 +218,8 @@ export function restoreProfile(raw,now=Date.now()){
   for(const item of p.inventory)discoverAncient(p,item);p.nextItemId=Math.max(integer(data.nextItemId,1,1e9,1),...p.inventory.map(i=>i.id+1));return p;
 }
 export function encodeProfile(profile,now=Date.now()){return JSON.stringify({...profileForSave(profile),lastSeenAt:number(now,profile.lastSeenAt)});}
-function gainXp(p,value){p.xp+=Math.max(0,value);let levels=0;while(p.level<MAX_LEVEL&&p.xp>=xpNeeded(p.level)){p.xp-=xpNeeded(p.level);p.level++;levels++;}if(p.level>=MAX_LEVEL)p.xp=0;return levels;}
+// Past Lv.200 the experience goes to 초월 경험치 (Alpha 0.141).
+function gainXp(p,value){p.xp+=Math.max(0,value);let levels=0;while(p.level<MAX_LEVEL&&p.xp>=xpNeeded(p.level)){p.xp-=xpNeeded(p.level);p.level++;levels++;}if(p.level>=MAX_LEVEL){p.transcendXp=Math.min(transcend.TRANSCEND_XP_LIMIT,(p.transcendXp??0)+p.xp);p.xp=0;}return levels;}
 export function collectOffline(p,now=Date.now()){
   const minutes=Math.floor(clamp((number(now)-p.lastSeenAt)/60000,0,240));p.lastSeenAt=number(now,p.lastSeenAt);
   if(!p.clearedStage||!minutes)return{minutes:0,gold:0,xp:0};const gold=minutes*2*p.clearedStage,xp=growthXp(p,minutes*p.clearedStage);p.gold+=gold;gainXp(p,xp);return{minutes,gold,xp};
@@ -226,9 +231,9 @@ export function equipmentBonuses(p){const result={damage:0,hp:0,speed:0,crit:0,r
 // Pieces worn per region set (Alpha 0.108), and each set's progress for the UI.
 export function equippedSetCounts(p){const counts={};for(const item of p.inventory??[]){const set=itemSet(item);if(set&&isEquippedItem(p,item))counts[set]=(counts[set]??0)+1;}return counts;}
 export function equippedSets(p){const counts=equippedSetCounts(p);return Object.entries(counts).map(([id,count])=>({set:EQUIPMENT_SETS[id],count,active:EQUIPMENT_SETS[id].bonuses.filter(b=>count>=b.pieces)})).sort((a,b)=>b.count-a.count);}
-export function playerStats(p){const b=equipmentBonuses(p),t=growth.trainingRanks(p),tree=growth.treeBonus(p),base=growth.levelGrowth(p.level),attackSpeed=1+base.attackSpeed+t.tempo*.01+tree.attackSpeed+b.attackSpeed/100;return{
-  maxHp:(150+(p.level-1)*6+base.hp+t.vitality*12+b.hp)*(1+b.hpPct+tree.hpPct),
-  damage:(24*(1+(p.level-1)*.035+base.damage+t.power*.05)+b.damage)*(1+b.damagePct+tree.damagePct),
+export function playerStats(p){const b=equipmentBonuses(p),t=growth.trainingRanks(p),tree=growth.treeBonus(p),tr=transcend.transcendBonus(p),base=growth.levelGrowth(p.level),attackSpeed=1+base.attackSpeed+t.tempo*.01+tree.attackSpeed+b.attackSpeed/100;return{
+  maxHp:(150+(p.level-1)*6+base.hp+t.vitality*12+b.hp)*(1+b.hpPct+tree.hpPct+tr.hpPct),
+  damage:(24*(1+(p.level-1)*.035+base.damage+t.power*.05)+b.damage)*(1+b.damagePct+tree.damagePct+tr.damagePct),
   range:135*(1+base.range+tree.range+b.range/100),speed:280*(1+base.speed+t.stride*.01+tree.speed+b.speed/100),
   attackDuration:.32/attackSpeed,attackSpeed,
   thunderCooldown:4.8,thunderDamage:62+b.damage*1.8,
@@ -472,6 +477,9 @@ export function returnToCamp(s){if(s.phase==='camp'||s.settlement)return false;f
 export function resultReady(s){return s.phase==='victory'&&s.resultDelay<=0||s.phase==='defeat'&&(s.run.timedOut||s.player.actionTime>=ACTION_DURATIONS.death);}
 // Alpha 0.131 성장: 능력치 단련 and 성장 트리 are changed in camp only.
 export function trainStat(s,id){if(s.phase!=='camp'||!growth.train(s.profile,id))return false;refreshStats(s,true);return true;}
+// Alpha 0.141 초월: camp only, free reset like 능력치 단련.
+export function trainTranscend(s,id){const p=s.profile;if(s.phase!=='camp'||transcend.transcendStatus(p,id))return false;p.transcendence[id]=(p.transcendence[id]??0)+1;refreshStats(s,true);return true;}
+export function resetTranscendence(s){if(s.phase!=='camp')return false;s.profile.transcendence=transcend.emptyTranscendence();refreshStats(s,true);return true;}
 export function resetTrainingStats(s){if(s.phase!=='camp')return false;growth.resetTraining(s.profile);refreshStats(s,true);return true;}
 export function learnGrowthNode(s,id){if(s.phase!=='camp'||!growth.learnNode(s.profile,id))return false;refreshStats(s,true);return true;}
 // Alpha 0.132 별 상자: camp only; rewards go straight to the profile.
@@ -698,7 +706,7 @@ function kill(s,e,inscriptions=s.buildEffects,explode=true){if(e.dead)return;e.d
 
 }
 function damageEnemy(s,e,value,critical=false,kind='normal',origin=s.player,piercing=false,synergy=null,swing=null){
-  if(!eligible(s,e)||s.phase!=='playing'||s.settlement)return 'miss';value*=1+ancientBuff(s,'fury');
+  if(!eligible(s,e)||s.phase!=='playing'||s.settlement)return 'miss';value*=1+ancientBuff(s,'fury');if(e.boss)value*=1+transcend.transcendBonus(s.profile).bossDamage;
   // 관문 '방어 태세': damage taken is cut; while a defense-rule boss shows its weak point the cut shrinks by the build's
   // counter (a full burst build ignores it there, an unprepared one barely notices the opening) (0.135).
   if(e.gateGuard)value/=e.boss&&ruleOf(s)==='defense'&&s.run.time%12>=8?1+(e.gateGuard-1)*(1-(e.gateCounter??0)):e.gateGuard;

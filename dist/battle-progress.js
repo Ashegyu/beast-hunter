@@ -2,7 +2,7 @@ import {restoreEquipment} from './equipment-slots.js?v=0.140.0';
 // A stage owns uncommitted rewards. The profile identity stays stable for the UI.
 // Checkpoints are runtime-only; saves serialize the pre-stage state until settlement.
 const journals=new WeakMap();
-const REWARD_FIELDS=['stageStars','gold','cores','level','xp','training','growthTree','skillBook','inventory','materials','pendingGold','pendingMaterials','pendingLoot','totalKills','lootPity','legendaryPity','discoveredAncients','stageProgress','difficultyProgress','bossMastery','clearedStage','unlockedStage','dungeonProgress','nightmareRecords'];
+const REWARD_FIELDS=['stageStars','gold','cores','level','xp','transcendXp','training','transcendence','growthTree','skillBook','inventory','materials','pendingGold','pendingMaterials','pendingLoot','totalKills','lootPity','legendaryPity','discoveredAncients','stageProgress','difficultyProgress','bossMastery','clearedStage','unlockedStage','dungeonProgress','nightmareRecords'];
 const PROGRESS_FIELDS=['stageStars','stageProgress','difficultyProgress','bossMastery','clearedStage','unlockedStage','dungeonProgress','nightmareRecords'];
 const RUN_FIELDS=['gold','cores','xp','xpBonus','trainingGold','items','stageItems','monsterItems','autoSalvaged','materials'];
 export const stageTransactionId=s=>s.run.battleId+':'+s.run.stage;
