@@ -54,7 +54,7 @@ let bagPageSize=20,bagMaterialPageSize=20;
 let workshopItemId=null,workshopMode='enhance',workshopFeedback='';
 let bagDetailReadId=null,bagDetailPage=0,bagDetailReadKey='',bagDetailPages=[];
 let bagSelectedId=null,bagSlot='all',bagSort='pickup',favoritesOnly=false,bagOrganizing=false,bagSelectedIds=new Set(),bagReviewIds=null,bagFeedback='',bagRenderKey='';
-let buildTab=0,retryPlan=null,inscriptionKey='',buildUiRevision=0,buildUiRendered='';
+let buildTab=0,retryPlan=null,buildUiRevision=0,buildUiRendered='';
 const buildNameDrafts=Array(5).fill(null);
 let inventoryPanel='gear',bagFiltersOpen=false,bagDetailReturn=null;
 let choiceIds=[],campChoices=false,inventoryOpen=false,previousModal='',heldAttacks=new Set();
@@ -1629,7 +1629,7 @@ function refreshBuildSystem(){
  const ruleText=state.settlement?'보상 저장 중 · 저장을 마치면 진행합니다':rule&&rule.type!=='normal'?(rule.type==='dungeon'?'성장 던전':rule.type==='raid'?'레이드':game.STAGE_TYPE_NAMES[rule.type])+' · '+rule.name+' · '+(rule.type==='raid'?'추천 '+rule.hint:rule.hint+(rule.required?' 필요':' 유리')):'';const gateHud=!state.settlement&&state.run.gate?game.GATE_TYPES[state.run.gate.type].name+' · '+game.gateText(state.run.gate).split(' · ')[1]:'',hudRule=[gateHud,ruleText].filter(Boolean).join(' | ');if($('stage-rule-hud').textContent!==hudRule)$('stage-rule-hud').textContent=hudRule;
 
  if(state.phase==='playing'&&!inventoryOpen)return;
- const uiKey=buildUiRevision+':'+state.phase+':'+buildTab+':'+inventoryOpen+':'+$('inscription-item').value+':'+$('inscription-effect').value+':'+!!retryPlan;if(uiKey===buildUiRendered)return;buildUiRendered=uiKey;
+ const uiKey=buildUiRevision+':'+state.phase+':'+buildTab+':'+inventoryOpen+':'+!!retryPlan;if(uiKey===buildUiRendered)return;buildUiRendered=uiKey;
  const selected=profile.selectedBuild!==null?profile.savedBuilds[profile.selectedBuild]:null,current=selected?.name??null,match=!!selected&&JSON.stringify(selected.equipment)===JSON.stringify(profile.equipment)&&JSON.stringify(selected.skill)===JSON.stringify({loadout:profile.skillBook.loadout,auto:profile.skillBook.auto,awakening:profile.skillBook.awakening});
  $('build-current').textContent='현재 · '+(current??'사용자 조합')+(current&&!match?' · 변경됨':'');$('build-retry').hidden=!retryPlan;
  for(let n=0;n<5;n++){
@@ -1644,14 +1644,9 @@ function refreshBuildSystem(){
   $('build-save-'+n).disabled=state.phase!=='camp';$('build-delete-'+n).disabled=!b||state.phase!=='camp';
  }
  for(const id of ['entry-build','home-entry-build'])if(document.activeElement!==$(id))$(id).value=!match?'current':String(profile.selectedBuild);
- const key=profile.inventory.map(i=>i.id+':'+(i.inscription??'')).join(',');if(key!==inscriptionKey){const previous=$('inscription-item').value;inscriptionKey=key;$('inscription-item').replaceChildren(...profile.inventory.map(i=>{const o=document.createElement('option');o.value=String(i.id);o.textContent=game.SLOTS[i.slot]+' · '+i.name+(i.inscription?' ['+game.BUILD_EFFECTS[i.inscription].name+']':'');return o;}));if(profile.inventory.some(i=>String(i.id)===previous))$('inscription-item').value=previous;}
- const status=game.inscriptionStatus(profile,Number($('inscription-item').value),$('inscription-effect').value);
- $('inscription-description').textContent=game.buildEffectText($('inscription-effect').value);$('inscription-cost').textContent=game.INSCRIPTION_COST.gold.toLocaleString('ko-KR')+' 골드'+Object.entries(game.INSCRIPTION_COST.materials).map(([id,n])=>' · '+game.MATERIAL_BY_ID[id].name+' '+n).join('');$('inscription-apply').disabled=state.phase!=='camp'||!status.ok;
 }
 for(let n=0;n<5;n++)$('build-name-'+n).addEventListener('input',()=>{buildNameDrafts[n]=$('build-name-'+n).value;});
 for(let n=0;n<5;n++)$('build-tab-'+n).addEventListener('click',()=>{buildTab=n;bagRenderKey='';updateHud();});
-for(const id of ['inscription-item','inscription-effect'])$(id).addEventListener('change',refreshBuildSystem);
-$('inscription-apply').addEventListener('click',()=>{const r=game.inscribeItem(state,Number($('inscription-item').value),$('inscription-effect').value);$('inscription-feedback').textContent=r.reason;if(r.ok)save();bagRenderKey='';updateHud();});
 for(const id of ['entry-build','home-entry-build'])$(id).addEventListener('change',()=>{if($(id).value==='current')return;const r=game.applyBuild(state,Number($(id).value));bagFeedback=r.reason;if(r.ok){appearance=equippedDesigns(profile);save();}bagRenderKey='';skillRenderKey='';updateHud();});
 $('result-build').addEventListener('click',()=>{if(!game.resultReady(state))return;retryPlan={chapter:state.stageId,stage:state.run.stage,difficulty:state.difficulty,dungeon:state.run.dungeonId,raid:state.run.raidId,rush:!!state.run.rush};returnCamp();openInventory('build');});
 $('build-retry').addEventListener('click',()=>{if(!retryPlan||state.phase!=='camp')return;const p=retryPlan;retryPlan=null;inventoryOpen=false;if(p.raid)startRaid(p.raid);else if(p.rush)startRush();else if(p.dungeon)startDungeon(p.dungeon,p.stage);else start(p.chapter,p.stage,p.difficulty);});
