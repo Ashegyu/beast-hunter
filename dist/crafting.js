@@ -18,6 +18,25 @@ export const MATERIALS=Object.freeze([
  {id:'promotionStone',name:'승급석',color:'#f0d586',promotion:true,normal:.02,elite:.2,boss:1,quantity:[1,1,3],where:'승급 던전 확정 보상 / 모든 사냥터 · 일반 2% / 정예 20% / 보스 100% · 1 / 1 / 3개'},
  {id:'sealShard',name:'인장 조각',color:'#ffd27a',normal:0,elite:0,boss:0,where:'보스 러시 보상 · 인장 분해 · 인장 성장에 사용'},
 ].map(r=>Object.freeze({...r,quantity:Object.freeze(r.quantity??[1,1,1])})));
+// Alpha 0.141 재료 도감: what each material is for and which dungeon also pays it (the field `where` lists the hunting grounds).
+const MATERIAL_INFO=Object.freeze({
+ boneIron:{text:'괴수의 뼈에 스민 쇠. 고유 장비의 뼈대가 된다.',use:'고유 장비 제작',dungeon:'괴수 해체장'},
+ hide:{text:'오래 버틴 괴수의 단단한 가죽.',use:'고유 장비 제작',dungeon:'괴수 해체장'},
+ crystal:{text:'괴수 몸속에서 굳은 이형의 결정.',use:'고유 장비 제작 · 승급 던전 보상',dungeon:'괴수 해체장 · 정예의 시련'},
+ root:{text:'붉은 숲 수호령이 남긴 뿌리.',use:'고유 장비 제작',dungeon:'괴수 해체장(5단계부터 돌아가며)'},
+ seal:{text:'어둠의 심연 망자들의 왕이 찍던 인장.',use:'고유 장비 제작',dungeon:'괴수 해체장(5단계부터 돌아가며)'},
+ tear:{text:'불과 얼음의 땅 빙룡이 흘린 눈물.',use:'고유 장비 제작',dungeon:'괴수 해체장(5단계부터 돌아가며)'},
+ source:{text:'모든 형태가 시작되는 원질의 핵.',use:'고유 장비 제작',dungeon:'괴수 해체장(50단계마다 1개)'},
+ origin:{text:'이름 없는 기원. 보스에게서만 아주 드물게 나온다.',use:'고유 장비 제작',dungeon:''},
+ refineStone:{text:'장비를 벼리는 기본 숫돌.',use:'장비 강화',dungeon:'철갑의 제련소'},
+ refineCrystal:{text:'강화를 깊게 새기는 정제된 결정.',use:'장비 강화(높은 단계)',dungeon:'철갑의 제련소(4단계부터)'},
+ refineEssence:{text:'한계를 넘는 강화에 쓰는 순수한 결정.',use:'장비 강화(최고 단계)',dungeon:'철갑의 제련소(7단계부터)'},
+ skillPage:{text:'옛 검사들의 검술을 적은 책.',use:'스킬 연구 · 스킬 갈래 해금',dungeon:'잔상의 수련장'},
+ promotionStone:{text:'최대 강화 장비를 한 등급 위로 올리는 돌.',use:'장비 승급',dungeon:'정예의 시련'},
+ sealShard:{text:'인장을 이루는 조각.',use:'인장 성장',dungeon:'보스 러시 · 인장 분해'},
+});
+export const materialInfo=id=>MATERIAL_INFO[id]??null;
+export const MATERIAL_ICON_INDEX=Object.freeze(Object.fromEntries(MATERIALS.map((r,n)=>[r.id,n])));
 export const MATERIAL_BY_ID=Object.freeze(Object.fromEntries(MATERIALS.map(r=>[r.id,r])));
 export const emptyMaterials=()=>Object.fromEntries(MATERIALS.map(r=>[r.id,0]));
 export function materialChance(row,{tier,boss=false,elite=false}){return row.tier&&row.tier!==tier?0:row[boss?'boss':elite?'elite':'normal'];}

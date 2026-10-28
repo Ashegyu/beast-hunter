@@ -778,3 +778,55 @@
 #game-shell #growth-stats>header span{grid-column:1/-1;margin:0!important}
 #game-shell #growth-stats .gstat-group{flex:none}
 @media(max-width:700px){#game-shell .gstat-group h4{display:none}#game-shell .gstat{padding:0}#game-shell .gstat dt{font-size:10px}#game-shell .gstat dd b{font-size:11.5px}#game-shell #growth-stats{gap:3px!important;padding:6px 8px!important}#game-shell #growth-stats>header strong{grid-column:1/-1;font-size:11px!important}}
+/* Alpha 0.141 재료 도감(사용자 요청): 재료 추적 창·전투 중 추적 막대 대신 도감 '재료' 탭. 왼쪽 14종 격자, 오른쪽 상세(얻는 곳·던전·쓰는 곳·제작 목표·사냥터 바로가기).
+   아이콘은 materials-v0141(7×2, 128px, crafting.js MATERIALS 순서, --mi). */
+#game-shell #craft-tracker{display:none!important}
+#game-shell .mat-icon{display:block;flex:none;width:44px;height:44px;background:url('assets/materials-v0141.webp') no-repeat;background-size:700% 200%;background-position:var(--mx,0%) var(--my,0%);filter:drop-shadow(0 2px 3px #000b)}
+#game-shell #codex-content[data-view=materials] :is(#codex-feature,.archive-gallery,.archive-tools,#codex-filters,.archive-record,.codex-pager,#codex-pages){display:none!important}
+#game-shell #codex-content[data-view=materials] #codex-browser{display:flex!important;flex-direction:column}
+#game-shell #material-codex:not([hidden]){display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:10px;flex:1 1 auto;min-height:0;overflow:hidden;margin-top:6px}
+#game-shell .mat-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));grid-auto-rows:minmax(0,1fr);gap:6px;min-height:0}
+#game-shell#game-shell .mat-card{position:relative;display:grid;justify-items:center;align-content:center;gap:2px;min-height:0!important;padding:4px 2px!important;border:1px solid #9e835355!important;border-radius:7px!important;background:radial-gradient(ellipse at 50% 35%,#2a1c1fcc,#0b0f14e6 70%)!important;background-image:radial-gradient(ellipse at 50% 35%,#2a1c1fcc,#0b0f14e6 70%)!important;color:#e6dccb!important;box-shadow:none!important}
+#game-shell#game-shell .mat-card::before,#game-shell#game-shell .mat-card::after{display:none!important}
+#game-shell .mat-card .mat-icon{width:38px;height:38px}
+#game-shell .mat-card strong{font-size:10px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+#game-shell .mat-card b{font-size:11px;color:#ffe3a8}
+#game-shell#game-shell .mat-card[data-rare=true]{border-color:#c98d3c88!important}
+#game-shell#game-shell .mat-card[data-goal=missing]::after{content:''!important;display:block!important;position:absolute;top:4px;right:4px;width:7px;height:7px;border-radius:50%;background:#e0503a;box-shadow:0 0 6px #e0503a}
+#game-shell#game-shell .mat-card[data-goal=ready] b{color:#8fe08f}
+#game-shell#game-shell .mat-card[aria-pressed=true]{border-color:#f2c97a!important;background-image:radial-gradient(ellipse at 50% 35%,#6a2a2acc,#1a0e12ee 75%)!important;box-shadow:0 0 0 1px #2a1408,0 0 12px #e0a04a66!important}
+#game-shell .mat-detail{display:flex;flex-direction:column;gap:6px;min-height:0;overflow:hidden;padding:10px 12px;border:1px solid #9e835366;border-radius:8px;background:linear-gradient(180deg,#160f12ee,#0b0f14ee)}
+#game-shell .mat-detail header{display:flex;align-items:center;gap:10px}
+#game-shell .mat-detail header .mat-icon{width:64px;height:64px}
+#game-shell .mat-detail header small{font-size:10px;color:#c98d3c;letter-spacing:.5px}
+#game-shell .mat-detail header h3{margin:1px 0;font:700 17px/1.2 var(--serif,serif);color:#ffe3a8}
+#game-shell .mat-detail header b{font-size:12px;color:#e6dccb}
+#game-shell #mat-detail-text{margin:0;font-size:11px;line-height:1.45;color:#b9bfb7}
+#game-shell .mat-detail dl{display:grid;gap:4px;margin:0}
+#game-shell .mat-detail dl>div{display:grid;grid-template-columns:52px minmax(0,1fr);gap:6px;font-size:10.5px;line-height:1.35}
+#game-shell .mat-detail dt{color:#c98d3c}
+#game-shell .mat-detail dd{margin:0;color:#e6dccb}
+#game-shell .mat-routes{display:grid;gap:4px;margin-top:auto}
+#game-shell#game-shell .mat-routes button{min-height:0!important;height:24px!important;padding:0 8px!important;border:1px solid #9e835366!important;border-radius:5px!important;background:#120d10!important;background-image:none!important;color:#ffe7c2!important;font-size:10.5px!important;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:none!important}
+#game-shell#game-shell .mat-routes button:disabled{opacity:.45}
+#game-shell#game-shell .mat-routes button[hidden]{display:none!important}
+@media(max-height:360px){#game-shell .mat-card .mat-icon{width:30px;height:30px}#game-shell .mat-detail header .mat-icon{width:48px;height:48px}#game-shell .mat-detail{padding:6px 8px;gap:4px}#game-shell #mat-detail-text{display:none}}
+#game-shell [style*="--mi:0;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 0;"],#game-shell .mat-icon[style*="--mi:0;"]{--mx:0.0%;--my:0%}
+#game-shell [style*="--mi:1;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 1;"],#game-shell .mat-icon[style*="--mi:1;"]{--mx:16.6667%;--my:0%}
+#game-shell [style*="--mi:2;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 2;"],#game-shell .mat-icon[style*="--mi:2;"]{--mx:33.3333%;--my:0%}
+#game-shell [style*="--mi:3;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 3;"],#game-shell .mat-icon[style*="--mi:3;"]{--mx:50.0%;--my:0%}
+#game-shell [style*="--mi:4;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 4;"],#game-shell .mat-icon[style*="--mi:4;"]{--mx:66.6667%;--my:0%}
+#game-shell [style*="--mi:5;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 5;"],#game-shell .mat-icon[style*="--mi:5;"]{--mx:83.3333%;--my:0%}
+#game-shell [style*="--mi:6;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 6;"],#game-shell .mat-icon[style*="--mi:6;"]{--mx:100.0%;--my:0%}
+#game-shell [style*="--mi:7;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 7;"],#game-shell .mat-icon[style*="--mi:7;"]{--mx:0.0%;--my:100%}
+#game-shell [style*="--mi:8;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 8;"],#game-shell .mat-icon[style*="--mi:8;"]{--mx:16.6667%;--my:100%}
+#game-shell [style*="--mi:9;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 9;"],#game-shell .mat-icon[style*="--mi:9;"]{--mx:33.3333%;--my:100%}
+#game-shell [style*="--mi:10;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 10;"],#game-shell .mat-icon[style*="--mi:10;"]{--mx:50.0%;--my:100%}
+#game-shell [style*="--mi:11;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 11;"],#game-shell .mat-icon[style*="--mi:11;"]{--mx:66.6667%;--my:100%}
+#game-shell [style*="--mi:12;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 12;"],#game-shell .mat-icon[style*="--mi:12;"]{--mx:83.3333%;--my:100%}
+#game-shell [style*="--mi:13;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 13;"],#game-shell .mat-icon[style*="--mi:13;"]{--mx:100.0%;--my:100%}
+#game-shell #codex-content .archive-categories{grid-template-columns:repeat(6,minmax(0,1fr))!important}
+#game-shell #codex-content[data-view=materials] #codex-paging{visibility:hidden!important}
+#game-shell #codex-content[data-view=materials] .archive-categories{margin-bottom:0}
+@media(max-width:700px){#game-shell .mat-grid{grid-template-columns:repeat(4,minmax(0,1fr))}#game-shell .mat-card strong{font-size:9px}#game-shell #material-codex:not([hidden]){grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}}
+#game-shell#game-shell #codex-content[data-view=materials] #codex-browser::after{display:none!important}

@@ -619,7 +619,7 @@ function refreshCampScene(selected){
  $('camp-map-launch').hidden=campDrawer!=='map';$('camp-map-start').disabled=!ready||state.phase!=='camp';$('camp-map-launch-name').textContent=$('hub-route-name').textContent;$('camp-map-launch-meta').textContent=$('hub-route-meta').textContent;
  $('camp-drawer').hidden=!campDrawer;$('hub-ui').hidden=!!campDrawer;$('camp-map-panel').hidden=campDrawer!=='map';$('camp-tactics-panel').hidden=campDrawer!=='tactics';$('tactics-launch').hidden=campDrawer!=='tactics'||selectedStage>profile.clearedStage;$('camp-growth-panel').hidden=campDrawer!=='growth';
  $('camp-dungeons-panel').hidden=campDrawer!=='dungeons';if(campDrawer==='dungeons')refreshDungeons();
- $('camp-drawer-title').textContent=campDrawer==='dungeons'?'성장 던전':campDrawer==='skills'?'스킬 · 빌드':campDrawer==='growth'?'리리안 성장':campDrawer==='more'?'더보기':campDrawer==='tactics'?'전술 · 보스 보상':'사냥터 선택';$('camp-skills-panel').hidden=campDrawer!=='skills';refreshSkills();$('camp-more-panel').hidden=campDrawer!=='more';$('nav-more').setAttribute('aria-expanded',String(campDrawer==='more'));$('more-track').disabled=!game.targetCraft(profile);$('more-track-note').textContent=game.targetCraft(profile)?game.targetCraft(profile).name:'제작창에서 목표를 지정하세요';$('camp-map-launch-tactic').textContent=game.battlePlan(selectedRunStage).tactic;
+ $('camp-drawer-title').textContent=campDrawer==='dungeons'?'성장 던전':campDrawer==='skills'?'스킬 · 빌드':campDrawer==='growth'?'리리안 성장':campDrawer==='more'?'더보기':campDrawer==='tactics'?'전술 · 보스 보상':'사냥터 선택';$('camp-skills-panel').hidden=campDrawer!=='skills';refreshSkills();$('camp-more-panel').hidden=campDrawer!=='more';$('nav-more').setAttribute('aria-expanded',String(campDrawer==='more'));$('more-track').disabled=!game.targetCraft(profile);$('more-track-note').textContent=game.targetCraft(profile)?'제작 목표 · '+game.targetCraft(profile).name:'재료를 얻는 곳과 쓰는 곳';$('camp-map-launch-tactic').textContent=game.battlePlan(selectedRunStage).tactic;
  for(const id of ['hub-map','hub-route','hub-growth','nav-hunt'])$(id).setAttribute('aria-expanded',String(campDrawer===(id==='hub-growth'?'growth':'map')));
 }
 // A physical pointer acts on press. Its later click is compatibility delivery,
@@ -1156,8 +1156,7 @@ function updateHud(){
   }
   $('reward-toast').setAttribute('title',$('reward-title').textContent+' · '+$('reward-meta').textContent);
   refreshCraftGoalHud();
-  if(trackOpen&&(state.phase==='camp'||state.phase==='playing'&&state.paused||game.resultReady(state))){modal('track','재료 수집 여정','재료를 눌러 사냥터를 찾아봐. 전투 중에는 일시정지돼.','CRAFTING JOURNEY');refreshTrack();
-  }else if(craftOpen&&state.phase==='camp'){modal('craft','고유 장비 제작','재료를 모아 나만의 장비를 벼려. 제작은 확정 성공.','THE FORGE');refreshCraft();
+  if(craftOpen&&state.phase==='camp'){modal('craft','고유 장비 제작','재료를 모아 나만의 장비를 벼려. 제작은 확정 성공.','THE FORGE');refreshCraft();
   }else if(codexOpen&&state.phase==='camp'){modal('codex','태초의 유물','고대 장비는 챕터 보스가 드물게 떨어뜨리고, 레이드 고대는 레이드 클리어 때 드물게 나와.','ANCIENT CODEX');refreshCodex();
   }else if(inventoryOpen){
     modal(inventoryPanel==='equipment'?'equipment':'inventory',inventoryPanel==='equipment'?'리리안의 장비':'리리안의 가방','아이콘을 눌러 능력치와 시너지 변화를 비교해.','EQUIPMENT');
@@ -1261,7 +1260,7 @@ if(typeof ResizeObserver==='function'){
 document.fonts?.ready.then(()=>{bagDetailReadKey='';refreshBagDetailReading();});
 resizeViewport();updateHud();boot();requestAnimationFrame(tick);
 
-function openCodex(){if(!ready||state.phase!=='camp')return;trackOpen=false;codexOpen=true;inventoryOpen=false;campChoices=false;codexDetailOpen=false;codexFiltersOpen=false;codexSelection=profile.targetAncientId??codexSelection;codexRenderKey='';updateHud();window.hunterPages?.first($('codex-content'));}
+function openCodex(keepSlot=false){if(!ready||state.phase!=='camp')return;if(keepSlot!==true&&codexSlot==='materials')codexSlot='all';trackOpen=false;craftOpen=false;campDrawer=campDrawer==='more'?'':campDrawer;codexOpen=true;inventoryOpen=false;campChoices=false;codexDetailOpen=false;codexFiltersOpen=false;codexSelection=profile.targetAncientId??codexSelection;codexRenderKey='';updateHud();window.hunterPages?.first($('codex-content'));}
 function openCodexDetail(id,origin){
  if(!codexOpen||state.phase!=='camp'||!game.ANCIENT_CATALOG.some(r=>r.id===id))return;
  codexSelection=id;codexOrigin=origin;codexDetailOpen=true;updateHud();window.hunterPages?.first($('codex-content'));window.hunterPages?.reveal($('codex-detail'));$('codex-list-back').focus({preventScroll:true});
@@ -1288,7 +1287,7 @@ for(let i=0;i<game.ANCIENT_CATALOG.length;i++)$('codex-card-'+i).addEventListene
 $('codex-feature-open').addEventListener('click',()=>{const id=profile.discoveredAncients.filter(id=>game.ANCIENT_CATALOG.some(r=>r.id===id)).at(-1);if(id)openCodexDetail(id,'codex-feature-open');});
 $('codex-filter-toggle').addEventListener('click',()=>{if(!codexOpen)return;codexFiltersOpen=!codexFiltersOpen;updateHud();});
 for(const [id,set]of [['codex-chapter',v=>codexChapter=v],['codex-slot',v=>codexSlot=v],['codex-found',v=>codexFound=v],['codex-sort',v=>codexSort=v]])$(id).addEventListener('change',e=>{set(e.target.value);codexDetailOpen=false;updateHud();});
-for(const slot of ['all','weapon','armor','charm','special'])$('codex-tab-'+slot).addEventListener('click',()=>{codexSlot=slot;codexDetailOpen=false;updateHud();});
+for(const slot of ['all','weapon','armor','charm','special','materials'])$('codex-tab-'+slot).addEventListener('click',()=>{codexSlot=slot;codexDetailOpen=false;updateHud();});
 for(const layout of ['grid','list'])$('codex-view-'+layout).addEventListener('click',()=>{codexLayout=layout;updateHud();});
 $('codex-page-prev').addEventListener('click',()=>{if(codexPage>0){codexPage--;updateHud();}});
 $('codex-page-next').addEventListener('click',()=>{codexPage++;updateHud();});
@@ -1337,14 +1336,15 @@ function codexPageSize(){
 }
 function refreshCodex(){
  const pageSize=codexPageSize(),pageFilter=[codexChapter,codexSlot,codexFound,codexSearch,codexSort,codexLayout].join('|');if(pageFilter!==codexPageFilter){codexPageFilter=pageFilter;codexPage=0;}
- const key=[profile.discoveredAncients.join(','),profile.targetAncientId,codexSelection,codexChapter,codexSlot,codexFound,codexSearch,codexDetailOpen,codexFiltersOpen,codexLayout,codexSort,codexPage,pageSize].join('|');if(key===codexRenderKey)return;codexRenderKey=key;
+ const key=[profile.discoveredAncients.join(','),profile.targetAncientId,codexSelection,codexChapter,codexSlot,codexFound,codexSearch,codexDetailOpen,codexFiltersOpen,codexLayout,codexSort,codexPage,pageSize,codexSlot==='materials'?materialSelected+':'+materialRecipeId+':'+profile.targetCraftId+':'+JSON.stringify(profile.materials)+':'+profile.unlockedStage:''].join('|');if(key===codexRenderKey)return;codexRenderKey=key;
  const found=new Set(profile.discoveredAncients),catalog=game.ANCIENT_CATALOG;let visible=0;
  $('codex-content').setAttribute('data-detail',String(codexDetailOpen));$('codex-browser').hidden=codexDetailOpen;$('codex-detail').hidden=!codexDetailOpen;
  $('codex-filters').hidden=!codexFiltersOpen;$('codex-filter-toggle').setAttribute('aria-expanded',String(codexFiltersOpen));
  $('codex-chapter').value=codexChapter;$('codex-slot').value=codexSlot;$('codex-found').value=codexFound;$('codex-sort').value=codexSort;
  $('codex-filter-dot').hidden=codexChapter==='0'&&codexFound==='all'&&codexSort==='catalog';
  $('codex-filter-caption').textContent=codexChapter==='0'?'필터':codexChapter==='7'?'레이드':game.THEMES[Number(codexChapter)-1].name;
- for(const slot of ['all','weapon','armor','charm','special'])$('codex-tab-'+slot).setAttribute('aria-pressed',String(slot===codexSlot));
+ for(const slot of ['all','weapon','armor','charm','special','materials'])$('codex-tab-'+slot).setAttribute('aria-pressed',String(slot===codexSlot));
+ const mats=codexSlot==='materials';$('codex-content').setAttribute('data-view',mats?'materials':'ancient');$('material-codex').hidden=!mats;if(mats){refreshMaterialCodex();return;}
  for(const layout of ['grid','list'])$('codex-view-'+layout).setAttribute('aria-pressed',String(layout===codexLayout));
  $('codex-grid').setAttribute('data-layout',codexLayout);
  const ordered=catalog.map((row,i)=>({row,i}));
@@ -1400,39 +1400,40 @@ function currentCraftProgress(){
  if(changed)goalCache={id:profile.targetCraftId,gold:profile.gold,inventory:profile.inventory,length:profile.inventory.length,unlocked:profile.unlockedStage,cleared:profile.clearedStage,stages:[...profile.stageProgress],counts:game.MATERIALS.map(m=>profile.materials[m.id]),progress:game.craftProgress(profile)};
  return goalCache.progress;
 }
-function refreshCraftGoalHud(){const progress=currentCraftProgress(),visible=!!progress&&profile.craftTrackerVisible&&state.phase==='playing'&&!state.paused;
- $('craft-tracker').hidden=!visible;$('game-shell').setAttribute('data-craft-tracker',String(visible));
+function refreshCraftGoalHud(){const progress=currentCraftProgress();$('craft-tracker').hidden=true;$('game-shell').setAttribute('data-craft-tracker','false');
  for(const id of ['camp-track','camp-track-note','result-track','result-craft-target'])$(id).hidden=!progress;
  if(!progress)return;const text=progress.recipe.name+' · '+progress.short;
- $('craft-tracker-text').textContent=progress.short;$('craft-tracker-fill').style.width=progress.percent+'%';$('craft-tracker').setAttribute('aria-label','제작 목표 '+text+' · 누르면 전투를 멈추고 상세 보기');
+
  $('camp-track').setAttribute('aria-label','제작 목표 · 수집 상황 · '+progress.short);$('camp-track-note').textContent=text;$('result-craft-target').textContent='제작 목표 · '+text;
 }
-function trackedRecipe(){return game.CRAFTED_CATALOG.find(r=>r.id===trackRecipeId)??game.targetCraft(profile);}
-function closeTrack(){const back=trackReturnCraft;trackOpen=false;trackRecipeId=null;trackReturnCraft=false;craftOpen=back&&state.phase==='camp';updateHud();if(craftOpen)$(trackOrigin).focus({preventScroll:true});}
-function openTrack(recipeId=null,materialId=null){const recipe=typeof recipeId==='string'?game.CRAFTED_CATALOG.find(r=>r.id===recipeId):game.targetCraft(profile);if(!ready||!recipe||!['camp','playing','victory','defeat'].includes(state.phase)||['victory','defeat'].includes(state.phase)&&!game.resultReady(state))return;
- trackReturnCraft=craftOpen;trackRecipeId=recipe.id;if(state.phase==='playing')state.paused=true;audio.suspend();clearInput();inventoryOpen=false;craftOpen=false;codexOpen=false;campChoices=false;trackOpen=true;trackMaterial=materialId;trackViewKey='';save();updateHud();window.hunterPages?.first($('track-content'));if(materialId){window.hunterPages?.reveal($('track-route'));$('track-materials-back').focus({preventScroll:true});}
+// Alpha 0.141 재료 도감 (사용자 요청 '재료 추적 창 없애고 재료 도감으로'): the old 재료 추적 modal and the in-battle tracker are
+// gone. Every former entry (거점·결과·제작·더보기) opens the codex 재료 tab with the material (or the goal's first missing one).
+let materialSelected='boneIron',materialRecipeId=null;
+function trackedRecipe(){return game.CRAFTED_CATALOG.find(r=>r.id===materialRecipeId)??game.targetCraft(profile);}
+function closeTrack(){}
+function openTrack(recipeId=null,materialId=null){
+ const recipe=typeof recipeId==='string'?game.CRAFTED_CATALOG.find(r=>r.id===recipeId):game.targetCraft(profile);if(!ready||state.phase!=='camp')return;
+ materialRecipeId=recipe?.id??null;const progress=recipe?game.craftProgress({...profile,targetCraftId:recipe.id}):null;
+ materialSelected=typeof materialId==='string'&&game.MATERIAL_BY_ID[materialId]?materialId:(progress?.rows.find(r=>!r.ready)??progress?.rows[0])?.material.id??materialSelected;
+ codexSlot='materials';openCodex(true);
 }
-function refreshTrack(){const recipe=trackedRecipe(),progress=recipe?.id===profile.targetCraftId?currentCraftProgress():recipe?game.craftProgress({...profile,targetCraftId:recipe.id}):null;if(!progress){trackOpen=false;updateHud();return;}
- const key=[progress.recipe.id,progress.percent,profile.gold,progress.rows.map(r=>r.have).join(','),progress.owned,profile.unlockedStage,profile.clearedStage,profile.stageProgress.join(','),trackMaterial,profile.craftTrackerVisible,state.phase].join('|');if(key===trackViewKey)return;trackViewKey=key;
- const row=progress.recipe;$('track-kind').textContent=row.id===profile.targetCraftId?'제작 목표':'제작법 미리보기';$('track-craft').textContent=trackReturnCraft?'제작법으로 돌아가기':'목표 제작법 보기';if(!progress.rows.some(r=>r.material.id===trackMaterial))trackMaterial=(progress.rows.find(r=>!r.ready&&r.material.tier)??progress.rows.find(r=>!r.ready)??progress.rows[0]).material.id;
- gearThumbnail($('track-art'),{...row,catalogId:row.id},200,true);$('track-name').textContent=row.name;$('track-progress').textContent=progress.owned?'제작 완료 · 목표 장비를 보유하고 있어.':'재료 '+progress.ready+'/'+progress.total+'종 준비 · '+progress.percent+'%';$('track-progress-fill').style.width=progress.percent+'%';$('track-progressbar').setAttribute('aria-valuenow',String(progress.percent));$('track-status').textContent=progress.reason;
- for(const m of game.MATERIALS){const cost=progress.rows.find(r=>r.material.id===m.id),button=$('track-material-'+m.id);button.hidden=!cost;if(!cost)continue;button.setAttribute('aria-pressed',String(m.id===trackMaterial));button.setAttribute('data-ready',String(cost.ready));$('track-count-'+m.id).textContent=cost.have+' / '+cost.need;$('track-missing-'+m.id).textContent=progress.owned?'제작에 사용 완료':cost.ready?'준비 완료':'부족 '+cost.missing+'개';}
- $('track-gold').textContent=progress.owned?'제작 완료':profile.gold+' / '+row.gold+' 골드 · 가방 '+profile.inventory.length+'/24';$('track-clear').hidden=row.id!==profile.targetCraftId;$('track-hide').hidden=row.id!==profile.targetCraftId;$('track-craft').disabled=state.phase!=='camp';$('track-hide').textContent=profile.craftTrackerVisible?'전투 표시 숨기기':'전투 표시 켜기';
- const material=game.MATERIAL_BY_ID[trackMaterial];$('track-route-title').textContent=material.name+' · 획득 사냥터';$('track-route-info').textContent=material.where;
- const routes=game.craftMaterialRoutes(profile,material.id);for(let n=1;n<=3;n++){const route=routes.find(r=>r.theme===n),button=$('track-route-'+n);button.hidden=!route;if(!route)continue;button.disabled=state.phase!=='camp'||!route.available;$('track-route-name-'+n).textContent=route.name+' · STAGE '+route.stage+' '+({boss:'보스',elite:'정예',normal:'일반 괴수'}[route.source])+' / '+Number((route.chance*100).toFixed(3))+'%'+(route.quantity>1?' · '+route.quantity+'개':'')+(route.reason?' · '+route.reason:'')+(state.phase!=='camp'?' · 거점에서 이동':'');}
- $('track-route-note').textContent='표시 확률은 해당 괴수 처치당 확률이야. 목표 지정으로 확률이 바뀌지 않아. '+(state.phase==='camp'?'사냥터를 누르면 출발 준비로 이동해.':'현재 전투는 멈춰 있어. 돌아가기 → 사냥 계속으로 재개해.');
+function refreshMaterialCodex(){
+ const recipe=trackedRecipe(),progress=recipe?game.craftProgress({...profile,targetCraftId:recipe.id}):null,need=Object.fromEntries((progress?.rows??[]).map(r=>[r.material.id,r]));
+ for(const m of game.MATERIALS){const card=$('mat-card-'+m.id),have=profile.materials[m.id]??0,row=need[m.id];hudText($('mat-name-'+m.id),m.name);hudText($('mat-have-'+m.id),row?have.toLocaleString('ko-KR')+' / '+row.need:have.toLocaleString('ko-KR'));
+  card.setAttribute('aria-pressed',String(m.id===materialSelected));card.setAttribute('data-goal',row?(row.ready?'ready':'missing'):'none');card.setAttribute('data-rare',String(!!m.rare));}
+ const m=game.MATERIAL_BY_ID[materialSelected],info=game.materialInfo(m.id)??{},row=need[m.id];
+ {const n=game.MATERIAL_ICON_INDEX[m.id];$('mat-detail-icon').style.setProperty('--mx',(n%7*100/6)+'%');$('mat-detail-icon').style.setProperty('--my',(Math.floor(n/7)*100)+'%');}hudText($('mat-detail-name'),m.name);hudText($('mat-detail-kind'),m.rare?'희귀 재료':m.refining?'강화 재료':m.promotion?'승급 재료':m.tier?game.THEMES[m.tier-1].name+' 재료':m.id==='skillPage'?'스킬 재료':m.id==='sealShard'?'인장 재료':'제작 재료');
+ hudText($('mat-detail-have'),'보유 '+(profile.materials[m.id]??0).toLocaleString('ko-KR'));hudText($('mat-detail-text'),info.text??'');hudText($('mat-detail-where'),m.where);hudText($('mat-detail-dungeon'),info.dungeon||'없음');hudText($('mat-detail-use'),info.use??'');
+ $('mat-detail-goal-row').hidden=!recipe;if(recipe)hudText($('mat-detail-goal'),recipe.name+' · '+(row?(row.ready?'준비 완료 ':'')+(profile.materials[m.id]??0)+' / '+row.need:'필요 없음'));
+ const routes=m.normal||m.elite||m.boss?game.craftMaterialRoutes(profile,m.id):[];
+ for(let n=1;n<=3;n++){const route=routes.find(r=>r.theme===n),b=$('mat-route-'+n);b.hidden=!route;if(!route)continue;b.disabled=!route.available;hudText(b,route.name+' '+route.stage+'스테이지 · '+({boss:'보스',elite:'정예',normal:'일반'})[route.source]+' '+Math.round(route.chance*1000)/10+'%'+(route.available?' ›':' · '+route.reason));}
 }
-for(const id of ['camp-track','result-track','craft-tracker'])$(id).addEventListener('click',openTrack);
+for(const m of game.MATERIALS)$('mat-card-'+m.id).addEventListener('click',()=>{if(!codexOpen||codexSlot!=='materials')return;materialSelected=m.id;codexRenderKey='';updateHud();});
+for(let n=1;n<=3;n++)$('mat-route-'+n).addEventListener('click',()=>{if(!codexOpen||state.phase!=='camp')return;const route=game.craftMaterialRoutes(profile,materialSelected).find(r=>r.theme===n);if(!route?.available)return;codexOpen=false;navigateCamp('hunt');selectedStage=0;selectChapter(route.chapter);selectedRunStage=route.stage;updateHud();});
+for(const id of ['camp-track','result-track'])$(id).addEventListener('click',()=>openTrack());
 $('craft-target').addEventListener('click',()=>{if(!craftOpen||state.phase!=='camp')return;if(game.setCraftTarget(profile,craftSelected)){craftFeedback='제작 목표 지정 · '+game.targetCraft(profile).name;save();updateHud();}});
-$('craft-track').addEventListener('click',()=>{if(craftOpen){trackOrigin='craft-track';openTrack(craftSelected);}});
-for(const m of game.MATERIALS)$('craft-material-'+m.id).addEventListener('click',()=>{const row=game.CRAFTED_CATALOG.find(r=>r.id===craftSelected);if(!craftOpen||!Object.hasOwn(row.cost,m.id))return;trackOrigin='craft-material-'+m.id;openTrack(craftSelected,m.id);});
-$('track-back').addEventListener('click',closeTrack);
-$('track-materials-back').addEventListener('click',()=>{if(!trackOpen)return;window.hunterPages?.reveal($('track-materials'));const button=$('track-material-'+trackMaterial);window.hunterPages?.reveal(button);button.focus({preventScroll:true});});
-$('track-clear').addEventListener('click',()=>{if(!trackOpen||trackedRecipe()?.id!==profile.targetCraftId)return;game.setCraftTarget(profile,null);trackOpen=false;save();updateHud();});
-$('track-hide').addEventListener('click',()=>{if(!trackOpen||trackedRecipe()?.id!==profile.targetCraftId)return;profile.craftTrackerVisible=!profile.craftTrackerVisible;save();updateHud();});
-$('track-craft').addEventListener('click',()=>{const target=trackedRecipe();if(!target||state.phase!=='camp'||!trackOpen)return;if(trackReturnCraft){closeTrack();return;}trackOpen=false;trackRecipeId=null;craftOpen=true;craftSelected=target.id;if(craftSlot!=='all'&&craftSlot!==target.slot)craftSlot='all';craftFeedback='';craftRenderKey='';updateHud();window.hunterPages?.first($('craft-content'));$('craft-recipe-'+game.CRAFTED_CATALOG.indexOf(target)).focus({preventScroll:true});});
-for(const m of game.MATERIALS)$('track-material-'+m.id).addEventListener('click',()=>{if(!trackOpen)return;const goal=trackedRecipe();if(!goal||!Object.hasOwn(goal.cost,m.id))return;trackMaterial=m.id;updateHud();window.hunterPages?.reveal($('track-route'));$('track-materials-back').focus({preventScroll:true});});
-for(let n=1;n<=3;n++)$('track-route-'+n).addEventListener('click',()=>{if(!trackOpen||state.phase!=='camp')return;const goal=trackedRecipe();if(!goal||!Object.hasOwn(goal.cost,trackMaterial))return;const route=game.craftMaterialRoutes(profile,trackMaterial).find(r=>r.theme===n&&r.available);if(!route)return;launchRevision++;selectedStage=route.chapter;selectedRunStage=route.stage;selectedDifficulty=0;trackOpen=false;craftOpen=false;updateHud();});
+$('craft-track').addEventListener('click',()=>{if(craftOpen)openTrack(craftSelected);});
+for(const m of game.MATERIALS)$('craft-material-'+m.id).addEventListener('click',()=>{const row=game.CRAFTED_CATALOG.find(r=>r.id===craftSelected);if(!craftOpen||!Object.hasOwn(row.cost,m.id))return;openTrack(craftSelected,m.id);});
 
 // Alpha 0.36: home panels mirror the live profile; they never own equipment or progress.
 let homeDashboardKey='';

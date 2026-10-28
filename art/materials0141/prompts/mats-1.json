@@ -1,0 +1,29 @@
+{
+  "id": "mats-1",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production crafting material item icons for a dark fantasy 2D action RPG. Image1 is the existing material icon sheet of this game: match its painterly detailed style, dark outlines, lighting and scale exactly; never copy its items. Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, row 1 cells 1-3, row 2 cells 4-5, and the sixth cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge, filling about 60% of its cell: (1) REFINING STONE: a rough grey whetstone ingot with warm orange forge sparks and glowing amber cracks, (2) PURIFIED CRYSTAL: a cluster of clear violet refined crystals with a soft inner glow, (3) PURE ESSENCE: a radiant golden-orange teardrop gem floating with light particles, (4) SWORD MANUAL: an old leather-bound sword technique book with a silver sword emblem on the cover and a red ribbon bookmark, (5) PROMOTION STONE: a golden ornate hexagonal stone medallion with an upward chevron rune glowing gold. Each item a single object, clearly readable at small icon size and distinct from the others. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "referenceImages": [
+    {
+      "path": "dist/assets/craft-materials-v041.webp",
+      "sha256": "cc23475928a04e5662bad9d471fd0a3f1a20e2ea28c63c51b3fd046a41c47142"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1536,
+        1024
+      ],
+      "transparent": 0.642,
+      "parts": 5,
+      "seconds": 58,
+      "sha256": "85cd8bb97f246a08cbd4ab9cb5177a0c39081d71358dd7caa9c662d84c4d397c"
+    }
+  ],
+  "final": {
+    "path": "art/materials0141/mats-1.png",
+    "sha256": "85cd8bb97f246a08cbd4ab9cb5177a0c39081d71358dd7caa9c662d84c4d397c"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "order": [
+    "boneIron",
+    "hide",
+    "crystal",
+    "root",
+    "seal",
+    "tear",
+    "source",
+    "origin",
+    "refineStone",
+    "refineCrystal",
+    "refineEssence",
+    "skillPage",
+    "promotionStone",
+    "sealShard"
+  ],
+  "sha256": "85cd8bb97f246a08cbd4ab9cb5177a0c39081d71358dd7caa9c662d84c4d397c",
+  "webpBytes": 102186
+}
