@@ -1,7 +1,7 @@
 import {RAIDS,RAID_WEEKLY_ENTRIES,RAID_DAMAGE,raidScale,RAID_ANCIENT_CHANCE,raidDefinition,raidPlan,raidRewards,raidWeek,raidEntriesLeft,raidUnlocked,raidChapter,emptyRaidProgress,raidTierUnlocked,raidTopTier,RAID_TIERS} from './raids.js?v=0.141.0';
 export * from './raids.js?v=0.141.0';
-import {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonPlan,dungeonActors,emptyDungeonProgress,dungeonStageId,towerBonus,TOWER_MAX_FLOOR,emptyDungeonWeek,dungeonRepeatsLeft,isDungeonRepeat,repeatRewards,DUNGEON_WEEKLY_REPEATS,DUNGEON_REPEAT_RATE} from './dungeons.js?v=0.141.0';
-export {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonChapter,DUNGEON_CHAPTER_STEP,dungeonStageId,TOWER,TOWER_MAX_FLOOR,TOWER_BONUS,towerBonus,towerBonusAt,towerChapter,towerFloorKind,towerPlan,DUNGEON_WEEKLY_REPEATS,DUNGEON_REPEAT_RATE,dungeonRepeatsLeft,dungeonRepeatsUsed,isDungeonRepeat,repeatRewards} from './dungeons.js?v=0.141.0';
+import {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonPlan,dungeonActors,emptyDungeonProgress,dungeonStageId,towerBonus,TOWER_MAX_FLOOR,emptyDungeonWeek,dungeonClearsLeft,isDungeonRepeat,repeatRewards,DUNGEON_WEEKLY_CLEARS,DUNGEON_REPEAT_RATE} from './dungeons.js?v=0.141.0';
+export {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonChapter,DUNGEON_CHAPTER_STEP,dungeonStageId,TOWER,TOWER_MAX_FLOOR,TOWER_BONUS,towerBonus,towerBonusAt,towerChapter,towerFloorKind,towerPlan,DUNGEON_WEEKLY_CLEARS,DUNGEON_REPEAT_RATE,dungeonClearsLeft,dungeonClearsUsed,isDungeonRepeat,repeatRewards} from './dungeons.js?v=0.141.0';
 export {THREAT,MODE_CHAPTERS,modeChapter,modeScale} from './chapters.js?v=0.141.0';
 import {beginStageJournal,profileForSave,strictBattle,cancelStageJournal,prepareStageCommit,finishStageJournal,stageTransactionId,ownedAtStageStart} from './battle-progress.js?v=0.141.0';
 import {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_DROP_CHANCE,INSCRIPTION_COST} from './build-effects.js?v=0.141.0';
@@ -196,7 +196,7 @@ export function restoreProfile(raw,now=Date.now()){
   // Alpha 0.139 악몽 기록: fastest 악몽 boss stage clear in seconds (0 = none), only for chapters whose 악몽 boss fell.
   p.nightmareRecords=STAGES.map(({id})=>p.bossMastery[id-1]>=2?Math.round(clamp(number(data.nightmareRecords?.[id-1],0),0,600)*10)/10:0);
   p.stageStars=stars.cleanStageStars(data.stageStars,STAGES.map(({id})=>Math.max(...[0,1,2].map(d=>completedStages(p,id,d)))));p.starChests=stars.cleanStarChests(data.starChests,p);
-  p.tower={best:integer(data.tower?.best,0,TOWER_MAX_FLOOR)};p.dungeonWeek=emptyDungeonWeek();p.dungeonWeek.week=integer(data.dungeonWeek?.week,-1,1e6,-1);for(const d of DUNGEONS)p.dungeonWeek.repeats[d.id]=integer(data.dungeonWeek?.repeats?.[d.id],0,DUNGEON_WEEKLY_REPEATS);
+  p.tower={best:integer(data.tower?.best,0,TOWER_MAX_FLOOR)};p.dungeonWeek=emptyDungeonWeek();p.dungeonWeek.week=integer(data.dungeonWeek?.week,-1,1e6,-1);for(const d of DUNGEONS)p.dungeonWeek.clears[d.id]=integer(data.dungeonWeek?.clears?.[d.id],0,DUNGEON_WEEKLY_CLEARS);
   // Alpha 0.141 초월: only a Lv.200 profile keeps 초월 경험치; ranks never exceed the points it gives.
   p.transcendXp=p.level>=MAX_LEVEL?integer(data.transcendXp,0,transcend.TRANSCEND_XP_LIMIT):0;p.transcendence=transcend.cleanTranscendence(data.transcendence,transcend.transcendLevel(p.transcendXp));
   p.training=growth.cleanTraining(data.training,p.level);p.growthTree=growth.fitTree(p,data.growthTree);
@@ -383,7 +383,7 @@ export function launchBossRush(s,now=Date.now(),view=null){
 }
 export function launchDungeon(s,id,level=1,view=null,now=Date.now()){
  const d=dungeonDefinition(id);if(!d||s.settlement||!['camp','victory','defeat'].includes(s.phase)||!Number.isInteger(level)||level<1||level>dungeonLimit(s.profile,id)||s.profile.battleSerial>=Number.MAX_SAFE_INTEGER)return false;
- const week=raidWeek(now);if(isDungeonRepeat(s.profile,id,level)&&!dungeonRepeatsLeft(s.profile,id,week))return false;
+ const week=raidWeek(now);if(id!=='tower'&&!dungeonClearsLeft(s.profile,id,week))return false;
  const auto=true,durable=s.durable;Object.assign(s,createGame(s.profile,{durable}));s.auto=auto;s.stageId=dungeonStageId(id,level);s.difficulty=0;s.profile.hunts++;s.profile.lastInterruptedBattle=null;s.profile.battleSerial++;
  s.rng=(12345+s.profile.hunts*97+chapterTheme(d.chapter).id*1009+level*41)>>>0;s.lootRng=(s.rng^0x9e3779b9)>>>0;s.phase='playing';s.run.stage=s.run.startStage=level;s.run.dungeonId=id;s.run.dungeonWeek=week;s.run.battleId='b'+s.profile.battleSerial;s.run.buildAtStart=Object.freeze({equipment:Object.freeze({...s.profile.equipment}),skill:skillSelection(s.profile.skillBook)});
  s.spawnView.width=clamp(number(view?.width,720),360,1600);s.spawnView.height=clamp(number(view?.height,1280),400,1800);prepareStage(s);return true;
@@ -1190,7 +1190,7 @@ function completeDungeon(s){
  if(s.settlement||s.run.flow!=='combat')return false;
  if(s.run.dungeonId==='tower')return completeTower(s);
  const id=s.run.dungeonId,repeat=isDungeonRepeat(s.profile,id,s.run.stage),reward=repeat?repeatRewards(dungeonRewards(id,s.run.stage)):dungeonRewards(id,s.run.stage);
- if(repeat){const w=s.profile.dungeonWeek;if(w.week!==s.run.dungeonWeek){w.week=s.run.dungeonWeek;for(const k of Object.keys(w.repeats))w.repeats[k]=0;}w.repeats[id]++;}
+ {const w=s.profile.dungeonWeek;if(w.week!==s.run.dungeonWeek){w.week=s.run.dungeonWeek;for(const k of Object.keys(w.clears))w.clears[k]=0;}w.clears[id]++;}
  s.run.dungeonReward={repeat,gold:Math.min(reward.gold,Math.max(0,1e8-s.profile.gold)),materials:{}};s.profile.gold+=s.run.dungeonReward.gold;s.run.gold+=s.run.dungeonReward.gold;
  for(const [id,n]of Object.entries(reward.materials)){const amount=Math.min(n,Math.max(0,MATERIAL_LIMIT-s.profile.materials[id]));s.profile.materials[id]+=amount;s.run.materials+=amount;if(amount)s.run.materialLedger[id]=(s.run.materialLedger[id]??0)+amount;s.run.dungeonReward.materials[id]=amount;}
  if(reward.xp){const xp=growthXp(s.profile,reward.xp);s.run.xp+=xp;s.run.dungeonReward.xp=xp;if(gainXp(s.profile,xp))refreshStats(s);}

@@ -79,13 +79,15 @@ test('experience dungeon pays its experience once on the win; the crafting dunge
  const s=make();g.launchDungeon(s,'xp',1);finish(s);assert.equal(s.run.dungeonReward.xp,550);assert.equal(s.profile.level,2);assert.equal(s.profile.xp,0);
  const t=make();g.launchDungeon(t,'craft',1);finish(t);assert.deepEqual(t.run.dungeonReward.materials,{boneIron:4,hide:2,crystal:1});
 });
-test('repeat clears pay half and use one of 14 weekly repeats per dungeon; new levels stay free and open; Monday resets',()=>{
+test('every win uses one of 14 weekly clears per dungeon (new levels too); repeats pay half; Monday resets; losses use nothing',()=>{
  const monday=Date.UTC(2026,9,25,15,0,0)+1000; // Monday 00:00:01 KST
- const s=make(),p=s.profile;assert.equal(g.launchDungeon(s,'gold',1,null,monday),true);finish(s);assert.equal(s.run.dungeonReward.repeat,false);assert.equal(p.gold,600);const week=s.run.dungeonWeek;assert.equal(g.dungeonRepeatsLeft(p,'gold',week),14);
- for(let n=0;n<14;n++){g.returnToCamp(s);assert.equal(g.launchDungeon(s,'gold',1,null,monday),true);finish(s);assert.equal(s.run.dungeonReward.gold,300);}
- assert.equal(g.dungeonRepeatsLeft(p,'gold',week),0);g.returnToCamp(s);assert.equal(g.launchDungeon(s,'gold',1,null,monday),false,'no repeats left');assert.equal(g.launchDungeon(s,'gold',2,null,monday),true,'a new level is still open');finish(s);assert.equal(s.run.dungeonReward.gold,800);
- g.returnToCamp(s);assert.equal(g.dungeonRepeatsLeft(p,'enhance',week),14,'per dungeon');assert.equal(g.launchDungeon(s,'gold',1,null,monday+7*864e5),true,'next week');finish(s);assert.equal(g.dungeonRepeatsLeft(p,'gold',week+1),13);
+ const s=make(),p=s.profile;assert.equal(g.launchDungeon(s,'gold',1,null,monday),true);finish(s);assert.equal(s.run.dungeonReward.repeat,false);assert.equal(p.gold,600);const week=s.run.dungeonWeek;assert.equal(g.dungeonClearsLeft(p,'gold',week),13,'a first clear counts too');
+ g.returnToCamp(s);g.launchDungeon(s,'gold',2,null,monday);finish(s);assert.equal(s.run.dungeonReward.gold,800);assert.equal(g.dungeonClearsLeft(p,'gold',week),12);
+ for(let n=0;n<12;n++){g.returnToCamp(s);assert.equal(g.launchDungeon(s,'gold',1,null,monday),true);finish(s);assert.equal(s.run.dungeonReward.gold,300);assert.equal(s.run.dungeonReward.repeat,true);}
+ assert.equal(g.dungeonClearsLeft(p,'gold',week),0);g.returnToCamp(s);assert.equal(g.launchDungeon(s,'gold',1,null,monday),false,'no clears left');assert.equal(g.launchDungeon(s,'gold',3,null,monday),false,'new levels too');
+ assert.equal(g.dungeonClearsLeft(p,'enhance',week),14,'per dungeon');assert.equal(g.launchDungeon(s,'tower',1,null,monday),true,'the tower has no weekly limit');g.returnToCamp(s);
+ assert.equal(g.launchDungeon(s,'gold',3,null,monday+7*864e5),true,'next week');finish(s);assert.equal(g.dungeonClearsLeft(p,'gold',week+1),13);
  const r=g.restoreProfile(g.encodeProfile(p,1000),1000);assert.deepEqual(r.dungeonWeek,p.dungeonWeek);
- const lost=make();g.launchDungeon(lost,'gold',1,null,monday);finish(lost);g.returnToCamp(lost);g.launchDungeon(lost,'gold',1,null,monday);lost.run.timeRemaining=0;g.advanceGame(lost,.025);assert.equal(g.dungeonRepeatsLeft(lost.profile,'gold',week),14,'a loss uses nothing');
+ const lost=make();g.launchDungeon(lost,'gold',1,null,monday);lost.run.timeRemaining=0;g.advanceGame(lost,.025);assert.equal(g.dungeonClearsLeft(lost.profile,'gold',week),14,'a loss uses nothing');
  assert.deepEqual(g.repeatRewards({gold:5,xp:1,materials:{a:1,b:9}}),{gold:2,xp:1,materials:{a:1,b:4},repeat:true});
 });

@@ -41,14 +41,14 @@ export const dungeonDefinition=id=>id==='tower'?TOWER:DUNGEONS.find(d=>d.id===id
 // The chapter whose land and monsters a dungeon level is fought on.
 export const dungeonStageId=(id,level)=>id==='tower'?towerChapter(level):dungeonDefinition(id)?.chapter??1;
 export const emptyDungeonProgress=()=>Object.fromEntries(DUNGEONS.map(d=>[d.id,0]));
-// Alpha 0.141 반복 수급 제한 (사용자 결정 '일주일 횟수로 제한, 첫 클리어 뒤에는 보상을 낮춰'): clearing a level above the
-// best pays in full and is free; clearing a level already cleared pays DUNGEON_REPEAT_RATE of it (rounded down, at least 1
-// of each paid item) and uses one of the dungeon's DUNGEON_WEEKLY_REPEATS for the week (raids' week: Monday 00:00 KST).
-// Entries are counted on the win only (a loss pays nothing). With none left, only new levels can be entered.
-export const DUNGEON_WEEKLY_REPEATS=14,DUNGEON_REPEAT_RATE=.5;
-export const emptyDungeonWeek=()=>({week:-1,repeats:Object.fromEntries(DUNGEONS.map(d=>[d.id,0]))});
-export function dungeonRepeatsUsed(profile,id,week){const w=profile?.dungeonWeek;return w&&w.week===week?w.repeats?.[id]??0:0;}
-export function dungeonRepeatsLeft(profile,id,week){return DUNGEONS.some(d=>d.id===id)?Math.max(0,DUNGEON_WEEKLY_REPEATS-dungeonRepeatsUsed(profile,id,week)):0;}
+// Alpha 0.141 반복 수급 제한 (사용자 결정 '일주일 횟수로 제한, 첫 클리어 뒤에는 보상을 낮춰', 횟수는 새 단계 포함):
+// every win uses one of the dungeon's DUNGEON_WEEKLY_CLEARS for the week (raids' week: Monday 00:00 KST), new level or not.
+// A level above the best pays in full; a level already cleared pays DUNGEON_REPEAT_RATE of it (rounded down, at least 1
+// of each paid item). A loss pays nothing and uses nothing. With no clears left the dungeon cannot be entered this week.
+export const DUNGEON_WEEKLY_CLEARS=14,DUNGEON_REPEAT_RATE=.5;
+export const emptyDungeonWeek=()=>({week:-1,clears:Object.fromEntries(DUNGEONS.map(d=>[d.id,0]))});
+export function dungeonClearsUsed(profile,id,week){const w=profile?.dungeonWeek;return w&&w.week===week?w.clears?.[id]??0:0;}
+export function dungeonClearsLeft(profile,id,week){return DUNGEONS.some(d=>d.id===id)?Math.max(0,DUNGEON_WEEKLY_CLEARS-dungeonClearsUsed(profile,id,week)):0;}
 export const isDungeonRepeat=(profile,id,level)=>id!=='tower'&&level<=(profile?.dungeonProgress?.[id]??0);
 export function repeatRewards(reward){
  if(!reward)return null;const cut=n=>n>0?Math.max(1,Math.floor(n*DUNGEON_REPEAT_RATE)):0;
