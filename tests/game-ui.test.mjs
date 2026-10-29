@@ -1936,12 +1936,24 @@ test('bag rules: grade chips pick the bulk dismantle grade, auto dismantle toggl
 });
 test('results offer the next opened chapter after a boss, and the next dungeon level after a clear',async()=>{
  const p=game.createProfile(1_000_000);p.clearedStage=5;p.unlockedStage=6;const ui=await host({saved:p,campaign:true});ui.state.phase='victory';ui.state.stageId=5;ui.state.run.stage=10;ui.state.difficulty=0;ui.state.resultDelay=0;ui.tick();
- assert.equal(ui.nodes.get('next-stage').hidden,false,'chapter 5 → 6 (the old 3-chapter rule hid it)');assert.match(ui.nodes.get('next-stage').textContent,new RegExp('다음 챕터로 · 6장 '+game.STAGES[5].name));assert.equal(ui.nodes.get('result-next-level').hidden,true);
+ assert.equal(ui.nodes.get('next-stage').hidden,false,'chapter 5 → 6 (the old 3-chapter rule hid it)');assert.match(ui.nodes.get('next-stage').textContent,/^다음 챕터로 · 6장 · 5초$/,'the 5-second countdown (below) shortens the label');assert.equal(ui.nodes.get('next-stage').attributes.title,'다음 챕터로 · 6장 '+game.STAGES[5].name);assert.equal(ui.nodes.get('result-next-level').hidden,true);
  ui.emit('next-stage','click');await ui.settle();assert.equal(ui.state.stageId,6);assert.equal(ui.state.run.stage,1);
  const d=await host({saved:bagFixture(),campaign:true});d.emit('lobby-summon','click');d.emit('dungeon-enter','click');await d.settle();await d.settle();const id=d.state.run.dungeonId;assert.equal(d.state.run.stage,1);finishDungeonUi(d);assert.equal(d.state.phase,'victory');
  assert.equal(d.nodes.get('result-next-level').hidden,false);assert.match(d.nodes.get('result-next-level').textContent,/다음 단계 · 2단계/);assert.match(d.nodes.get('next-stage').textContent,/같은 단계 재도전/);
  d.emit('result-next-level','click');await d.settle();await d.settle();assert.equal(d.state.phase,'playing');assert.equal(d.state.run.dungeonId,id);assert.equal(d.state.run.stage,2);
  assert.match(d.nodes.get('hunt-stage').textContent,/2단계/);
+});
+// Alpha 0.142 (사용자 요청): a won chapter or dungeon level moves on by itself after 5 seconds without input; input stops it.
+test('results move on to the next chapter or dungeon level after 5 seconds without input',async()=>{
+ const won=async()=>{const p=game.createProfile(1_000_000);p.clearedStage=5;p.unlockedStage=6;const ui=await host({saved:p,campaign:true});ui.state.phase='victory';ui.state.stageId=5;ui.state.run.stage=10;ui.state.difficulty=0;ui.state.resultDelay=0;ui.tick();return ui;};
+ const ui=await won();assert.equal(ui.nodes.get('next-stage').textContent,'다음 챕터로 · 6장 · 5초');assert.equal(ui.nodes.get('next-stage').attributes['data-auto'],'true');
+ ui.run(4.5);assert.equal(ui.state.phase,'victory');assert.match(ui.nodes.get('next-stage').textContent,/ · 1초$/);
+ ui.run(.6);await ui.settle();assert.equal(ui.state.stageId,6);assert.equal(ui.state.run.stage,1);
+ const stay=await won();stay.emit('document','pointerdown');stay.run(8);assert.equal(stay.state.phase,'victory','a tap on the result stops it');assert.match(stay.nodes.get('next-stage').textContent,new RegExp('^다음 챕터로 · 6장 '+game.STAGES[5].name+'$'));
+ const key=await won();key.emit('document','keydown',{key:'a',code:'KeyA'});key.run(8);assert.equal(key.state.phase,'victory');
+ const lost=await won();lost.state.phase='defeat';lost.run(8);assert.equal(lost.state.phase,'defeat','a defeat never restarts by itself');
+ const d=await host({saved:bagFixture(),campaign:true});d.emit('lobby-summon','click');d.emit('dungeon-enter','click');await d.settle();await d.settle();const id=d.state.run.dungeonId;finishDungeonUi(d);assert.equal(d.state.phase,'victory');
+ d.tick();assert.match(d.nodes.get('result-next-level').textContent,/다음 단계 · 2단계 · \d초$/);d.run(5.2);await d.settle();await d.settle();assert.equal(d.state.phase,'playing');assert.equal(d.state.run.dungeonId,id);assert.equal(d.state.run.stage,2);
 });
 test('skill branch view: tier tabs show three branches per tier and buy into the chosen tier',async()=>{
  const p=game.createProfile(1_000_000);p.level=200;p.skillBook=game.restoreSkillBook(null,200);p.skillBook.ranks.crescent=14;p.skillBook.ranks.bloodmoon=19;p.materials.skillPage=200;p.gold=1e6;const ui=await host({saved:p,campaign:true});ui.emit('nav-more','click');ui.emit('nav-skills','click');

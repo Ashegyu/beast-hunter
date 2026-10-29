@@ -657,9 +657,28 @@ $('pause').addEventListener('click',togglePause);$('camp-button').addEventListen
 function pauseMenuActive(){return !orientationBlocked&&state.phase==='playing'&&state.paused&&!inventoryOpen&&!trackOpen;}
 $('resume').addEventListener('click',()=>{if(!pauseMenuActive())return;audio.unlock();state.paused=false;clearInput();canvas.focus({preventScroll:true});updateHud();});
 $('retreat').addEventListener('click',()=>{if(pauseMenuActive())returnCamp();});$('result-camp').addEventListener('click',()=>{if(game.resultReady(state))returnCamp();});
-$('next-stage').addEventListener('click',()=>state.run.raidId?startRaid(state.run.raidId):state.run.rush?startRush():state.run.dungeonId?startDungeon(state.run.dungeonId,state.run.stage):state.phase==='defeat'?start(state.stageId,state.run.stage,state.difficulty):resultNextChapter?start(resultNextChapter,1,state.difficulty):state.difficulty?start(state.stageId,1,state.difficulty):start(Math.min(game.STAGES.length,state.stageId+1),1,0));
+function nextStageAction(){autoNextLeft=0;return state.run.raidId?startRaid(state.run.raidId):state.run.rush?startRush():state.run.dungeonId?startDungeon(state.run.dungeonId,state.run.stage):state.phase==='defeat'?start(state.stageId,state.run.stage,state.difficulty):resultNextChapter?start(resultNextChapter,1,state.difficulty):state.difficulty?start(state.stageId,1,state.difficulty):start(Math.min(game.STAGES.length,state.stageId+1),1,0);}
+$('next-stage').addEventListener('click',nextStageAction);
 // Alpha 0.142 결과 창 '다음 단계/다음 층' (사용자 요청): the dungeon or tower one level up.
-$('result-next-level').addEventListener('click',()=>{const id=state.run.dungeonId;if(!id||!resultNextLevel)return;if(id==='tower')selectedTowerFloor=resultNextLevel;else if(id==='rift')selectedRiftDepth=resultNextLevel;else selectedDungeonLevel=resultNextLevel;startDungeon(id,resultNextLevel);});
+function nextLevelAction(){autoNextLeft=0;const id=state.run.dungeonId;if(!id||!resultNextLevel)return;if(id==='tower')selectedTowerFloor=resultNextLevel;else if(id==='rift')selectedRiftDepth=resultNextLevel;else selectedDungeonLevel=resultNextLevel;startDungeon(id,resultNextLevel);}
+$('result-next-level').addEventListener('click',nextLevelAction);
+// Alpha 0.142 결과 창 자동 진행 (사용자 요청 '끝나면 입력이 없으면 5초 뒤 다음 단계로'): a won chapter
+// (the countdown label drops the chapter name so it stays on one line at 568×320) with an open next chapter, or a
+// won dungeon/tower/rift level with the next level open, moves on by itself after AUTO_NEXT_SECONDS of the result screen.
+// Any key, pointer or wheel input on the page stops it for this result; raids, boss rush, defeats and replays never auto-start.
+const AUTO_NEXT_SECONDS=5;let autoNextKey=null,autoNextLeft=0;
+function autoNextTarget(){if(state.phase!=='victory'||state.settlement||!game.resultReady(state)||state.run.raidId||state.run.rush)return null;
+ return state.run.dungeonId?(resultNextLevel?{button:$('result-next-level'),run:nextLevelAction,label:()=>$('result-next-level').textContent}:null):resultNextChapter?{button:$('next-stage'),run:nextStageAction,label:()=>'다음 챕터로 · '+resultNextChapter+'장'}:null;}
+function autoAdvanceResult(dt){
+ const key=state.phase==='victory'?state.run.battleId+':'+profile.hunts:null;if(key!==autoNextKey){autoNextKey=key;autoNextLeft=key?AUTO_NEXT_SECONDS:0;}
+ const target=autoNextLeft>0?autoNextTarget():null;for(const id of ['next-stage','result-next-level']){$(id).setAttribute('data-auto','false');$(id).setAttribute('title','');}
+ if(!target||target.button.hidden)return;autoNextLeft-=dt;
+ if(autoNextLeft<=0){autoNextLeft=0;target.run();return;}
+ target.button.setAttribute('data-auto','true');target.button.setAttribute('title',target.button.textContent);hudText(target.button,target.label()+' · '+Math.ceil(autoNextLeft)+'초');
+}
+// Only input on the shown result counts: taps still landing from the fight during the result delay do not stop it.
+function cancelAutoNext(){if(autoNextLeft>0&&autoNextTarget()){autoNextLeft=0;updateHud();}}
+for(const name of ['pointerdown','keydown','wheel'])document.addEventListener(name,cancelAutoNext,{capture:true,passive:true});
 for(let n=1;n<=game.STAGES_PER_CHAPTER;n++)$('run-stage-'+n).addEventListener('click',()=>{if(ready&&state.phase==='camp'&&n<=game.stageLimit(profile,selectedStage,selectedDifficulty)){launchRevision++;selectedRunStage=n;updateHud();}});
 $('auto').addEventListener('click',()=>{if(orientationBlocked)return;skillMode=skillMode==='auto'?'manual':'auto';try{localStorage.setItem(SKILL_MODE_KEY,skillMode);}catch{}canvas.focus({preventScroll:true});updateHud();});
 for(const id of ['attack']){
@@ -1266,7 +1285,7 @@ function tick(now){
     if(oldPhase==='playing'&&state.phase!=='playing'){suppressHeldSpace=keys.has(' ');clearInput();}if(oldSubstage!==state.run.stage||oldFlow!==state.run.flow&&state.run.flow==='stageClear')clearInput();processAudio();camera=cameraFor(state.player,state.bounds,viewport,GROUND_DEPTH_SCALE);
     // Camp is fully covered by its illustrated screens; avoid painting behind them.
     const drawRan=combatReady&&regionAssets.residentId===displayRegionId()&&state.phase!=='camp';if(drawRan)draw();const drawEnd=clockMs();
-    const hudRan=true;updateHud();const hudEnd=clockMs();saveClock+=dt;
+    const hudRan=true;updateHud();autoAdvanceResult(dt);const hudEnd=clockMs();saveClock+=dt;
     if(state.settlement&&!storageBlocked||saveClock>=2||oldPhase!==state.phase||oldLevel!==profile.level||oldGold!==profile.gold||oldCores!==profile.cores||oldMaterials!==state.run.materials||oldResources!==state.run.resourceRevision){save();saveClock=0;}
     const frameEnd=clockMs();
     if(active){

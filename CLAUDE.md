@@ -14,7 +14,7 @@
 - 웹 배포: `.github/workflows/pages.yml`(main 푸시 → dist를 GitHub Pages로). 저장소 설정 Pages Source = GitHub Actions 필요. 게임은 상대 경로라 하위 경로에서도 동작.
 - 게임: `PORT=8090 node serve-local.mjs` 후 `http://127.0.0.1:8090/` (기본 포트 8080). file:// 로는 안 된다.
 - 헤드리스 확인: 전역 playwright(`/opt/node22/lib/node_modules/playwright`)를 createRequire로 불러 Chromium 실행. 844×390에서 거점 → 사냥터 → 전투 준비 → 전투까지 콘솔 오류·404 없이 동작 확인함.
-- 테스트: `npm test` = `node --experimental-vm-modules --test tests/*.test.mjs` (약 140초, 'ancient slot icons …' 한 테스트가 60초). **968/968 통과** (0.142 악몽 콘텐츠 기준). game-ui 테스트는 host마다 vm 문맥에 app.js를 컴파일하는데 V8 컴파일 캐시가 그 문맥을 붙잡아 메모리가 쌓였다(0.119에서 3.3GB, 기본 힙 약 2GB 초과). 테스트 파일 첫머리의 `v8.setFlagsFromString('--no-compilation-cache')`로 최대 RSS 약 0.73GB. 지우지 말 것. 어셋 개수 단언(클립 415+(45+26+66+4)×15, 프레임 907+(45+26+66+4)×25(+4는 0.123 레이드 보스 3 + 0.142 악몽의 군주), 시작 시 요청 이미지 26장 = 공유 18 + 1장 8장(세트 장비 페이지 포함))은 0.109 기준. region-assets 테스트가 모든 챕터 이미지 경로가 `delivery`를 거쳐 실제 파일로 이어지는지 검사한다(0.107에서 재사용 지형 6장 연결이 빠져 5·9·17·18·28·29장 입장이 막혔었다).
+- 테스트: `npm test` = `node --experimental-vm-modules --test tests/*.test.mjs` (약 140초, 'ancient slot icons …' 한 테스트가 60초). **969/969 통과** (0.142 결과 창 자동 진행 기준). game-ui 테스트는 host마다 vm 문맥에 app.js를 컴파일하는데 V8 컴파일 캐시가 그 문맥을 붙잡아 메모리가 쌓였다(0.119에서 3.3GB, 기본 힙 약 2GB 초과). 테스트 파일 첫머리의 `v8.setFlagsFromString('--no-compilation-cache')`로 최대 RSS 약 0.73GB. 지우지 말 것. 어셋 개수 단언(클립 415+(45+26+66+4)×15, 프레임 907+(45+26+66+4)×25(+4는 0.123 레이드 보스 3 + 0.142 악몽의 군주), 시작 시 요청 이미지 26장 = 공유 18 + 1장 8장(세트 장비 페이지 포함))은 0.109 기준. region-assets 테스트가 모든 챕터 이미지 경로가 `delivery`를 거쳐 실제 파일로 이어지는지 검사한다(0.107에서 재사용 지형 6장 연결이 빠져 5·9·17·18·28·29장 입장이 막혔었다).
 
 ## 구조
 - `dist/index.html` (389KB, 정적 DOM 3704 id, CSS 45개 순차 로드) → `menu-pages.js`, `app.js`.
