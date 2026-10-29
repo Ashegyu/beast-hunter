@@ -3,7 +3,7 @@
 // 성장은 단계마다 모든 효과 수치 +10%, 5단계에 중옵 효과, 10단계에 상옵 효과가 하나씩 더 붙는다. 순수 데이터와 규칙만 둔다.
 // Alpha 0.136.2 (사용자 요청): 캐릭터마다 그 캐릭터의 전투 방식에 맞춘 '전용' 특수효과가 아주 낮은 확률(2%)로 나온다.
 // 인장의 characterId가 어느 캐릭터의 전용 효과를 받을지 정한다. 새 캐릭터는 SEAL_CHARACTERS와 EXCLUSIVE_EFFECTS에 줄을 더한다.
-import {describePower} from './ancient-powers.js?v=0.144.2';
+import {describePower} from './ancient-powers.js?v=0.144.3';
 
 export const SEAL_GRADES=Object.freeze([
  {id:0,name:'하옵',chance:.65,color:'#9ad1ff',rarity:1,salvage:3},

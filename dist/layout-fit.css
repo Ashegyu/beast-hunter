@@ -1797,3 +1797,22 @@
 #game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=map] .entry-build-grid>button:disabled{opacity:.35}
 #game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=map] .entry-build-grid>button[aria-pressed=true]{border-color:#f2c97a!important;background:linear-gradient(180deg,#8a2a2c,#3a1418)!important;color:#ffe9c4!important;box-shadow:0 0 8px #e0a04a55!important;font-weight:700!important}
 @media(max-width:760px){#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=map] .entry-build-grid{gap:3px}#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=map] .entry-build-grid>button{font-size:9.5px!important;letter-spacing:-.05em;padding:0 1px!important}#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=map] .entry-build-grid::before{font-size:9px}}
+/* 0.144.3 · 도감 화면 정렬(사용자 요청 '도감 화면도 정렬 맞춰보자'): 판 여백이 위 10·옆 12·아래 0px이라 아래만 18px 비어 있었다 →
+   여백 --xg 하나(10px, 폭 760 미만 8, 높이 360 이하 7)로 위·아래·옆을 맞춘다. 옛 규칙의 맨 아래 빈 행(12px·8px)은 0으로 두고
+   그 행 앞의 행 간격이 아래 여백 몫을 하므로 padding-bottom은 0.
+   오른쪽 상세 칸은 내용(획득처·드롭 확률·고정 능력치·기본 효과·위력)이 칸보다 길어 마지막 줄(위력)이 잘렸다(844에서 27px, 568에서 더 많이) →
+   머리 그림을 줄이고(76→56px, 낮은 화면 44px) 정보 줄 간격·글자를 줄여 한 칸에 다 들게 한다. 칸 사이 간격도 --xg. */
+#game-shell#game-shell#game-shell[data-panel=codex] #codex-content{--xg:10px}
+#game-shell#game-shell#game-shell[data-panel=codex] #codex-content:not([hidden]){padding:var(--xg) var(--xg) 0!important;column-gap:var(--xg)!important;row-gap:var(--xg)!important;box-sizing:border-box;grid-template-rows:30px 28px minmax(0,1fr) 0!important}
+#game-shell#game-shell#game-shell[data-panel=codex] #codex-detail:not([hidden]){padding:8px 10px!important;display:flex!important;flex-direction:column!important;gap:5px!important}
+#game-shell#game-shell#game-shell[data-panel=codex] #codex-detail>*{flex:none;margin:0!important}
+#game-shell#game-shell#game-shell[data-panel=codex] #codex-detail #codex-detail-art{width:56px!important;height:56px!important}
+#game-shell#game-shell#game-shell[data-panel=codex] #codex-detail .codex-detail-heading{gap:10px!important;padding:0!important;min-height:0!important}
+#game-shell#game-shell#game-shell[data-panel=codex] #codex-detail #codex-signature{font-size:10px!important;line-height:1.35!important;padding:4px 8px!important}
+#game-shell#game-shell#game-shell[data-panel=codex] #codex-detail .codex-info{flex:1 1 auto!important;min-height:0;gap:1px!important;overflow:hidden}
+#game-shell#game-shell#game-shell[data-panel=codex] #codex-detail .codex-info>div{grid-template-columns:52px minmax(0,1fr)!important;padding:1px 0!important;min-height:0!important}
+#game-shell#game-shell#game-shell[data-panel=codex] #codex-detail .codex-info :is(dt,dd){font-size:10px!important;line-height:1.3!important;margin:0!important}
+@media(max-width:760px){#game-shell#game-shell#game-shell[data-panel=codex] #codex-content{--xg:8px}
+#game-shell#game-shell#game-shell[data-panel=codex] #codex-detail .codex-info :is(dt,dd){font-size:9.5px!important;line-height:1.25!important}
+#game-shell#game-shell#game-shell[data-panel=codex] #codex-detail #codex-signature{font-size:9.5px!important;line-height:1.3!important}}
+@media(max-height:360px){#game-shell#game-shell#game-shell[data-panel=codex] #codex-content{--xg:7px}#game-shell#game-shell#game-shell[data-panel=codex] #codex-content:not([hidden]){grid-template-rows:26px 24px minmax(0,1fr) 0!important}#game-shell#game-shell#game-shell[data-panel=codex] #codex-detail #codex-detail-art{width:44px!important;height:44px!important}}
