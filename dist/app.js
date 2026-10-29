@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.143.4';
-import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.143.4';
-import { createCombatAudio } from './sound.js?v=0.143.4';
-import * as game from './game-engine.js?v=0.143.4';
-import {FrameMetrics} from './frame-metrics.js?v=0.143.4';
-import { frameIndex, frameRect, validateClip } from './engine.js?v=0.143.4';
-import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.143.4';
-import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.143.4';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.143.4';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.143.4';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.143.4';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.143.4';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.143.5';
+import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.143.5';
+import { createCombatAudio } from './sound.js?v=0.143.5';
+import * as game from './game-engine.js?v=0.143.5';
+import {FrameMetrics} from './frame-metrics.js?v=0.143.5';
+import { frameIndex, frameRect, validateClip } from './engine.js?v=0.143.5';
+import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.143.5';
+import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.143.5';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.143.5';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.143.5';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.143.5';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.143.5';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -482,7 +482,7 @@ function refreshBag(){
  $('bag-storage-note').textContent=materials?'수집한 재료 · 제작·강화에 사용하는 보유 수량':profile.inventory.length>=game.INVENTORY_LIMIT?'가방이 가득 찼어. 착용·즐겨찾기·저장 빌드는 보호하고 낮은 가치 장비를 골드로 정리해.':'남은 '+(game.INVENTORY_LIMIT-profile.inventory.length)+'칸 · 착용·즐겨찾기·저장 빌드는 자동 정리에서 보호돼.';
  $('loot-luck').textContent='일반 드롭 → 최대 강화 → 승급';
  $('loot-filter').value=String(rarityFilter);$('bag-slot').value=bagSlot;$('bag-part').value=bagPart;$('bag-sort').value=bagSort;
- $('bag-favorites').setAttribute('aria-pressed',String(favoritesOnly));$('bag-organize').setAttribute('aria-pressed',String(bagOrganizing));$('bag-organize').textContent=bagOrganizing?'정리 마치기':'가방 정리';
+ $('bag-favorites').setAttribute('aria-pressed',String(favoritesOnly));$('bag-organize').setAttribute('aria-pressed',String(bagOrganizing));$('bag-organize').textContent=bagOrganizing?'정리 마치기':'분해 · 정리';
  $('bag-bulk').hidden=inventoryPanel!=='gear'||!bagOrganizing;
  // Alpha 0.142 분해 규칙: grade chips, bulk by grade, auto dismantle on gain, per-부위 보관 개수.
  {const rules=profile.bagRules,camp=state.phase==='camp',grade=rules.grade,ids=game.gradeSalvageIds(profile,grade);$('bag-rules').hidden=!!bagReviewIds;
