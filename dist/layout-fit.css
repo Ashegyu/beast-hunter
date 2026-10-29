@@ -1753,3 +1753,10 @@
 #game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=skills] #skill-board .sb-branch>*{flex:none!important;line-height:1.15!important}
 @media(max-width:760px){#game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=skills] #skill-board{--sg:8px}}
 @media(max-height:360px){#game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=skills] #skill-board{--sg:7px}}
+/* 0.143.7 · 제작 화면 정렬(사용자 요청 '제작 화면도 정렬 맞춰보자'): 판 바깥 여백이 옆 12·위 6·아래 8px, 칸 사이 7·8px(낮은 화면 5·6px)로
+   다른 화면과 달랐다. 여백 --cg 하나(10px, 폭 760 미만 8, 높이 360 이하 7)로 위·아래·옆과 탭 줄·두 칸 사이를 맞춘다. */
+#game-shell#game-shell#game-shell[data-panel=craft] #craft-content{--cg:10px}
+#game-shell#game-shell#game-shell[data-panel=craft] #craft-content:not([hidden]){padding:var(--cg)!important;box-sizing:border-box}
+#game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=craft] #forge-board{gap:var(--cg)!important}
+@media(max-width:760px){#game-shell#game-shell#game-shell[data-panel=craft] #craft-content{--cg:8px}}
+@media(max-height:360px){#game-shell#game-shell#game-shell[data-panel=craft] #craft-content{--cg:7px}}
