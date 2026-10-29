@@ -1,6 +1,6 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import * as g from '../dist/game-engine.js';import {rollAncient,ancientSignatures,itemRollRanges} from '../dist/loot.js?v=0.142.0';
-import {FORGE_AWAKEN_POWER,awakenCost,rollMaterials} from '../dist/crafting.js?v=0.142.0';import {RIFT_MUTATORS,riftMutators,riftChapter,riftDepthKind,riftRewards,riftLimit,riftPlan} from '../dist/dungeons.js?v=0.142.0';
+import * as g from '../dist/game-engine.js';import {rollAncient,ancientSignatures,itemRollRanges} from '../dist/loot.js?v=0.142.1';
+import {FORGE_AWAKEN_POWER,awakenCost,rollMaterials} from '../dist/crafting.js?v=0.142.1';import {RIFT_MUTATORS,riftMutators,riftChapter,riftDepthKind,riftRewards,riftLimit,riftPlan} from '../dist/dungeons.js?v=0.142.1';
 import {openMode} from './mode-fixture.mjs';
 // Alpha 0.142 악몽 콘텐츠: 악몽 결정, 승화 각성, 심연의 균열, 악몽 레이드 '악몽의 군주', 초월 확장.
 const MONDAY=Date.UTC(2026,9,25,15),now=MONDAY+3*864e5;

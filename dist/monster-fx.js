@@ -1,4 +1,4 @@
-import {GROUND_DEPTH_SCALE} from './world.js?v=0.142.0';
+import {GROUND_DEPTH_SCALE} from './world.js?v=0.142.1';
 const KINDS=Object.freeze(['slash','bolt','impact','charge']);
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,Number.isFinite(v)?v:a));
 export function validMonsterEffects(atlas,images){

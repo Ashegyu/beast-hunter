@@ -2,7 +2,7 @@ import test from 'node:test';import assert from 'node:assert/strict';
 import * as g from '../dist/game-engine.js';import {MATERIAL_LIMIT,materialChance,rollMaterials} from '../dist/crafting.js';
 import {rollItem,uniqueEffect,uniquePower,ITEM_CATALOG,ANCIENT_CATALOG} from '../dist/loot.js';
 import {visualDesign,snapshotDesigns} from '../dist/equipment-visuals.js';import {freezeCombat} from './combat-fixture.mjs';
-import {rollAncient,ancientSignatures} from '../dist/loot.js?v=0.142.0';import {openMode} from './mode-fixture.mjs';
+import {rollAncient,ancientSignatures} from '../dist/loot.js?v=0.142.1';import {openMode} from './mode-fixture.mjs';
 // Alpha 0.142: the old recipes can no longer be crafted (승화 제작 replaced them); saves still hold such items, so fixtures build them directly.
 const legacyItem=(row,id)=>({id,slot:row.slot,tier:row.tier,rarity:6,name:row.name,catalogId:row.id,artId:row.artId,affixes:{...row.base},rollVersion:1});
 function addLegacy(s,row){const id=Math.max(s.profile.nextItemId??1,...s.profile.inventory.map(i=>i.id+1),...(s.profile.pendingLoot??[]).map(i=>i.id+1));s.profile.nextItemId=id+1;const item=legacyItem(row,id);s.profile.inventory.push(item);return item;}
