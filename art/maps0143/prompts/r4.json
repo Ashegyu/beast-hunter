@@ -1,0 +1,27 @@
+{
+  "id": "r4",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production UI background illustration for the hunting map (stage select) screen of a dark fantasy 2D action RPG. Image1 is an existing hunting map illustration of this game: match its painterly dark fantasy rendering, high three-quarter aerial view, dramatic rim lighting, atmospheric haze and level of detail; never copy its subject or layout. Create ONE opaque landscape image, 3:2 aspect (about 1536x1024), a single scene seen from a high three-quarter aerial view, with no characters, no people, no monsters, no text, no letters, no logo, no UI, no frame or border, no map markers or numbers. COMPOSITION (UI panels cover the edges): a clear winding trail/road crosses the whole image from the left edge to the right edge through the middle band (between 35% and 75% of the height), gently zig-zagging up and down; keep that middle band readable and mid-toned with no tall objects covering the trail; the top 20%, the left 12%, the right 20% and the bottom 22% are calmer and darker (they sit under UI panels). REGION: a drowned sunken kingdom, ruined white marble temples, columns and statues half submerged in shallow teal lagoon water, coral and seaweed, shafts of light through clouds, the trail made of causeways and broken stone walkways over the water",
+  "referenceImages": [
+    {
+      "path": "dist/assets/hunt-map-forest-v036.webp",
+      "sha256": "d5bba2f3cd092bf12b059142480616d150a62b60b566759e4980861ef11ec6fe"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1536,
+        1024
+      ],
+      "seconds": 123,
+      "sha256": "a437a9010faa2654eb4b409dd537cdf758735b8c4a598ebf02f1017d65e6e01c"
+    }
+  ],
+  "final": {
+    "path": "art/maps0143/r4.png",
+    "sha256": "a437a9010faa2654eb4b409dd537cdf758735b8c4a598ebf02f1017d65e6e01c"
+  }
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "r1",
+    "source": "art/maps0143/r1.png",
+    "sha256": "90b94e35388dc0c936b7eefbbc649a7e4aa20f18fd1b31e1631d737298ed0806",
+    "webpBytes": 279920
+  },
+  {
+    "id": "r2",
+    "source": "art/maps0143/r2.png",
+    "sha256": "91d500c95435408cdc3cef892c3e54c9f56d6bd82e9183760b4a700fb0b20f6a",
+    "webpBytes": 261118
+  },
+  {
+    "id": "r3",
+    "source": "art/maps0143/r3.png",
+    "sha256": "92587b990d94231d4a50d29520d2d77363ea5c87be3058c852e3e99ccd2fedaa",
+    "webpBytes": 180672
+  },
+  {
+    "id": "r4",
+    "source": "art/maps0143/r4.png",
+    "sha256": "a437a9010faa2654eb4b409dd537cdf758735b8c4a598ebf02f1017d65e6e01c",
+    "webpBytes": 253498
+  },
+  {
+    "id": "r5",
+    "source": "art/maps0143/r5.png",
+    "sha256": "c6513ffea9c8243abdbb14da1e75d4aca9241709ce97e0495679cbf651117dfd",
+    "webpBytes": 204198
+  },
+  {
+    "id": "r6",
+    "source": "art/maps0143/r6.png",
+    "sha256": "55f4951d8493fcd894d08a549a7f9f758de1781a94deab1683bdffd7b3f842d9",
+    "webpBytes": 224922
+  }
+]

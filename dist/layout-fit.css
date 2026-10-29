@@ -1651,3 +1651,30 @@
 #game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel #stage-preview-description{-webkit-line-clamp:5}
 #game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel .stage-tabs>button small{font-size:8px!important;line-height:9px!important}
 #game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel .stage-tabs>button strong{font-size:10px!important;line-height:11px!important}}
+/* 0.143 · 사냥 지도 상단(사용자 요청 '챕터 이름 영역이 너무 크고 난이도 선택 정렬도 안 맞아'): 배너는 왼쪽 그림 자리와
+   스테이지 줄(출발 바·오른쪽 칸과 중복)을 빼고 '챕터·지역 / 이름 ‹ ›' 한 덩어리로 줄인다(글자 폭만큼).
+   난이도는 배너와 같은 높이의 분할 버튼: 세 칸 같은 폭, 아이콘+글자 가운데, 선택 칸은 칸 전체를 채운다. */
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-drawer{--mh:40px}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel #chapter-banner{width:auto!important;max-width:calc(100% - var(--mr) - var(--md) - 4 * var(--mg))!important;display:grid!important;grid-template-columns:auto auto;grid-template-rows:auto auto;align-content:center;column-gap:12px;row-gap:1px;padding:0 8px 0 12px!important}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel #chapter-banner:before{display:none!important}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel #chapter-banner>#map-banner-stage{display:none!important}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel #chapter-banner>#chapter-label{grid-area:1/1;width:auto!important;margin:0!important;font-size:9px!important;line-height:11px!important;white-space:nowrap}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel #chapter-banner>#chapter-preview-name{grid-area:2/1;width:auto!important;margin:0!important;font-size:16px!important;line-height:20px!important;white-space:nowrap}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel #chapter-banner>.chapter-pager{position:static!important;grid-area:1/2/3/3;align-self:center;transform:none!important;display:flex;gap:5px}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel #chapter-banner>.chapter-pager>button{width:28px!important;height:28px!important;font-size:18px!important;line-height:24px!important}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel .map-difficulty-modes{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px!important;height:var(--mh)!important;width:var(--md)!important;padding:3px!important;margin:0!important;box-sizing:border-box;border:1px solid #c9a35c66;border-radius:999px;background:#060e18e6}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel .map-difficulty-modes>button{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:center!important;gap:3px!important;width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;margin:0!important;padding:0 4px!important;line-height:1!important}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel .map-difficulty-modes>button>svg{flex:none;width:16px!important;height:18px!important;margin:0!important}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel .map-difficulty-modes>button>strong{margin:0!important;font-size:12px!important;line-height:14px!important;white-space:nowrap}
+#game-shell#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel .map-difficulty-modes>button[data-common-skin][data-common-skin]::before{inset:0!important}
+@media(max-width:760px){#game-shell#game-shell#game-shell[data-camp-view=map] #camp-drawer{--md:170px}#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel .map-difficulty-modes>button>strong{font-size:11px!important}}
+@media(max-height:360px){#game-shell#game-shell#game-shell[data-camp-view=map] #camp-drawer{--mh:34px}#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel #chapter-banner>#chapter-preview-name{font-size:14px!important;line-height:17px!important}#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel #chapter-banner>.chapter-pager>button{width:24px!important;height:24px!important;line-height:20px!important}}
+/* 0.143 · 사냥 지도 지역 배경(사용자 요청 '배경은 다 똑같네'): 지역 6곳마다 Codex 원화(art/maps0143)를 쓴다.
+   app.js가 고른 챕터의 지역 번호를 #camp-drawer[data-map-region]에 둔다. 원화는 가운데 띠에 길이 가로지르고 가장자리가 어둡다. */
+#game-shell[data-panel=camp][data-camp-view=map] #camp-drawer[data-map-region="1"]{--map-scene-art:url('assets/hunt-map-r1-v0143.webp')}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-drawer[data-map-region="2"]{--map-scene-art:url('assets/hunt-map-r2-v0143.webp')}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-drawer[data-map-region="3"]{--map-scene-art:url('assets/hunt-map-r3-v0143.webp')}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-drawer[data-map-region="4"]{--map-scene-art:url('assets/hunt-map-r4-v0143.webp')}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-drawer[data-map-region="5"]{--map-scene-art:url('assets/hunt-map-r5-v0143.webp')}
+#game-shell[data-panel=camp][data-camp-view=map] #camp-drawer[data-map-region="6"]{--map-scene-art:url('assets/hunt-map-r6-v0143.webp')}
+#game-shell#game-shell[data-panel=camp][data-camp-view=map] #camp-drawer[data-map-region]{background:linear-gradient(0deg,#030b14b0,transparent 45%),linear-gradient(#04070c38,#04070c38),var(--map-scene-art) center 55%/cover no-repeat #07111d!important}
