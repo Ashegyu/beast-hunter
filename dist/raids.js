@@ -40,7 +40,8 @@ export function raidWeek(now){return Math.floor((Number(now)+KST-MONDAY)/WEEK);}
 export function nextRaidReset(now){return (raidWeek(now)+1)*WEEK+MONDAY-KST;}
 export const emptyRaidProgress=()=>({week:-1,entries:Object.fromEntries(RAIDS.map(r=>[r.id,0])),clears:Object.fromEntries(RAIDS.map(r=>[r.id,0]))});
 export function raidEntriesUsed(profile,id,now){const r=profile?.raids;return r&&r.week===raidWeek(now)?r.entries?.[id]??0:0;}
-export function raidEntriesLeft(profile,id,now){return raidDefinition(id)?Math.max(0,RAID_WEEKLY_ENTRIES-raidEntriesUsed(profile,id,now)):0;}
+// 0.144.9 테스트 모드(사용자 요청): 입장 횟수 제한 없음.
+export function raidEntriesLeft(profile,id,now){return raidDefinition(id)?profile?.testMode?RAID_WEEKLY_ENTRIES:Math.max(0,RAID_WEEKLY_ENTRIES-raidEntriesUsed(profile,id,now)):0;}
 export const raidUnlocked=(profile,id)=>!!raidDefinition(id)&&(profile?.clearedStage??0)>=raidDefinition(id).unlock&&(!raidDefinition(id).nightmare||Array.isArray(profile?.bossMastery)&&profile.bossMastery.length>0&&profile.bossMastery.every(v=>v>=1));
 // The tier a raid is fought at: the 악몽 raid only at 악몽, the others at the chosen tier.
 export const raidFightTier=(id,tier)=>raidDefinition(id)?.fixedTier??tier;

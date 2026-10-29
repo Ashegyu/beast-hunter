@@ -16,7 +16,7 @@ export const rushDay=now=>Math.floor((Number(now)+KST)/DAY);
 export const nextRushReset=now=>(rushDay(now)+1)*DAY-KST;
 export const emptyRushProgress=()=>({day:-1,entries:0,clears:0,best:0});
 export const rushUnlocked=profile=>(profile?.clearedStage??0)>=RUSH_UNLOCK;
-export function rushEntriesLeft(profile,now){const r=profile?.bossRush;return Math.max(0,RUSH_DAILY_ENTRIES-(r&&r.day===rushDay(now)?r.entries:0));}
+export function rushEntriesLeft(profile,now){const r=profile?.bossRush;if(profile?.testMode)return RUSH_DAILY_ENTRIES;return Math.max(0,RUSH_DAILY_ENTRIES-(r&&r.day===rushDay(now)?r.entries:0));}
 export const rushChapter=(profile,chapters)=>Math.max(1,Math.min(chapters,profile?.clearedStage??1));
 // The five chapters whose bosses appear, oldest first; the furthest cleared chapter's boss comes last.
 export function rushLineup(chapter){const last=Math.max(RUSH_BOSSES,chapter);return Array.from({length:RUSH_BOSSES},(_,i)=>last-RUSH_BOSSES+1+i);}

@@ -1,5 +1,5 @@
 // Growth dungeons reuse existing enemies, art and resource identities.
-import {enemyHpScale,enemyDamageScale} from './chapters.js?v=0.144.8';
+import {enemyHpScale,enemyDamageScale} from './chapters.js?v=0.144.9';
 // Alpha 0.141 (사용자 요청 '던전 단계가 너무 적다'): 100 levels on the chapter curve. Level L is fought like chapter
 // 1+(L−1)×0.9 (dungeonChapter: 10단계 ≈ 9장, 50단계 ≈ 45장, 100단계 ≈ 90장 = 정예 60장), times the dungeon's own hp/damage.
 export const DUNGEON_MAX_LEVEL=100,DUNGEON_CHAPTER_STEP=.9;
@@ -75,7 +75,7 @@ export const emptyDungeonProgress=()=>Object.fromEntries(DUNGEONS.map(d=>[d.id,0
 export const DUNGEON_WEEKLY_CLEARS=14,DUNGEON_REPEAT_RATE=.5;
 export const emptyDungeonWeek=()=>({week:-1,clears:Object.fromEntries(DUNGEONS.map(d=>[d.id,0]))});
 export function dungeonClearsUsed(profile,id,week){const w=profile?.dungeonWeek;return w&&w.week===week?w.clears?.[id]??0:0;}
-export function dungeonClearsLeft(profile,id,week){return DUNGEONS.some(d=>d.id===id)?Math.max(0,DUNGEON_WEEKLY_CLEARS-dungeonClearsUsed(profile,id,week)):0;}
+export function dungeonClearsLeft(profile,id,week){return DUNGEONS.some(d=>d.id===id)?profile?.testMode?DUNGEON_WEEKLY_CLEARS:Math.max(0,DUNGEON_WEEKLY_CLEARS-dungeonClearsUsed(profile,id,week)):0;}
 export const isDungeonRepeat=(profile,id,level)=>id!=='tower'&&id!=='rift'&&level<=(profile?.dungeonProgress?.[id]??0);
 export function repeatRewards(reward){
  if(!reward)return null;const cut=n=>n>0?Math.max(1,Math.floor(n*DUNGEON_REPEAT_RATE)):0;

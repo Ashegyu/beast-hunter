@@ -336,9 +336,11 @@ test('map difficulty remains visible before boss clearance and locked activation
 });
 test('map difficulty applies the 0.139 unlock order (all of the mode below, then one chapter at a time) and launches from stage one',async()=>{
  const elite=openMode(game,game.createProfile(1_000_000),1,11),nightmare=openMode(game,game.createProfile(1_000_000),2,2);
- for(const [p,chapter,mode,closed,why]of [[elite,11,1,12,'정예 11장 처치 필요'],[nightmare,2,2,3,'악몽 2장 처치 필요']]){
+ for(const [p,chapter,mode,closed,why]of [[elite,11,1,12,'정예 11장으로'],[nightmare,2,2,3,'악몽 2장으로']]){
   const ui=await host({saved:p,campaign:true});ui.emit('nav-hunt','click');pickChapter(ui,closed);
-  assert.equal(ui.nodes.get('map-mode-'+mode).disabled,true);assert.equal(ui.nodes.get('map-mode-status-'+mode).textContent,why);
+  // 0.144.9: an open mode stays pressable on a chapter it has not reached yet and names the chapter it jumps to.
+  assert.equal(ui.nodes.get('map-mode-'+mode).disabled,false);assert.equal(ui.nodes.get('map-mode-status-'+mode).textContent,why);
+  ui.emit('map-mode-'+mode,'click');assert.equal(ui.nodes.get('map-mode-'+mode).attributes['aria-pressed'],'true');assert.equal(ui.nodes.get('map-mode-status-'+mode).textContent,'완료 0/10');ui.emit('map-mode-0','click');
   if(mode===1)assert.equal(ui.nodes.get('map-mode-status-2').textContent,'정예 60장 클리어 필요');
   pickChapter(ui,chapter);ui.emit('run-stage-3','click');const before=ui.profile();
   assert.equal(ui.nodes.get('map-mode-'+mode).disabled,false);assert.equal(ui.nodes.get('map-mode-2').disabled,mode===1);
@@ -352,7 +354,8 @@ test('map difficulty pills keep the campaign choice while switching modes starts
  const p=game.createProfile(1_000_000);p.clearedStage=2;p.unlockedStage=2;p.stageProgress=[10,10,0];p.bossMastery=[1,0,-1];p.difficultyProgress=[[3,2,0],[0,0,0]];widen(p);openMode(game,p,2,2);const ui=await host({saved:p});ui.emit('nav-hunt','click');pickChapter(ui,1);ui.emit('map-mode-2','click');ui.emit('camp-tactics-open','click');assert.equal(ui.nodes.get('camp-map-panel').hidden,false,'the old entry opens the map');assert.equal(ui.nodes.get('camp-tactics-panel').hidden,true);
  ui.emit('map-mode-1','click');assert.equal(ui.nodes.get('map-mode-1').attributes['aria-pressed'],'true');ui.emit('run-stage-4','click');assert.equal(ui.nodes.get('map-mode-1').attributes['aria-pressed'],'true');
  ui.emit('map-mode-0','click');assert.equal(ui.nodes.get('run-stage-1').attributes['aria-pressed'],'true','changing difficulty starts from stage one');
- ui.emit('map-mode-2','click');pickChapter(ui,11);assert.equal(ui.nodes.get('map-mode-0').attributes['aria-pressed'],'true');assert.equal(ui.nodes.get('map-mode-2').disabled,true,'previous chapter mastery must not unlock this chapter');
+ ui.emit('map-mode-2','click');pickChapter(ui,11);assert.equal(ui.nodes.get('map-mode-0').attributes['aria-pressed'],'true');assert.equal(ui.nodes.get('map-mode-2').attributes['aria-pressed'],'false','previous chapter mastery must not unlock this chapter');assert.equal(ui.nodes.get('map-mode-status-2').textContent,'악몽 2장으로');
+ ui.emit('map-mode-2','click');assert.equal(ui.nodes.get('map-mode-2').attributes['aria-pressed'],'true','the button jumps to the mode\'s next chapter');
 });
 test('changing map difficulty cancels a pending cold launch and a fresh click uses the new mode',async()=>{
  const p=game.createProfile(1_000_000);p.clearedStage=1;p.unlockedStage=1;p.stageProgress=[10,0,0];p.bossMastery=[1,-1,-1];openMode(game,p,2,1);const ui=await host({saved:p,coldStart:true,campaign:true,deferredAsset:'assets/lirian_death-v06.webp'});
