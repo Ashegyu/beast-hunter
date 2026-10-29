@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.144.3';
-import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.144.3';
-import { createCombatAudio } from './sound.js?v=0.144.3';
-import * as game from './game-engine.js?v=0.144.3';
-import {FrameMetrics} from './frame-metrics.js?v=0.144.3';
-import { frameIndex, frameRect, validateClip } from './engine.js?v=0.144.3';
-import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.144.3';
-import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.144.3';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.144.3';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.144.3';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.144.3';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.144.3';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.144.4';
+import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.144.4';
+import { createCombatAudio } from './sound.js?v=0.144.4';
+import * as game from './game-engine.js?v=0.144.4';
+import {FrameMetrics} from './frame-metrics.js?v=0.144.4';
+import { frameIndex, frameRect, validateClip } from './engine.js?v=0.144.4';
+import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.144.4';
+import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.144.4';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.144.4';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.144.4';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.144.4';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.144.4';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -319,7 +319,7 @@ function refreshGrowthBoard(){
  for(const [id,v]of [['growth-tab-training','training'],['growth-tab-tree','tree'],['growth-tab-transcend','transcend']])$(id).setAttribute('aria-pressed',String(growthView===v));
  hudText($('growth-points'),growthView==='transcend'?'초월 포인트 '+game.transcendPoints(profile)+' / '+game.transcendPointsTotal(profile):growthView==='tree'?'트리 포인트 '+game.treePoints(profile)+' / '+game.treePointsTotal(profile):'능력치 포인트 '+game.trainingPoints(profile)+' / '+game.trainingPointsTotal(profile));hudText($('growth-reset'),growthArmed===growthView?'초기화 확인':'초기화');
  for(const id of game.TRAINING_IDS){const t=game.TRAINING[id],rank=profile.training[id],why=game.trainStatus(profile,id),rate=game.trainingRate(rank);hudText($('train-'+id+'-value'),t.unit+' +'+game.trainingValue(id,rank)+t.suffix+(rate<1?' · 효율 '+Math.round(rate*100)+'%':''));hudText($('train-'+id+'-rank'),String(rank));$('train-'+id).disabled=!!why;$('train-'+id).setAttribute('aria-label',t.name+' '+rank+'단계 · '+t.unit+' 단계당 +'+Math.round(t.per*rate*100)/100+t.suffix+(why?' · '+why:''));statGauge('train-'+id,rank,[20,60]);}
- if(growthView==='transcend'){const pr=game.transcendProgress(profile.transcendXp??0);$('transcend-xp-gauge').style.width=(profile.level<game.MAX_LEVEL?0:Math.round(pr.xp/pr.needed*1000)/10)+'%';hudText($('transcend-level'),profile.level<game.MAX_LEVEL?'Lv.200부터 경험치가 초월 경험치로 쌓입니다. 경험치 던전에서도 얻습니다.':'초월 Lv.'+pr.level+(game.nightmareChapters(profile)?' · 악몽 챕터 +'+game.nightmareChapters(profile):'')+' · 다음 레벨 '+pr.xp.toLocaleString('ko-KR')+' / '+pr.needed.toLocaleString('ko-KR')+' · 51단계부터 효율 50%, 151단계부터 25%');
+ if(growthView==='transcend'){const pr=game.transcendProgress(profile.transcendXp??0);$('transcend-xp-gauge').style.width=(profile.level<game.MAX_LEVEL?0:Math.round(pr.xp/pr.needed*1000)/10)+'%';{const t=profile.level<game.MAX_LEVEL?'Lv.200부터 경험치가 초월 경험치로 쌓입니다. 경험치 던전에서도 얻습니다.':'초월 Lv.'+pr.level+(game.nightmareChapters(profile)?' · 악몽 챕터 +'+game.nightmareChapters(profile):'')+' · 다음 레벨 '+pr.xp.toLocaleString('ko-KR')+' / '+pr.needed.toLocaleString('ko-KR')+' · 51단계부터 효율 50%, 151단계부터 25%';hudText($('transcend-level'),t);$('transcend-level').setAttribute('title',t);}
   for(const t of game.TRANSCEND){const rank=profile.transcendence?.[t.id]??0,why=game.transcendStatus(profile,t.id),eff=game.transcendEffective(rank);hudText($('transcend-'+t.id+'-value'),t.text+' +'+Math.round(eff*(t.per??.01)*1000)/10+'%');$('transcend-row-'+t.id).setAttribute('data-locked',String(why==='악몽 개방 후'));hudText($('transcend-'+t.id+'-rank'),String(rank));statGauge('transcend-'+t.id,rank,[50,150]);$('transcend-'+t.id).disabled=!!why;$('transcend-'+t.id).setAttribute('aria-label',t.name+' '+rank+'단계 · '+t.text+' +'+Math.round(eff*(t.per??.01)*1000)/10+'%'+(why?' · '+why:''));}}
  if(growthView!=='tree')return;
  {const cur=JSON.stringify(profile.growthTree);for(let n=0;n<5;n++){const b=$('tree-preset-'+n),preset=profile.treePresets?.[n];b.setAttribute('aria-pressed',String(n===treePresetSelected));b.setAttribute('data-saved',String(!!preset));b.setAttribute('data-current',String(!!preset&&JSON.stringify(preset.tree)===cur));b.setAttribute('title',preset?preset.name+' · '+preset.tree.length+'노드':'빈 칸');}

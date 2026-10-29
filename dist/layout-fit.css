@@ -1816,3 +1816,22 @@
 #game-shell#game-shell#game-shell[data-panel=codex] #codex-detail .codex-info :is(dt,dd){font-size:9.5px!important;line-height:1.25!important}
 #game-shell#game-shell#game-shell[data-panel=codex] #codex-detail #codex-signature{font-size:9.5px!important;line-height:1.3!important}}
 @media(max-height:360px){#game-shell#game-shell#game-shell[data-panel=codex] #codex-content{--xg:7px}#game-shell#game-shell#game-shell[data-panel=codex] #codex-content:not([hidden]){grid-template-rows:26px 24px minmax(0,1fr) 0!important}#game-shell#game-shell#game-shell[data-panel=codex] #codex-detail #codex-detail-art{width:44px!important;height:44px!important}}
+/* 0.144.4 · 성장 화면 정렬(사용자 요청: 화면 정렬 이어서): 판에 바깥 여백이 없어 왼쪽 능력치 칸·위 탭 줄이 화면 가장자리에 붙고
+   오른쪽 끝·아래만 6·10px 비어 있었다. 여백 --gg 하나(10px, 폭 760 미만 8, 높이 360 이하 7)로 네 변과 두 칸 사이를 맞춘다.
+   초월 탭: 머리 줄 + 6줄이 auto 행이라 568에서 마지막 줄(질풍)이 칸 밖으로 나갔다 → 머리 auto + 6줄 같은 높이(minmax(0,1fr)),
+   높이 360 이하는 머리 설명을 한 줄(말줄임, 전체는 title)로, 줄 글자를 조금 줄인다. 판 격자 위아래 빈 행은 0으로 두 칸 높이를 맞춘다. */
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=growth] #camp-growth-panel{--gg:10px}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=growth] #camp-growth-panel:not([hidden]){padding:var(--gg)!important;column-gap:var(--gg)!important;box-sizing:border-box}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=growth] #camp-growth-panel:not([hidden]){grid-template-rows:0 minmax(0,1fr) 0 0!important;row-gap:0!important}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=growth] #camp-growth-panel>#growth-board{padding:0!important}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=growth] #camp-growth-panel>:is(#growth-stats,#growth-board){margin:0!important}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=growth] #camp-growth-panel>#growth-board>.growth-board-head{width:100%!important;margin:0!important}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=growth] #growth-transcend:not([hidden]){grid-template-rows:auto repeat(6,minmax(0,1fr))!important}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=growth] :is(#growth-training,#growth-transcend)>.stat-row{min-height:0!important;overflow:hidden}
+@media(max-width:760px){#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=growth] #camp-growth-panel{--gg:8px}}
+@media(max-height:360px){#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=growth] #camp-growth-panel{--gg:7px}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=growth] #growth-transcend #transcend-level{white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;font-size:10px!important;line-height:14px!important;max-height:14px}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=growth] :is(#growth-training,#growth-transcend) .stat-text>strong{font-size:11px!important;line-height:13px!important}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=growth] :is(#growth-training,#growth-transcend) .stat-text>small{font-size:9.5px!important;line-height:11px!important}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=growth] :is(#growth-training,#growth-transcend) .stat-text{row-gap:0!important}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=growth] :is(#growth-training,#growth-transcend)>.stat-row{padding-block:1px!important}}

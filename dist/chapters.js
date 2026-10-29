@@ -1,6 +1,6 @@
-import {equipmentFamily} from './equipment-slots.js?v=0.144.3';
-import {SEAL_EFFECTS,sealArtId} from './seals.js?v=0.144.3';
-import {EQUIPMENT_SETS,SET_SLOTS,CHAPTER_SETS,setArtId} from './equipment-sets.js?v=0.144.3';
+import {equipmentFamily} from './equipment-slots.js?v=0.144.4';
+import {SEAL_EFFECTS,sealArtId} from './seals.js?v=0.144.4';
+import {EQUIPMENT_SETS,SET_SLOTS,CHAPTER_SETS,setArtId} from './equipment-sets.js?v=0.144.4';
 // Sixty chapters in six regions of ten: 1–10 forest, 11–20 fire and ice (11–15 fire,
 // 16–20 ice), 21–30 darkness (Alpha 0.107), 31–40 sunken kingdom, 41–50 storm sky isles,
 // 51–60 twilight sanctum (Alpha 0.118). A region drives the map tabs, item and
