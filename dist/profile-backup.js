@@ -1,5 +1,5 @@
-import {SLOTS,EQUIPMENT_KEYS,itemSlotForPosition} from './equipment-slots.js?v=0.144.0';
-import {encodeProfile,restoreProfile,INVENTORY_LIMIT,MAX_LEVEL,STAGES} from './game-engine.js?v=0.144.0';
+import {SLOTS,EQUIPMENT_KEYS,itemSlotForPosition} from './equipment-slots.js?v=0.144.1';
+import {encodeProfile,restoreProfile,INVENTORY_LIMIT,MAX_LEVEL,STAGES} from './game-engine.js?v=0.144.1';
 
 export const MAX_BACKUP_BYTES=2097152; // 0.142: 2 MB for the 2000-item bag
 const FORMAT='beast-hunter-backup',VERSION=1;
