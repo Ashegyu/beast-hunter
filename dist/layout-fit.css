@@ -1616,3 +1616,38 @@
 #game-shell#game-shell#game-shell #raid-cards #raid-week{display:none!important}
 /* 0.142 던전 종류 탭 5개(심연의 균열 추가): 폭 760 미만에서 줄을 좁혀 왼쪽 칸 안에 들게 한다 */
 @media(max-width:760px){#game-shell#game-shell .dungeon-modes{gap:3px!important;min-width:0}#game-shell#game-shell .dungeon-modes button{flex:0 1 auto!important;min-width:0!important;padding:0 6px!important;font-size:9.5px!important;letter-spacing:-.03em;white-space:nowrap;overflow:hidden}}
+/* 0.142.2 · 사냥 지도 정렬(사용자 요청 '정렬이 잘 맞지 않아'): 배너·난이도·지역 목록·스테이지 길·출발 바·오른쪽 정보 칸을
+   한 격자에 맞춘다. --mg 여백, --mr 오른쪽 칸 폭, --mh 배너 높이, --ml 출발 바 높이, --mt 지역 목록 폭.
+   위 줄(배너·난이도)과 오른쪽 칸 위 끝, 출발 바와 오른쪽 칸 아래 끝, 지역 목록·스테이지 길은 그 사이를 채운다.
+   스테이지 길은 위아래 번갈아(38%/62%) 놓고 index.html의 map-path도 같은 좌표로 그린다. */
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-drawer{--mg:10px;--mr:clamp(138px,18vw,172px);--mh:50px;--ml:80px;--mt:clamp(84px,11.5vw,108px);--md:190px}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel #chapter-banner{position:absolute!important;inset:var(--mg) auto auto var(--mg)!important;width:min(360px,calc(100% - var(--mr) - var(--md) - 4 * var(--mg)))!important;height:var(--mh)!important;min-height:0!important;margin:0!important;box-sizing:border-box}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel .map-difficulty{position:absolute!important;inset:var(--mg) calc(var(--mr) + 2 * var(--mg)) auto auto!important;width:auto!important;height:var(--mh)!important;min-height:0!important;margin:0!important;padding:0!important;display:flex!important;align-items:center;justify-content:flex-end;transform:none!important}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel .stage-tabs{position:absolute!important;inset:calc(var(--mh) + 2 * var(--mg)) auto calc(var(--ml) + 2 * var(--mg)) var(--mg)!important;width:var(--mt)!important;height:auto!important;min-height:0!important;margin:0!important;display:grid!important;grid-template-rows:repeat(6,minmax(0,1fr))!important;gap:1px!important;padding:0!important;overflow:visible!important}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel .stage-tabs>button{width:100%!important;height:auto!important;min-height:0!important;margin:0!important;box-sizing:border-box;display:flex!important;align-items:center}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel .stage-tabs>button{padding:0 7px!important}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel .stage-tabs>button>span{min-width:0;width:100%;display:flex;flex-direction:column;justify-content:center;gap:1px}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel .map-difficulty-modes{height:auto!important;min-height:0!important;align-self:center}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel .stage-board{inset:calc(var(--mh) + 2 * var(--mg)) calc(var(--mr) + 2 * var(--mg)) calc(var(--ml) + 2 * var(--mg)) calc(var(--mt) + 2 * var(--mg))!important}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel .stage-preview{position:absolute!important;inset:var(--mg) var(--mg) var(--mg) auto!important;width:var(--mr)!important;height:auto!important;min-height:0!important;margin:0!important;box-sizing:border-box;display:flex!important;flex-direction:column!important;gap:6px!important;overflow:hidden}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel .stage-preview>*{flex:none;width:100%!important;margin:0!important;box-sizing:border-box}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel .stage-preview>.stage-preview-copy{flex:1 1 auto!important;min-height:0;overflow:hidden}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel .map-scene-progress{display:flex!important;align-items:baseline;justify-content:space-between;gap:4px;height:auto!important;min-height:0!important;padding:4px 0!important;border-block:1px solid #c9a35c40}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-launch{position:absolute!important;inset:auto calc(var(--mr) + 2 * var(--mg)) var(--mg) var(--mg)!important;width:auto!important;height:var(--ml)!important;min-height:0!important;margin:0!important;box-sizing:border-box;align-items:center!important}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel .map-overview>:is(#chapter-banner,.map-difficulty,.stage-tabs,.stage-board,.stage-preview){grid-area:auto!important;place-self:stretch!important}
+#game-shell[data-panel=camp][data-camp-view=map] #run-stage-1{--route-x:5%;--route-y:62%}
+#game-shell[data-panel=camp][data-camp-view=map] #run-stage-2{--route-x:15%;--route-y:38%}
+#game-shell[data-panel=camp][data-camp-view=map] #run-stage-3{--route-x:25%;--route-y:62%}
+#game-shell[data-panel=camp][data-camp-view=map] #run-stage-4{--route-x:35%;--route-y:38%}
+#game-shell[data-panel=camp][data-camp-view=map] #run-stage-5{--route-x:45%;--route-y:62%}
+#game-shell[data-panel=camp][data-camp-view=map] #run-stage-6{--route-x:55%;--route-y:38%}
+#game-shell[data-panel=camp][data-camp-view=map] #run-stage-7{--route-x:65%;--route-y:62%}
+#game-shell[data-panel=camp][data-camp-view=map] #run-stage-8{--route-x:75%;--route-y:38%}
+#game-shell[data-panel=camp][data-camp-view=map] #run-stage-9{--route-x:85%;--route-y:62%}
+#game-shell[data-panel=camp][data-camp-view=map] #run-stage-10{--route-x:95%;--route-y:38%}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel #stage-preview-description{-webkit-line-clamp:7}
+@media(max-width:760px){#game-shell#game-shell#game-shell[data-camp-view=map] #camp-drawer{--mg:8px;--md:150px}}
+@media(max-height:360px){#game-shell#game-shell#game-shell[data-camp-view=map] #camp-drawer{--mg:7px;--mh:42px;--ml:64px}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel #stage-preview-description{-webkit-line-clamp:5}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel .stage-tabs>button small{font-size:8px!important;line-height:9px!important}
+#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel .stage-tabs>button strong{font-size:10px!important;line-height:11px!important}}
