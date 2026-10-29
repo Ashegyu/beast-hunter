@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.144.4';
-import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.144.4';
-import { createCombatAudio } from './sound.js?v=0.144.4';
-import * as game from './game-engine.js?v=0.144.4';
-import {FrameMetrics} from './frame-metrics.js?v=0.144.4';
-import { frameIndex, frameRect, validateClip } from './engine.js?v=0.144.4';
-import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.144.4';
-import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.144.4';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.144.4';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.144.4';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.144.4';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.144.4';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.144.5';
+import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.144.5';
+import { createCombatAudio } from './sound.js?v=0.144.5';
+import * as game from './game-engine.js?v=0.144.5';
+import {FrameMetrics} from './frame-metrics.js?v=0.144.5';
+import { frameIndex, frameRect, validateClip } from './engine.js?v=0.144.5';
+import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.144.5';
+import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.144.5';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.144.5';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.144.5';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.144.5';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.144.5';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -1150,7 +1150,7 @@ function updateHud(){
   $('game-shell').setAttribute('data-biome',displayChapter().key);$('game-shell').setAttribute('data-encounter',plan.tag);$('game-shell').setAttribute('data-flow',state.run.flow);
   hudText($('sound'),audio.available?'효과음 '+(soundEnabled?'ON':'OFF'):'효과음 미지원');$('sound').setAttribute('aria-pressed',String(soundEnabled));
   hudText($('gold'),String(profile.gold));hudText($('cores'),String(profile.cores));hudText($('level'),'Lv. '+profile.level);
-  hudText($('hp-text'),Math.ceil(p.hp)+' / '+Math.round(p.maxHp));$('hp-fill').style.width=clamp(p.hp/p.maxHp*100,0,100)+'%';
+  {const maxHp=Math.round(p.maxHp);hudText($('hp-text'),Math.min(maxHp,Math.ceil(p.hp))+' / '+maxHp);}$('hp-fill').style.width=clamp(p.hp/p.maxHp*100,0,100)+'%';
   $('xp-fill').style.width=(profile.level===game.MAX_LEVEL?100:profile.xp/game.xpNeeded(profile.level)*100)+'%';hudText($('xp-text'),profile.level===game.MAX_LEVEL?'최고 레벨':'다음 성장까지 '+(game.xpNeeded(profile.level)-profile.xp));refreshGrowthProgress();
   refreshBuildSystem();
   const monsters=game.remainingMonsters(state),timeText=countdown(state.run.timeRemaining),timeRatio=state.run.timeLimit?clamp(state.run.timeRemaining/state.run.timeLimit,0,1):0;

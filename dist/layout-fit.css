@@ -1835,3 +1835,7 @@
 #game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=growth] :is(#growth-training,#growth-transcend) .stat-text>small{font-size:9.5px!important;line-height:11px!important}
 #game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=growth] :is(#growth-training,#growth-transcend) .stat-text{row-gap:0!important}
 #game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=growth] :is(#growth-training,#growth-transcend)>.stat-row{padding-block:1px!important}}
+/* 0.144.5 · 결과 창 정렬(사용자 요청: 화면 정렬 이어서): 왼쪽 보고 칸(수치 4칸·획득 한 줄·레벨 줄)이 내용 높이로 위에 붙어
+   아랫선이 오른쪽 버튼 칸보다 30px 정도 위에서 끝났다. 획득 아이콘은 0.129 요청대로 한 줄이라 칸을 키워도 늘지 않으므로,
+   보고 칸을 버튼 칸 높이까지 늘리고 세 덩어리를 위·가운데·아래로 고르게 나눠 위·아랫선을 맞춘다(더보기 펼침은 그대로). */
+#game-shell#game-shell#game-shell #overlay[data-panel=result] #result-content:not([data-loot-expanded=true]) .result-report{align-self:stretch!important;height:auto!important;max-height:none!important;justify-content:space-between!important}
