@@ -54,11 +54,11 @@ test('every new armor part promotes through normal to mythic without changing it
   assert.equal(g.promoteItem(s,1).ok,false);assert.equal(g.enhancementCap(i.rarity),30);
  }
 });
-test('crafted earrings can be created twice with distinct IDs, never a third; every new crafted/ancient signature is active in its position',()=>{
- const p=g.createProfile(1000);p.gold=1e8;p.unlockedStage=3;for(const m of g.MATERIALS)p.materials[m.id]=1000;const s=g.createGame(p);
- const row=g.CRAFTED_CATALOG.find(r=>r.slot==='earring'),a=g.craftItem(s,row.id),b=g.craftItem(s,row.id);assert.equal(a.ok,true);assert.equal(b.ok,true);assert.notEqual(a.item.id,b.item.id);assert.equal(g.craftItem(s,row.id).ok,false);
- g.equipItem(s,a.item.id);g.equipItem(s,b.item.id);assert.equal(Object.values(s.loadout).filter(Boolean).length,2);
- for(const slot of ['helmet','pants','boots']){const r=g.CRAFTED_CATALOG.find(r=>r.slot===slot),result=g.craftItem(s,r.id);assert.equal(result.ok,true);assert.equal(g.equipItem(s,result.item.id),true);assert.equal(s.loadout[slot].crafted.id,r.id);}
+test('forged earrings fill both earring positions; every forged/legacy crafted/ancient signature is active in its position',()=>{
+ const p=g.createProfile(1000);p.gold=1e8;openMode(g,p,1,61);for(const m of g.MATERIALS)p.materials[m.id]=1000;const s=g.createGame(p);s.phase='camp';
+ const forge=(slot,id)=>{p.inventory.push(rollAncient({id,tier:1,slot},.1));const r=g.forgeAncient(s,id,g.FORGE_EFFECTS[slot][0].id);assert.equal(r.ok,true,slot);return r.item;};
+ const a=forge('earring',1),b=forge('earring',2);assert.notEqual(a.id,b.id);g.equipItem(s,a.id);g.equipItem(s,b.id);assert.equal(Object.values(s.loadout).filter(Boolean).length,2);
+ for(const [n,slot]of ['helmet','pants','boots'].entries()){const item=forge(slot,10+n);assert.equal(g.equipItem(s,item.id),true);assert.equal(s.loadout[slot].crafted.id,'forge-'+slot+'-1');assert.equal(s.loadout[slot].signatures.length,2);}
  // Alpha 0.136: the seal recipe can no longer be made, but an owned crafted seal keeps its signature.
  {const r=g.CRAFTED_CATALOG.find(r=>r.slot==='special');assert.equal(g.craftItem(s,r.id).ok,false);p.inventory.push({id:99,slot:'special',tier:r.tier,rarity:6,name:r.name,catalogId:r.id,artId:r.artId,affixes:{...r.base},rollVersion:1,characterId:'lirian'});assert.equal(g.equipItem(s,99),true);assert.equal(s.loadout.special.crafted.id,r.id);}
  const ancient=rollAncient({id:100,tier:1,slot:'boots'},.1);p.inventory.push(ancient);g.equipItem(s,100);assert.equal(s.loadout.boots.ancient.id,ancient.catalogId);assert.equal(g.promotionStatus(p,100).ok,false);

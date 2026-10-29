@@ -20,10 +20,13 @@ export * from './ultimate-video.js?v=0.142.0';
 export * from './skill-motion.js?v=0.142.0';
 import * as skills from './combat-skills.js?v=0.142.0';
 export * from './combat-skills.js?v=0.142.0';
-import {MATERIALS,MATERIAL_BY_ID,MATERIAL_LIMIT,emptyMaterials,rollMaterials,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress} from './crafting.js?v=0.142.0';
+import {MATERIALS,MATERIAL_BY_ID,MATERIAL_LIMIT,emptyMaterials,rollMaterials,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress,FORGE_EFFECT_BY_ID} from './crafting.js?v=0.142.0';
+import {forgeStatus,forgedItem} from './forge.js?v=0.142.0';
+export {forgeStatus,forgedItem,forgeTarget} from './forge.js?v=0.142.0';
+export {FORGE_SLOTS,FORGE_EFFECTS,FORGE_EFFECT_BY_ID,FORGE_CATALOG,FORGE_REGION_MATERIAL,forgeCost,forgeRow,forgeOpen,forgeTierOpen,forgeGateChapter} from './crafting.js?v=0.142.0';
 export {MATERIALS,MATERIAL_BY_ID,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress,materialInfo,MATERIAL_ICON_INDEX} from './crafting.js?v=0.142.0';
 import {equipmentSynergies} from './equipment-synergies.js?v=0.142.0';
-import {itemProtection} from './loot.js?v=0.142.0';
+import {itemProtection,forgeSource} from './loot.js?v=0.142.0';
 export {itemProtection,salvageValue,autoSalvageable,gradeSalvageIds} from './loot.js?v=0.142.0';
 import {cleanBagRules,emptyBagRules,BAG_SLOTS,BAG_LIMIT_MIN,BAG_LIMIT_MAX,BAG_GRADE_MAX} from './inventory-rules.js?v=0.142.0';
 export {cleanBagRules,emptyBagRules,BAG_SLOTS,BAG_LIMIT_DEFAULT,BAG_LIMIT_MIN,BAG_LIMIT_MAX,BAG_LIMIT_STEP,BAG_GRADE_MAX} from './inventory-rules.js?v=0.142.0';
@@ -152,6 +155,8 @@ function cleanItem(item,version){
   const candidateDefinition=EQUIPMENT_DEFINITIONS.get(item.catalogId),definition=candidateDefinition?.slot===clean.slot&&candidateDefinition.tier===clean.tier&&candidateDefinition.artId===clean.artId?candidateDefinition:null;
   if(clean.slot==='special'){if(!definition?.characterId)return null;clean.characterId=definition.characterId;}
   const crafted=version>=7?craftedDefinition(item):null;
+  // Alpha 0.142 승화: a forged item keeps the ancient it was made from and its chosen 승화 effect (else it is dropped).
+  if(crafted?.forge){const effect=FORGE_EFFECT_BY_ID[item.forge?.effect],forge={ancient:String(item.forge?.ancient??''),effect:effect?.id};if(!effect||!effect.id.startsWith('forge-'+clean.slot+'-'))return null;const restored={...clean,name:crafted.name,catalogId:crafted.id,artId:crafted.artId,forge,affixes:version>=10&&item.rollVersion===1?affixes:{...crafted.base}};if(!forgeSource(restored))return null;if(crafted.raidForge)restored.powerRoll=integer(item.powerRoll,RAID_POWER_ROLL.min,RAID_POWER_ROLL.max,100);return restoreEquipmentProgress(restored,item,version>=10);}
   if(crafted)return restoreEquipmentProgress({...clean,name:crafted.name,catalogId:crafted.id,affixes:version>=10&&item.rollVersion===1?affixes:{...crafted.base}},item,version>=10);
   if(version<5&&clean.rarity>=5&&!clean.artId)clean.artId=equipmentArt(clean).id;
   const ancient=ancientDefinition({...clean,catalogId:item.catalogId})??(version<5&&clean.rarity>=5?ancientForLegacy(clean):null);
@@ -561,6 +566,15 @@ function allocateItemId(s){
   if(!Number.isInteger(id)||id<1||id>1e9)id=1;
   while(p.inventory.some(i=>i.id===id)||p.pendingLoot.some(i=>i.id===id)||p.savedBuilds.some(b=>b&&Object.values(b.equipment).includes(id)))id=id>=1e9?1:id+1;
   p.nextItemId=id+1;return id;
+}
+// Alpha 0.142 승화 제작: the chosen ancient becomes a forged item in place (same id), paying the forge row's cost.
+export function forgeAncient(s,itemId,effectId){
+ if(s.phase!=='camp')return {ok:false,reason:'거점에서만 승화할 수 있어.'};
+ const status=forgeStatus(s.profile,itemId,effectId);if(!status.ok)return status;
+ const p=s.profile,index=p.inventory.findIndex(i=>i.id===itemId),made=cleanItem(forgedItem(p.inventory[index],effectId),PROFILE_VERSION);if(!made)return {ok:false,reason:'승화할 수 없는 장비야.'};
+ p.gold-=status.row.gold;for(const [key,count]of Object.entries(status.row.cost))p.materials[key]-=count;
+ // A new array so the id index cache (equipment-slots inventoryItem) never serves the old ancient.
+ p.inventory=p.inventory.map((it,n)=>n===index?made:it);refreshStats(s,true);return {ok:true,item:made,reason:made.name+' 승화 완료!'};
 }
 export function craftItem(s,id,inscription=null){
  if(s.phase!=='camp')return {ok:false,reason:'거점에서만 제작할 수 있어.'};

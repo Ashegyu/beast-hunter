@@ -85275,7 +85275,7 @@
     "ancient-individual-v0123.png": "ancient-individual-v0123.webp",
     "equipment-seals-v0136.png": "equipment-seals-v0136.webp",
     "equipment-accessories-v0140.png": "equipment-accessories-v0140.webp",
-    "craft-equipment-v0140.png": "craft-equipment-v0140.webp"
+    "craft-equipment-v0142.png": "craft-equipment-v0142.webp"
   },
   "equipmentSockets": {
     "lirian_idle_s_v05": [
@@ -89563,9 +89563,9 @@
     }
   },
   "craftedPresentation": {
-    "image": "craft-equipment-v0140.png",
+    "image": "craft-equipment-v0142.png",
     "width": 1536,
-    "height": 2048,
+    "height": 3072,
     "frames": {
       "crafted-frost-blade": {
         "x": 0,
@@ -89632,6 +89632,300 @@
         "y": 1536,
         "w": 512,
         "h": 512
+      },
+      "forge-weapon-1": {
+        "x": 1024,
+        "y": 1536,
+        "w": 512,
+        "h": 512
+      },
+      "forge-weapon-2": {
+        "x": 1024,
+        "y": 1536,
+        "w": 512,
+        "h": 512
+      },
+      "forge-weapon-3": {
+        "x": 1024,
+        "y": 1536,
+        "w": 512,
+        "h": 512
+      },
+      "forge-weapon-4": {
+        "x": 1024,
+        "y": 1536,
+        "w": 512,
+        "h": 512
+      },
+      "forge-weapon-5": {
+        "x": 1024,
+        "y": 1536,
+        "w": 512,
+        "h": 512
+      },
+      "forge-weapon-6": {
+        "x": 1024,
+        "y": 1536,
+        "w": 512,
+        "h": 512
+      },
+      "forge-weapon-raid": {
+        "x": 1024,
+        "y": 1536,
+        "w": 512,
+        "h": 512
+      },
+      "forge-helmet-1": {
+        "x": 0,
+        "y": 2048,
+        "w": 512,
+        "h": 512
+      },
+      "forge-helmet-2": {
+        "x": 0,
+        "y": 2048,
+        "w": 512,
+        "h": 512
+      },
+      "forge-helmet-3": {
+        "x": 0,
+        "y": 2048,
+        "w": 512,
+        "h": 512
+      },
+      "forge-helmet-4": {
+        "x": 0,
+        "y": 2048,
+        "w": 512,
+        "h": 512
+      },
+      "forge-helmet-5": {
+        "x": 0,
+        "y": 2048,
+        "w": 512,
+        "h": 512
+      },
+      "forge-helmet-6": {
+        "x": 0,
+        "y": 2048,
+        "w": 512,
+        "h": 512
+      },
+      "forge-helmet-raid": {
+        "x": 0,
+        "y": 2048,
+        "w": 512,
+        "h": 512
+      },
+      "forge-armor-1": {
+        "x": 512,
+        "y": 2048,
+        "w": 512,
+        "h": 512
+      },
+      "forge-armor-2": {
+        "x": 512,
+        "y": 2048,
+        "w": 512,
+        "h": 512
+      },
+      "forge-armor-3": {
+        "x": 512,
+        "y": 2048,
+        "w": 512,
+        "h": 512
+      },
+      "forge-armor-4": {
+        "x": 512,
+        "y": 2048,
+        "w": 512,
+        "h": 512
+      },
+      "forge-armor-5": {
+        "x": 512,
+        "y": 2048,
+        "w": 512,
+        "h": 512
+      },
+      "forge-armor-6": {
+        "x": 512,
+        "y": 2048,
+        "w": 512,
+        "h": 512
+      },
+      "forge-armor-raid": {
+        "x": 512,
+        "y": 2048,
+        "w": 512,
+        "h": 512
+      },
+      "forge-pants-1": {
+        "x": 1024,
+        "y": 2048,
+        "w": 512,
+        "h": 512
+      },
+      "forge-pants-2": {
+        "x": 1024,
+        "y": 2048,
+        "w": 512,
+        "h": 512
+      },
+      "forge-pants-3": {
+        "x": 1024,
+        "y": 2048,
+        "w": 512,
+        "h": 512
+      },
+      "forge-pants-4": {
+        "x": 1024,
+        "y": 2048,
+        "w": 512,
+        "h": 512
+      },
+      "forge-pants-5": {
+        "x": 1024,
+        "y": 2048,
+        "w": 512,
+        "h": 512
+      },
+      "forge-pants-6": {
+        "x": 1024,
+        "y": 2048,
+        "w": 512,
+        "h": 512
+      },
+      "forge-pants-raid": {
+        "x": 1024,
+        "y": 2048,
+        "w": 512,
+        "h": 512
+      },
+      "forge-boots-1": {
+        "x": 0,
+        "y": 2560,
+        "w": 512,
+        "h": 512
+      },
+      "forge-boots-2": {
+        "x": 0,
+        "y": 2560,
+        "w": 512,
+        "h": 512
+      },
+      "forge-boots-3": {
+        "x": 0,
+        "y": 2560,
+        "w": 512,
+        "h": 512
+      },
+      "forge-boots-4": {
+        "x": 0,
+        "y": 2560,
+        "w": 512,
+        "h": 512
+      },
+      "forge-boots-5": {
+        "x": 0,
+        "y": 2560,
+        "w": 512,
+        "h": 512
+      },
+      "forge-boots-6": {
+        "x": 0,
+        "y": 2560,
+        "w": 512,
+        "h": 512
+      },
+      "forge-boots-raid": {
+        "x": 0,
+        "y": 2560,
+        "w": 512,
+        "h": 512
+      },
+      "forge-charm-1": {
+        "x": 512,
+        "y": 2560,
+        "w": 512,
+        "h": 512
+      },
+      "forge-charm-2": {
+        "x": 512,
+        "y": 2560,
+        "w": 512,
+        "h": 512
+      },
+      "forge-charm-3": {
+        "x": 512,
+        "y": 2560,
+        "w": 512,
+        "h": 512
+      },
+      "forge-charm-4": {
+        "x": 512,
+        "y": 2560,
+        "w": 512,
+        "h": 512
+      },
+      "forge-charm-5": {
+        "x": 512,
+        "y": 2560,
+        "w": 512,
+        "h": 512
+      },
+      "forge-charm-6": {
+        "x": 512,
+        "y": 2560,
+        "w": 512,
+        "h": 512
+      },
+      "forge-charm-raid": {
+        "x": 512,
+        "y": 2560,
+        "w": 512,
+        "h": 512
+      },
+      "forge-earring-1": {
+        "x": 1024,
+        "y": 2560,
+        "w": 512,
+        "h": 512
+      },
+      "forge-earring-2": {
+        "x": 1024,
+        "y": 2560,
+        "w": 512,
+        "h": 512
+      },
+      "forge-earring-3": {
+        "x": 1024,
+        "y": 2560,
+        "w": 512,
+        "h": 512
+      },
+      "forge-earring-4": {
+        "x": 1024,
+        "y": 2560,
+        "w": 512,
+        "h": 512
+      },
+      "forge-earring-5": {
+        "x": 1024,
+        "y": 2560,
+        "w": 512,
+        "h": 512
+      },
+      "forge-earring-6": {
+        "x": 1024,
+        "y": 2560,
+        "w": 512,
+        "h": 512
+      },
+      "forge-earring-raid": {
+        "x": 1024,
+        "y": 2560,
+        "w": 512,
+        "h": 512
       }
     },
     "weaponAnchors": {
@@ -89646,6 +89940,48 @@
         "gripY": 420,
         "tipX": 492,
         "tipY": 20
+      },
+      "forge-weapon-1": {
+        "gripX": 88,
+        "gripY": 423,
+        "tipX": 488,
+        "tipY": 26
+      },
+      "forge-weapon-2": {
+        "gripX": 88,
+        "gripY": 423,
+        "tipX": 488,
+        "tipY": 26
+      },
+      "forge-weapon-3": {
+        "gripX": 88,
+        "gripY": 423,
+        "tipX": 488,
+        "tipY": 26
+      },
+      "forge-weapon-4": {
+        "gripX": 88,
+        "gripY": 423,
+        "tipX": 488,
+        "tipY": 26
+      },
+      "forge-weapon-5": {
+        "gripX": 88,
+        "gripY": 423,
+        "tipX": 488,
+        "tipY": 26
+      },
+      "forge-weapon-6": {
+        "gripX": 88,
+        "gripY": 423,
+        "tipX": 488,
+        "tipY": 26
+      },
+      "forge-weapon-raid": {
+        "gripX": 88,
+        "gripY": 423,
+        "tipX": 488,
+        "tipY": 26
       }
     }
   },

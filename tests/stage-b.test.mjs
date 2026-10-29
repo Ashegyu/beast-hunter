@@ -30,9 +30,10 @@ test('inscription replaces exactly one optional effect, preserves innate identit
  assert.equal(g.inscribeItem(s,1,'bleed').ok,true);assert.equal(p.gold,gold-1500);assert.equal(p.materials.boneIron,iron-12);assert.equal(i.inscription,'bleed');assert.deepEqual({id:i.id,affixes:i.affixes,bonus:i.enhancementAffixes,catalogId:i.catalogId},identity);
  p.gold=0;const before=g.encodeProfile(p,1000);assert.equal(g.inscribeItem(s,1,'leech').ok,false);assert.equal(g.inscribeItem(s,1,'malicious-script').ok,false);assert.equal(g.encodeProfile(p,1000),before);assert.equal(g.restoreProfile({...p,inventory:[{...i,inscription:'evil'}]},1000).inventory[0].inscription,undefined);
 });
-test('craft plus inscription checks combined costs before allocating or charging, and saved art stays the same',()=>{
- const p=profile(),s=g.createGame(p),recipe=g.CRAFTED_CATALOG[1];const gold=p.gold;const r=g.craftItem(s,recipe.id,'shred');assert.equal(r.ok,true);assert.equal(r.item.inscription,'shred');assert.equal(r.item.artId,recipe.artId);assert.equal(p.gold,gold-recipe.gold-1500);
- const other=g.CRAFTED_CATALOG[0];p.gold=other.gold+1499;const before=g.encodeProfile(p,1000);assert.equal(g.craftItem(s,other.id,'chain').ok,false);assert.equal(g.encodeProfile(p,1000),before);
+test('승화 keeps the ancient\'s inscription, checks the cost before charging, and saved art becomes the forge art',()=>{
+ const p=profile(),s=g.createGame(p);s.phase='camp';p.gold=1e6;for(const m of g.MATERIALS)p.materials[m.id]=500;const row=g.ANCIENT_CATALOG.find(r=>r.id==='ancient-1-weapon-1');p.inventory.push({id:7,slot:'weapon',tier:1,rarity:5,name:row.name,catalogId:row.id,artId:row.artId,affixes:{...row.base},rollVersion:1,inscription:'shred'});
+ const effect=g.FORGE_EFFECTS.weapon[0].id,cost=g.forgeCost(1);p.gold=cost.gold-1;const before=g.encodeProfile(p,1000);assert.equal(g.forgeAncient(s,7,effect).ok,false);assert.equal(g.encodeProfile(p,1000),before);
+ p.gold=cost.gold;const r=g.forgeAncient(s,7,effect);assert.equal(r.ok,true);assert.equal(r.item.inscription,'shred');assert.equal(r.item.artId,'forge_weapon');assert.equal(p.gold,0);
 });
 test('new stage types preserve ten stages and difficulty, while failed special rewards and new refresh rewards are not owned',()=>{
  assert.deepEqual(g.BATTLE_PLANS.map(x=>x.stageType),['normal','normal','normal','special','normal','normal','normal','elite','special','boss']);

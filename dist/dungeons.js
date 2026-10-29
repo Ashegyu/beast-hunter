@@ -67,8 +67,8 @@ export function dungeonRewards(id,level){
  if(id==='promote')return {gold:0,materials:{promotionStone:2+Math.floor(early/2)+past(level,5),crystal:1+Math.floor(early/3)+past(level,10)}};
  if(id==='skill')return {gold:0,materials:{skillPage:2+Math.floor(early/2)+past(level,6)}};
  if(id==='xp')return {gold:0,xp:500+level*50,materials:{}};
- // Crafting recipes need 30~60 뼈철, 15~50 가죽, 10~25 결정, 3~6 of a region material, 2 원질 핵 and 1 무명의 기원 (bosses only).
- const region=['root','tear','seal'][(level-1)%3];
+ // 승화 제작 (0.142) needs 40~100 뼈철, 21~57 가죽, 9~27 결정, 4~12 of a region material (six regions now) and, from region 4, 원질 핵·무명의 기원.
+ const region=['root','tear','seal','pearl','plume','halo'][(level-1)%6];
  return {gold:0,materials:{boneIron:4+Math.floor(level/2),hide:2+Math.floor(level/3),crystal:1+Math.floor(level/5),...(level>=5?{[region]:1+Math.floor(level/30)}:{}),...(level>=50?{source:Math.floor(level/50)}:{})}};
 }
 export function dungeonPlan(id,level){

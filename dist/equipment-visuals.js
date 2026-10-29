@@ -11,12 +11,13 @@ export const EQUIPMENT_GRADES=Object.freeze({
  5:Object.freeze({name:'고대',key:'ancient',color:'#fff0bf',accent:'#c6a2ff'}),
  6:Object.freeze({name:'고유',key:'crafted',color:'#8ffff1',accent:'#ffd8ec'}),
 });
-const CRAFTED_DESIGNS=new Map(CRAFTED_CATALOG.map(row=>[row.id,Object.freeze({...equipmentArt(row),rarity:6,craftId:row.id,rune:row.signature.index,color:row.signature.color,fxStyle:7,name:'고유 '+row.name})]));
+const CRAFTED_DESIGNS=new Map(CRAFTED_CATALOG.map(row=>[row.id,Object.freeze({...(equipmentArt(row)??equipmentArt({...row,tier:3})),rarity:6,craftId:row.id,rune:row.signature.index,color:row.signature.color,fxStyle:7,name:'고유 '+row.name})]));
 const SLOTS=Object.freeze(['weapon','armor','charm']);
 const GRADE_DESIGNS=new Map(ALL_EQUIPMENT_ART.flatMap(base=>[0,1,2,3,4].map(rarity=>[base.id+':'+rarity,Object.freeze({...base,rarity,name:(EQUIPMENT_GRADES[rarity]?.name?EQUIPMENT_GRADES[rarity].name+' ':'')+base.name})])));
 const ANCIENT_DESIGNS=new Map(ANCIENT_CATALOG.map(row=>[row.id,Object.freeze({...equipmentArt(row),rarity:5,variant:row.id,rune:row.signature.index,color:row.signature.color,fxStyle:row.visualStyle,name:'고대 '+row.name})]));
 const ATTACK_STYLES=Object.freeze({...EQUIPMENT_GRADES,5:Object.freeze({color:'#8ff8ed',accent:'#e7ffff'}),6:EQUIPMENT_GRADES[5],7:EQUIPMENT_GRADES[6]});
-export function visualDesign(item){const base=equipmentArt(item);if(!base)return null;const crafted=craftedDefinition(item);if(crafted)return CRAFTED_DESIGNS.get(crafted.id);const ancient=ancientDefinition(item);return ancient?ANCIENT_DESIGNS.get(ancient.id):GRADE_DESIGNS.get(base.id+':'+item?.rarity)??base;}
+// Alpha 0.142: 승화 rows go up to region 6, past the base art tiers, so a crafted item is resolved before the base art.
+export function visualDesign(item){const crafted=craftedDefinition(item);if(crafted)return CRAFTED_DESIGNS.get(crafted.id);const base=equipmentArt(item);if(!base)return null;const ancient=ancientDefinition(item);return ancient?ANCIENT_DESIGNS.get(ancient.id):GRADE_DESIGNS.get(base.id+':'+item?.rarity)??base;}
 export function equippedDesigns(profile){
  const result={weapon:null,armor:null,charm:null};for(const item of profile.inventory)if(Object.hasOwn(result,item.slot)&&profile.equipment[item.slot]===item.id)result[item.slot]=visualDesign(item);return result;
 }

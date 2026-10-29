@@ -1,0 +1,9 @@
+{
+ "id": "forge-2",
+ "prompt": "Use case: stylized-concept. Asset type: production equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing crafted unique gear sheet of this game: match its highly detailed painterly dark-steel style, sharp silhouettes, dark outlines, lighting and scale exactly; never copy its items. Theme for every item: ASCENDED (sublimated) gear reforged from an ancient relic — dark blackened steel with molten white-gold light veins, a glowing violet-gold ancient crystal core set in each piece, and thin rising embers of golden light. Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, row 1 cells 1-3, row 2 cells 4-5, and the sixth cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge, each item compact and filling about 60% of its cell: (1) an ascended necklace: a black-gold chain with a large radiant violet-gold crystal pendant in an ornate spiked setting, (2) a single ascended drop earring of black gold with a small radiant violet-gold crystal and a light spark, (3) a crafting material: a deep-sea blue pearl glowing softly inside a half-open dark spiral shell, (4) a crafting material: a long storm feather of steel-blue plumes crackling with small white lightning sparks, (5) a crafting material: a radiant fragment of golden dusk light, a sharp glowing gold crystal shard with a thin halo ring around it. Each item clearly readable at small icon size and clearly distinct from the others. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+ "style": "dist/assets/craft-equipment-v041.webp (없는 경로 — 생성기가 스타일 해시 단계에서 멈춤, 그림은 프롬프트만으로 생성됨)",
+ "final": {
+  "path": "art/forge0142/forge-2.png",
+  "sha256": "51e027f4b699605307ea600131b113b3e337046777bb68d28f0d40126a83a91d"
+ }
+}

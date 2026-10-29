@@ -1,0 +1,30 @@
+{
+ "forge-1": {
+  "kind": "sprite",
+  "minParts": 5,
+  "out": "art/forge0142/forge-1.png",
+  "style": "art/forge0142/craft-equipment-v0140.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing crafted unique gear sheet of this game: match its highly detailed painterly dark-steel style, sharp silhouettes, dark outlines, lighting and scale exactly; never copy its items. Theme for every item: ASCENDED (sublimated) gear reforged from an ancient relic — dark blackened steel with molten white-gold light veins, a glowing violet-gold ancient crystal core set in each piece, and thin rising embers of golden light. Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, row 1 cells 1-3, row 2 cells 4-5, and the sixth cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge, each item compact and filling about 60% of its cell: (1) an ascended two-handed greatsword pointing diagonally up-right, blackened blade split by a molten white-gold light vein, violet-gold crystal in the crossguard, (2) an ascended closed helmet with a white-gold crown crest and a violet crystal on the brow, (3) an ascended chest armor cuirass with layered plates, a large glowing violet-gold crystal heart and gold light veins, (4) ascended armored leg greaves (one pair of trousers) of black steel plates with gold light veins and crystal knee guards, (5) a pair of ascended armored boots side by side with gold-lit plates and small violet crystals. Each item clearly readable at small icon size and clearly distinct from the others. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "items": [
+   "forge_weapon",
+   "forge_helmet",
+   "forge_armor",
+   "forge_pants",
+   "forge_boots"
+  ]
+ },
+ "forge-2": {
+  "kind": "sprite",
+  "minParts": 5,
+  "out": "art/forge0142/forge-2.png",
+  "style": "art/forge0142/craft-equipment-v0140.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing crafted unique gear sheet of this game: match its highly detailed painterly dark-steel style, sharp silhouettes, dark outlines, lighting and scale exactly; never copy its items. Theme for every item: ASCENDED (sublimated) gear reforged from an ancient relic — dark blackened steel with molten white-gold light veins, a glowing violet-gold ancient crystal core set in each piece, and thin rising embers of golden light. Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, row 1 cells 1-3, row 2 cells 4-5, and the sixth cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge, each item compact and filling about 60% of its cell: (1) an ascended necklace: a black-gold chain with a large radiant violet-gold crystal pendant in an ornate spiked setting, (2) a single ascended drop earring of black gold with a small radiant violet-gold crystal and a light spark, (3) a crafting material: a deep-sea blue pearl glowing softly inside a half-open dark spiral shell, (4) a crafting material: a long storm feather of steel-blue plumes crackling with small white lightning sparks, (5) a crafting material: a radiant fragment of golden dusk light, a sharp glowing gold crystal shard with a thin halo ring around it. Each item clearly readable at small icon size and clearly distinct from the others. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "items": [
+   "forge_charm",
+   "forge_earring",
+   "pearl",
+   "plume",
+   "halo"
+  ]
+ }
+}

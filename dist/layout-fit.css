@@ -779,9 +779,9 @@
 #game-shell #growth-stats .gstat-group{flex:none}
 @media(max-width:700px){#game-shell .gstat-group h4{display:none}#game-shell .gstat{padding:0}#game-shell .gstat dt{font-size:10px}#game-shell .gstat dd b{font-size:11.5px}#game-shell #growth-stats{gap:3px!important;padding:6px 8px!important}#game-shell #growth-stats>header strong{grid-column:1/-1;font-size:11px!important}}
 /* Alpha 0.141 재료 도감(사용자 요청): 재료 추적 창·전투 중 추적 막대 대신 도감 '재료' 탭. 왼쪽 14종 격자, 오른쪽 상세(얻는 곳·던전·쓰는 곳·제작 목표·사냥터 바로가기).
-   아이콘은 materials-v0141(7×2, 128px, crafting.js MATERIALS 순서, --mi). */
+   아이콘은 materials-v0141(7×2, 128px, crafting.js MATERIALS 순서, --mi). 0.142부터 materials-v0142(7×3, 14~16은 4~6지역 재료). */
 #game-shell #craft-tracker{display:none!important}
-#game-shell .mat-icon{display:block;flex:none;width:44px;height:44px;background:url('assets/materials-v0141.webp') no-repeat;background-size:700% 200%;background-position:var(--mx,0%) var(--my,0%);filter:drop-shadow(0 2px 3px #000b)}
+#game-shell .mat-icon{display:block;flex:none;width:44px;height:44px;background:url('assets/materials-v0142.webp') no-repeat;background-size:700% 300%;background-position:var(--mx,0%) var(--my,0%);filter:drop-shadow(0 2px 3px #000b)}
 #game-shell #codex-content[data-view=materials] :is(#codex-feature,.archive-gallery,.archive-tools,#codex-filters,.archive-record,.codex-pager,#codex-pages){display:none!important}
 #game-shell #codex-content[data-view=materials] #codex-browser{display:flex!important;flex-direction:column}
 #game-shell #material-codex:not([hidden]){display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:10px;flex:1 1 auto;min-height:0;overflow:hidden;margin-top:6px}
@@ -818,13 +818,13 @@
 #game-shell [style*="--mi:4;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 4;"],#game-shell .mat-icon[style*="--mi:4;"]{--mx:66.6667%;--my:0%}
 #game-shell [style*="--mi:5;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 5;"],#game-shell .mat-icon[style*="--mi:5;"]{--mx:83.3333%;--my:0%}
 #game-shell [style*="--mi:6;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 6;"],#game-shell .mat-icon[style*="--mi:6;"]{--mx:100.0%;--my:0%}
-#game-shell [style*="--mi:7;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 7;"],#game-shell .mat-icon[style*="--mi:7;"]{--mx:0.0%;--my:100%}
-#game-shell [style*="--mi:8;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 8;"],#game-shell .mat-icon[style*="--mi:8;"]{--mx:16.6667%;--my:100%}
-#game-shell [style*="--mi:9;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 9;"],#game-shell .mat-icon[style*="--mi:9;"]{--mx:33.3333%;--my:100%}
-#game-shell [style*="--mi:10;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 10;"],#game-shell .mat-icon[style*="--mi:10;"]{--mx:50.0%;--my:100%}
-#game-shell [style*="--mi:11;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 11;"],#game-shell .mat-icon[style*="--mi:11;"]{--mx:66.6667%;--my:100%}
-#game-shell [style*="--mi:12;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 12;"],#game-shell .mat-icon[style*="--mi:12;"]{--mx:83.3333%;--my:100%}
-#game-shell [style*="--mi:13;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 13;"],#game-shell .mat-icon[style*="--mi:13;"]{--mx:100.0%;--my:100%}
+#game-shell [style*="--mi:7;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 7;"],#game-shell .mat-icon[style*="--mi:7;"]{--mx:0.0%;--my:50%}
+#game-shell [style*="--mi:8;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 8;"],#game-shell .mat-icon[style*="--mi:8;"]{--mx:16.6667%;--my:50%}
+#game-shell [style*="--mi:9;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 9;"],#game-shell .mat-icon[style*="--mi:9;"]{--mx:33.3333%;--my:50%}
+#game-shell [style*="--mi:10;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 10;"],#game-shell .mat-icon[style*="--mi:10;"]{--mx:50.0%;--my:50%}
+#game-shell [style*="--mi:11;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 11;"],#game-shell .mat-icon[style*="--mi:11;"]{--mx:66.6667%;--my:50%}
+#game-shell [style*="--mi:12;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 12;"],#game-shell .mat-icon[style*="--mi:12;"]{--mx:83.3333%;--my:50%}
+#game-shell [style*="--mi:13;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 13;"],#game-shell .mat-icon[style*="--mi:13;"]{--mx:100.0%;--my:50%}
 #game-shell #codex-content .archive-categories{grid-template-columns:repeat(6,minmax(0,1fr))!important}
 #game-shell #codex-content[data-view=materials] #codex-paging{visibility:hidden!important}
 #game-shell #codex-content[data-view=materials] .archive-categories{margin-bottom:0}
@@ -1471,3 +1471,121 @@
 @media(max-width:700px){#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-card img{height:min(30px,44%)!important}#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-card strong{font-size:9.5px!important;letter-spacing:-.2px!important}}
 @media(max-height:360px){#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board #skill-detail-note{display:none!important}}
 @media(max-height:380px){#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board :is(.sb-slot small,.sb-branch-text,#skill-detail-note){display:none!important}}
+/* Alpha 0.142 승화 제작: 4~6지역 재료 아이콘은 materials-v0142 셋째 줄(옛 v041 재료 칸에는 없음). */
+#game-shell [style*="--mi:14;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 14;"],#game-shell .mat-icon[style*="--mi:14;"]{--mx:0.0%;--my:100%}
+#game-shell [style*="--mi:15;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 15;"],#game-shell .mat-icon[style*="--mi:15;"]{--mx:16.6667%;--my:100%}
+#game-shell [style*="--mi:16;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 16;"],#game-shell .mat-icon[style*="--mi:16;"]{--mx:33.3333%;--my:100%}
+#game-shell#game-shell [id$="-pearl"]>.craft-material-icon{background-image:url('assets/materials-v0142.webp')!important;background-size:700% 300%!important;background-position:0% 100%!important;filter:none!important}
+#game-shell#game-shell [id$="-plume"]>.craft-material-icon{background-image:url('assets/materials-v0142.webp')!important;background-size:700% 300%!important;background-position:16.6667% 100%!important;filter:none!important}
+#game-shell#game-shell [id$="-halo"]>.craft-material-icon{background-image:url('assets/materials-v0142.webp')!important;background-size:700% 300%!important;background-position:33.3333% 100%!important;filter:none!important}
+
+/* Alpha 0.142 승화 제작 화면(사용자 결정 '제작은 고대보다 위'): [분류 탭] / [왼쪽 바칠 고대 2열×4줄 + 넘김 | 오른쪽 결과 미리보기(원화·이름·능력치 전→후),
+   계승 효과 한 줄 + 승화 효과 3칸, 재료 칩 + 비용·승화 버튼]. 옛 제작 CSS가 #craft-content·클래스에 수백 줄 걸려 있어 #forge-board 안은 all:revert로 지우고 여기서만 그린다. */
+#game-shell#game-shell#game-shell[data-panel=craft] #craft-content:not([hidden]){display:block!important;padding:6px 12px 8px!important;overflow:hidden!important}
+#game-shell#game-shell#game-shell[data-panel=craft] #craft-content>:not(#forge-board){display:none!important}
+#game-shell#game-shell#game-shell#game-shell #forge-board *:not(.equipment-icon,.equipment-icon *,.craft-material-icon),#game-shell#game-shell#game-shell#game-shell #forge-board *:not(.equipment-icon,.equipment-icon *,.craft-material-icon)::before,#game-shell#game-shell#game-shell#game-shell #forge-board *:not(.equipment-icon,.equipment-icon *,.craft-material-icon)::after{all:revert!important}
+/* 장비 그림(atlasThumbnail이 인라인으로 자리 잡는 img)과 재료 아이콘(craft.css 배경)은 지우지 않는다. */
+#game-shell#game-shell#game-shell#game-shell #forge-board{all:revert!important;display:grid!important;box-sizing:border-box!important;width:100%!important;height:100%!important;grid-template-columns:minmax(0,.85fr) minmax(0,1.55fr)!important;grid-template-rows:30px minmax(0,1fr)!important;gap:7px 8px!important;color:#e6dccb!important;font-size:11px!important;line-height:1.3!important;word-break:keep-all!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board *{box-sizing:border-box!important;min-width:0!important;margin:0!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board button{font:inherit!important;color:inherit!important;cursor:pointer!important;border:0!important;background:none!important;padding:0!important;text-align:inherit!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board [hidden]{display:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-tabs{grid-column:1/-1!important;display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-tabs button{display:flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;height:30px!important;border:1px solid #9e835355!important;border-radius:6px!important;background:linear-gradient(180deg,#151a20f0,#0b0f14f0)!important;color:#c9bda6!important;font-size:11.5px!important;font-weight:600!important;white-space:nowrap!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-tabs button[hidden]{display:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-tabs svg{width:15px!important;height:15px!important;flex:none!important;fill:none!important;stroke:currentColor!important;stroke-width:1.6!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-tabs button[aria-pressed=true]{border-color:#f2c97a!important;background:linear-gradient(180deg,#7a2a26,#3c1216)!important;color:#ffe9c4!important;box-shadow:0 0 0 1px #2a1408,0 0 10px #e0a04a55!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board :is(.fb-list,.fb-detail){position:relative!important;display:flex!important;flex-direction:column!important;gap:5px!important;min-height:0!important;padding:7px!important;border:1px solid #9e835366!important;border-radius:8px!important;background:linear-gradient(180deg,#141b22f2,#0b1016f2)!important;box-shadow:inset 0 1px 0 #ffffff0a,0 4px 14px #0008!important;overflow:hidden!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-head{display:flex!important;align-items:baseline!important;justify-content:space-between!important;flex:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-head b{font-size:12px!important;color:#f0dcb0!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-head small{font-size:10px!important;color:#a99a7c!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-picks{flex:1 1 auto!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:repeat(4,minmax(0,1fr))!important;gap:4px!important;min-height:0!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-pick{display:grid!important;grid-template-columns:auto minmax(0,1fr)!important;grid-template-rows:1fr 1fr!important;grid-template-areas:'icon name' 'icon state'!important;column-gap:6px!important;row-gap:1px!important;align-items:center!important;min-height:0!important;padding:2px 5px 2px 3px!important;border:1px solid #9e835344!important;border-radius:6px!important;background:radial-gradient(ellipse at 20% 50%,#22303a,#0d1218 78%)!important;overflow:hidden!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-pick[hidden]{display:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-pick .equipment-icon{display:block!important;grid-area:icon!important;width:40px!important;height:40px!important;position:relative!important;overflow:hidden!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-pick b{display:block!important;grid-area:name!important;align-self:end!important;font-size:10.5px!important;font-weight:700!important;color:#efe4cf!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-pick small{display:block!important;grid-area:state!important;align-self:start!important;font-size:9px!important;color:#ffd58a!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-pick[data-state=locked]{opacity:.6!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-pick[data-state=locked] small{color:#c98d8d!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-pick[aria-pressed=true]{border-color:#f2c97a!important;background:radial-gradient(ellipse at 20% 50%,#6a2a2acc,#1a0e12ee 75%)!important;box-shadow:0 0 0 1px #2a1408,0 0 12px #e0a04a66!important;opacity:1!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-empty{flex:1 1 auto!important;display:grid!important;place-items:center!important;padding:10px!important;text-align:center!important;font-size:10.5px!important;color:#a99a7c!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-empty[hidden]{display:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-pager{flex:none!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:10px!important;height:22px!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-pager[hidden]{display:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-pager button{display:grid!important;place-items:center!important;width:30px!important;height:22px!important;border:1px solid #9e835366!important;border-radius:5px!important;background:#151a20!important;color:#f0dcb0!important;font-size:15px!important;line-height:1!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-pager button:disabled{opacity:.35!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #forge-page-label{font-size:10px!important;color:#a99a7c!important}
+/* 오른쪽 */
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-hero{flex:none!important;display:grid!important;grid-template-columns:auto minmax(0,1fr) auto!important;align-items:center!important;gap:8px!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #craft-art{display:block!important;grid-row:1/3!important;width:74px!important;height:74px!important;position:relative!important;overflow:hidden!important;border-radius:8px!important;background:radial-gradient(circle at 50% 55%,#5a3a1acc,#120d10 70%)!important;box-shadow:0 0 0 1px #c79a5288,0 0 14px #e0a04a44!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-title{display:flex!important;flex-direction:column!important;gap:1px!important;min-width:0!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #craft-kind{align-self:flex-start!important;padding:0 6px!important;border-left:3px solid #f2c97a!important;background:#4a2a10cc!important;font-size:9.5px!important;color:#ffe3a8!important;white-space:nowrap!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #craft-name{font:700 15px/1.2 var(--serif,serif)!important;color:#ffe9c4!important;text-shadow:0 2px 6px #000!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #forge-source{font-size:9.5px!important;color:#a99a7c!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-stats{grid-column:2!important;display:flex!important;flex-wrap:wrap!important;gap:3px!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-stats>div{display:flex!important;align-items:baseline!important;gap:4px!important;padding:1px 7px!important;border:1px solid #9e835340!important;border-radius:10px!important;background:#0d1218!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-stats dt{display:block!important;font-size:10px!important;color:#b9bfb7!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-stats dd{display:block!important;font-size:11px!important;font-weight:700!important;color:#fff2d6!important;white-space:nowrap!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-effects{flex:1 1 auto!important;display:flex!important;flex-direction:column!important;gap:4px!important;min-height:0!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-inherit{flex:none!important;font-size:10px!important;color:#9fc3c9!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-effect-grid{flex:1 1 auto!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:4px!important;min-height:0!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-effect{display:flex!important;flex-direction:column!important;gap:2px!important;min-height:0!important;padding:4px 6px!important;border:1px solid #9e835355!important;border-radius:6px!important;background:linear-gradient(180deg,#1a222a,#10161c)!important;overflow:hidden!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-effect b{font-size:11px!important;font-weight:700!important;color:#f0dcb0!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-effect small{font-size:9px!important;line-height:1.25!important;color:#a9b4b8!important;display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:4!important;overflow:hidden!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-effect[aria-checked=true]{border-color:#f2c97a!important;background:linear-gradient(180deg,#6d1f2a,#35121b)!important;box-shadow:inset 0 0 0 1px #ffd58a55!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-effect[aria-checked=true] small{color:#ffe3a8!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-bottom{flex:none!important;display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;grid-template-rows:auto auto!important;gap:3px 8px!important;align-items:center!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-costs{grid-row:1!important;grid-column:1!important;display:flex!important;flex-wrap:wrap!important;gap:3px!important;list-style:none!important;padding:0!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-costs li{display:block!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-costs li[hidden]{display:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-costs button{display:flex!important;align-items:center!important;gap:3px!important;height:22px!important;padding:0 6px 0 2px!important;border:1px solid #9e835344!important;border-radius:11px!important;background:#0d1218!important;font-size:10px!important;color:#e6dccb!important;white-space:nowrap!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-costs li[data-ready=false] button{border-color:#a8433a88!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-costs li[data-ready=false] b{color:#ff9a8a!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-costs span{display:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-costs b{font-weight:700!important;color:#bfe6b0!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-costs .craft-material-icon{display:block!important;width:18px!important;height:18px!important;background-repeat:no-repeat!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-buy{grid-row:1/3!important;grid-column:2!important;display:flex!important;align-items:center!important;gap:6px!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-gold{display:flex!important;flex-direction:column!important;align-items:flex-end!important;line-height:1.15!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-gold small{font-size:9px!important;color:#a99a7c!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #craft-gold{font-size:13px!important;font-weight:700!important;color:#ffd58a!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #craft-gold-owned{font-size:9px!important;color:#8f8672!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-submit{height:34px!important;padding:0 16px!important;border:1px solid #f2c97a!important;border-radius:6px!important;background:linear-gradient(180deg,#9a3328,#4a1416)!important;color:#ffe9c4!important;font-size:12.5px!important;font-weight:700!important;white-space:nowrap!important;box-shadow:0 0 10px #e0a04a55!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-submit:disabled{border-color:#6d5c45!important;background:#1a1816!important;color:#8f8672!important;box-shadow:none!important;cursor:default!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board :is(.fb-status,.fb-feedback){grid-column:1!important;font-size:9.5px!important;color:#a99a7c!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-status[data-ready=true]{color:#8fe08f!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-feedback{color:#ffd58a!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-feedback:empty{display:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-bottom:has(.fb-feedback:not(:empty)) .fb-status{display:none!important}
+@media(max-height:380px){
+ #game-shell#game-shell#game-shell#game-shell #forge-board{grid-template-rows:26px minmax(0,1fr)!important;gap:5px 6px!important}
+ #game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-tabs button{height:26px!important;font-size:10.5px!important}
+ #game-shell#game-shell#game-shell#game-shell#game-shell #forge-board :is(.fb-list,.fb-detail){padding:5px!important;gap:4px!important}
+ #game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #craft-art{width:56px!important;height:56px!important}
+ #game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #craft-name{font-size:13px!important}
+ #game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-effect small{-webkit-line-clamp:3!important}
+ #game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-submit{height:30px!important;padding:0 12px!important}
+}
+@media(max-width:700px){
+ #game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-pick .equipment-icon{width:32px!important;height:32px!important}
+ #game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-pick b{font-size:9.5px!important}
+ #game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-effect b{font-size:10px!important}
+ #game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-effect small{font-size:8.5px!important}
+}
+/* 승화 재료 칩 아이콘: 모두 materials-v0142에서(옛 v041 칸의 인라인 --mx/--my는 이 판에서 지웠다). */
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #craft-cost-boneIron .craft-material-icon{background:url('assets/materials-v0142.webp') no-repeat!important;background-size:700% 300%!important;background-position:0.0000% 0%!important;filter:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #craft-cost-hide .craft-material-icon{background:url('assets/materials-v0142.webp') no-repeat!important;background-size:700% 300%!important;background-position:16.6667% 0%!important;filter:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #craft-cost-crystal .craft-material-icon{background:url('assets/materials-v0142.webp') no-repeat!important;background-size:700% 300%!important;background-position:33.3333% 0%!important;filter:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #craft-cost-root .craft-material-icon{background:url('assets/materials-v0142.webp') no-repeat!important;background-size:700% 300%!important;background-position:50.0000% 0%!important;filter:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #craft-cost-seal .craft-material-icon{background:url('assets/materials-v0142.webp') no-repeat!important;background-size:700% 300%!important;background-position:66.6667% 0%!important;filter:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #craft-cost-tear .craft-material-icon{background:url('assets/materials-v0142.webp') no-repeat!important;background-size:700% 300%!important;background-position:83.3333% 0%!important;filter:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #craft-cost-source .craft-material-icon{background:url('assets/materials-v0142.webp') no-repeat!important;background-size:700% 300%!important;background-position:100.0000% 0%!important;filter:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #craft-cost-origin .craft-material-icon{background:url('assets/materials-v0142.webp') no-repeat!important;background-size:700% 300%!important;background-position:0.0000% 50%!important;filter:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #craft-cost-refineStone .craft-material-icon{background:url('assets/materials-v0142.webp') no-repeat!important;background-size:700% 300%!important;background-position:16.6667% 50%!important;filter:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #craft-cost-refineCrystal .craft-material-icon{background:url('assets/materials-v0142.webp') no-repeat!important;background-size:700% 300%!important;background-position:33.3333% 50%!important;filter:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #craft-cost-refineEssence .craft-material-icon{background:url('assets/materials-v0142.webp') no-repeat!important;background-size:700% 300%!important;background-position:50.0000% 50%!important;filter:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #craft-cost-skillPage .craft-material-icon{background:url('assets/materials-v0142.webp') no-repeat!important;background-size:700% 300%!important;background-position:66.6667% 50%!important;filter:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #craft-cost-promotionStone .craft-material-icon{background:url('assets/materials-v0142.webp') no-repeat!important;background-size:700% 300%!important;background-position:83.3333% 50%!important;filter:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #craft-cost-sealShard .craft-material-icon{background:url('assets/materials-v0142.webp') no-repeat!important;background-size:700% 300%!important;background-position:100.0000% 50%!important;filter:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #craft-cost-pearl .craft-material-icon{background:url('assets/materials-v0142.webp') no-repeat!important;background-size:700% 300%!important;background-position:0.0000% 100%!important;filter:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #craft-cost-plume .craft-material-icon{background:url('assets/materials-v0142.webp') no-repeat!important;background-size:700% 300%!important;background-position:16.6667% 100%!important;filter:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #craft-cost-halo .craft-material-icon{background:url('assets/materials-v0142.webp') no-repeat!important;background-size:700% 300%!important;background-position:33.3333% 100%!important;filter:none!important}
+@media(max-width:700px){#game-shell#game-shell#game-shell#game-shell #forge-board{grid-template-columns:minmax(0,1fr) minmax(0,1.3fr)!important}#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-pick{column-gap:4px!important;padding:2px 3px!important}#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-pick .equipment-icon{width:28px!important;height:28px!important}}

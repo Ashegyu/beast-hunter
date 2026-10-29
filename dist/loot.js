@@ -1,5 +1,6 @@
 import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily,inventoryItem} from './equipment-slots.js?v=0.142.0';
-import {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.142.0';
+import {CRAFTED_CATALOG,craftedDefinition,FORGE_EFFECT_BY_ID,FORGE_EFFECT_POWER} from './crafting.js?v=0.142.0';
+import {ANCIENT_POWER,ANCIENT_STATS} from './ancient-stats.js?v=0.142.0';
 export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.142.0';
 import {huntMode,BOSS_DROP_TABLES} from './hunt-modes.js?v=0.142.0';
 import {UNIQUE_EFFECTS,EFFECT_ROWS,uniquePower} from './unique-effects.js?v=0.142.0';
@@ -91,14 +92,12 @@ const ancientKey=row=>[row.tier,row.slot,row.artId,row.effectId].join(':');
 const VISUAL_STYLE=Object.freeze({echo:3,storm:5,execution:6,blood:4,frostNova:5,whirlwind:6,barrier:3,thorns:4,pulse:6,frostWard:5,lastStand:6,recovery:3,momentum:3,focus:4,capacitor:5,hunter:4,orbit:6,magnet:5});
 // Alpha 0.110: three stats per slot instead of all five (several ancients used to cap crit and
 // reduction at 50%), at 2.9× instead of 3.65× — above a promoted mythic set piece, below the old values.
-const ANCIENT_POWER=2.9;
 // Alpha 0.112: ancient numbering follows the 0.107 regions. The base catalog's tier 2 is the ruined-castle family and
 // tier 3 the frost family; as ancients they become tier 3 (어둠의 심연) and tier 2 (불과 얼음의 땅). Names and art
 // stay with their family (the art id still names the base art). ANCIENT_TIER_OF_BASE is its own inverse.
 const ANCIENT_TIER_OF_BASE=Object.freeze({1:1,2:3,3:2});
 export const ancientIdOfBase=id=>id.replace(/^(ancient-)?([123])-/,(_,prefix,t)=>(prefix??'')+ANCIENT_TIER_OF_BASE[t]+'-');
-const ANCIENT_STATS=Object.freeze({weapon:{damage:13,crit:3,speed:3},armor:{hp:38,reduction:3,crit:2},helmet:{hp:25,crit:3,reduction:2},pants:{hp:25,speed:3,reduction:2},
- boots:{hp:18,speed:4,reduction:2},charm:{damage:5,hp:18,crit:3},earring:{damage:4,crit:3,speed:3},special:{damage:5,hp:18,reduction:3}});
+
 // Alpha 0.121: an ancient's power grows with its region tier (+10% per tier: 1.0 … 1.5) and with the hunt mode it
 // was earned on (정예 ×1.15, 악몽 ×1.3 plus a second power from NIGHTMARE_POWERS). Only amounts scale (damage, heal,
 // shield, fury, haste); triggers, cooldowns, radii and control effects stay as authored.
@@ -131,8 +130,13 @@ export function ancientForLegacy(item){const row=CATALOG_BY_ID.get(item.catalogI
 // The powers an owned ancient actually carries: its tier-scaled signature, raised by the hunt mode it was earned on,
 // plus the 악몽 second power. Crafted gear keeps its fixed signature. Ids double as cooldown keys.
 export const raidPowerRoll=item=>Number.isInteger(item?.powerRoll)?Math.max(RAID_POWER_ROLL.min,Math.min(RAID_POWER_ROLL.max,item.powerRoll)):100;
+// Alpha 0.142 승화: the ancient a forged item was made from, rebuilt from the saved `forge` record.
+export function forgeSource(item){const crafted=item?.rarity===6?craftedDefinition(item):null,row=crafted?.forge?ANCIENT_BY_ID.get(item.forge?.ancient):null;if(!row||row.slot!==item.slot||!!row.raid!==crafted.raidForge||(!row.raid&&row.tier!==crafted.tier))return null;
+ return {rarity:5,catalogId:row.id,slot:row.slot,tier:row.tier,artId:row.artId,name:row.name,affixes:{},...(huntGrade(item)?{hunt:huntGrade(item)}:{}),...(row.raid?{powerRoll:raidPowerRoll(item)}:{})};}
+export function forgeSignature(item){const crafted=item?.rarity===6?craftedDefinition(item):null,r=crafted?.forge?FORGE_EFFECT_BY_ID[item.forge?.effect]:null;if(!r||!r.id.startsWith('forge-'+item.slot+'-'))return null;
+ return scalePower(r,ANCIENT_TIER_POWER[crafted.tier-1]*ANCIENT_HUNT_POWER[huntGrade(item)]*FORGE_EFFECT_POWER*(crafted.raidForge?RAID_ANCIENT_STATS:1));}
 export function ancientSignatures(item){
- const crafted=item?.rarity===6?craftedDefinition(item):null;if(crafted)return [crafted.signature];
+ const crafted=item?.rarity===6?craftedDefinition(item):null;if(crafted?.forge){const source=forgeSource(item),own=forgeSignature(item);return [...(source?ancientSignatures(source):[]),...(own?[own]:[])];}if(crafted)return [crafted.signature];
  const row=ancientDefinition(item);if(!row)return [];if(row.raid){const tier=huntGrade(item),roll=raidPowerRoll(item)/100,list=[scalePower(row.signature,roll*RAID_TIER_POWER[tier])];
   // Alpha 0.139: 정예 raid ancients add the raid's 각성 power, 악몽 ones also the slot family's 심연 power (both follow the roll).
   if(tier>=1)list.push(scalePower(RAID_AWAKEN_POWERS[row.raid],roll*RAID_TIER_POWER[tier],{id:row.id+'-awaken',color:RAID_AWAKEN_POWERS[row.raid].color}));
@@ -296,6 +300,7 @@ export function uniqueEffect(item){
  if(!item||!Number.isInteger(item.rarity)||item.rarity<3||item.rarity>=RARITIES.length)return null;
  if(item.rarity===5&&!ancientDefinition(item)||item.rarity===6&&!craftedDefinition(item))return null;
  const row=CATALOG_BY_ID.get(item.catalogId),matching=row&&row.slot===item.slot&&row.tier===item.tier&&row.artId===item.artId;
+ if(matching&&row.forge){const list=ancientSignatures(item);return list.length?Object.freeze({id:'forge-'+item.id,slot:item.slot,name:list.map(r=>r.name).join(' + '),description:list.map(r=>r.description).join('\n'),color:list.at(-1).color,scales:false}):null;}
  if(matching&&row.signatureOnly){const special=ancientDefinition(item)??craftedDefinition(item);return special?Object.freeze({id:'signature-'+row.id,slot:item.slot,name:special.signature.name,description:special.signature.description,color:special.signature.color,scales:false}):null;}
  const definition=UNIQUE_EFFECTS[matching?row.effectId:LEGACY_EFFECT[item.artId]];
  return definition?.slot===item.slot?definition:null;

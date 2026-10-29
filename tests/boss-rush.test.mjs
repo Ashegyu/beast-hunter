@@ -75,7 +75,7 @@ test('seals no longer come from dungeons, boss or raid ancients or the forge',()
  let x=7;const rng=()=>{x=(Math.imul(1664525,x)+1013904223)>>>0;return x/4294967296;};
  for(let n=0;n<400;n++)assert.notEqual(L.rollAccessory({id:n+1,tier:1+n%6,grade:n%3},rng).slot,'special');
  for(let n=0;n<200;n++){for(const tier of [1,2,3,4,5,6])assert.notEqual(L.rollAncient({id:n+1,tier,slot:null},rng()).slot,'special');for(const r of g.RAIDS)assert.notEqual(L.rollAncient({id:n+1,tier:6,raid:r.id},rng()).slot,'special');}
- const p=profile(60);for(const m of g.MATERIALS)p.materials[m.id]=999;p.gold=1e7;assert.equal(g.craftStatus(p,'crafted-special').ok,false);assert.equal(g.craftStatus(p,'crafted-blood-blade').ok,true);
+ const p=profile(60);for(const m of g.MATERIALS)p.materials[m.id]=999;p.gold=1e7;assert.equal(g.craftStatus(p,'crafted-special').ok,false);assert.ok(!g.FORGE_SLOTS.includes('special'));const sealAncient=L.rollAncient({id:9,tier:1,slot:'special'},.1);assert.equal(g.forgeTarget(sealAncient),null,'seals can never be forged');
 });
 
 test('boss rush opens after chapter 10 with three entries a day, spent at entry',()=>{

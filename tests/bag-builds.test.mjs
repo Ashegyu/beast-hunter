@@ -28,7 +28,8 @@ test('full protected bag and pending loot restore never discard favorites or bui
 test('legacy defaults, invalid builds and stale identities are bounded and never alias newly crafted gear',()=>{
  const p=g.createProfile(1000),old={...p};delete old.savedBuilds;delete old.favoriteItemIds;assert.deepEqual(g.restoreProfile(old,1000).savedBuilds,[null,null,null,null,null]);
  p.savedBuilds=[{name:'missing',equipment:{weapon:1,armor:null,charm:null}},{name:'invalid',equipment:{weapon:-1,armor:null,charm:null}},null,{name:'ignored'}];const clean=g.restoreProfile(p,1000);assert.equal(clean.savedBuilds.length,5);assert.equal(clean.savedBuilds[1],null);assert.equal(g.buildStatus(clean,0).ok,true);
- clean.gold=10000;clean.clearedStage=3;clean.unlockedStage=3;for(const m of g.MATERIALS)clean.materials[m.id]=100;const s=g.createGame(clean),crafted=g.craftItem(s,g.CRAFTED_CATALOG[0].id);assert.equal(crafted.ok,true);assert.equal(crafted.item.id,2);assert.equal(g.buildStatus(clean,0).ok,true);
+ // Alpha 0.142 승화 keeps the ancient's id, so forging never mints an id that a stale build could alias.
+ clean.gold=1e6;clean.clearedStage=60;clean.unlockedStage=60;clean.stageProgress=g.STAGES.map(()=>10);clean.bossMastery=g.STAGES.map(()=>1);for(const m of g.MATERIALS)clean.materials[m.id]=100;clean.inventory.push({id:2,slot:'weapon',tier:1,rarity:5,name:'x',catalogId:'ancient-1-weapon-1',artId:g.ANCIENT_CATALOG.find(r=>r.id==='ancient-1-weapon-1').artId,affixes:{...g.ANCIENT_CATALOG.find(r=>r.id==='ancient-1-weapon-1').base},rollVersion:1});clean.nextItemId=3;const s=g.createGame(clean),forged=g.forgeAncient(s,2,g.FORGE_EFFECTS.weapon[0].id);assert.equal(forged.ok,true);assert.equal(forged.item.id,2);assert.equal(clean.nextItemId,3);assert.equal(g.buildStatus(clean,0).ok,true);
 });
 
 test('legacy 48-item saves can grow through 49 to the bag limit and recover without item loss',()=>{

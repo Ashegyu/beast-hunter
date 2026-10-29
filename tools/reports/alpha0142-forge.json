@@ -1,0 +1,28 @@
+{
+  "sources": [
+    {
+      "sheet": "forge-1",
+      "source": "art/forge0142/forge-1.png",
+      "sha256": "41498772ec1a64e063bdc42daa7472354d1e486a80edd372b8e2b3d2943dfb50"
+    },
+    {
+      "sheet": "forge-2",
+      "source": "art/forge0142/forge-2.png",
+      "sha256": "51e027f4b699605307ea600131b113b3e337046777bb68d28f0d40126a83a91d"
+    }
+  ],
+  "craftPage": [
+    1536,
+    3072
+  ],
+  "craftItemSide": 469,
+  "materials": [
+    "pearl",
+    "plume",
+    "halo"
+  ],
+  "webpBytes": {
+    "craft-equipment-v0142.webp": 1104606,
+    "materials-v0142.webp": 125030
+  }
+}
