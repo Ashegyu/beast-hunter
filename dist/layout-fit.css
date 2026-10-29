@@ -1718,3 +1718,18 @@
 #game-shell#game-shell#game-shell[data-panel=equipment] #equipment-persona>.equipped-slot>div{flex:none!important;height:12px!important;line-height:12px!important;margin:0!important;white-space:nowrap}
 @media(max-width:760px){#game-shell#game-shell#game-shell[data-panel=equipment] #equipment-content{--eg:8px}}
 @media(max-height:360px){#game-shell#game-shell#game-shell[data-panel=equipment] #equipment-content{--eg:7px;--eh:42px;--ea:30px;grid-template-rows:minmax(0,1fr) minmax(0,1.3fr) 0 var(--ea)!important;row-gap:var(--eg)!important}#game-shell#game-shell#game-shell[data-panel=equipment] #equipment-content>.equipment-sources{display:none!important}}
+/* 0.143.4 · 가방 화면 정렬(사용자 요청 '가방 화면도 정렬 맞춰보자'): 바깥 여백(위 8·옆 10px)과 두 판 사이(9px)를
+   여백 --bg 하나로 맞추고 판 안쪽 여백도 같게 해 '소지품' 머리가 판 테두리에 걸리지 않게 한다.
+   상세 창: 닫기(×) 36×32 버튼이 22px 칸에서 넘쳐 창 밖으로 나가고 568에서는 '공격 +5'의 수치와 겹쳤다 →
+   닫기 28px를 창 안쪽 오른쪽 위에, 이름 칸은 그만큼 비우고 기본 수치 줄은 '공격 +5'로 붙여 쓴다. */
+#game-shell#game-shell#game-shell[data-panel=inventory] #inventory-content{--bg:10px;padding:var(--bg)!important;column-gap:var(--bg)!important;box-sizing:border-box}
+#game-shell#game-shell#game-shell[data-panel=inventory] #inventory-content .armory-bag{padding:8px!important;box-sizing:border-box}
+#game-shell#game-shell#game-shell[data-panel=inventory] #bag-detail>.item-detail-heading{inset:6px 6px auto auto!important;width:28px!important;height:28px!important;z-index:4}
+#game-shell#game-shell#game-shell[data-panel=inventory] #bag-detail-close{width:28px!important;height:28px!important;min-width:0!important;min-height:0!important;padding:0!important;line-height:26px!important}
+#game-shell#game-shell#game-shell[data-panel=inventory] #bag-detail .item-identity{padding-right:30px!important;box-sizing:border-box;min-width:0}
+#game-shell#game-shell#game-shell[data-panel=inventory] #bag-detail .item-core-stats>div{justify-content:flex-start!important;gap:6px!important}
+#game-shell#game-shell#game-shell[data-panel=inventory] #inventory-content .armory-bag{--bp:8px}
+#game-shell#game-shell#game-shell[data-panel=inventory] #inventory-content .armory-bag-heading>div:has(#bag-sort){left:var(--bp)!important;bottom:var(--bp)!important;top:auto!important}
+#game-shell#game-shell#game-shell[data-panel=inventory] #bag-material-craft{height:100%!important;min-height:0!important;max-height:100%!important;box-sizing:border-box}
+@media(max-width:760px){#game-shell#game-shell#game-shell[data-panel=inventory] #inventory-content{--bg:8px}#game-shell#game-shell#game-shell[data-panel=inventory] #inventory-content .armory-bag{padding:6px!important;--bp:6px}}
+@media(max-height:360px){#game-shell#game-shell#game-shell[data-panel=inventory] #inventory-content{--bg:7px}}
