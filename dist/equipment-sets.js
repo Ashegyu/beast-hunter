@@ -7,6 +7,7 @@ export const SET_SLOTS=Object.freeze(['weapon','helmet','armor','pants','boots']
 export const SET_STATS=Object.freeze(['damagePct','hpPct','speed','crit','reduction','attackSpeed','range','regeneration','collection']);
 const STAT_TEXT={damagePct:v=>'공격력 +'+Math.round(v*100)+'%',hpPct:v=>'체력 +'+Math.round(v*100)+'%',speed:v=>'이동 속도 +'+v+'%',crit:v=>'치명 +'+v+'%',
  reduction:v=>'피해 감소 +'+v+'%',attackSpeed:v=>'공격 속도 +'+v+'%',range:v=>'공격 범위 +'+v+'%',regeneration:v=>'초당 회복 +'+v,collection:v=>'획득 범위 +'+v};
+export const setStatText=(k,v)=>STAT_TEXT[k](v);
 const bonus=(pieces,stats)=>({pieces,stats,text:Object.entries(stats).map(([k,v])=>STAT_TEXT[k](v)).join(' · ')});
 // Newer sets name their pieces "<prefix> <noun>": two prefixes per set, one noun per weapon design and part.
 const named=([a,b],[sword,second],[helmet,armor,pants,boots])=>({weapon:[[a+' '+sword,b+' '+sword],[a+' '+second,b+' '+second]],

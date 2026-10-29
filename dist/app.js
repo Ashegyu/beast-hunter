@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.145.1';
-import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.145.1';
-import { createCombatAudio } from './sound.js?v=0.145.1';
-import * as game from './game-engine.js?v=0.145.1';
-import {FrameMetrics} from './frame-metrics.js?v=0.145.1';
-import { frameIndex, frameRect, validateClip } from './engine.js?v=0.145.1';
-import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.145.1';
-import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.145.1';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.145.1';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.145.1';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.145.1';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.145.1';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.145.2';
+import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.145.2';
+import { createCombatAudio } from './sound.js?v=0.145.2';
+import * as game from './game-engine.js?v=0.145.2';
+import {FrameMetrics} from './frame-metrics.js?v=0.145.2';
+import { frameIndex, frameRect, validateClip } from './engine.js?v=0.145.2';
+import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.145.2';
+import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.145.2';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.145.2';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.145.2';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.145.2';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.145.2';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -427,6 +427,7 @@ function refreshBagDetailReading(){
  const ancient=game.ancientDefinition(item);if(ancient)parts.unshift('고대 특수효과\n'+ancientPowerText(item));
  if(game.isSeal(item))parts.unshift('인장 효과 · '+game.SEAL_GRADES[item.seal.grade].name+' · 성장 '+item.seal.level+' / '+game.SEAL_MAX_LEVEL+'\n'+game.sealEffectLines(item).join('\n')+'\n성장은 던전 → 보스 러시 화면에서');
  if(item.perfect)parts.push('극옵 · 모든 기본 옵션 최댓값');
+ {const aset=game.ancientSetOf(item);if(aset){const worn=game.equippedAncientSetCounts(profile)[aset]??0,set=game.ANCIENT_SETS[aset];parts.push('고대 세트 · '+set.name+' (착용 '+worn+'/'+set.pieces+')\n'+game.ancientSetText(aset,worn));}}
  const setId=game.itemSet(item);if(setId){const worn=game.equippedSetCounts(profile)[setId]??0;parts.push('세트 · '+game.EQUIPMENT_SETS[setId].name+' (착용 '+worn+'/'+game.SET_SLOTS.length+')\n'+game.setBonusText(setId,worn));}
  const ranges=game.itemRollRanges(item);if(Object.keys(ranges).length)parts.push('기본 옵션 범위 (강화 보너스 제외)\n'+Object.entries(ranges).map(([k,r])=>game.AFFIXES[k]+' '+item.affixes[k]+' ['+r.min+'~'+r.max+']').join(' · '));
  if(item.inscription)parts.push('추가 각인 · '+game.BUILD_EFFECTS[item.inscription].name+'\n'+game.buildEffectText(item.inscription));
@@ -1576,10 +1577,11 @@ function refreshEquipmentScene(){
   $('equipment-link-name-'+row.id).textContent=row.name;$('equipment-link-state-'+row.id).textContent=active?'활성':'미완성';$('equipment-link-description-'+row.id).textContent=active?row.description:row.requirement;
  }
  // Region set progress (Alpha 0.108): the set with the most worn pieces and its 2/4-piece bonuses.
- const best=game.equippedSets(profile)[0],setButton=$('equipment-link-set');setButton.setAttribute('data-active',String(!!best?.active.length));
- $('equipment-link-name-set').textContent=best?'세트 · '+best.set.name+' '+best.count+'/'+game.SET_SLOTS.length:'지역 장비 세트';
+ // Alpha 0.145.2: a 고대 세트 with at least as many reached stages as the best chapter set takes this card.
+ const chapterBest=game.equippedSets(profile)[0],ancientBest=game.equippedAncientSets(profile)[0],ancient=!!ancientBest&&(!chapterBest||ancientBest.active.length>=chapterBest.active.length),best=ancient?ancientBest:chapterBest,setButton=$('equipment-link-set');setButton.setAttribute('data-active',String(!!best?.active.length));
+ $('equipment-link-name-set').textContent=!best?'지역 장비 세트':ancient?'고대 세트 · '+best.set.name+' '+best.count+'/'+best.set.pieces:'세트 · '+best.set.name+' '+best.count+'/'+game.SET_SLOTS.length;
  $('equipment-link-state-set').textContent=best?.active.length?best.active.at(-1).pieces+'세트 활성':'미완성';
- $('equipment-link-description-set').textContent=best?best.set.bonuses.map(b=>b.pieces+'세트 '+b.text).join(' · '):'같은 지역 세트 2·4부위 착용 시 효과';
+ $('equipment-link-description-set').textContent=!best?'같은 지역 세트 2·4부위 착용 시 효과':ancient?best.set.stages.map(s=>s.pieces+'세트 '+(s.special?'「'+s.special.name+'」':Object.entries(s.stats).map(([k,v])=>game.setStatText(k,v)).join(' · '))).join(' · '):best.set.bonuses.map(b=>b.pieces+'세트 '+b.text).join(' · ');
  setButton.setAttribute('aria-label',$('equipment-link-name-set').textContent+' · '+$('equipment-link-state-set').textContent);
  for(const view of ['skills','growth','codex'])$('equipment-menu-'+view).disabled=state.phase!=='camp';
 }

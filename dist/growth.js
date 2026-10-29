@@ -173,7 +173,15 @@ export function fitTree(p,tree){const out=cleanTree(tree),limit=treePointsTotal(
 // 트리 포인트 spent in a region (bridges count for both neighbours); stage-gates.js turns it into the gate counter.
 export function branchPoints(p,branch){return (p?.growthTree??[]).reduce((a,id)=>a+(isTreeNode(id)&&TREE_NODES[id].branches.includes(branch)?TREE_NODES[id].cost:0),0);}
 const ZERO=Object.freeze({damagePct:0,attackSpeed:0,crit:0,execute:0,finisher:0,hpPct:0,reduction:0,drain:0,regeneration:0,lowHpGuard:0,staminaRegen:0,skillCooldown:0,skillArea:0,skillDamage:0,skillFury:0,speed:0,range:0});
-export function treeBonus(p){const tree=p?.growthTree;if(!tree?.length)return ZERO;const out={...ZERO};for(const id of tree){if(!isTreeNode(id))continue;for(const [k,v] of Object.entries(TREE_NODES[id].bonus))out[k]+=v;}return out;}
+// Alpha 0.145.2: other sources of the same effects (고대 세트 특수효과) add here, so every place that reads treeBonus applies them.
+const bonusSources=[];
+export function addBonusSource(fn){if(!bonusSources.includes(fn))bonusSources.push(fn);}
+export function treeBonus(p){
+ const tree=p?.growthTree;let out=null;
+ if(tree?.length){out={...ZERO};for(const id of tree){if(!isTreeNode(id))continue;for(const [k,v] of Object.entries(TREE_NODES[id].bonus))out[k]+=v;}}
+ for(const fn of bonusSources){const extra=fn(p);for(const k in extra){if(!Object.hasOwn(ZERO,k))continue;out??={...ZERO};out[k]+=extra[k];}}
+ return out??ZERO;
+}
 export function trainingValue(id,rank){const t=Object.hasOwn(TRAINING,id)?TRAINING[id]:null;return t?Math.round(t.per*trainingEffective(rank)*10)/10:0;}
 export function trainStatus(p,id){if(!Object.hasOwn(TRAINING,id))return '없는 단련';if(trainingPoints(p)<1)return '능력치 포인트 부족';return '';}
 export function nodeStatus(p,id){if(!isTreeNode(id))return '없는 노드';const tree=p.growthTree??[];if(tree.includes(id))return '습득';if(!ADJ[id].some(n=>n===TREE_ROOT||tree.includes(n)))return '이어진 노드 필요';if(treePoints(p)<TREE_NODES[id].cost)return '트리 포인트 부족';return '';}
