@@ -1813,6 +1813,13 @@ test('stage B five presets save real gear and skill settings, expose two-tap ent
  const stored=ui.profile();assert.equal(stored.savedBuilds.length,5);assert.equal(stored.savedBuilds[4].name,'실험 보스');assert.deepEqual(stored.savedBuilds[4].skill.loadout,stored.skillBook.loadout);assert.equal(ui.nodes.get('build-card-4').hidden,false);assert.equal(ui.nodes.get('build-card-0').hidden,true);
  ui.emit('nav-home','click');ui.emit('hub-route','click');ui.nodes.get('entry-build').value='4';ui.emit('entry-build','change');assert.equal(ui.profile().selectedBuild,4);assert.equal(ui.nodes.get('entry-build-option-4').disabled,false);const restored=await host({saved:ui.profile()});assert.equal(restored.profile().savedBuilds[4].name,'실험 보스');assert.equal(restored.storage.has(KEY+':recovery'),false);
 });
+test('hunt map entry presets are a five-button grid: saved presets apply on tap and the matching one is pressed (0.144)',async()=>{
+ const p=bagFixture();p.level=30;const ui=await host({saved:p,campaign:true});ui.emit('lobby-equipment','click');ui.emit('loadout-build-open','click');ui.emit('build-tab-2','click');ui.emit('build-save-2','click');
+ ui.emit('nav-home','click');ui.emit('hub-route','click');ui.tick(0);
+ assert.equal(ui.nodes.get('entry-build-pick-2').disabled,false);assert.equal(ui.nodes.get('entry-build-pick-0').disabled,true);assert.equal(ui.nodes.get('entry-build-pick-2').textContent,'광역');
+ assert.equal(ui.nodes.get('entry-build-pick-2').attributes['aria-pressed'],'true');
+ ui.emit('entry-build-pick-2','click');assert.equal(ui.profile().selectedBuild,2);assert.equal(ui.nodes.get('entry-build-pick-2').attributes['aria-pressed'],'true');assert.equal(ui.nodes.get('entry-build-pick-1').attributes['aria-pressed'],'false');
+});
 test('the build screen has no equipment inscription crafting; dropped and crafted inscriptions still count',async()=>{
  const p=bagFixture();p.inventory[0].inscription='leech';const ui=await host({saved:p});ui.emit('lobby-equipment','click');ui.emit('loadout-build-open','click');
  for(const id of ['build-inscription','inscription-item','inscription-effect','inscription-apply'])assert.equal(ui.nodes.has(id),false,id);

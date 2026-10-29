@@ -1780,3 +1780,20 @@
 #game-shell#game-shell#game-shell #camp-dungeons-panel .dungeon-level-pager>button{width:18px!important;min-width:0!important;padding:0!important}
 #game-shell#game-shell#game-shell #camp-dungeons-panel .dungeon-level-pager>strong{width:auto!important;min-width:40px!important}}
 @media(max-height:360px){#game-shell#game-shell#game-shell #camp-dungeons-panel{--dg:7px}}
+/* 0.144 · 사냥 지도 입장 프리셋을 드롭다운 대신 버튼 격자로(사용자 요청 '스테이지 선택에서 조합 리스트를 그리드 형식으로').
+   출발 바 = [프리셋 격자 3×2(첫 칸 '입장 프리셋' 이름표) | 주요 보상 | 전투 준비]. 왼쪽의 챕터·스테이지 요약은 위 배너·오른쪽 칸과
+   같은 내용이라 숨긴다(DOM·갱신 코드는 남음). 저장 안 된 프리셋은 흐리게, 지금 장비·스킬이 그 프리셋과 같으면 붉게 강조.
+   숨은 select(#entry-build)는 상태·테스트용으로 남긴다. .map-launch-actions는 display:contents로 풀어 격자·버튼을 바의 칸에 직접 놓는다. */
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=map] #camp-map-launch{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr) minmax(0,.8fr)!important;grid-template-rows:minmax(0,1fr)!important;align-items:stretch!important}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=map] #camp-map-launch>.map-launch-summary{display:none!important}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=map] #camp-map-launch>.map-launch-actions{display:contents!important}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=map] #camp-map-launch>.map-launch-rewards{grid-column:2!important;grid-row:1!important;align-self:center!important}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=map] #camp-map-launch #camp-map-start{grid-column:3!important;grid-row:1!important;height:auto!important;min-height:0!important;align-self:stretch!important;margin:0!important}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=map] .map-launch-actions>label.entry-build-control{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip-path:inset(50%)!important;margin:0!important;padding:0!important}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=map] .entry-build-grid{grid-column:1;grid-row:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:4px;min-width:0;min-height:0}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=map] .entry-build-grid::before{content:'입장 프리셋';display:flex;align-items:center;justify-content:center;font:600 10px/1.1 var(--ui-font);color:#c9b083;letter-spacing:-.02em;text-align:center}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=map] .entry-build-grid>button{min-width:0!important;min-height:0!important;height:auto!important;margin:0!important;padding:0 3px!important;border:1px solid #9e835366!important;border-radius:5px!important;background:#120d10dd!important;background-image:none!important;box-shadow:none!important;color:#e6dccb!important;font:500 11px/1 var(--ui-font)!important;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=map] .entry-build-grid>button::before,#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=map] .entry-build-grid>button::after{display:none!important}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=map] .entry-build-grid>button:disabled{opacity:.35}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=map] .entry-build-grid>button[aria-pressed=true]{border-color:#f2c97a!important;background:linear-gradient(180deg,#8a2a2c,#3a1418)!important;color:#ffe9c4!important;box-shadow:0 0 8px #e0a04a55!important;font-weight:700!important}
+@media(max-width:760px){#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=map] .entry-build-grid{gap:3px}#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=map] .entry-build-grid>button{font-size:9.5px!important;letter-spacing:-.05em;padding:0 1px!important}#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=map] .entry-build-grid::before{font-size:9px}}

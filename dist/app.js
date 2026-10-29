@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.143.9';
-import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.143.9';
-import { createCombatAudio } from './sound.js?v=0.143.9';
-import * as game from './game-engine.js?v=0.143.9';
-import {FrameMetrics} from './frame-metrics.js?v=0.143.9';
-import { frameIndex, frameRect, validateClip } from './engine.js?v=0.143.9';
-import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.143.9';
-import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.143.9';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.143.9';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.143.9';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.143.9';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.143.9';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.144.0';
+import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.144.0';
+import { createCombatAudio } from './sound.js?v=0.144.0';
+import * as game from './game-engine.js?v=0.144.0';
+import {FrameMetrics} from './frame-metrics.js?v=0.144.0';
+import { frameIndex, frameRect, validateClip } from './engine.js?v=0.144.0';
+import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.144.0';
+import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.144.0';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.144.0';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.144.0';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.144.0';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.144.0';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -1698,7 +1698,7 @@ function refreshBuildSystem(){
 
  if(state.phase==='playing'&&!inventoryOpen)return;
  const uiKey=buildUiRevision+':'+state.phase+':'+buildTab+':'+inventoryOpen+':'+!!retryPlan;if(uiKey===buildUiRendered)return;buildUiRendered=uiKey;
- const selected=profile.selectedBuild!==null?profile.savedBuilds[profile.selectedBuild]:null,current=selected?.name??null,match=!!selected&&JSON.stringify(selected.equipment)===JSON.stringify(profile.equipment)&&JSON.stringify(selected.skill)===JSON.stringify({loadout:profile.skillBook.loadout,auto:profile.skillBook.auto,awakening:profile.skillBook.awakening});
+ const selected=profile.selectedBuild!==null?profile.savedBuilds[profile.selectedBuild]:null,current=selected?.name??null,match=!!selected&&JSON.stringify(selected.equipment)===JSON.stringify(profile.equipment)&&JSON.stringify(selected.skill)===JSON.stringify({loadout:profile.skillBook.loadout,auto:profile.skillBook.auto,awakening:profile.skillBook.awakening,branchPick:profile.skillBook.branchPick});
  $('build-current').textContent='현재 · '+(current??'사용자 조합')+(current&&!match?' · 변경됨':'');$('build-retry').hidden=!retryPlan;
  for(let n=0;n<5;n++){
   const b=profile.savedBuilds[n],status=game.buildStatus(profile,n),option=$('entry-build-option-'+n);option.disabled=!b;option.textContent=(b?.name??game.BUILD_NAMES[n])+(b?'':' · 미저장');$('home-build-option-'+n).disabled=!b;$('home-build-option-'+n).textContent=option.textContent;
@@ -1711,11 +1711,13 @@ function refreshBuildSystem(){
   }else{$('build-skill-'+n).textContent='현재 장비·스킬·성장 트리·자동 정책을 함께 저장합니다.';$('build-effects-'+n).textContent='같은 장비는 여러 프리셋에서 공유합니다.';}
   $('build-save-'+n).disabled=state.phase!=='camp';$('build-delete-'+n).disabled=!b||state.phase!=='camp';
  }
- for(const id of ['entry-build','home-entry-build'])if(document.activeElement!==$(id))$(id).value=!match?'current':String(profile.selectedBuild);
+ for(const id of ['entry-build','home-entry-build'])if(document.activeElement!==$(id))$(id).value=!match?'current':String(profile.selectedBuild);for(let n=0;n<5;n++){const b=$('entry-build-pick-'+n);hudText(b,profile.savedBuilds[n]?.name??game.BUILD_NAMES[n]);b.disabled=!profile.savedBuilds[n];b.setAttribute('aria-pressed',String(!!match&&profile.selectedBuild===n));b.setAttribute('title',profile.savedBuilds[n]?'이 프리셋으로 바꿔 입장':'저장된 프리셋 없음');}
 }
 for(let n=0;n<5;n++)$('build-name-'+n).addEventListener('input',()=>{buildNameDrafts[n]=$('build-name-'+n).value;});
 for(let n=0;n<5;n++)$('build-tab-'+n).addEventListener('click',()=>{buildTab=n;bagRenderKey='';updateHud();});
-for(const id of ['entry-build','home-entry-build'])$(id).addEventListener('change',()=>{if($(id).value==='current')return;const r=game.applyBuild(state,Number($(id).value));bagFeedback=r.reason;if(r.ok){appearance=equippedDesigns(profile);save();}bagRenderKey='';skillRenderKey='';updateHud();});
+// Alpha 0.144: 사냥 출발 바의 입장 프리셋도 던전처럼 버튼 5개 격자(숨은 select는 상태·테스트용으로 남김).
+ for(let n=0;n<5;n++)$('entry-build-pick-'+n).addEventListener('click',()=>{if(state.phase!=='camp')return;const r=game.applyBuild(state,n);bagFeedback=r.reason;if(r.ok){appearance=equippedDesigns(profile);save();}bagRenderKey='';skillRenderKey='';updateHud();});
+ for(const id of ['entry-build','home-entry-build'])$(id).addEventListener('change',()=>{if($(id).value==='current')return;const r=game.applyBuild(state,Number($(id).value));bagFeedback=r.reason;if(r.ok){appearance=equippedDesigns(profile);save();}bagRenderKey='';skillRenderKey='';updateHud();});
 $('result-build').addEventListener('click',()=>{if(!game.resultReady(state))return;retryPlan={chapter:state.stageId,stage:state.run.stage,difficulty:state.difficulty,dungeon:state.run.dungeonId,raid:state.run.raidId,rush:!!state.run.rush};returnCamp();openInventory('build');});
 $('build-retry').addEventListener('click',()=>{if(!retryPlan||state.phase!=='camp')return;const p=retryPlan;retryPlan=null;inventoryOpen=false;if(p.raid)startRaid(p.raid);else if(p.rush)startRush();else if(p.dungeon)startDungeon(p.dungeon,p.stage);else start(p.chapter,p.stage,p.difficulty);});
 
@@ -1784,7 +1786,7 @@ function refreshTower(){
  $('dungeon-enter').disabled=dungeonBusy||!!combatWork||!!combatError;$('dungeon-enter').textContent=dungeonBusy?'전투 준비 중…':'탑 오르기 ›';
 }
 function refreshDungeonBuild(){
- const selected=profile.selectedBuild!==null?profile.savedBuilds[profile.selectedBuild]:null,match=selected&&JSON.stringify(selected.equipment)===JSON.stringify(profile.equipment)&&JSON.stringify(selected.skill)===JSON.stringify({loadout:profile.skillBook.loadout,auto:profile.skillBook.auto,awakening:profile.skillBook.awakening});
+ const selected=profile.selectedBuild!==null?profile.savedBuilds[profile.selectedBuild]:null,match=selected&&JSON.stringify(selected.equipment)===JSON.stringify(profile.equipment)&&JSON.stringify(selected.skill)===JSON.stringify({loadout:profile.skillBook.loadout,auto:profile.skillBook.auto,awakening:profile.skillBook.awakening,branchPick:profile.skillBook.branchPick});
  for(let n=0;n<5;n++){$('dungeon-build-option-'+n).textContent=(profile.savedBuilds[n]?.name??game.BUILD_NAMES[n])+(profile.savedBuilds[n]?'':' · 미저장');$('dungeon-build-option-'+n).disabled=!profile.savedBuilds[n];}for(let n=0;n<5;n++){const b=$('dungeon-build-pick-'+n);hudText(b,profile.savedBuilds[n]?.name??game.BUILD_NAMES[n]);b.disabled=!profile.savedBuilds[n];b.setAttribute('aria-pressed',String(!!match&&profile.selectedBuild===n));b.setAttribute('title',profile.savedBuilds[n]?'이 프리셋으로 바꿔 입장':'저장된 프리셋 없음');}hudText($('dungeon-build-state'),match?'프리셋':'프리셋 · 사용자 조합');if(document.activeElement!==$('dungeon-build'))$('dungeon-build').value=match?String(profile.selectedBuild):'current';
 }
 // Alpha 0.136 보스 러시 tab: today's five bosses, entries and the 인장 성장 panel; the right-hand entry panel is shared.
