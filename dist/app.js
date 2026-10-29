@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.144.5';
-import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.144.5';
-import { createCombatAudio } from './sound.js?v=0.144.5';
-import * as game from './game-engine.js?v=0.144.5';
-import {FrameMetrics} from './frame-metrics.js?v=0.144.5';
-import { frameIndex, frameRect, validateClip } from './engine.js?v=0.144.5';
-import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.144.5';
-import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.144.5';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.144.5';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.144.5';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.144.5';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.144.5';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.144.6';
+import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.144.6';
+import { createCombatAudio } from './sound.js?v=0.144.6';
+import * as game from './game-engine.js?v=0.144.6';
+import {FrameMetrics} from './frame-metrics.js?v=0.144.6';
+import { frameIndex, frameRect, validateClip } from './engine.js?v=0.144.6';
+import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.144.6';
+import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.144.6';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.144.6';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.144.6';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.144.6';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.144.6';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -1434,7 +1434,7 @@ function refreshCraft(){
  const targetOf=it=>awakenMode?game.awakenTarget(it):game.forgeTarget(it),gateOpen=row=>awakenMode?game.awakenTierOpen(profile,row.tier,row.raidForge):game.forgeTierOpen(profile,row.tier,row.raidForge),gateWord=awakenMode?'악몽 ':'정예 ';
  for(let n=0;n<FORGE_PAGE;n++){const item=list[forgePage*FORGE_PAGE+n],node=$('forge-pick-'+n);node.hidden=!item;if(!item)continue;const row=targetOf(item),gate=gateOpen(row);
   node.setAttribute('aria-pressed',String(item.id===forgePickId));node.setAttribute('data-state',!gate?'locked':game.isEquippedItem(profile,item)?'worn':'ready');gearThumbnail($('forge-pick-art-'+n),item,48);
-  $('forge-pick-name-'+n).textContent=item.name.replace(/^태초의 /,'');$('forge-pick-state-'+n).textContent=gate?(row.raidForge?'레이드':row.tier+'지역')+(item.hunt?' · '+['','정예','악몽'][item.hunt]:'')+(item.enhancement?' +'+item.enhancement:'')+(game.isEquippedItem(profile,item)?' · 착용':''):gateWord+game.forgeGateChapter(row.tier,row.raidForge)+'장 필요';node.title=item.name;node.setAttribute('aria-label',item.name+' · '+$('forge-pick-state-'+n).textContent);}
+  $('forge-pick-name-'+n).textContent=item.name.replace(/^태초의 /,'');$('forge-pick-state-'+n).textContent=gate?(row.raidForge?'레이드':row.tier+'지역')+(item.hunt?' · '+['','정예','악몽'][item.hunt]:'')+(item.enhancement?' +'+item.enhancement:''):gateWord+game.forgeGateChapter(row.tier,row.raidForge)+'장 필요';node.title=item.name+(game.isEquippedItem(profile,item)?' (착용 중)':'');node.setAttribute('aria-label',item.name+' · '+$('forge-pick-state-'+n).textContent);}
  const item=list.find(i=>i.id===forgePickId)??null,row=item?targetOf(item):null,slot=row?.slot??(craftSlot==='armor'?'armor':craftSlot==='charm'?'charm':'weapon'),effects=game.FORGE_EFFECTS[slot],owned=awakenMode&&item?item.forge.effect:null;
  const choice=awakenMode?awakenChoice:forgeChoice;let effectId=choice[slot];if(!effectId||effectId===owned)effectId=effects.find(r=>r.id!==owned).id;
  const preview=item?(awakenMode?game.awakenedItem(item,effectId):game.forgedItem(item,effectId)):null;$('craft-detail').setAttribute('data-slot',slot);$('craft-detail').setAttribute('data-empty',String(!item));
