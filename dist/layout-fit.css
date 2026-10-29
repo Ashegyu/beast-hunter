@@ -1700,3 +1700,21 @@
 #game-shell#game-shell[data-panel=camp][data-camp-view=home] #hub-route[data-map-region]{background:linear-gradient(90deg,#050a10f5,#050b10b0 47%,#050b1030),var(--map-art) 60% 50%/cover!important}
 @media(max-width:760px){#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=home]{--hg:8px;--hstart:42px}}
 @media(max-height:360px){#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=home]{--hg:7px;--hwal:26px;--hstart:40px}}
+/* 0.143.3 · 장비 화면 정렬(사용자 요청 '장비 화면도 정렬 맞춰보자'): 바깥 여백이 왼 19·위 15·아래 12·오른 19px로 제각각이고
+   오른쪽 열 행 높이가 고정값이라 판끼리 아랫선이 안 맞았다. 여백 --eg 하나로 왼쪽 판(캐릭터·슬롯)과 오른쪽 열
+   (능력치 / 시너지 / 획득처 / 버튼)의 위·아래 선을 맞추고, 오른쪽 끝은 위 제목 줄 아이콘과 같은 선(여백 10px)에 둔다.
+   판 안: 프로필 머리(--eh)는 판 왼쪽 위 안쪽, 슬롯은 그 아래부터 판 바닥까지 같은 줄 간격(왼 5칸·오른 4칸이 같은 줄).
+   받침대가 슬롯 이름표를 덮던 것은 슬롯을 위로 올려 해결. */
+#game-shell#game-shell#game-shell[data-panel=equipment] #equipment-content{--eg:10px;--er:clamp(220px,39.5%,340px);--eh:52px;--ea:36px;padding:var(--eg)!important;gap:var(--eg)!important;grid-template-columns:minmax(0,1fr) var(--er)!important;grid-template-rows:minmax(0,1.05fr) minmax(0,1.1fr) minmax(0,.5fr) var(--ea)!important;box-sizing:border-box}
+#game-shell#game-shell#game-shell[data-panel=equipment] #equipment-content>#equipment-persona{grid-area:1/1/5/2!important;margin:0!important;height:auto!important;min-height:0!important;padding:calc(var(--eh) + 12px) 8px 8px!important;box-sizing:border-box;grid-template-rows:repeat(5,minmax(0,1fr))!important;row-gap:4px!important;align-self:stretch!important}
+#game-shell#game-shell#game-shell[data-panel=equipment] #equipment-content>.equipment-stats-panel{grid-area:1/2!important;margin:0!important}
+#game-shell#game-shell#game-shell[data-panel=equipment] #equipment-content>.equipment-synergy-panel{grid-area:2/2!important;margin:0!important}
+#game-shell#game-shell#game-shell[data-panel=equipment] #equipment-content>.equipment-sources{grid-area:3/2!important;margin:0!important;min-height:0;align-content:center;overflow:hidden}
+#game-shell#game-shell#game-shell[data-panel=equipment] #equipment-content>.loadout-actions{grid-area:4/2!important;margin:0!important}
+#game-shell#game-shell#game-shell[data-panel=equipment] #equipment-content>.loadout-heading{position:absolute!important;inset:calc(var(--eg) + 6px) auto auto calc(var(--eg) + 8px)!important;height:var(--eh)!important;min-height:0!important;margin:0!important;box-sizing:border-box;align-items:center}
+#game-shell#game-shell#game-shell[data-panel=equipment] #equipment-persona>.equipped-slot{z-index:3;height:100%!important;min-height:0!important;margin:0!important;align-self:stretch!important}
+#game-shell#game-shell#game-shell[data-panel=equipment] #equipment-persona>.equipped-slot{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:1px!important;padding:0!important}
+#game-shell#game-shell#game-shell[data-panel=equipment] #equipment-persona>.equipped-slot>.loadout-slot-frame{flex:none!important;height:min(44px,calc(100% - 13px))!important;width:auto!important;aspect-ratio:1!important;max-width:100%!important;margin:0!important;box-sizing:border-box}
+#game-shell#game-shell#game-shell[data-panel=equipment] #equipment-persona>.equipped-slot>div{flex:none!important;height:12px!important;line-height:12px!important;margin:0!important;white-space:nowrap}
+@media(max-width:760px){#game-shell#game-shell#game-shell[data-panel=equipment] #equipment-content{--eg:8px}}
+@media(max-height:360px){#game-shell#game-shell#game-shell[data-panel=equipment] #equipment-content{--eg:7px;--eh:42px;--ea:30px;grid-template-rows:minmax(0,1fr) minmax(0,1.3fr) 0 var(--ea)!important;row-gap:var(--eg)!important}#game-shell#game-shell#game-shell[data-panel=equipment] #equipment-content>.equipment-sources{display:none!important}}

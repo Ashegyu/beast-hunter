@@ -1,9 +1,9 @@
 // Alpha 0.142 승화 제작 (사용자 결정): 같은 부위 고대 장비 1개를 바쳐 고대보다 위의 제작 장비로 만든다.
 // 새 장비는 바친 고대의 아이템 번호를 그대로 쓴다 — 착용 칸·저장 빌드·즐겨찾기가 끊기지 않고, 강화 수치·각인·사냥 난이도(정예·악몽)·
 // 레이드 효과 위력도 이어진다. 기본 능력치는 고대 값의 1.2배를 승화 줄 범위 안으로 맞춘다.
-import {ancientDefinition,itemRollRanges,craftedDefinition} from './loot.js?v=0.143.2';
-import {inventoryItem} from './equipment-slots.js?v=0.143.2';
-import {FORGE_EFFECTS,FORGE_POWER,FORGE_AWAKEN_POWER,forgeRow,forgeOpen,forgeTierOpen,forgeGateChapter,awakenOpen,awakenTierOpen,awakenCost} from './crafting.js?v=0.143.2';
+import {ancientDefinition,itemRollRanges,craftedDefinition} from './loot.js?v=0.143.3';
+import {inventoryItem} from './equipment-slots.js?v=0.143.3';
+import {FORGE_EFFECTS,FORGE_POWER,FORGE_AWAKEN_POWER,forgeRow,forgeOpen,forgeTierOpen,forgeGateChapter,awakenOpen,awakenTierOpen,awakenCost} from './crafting.js?v=0.143.3';
 
 // The forge row an ancient goes into: its region tier, or the raid row (6지역 ×1.1) for raid ancients.
 export function forgeTarget(item){const row=item?.rarity===5?ancientDefinition(item):null;return row&&FORGE_EFFECTS[row.slot]?forgeRow(row.slot,row.raid?6:row.tier,!!row.raid):null;}
