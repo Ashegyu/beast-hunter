@@ -1845,11 +1845,18 @@
 #game-shell#game-shell#game-shell :is(.tower-bonus,.rush-lineup)>header>*{max-width:100%!important;width:auto!important;margin:0!important;text-align:left!important}
 #game-shell#game-shell#game-shell :is(#tower-next-bonus,#rush-chapter){white-space:nowrap!important;overflow:visible!important;text-overflow:clip!important}}
 /* 0.144.6 · 제작 목록 잘림: 이름이 한 줄 말줄임이라 '폐성 수호자의 귀걸이'가 잘리고 상태 줄 '3지역 · 정예 +15 · 착용'도 잘렸다
-   → 이름은 두 줄까지, 착용은 글자 대신 칸 오른쪽 위 작은 '착용' 표식(data-state=worn). 효과 설명은 5줄까지(낮은 화면은 8px). */
+   → 이름은 두 줄까지, 착용은 글자 대신 장비 그림 왼쪽 위 작은 '착용' 표식(data-state=worn). 효과 설명은 5줄까지(낮은 화면은 8px).
+   낮은 화면은 재료 칩을 줄여(높이 18·아이콘 14) 한 줄에 셋씩 들게 해 효과 칸 높이를 확보하고, 그래도 넘치는 설명은 아래를 흐리게 끊는다. */
 #game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=craft] #forge-board .fb-pick{position:relative!important;grid-template-rows:auto auto!important;align-content:center!important}
 #game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=craft] #forge-board .fb-pick b{white-space:normal!important;display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important;line-height:1.15!important;word-break:keep-all!important;overflow-wrap:anywhere}
-#game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=craft] #forge-board .fb-pick[data-state=worn]::after{content:'착용'!important;display:block!important;position:absolute!important;top:2px!important;right:3px!important;padding:0 3px!important;border-radius:3px!important;background:#8a2a2c!important;color:#ffe9c4!important;font:700 8px/12px var(--ui-font)!important;pointer-events:none!important}
-#game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=craft] #forge-board .fb-pick[data-state=worn] b{padding-right:22px}
+#game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=craft] #forge-board .fb-pick[data-state=worn]::after{content:'착용'!important;display:block!important;position:absolute!important;top:2px!important;left:2px!important;right:auto!important;padding:0 3px!important;border-radius:3px!important;background:#8a2a2c!important;color:#ffe9c4!important;font:700 8px/12px var(--ui-font)!important;pointer-events:none!important}
 #game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=craft] #forge-board .fb-effect small{-webkit-line-clamp:5!important}
-@media(max-height:360px){#game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=craft] #forge-board .fb-effect small{-webkit-line-clamp:5!important;font-size:8px!important;line-height:1.1!important;letter-spacing:-.02em}
+@media(max-height:360px){#game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=craft] #forge-board .fb-costs button{height:18px!important;padding:0 4px 0 1px!important;gap:2px!important;font-size:9.5px!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=craft] #forge-board .fb-costs .craft-material-icon{width:14px!important;height:14px!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=craft] #forge-board .fb-costs{gap:2px!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=craft] #forge-board .fb-effect small{-webkit-mask-image:linear-gradient(#000 calc(100% - 6px),transparent);mask-image:linear-gradient(#000 calc(100% - 6px),transparent)}
+#game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=craft] #forge-board .fb-effect small{-webkit-line-clamp:5!important;font-size:8px!important;line-height:1.1!important;letter-spacing:-.02em}
 #game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=craft] #forge-board .fb-effect{padding:3px 5px!important;gap:1px!important}}
+/* 0.144.7 · 가방 분해 창(폭 760 미만): '부위별 보관 개수 | 넘으면 낮은 등급부터 자동 분해'가 한 줄에서 잘렸다 → 설명을 제목 아래 줄로. */
+@media(max-width:760px) and (min-height:361px){#game-shell#game-shell#game-shell[data-panel=inventory] #bag-rules h4{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:0!important;white-space:normal!important}
+#game-shell#game-shell#game-shell[data-panel=inventory] #bag-rules h4>small{display:block!important;margin:0!important;font-size:9px!important;white-space:normal!important}}
