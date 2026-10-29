@@ -1,7 +1,7 @@
-import {MONSTERS} from './chapters.js?v=0.143.7';
-import { makeState, advance, triggerAttack, triggerHit, resetState, frameIndex, frameRect, validateClip } from './engine.js?v=0.143.7';
-import { WORLD_BOUNDS, VIEWPORT, cameraFor, screenToWorld, visibleInCamera } from './world.js?v=0.143.7';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.143.7';
+import {MONSTERS} from './chapters.js?v=0.143.8';
+import { makeState, advance, triggerAttack, triggerHit, resetState, frameIndex, frameRect, validateClip } from './engine.js?v=0.143.8';
+import { WORLD_BOUNDS, VIEWPORT, cameraFor, screenToWorld, visibleInCamera } from './world.js?v=0.143.8';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.143.8';
 
 const $ = id => document.getElementById(id);
 const canvas = $('arena');

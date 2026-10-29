@@ -1760,3 +1760,9 @@
 #game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=craft] #forge-board{gap:var(--cg)!important}
 @media(max-width:760px){#game-shell#game-shell#game-shell[data-panel=craft] #craft-content{--cg:8px}}
 @media(max-height:360px){#game-shell#game-shell#game-shell[data-panel=craft] #craft-content{--cg:7px}}
+/* 0.143.7 · 제작 상세 칸 머리(사용자 요청 '오른쪽 아이템 표시가 너무 상단에 붙어 있다'): 장비 그림(74px, 낮은 화면 56px)이 2행에 걸쳐
+   가운데 정렬이라 두 행 높이가 그림보다 낮으면 위로 넘쳐 칸 윗변에 걸렸다(844에서 4px 밖). 그림은 머리 칸 위에 붙이고
+   머리 칸 높이를 그림 높이 이상으로, 칸 위에 여백 4px를 더 준다. 옛 규칙의 top:-19.5px(inset)가 그림을 끌어올리던 것도 지운다. */
+#game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=craft] #forge-board .fb-hero{--art:74px;min-height:var(--art)!important;padding-top:4px!important;align-content:center!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=craft] #forge-board #craft-art{align-self:start!important;margin:0!important;inset:auto!important;width:var(--art)!important;height:var(--art)!important}
+@media(max-height:360px){#game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=craft] #forge-board .fb-hero{--art:56px}}
