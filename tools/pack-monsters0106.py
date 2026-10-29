@@ -77,7 +77,8 @@ def pack():
     manifest['clips'] = {key: value for key, value in manifest['clips'].items() if not key.endswith('_' + TAG)}
     manifest['directions'] = {key: value for key, value in manifest['directions'].items()
                               if not any(i.endswith('_' + TAG) for f in value.values() for i in f.values())}
-    manifest['delivery'] = {key: value for key, value in manifest['delivery'].items() if TAG not in key}
+    # Only monster atlases of this tag (0.142: other packers also use the v0142 tag for their own pages).
+    manifest['delivery'] = {key: value for key, value in manifest['delivery'].items() if not (key.startswith('monsters-') and TAG in key)}
     old_clips = dict(manifest['clips'])
     old_directions = dict(manifest['directions'])
     report = {

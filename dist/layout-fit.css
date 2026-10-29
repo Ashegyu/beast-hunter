@@ -719,17 +719,17 @@
 #game-shell #growth-training,#game-shell #growth-transcend{gap:6px 10px!important;align-content:stretch}
 #game-shell .stat-row{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;align-items:center;gap:10px;min-width:0;min-height:0;padding:6px 10px 6px 6px;border:0;border-bottom:1px solid #9e835333;border-radius:0;background:linear-gradient(90deg,#1a1216cc 0%,#0e1216a0 55%,#0e121600 100%)}
 #game-shell .stat-row::before{content:'';position:absolute;left:0;top:18%;bottom:18%;width:2px;border-radius:2px;background:#c98d3c88}
-#game-shell .stat-emblem{width:44px;height:44px;flex:none;background:url('assets/growth-stats-v0141.webp') no-repeat;background-size:500% 200%;filter:drop-shadow(0 2px 4px #000c)}
+#game-shell .stat-emblem{width:44px;height:44px;flex:none;background:url('assets/growth-stats-v0142.webp') no-repeat;background-size:500% 300%;filter:drop-shadow(0 2px 4px #000c)}
 #game-shell .stat-row[data-stat=power] .stat-emblem{background-position:0 0}
 #game-shell .stat-row[data-stat=vitality] .stat-emblem{background-position:25% 0}
 #game-shell .stat-row[data-stat=guard] .stat-emblem{background-position:50% 0}
 #game-shell .stat-row[data-stat=precision] .stat-emblem{background-position:75% 0}
 #game-shell .stat-row[data-stat=tempo] .stat-emblem{background-position:100% 0}
-#game-shell .stat-row[data-stat=stride] .stat-emblem{background-position:0 100%}
-#game-shell .stat-row[data-stat=might] .stat-emblem{background-position:25% 100%}
-#game-shell .stat-row[data-stat=life] .stat-emblem{background-position:50% 100%}
-#game-shell .stat-row[data-stat=slayer] .stat-emblem{background-position:75% 100%}
-#game-shell .stat-row[data-stat=arts] .stat-emblem{background-position:100% 100%}
+#game-shell .stat-row[data-stat=stride] .stat-emblem{background-position:0 50%}
+#game-shell .stat-row[data-stat=might] .stat-emblem{background-position:25% 50%}
+#game-shell .stat-row[data-stat=life] .stat-emblem{background-position:50% 50%}
+#game-shell .stat-row[data-stat=slayer] .stat-emblem{background-position:75% 50%}
+#game-shell .stat-row[data-stat=arts] .stat-emblem{background-position:100% 50%}
 #game-shell .stat-text{display:grid;gap:3px;min-width:0}
 #game-shell .stat-text strong{font-size:13px;line-height:1.2;color:#f3e3c3;letter-spacing:.3px}
 #game-shell .stat-text small{font-size:10.5px;line-height:1.25;color:#b9bfb7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -1589,3 +1589,30 @@
 #game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #craft-cost-plume .craft-material-icon{background:url('assets/materials-v0142.webp') no-repeat!important;background-size:700% 300%!important;background-position:16.6667% 100%!important;filter:none!important}
 #game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #craft-cost-halo .craft-material-icon{background:url('assets/materials-v0142.webp') no-repeat!important;background-size:700% 300%!important;background-position:33.3333% 100%!important;filter:none!important}
 @media(max-width:700px){#game-shell#game-shell#game-shell#game-shell #forge-board{grid-template-columns:minmax(0,1fr) minmax(0,1.3fr)!important}#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-pick{column-gap:4px!important;padding:2px 3px!important}#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-pick .equipment-icon{width:28px!important;height:28px!important}}
+/* 0.142 승화 각성: 왼쪽 위 '승화 | 각성' 전환, 각성 화면은 붉은 테 */
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-modes{display:flex!important;gap:3px!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-modes button{height:22px!important;padding:0 12px!important;border:1px solid #9e835355!important;border-radius:11px!important;background:#121820!important;color:#c9bda6!important;font-size:11px!important;font-weight:700!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-modes button[aria-selected=true]{border-color:#f2c97a!important;background:linear-gradient(180deg,#7a2a26,#3c1216)!important;color:#ffe9c4!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #forge-mode-awaken[aria-selected=true]{border-color:#ff5a7a!important;background:linear-gradient(180deg,#5a1030,#22060f)!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board[data-mode=awaken] .fb-detail{border-color:#ff5a7a66!important;box-shadow:inset 0 1px 0 #ffffff0a,0 0 16px #ff5a7a22!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-effect[data-owned=true]{opacity:.55!important;border-style:dashed!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board .fb-head{align-items:center!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #forge-board #craft-cost-nightmareShard .craft-material-icon{background:url('assets/materials-v0142.webp') no-repeat!important;background-size:700% 300%!important;background-position:50% 100%!important;filter:none!important}
+#game-shell [style*="--mi:17;"] .mat-icon,#game-shell .mat-icon[style*="--mi: 17;"],#game-shell .mat-icon[style*="--mi:17;"]{--mx:50.0%;--my:100%}
+#game-shell#game-shell [id$="-nightmareShard"]>.craft-material-icon{background-image:url('assets/materials-v0142.webp')!important;background-size:700% 300%!important;background-position:50% 100%!important;filter:none!important}
+/* 0.142 초월 확장: 초월 수호·질풍 문장은 growth-stats-v0142 셋째 줄, 악몽 개방 전에는 흐리게 */
+#game-shell .stat-row[data-stat=aegis] .stat-emblem{background-position:0 100%}
+#game-shell .stat-row[data-stat=swift] .stat-emblem{background-position:25% 100%}
+#game-shell .stat-row[data-locked=true]{opacity:.5}
+/* 0.142 악몽 콘텐츠: 심연의 균열(탑 패널 공유)·악몽 레이드 장면 원화 */
+#game-shell #camp-dungeons-panel{--scene-rift:url('assets/dungeon-rift-v0142.webp');--scene-raid-sovereign:url('assets/dungeon-raid-sovereign-v0142.webp')}
+#game-shell #camp-dungeons-panel[data-dungeon=rift]{--scene:var(--scene-rift);background:linear-gradient(110deg,#080c10f2 0%,#0d0a10e6 55%,#140c12dd 100%),var(--scene) center/cover!important}
+#game-shell #camp-dungeons-panel[data-dungeon=raid-sovereign]{--scene:var(--scene-raid-sovereign);background:linear-gradient(110deg,#080c10f2 0%,#0d0a10e6 55%,#140c12dd 100%),var(--scene) center/cover!important}
+#game-shell #raid-card-sovereign{--card-scene:var(--scene-raid-sovereign)}
+#game-shell #raid-card-sovereign strong{color:#ff9db0!important}
+#game-shell #camp-dungeons-panel[data-dungeon=rift] .tower-climb{background:linear-gradient(180deg,#05070a10 0%,#05070a99 45%,#05070af0 100%),var(--scene-rift) center 35%/cover!important}
+/* 0.142 악몽 레이드: 카드 4장이 2×2를 채우고 주간 입장 상자는 숨김(초기화 시각은 아래 안내 줄로) */
+#game-shell#game-shell#game-shell #raid-cards:not([hidden]){grid-template-rows:repeat(2,minmax(0,1fr))!important;grid-auto-rows:0!important}
+#game-shell#game-shell#game-shell #raid-cards #raid-week{display:none!important}
+/* 0.142 던전 종류 탭 5개(심연의 균열 추가): 폭 760 미만에서 줄을 좁혀 왼쪽 칸 안에 들게 한다 */
+@media(max-width:760px){#game-shell#game-shell .dungeon-modes{gap:3px!important;min-width:0}#game-shell#game-shell .dungeon-modes button{flex:0 1 auto!important;min-width:0!important;padding:0 6px!important;font-size:9.5px!important;letter-spacing:-.03em;white-space:nowrap;overflow:hidden}}

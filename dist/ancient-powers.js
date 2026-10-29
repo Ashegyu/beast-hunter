@@ -220,4 +220,14 @@ export const RAID_ABYSS_POWERS=Object.freeze(Object.fromEntries([
  ['charm',{name:'심연의 메아리',trigger:'skill',cooldown:5,cdr:.8,stamina:8}],
 ].map(([family,r],i)=>{const id='raid-abyss-'+family;return [family,Object.freeze({...r,id,index:171+i,radius:0,color:'#7a5cff',description:describePower(r)})];})));
 
+// Alpha 0.142 악몽 레이드 '악몽의 군주': its five relics (indices 180~) and its 각성 power (185).
+const SOVEREIGN_POWERS=[
+ ['sovereign-weapon',{name:'악몽 베기',trigger:'finisher',cooldown:4,damage:.8,cone:true,bleed:4,radius:260}],
+ ['sovereign-helmet',{name:'악몽의 시선',trigger:'crit',cooldown:5,fury:.18,furyTime:3,stamina:6}],
+ ['sovereign-armor',{name:'흑요 가시',trigger:'hurt',cooldown:5,damage:.6,bleed:3,shield:.06,radius:220}],
+ ['sovereign-charm',{name:'악몽의 눈',trigger:'skill',cooldown:6,damage:.4,ticks:3,center:'target',cdr:.5,radius:230}],
+ ['sovereign-earring',{name:'가시 메아리',trigger:'kill',cooldown:4,shots:3,damage:.5,bleed:2,radius:300}],
+].map(([key,r],i)=>{const id='ancient-raid-'+key;return [id,Object.freeze({...r,id,index:180+i,radius:r.radius??0,color:'#ff3d6a',description:describePower(r)})];});
+export const SOVEREIGN_RAID_POWERS=Object.freeze(Object.fromEntries(SOVEREIGN_POWERS));
+export const SOVEREIGN_AWAKEN=Object.freeze((r=>({...r,id:'raid-awaken-sovereign',index:185,radius:r.radius,color:'#ff3d6a',description:describePower(r)}))({name:'군주 각성',trigger:'kill',cooldown:4,damage:.7,shield:.05,radius:260}));
 export const ANCIENT_POWER_BY_ID=Object.freeze(Object.fromEntries(ANCIENT_POWERS.map(r=>[r.id,r])));

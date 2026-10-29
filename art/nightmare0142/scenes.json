@@ -1,0 +1,16 @@
+{
+ "rift": {
+  "kind": "scene",
+  "out": "art/nightmare0142/rift.png",
+  "style": "dist/assets/dungeon-tower-v0141.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production UI illustration (a wide landscape banner) for a dark fantasy 2D action RPG dungeon select screen. Image1 is an existing illustration of this game: match its painterly dark fantasy rendering, dramatic warm/cool rim lighting, deep shadows, atmospheric haze and level of detail; never copy its subject. Create ONE opaque landscape image, 3:2 aspect (about 1536x1024), a single scene with no humans, no people, no text, no letters, no logo, no UI, no frame or border. Keep the main subject in the CENTER third and slightly above center (the image is cropped to wide and narrow banners and dark text sits on the lower part), with darker, calmer lower 30%. Image2 is the SUBJECT reference only: the raid boss of this game (an animation sheet); paint that same creature once, large, in the scene, matching its design and colors, not as a sprite sheet. SCENE (environment only — absolutely NO figures, NO angels, NO knights, NO creatures, NO people; never reuse the reference subject): a vast jagged rift torn open in the dark sky above a shattered ancient battlefield, a swirling vortex of black mist and crimson light pouring down from the rift, broken floating stone platforms spiralling into the abyss, faint crimson eyes glimmering in the mist; menacing, otherworldly, deep crimson and black palette with cold violet rim light.",
+  "reference": "art/raid0123/bosses/raid_judge.png"
+ },
+ "raid-nightmare-scene": {
+  "kind": "scene",
+  "out": "art/nightmare0142/raid-nightmare-scene.png",
+  "style": "dist/assets/dungeon-tower-v0141.webp",
+  "prompt": "Use case: stylized-concept. Asset type: production UI illustration (a wide landscape banner) for a dark fantasy 2D action RPG dungeon select screen. Image1 is an existing illustration of this game: match its painterly dark fantasy rendering, dramatic warm/cool rim lighting, deep shadows, atmospheric haze and level of detail; never copy its subject. Create ONE opaque landscape image, 3:2 aspect (about 1536x1024), a single scene with no humans, no people, no text, no letters, no logo, no UI, no frame or border. Keep the main subject in the CENTER third and slightly above center (the image is cropped to wide and narrow banners and dark text sits on the lower part), with darker, calmer lower 30%. Image2 is the SUBJECT reference only: the raid boss of this game (an animation sheet); paint that same creature once, large, in the scene, matching its design and colors, not as a sprite sheet. SCENE (environment only — absolutely NO figures, NO angels, NO knights, NO creatures, NO people; never reuse the reference subject): a nightmare throne hall: a colossal throne of black obsidian thorns on a raised dais at the center, surrounded by a ring of dead black trees and drifting black mist, a huge crimson eye glowing in a cracked sky window behind the throne, crimson candles and chains; dread, regal, deep crimson and black palette.",
+  "reference": "art/raid0123/bosses/raid_judge.png"
+ }
+}

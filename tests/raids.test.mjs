@@ -23,11 +23,11 @@ test('weekly entries: three per raid, spent at entry, kept spent on failure and 
  assert.equal(g.raidEntriesLeft(saved,'colossus',MONDAY+7*864e5),3);assert.equal(g.launchRaid(g.createGame(saved),'colossus',MONDAY+7*864e5),true);
  // Locked until chapter 60 is cleared; restore clamps hostile counts.
  for(const r of g.RAIDS){assert.equal(r.unlock,60);assert.equal(g.launchRaid(g.createGame(profile(59)),r.id,now),false);}
- const hostile=g.restoreProfile({...JSON.parse(g.encodeProfile(profile(),1000)),raids:{week:'x',entries:{colossus:99,queen:-4},clears:{judge:1e9}}},1000);assert.deepEqual(hostile.raids,{week:-1,entries:{colossus:3,queen:0,judge:0},clears:{colossus:0,queen:0,judge:1e6}});
+ const hostile=g.restoreProfile({...JSON.parse(g.encodeProfile(profile(),1000)),raids:{week:'x',entries:{colossus:99,queen:-4},clears:{judge:1e9}}},1000);assert.deepEqual(hostile.raids,{week:-1,entries:{colossus:3,queen:0,judge:0,sovereign:0},clears:{colossus:0,queen:0,judge:1e6,sovereign:0}});
 });
 
 test('raid bosses scale with the furthest chapter and fight with their own species, cycle and pattern',()=>{
- for(const r of g.RAIDS){const s=raid(r.id),e=boss(s),st=g.STAGES[59];assert.equal(s.stageId,60);assert.equal(e.species,r.species);assert.equal(e.maxHp,Math.round(st.raidBossHp*r.hp*g.raidScale(60)));assert.deepEqual([...e.bossCycle],[...r.cycle]);assert.equal(e.special,undefined);assert.equal(s.run.timeLimit,g.RAID_TIME_LIMIT);assert.equal(s.run.rule.type,'raid');assert.match(g.bossRuleStatus(s),r.mechanic==='armor'?/강철 장갑/:r.mechanic==='swarm'?/군단 소환까지/:/심판까지/);}
+ for(const r of g.RAIDS.filter(r=>!r.nightmare)){const s=raid(r.id),e=boss(s),st=g.STAGES[59];assert.equal(s.stageId,60);assert.equal(e.species,r.species);assert.equal(e.maxHp,Math.round(st.raidBossHp*r.hp*g.raidScale(60)));assert.deepEqual([...e.bossCycle],[...r.cycle]);assert.equal(e.special,undefined);assert.equal(s.run.timeLimit,g.RAID_TIME_LIMIT);assert.equal(s.run.rule.type,'raid');assert.match(g.bossRuleStatus(s),r.mechanic==='armor'?/강철 장갑/:r.mechanic==='swarm'?/군단 소환까지/:/심판까지/);}
  assert.ok(g.raidScale(20)>g.raidScale(60));assert.equal(g.raidScale(60),.7);
 });
 
@@ -60,8 +60,8 @@ test('황혼의 심판자 judgement ignores dodge frames, grows each time and is
 });
 
 test('raid ancients: fifteen authored identities, never in chapter boss pools; 정예/악몽 raid tiers add 각성 and 심연 powers (0.139)',()=>{
- const rows=g.ANCIENT_CATALOG.filter(r=>r.raid);assert.equal(rows.length,15);
- for(const r of g.RAIDS){const own=rows.filter(a=>a.raid===r.id);assert.deepEqual(own.map(a=>a.slot),['weapon','helmet','armor','charm','special']);assert.ok(own.every(a=>a.region===7&&a.tier===6));for(const a of own)assert.deepEqual(a.signature,RAID_POWERS[a.id]);}
+ const rows=g.ANCIENT_CATALOG.filter(r=>r.raid&&r.raid!=='sovereign');assert.equal(rows.length,15);
+ for(const r of g.RAIDS.filter(r=>!r.nightmare)){const own=rows.filter(a=>a.raid===r.id);assert.deepEqual(own.map(a=>a.slot),['weapon','helmet','armor','charm','special']);assert.ok(own.every(a=>a.region===7&&a.tier===6));for(const a of own)assert.deepEqual(a.signature,RAID_POWERS[a.id]);}
  for(const b of g.BOSS_LOOT)assert.ok(b.items.every(a=>!a.raid));
  const keys=new Set(rows.map(a=>JSON.stringify({...a.signature,id:0,index:0,name:0,color:0,description:0})));assert.equal(keys.size,15);
  const row=rows[0],item={id:1,slot:row.slot,tier:row.tier,rarity:5,catalogId:row.id,artId:row.artId,name:row.name,affixes:{}};

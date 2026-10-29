@@ -1,0 +1,29 @@
+{
+  "id": "raid-nightmare",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production legendary (ancient grade, raid exclusive) equipment item icons for a dark fantasy 2D action RPG. Image1 is the existing ANCIENT equipment atlas of this game: match its finely detailed pixel-illustrated painterly style, dark outlines, lighting and scale, and the exact diagonal orientation of its swords (hilt at bottom-left, tip at top-right). Create ONE transparent RGBA square image with exactly FIVE separate items in an invisible 3 columns x 2 rows grid, row 1 cells 1-3, row 2 cells 4-5, and the sixth cell (bottom-right) left completely EMPTY. Each item centered in its own cell with wide transparent margins, never touching each other or the canvas edge: (1) a long curved nightmare greatsword of black obsidian with a crimson glowing edge and thorned crossguard, (2) a horned black thorn-crown helmet with crimson eye slits, (3) a cracked obsidian breastplate with black thorns and a glowing crimson eye in the chest, (4) a necklace with a black teardrop crystal holding a swirling crimson nightmare eye, (5) a single drop earring of black thorns with a small crimson crystal. All five share one design language: NIGHTMARE SOVEREIGN raid relics: black obsidian, thorns, crimson eyes and glow, wisps of black mist. They are the rarest raid trophies: more ornate than any other gear, each clearly distinct. Each item clearly readable at small icon size. Actual alpha transparency, no background, no floor, no shadow, no text, no labels, no characters.",
+  "referenceImages": [
+    {
+      "path": "dist/assets/ancient-individual-v0123.webp",
+      "sha256": "2ca662133b7c7359034fb3a7be00d14d9f9e4a5a623ffa5ded8ca6f6ea0cfa87"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1536,
+        1024
+      ],
+      "transparent": 0.637,
+      "parts": 5,
+      "seconds": 73,
+      "sha256": "7fd04bbbca112df99dd50ee9e17ec6ad24f70b0621bb5aeae0b33b95b6556bae"
+    }
+  ],
+  "final": {
+    "path": "art/nightmare0142/raid-nightmare.png",
+    "sha256": "7fd04bbbca112df99dd50ee9e17ec6ad24f70b0621bb5aeae0b33b95b6556bae"
+  }
+}

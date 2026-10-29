@@ -38,9 +38,35 @@ export function towerPlan(floor){
  if(!towerRewards(floor))return null;const kind=towerFloorKind(floor);
  return {...TOWER,chapter:towerChapter(floor),floorKind:kind,stageType:'dungeon',timeLimit:60,barrels:0,interval:kind==='boss'?0:.1,minimumTime:0,levelChapter:floor,formation:kind==='boss'?'boss':TOWER_FORMATIONS[floor%TOWER_FORMATIONS.length],hpScale:enemyHpScale(floor),damageScale:enemyDamageScale(floor),waves:TOWER_WAVES[kind]};
 }
-export const dungeonDefinition=id=>id==='tower'?TOWER:DUNGEONS.find(d=>d.id===id)??null;
+// Alpha 0.142 심연의 균열 (악몽 콘텐츠, 사용자 결정): opens with 악몽 (every chapter beaten on 정예). One 60-second battle per depth on
+// the 황혼의 신역 ground, fought like 악몽 chapter 60 and deeper (virtual chapter 120 + 1.5 per depth); every fifth depth is a
+// boss. Each week two 변이 (RIFT_MUTATORS, chosen by the raid week) change the enemies, and the week's depth record resets
+// on Monday (profile.rift = {week, best, allBest}). Every clear pays 악몽 결정 and gold — no entry limit.
+export const RIFT_MAX_DEPTH=999,RIFT_BASE_CHAPTER=120,RIFT_STEP=1.5;
+export const RIFT=Object.freeze({id:'rift',name:'심연의 균열',kind:'심연의 균열',chapter:51,icon:'boss',tag:'RIFT',rule:'한 단계씩 깊어질수록 강해집니다. 5단계마다 균열의 주인. 주마다 변이가 바뀝니다.',hint:'이번 주 변이에 맞춘 빌드',use:'승화 각성 · 악몽 결정',hp:1,damage:1,formation:'surge',waves:Object.freeze([])});
+export const RIFT_MUTATORS=Object.freeze([
+ {id:'fury',name:'광분',text:'적 공격력 +30%',damage:1.3},
+ {id:'bulk',name:'거체',text:'적 체력 +40%',hp:1.4},
+ {id:'swift',name:'질주',text:'적 이동 속도 +25%',speed:1.25},
+ {id:'plate',name:'철갑',text:'적이 받는 피해 20% 감소(장갑)',armor:.2},
+ {id:'legion',name:'군세',text:'웨이브마다 정예 +1',elites:1},
+ {id:'haste',name:'초읽기',text:'제한 시간 45초',time:45},
+].map(Object.freeze));
+export function riftMutators(week){const n=RIFT_MUTATORS.length,w=Math.max(0,week|0),a=w%n,b=(a+1+Math.floor(w/n)%(n-1))%n;return [RIFT_MUTATORS[a],RIFT_MUTATORS[b]];}
+export const riftChapter=depth=>51+(Math.max(1,depth|0)-1)%10;
+export const riftDepthKind=depth=>depth%5===0?'boss':'normal';
+export function riftRewards(depth){if(!Number.isInteger(depth)||depth<1||depth>RIFT_MAX_DEPTH)return null;return {gold:1000+depth*150,materials:{nightmareShard:2+Math.floor(depth/5)}};}
+export function riftBest(profile,week){const r=profile?.rift;return r&&r.week===week?r.best??0:0;}
+export const riftLimit=(profile,week)=>Math.min(RIFT_MAX_DEPTH,riftBest(profile,week)+1);
+const RIFT_WAVES={normal:[wave(12,4,3,['skitter']),wave(14,4,3,['spitter']),wave(12,5,4,['bulwark','skitter'])],boss:[{...wave(4,2,0),boss:true}]};
+export function riftPlan(depth,week=0){
+ const reward=riftRewards(depth);if(!reward)return null;const kind=riftDepthKind(depth),m=riftMutators(week),k=key=>m.reduce((v,r)=>v*(r[key]??1),1),chapter=RIFT_BASE_CHAPTER+(depth-1)*RIFT_STEP,extra=m.reduce((v,r)=>v+(r.elites??0),0);
+ const waves=RIFT_WAVES[kind].map(w=>Object.freeze({...w,elites:Object.freeze(extra?[...w.elites,...['skitter','spitter','bulwark'].filter(t=>!w.elites.includes(t)).slice(0,extra)]:w.elites)}));
+ return {...RIFT,chapter:riftChapter(depth),floorKind:kind,mutators:m,stageType:'dungeon',timeLimit:m.reduce((v,r)=>Math.min(v,r.time??60),60),barrels:0,interval:kind==='boss'?0:.1,minimumTime:0,levelChapter:chapter,formation:kind==='boss'?'boss':'surge',hpScale:enemyHpScale(chapter)*k('hp'),damageScale:enemyDamageScale(chapter)*k('damage'),speedScale:k('speed'),armor:m.reduce((v,r)=>Math.max(v,r.armor??0),0),waves:Object.freeze(waves)};
+}
+export const dungeonDefinition=id=>id==='tower'?TOWER:id==='rift'?RIFT:DUNGEONS.find(d=>d.id===id)??null;
 // The chapter whose land and monsters a dungeon level is fought on.
-export const dungeonStageId=(id,level)=>id==='tower'?towerChapter(level):dungeonDefinition(id)?.chapter??1;
+export const dungeonStageId=(id,level)=>id==='tower'?towerChapter(level):id==='rift'?riftChapter(level):dungeonDefinition(id)?.chapter??1;
 export const emptyDungeonProgress=()=>Object.fromEntries(DUNGEONS.map(d=>[d.id,0]));
 // Alpha 0.141 반복 수급 제한 (사용자 결정 '일주일 횟수로 제한, 첫 클리어 뒤에는 보상을 낮춰', 횟수는 새 단계 포함):
 // every win uses one of the dungeon's DUNGEON_WEEKLY_CLEARS for the week (raids' week: Monday 00:00 KST), new level or not.
@@ -50,7 +76,7 @@ export const DUNGEON_WEEKLY_CLEARS=14,DUNGEON_REPEAT_RATE=.5;
 export const emptyDungeonWeek=()=>({week:-1,clears:Object.fromEntries(DUNGEONS.map(d=>[d.id,0]))});
 export function dungeonClearsUsed(profile,id,week){const w=profile?.dungeonWeek;return w&&w.week===week?w.clears?.[id]??0:0;}
 export function dungeonClearsLeft(profile,id,week){return DUNGEONS.some(d=>d.id===id)?Math.max(0,DUNGEON_WEEKLY_CLEARS-dungeonClearsUsed(profile,id,week)):0;}
-export const isDungeonRepeat=(profile,id,level)=>id!=='tower'&&level<=(profile?.dungeonProgress?.[id]??0);
+export const isDungeonRepeat=(profile,id,level)=>id!=='tower'&&id!=='rift'&&level<=(profile?.dungeonProgress?.[id]??0);
 export function repeatRewards(reward){
  if(!reward)return null;const cut=n=>n>0?Math.max(1,Math.floor(n*DUNGEON_REPEAT_RATE)):0;
  return {...reward,gold:cut(reward.gold),...(reward.xp?{xp:cut(reward.xp)}:{}),materials:Object.fromEntries(Object.entries(reward.materials).map(([k,n])=>[k,cut(n)])),repeat:true};
@@ -60,6 +86,7 @@ export function dungeonLimit(profile,id){if(id==='tower')return Math.min(TOWER_M
 const past=(level,every)=>Math.floor(Math.max(0,level-10)/every);
 export function dungeonRewards(id,level){
  if(id==='tower')return towerRewards(level);
+ if(id==='rift')return riftRewards(level);
  if(!dungeonDefinition(id)||!Number.isInteger(level)||level<1||level>DUNGEON_MAX_LEVEL)return null;
  const early=Math.min(level,10);
  if(id==='gold')return {gold:400+early*200+Math.max(0,level-10)*150,materials:{}};
@@ -71,8 +98,9 @@ export function dungeonRewards(id,level){
  const region=['root','tear','seal','pearl','plume','halo'][(level-1)%6];
  return {gold:0,materials:{boneIron:4+Math.floor(level/2),hide:2+Math.floor(level/3),crystal:1+Math.floor(level/5),...(level>=5?{[region]:1+Math.floor(level/30)}:{}),...(level>=50?{source:Math.floor(level/50)}:{})}};
 }
-export function dungeonPlan(id,level){
+export function dungeonPlan(id,level,week=0){
  if(id==='tower')return towerPlan(level);
+ if(id==='rift')return riftPlan(level,week);
  const d=dungeonDefinition(id);if(!d||!dungeonRewards(id,level))return null;
  const chapter=dungeonChapter(level);
  return {...d,stageType:'dungeon',timeLimit:60,barrels:0,interval:id==='gold'?.065:.14,minimumTime:0,chapter:d.chapter,levelChapter:chapter,hpScale:d.hp*enemyHpScale(chapter),damageScale:d.damage*enemyDamageScale(chapter)};

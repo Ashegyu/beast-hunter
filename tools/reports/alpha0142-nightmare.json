@@ -1,0 +1,21 @@
+{
+  "sources": {
+    "nm-1.png": "afd331eddd4eb768f1fec7a098b5ec4f8337d07977094e7ea17494e6e397dd77",
+    "raid-nightmare-scene.png": "6b14c4dcef2b59336cd6b226fef7a56d9422939c3c210b4bc0102db215b0d963",
+    "raid-nightmare.png": "7fd04bbbca112df99dd50ee9e17ec6ad24f70b0621bb5aeae0b33b95b6556bae",
+    "rift.png": "bb10d11bb3075f731f7d1d123e50ebcc30021b32d1278ed501fc804a3af13647"
+  },
+  "ancientAtlas": [
+    2240,
+    3936
+  ],
+  "bytes": 7055794,
+  "stats": [
+    640,
+    384
+  ],
+  "scenes": {
+    "dungeon-rift-v0142.webp": 63616,
+    "dungeon-raid-sovereign-v0142.webp": 76800
+  }
+}

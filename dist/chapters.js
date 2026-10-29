@@ -258,7 +258,7 @@ Object.assign(MONSTERS,{
 for(const [id,mid] of Object.entries(MID_BOSSES))MONSTERS[id]={name:mid.name,role:'bulwark',height:mid.height,guardMax:0,midBoss:true};
 for(const [id,boss] of Object.entries(CHAPTER_BOSSES))MONSTERS[id]={name:boss.name,role:'bulwark',height:boss.height,...(boss.special?{special:true}:{})};
 // Alpha 0.123 raid bosses (raids.js); not part of any chapter, so their atlases load only with a raid region.
-export const RAID_BOSSES={raid_colossus:{name:'강철 거신',height:300},raid_queen:{name:'군단의 여왕',height:280},raid_judge:{name:'황혼의 심판자',height:290}};
+export const RAID_BOSSES={raid_colossus:{name:'강철 거신',height:300},raid_queen:{name:'군단의 여왕',height:280},raid_judge:{name:'황혼의 심판자',height:290},raid_nightmare:{name:'악몽의 군주',height:300}};
 for(const [id,boss] of Object.entries(RAID_BOSSES))MONSTERS[id]={name:boss.name,role:'bulwark',height:boss.height,raid:true};
 // Only role-compatible, unlocked chapter identities can enter a normal wave.
 export function chapterMonsterPool(chapterId,stage,role){

@@ -17,9 +17,9 @@ test('experience past Lv.200 fills 초월 경험치 (stage pickups and the exper
 test('초월 points buy four abilities in camp; restore trims ranks to the points; reset refunds everything',()=>{
  const p=capped();p.transcendXp=5000+5250+5500;const s=g.createGame(p);assert.equal(g.transcendPointsTotal(p),3);
  const before=g.playerStats(p);assert.equal(g.trainTranscend(s,'might'),true);assert.equal(g.trainTranscend(s,'life'),true);assert.equal(g.trainTranscend(s,'slayer'),true);assert.equal(g.trainTranscend(s,'arts'),false);assert.equal(g.transcendStatus(p,'arts'),'초월 포인트 부족');
- const after=g.playerStats(p);assert.ok(Math.abs(after.damage/before.damage-(1+g.equipmentBonuses(p).damagePct+.01)/(1+g.equipmentBonuses(p).damagePct))<.02);assert.ok(after.maxHp>before.maxHp);assert.deepEqual(g.transcendBonus(p),{damagePct:.01,hpPct:.01,bossDamage:.01,skillDamage:0});
- const saved=readBackup(createBackup(p,1000),1000).profile;assert.deepEqual(saved.transcendence,{might:1,life:1,slayer:1,arts:0});
- const forged=capped();forged.transcendXp=5000;forged.transcendence={might:9,life:9,slayer:0,arts:0};assert.deepEqual(g.restoreProfile(forged,1000).transcendence,{might:1,life:0,slayer:0,arts:0});
+ const after=g.playerStats(p);assert.ok(Math.abs(after.damage/before.damage-(1+g.equipmentBonuses(p).damagePct+.01)/(1+g.equipmentBonuses(p).damagePct))<.02);assert.ok(after.maxHp>before.maxHp);assert.deepEqual(g.transcendBonus(p),{damagePct:.01,hpPct:.01,bossDamage:.01,skillDamage:0,reduction:0,attackSpeed:0});
+ const saved=readBackup(createBackup(p,1000),1000).profile;assert.deepEqual(saved.transcendence,{might:1,life:1,slayer:1,arts:0,aegis:0,swift:0});
+ const forged=capped();forged.transcendXp=5000;forged.transcendence={might:9,life:9,slayer:0,arts:0};assert.deepEqual(g.restoreProfile(forged,1000).transcendence,{might:1,life:0,slayer:0,arts:0,aegis:0,swift:0});
  assert.equal(g.resetTranscendence(s),true);assert.equal(g.transcendPoints(p),3);const low=g.createGame(g.createProfile(1000));assert.equal(g.trainTranscend(low,'might'),false);assert.equal(g.transcendStatus(low.profile,'might'),'Lv.200 이후 개방');
 });
 test('초월 사냥 raises damage to bosses only',()=>{

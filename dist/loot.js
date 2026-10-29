@@ -1,10 +1,11 @@
 import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily,inventoryItem} from './equipment-slots.js?v=0.142.0';
-import {CRAFTED_CATALOG,craftedDefinition,FORGE_EFFECT_BY_ID,FORGE_EFFECT_POWER} from './crafting.js?v=0.142.0';
+import {CRAFTED_CATALOG,craftedDefinition,FORGE_EFFECT_BY_ID,FORGE_EFFECT_POWER,FORGE_AWAKEN_POWER} from './crafting.js?v=0.142.0';
 import {ANCIENT_POWER,ANCIENT_STATS} from './ancient-stats.js?v=0.142.0';
 export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.142.0';
 import {huntMode,BOSS_DROP_TABLES} from './hunt-modes.js?v=0.142.0';
 import {UNIQUE_EFFECTS,EFFECT_ROWS,uniquePower} from './unique-effects.js?v=0.142.0';
-import {ANCIENT_POWER_BY_ID,NIGHTMARE_POWERS,RAID_POWERS,RAID_AWAKEN_POWERS,RAID_ABYSS_POWERS,describePower} from './ancient-powers.js?v=0.142.0';
+import {ANCIENT_POWER_BY_ID,NIGHTMARE_POWERS,RAID_POWERS as BASE_RAID_POWERS,RAID_AWAKEN_POWERS as BASE_RAID_AWAKEN,RAID_ABYSS_POWERS,describePower,SOVEREIGN_RAID_POWERS,SOVEREIGN_AWAKEN} from './ancient-powers.js?v=0.142.0';
+const RAID_POWERS={...BASE_RAID_POWERS,...SOVEREIGN_RAID_POWERS},RAID_AWAKEN_POWERS={...BASE_RAID_AWAKEN,sovereign:SOVEREIGN_AWAKEN};
 import {RAID_ANCIENTS,RAID_REGION,RAID_ANCIENT_STATS} from './raids.js?v=0.142.0';
 import {REGION_ANCIENTS,REGION_ANCIENT_BOSSES} from './ancient-regions.js?v=0.142.0';
 import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.142.0';
@@ -133,10 +134,10 @@ export const raidPowerRoll=item=>Number.isInteger(item?.powerRoll)?Math.max(RAID
 // Alpha 0.142 승화: the ancient a forged item was made from, rebuilt from the saved `forge` record.
 export function forgeSource(item){const crafted=item?.rarity===6?craftedDefinition(item):null,row=crafted?.forge?ANCIENT_BY_ID.get(item.forge?.ancient):null;if(!row||row.slot!==item.slot||!!row.raid!==crafted.raidForge||(!row.raid&&row.tier!==crafted.tier))return null;
  return {rarity:5,catalogId:row.id,slot:row.slot,tier:row.tier,artId:row.artId,name:row.name,affixes:{},...(huntGrade(item)?{hunt:huntGrade(item)}:{}),...(row.raid?{powerRoll:raidPowerRoll(item)}:{})};}
-export function forgeSignature(item){const crafted=item?.rarity===6?craftedDefinition(item):null,r=crafted?.forge?FORGE_EFFECT_BY_ID[item.forge?.effect]:null;if(!r||!r.id.startsWith('forge-'+item.slot+'-'))return null;
- return scalePower(r,ANCIENT_TIER_POWER[crafted.tier-1]*ANCIENT_HUNT_POWER[huntGrade(item)]*FORGE_EFFECT_POWER*(crafted.raidForge?RAID_ANCIENT_STATS:1));}
+export function forgeSignature(item,key='effect'){const crafted=item?.rarity===6?craftedDefinition(item):null,r=crafted?.forge?FORGE_EFFECT_BY_ID[item.forge?.[key]]:null;if(!r||!r.id.startsWith('forge-'+item.slot+'-')||key==='awaken'&&r.id===item.forge.effect)return null;
+ return scalePower(r,ANCIENT_TIER_POWER[crafted.tier-1]*ANCIENT_HUNT_POWER[huntGrade(item)]*FORGE_EFFECT_POWER*(crafted.raidForge?RAID_ANCIENT_STATS:1)*(item.forge.awaken?FORGE_AWAKEN_POWER:1),key==='awaken'?{id:r.id+'-awaken'}:{});}
 export function ancientSignatures(item){
- const crafted=item?.rarity===6?craftedDefinition(item):null;if(crafted?.forge){const source=forgeSource(item),own=forgeSignature(item);return [...(source?ancientSignatures(source):[]),...(own?[own]:[])];}if(crafted)return [crafted.signature];
+ const crafted=item?.rarity===6?craftedDefinition(item):null;if(crafted?.forge){const source=forgeSource(item),own=forgeSignature(item),awake=item.forge?.awaken?forgeSignature(item,'awaken'):null;return [...(source?ancientSignatures(source):[]),...(own?[own]:[]),...(awake?[awake]:[])];}if(crafted)return [crafted.signature];
  const row=ancientDefinition(item);if(!row)return [];if(row.raid){const tier=huntGrade(item),roll=raidPowerRoll(item)/100,list=[scalePower(row.signature,roll*RAID_TIER_POWER[tier])];
   // Alpha 0.139: 정예 raid ancients add the raid's 각성 power, 악몽 ones also the slot family's 심연 power (both follow the roll).
   if(tier>=1)list.push(scalePower(RAID_AWAKEN_POWERS[row.raid],roll*RAID_TIER_POWER[tier],{id:row.id+'-awaken',color:RAID_AWAKEN_POWERS[row.raid].color}));
@@ -245,7 +246,9 @@ export function itemRollRanges(item){
  if(!item||!Number.isInteger(item.rarity)||item.rarity<0||item.rarity>6)return {};
  const row=CATALOG_BY_ID.get(item.catalogId);if(!row||row.slot!==item.slot||row.tier!==item.tier||row.artId!==item.artId||item.rarity===5&&!ancientDefinition(item)||item.rarity===6&&!craftedDefinition(item)||item.rarity<5&&(row.ancient||row.rarity===6))return {};
  const keys=Object.keys(item.affixes??{});if(!keys.length||keys.some(k=>!Object.hasOwn(EXTRA_AFFIXES,k)))return {};
- return Object.fromEntries(keys.map(k=>[k,affixRange(row,item.rarity,k,huntGrade(item))]));
+ // Alpha 0.142 승화 각성: an awakened forged item rolls ×1.15 (still under the stat caps).
+ const awake=item.rarity===6&&row.forge&&item.forge?.awaken?FORGE_AWAKEN_POWER:1;
+ return Object.fromEntries(keys.map(k=>{const r=affixRange(row,item.rarity,k,huntGrade(item));if(awake===1)return [k,r];const cap=affixCap(k),min=Math.min(cap-1,Math.round(r.min*awake));return [k,{min,max:Math.min(cap,Math.max(min+1,Math.round(r.max*awake)))}];}));
 }
 export function isPerfectRoll(item,affixes=item?.affixes){
  const ranges=itemRollRanges(item),keys=Object.keys(ranges),row=CATALOG_BY_ID.get(item?.catalogId),count=item?.rarity>=5?Object.keys(row?.base??{}).length:[2,2,3,4,5][item?.rarity];

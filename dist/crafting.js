@@ -24,6 +24,8 @@ export const MATERIALS=Object.freeze([
  {id:'pearl',name:'심해 진주',color:'#6fd6ff',tier:4,normal:0,elite:.006,boss:.06,where:'가라앉은 왕국 · 정예 0.6% / 보스 6%'},
  {id:'plume',name:'폭풍 깃',color:'#a8b8ff',tier:5,normal:0,elite:.006,boss:.06,where:'폭풍의 하늘섬 · 정예 0.6% / 보스 6%'},
  {id:'halo',name:'황혼 성휘',color:'#ffd27a',tier:6,normal:0,elite:.006,boss:.06,where:'황혼의 신역 · 정예 0.6% / 보스 6%'},
+ // Alpha 0.142 악몽 콘텐츠: never rolled on hunts — every 악몽 boss pays it (1 + 챕터/20), so do the 악몽 레이드 and 심연의 균열.
+ {id:'nightmareShard',name:'악몽 결정',color:'#ff5a7a',normal:0,elite:0,boss:0,where:'악몽 보스 처치 확정 · 악몽 레이드 · 심연의 균열'},
 ].map(r=>Object.freeze({...r,quantity:Object.freeze(r.quantity??[1,1,1])})));
 // Alpha 0.141 재료 도감: what each material is for and which dungeon also pays it (the field `where` lists the hunting grounds).
 const MATERIAL_INFO=Object.freeze({
@@ -41,6 +43,7 @@ const MATERIAL_INFO=Object.freeze({
  pearl:{text:'가라앉은 왕국 깊은 곳에서 자란 푸른 진주.',use:'승화 제작(4지역 고대)',dungeon:'괴수 해체장(5단계부터 돌아가며)'},
  plume:{text:'폭풍의 하늘섬 괴조가 떨군 번개 어린 깃.',use:'승화 제작(5지역 고대)',dungeon:'괴수 해체장(5단계부터 돌아가며)'},
  halo:{text:'황혼의 신역에서 식지 않는 성스러운 빛 조각.',use:'승화 제작(6지역·레이드 고대)',dungeon:'괴수 해체장(5단계부터 돌아가며)'},
+ nightmareShard:{text:'악몽 속 군주들이 남긴 검붉은 결정.',use:'승화 각성',dungeon:'심연의 균열'},
  skillPage:{text:'옛 검사들의 검술을 적은 책.',use:'스킬 갈래 해금',dungeon:'잔상의 수련장'},
  promotionStone:{text:'최대 강화 장비를 한 등급 위로 올리는 돌.',use:'장비 승급',dungeon:'정예의 시련'},
  sealShard:{text:'인장을 이루는 조각.',use:'인장 성장',dungeon:'보스 러시 · 인장 분해'},
@@ -105,6 +108,12 @@ export const forgeRow=(slot,tier,raid=false)=>FORGE_CATALOG.find(r=>r.slot===slo
 export const forgeOpen=profile=>Array.isArray(profile?.bossMastery)&&profile.bossMastery.length>0&&profile.bossMastery.every(v=>v>=0);
 export const forgeGateChapter=(tier,raid=false)=>raid?60:Math.max(1,Math.min(6,tier|0))*10;
 export const forgeTierOpen=(profile,tier,raid=false)=>forgeOpen(profile)&&(profile.bossMastery?.[forgeGateChapter(tier,raid)-1]??-1)>=1;
+// Alpha 0.142 승화 각성 (악몽 콘텐츠, 사용자 결정): a forged item awakens once — stats ×1.15 and a second 승화 effect of its slot.
+// Opens with 악몽 (every chapter beaten on 정예); an N지역 item needs the 악몽 10N장 boss, a raid one the 악몽 60장 boss.
+export const FORGE_AWAKEN_POWER=1.15;
+export const awakenOpen=profile=>Array.isArray(profile?.bossMastery)&&profile.bossMastery.length>0&&profile.bossMastery.every(v=>v>=1);
+export const awakenTierOpen=(profile,tier,raid=false)=>awakenOpen(profile)&&(profile.bossMastery?.[forgeGateChapter(tier,raid)-1]??-1)>=2;
+export function awakenCost(tier,raid=false){const t=raid?7:Math.max(1,Math.min(6,tier|0));return Object.freeze({gold:10000*t,materials:Object.freeze({nightmareShard:raid?20:4+2*t,[FORGE_REGION_MATERIAL[Math.min(6,t)-1]]:raid?10:2+t,...(t>=4?{source:t-3}:{})})});}
 const BY_ID=new Map(CRAFTED_CATALOG.map(r=>[r.id,r]));
 export const targetCraft=profile=>BY_ID.get(profile.targetCraftId)??null;
 export function setCraftTarget(profile,id){if(id!==null&&!BY_ID.has(id))return false;profile.targetCraftId=id;return true;}

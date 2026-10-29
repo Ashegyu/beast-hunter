@@ -1,7 +1,7 @@
 import {RAIDS,RAID_WEEKLY_ENTRIES,RAID_DAMAGE,raidScale,RAID_ANCIENT_CHANCE,raidDefinition,raidPlan,raidRewards,raidWeek,raidEntriesLeft,raidUnlocked,raidChapter,emptyRaidProgress,raidTierUnlocked,raidTopTier,RAID_TIERS} from './raids.js?v=0.142.0';
 export * from './raids.js?v=0.142.0';
-import {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonPlan,dungeonActors,emptyDungeonProgress,dungeonStageId,towerBonus,TOWER_MAX_FLOOR,emptyDungeonWeek,dungeonClearsLeft,isDungeonRepeat,repeatRewards,DUNGEON_WEEKLY_CLEARS,DUNGEON_REPEAT_RATE} from './dungeons.js?v=0.142.0';
-export {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonChapter,DUNGEON_CHAPTER_STEP,dungeonStageId,TOWER,TOWER_MAX_FLOOR,TOWER_BONUS,towerBonus,towerBonusAt,towerChapter,towerFloorKind,towerPlan,DUNGEON_WEEKLY_CLEARS,DUNGEON_REPEAT_RATE,dungeonClearsLeft,dungeonClearsUsed,isDungeonRepeat,repeatRewards} from './dungeons.js?v=0.142.0';
+import {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonPlan,dungeonActors,emptyDungeonProgress,dungeonStageId,towerBonus,TOWER_MAX_FLOOR,emptyDungeonWeek,dungeonClearsLeft,isDungeonRepeat,repeatRewards,DUNGEON_WEEKLY_CLEARS,DUNGEON_REPEAT_RATE,RIFT_MAX_DEPTH,riftLimit} from './dungeons.js?v=0.142.0';
+export {DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonChapter,DUNGEON_CHAPTER_STEP,dungeonStageId,TOWER,TOWER_MAX_FLOOR,TOWER_BONUS,towerBonus,towerBonusAt,towerChapter,towerFloorKind,towerPlan,DUNGEON_WEEKLY_CLEARS,DUNGEON_REPEAT_RATE,dungeonClearsLeft,dungeonClearsUsed,isDungeonRepeat,repeatRewards,RIFT,RIFT_MAX_DEPTH,RIFT_MUTATORS,riftMutators,riftPlan,riftRewards,riftBest,riftLimit,riftChapter,riftDepthKind} from './dungeons.js?v=0.142.0';
 export {THREAT,MODE_CHAPTERS,modeChapter,modeScale} from './chapters.js?v=0.142.0';
 import {beginStageJournal,profileForSave,strictBattle,cancelStageJournal,prepareStageCommit,finishStageJournal,stageTransactionId,ownedAtStageStart} from './battle-progress.js?v=0.142.0';
 import {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_DROP_CHANCE,INSCRIPTION_COST} from './build-effects.js?v=0.142.0';
@@ -20,10 +20,10 @@ export * from './ultimate-video.js?v=0.142.0';
 export * from './skill-motion.js?v=0.142.0';
 import * as skills from './combat-skills.js?v=0.142.0';
 export * from './combat-skills.js?v=0.142.0';
-import {MATERIALS,MATERIAL_BY_ID,MATERIAL_LIMIT,emptyMaterials,rollMaterials,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress,FORGE_EFFECT_BY_ID} from './crafting.js?v=0.142.0';
-import {forgeStatus,forgedItem} from './forge.js?v=0.142.0';
-export {forgeStatus,forgedItem,forgeTarget} from './forge.js?v=0.142.0';
-export {FORGE_SLOTS,FORGE_EFFECTS,FORGE_EFFECT_BY_ID,FORGE_CATALOG,FORGE_REGION_MATERIAL,forgeCost,forgeRow,forgeOpen,forgeTierOpen,forgeGateChapter} from './crafting.js?v=0.142.0';
+import {MATERIALS,MATERIAL_BY_ID,MATERIAL_LIMIT,emptyMaterials,rollMaterials,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress,FORGE_EFFECT_BY_ID,awakenOpen} from './crafting.js?v=0.142.0';
+import {forgeStatus,forgedItem,awakenStatus,awakenedItem} from './forge.js?v=0.142.0';
+export {forgeStatus,forgedItem,forgeTarget,awakenStatus,awakenedItem,awakenTarget} from './forge.js?v=0.142.0';
+export {FORGE_SLOTS,FORGE_EFFECTS,FORGE_EFFECT_BY_ID,FORGE_CATALOG,FORGE_REGION_MATERIAL,forgeCost,forgeRow,forgeOpen,forgeTierOpen,forgeGateChapter,FORGE_AWAKEN_POWER,awakenOpen,awakenTierOpen,awakenCost} from './crafting.js?v=0.142.0';
 export {MATERIALS,MATERIAL_BY_ID,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress,materialInfo,MATERIAL_ICON_INDEX} from './crafting.js?v=0.142.0';
 import {equipmentSynergies} from './equipment-synergies.js?v=0.142.0';
 import {itemProtection,forgeSource} from './loot.js?v=0.142.0';
@@ -41,7 +41,7 @@ import { STAGES_PER_CHAPTER, battlePlan, stageWaveCount, waveComposition } from 
 import { RAID_POWER_ROLL, raidPowerRoll } from './loot.js?v=0.142.0';
 import * as growth from './growth.js?v=0.142.0';
 import * as transcend from './transcendence.js?v=0.142.0';
-export {TRANSCEND,TRANSCEND_IDS,TRANSCEND_STEPS,transcendNeeded,transcendLevel,transcendProgress,transcendEffective,transcendPoints,transcendPointsTotal,transcendBonus,transcendStatus} from './transcendence.js?v=0.142.0';
+export {TRANSCEND,TRANSCEND_IDS,TRANSCEND_STEPS,transcendNeeded,transcendLevel,transcendProgress,transcendEffective,transcendPoints,transcendPointsTotal,transcendBonus,nightmareChapters,nightmareOpen,transcendStatus} from './transcendence.js?v=0.142.0';
 export * from './growth.js?v=0.142.0';
 import * as stars from './stage-stars.js?v=0.142.0';
 import * as seals from './seals.js?v=0.142.0';
@@ -135,7 +135,7 @@ export function growthXp(profile,value){
  return Math.min(Number.MAX_SAFE_INTEGER,awarded+remaining);
 }
 export function createProfile(now=Date.now()){
-  return {version:PROFILE_VERSION,dungeonProgress:emptyDungeonProgress(),raids:emptyRaidProgress(),bossRush:rush.emptyRushProgress(),beastSkills:{},battleSerial:0,settledBattleIds:[],activeBattle:null,lastInterruptedBattle:null,selectedBuild:null,characterId:'lirian',equipmentRng:246813579,difficultyProgress:[STAGES.map(()=>0),STAGES.map(()=>0)],nightmareRecords:STAGES.map(()=>0),skillBook:skills.restoreSkillBook(null,1),favoriteItemIds:[],bagRules:emptyBagRules(),savedBuilds:[null,null,null,null,null],targetCraftId:null,craftTrackerVisible:true,materials:emptyMaterials(),treePresets:[null,null,null,null,null],tower:{best:0},dungeonWeek:emptyDungeonWeek(),transcendXp:0,transcendence:transcend.emptyTranscendence(),discoveredAncients:[],targetAncientId:null,bossMastery:STAGES.map(()=>-1),lootPity:0,legendaryPity:0,pendingGold:0,pendingMaterials:emptyMaterials(),pendingLoot:[],stageProgress:STAGES.map(()=>0),stageStars:stars.emptyStageStars(STAGES.length),starChests:stars.emptyStageStars(STAGES.length),gold:0,cores:0,level:1,xp:0,training:growth.emptyTraining(),growthTree:[],unlockedStage:1,clearedStage:0,totalKills:0,hunts:0,lastSeenAt:number(now),inventory:[],equipment:emptyEquipment(),nextItemId:1};
+  return {version:PROFILE_VERSION,dungeonProgress:emptyDungeonProgress(),rift:{week:-1,best:0,allBest:0},raids:emptyRaidProgress(),bossRush:rush.emptyRushProgress(),beastSkills:{},battleSerial:0,settledBattleIds:[],activeBattle:null,lastInterruptedBattle:null,selectedBuild:null,characterId:'lirian',equipmentRng:246813579,difficultyProgress:[STAGES.map(()=>0),STAGES.map(()=>0)],nightmareRecords:STAGES.map(()=>0),skillBook:skills.restoreSkillBook(null,1),favoriteItemIds:[],bagRules:emptyBagRules(),savedBuilds:[null,null,null,null,null],targetCraftId:null,craftTrackerVisible:true,materials:emptyMaterials(),treePresets:[null,null,null,null,null],tower:{best:0},dungeonWeek:emptyDungeonWeek(),transcendXp:0,transcendence:transcend.emptyTranscendence(),discoveredAncients:[],targetAncientId:null,bossMastery:STAGES.map(()=>-1),lootPity:0,legendaryPity:0,pendingGold:0,pendingMaterials:emptyMaterials(),pendingLoot:[],stageProgress:STAGES.map(()=>0),stageStars:stars.emptyStageStars(STAGES.length),starChests:stars.emptyStageStars(STAGES.length),gold:0,cores:0,level:1,xp:0,training:growth.emptyTraining(),growthTree:[],unlockedStage:1,clearedStage:0,totalKills:0,hunts:0,lastSeenAt:number(now),inventory:[],equipment:emptyEquipment(),nextItemId:1};
 }
 const EQUIPMENT_DEFINITIONS=new Map([...ITEM_CATALOG,...ANCIENT_CATALOG,...CRAFTED_CATALOG].map(row=>[row.id,row]));
 function cleanItem(item,version){
@@ -156,7 +156,7 @@ function cleanItem(item,version){
   if(clean.slot==='special'){if(!definition?.characterId)return null;clean.characterId=definition.characterId;}
   const crafted=version>=7?craftedDefinition(item):null;
   // Alpha 0.142 승화: a forged item keeps the ancient it was made from and its chosen 승화 effect (else it is dropped).
-  if(crafted?.forge){const effect=FORGE_EFFECT_BY_ID[item.forge?.effect],forge={ancient:String(item.forge?.ancient??''),effect:effect?.id};if(!effect||!effect.id.startsWith('forge-'+clean.slot+'-'))return null;const restored={...clean,name:crafted.name,catalogId:crafted.id,artId:crafted.artId,forge,affixes:version>=10&&item.rollVersion===1?affixes:{...crafted.base}};if(!forgeSource(restored))return null;if(crafted.raidForge)restored.powerRoll=integer(item.powerRoll,RAID_POWER_ROLL.min,RAID_POWER_ROLL.max,100);return restoreEquipmentProgress(restored,item,version>=10);}
+  if(crafted?.forge){const effect=FORGE_EFFECT_BY_ID[item.forge?.effect],awaken=FORGE_EFFECT_BY_ID[item.forge?.awaken],forge={ancient:String(item.forge?.ancient??''),effect:effect?.id,...(awaken&&awaken.id!==effect?.id&&awaken.id.startsWith('forge-'+clean.slot+'-')?{awaken:awaken.id}:{})};if(!effect||!effect.id.startsWith('forge-'+clean.slot+'-'))return null;const restored={...clean,name:crafted.name,catalogId:crafted.id,artId:crafted.artId,forge,affixes:version>=10&&item.rollVersion===1?affixes:{...crafted.base}};if(!forgeSource(restored))return null;if(crafted.raidForge)restored.powerRoll=integer(item.powerRoll,RAID_POWER_ROLL.min,RAID_POWER_ROLL.max,100);return restoreEquipmentProgress(restored,item,version>=10);}
   if(crafted)return restoreEquipmentProgress({...clean,name:crafted.name,catalogId:crafted.id,affixes:version>=10&&item.rollVersion===1?affixes:{...crafted.base}},item,version>=10);
   if(version<5&&clean.rarity>=5&&!clean.artId)clean.artId=equipmentArt(clean).id;
   const ancient=ancientDefinition({...clean,catalogId:item.catalogId})??(version<5&&clean.rarity>=5?ancientForLegacy(clean):null);
@@ -205,9 +205,9 @@ export function restoreProfile(raw,now=Date.now()){
   // Alpha 0.139 악몽 기록: fastest 악몽 boss stage clear in seconds (0 = none), only for chapters whose 악몽 boss fell.
   p.nightmareRecords=STAGES.map(({id})=>p.bossMastery[id-1]>=2?Math.round(clamp(number(data.nightmareRecords?.[id-1],0),0,600)*10)/10:0);
   p.stageStars=stars.cleanStageStars(data.stageStars,STAGES.map(({id})=>Math.max(...[0,1,2].map(d=>completedStages(p,id,d)))));p.starChests=stars.cleanStarChests(data.starChests,p);
-  p.tower={best:integer(data.tower?.best,0,TOWER_MAX_FLOOR)};p.dungeonWeek=emptyDungeonWeek();p.dungeonWeek.week=integer(data.dungeonWeek?.week,-1,1e6,-1);for(const d of DUNGEONS)p.dungeonWeek.clears[d.id]=integer(data.dungeonWeek?.clears?.[d.id],0,DUNGEON_WEEKLY_CLEARS);
+  p.tower={best:integer(data.tower?.best,0,TOWER_MAX_FLOOR)};p.rift={week:integer(data.rift?.week,-1,1e6,-1),best:integer(data.rift?.best,0,RIFT_MAX_DEPTH),allBest:integer(data.rift?.allBest,0,RIFT_MAX_DEPTH)};if(p.rift.allBest<p.rift.best)p.rift.allBest=p.rift.best;p.dungeonWeek=emptyDungeonWeek();p.dungeonWeek.week=integer(data.dungeonWeek?.week,-1,1e6,-1);for(const d of DUNGEONS)p.dungeonWeek.clears[d.id]=integer(data.dungeonWeek?.clears?.[d.id],0,DUNGEON_WEEKLY_CLEARS);
   // Alpha 0.141 초월: only a Lv.200 profile keeps 초월 경험치; ranks never exceed the points it gives.
-  p.transcendXp=p.level>=MAX_LEVEL?integer(data.transcendXp,0,transcend.TRANSCEND_XP_LIMIT):0;p.transcendence=transcend.cleanTranscendence(data.transcendence,transcend.transcendLevel(p.transcendXp));
+  p.transcendXp=p.level>=MAX_LEVEL?integer(data.transcendXp,0,transcend.TRANSCEND_XP_LIMIT):0;p.transcendence=transcend.cleanTranscendence(data.transcendence,transcend.transcendPointsTotal(p));
   p.training=growth.cleanTraining(data.training,p.level);p.growthTree=growth.fitTree(p,data.growthTree);
   // Alpha 0.141 트리 프리셋: five tree-only slots (a node list that stays connected to the core; points are checked on load).
   p.treePresets=Array.from({length:TREE_PRESETS},(_,n)=>{const r=data.treePresets?.[n];if(!r||typeof r!=='object')return null;const tree=growth.cleanTree(r.tree);return {name:typeof r.name==='string'&&r.name.trim()?r.name.trim().slice(0,12):'트리 '+(n+1),tree};});
@@ -244,13 +244,13 @@ export function equipmentBonuses(p){const result={damage:0,hp:0,speed:0,crit:0,r
 // Pieces worn per region set (Alpha 0.108), and each set's progress for the UI.
 export function equippedSetCounts(p){const counts={};for(const item of equippedItems(p)){const set=itemSet(item);if(set)counts[set]=(counts[set]??0)+1;}return counts;}
 export function equippedSets(p){const counts=equippedSetCounts(p);return Object.entries(counts).map(([id,count])=>({set:EQUIPMENT_SETS[id],count,active:EQUIPMENT_SETS[id].bonuses.filter(b=>count>=b.pieces)})).sort((a,b)=>b.count-a.count);}
-export function playerStats(p){const pb=skills.passiveBranchStats(p),b=equipmentBonuses(p),t=growth.trainingRanks(p),tree=growth.treeBonus(p),tr=transcend.transcendBonus(p),tw=towerBonus(p.tower?.best),base=growth.levelGrowth(p.level),attackSpeed=1+base.attackSpeed+t.tempo*.01+tree.attackSpeed+pb.attackSpeed+b.attackSpeed/100;return{
+export function playerStats(p){const pb=skills.passiveBranchStats(p),b=equipmentBonuses(p),t=growth.trainingRanks(p),tree=growth.treeBonus(p),tr=transcend.transcendBonus(p),tw=towerBonus(p.tower?.best),base=growth.levelGrowth(p.level),attackSpeed=1+base.attackSpeed+t.tempo*.01+tree.attackSpeed+pb.attackSpeed+tr.attackSpeed+b.attackSpeed/100;return{
   maxHp:(150+(p.level-1)*6+base.hp+t.vitality*12+b.hp)*(1+b.hpPct+tree.hpPct+tr.hpPct+tw.hpPct+pb.hpPct),
   damage:(24*(1+(p.level-1)*.035+base.damage+t.power*.05)+b.damage)*(1+b.damagePct+tree.damagePct+tr.damagePct+tw.damagePct+pb.damagePct),
   range:135*(1+base.range+tree.range+b.range/100),speed:280*(1+base.speed+t.stride*.01+tree.speed+pb.speed+b.speed/100),
   attackDuration:.32/attackSpeed,attackSpeed,
   thunderCooldown:4.8,thunderDamage:62+b.damage*1.8,
-  crit:Math.min(.5,.05+t.precision*.005+tree.crit+tw.crit+pb.crit+b.crit/100),reduction:Math.min(.5,base.reduction+t.guard*.01+tree.reduction+tw.reduction+pb.reduction+b.reduction/100),collection:110+t.stride*5+(equippedUniqueEffect(p,'charm')?.id==='magnet'?UNIQUE_EFFECTS.magnet.range:0)+b.collection,regeneration:.65+base.regeneration+tree.regeneration+pb.regeneration+b.regeneration};}
+  crit:Math.min(.5,.05+t.precision*.005+tree.crit+tw.crit+pb.crit+b.crit/100),reduction:Math.min(.5,base.reduction+t.guard*.01+tree.reduction+tw.reduction+tr.reduction+pb.reduction+b.reduction/100),collection:110+t.stride*5+(equippedUniqueEffect(p,'charm')?.id==='magnet'?UNIQUE_EFFECTS.magnet.range:0)+b.collection,regeneration:.65+base.regeneration+tree.regeneration+pb.regeneration+b.regeneration};}
 export function compareEquipment(profile,equipment){
  const next={...profile,equipment},before=playerStats(profile),after=playerStats(next),current=equipmentSynergies(profile),future=equipmentSynergies(next);
  const gained=future.filter(r=>!current.some(b=>b.id===r.id)),lost=current.filter(r=>!future.some(b=>b.id===r.id));
@@ -354,7 +354,7 @@ function spawnEnemy(s,type,x,y,elite=false,boss=false,speciesId=null){
   // everything in a rush (bosses, escorts, projectiles via damageBase) is eased by rushScale(chapter).
   if(s.run.rush&&boss){const n=clamp(s.run.wave,1,rush.RUSH_BOSSES)-1;e.hp=e.maxHp=Math.round(st.bossHp*rush.RUSH_HP[n]*rushK*(s.enemyScale?.hp??1));e.damage*=rush.RUSH_DAMAGE[n];e.rushChapter=s.run.rushBoss;}
   // Alpha 0.141: dungeon levels carry their whole strength in plan.hpScale (chapter curve), not the stage factor of s.run.stage.
-  if(s.run.dungeonId){const plan=activePlan(s);e.hp=e.maxHp=Math.max(1,Math.round(e.maxHp*plan.hpScale/(hpBase*(boss?1:factor))));e.damage*=plan.damageScale/damageBase;e.damageBase=plan.damageScale;}
+  if(s.run.dungeonId){const plan=activePlan(s);e.hp=e.maxHp=Math.max(1,Math.round(e.maxHp*plan.hpScale/(hpBase*(boss?1:factor))));e.damage*=plan.damageScale/damageBase;e.damageBase=plan.damageScale;if(plan.speedScale)e.speed*=plan.speedScale;}
   // Alpha 0.133 관문 (stage-gates.js): the remaining pressure after the build's counter.
   const gate=s.run.gate;if(gate&&!raid&&!s.run.dungeonId){const k=1+gate.effect;if(gate.type==='survival'){e.damage*=k;e.damageBase*=k;}else if(gate.type==='swarm'&&!elite&&!boss)e.hp=e.maxHp=Math.round(e.maxHp*k);else if(gate.type==='single'&&(elite||boss))e.hp=e.maxHp=Math.round(e.maxHp*k);else if(gate.type==='defense'){e.gateGuard=k;e.gateCounter=gate.counter;}}
   // Alpha 0.139: 정예/악몽 continue the chapter curve (chapters.js modeScale: chapter 60+N / 120+N).
@@ -384,14 +384,15 @@ function spawnPoint(s,chosen=[],heading=null,spread=Math.PI*2){
   for(let i=0;i<48;i++){const q=pointAt(i*Math.PI/12,i<24?.8:1);if(length(q.x-p.x,q.y-p.y)<170)continue;const space=clearance(q);if(space>70)return q;if(space>bestSpace){best=q;bestSpace=space;}}
   return best??{x:clamp(p.x+(p.x<s.bounds.width/2?220:-220),125,s.bounds.width-125),y:clamp(p.y+(p.y<s.bounds.height/2?180:-180),125,s.bounds.height-125)};
 }
-const activePlan=s=>s.run.raidId?raidPlan(s.run.raidId):s.run.rush?rush.rushPlan():s.run.dungeonId?dungeonPlan(s.run.dungeonId,s.run.stage):battlePlan(s.run.stage);
+const activePlan=s=>s.run.raidId?raidPlan(s.run.raidId):s.run.rush?rush.rushPlan():s.run.dungeonId?dungeonPlan(s.run.dungeonId,s.run.stage,s.run.dungeonWeek):battlePlan(s.run.stage);
 // Alpha 0.123 raid: one patterned boss on the furthest opened chapter's ground. The weekly entry is spent before the
 // stage journal is taken, so a failed or abandoned raid (which rolls the journal back) keeps the entry spent.
 // A raid fights on the opened chapter's ground with its own boss; app.js loads it as region raidRegionId(raid, chapter).
 export const raidRegionId=(id,chapter)=>'raid-'+id+'-'+chapter;
 export const RAID_REGIONS=Object.freeze(RAIDS.flatMap(r=>STAGES.map(c=>Object.freeze({...c,id:raidRegionId(r.id,c.id),bossSpecies:r.species,midBoss:null}))));
 export function launchRaid(s,id,now=Date.now(),view=null,tier=0){
- const r=raidDefinition(id);if(!r||s.settlement||!['camp','victory','defeat'].includes(s.phase)||!raidUnlocked(s.profile,id)||!raidTierUnlocked(s.profile,tier)||raidEntriesLeft(s.profile,id,now)<1||s.profile.battleSerial>=Number.MAX_SAFE_INTEGER)return false;
+ // Alpha 0.142: the 악몽 raid is always fought at 악몽 and only needs 악몽 open (raidUnlocked), not every chapter on 악몽.
+ const r=raidDefinition(id);if(r?.fixedTier!=null)tier=r.fixedTier;if(!r||s.settlement||!['camp','victory','defeat'].includes(s.phase)||!raidUnlocked(s.profile,id)||r.fixedTier==null&&!raidTierUnlocked(s.profile,tier)||raidEntriesLeft(s.profile,id,now)<1||s.profile.battleSerial>=Number.MAX_SAFE_INTEGER)return false;
  const chapter=raidChapter(s.profile,STAGES.length),durable=s.durable;Object.assign(s,createGame(s.profile,{durable}));s.auto=true;s.stageId=chapter;s.difficulty=0;s.profile.hunts++;s.profile.lastInterruptedBattle=null;s.profile.battleSerial++;
  const week=raidWeek(now),raids=s.profile.raids;if(raids.week!==week){raids.week=week;for(const k of Object.keys(raids.entries))raids.entries[k]=0;}raids.entries[id]++;
  s.rng=(12345+s.profile.hunts*97+chapter*1009+RAIDS.indexOf(r)*7919)>>>0;s.lootRng=(s.rng^0x9e3779b9)>>>0;s.materialRng=(s.rng^0xa341316c)>>>0;s.phase='playing';s.run.stage=s.run.startStage=1;s.run.raidId=id;s.run.raidChapter=chapter;s.run.raidTier=tier;s.run.battleId='b'+s.profile.battleSerial;s.run.buildAtStart=Object.freeze({equipment:Object.freeze({...s.profile.equipment}),skill:skillSelection(s.profile.skillBook)});
@@ -409,8 +410,10 @@ export function launchBossRush(s,now=Date.now(),view=null){
  s.spawnView.width=clamp(number(view?.width,720),360,1600);s.spawnView.height=clamp(number(view?.height,1280),400,1800);prepareStage(s);return true;
 }
 export function launchDungeon(s,id,level=1,view=null,now=Date.now()){
- const d=dungeonDefinition(id);if(!d||s.settlement||!['camp','victory','defeat'].includes(s.phase)||!Number.isInteger(level)||level<1||level>dungeonLimit(s.profile,id)||s.profile.battleSerial>=Number.MAX_SAFE_INTEGER)return false;
- const week=raidWeek(now);if(id!=='tower'&&!dungeonClearsLeft(s.profile,id,week))return false;
+ const d=dungeonDefinition(id),week=raidWeek(now);if(!d||s.settlement||!['camp','victory','defeat'].includes(s.phase)||!Number.isInteger(level)||level<1||level>(id==='rift'?riftLimit(s.profile,week):dungeonLimit(s.profile,id))||s.profile.battleSerial>=Number.MAX_SAFE_INTEGER)return false;
+ // Alpha 0.142 심연의 균열: opens with 악몽 (every chapter beaten on 정예); no weekly entry count.
+ if(id==='rift'&&!awakenOpen(s.profile))return false;
+ if(id!=='tower'&&id!=='rift'&&!dungeonClearsLeft(s.profile,id,week))return false;
  const auto=true,durable=s.durable;Object.assign(s,createGame(s.profile,{durable}));s.auto=auto;s.stageId=dungeonStageId(id,level);s.difficulty=0;s.profile.hunts++;s.profile.lastInterruptedBattle=null;s.profile.battleSerial++;
  s.rng=(12345+s.profile.hunts*97+chapterTheme(d.chapter).id*1009+level*41)>>>0;s.lootRng=(s.rng^0x9e3779b9)>>>0;s.phase='playing';s.run.stage=s.run.startStage=level;s.run.dungeonId=id;s.run.dungeonWeek=week;s.run.battleId='b'+s.profile.battleSerial;s.run.buildAtStart=Object.freeze({equipment:Object.freeze({...s.profile.equipment}),skill:skillSelection(s.profile.skillBook)});
  s.spawnView.width=clamp(number(view?.width,720),360,1600);s.spawnView.height=clamp(number(view?.height,1280),400,1800);prepareStage(s);return true;
@@ -576,6 +579,13 @@ export function forgeAncient(s,itemId,effectId){
  // A new array so the id index cache (equipment-slots inventoryItem) never serves the old ancient.
  p.inventory=p.inventory.map((it,n)=>n===index?made:it);refreshStats(s,true);return {ok:true,item:made,reason:made.name+' 승화 완료!'};
 }
+export function awakenForge(s,itemId,effectId){
+ if(s.phase!=='camp')return {ok:false,reason:'거점에서만 각성할 수 있어.'};
+ const status=awakenStatus(s.profile,itemId,effectId);if(!status.ok)return status;
+ const p=s.profile,index=p.inventory.findIndex(i=>i.id===itemId),made=cleanItem(awakenedItem(p.inventory[index],effectId),PROFILE_VERSION);if(!made)return {ok:false,reason:'각성할 수 없는 장비야.'};
+ p.gold-=status.cost.gold;for(const [key,count]of Object.entries(status.cost.materials))p.materials[key]-=count;
+ p.inventory=p.inventory.map((it,n)=>n===index?made:it);refreshStats(s,true);return {ok:true,item:made,reason:made.name+' 각성 완료!'};
+}
 export function craftItem(s,id,inscription=null){
  if(s.phase!=='camp')return {ok:false,reason:'거점에서만 제작할 수 있어.'};
  const status=craftStatus(s.profile,id);if(!status.ok)return status;
@@ -589,6 +599,8 @@ export function craftItem(s,id,inscription=null){
 }
 function dropMaterials(s,e){
  const drops=rollMaterials({tier:themeOf(s),boss:e.boss,elite:e.elite},()=>{s.materialRng=(Math.imul(1664525,s.materialRng)+1013904223)>>>0;return s.materialRng/4294967296;},()=>{s.refiningRng=(Math.imul(1664525,s.refiningRng)+1013904223)>>>0;return s.refiningRng/4294967296;},()=>{s.promotionRng=(Math.imul(1664525,s.promotionRng)+1013904223)>>>0;return s.promotionRng/4294967296;});
+ // Alpha 0.142 악몽 결정: every 악몽 chapter boss pays 1 + 챕터/20 (no roll, so the material streams stay as they were).
+ if(e.boss&&s.difficulty===2&&!s.run.dungeonId&&!s.run.raidId&&!s.run.rush)drops.push({id:'nightmareShard',amount:1+Math.floor((stageOf(s)?.id??1)/20)});
  for(const drop of drops){const row=MATERIAL_BY_ID[drop.id],count=Math.min(drop.amount,MATERIAL_LIMIT-s.profile.materials[drop.id]-s.profile.pendingMaterials[drop.id]);if(count<=0)continue;
   s.profile.pendingMaterials[drop.id]+=count;s.run.resourceRevision++;
   const offset=(MATERIALS.indexOf(row)%3-1)*20,x=clamp(e.x+offset,s.bounds.padding,s.bounds.width-s.bounds.padding),y=e.y+10;
@@ -759,7 +771,7 @@ function damageEnemy(s,e,value,critical=false,kind='normal',origin=s.player,pier
   const armorIgnored=e.plateBrokenUntil>s.run.time||swing?.damage!=null&&skills.finisherGuardBonus(s)>0;
   value*=(1-Math.max(0,(armorIgnored?0:e.plate??0)+(defending?stanceGuard(s):0)-shred))*(1+shred*BUILD_EFFECTS.shred.vulnerability);
   if(e.boss&&ruleOf(s)==='defense'&&!defending)value*=1.5;
-  if(e.raid==='queen'&&raidBroodAlive(s))value*=1-raidDefinition('queen').broodShield;
+  if(e.raid&&raidDefinition(e.raid)?.broodShield&&raidBroodAlive(s))value*=1-raidDefinition(e.raid).broodShield;
   let guarded=false,broken=false;
   if(e.guard>0){
     const n=direction(origin.x-e.x,origin.y-e.y),front=n.x*e.guardX+n.y*e.guardY>.1;
@@ -1213,7 +1225,7 @@ function learnBeastTechnique(s,st){
 }
 function completeRaid(s){
  if(s.settlement||s.run.flow!=='combat')return false;
- const r=raidDefinition(s.run.raidId),tier=s.run.raidTier??0,base=raidRewards(s.run.raidChapter),k=modeScale(MODE_CHAPTERS,tier).reward,reward={...base,gold:Math.round(base.gold*k),materials:Object.fromEntries(Object.entries(base.materials).map(([id,n])=>[id,n*(1+tier)]))};s.run.dungeonReward={gold:Math.min(reward.gold,Math.max(0,1e8-s.profile.gold)),cores:Math.min(reward.cores,Math.max(0,1e6-s.profile.cores)),materials:{}};
+ const r=raidDefinition(s.run.raidId),tier=s.run.raidTier??0,base0=raidRewards(s.run.raidChapter),base=r.nightmare?{...base0,materials:{...base0.materials,nightmareShard:4}}:base0,k=modeScale(MODE_CHAPTERS,tier).reward,reward={...base,gold:Math.round(base.gold*k),materials:Object.fromEntries(Object.entries(base.materials).map(([id,n])=>[id,n*(1+tier)]))};s.run.dungeonReward={gold:Math.min(reward.gold,Math.max(0,1e8-s.profile.gold)),cores:Math.min(reward.cores,Math.max(0,1e6-s.profile.cores)),materials:{}};
  s.profile.gold+=s.run.dungeonReward.gold;s.run.gold+=s.run.dungeonReward.gold;s.profile.cores+=s.run.dungeonReward.cores;s.run.cores+=s.run.dungeonReward.cores;
  for(const [id,n]of Object.entries(reward.materials)){const amount=Math.min(n,Math.max(0,MATERIAL_LIMIT-s.profile.materials[id]));s.profile.materials[id]+=amount;s.run.materials+=amount;if(amount)s.run.materialLedger[id]=(s.run.materialLedger[id]??0)+amount;s.run.dungeonReward.materials[id]=amount;}
  s.profile.raids.clears[r.id]++;s.run.rooms=1;s.run.seals=1;
@@ -1234,6 +1246,7 @@ function completeRush(s){
 function completeDungeon(s){
  if(s.settlement||s.run.flow!=='combat')return false;
  if(s.run.dungeonId==='tower')return completeTower(s);
+ if(s.run.dungeonId==='rift')return completeRift(s);
  const id=s.run.dungeonId,repeat=isDungeonRepeat(s.profile,id,s.run.stage),reward=repeat?repeatRewards(dungeonRewards(id,s.run.stage)):dungeonRewards(id,s.run.stage);
  {const w=s.profile.dungeonWeek;if(w.week!==s.run.dungeonWeek){w.week=s.run.dungeonWeek;for(const k of Object.keys(w.clears))w.clears[k]=0;}w.clears[id]++;}
  s.run.dungeonReward={repeat,gold:Math.min(reward.gold,Math.max(0,1e8-s.profile.gold)),materials:{}};s.profile.gold+=s.run.dungeonReward.gold;s.run.gold+=s.run.dungeonReward.gold;
@@ -1241,6 +1254,15 @@ function completeDungeon(s){
  if(reward.xp){const xp=growthXp(s.profile,reward.xp);s.run.xp+=xp;s.run.dungeonReward.xp=xp;if(gainXp(s.profile,xp))refreshStats(s);}
  s.profile.dungeonProgress[s.run.dungeonId]=Math.max(s.profile.dungeonProgress[s.run.dungeonId],s.run.stage);s.run.rooms=1;s.run.seals=1;
  if(lootRandom(s)<dropRate(s,'dungeon')*(repeat?DUNGEON_REPEAT_RATE:1)){const chapter=STAGES[Math.min(STAGES.length,Math.max(1,s.profile.unlockedStage))-1],item=rollAccessory({id:allocateItemId(s),tier:chapter?.theme??1,grade:s.run.stage>=7?2:s.run.stage>=4?1:0},()=>lootRandom(s));if(receiveItem(s,item,'stage'))s.run.dungeonReward.item=item;}
+ s.projectiles.length=0;s.spawns.length=0;s.player.queued=false;s.player.swing=null;s.player.action='idle';s.hitStop=0;skills.clearSkillStage(s);clearUniqueTransient(s);clearAncient(s);s.resultDelay=.5;return queueSettlement(s,true);
+}
+// Alpha 0.142 심연의 균열: every clear pays; the week's best depth opens the next one (it resets with the raid week).
+function completeRift(s){
+ const depth=s.run.stage,reward=dungeonRewards('rift',depth),r=s.profile.rift;if(r.week!==s.run.dungeonWeek){r.week=s.run.dungeonWeek;r.best=0;}
+ const record=depth>r.best;r.best=Math.max(r.best,depth);r.allBest=Math.max(r.allBest,depth);
+ s.run.dungeonReward={gold:Math.min(reward.gold,Math.max(0,1e8-s.profile.gold)),materials:{},firstClear:record};s.profile.gold+=s.run.dungeonReward.gold;s.run.gold+=s.run.dungeonReward.gold;
+ for(const [id,n]of Object.entries(reward.materials)){const amount=Math.min(n,Math.max(0,MATERIAL_LIMIT-s.profile.materials[id]));s.profile.materials[id]+=amount;s.run.materials+=amount;if(amount)s.run.materialLedger[id]=(s.run.materialLedger[id]??0)+amount;s.run.dungeonReward.materials[id]=amount;}
+ s.run.rooms=1;s.run.seals=1;
  s.projectiles.length=0;s.spawns.length=0;s.player.queued=false;s.player.swing=null;s.player.action='idle';s.hitStop=0;skills.clearSkillStage(s);clearUniqueTransient(s);clearAncient(s);s.resultDelay=.5;return queueSettlement(s,true);
 }
 // Alpha 0.141 무한의 탑: the floor's rewards only on its first clear; the best floor drives towerBonus (playerStats).
@@ -1308,10 +1330,11 @@ function updateBossRule(s,e,dt){
 // Raid patterns (Alpha 0.123). 강철 거신's armor is e.plate (damageEnemy); the queen calls a brood that shields her;
 // the judge's judgement is unavoidable (only real invulnerability, shields, reduction and health answer it).
 function raidRule(s,e,dt,r){
- if(r.mechanic==='swarm'){e.broodClock=(e.broodClock??r.broodEvery-3)+dt;if(e.broodClock>=r.broodEvery){e.broodClock-=r.broodEvery;
-  for(let i=0;i<r.broodSize&&s.enemies.filter(q=>!q.dead).length<MAX_ACTIVE_ENEMIES;i++){const a=i/r.broodSize*Math.PI*2,add=spawnEnemy(s,i%3===2?'spitter':'skitter',clamp(e.x+Math.cos(a)*170,s.bounds.padding,s.bounds.width-s.bounds.padding),clamp(e.y+Math.sin(a)*120,s.bounds.padding,s.bounds.height-s.bounds.padding));add.objective=false;add.aggro=true;add.raidBrood=true;const scale=raidScale(stageOf(s).id);add.hp=add.maxHp=Math.round(add.maxHp*r.broodHp*scale);add.damage*=scale;}
+ // Alpha 0.142: the 악몽 raid ('nightmare') uses both the brood and the judgement parts below (they follow the fields).
+ if(r.broodEvery){e.broodClock=(e.broodClock??r.broodEvery-3)+dt;if(e.broodClock>=r.broodEvery){e.broodClock-=r.broodEvery;
+  for(let i=0;i<r.broodSize&&s.enemies.filter(q=>!q.dead).length<MAX_ACTIVE_ENEMIES;i++){const a=i/r.broodSize*Math.PI*2,add=spawnEnemy(s,r.broodTypes?r.broodTypes[i%r.broodTypes.length]:i%3===2?'spitter':'skitter',clamp(e.x+Math.cos(a)*170,s.bounds.padding,s.bounds.width-s.bounds.padding),clamp(e.y+Math.sin(a)*120,s.bounds.padding,s.bounds.height-s.bounds.padding));add.objective=false;add.aggro=true;add.raidBrood=true;const scale=raidScale(stageOf(s).id);add.hp=add.maxHp=Math.round(add.maxHp*r.broodHp*scale);add.damage*=scale;}
   effect(s,'bossRage',{x:e.x,y:e.y},1.2);}}
- if(r.mechanic==='judgement'){e.judgeClock=(e.judgeClock??0)+dt;const warn=e.judgeClock>=r.judgementEvery-r.judgementWarning;
+ if(r.judgementEvery){e.judgeClock=(e.judgeClock??0)+dt;const warn=e.judgeClock>=r.judgementEvery-r.judgementWarning;
   if(warn&&!e.judgeWarning){e.judgeWarning=true;effect(s,'bossRage',{x:e.x,y:e.y},r.judgementWarning);}
   if(e.judgeClock>=r.judgementEvery){e.judgeClock-=r.judgementEvery;e.judgeWarning=false;const p=s.player,count=e.judgements??0;e.judgements=count+1;
    // Post-hit and dash frames do not dodge it; real invulnerability (ancient powers, last stand) does.
@@ -1322,6 +1345,7 @@ export function bossRuleStatus(s){const e=s.enemies.find(e=>e.boss&&!e.dead);if(
  if(s.run.raidId){const r=raidDefinition(s.run.raidId);
   if(r.mechanic==='armor')return e.plateBrokenUntil>s.run.time?'장갑 파괴 · '+Math.ceil(e.plateBrokenUntil-s.run.time)+'초':'강철 장갑 · 피해 '+Math.round(r.armor*100)+'% 차단';
   if(r.mechanic==='swarm')return raidBroodAlive(s)?'군단의 가호 · 피해 '+Math.round(r.broodShield*100)+'% 감소':'군단 소환까지 '+Math.max(1,Math.ceil(r.broodEvery-(e.broodClock??r.broodEvery-3)))+'초';
+  if(r.mechanic==='nightmare')return (raidBroodAlive(s)?'그림자의 가호 · 피해 '+Math.round(r.broodShield*100)+'% 감소':'그림자까지 '+Math.max(1,Math.ceil(r.broodEvery-(e.broodClock??r.broodEvery-3)))+'초')+' · '+(e.judgeWarning?'저주 임박':'저주까지 '+Math.max(1,Math.ceil(r.judgementEvery-(e.judgeClock??0)))+'초');
   return (e.judgeWarning?'심판 임박':'심판까지 '+Math.max(1,Math.ceil(r.judgementEvery-(e.judgeClock??0)))+'초')+' · '+(e.judgements??0)+'회 · 위력 +'+Math.round(r.judgementGrowth*(e.judgements??0)*100)+'%';}
 const rule=ruleOf(s),escort=e.special&&rule!=='summon'?' · 호위 '+(e.summonPhase??0)+'/2':'',prefix=e.special?'특수 보스 · ':'';
  if(rule==='regen')return prefix+'재생 · '+Math.ceil(8-(e.recoveryClock??0))+'초'+escort;

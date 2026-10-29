@@ -19,6 +19,11 @@ export const RAIDS=Object.freeze([
  {id:'judge',name:'황혼의 심판자',species:'raid_judge',mechanic:'judgement',unlock:60,hp:7.5,color:'#c9a2ff',
   rule:'12초마다 피할 수 없는 심판(최대 체력의 40%, 매번 +10%)을 내립니다. 피해 감소·보호막·회복으로 버티세요.',
   build:'체력 · 보호막 · 회복',cycle:['charge','slam','volley','slam','charge','volley'],judgementEvery:12,judgementWarning:2,judgementDamage:.4,judgementGrowth:.1},
+ // Alpha 0.142 악몽 레이드 (사용자 결정): opens with 악몽 (every chapter beaten on 정예) and is always fought at the 악몽 tier.
+ // Its pattern joins the queen's and the judge's: shades that shield it and an unavoidable curse.
+ {id:'sovereign',name:'악몽의 군주',species:'raid_nightmare',mechanic:'nightmare',unlock:60,nightmare:true,fixedTier:2,hp:6,broodHp:6,color:'#ff3d6a',
+  rule:'14초마다 악몽 그림자 2마리를 부르고, 그림자가 살아 있으면 피해를 80% 덜 받습니다. 12초마다 피할 수 없는 저주(최대 체력 25%, 매번 +8%)를 내립니다.',
+  build:'단일 화력 · 생존 · 보호막',cycle:['charge','volley','slam','charge','slam','volley'],broodEvery:14,broodSize:2,broodShield:.8,broodTypes:['bulwark','spitter'],judgementEvery:12,judgementWarning:2,judgementDamage:.25,judgementGrowth:.08},
 ].map(r=>Object.freeze({...r,cycle:Object.freeze(r.cycle)})));
 // Alpha 0.139 레이드 난이도 (사용자 결정): 일반 opens after 일반 60장, 정예 after every 정예 chapter, 악몽 after every 악몽 chapter.
 // The weekly entries are shared by the three tiers. A tier fights like the 정예/악몽 curve at chapter 60 (game-engine modeScale)
@@ -36,7 +41,9 @@ export function nextRaidReset(now){return (raidWeek(now)+1)*WEEK+MONDAY-KST;}
 export const emptyRaidProgress=()=>({week:-1,entries:Object.fromEntries(RAIDS.map(r=>[r.id,0])),clears:Object.fromEntries(RAIDS.map(r=>[r.id,0]))});
 export function raidEntriesUsed(profile,id,now){const r=profile?.raids;return r&&r.week===raidWeek(now)?r.entries?.[id]??0:0;}
 export function raidEntriesLeft(profile,id,now){return raidDefinition(id)?Math.max(0,RAID_WEEKLY_ENTRIES-raidEntriesUsed(profile,id,now)):0;}
-export const raidUnlocked=(profile,id)=>!!raidDefinition(id)&&(profile?.clearedStage??0)>=raidDefinition(id).unlock;
+export const raidUnlocked=(profile,id)=>!!raidDefinition(id)&&(profile?.clearedStage??0)>=raidDefinition(id).unlock&&(!raidDefinition(id).nightmare||Array.isArray(profile?.bossMastery)&&profile.bossMastery.length>0&&profile.bossMastery.every(v=>v>=1));
+// The tier a raid is fought at: the 악몽 raid only at 악몽, the others at the chosen tier.
+export const raidFightTier=(id,tier)=>raidDefinition(id)?.fixedTier??tier;
 // The chapter the raid scales with and fights on: the furthest chapter opened.
 export const raidChapter=(profile,chapters)=>Math.max(1,Math.min(chapters,profile?.unlockedStage??1));
 export function raidPlan(id){
@@ -53,10 +60,13 @@ export function raidRewards(chapter){
 // carry their power as authored (RAID_POWERS in ancient-powers.js), without tier or hunt-mode scaling.
 export const RAID_REGION=7,RAID_ANCIENT_STATS=1.1;
 const PARTS=['weapon','helmet','armor','charm','special'];
-const ART={weapon:'set_sungod_sword',helmet:'set_sungod_helmet',armor:'set_sungod_armor',charm:'acc_t6_charm',special:'acc_t6_seal'};
+const ART={weapon:'set_sungod_sword',helmet:'set_sungod_helmet',armor:'set_sungod_armor',charm:'acc_t6_charm',special:'acc_t6_seal',earring:'acc_t6_earring'};
+// The 악몽 raid's five relics trade the seal for an earring (seals come only from the boss rush).
+const PARTS_OF={sovereign:['weapon','helmet','armor','charm','earring']};
 const RAID_ITEMS={
  colossus:[['거신의 파쇄검','echo'],['거신의 요새 투구',null],['거신의 용광로 흉갑','lastStand'],['용광로 심장 목걸이','focus'],['리리안의 거신 인장',null]],
  queen:[['여왕의 낫날 검','storm'],['여왕의 갑각 왕관',null],['여왕의 산성 갑각','thorns'],['군단 알 목걸이','hunter'],['리리안의 군단 인장',null]],
  judge:[['심판의 광휘검','execution'],['눈가린 심판관의 투구',null],['심판관의 성휘 흉갑','barrier'],['심판의 천칭 목걸이','capacitor'],['리리안의 판결 인장',null]],
+ sovereign:[['악몽 군주의 가시검','storm'],['가시 왕관 투구',null],['악몽의 흑요 흉갑','thorns'],['악몽의 눈 목걸이','hunter'],['악몽 가시 귀걸이',null]],
 };
-export const RAID_ANCIENTS=Object.freeze(RAIDS.flatMap(r=>RAID_ITEMS[r.id].map(([name,effectId],i)=>Object.freeze({id:`ancient-raid-${r.id}-${PARTS[i]}`,tier:6,slot:PARTS[i],name,artId:ART[PARTS[i]],effectId,raid:r.id}))));
+export const RAID_ANCIENTS=Object.freeze(RAIDS.flatMap(r=>RAID_ITEMS[r.id].map(([name,effectId],i)=>{const slot=(PARTS_OF[r.id]??PARTS)[i];return Object.freeze({id:`ancient-raid-${r.id}-${slot}`,tier:6,slot,name,artId:ART[slot],effectId,raid:r.id});})));

@@ -20,6 +20,12 @@ const ROWS={
  'judge-armor':['성휘 방벽','spin',220,12,{shield:.08,heal:.03}],
  'judge-charm':['천칭의 빛','breath',300,11,{heal:.05}],
  'judge-special':['최종 판결','slam',420,12,{execute:50}],
+ // Alpha 0.142 악몽 레이드 '악몽의 군주'.
+ 'sovereign-weapon':['악몽 참수','slam',460,9,{bleed:4}],
+ 'sovereign-helmet':['가시 왕관','roar',180,13,{shield:.1,bleed:2}],
+ 'sovereign-armor':['흑요 파열','zone',320,13,{bleed:3}],
+ 'sovereign-charm':['악몽의 시선','breath',320,10,{breach:10,bleed:2}],
+ 'sovereign-earring':['가시 비','volley',300,9,{extraHit:1,bleed:2}],
 };
 const COLOR=Object.fromEntries(RAIDS.map(r=>[r.id,r.color]));
 export const GEAR_SKILLS=Object.freeze(RAID_ANCIENTS.map(a=>{

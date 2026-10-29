@@ -9,11 +9,11 @@ import {freezeCombat} from './combat-fixture.mjs';
 const raidItem=(raid,slot,powerRoll=100,id=7)=>{let seed=5;const rng=()=>{seed=(Math.imul(1664525,seed)+1013904223)>>>0;return seed/4294967296;};return {...L.rollAncient({id,tier:6,slot,raid},0,rng),powerRoll};};
 function profile(items=[]){const p=g.createProfile(1000);p.level=150;p.unlockedStage=61;p.clearedStage=60;p.skillBook=g.restoreSkillBook(null,150);p.skillBook.loadout.active=[null,null,null,null];p.skillBook.loadout.ultimate=[null];p.inventory=items;for(const it of items)p.equipment[it.slot]=it.id;return p;}
 
-test('fifteen equipment skills, one per raid ancient, outside the skill screen and loadouts',()=>{
- const raid=g.ANCIENT_CATALOG.filter(a=>a.raid);assert.equal(g.GEAR_SKILLS.length,15);assert.deepEqual(g.GEAR_SKILLS.map(d=>d.ancientId).sort(),raid.map(a=>a.id).sort());
+test('twenty equipment skills, one per raid ancient, outside the skill screen and loadouts',()=>{
+ const raid=g.ANCIENT_CATALOG.filter(a=>a.raid);assert.equal(g.GEAR_SKILLS.length,20);assert.deepEqual(g.GEAR_SKILLS.map(d=>d.ancientId).sort(),raid.map(a=>a.id).sort());
  for(const d of g.GEAR_SKILLS){assert.equal(d.kind,'gear');assert.equal(d.cost,0);assert.equal(g.SKILL_BY_ID[d.id],d);assert.ok(!g.SKILL_CATALOG.includes(d));assert.ok(fs.existsSync(new URL('../dist/'+d.icon,import.meta.url)),d.icon);assert.ok(d.description.length>10);assert.equal(d.color,g.raidDefinition(d.raid).color);}
- assert.equal(new Set(g.GEAR_SKILLS.map(d=>d.name)).size,15);
- assert.equal(new Set(g.GEAR_SKILLS.map(d=>JSON.stringify([d.template,d.element,d.execute,d.hits]))).size,15);
+ assert.equal(new Set(g.GEAR_SKILLS.map(d=>d.name)).size,20);
+ assert.equal(new Set(g.GEAR_SKILLS.map(d=>JSON.stringify([d.template,d.element,d.execute,d.hits]))).size,20);
  assert.deepEqual(g.skillSlots(150),{active:4,passive:3,ultimate:1,beast:1});
 });
 

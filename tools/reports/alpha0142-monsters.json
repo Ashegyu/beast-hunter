@@ -1,0 +1,742 @@
+{
+  "kind": "generated-source-extraction-and-lossless-atlas",
+  "scope": "Native pixel geometry and encoded/decoded size; no browser/GPU measurements.",
+  "sources": {
+    "raid_nightmare": "ea8250af6d9b17c356b2ba8983e977a95b097e96f68427f37b8f9fe1f95e4f96"
+  },
+  "species": {
+    "raid_nightmare": {
+      "source": "art/nightmare0142/bosses/raid_nightmare.png",
+      "sha256": "ea8250af6d9b17c356b2ba8983e977a95b097e96f68427f37b8f9fe1f95e4f96",
+      "width": 1254,
+      "height": 1254,
+      "transparentFraction": 0.453666,
+      "bodyCores": 25,
+      "independentComponentsOver1500px": 25,
+      "rowBands": null,
+      "directions": [
+        {
+          "direction": "s",
+          "bodyHeight": 228.5,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                19,
+                11,
+                238,
+                240
+              ],
+              "crop": [
+                0,
+                0,
+                255,
+                287
+              ],
+              "pivotX": 132.0,
+              "pivotY": 239,
+              "bodyHeight": 228.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "785ec7524ede324ecb8380bfffd20466a45ae0fb23aee35533bff85d985deb70",
+              "atlas": "monsters-raid_nightmare-v0142.png",
+              "atlasRect": [
+                1060,
+                4,
+                255,
+                287
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                258,
+                13,
+                478,
+                241
+              ],
+              "crop": [
+                243,
+                0,
+                492,
+                271
+              ],
+              "pivotX": 129.0,
+              "pivotY": 240,
+              "bodyHeight": 228.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "0607bd30944e6f31551b905b078add07936bdc1cc32bceaf393b3e1a99f38516",
+              "atlas": "monsters-raid_nightmare-v0142.png",
+              "atlasRect": [
+                1358,
+                310,
+                249,
+                271
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                487,
+                6,
+                714,
+                242
+              ],
+              "crop": [
+                474,
+                0,
+                725,
+                269
+              ],
+              "pivotX": 123.0,
+              "pivotY": 241,
+              "bodyHeight": 228.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "13cbfe7eef1e9efa11c1b4325a37e9a1d5d5d2c9205f24cdbd034ca576b31e7c",
+              "atlas": "monsters-raid_nightmare-v0142.png",
+              "atlasRect": [
+                4,
+                604,
+                251,
+                269
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                727,
+                26,
+                1022,
+                239
+              ],
+              "crop": [
+                714,
+                18,
+                1032,
+                257
+              ],
+              "pivotX": 123.0,
+              "pivotY": 220,
+              "bodyHeight": 228.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "5c2c42e66e98b4e9097ebf0fc62db579e04f350c7b7fe90c893edebbecd70212",
+              "atlas": "monsters-raid_nightmare-v0142.png",
+              "atlasRect": [
+                294,
+                881,
+                318,
+                239
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                983,
+                132,
+                1249,
+                243
+              ],
+              "crop": [
+                968,
+                83,
+                1254,
+                320
+              ],
+              "pivotX": 148.0,
+              "pivotY": 159,
+              "bodyHeight": 228.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "637c5d6e160d800e1e08e975a9b0a590cc00eedbc8a1d464879979cf0a294575",
+              "atlas": "monsters-raid_nightmare-v0142.png",
+              "atlasRect": [
+                620,
+                881,
+                286,
+                237
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "se",
+          "bodyHeight": 227.5,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                22,
+                251,
+                221,
+                480
+              ],
+              "crop": [
+                0,
+                238,
+                245,
+                535
+              ],
+              "pivotX": 122.0,
+              "pivotY": 241,
+              "bodyHeight": 227.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "5cc5eb9ccfb50ea33038ad58ed8a919e371b253caf5103d702a56637d59cd3b3",
+              "atlas": "monsters-raid_nightmare-v0142.png",
+              "atlasRect": [
+                536,
+                4,
+                245,
+                297
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                260,
+                253,
+                467,
+                479
+              ],
+              "crop": [
+                234,
+                241,
+                482,
+                511
+              ],
+              "pivotX": 133.0,
+              "pivotY": 237,
+              "bodyHeight": 227.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "0631fc2584b027742e722eda804b023fb859b01d79d1607a13c218f0046e8ca3",
+              "atlas": "monsters-raid_nightmare-v0142.png",
+              "atlasRect": [
+                1615,
+                310,
+                248,
+                270
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                483,
+                248,
+                721,
+                480
+              ],
+              "crop": [
+                465,
+                232,
+                730,
+                530
+              ],
+              "pivotX": 135.0,
+              "pivotY": 247,
+              "bodyHeight": 227.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "e1ee27f586dfa71fd04246a9932a81c3b9907d6dc5988f4b0355172db6cbfb3f",
+              "atlas": "monsters-raid_nightmare-v0142.png",
+              "atlasRect": [
+                4,
+                4,
+                265,
+                298
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                734,
+                267,
+                1074,
+                479
+              ],
+              "crop": [
+                716,
+                252,
+                1082,
+                526
+              ],
+              "pivotX": 120.0,
+              "pivotY": 226,
+              "bodyHeight": 227.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "bd6937bb9a6aaa64ff93fe9eb01fddf8085d944225ecfa77fc3fc4c6f090e6c3",
+              "atlas": "monsters-raid_nightmare-v0142.png",
+              "atlasRect": [
+                611,
+                310,
+                366,
+                274
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                986,
+                383,
+                1249,
+                482
+              ],
+              "crop": [
+                972,
+                324,
+                1254,
+                567
+              ],
+              "pivotX": 145.5,
+              "pivotY": 157,
+              "bodyHeight": 227.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "3efecc1ee95c48159f62ba53efb471fefaa177a300c465aafe90e23b4a4204af",
+              "atlas": "monsters-raid_nightmare-v0142.png",
+              "atlasRect": [
+                4,
+                881,
+                282,
+                243
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "e",
+          "bodyHeight": 226.5,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                11,
+                495,
+                213,
+                721
+              ],
+              "crop": [
+                0,
+                483,
+                231,
+                738
+              ],
+              "pivotX": 94.0,
+              "pivotY": 237,
+              "bodyHeight": 226.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "976ef862afb80da1bd6b8fb2b920579f8b9b49114312be43395caf19a02001c6",
+              "atlas": "monsters-raid_nightmare-v0142.png",
+              "atlasRect": [
+                1300,
+                604,
+                231,
+                255
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                245,
+                493,
+                441,
+                720
+              ],
+              "crop": [
+                222,
+                482,
+                484,
+                737
+              ],
+              "pivotX": 119.0,
+              "pivotY": 237,
+              "bodyHeight": 226.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "e2b0d32037f4d233e1479c0f2154fc0338b5eb442233a876c2737fc78dacb9df",
+              "atlas": "monsters-raid_nightmare-v0142.png",
+              "atlasRect": [
+                1539,
+                604,
+                262,
+                255
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                478,
+                487,
+                700,
+                721
+              ],
+              "crop": [
+                463,
+                473,
+                726,
+                766
+              ],
+              "pivotX": 139.0,
+              "pivotY": 247,
+              "bodyHeight": 226.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "9f30f40e5073914766333d019f099e0d55ca76bea12ea0c7defd94d5e16bddc7",
+              "atlas": "monsters-raid_nightmare-v0142.png",
+              "atlasRect": [
+                789,
+                4,
+                263,
+                293
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                740,
+                508,
+                1097,
+                723
+              ],
+              "crop": [
+                714,
+                495,
+                1187,
+                762
+              ],
+              "pivotX": 125.0,
+              "pivotY": 227,
+              "bodyHeight": 226.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "32d58ae543b8d3054698cbec069b7bbc22938d31b4538c5391a1e0f8a60edb0b",
+              "atlas": "monsters-raid_nightmare-v0142.png",
+              "atlasRect": [
+                526,
+                604,
+                473,
+                267
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                979,
+                638,
+                1247,
+                727
+              ],
+              "crop": [
+                953,
+                556,
+                1254,
+                783
+              ],
+              "pivotX": 160.0,
+              "pivotY": 170,
+              "bodyHeight": 226.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "786f950d910c0eec606ad991c73251eae10a1f808de54a8cca70b54a2cbbc216",
+              "atlas": "monsters-raid_nightmare-v0142.png",
+              "atlasRect": [
+                914,
+                881,
+                301,
+                227
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "ne",
+          "bodyHeight": 225.5,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                9,
+                736,
+                231,
+                962
+              ],
+              "crop": [
+                0,
+                722,
+                247,
+                1009
+              ],
+              "pivotX": 127.0,
+              "pivotY": 239,
+              "bodyHeight": 225.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "9957c243a53087fc55716b18bbf2d71b5d7055afef182b6bd278cc4089f199d7",
+              "atlas": "monsters-raid_nightmare-v0142.png",
+              "atlasRect": [
+                1323,
+                4,
+                247,
+                287
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                252,
+                737,
+                479,
+                962
+              ],
+              "crop": [
+                232,
+                725,
+                493,
+                1011
+              ],
+              "pivotX": 110.0,
+              "pivotY": 236,
+              "bodyHeight": 225.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "3548931d809efc824b6ebdd56ec6f94a3344f081bf0c25cbffe463d4aed5d029",
+              "atlas": "monsters-raid_nightmare-v0142.png",
+              "atlasRect": [
+                4,
+                310,
+                261,
+                286
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                492,
+                725,
+                717,
+                962
+              ],
+              "crop": [
+                469,
+                713,
+                754,
+                976
+              ],
+              "pivotX": 138.0,
+              "pivotY": 248,
+              "bodyHeight": 225.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "b17fc8484dba5eb2e0b3b80739df1b8d5e7e240019abaceb41122b0f6429ea1f",
+              "atlas": "monsters-raid_nightmare-v0142.png",
+              "atlasRect": [
+                1007,
+                604,
+                285,
+                263
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                735,
+                750,
+                1075,
+                968
+              ],
+              "crop": [
+                718,
+                735,
+                1083,
+                1007
+              ],
+              "pivotX": 118.0,
+              "pivotY": 232,
+              "bodyHeight": 225.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "ebe3d8318ba29007431a60cde214f422ac36e94fef3fbb71a81cfdf800fb3cd4",
+              "atlas": "monsters-raid_nightmare-v0142.png",
+              "atlasRect": [
+                985,
+                310,
+                365,
+                272
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                989,
+                876,
+                1245,
+                976
+              ],
+              "crop": [
+                962,
+                855,
+                1254,
+                1049
+              ],
+              "pivotX": 155.0,
+              "pivotY": 120,
+              "bodyHeight": 225.5,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "d15161e075899f148a7cee3ff491832f4e7bf7a71b75e7406d6af83118b15a6f",
+              "atlas": "monsters-raid_nightmare-v0142.png",
+              "atlasRect": [
+                1223,
+                881,
+                292,
+                194
+              ]
+            }
+          ]
+        },
+        {
+          "direction": "n",
+          "bodyHeight": 243.0,
+          "frames": [
+            {
+              "column": 0,
+              "core": [
+                19,
+                979,
+                242,
+                1221
+              ],
+              "crop": [
+                0,
+                967,
+                259,
+                1254
+              ],
+              "pivotX": 113.0,
+              "pivotY": 253,
+              "bodyHeight": 243.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "b84978daaaf39e31dca7d383bf95c5dbe6ba9efc1527a28e5ac49dbf5d761f4d",
+              "atlas": "monsters-raid_nightmare-v0142.png",
+              "atlasRect": [
+                1578,
+                4,
+                259,
+                287
+              ]
+            },
+            {
+              "column": 1,
+              "core": [
+                269,
+                979,
+                486,
+                1223
+              ],
+              "crop": [
+                242,
+                966,
+                497,
+                1234
+              ],
+              "pivotX": 123.0,
+              "pivotY": 256,
+              "bodyHeight": 243.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "36de2e9a0d66261d86d6936682e0dee42ce1a5817bbfc7250a15711687aaca61",
+              "atlas": "monsters-raid_nightmare-v0142.png",
+              "atlasRect": [
+                263,
+                604,
+                255,
+                268
+              ]
+            },
+            {
+              "column": 2,
+              "core": [
+                499,
+                971,
+                727,
+                1224
+              ],
+              "crop": [
+                488,
+                956,
+                739,
+                1254
+              ],
+              "pivotX": 130.0,
+              "pivotY": 267,
+              "bodyHeight": 243.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "598b4c4582f9441ef3b966721b18904f500dc879d24ca2e94c26b25e154fb408",
+              "atlas": "monsters-raid_nightmare-v0142.png",
+              "atlasRect": [
+                277,
+                4,
+                251,
+                298
+              ]
+            },
+            {
+              "column": 3,
+              "core": [
+                738,
+                991,
+                1036,
+                1227
+              ],
+              "crop": [
+                721,
+                975,
+                1051,
+                1254
+              ],
+              "pivotX": 115.0,
+              "pivotY": 251,
+              "bodyHeight": 243.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "b6bd52d5a66481dfe3f36b42eafa7c4a76d1ea0b11c380997a794a9fc57d6888",
+              "atlas": "monsters-raid_nightmare-v0142.png",
+              "atlasRect": [
+                273,
+                310,
+                330,
+                279
+              ]
+            },
+            {
+              "column": 4,
+              "core": [
+                975,
+                1116,
+                1247,
+                1224
+              ],
+              "crop": [
+                960,
+                1046,
+                1254,
+                1231
+              ],
+              "pivotX": 151.0,
+              "pivotY": 177,
+              "bodyHeight": 243.0,
+              "sourcePixelsExact": true,
+              "rgbaSHA256": "427890a03f5a33badff6aaf43633ed8c580f5daff564ed80688d6159d780fa57",
+              "atlas": "monsters-raid_nightmare-v0142.png",
+              "atlasRect": [
+                1523,
+                881,
+                294,
+                185
+              ]
+            }
+          ]
+        }
+      ],
+      "frames": 25
+    }
+  },
+  "atlases": [
+    {
+      "image": "monsters-raid_nightmare-v0142.png",
+      "delivery": "monsters-raid_nightmare-v0142.webp",
+      "width": 2048,
+      "height": 1128,
+      "frames": 25,
+      "sha256WebP": "ce4f7b827b97062a2dbec36189bd8e1b7568e2ccb78b0cf3b0e0cb4f1a456362",
+      "sha256RGBA": "1918a129732c5e0669c0eb36e153d4bb3c3b5aa1403e53b2a4bf67ff43596227",
+      "decodedRGBABytes": 9240576,
+      "webpBytes": 1841352,
+      "pixelExact": true
+    }
+  ],
+  "method": "25 largest body cores; validated row bands for detached spores/shards; whole opaque parts assigned to closest body connection, then nearest-part edge alpha; no resampling or repainting"
+}

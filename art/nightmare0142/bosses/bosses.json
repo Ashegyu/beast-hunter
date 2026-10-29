@@ -1,0 +1,11 @@
+{
+ "raid_nightmare": {
+  "style": "art/monsters045/frost_king.png",
+  "reference": "art/monsters065/references/encyclopedia-5.png",
+  "reference_hint": "pick the matching creature archetype from this encyclopedia for anatomy and costume ideas only",
+  "special": true,
+  "name": "악몽의 군주",
+  "out": "art/nightmare0142/bosses/raid_nightmare.png",
+  "subject": "A towering nightmare sovereign: a gaunt horned wraith king in tattered black and deep crimson robes over cracked obsidian armor, a crown of black thorns, many small glowing crimson eyes on a shadowy mask-face, long clawed hands holding a short curved blade of dark smoke and crimson light, wisps of black mist at the hem. Reads as the lord of nightmares. Raid boss: the largest, most imposing silhouette in the game, heavily detailed. Attack windup rears back and gathers strength; attack contact strikes forward hard with a clearly different pose; death lies collapsed flat. Keep mist, blade and claws short and inside the cell. Distinct from the style reference subject."
+ }
+}

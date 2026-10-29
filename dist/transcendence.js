@@ -6,6 +6,9 @@ export const TRANSCEND=Object.freeze([
  {id:'life',name:'초월 생명',key:'hpPct',text:'최대 체력'},
  {id:'slayer',name:'초월 사냥',key:'bossDamage',text:'보스에게 주는 피해'},
  {id:'arts',name:'초월 검술',key:'skillDamage',text:'스킬 피해'},
+ // Alpha 0.142 악몽 (사용자 결정 '초월 확장'): two abilities that open with 악몽 (every chapter beaten on 정예).
+ {id:'aegis',name:'초월 수호',key:'reduction',text:'피해 감소',per:.005,nightmare:true},
+ {id:'swift',name:'초월 질풍',key:'attackSpeed',text:'공격 속도',nightmare:true},
 ].map(Object.freeze));
 export const TRANSCEND_IDS=Object.freeze(TRANSCEND.map(t=>t.id));
 export const TRANSCEND_PER_RANK=.01,TRANSCEND_XP_LIMIT=1e12;
@@ -27,7 +30,10 @@ export function transcendEffective(rank){
  for(let i=0;i<TRANSCEND_STEPS.length;i++){const [from,rate]=TRANSCEND_STEPS[i],to=TRANSCEND_STEPS[i+1]?.[0]??Infinity,n=Math.min(left,to-from);out+=n*rate;left-=n;if(!left)break;}
  return out;
 }
-export const transcendPointsTotal=p=>transcendLevel(p?.transcendXp??0);
+// Alpha 0.142: every chapter first beaten on 악몽 adds one 초월 포인트 on top of the 초월 레벨.
+export const nightmareChapters=p=>Array.isArray(p?.bossMastery)?p.bossMastery.filter(v=>v>=2).length:0;
+export const nightmareOpen=p=>Array.isArray(p?.bossMastery)&&p.bossMastery.length>0&&p.bossMastery.every(v=>v>=1);
+export const transcendPointsTotal=p=>transcendLevel(p?.transcendXp??0)+nightmareChapters(p);
 export const transcendSpent=p=>TRANSCEND_IDS.reduce((n,id)=>n+(p?.transcendence?.[id]??0),0);
 export const transcendPoints=p=>Math.max(0,transcendPointsTotal(p)-transcendSpent(p));
 // Restore: whole ranks, and never more than the points the stored experience gives (later ids are trimmed first).
@@ -36,5 +42,5 @@ export function cleanTranscendence(raw,points){
  for(const id of TRANSCEND_IDS){const n=Math.min(left,Math.max(0,Number.isFinite(raw?.[id])?Math.floor(raw[id]):0));out[id]=n;left-=n;}
  return out;
 }
-export function transcendBonus(p){const out={damagePct:0,hpPct:0,bossDamage:0,skillDamage:0};for(const t of TRANSCEND)out[t.key]=transcendEffective(p?.transcendence?.[t.id]??0)*TRANSCEND_PER_RANK;return out;}
-export function transcendStatus(p,id){if(!TRANSCEND_IDS.includes(id))return '능력 없음';if((p?.level??1)<200&&!transcendPointsTotal(p))return 'Lv.200 이후 개방';return transcendPoints(p)>0?'':'초월 포인트 부족';}
+export function transcendBonus(p){const out={damagePct:0,hpPct:0,bossDamage:0,skillDamage:0,reduction:0,attackSpeed:0};for(const t of TRANSCEND)out[t.key]=transcendEffective(p?.transcendence?.[t.id]??0)*(t.per??TRANSCEND_PER_RANK);return out;}
+export function transcendStatus(p,id){if(!TRANSCEND_IDS.includes(id))return '능력 없음';if(TRANSCEND.find(t=>t.id===id).nightmare&&!nightmareOpen(p))return '악몽 개방 후';if((p?.level??1)<200&&!transcendPointsTotal(p))return 'Lv.200 이후 개방';return transcendPoints(p)>0?'':'초월 포인트 부족';}
