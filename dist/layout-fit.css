@@ -1860,3 +1860,25 @@
 /* 0.144.7 · 가방 분해 창(폭 760 미만): '부위별 보관 개수 | 넘으면 낮은 등급부터 자동 분해'가 한 줄에서 잘렸다 → 설명을 제목 아래 줄로. */
 @media(max-width:760px) and (min-height:361px){#game-shell#game-shell#game-shell[data-panel=inventory] #bag-rules h4{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:0!important;white-space:normal!important}
 #game-shell#game-shell#game-shell[data-panel=inventory] #bag-rules h4>small{display:block!important;margin:0!important;font-size:9px!important;white-space:normal!important}}
+/* 0.144.8 · 빌드 화면 정렬(사용자 요청: 남은 화면 정렬): 바깥 판(#inventory-content, 여백 10px) 안에 빌드 판이 다시 8·12px 여백을 둬서
+   제목·탭·카드가 다른 화면보다 안쪽으로 들어가 있었다 → 빌드 판 여백 0, 칸 사이 --bg.
+   오른쪽 '착용 장비와 시너지' 칸: 접힘 줄(summary)이 44~50px씩이라 아래 특성 문장이 잘리고 칸이 스크롤됐다 → 줄을 28px로 줄여 한 칸에 들게 한다. */
+#game-shell#game-shell#game-shell[data-panel=inventory] #inventory-build-view:not([hidden]){padding:0!important;gap:var(--bg,10px)!important;overflow:hidden!important}
+#game-shell#game-shell#game-shell[data-panel=inventory] #build-current-panel{overflow:hidden!important;padding:6px 8px!important}
+#game-shell#game-shell#game-shell[data-panel=inventory] #build-current-panel summary{min-height:0!important;padding:6px 0!important;line-height:16px!important}
+#game-shell#game-shell#game-shell[data-panel=inventory] #build-current-panel .unique-summary{padding:0 3px!important;margin:0!important}
+#game-shell#game-shell#game-shell[data-panel=inventory] #build-current-panel .bag-equipped{padding:0 4px!important;display:flex!important;flex-direction:column!important;gap:4px!important}
+#game-shell#game-shell#game-shell[data-panel=inventory] #build-current-panel .equipped-trait{padding:6px 8px!important;margin:0!important;line-height:1.4!important}
+/* 높이 360 이하: 저장된 빌드의 장비 9줄이 왼쪽 반 칸(84px)을 넘어 잘렸다 → 장비 목록을 카드 폭 전체 2단으로, 스킬·효과 문장은 그 아래. */
+@media(max-height:360px){#game-shell#game-shell#game-shell[data-panel=inventory] #inventory-build-view .build-info{grid-template-columns:minmax(0,1fr)!important;align-content:start!important;row-gap:2px!important;overflow:hidden!important}
+#game-shell#game-shell#game-shell[data-panel=inventory] #inventory-build-view .build-info>p[id^=build-gear]{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-flow:row;column-gap:8px;height:auto!important;max-height:none!important;overflow:visible!important}
+#game-shell#game-shell#game-shell[data-panel=inventory] #inventory-build-view .build-info>p[id^=build-gear]>span{font-size:9px!important;line-height:10px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#game-shell#game-shell#game-shell[data-panel=inventory] #inventory-build-view .build-info>div>p{font-size:9px!important;line-height:11px!important;margin:0!important}}
+/* 0.144.8 · 더보기(설정·백업) 화면 정렬: 위 10·옆 14px 여백, 오른쪽 백업 칸이 내용 높이(208px)라 왼쪽 메뉴보다 짧게 끝났다
+   → 여백 10px 하나, 왼쪽(소개·메뉴·버전)과 오른쪽 백업 칸의 위·아랫선을 맞춘다. 버전 표기는 set-module-version.py가 같이 올린다. */
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=more] #camp-more-panel{--mg2:10px;padding:var(--mg2)!important;column-gap:var(--mg2)!important;row-gap:6px!important;grid-template-rows:auto minmax(0,1fr) auto!important;align-content:stretch!important;overflow:hidden!important}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=more] #camp-more-panel>.backup-panel{grid-row:1/4!important;align-self:stretch!important;margin:0!important;box-sizing:border-box}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=more] #camp-more-panel>:is(.more-intro,.more-menu,.more-version){margin:0!important}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=more] #camp-more-panel>.more-menu{align-self:end!important}
+@media(max-width:760px){#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=more] #camp-more-panel{--mg2:8px}}
+@media(max-height:360px){#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=more] #camp-more-panel{--mg2:7px}}

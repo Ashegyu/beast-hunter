@@ -30,6 +30,8 @@ def main():
         out = MODULE.sub(lambda m: f"{m['q']}{m['path']}?v={version}{m['q']}", text)
         if path.suffix == '.html':
             out = TAG.sub(lambda m: f"{m['attr']}{m['q']}{m['path']}?v={version}{m['q']}", out)
+            # 0.144.8: 더보기 화면 아래 버전 표기도 같이 올린다(0.103.1에 멈춰 있었음).
+            out = re.sub(r'(<p class="more-version">[^<]*?ALPHA )[\d.]+', lambda m: m[1] + version, out)
         if out != text:
             path.write_text(out, encoding='utf-8')
             changed += 1
