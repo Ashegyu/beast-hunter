@@ -1,20 +1,20 @@
-import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily,inventoryItem} from './equipment-slots.js?v=0.144.1';
-import {CRAFTED_CATALOG,craftedDefinition,FORGE_EFFECT_BY_ID,FORGE_EFFECT_POWER,FORGE_AWAKEN_POWER} from './crafting.js?v=0.144.1';
-import {ANCIENT_POWER,ANCIENT_STATS} from './ancient-stats.js?v=0.144.1';
-export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.144.1';
-import {huntMode,BOSS_DROP_TABLES} from './hunt-modes.js?v=0.144.1';
-import {UNIQUE_EFFECTS,EFFECT_ROWS,uniquePower} from './unique-effects.js?v=0.144.1';
-import {ANCIENT_POWER_BY_ID,NIGHTMARE_POWERS,RAID_POWERS as BASE_RAID_POWERS,RAID_AWAKEN_POWERS as BASE_RAID_AWAKEN,RAID_ABYSS_POWERS,describePower,SOVEREIGN_RAID_POWERS,SOVEREIGN_AWAKEN} from './ancient-powers.js?v=0.144.1';
+import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily,inventoryItem} from './equipment-slots.js?v=0.144.2';
+import {CRAFTED_CATALOG,craftedDefinition,FORGE_EFFECT_BY_ID,FORGE_EFFECT_POWER,FORGE_AWAKEN_POWER} from './crafting.js?v=0.144.2';
+import {ANCIENT_POWER,ANCIENT_STATS} from './ancient-stats.js?v=0.144.2';
+export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.144.2';
+import {huntMode,BOSS_DROP_TABLES} from './hunt-modes.js?v=0.144.2';
+import {UNIQUE_EFFECTS,EFFECT_ROWS,uniquePower} from './unique-effects.js?v=0.144.2';
+import {ANCIENT_POWER_BY_ID,NIGHTMARE_POWERS,RAID_POWERS as BASE_RAID_POWERS,RAID_AWAKEN_POWERS as BASE_RAID_AWAKEN,RAID_ABYSS_POWERS,describePower,SOVEREIGN_RAID_POWERS,SOVEREIGN_AWAKEN} from './ancient-powers.js?v=0.144.2';
 const RAID_POWERS={...BASE_RAID_POWERS,...SOVEREIGN_RAID_POWERS},RAID_AWAKEN_POWERS={...BASE_RAID_AWAKEN,sovereign:SOVEREIGN_AWAKEN};
-import {RAID_ANCIENTS,RAID_REGION,RAID_ANCIENT_STATS} from './raids.js?v=0.144.1';
-import {REGION_ANCIENTS,REGION_ANCIENT_BOSSES} from './ancient-regions.js?v=0.144.1';
-import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.144.1';
-import {isSeal,sealSignatures,SEAL_GRADES} from './seals.js?v=0.144.1';
-export {EQUIPMENT_SETS,SET_SLOTS,SET_STATS,CHAPTER_SETS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.144.1';
-export {UNIQUE_EFFECTS,uniquePower} from './unique-effects.js?v=0.144.1';
+import {RAID_ANCIENTS,RAID_REGION,RAID_ANCIENT_STATS} from './raids.js?v=0.144.2';
+import {REGION_ANCIENTS,REGION_ANCIENT_BOSSES} from './ancient-regions.js?v=0.144.2';
+import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.144.2';
+import {isSeal,sealSignatures,SEAL_GRADES} from './seals.js?v=0.144.2';
+export {EQUIPMENT_SETS,SET_SLOTS,SET_STATS,CHAPTER_SETS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.144.2';
+export {UNIQUE_EFFECTS,uniquePower} from './unique-effects.js?v=0.144.2';
 // Item definitions and pure rolls; the combat state owns identities and delivery.
-import {INVENTORY_LIMIT,MAX_PENDING_LOOT,cleanBagRules} from './inventory-rules.js?v=0.144.1';
-export {INVENTORY_LIMIT,MAX_PENDING_LOOT} from './inventory-rules.js?v=0.144.1';
+import {INVENTORY_LIMIT,MAX_PENDING_LOOT,cleanBagRules} from './inventory-rules.js?v=0.144.2';
+export {INVENTORY_LIMIT,MAX_PENDING_LOOT} from './inventory-rules.js?v=0.144.2';
 // Alpha 0.120: 극옵 (every rolled stat at its maximum) comes only from this 1% draw; ordinary rolls stop one below the maximum.
 export const LEGENDARY_PITY_LIMIT=100,PERFECT_ROLL_CHANCE=.01;
 // Per-item stat caps. Alpha 0.120 raised flat damage/HP (80/250) so late tiers, mythic promotions and hunt modes keep their spread.
@@ -197,8 +197,9 @@ export function rollAccessory({id,tier,grade=0},rng){
 }
 const SCORE_WEIGHT=Object.freeze({damage:5,hp:.5,speed:3,crit:4,reduction:5});
 export function itemPower(item){if(isSeal(item))return 1e6+item.seal.grade*1e5+item.seal.level*1e3;let score=item.rarity*10000+item.tier*1000;for(const [k,v]of Object.entries(item.affixes))score+=(SCORE_WEIGHT[k]??0)*effectiveAffix(item,k);return score;}
-// Alpha 0.144 가방 정렬(사용자 요청 '같은 등급이면 수치가 높은 순'): itemPower에서 등급·지역 가산을 뺀 순수 수치 점수(강화 포함).
-export function itemStatScore(item){if(isSeal(item))return item.seal.grade*1000+item.seal.level;let score=0;for(const k of Object.keys(item.affixes??{}))score+=(SCORE_WEIGHT[k]??0)*effectiveAffix(item,k);return score;}
+// Alpha 0.144 가방 정렬(사용자 요청 '같은 등급이면 수치가 높은 순', 0.144.2 '강화 수치 제외'): itemPower와 같은 가중치로
+// 장비 원래 수치(item.affixes, 강화 보너스 제외)만 더한다. 등급·지역 가산도 없음. 인장은 등급·레벨.
+export function itemStatScore(item){if(isSeal(item))return item.seal.grade*1000+item.seal.level;let score=0;for(const [k,v]of Object.entries(item.affixes??{}))score+=(SCORE_WEIGHT[k]??0)*(Number(v)||0);return score;}
 export const salvageValue=item=>12+(item.rarity===5?6:item.rarity)*14+item.tier*4;
 export function itemProtection(profile,item){
  if(isEquippedItem(profile,item))return '착용 중';

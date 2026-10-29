@@ -1820,13 +1820,14 @@ test('hunt map entry presets are a five-button grid: saved presets apply on tap 
  assert.equal(ui.nodes.get('entry-build-pick-2').attributes['aria-pressed'],'true');
  ui.emit('entry-build-pick-2','click');assert.equal(ui.profile().selectedBuild,2);assert.equal(ui.nodes.get('entry-build-pick-2').attributes['aria-pressed'],'true');assert.equal(ui.nodes.get('entry-build-pick-1').attributes['aria-pressed'],'false');
 });
-test('bag rarity sort puts the higher-stat item first within the same grade (0.144)',async()=>{
+test('bag rarity sort puts the higher-stat item first within the same grade, ignoring enhancement (0.144)',async()=>{
  const p=bagFixture();const r=game.ITEM_CATALOG.find(r=>r.id==='1-weapon-1');
  p.inventory=[[11,2,10,'약한 검'],[12,2,40,'강한 검'],[13,3,5,'영웅 검'],[14,2,25,'중간 검']].map(([id,rarity,damage,name])=>({id,catalogId:r.id,slot:r.slot,tier:1,artId:r.artId,name,rarity,affixes:{damage}}));p.equipment={};
  const ui=await host({saved:p});ui.emit('nav-bag','click');ui.nodes.get('bag-sort').value='rarity';ui.emit('bag-sort','change');ui.tick(0);
  const order=[0,1,2,3].map(n=>{ui.emit('bag-'+n,'click');ui.tick(0);return ui.nodes.get('item-name-'+n).textContent;});
  assert.deepEqual(order.map(t=>t.match(/(영웅|강한|중간|약한) 검/)?.[1]),['영웅','강한','중간','약한']);
  assert.ok(game.itemStatScore(p.inventory[1])>game.itemStatScore(p.inventory[3]));
+ const plain={...p.inventory[0],affixes:{damage:10}},enhanced={...plain,enhancement:9};assert.ok(game.effectiveAffix(enhanced,'damage')>10);assert.equal(game.itemStatScore(enhanced),game.itemStatScore(plain));
 });
 test('the build screen has no equipment inscription crafting; dropped and crafted inscriptions still count',async()=>{
  const p=bagFixture();p.inventory[0].inscription='leech';const ui=await host({saved:p});ui.emit('lobby-equipment','click');ui.emit('loadout-build-open','click');
