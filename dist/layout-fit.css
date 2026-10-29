@@ -1766,3 +1766,17 @@
 #game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=craft] #forge-board .fb-hero{--art:74px;min-height:var(--art)!important;padding-top:4px!important;align-content:center!important}
 #game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=craft] #forge-board #craft-art{align-self:start!important;margin:0!important;inset:auto!important;width:var(--art)!important;height:var(--art)!important}
 @media(max-height:360px){#game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=craft] #forge-board .fb-hero{--art:56px}}
+/* 0.143.9 · 던전 화면 정렬(사용자 요청 '던전 화면도 정렬 맞춰보자'): 판 바깥 여백(위아래 12·옆 18px, 좁은 화면 8·12px)과
+   두 칸 사이(14·9px)를 다른 화면처럼 여백 --dg 하나(10px, 폭 760 미만 8, 높이 360 이하 7)로 맞춘다.
+   입장 칸 머리 띠: 글줄이 폭 250px로 고정돼 좁은 화면에서 띠 밖으로 나가 '주간 14/14'가 잘렸다 → 띠 안쪽 폭에 맞추고
+   단계 줄은 넘기기 버튼을 줄여 한 줄에 들게 한다. */
+#game-shell#game-shell#game-shell #camp-dungeons-panel{--dg:10px;padding:var(--dg)!important;gap:var(--dg)!important;box-sizing:border-box}
+#game-shell#game-shell#game-shell #camp-dungeons-panel .dungeon-entry>header>*{width:auto!important;min-width:0!important;max-width:100%!important;box-sizing:border-box}
+#game-shell#game-shell#game-shell #camp-dungeons-panel .dungeon-level-label{gap:6px!important;min-width:0}
+#game-shell#game-shell#game-shell #camp-dungeons-panel .dungeon-level-label>#dungeon-progress{margin-left:auto!important;flex:none;white-space:nowrap}
+#game-shell#game-shell#game-shell #camp-dungeons-panel .dungeon-level-label>.dungeon-level-pager{flex:0 1 auto;min-width:0}
+@media(max-width:760px){#game-shell#game-shell#game-shell #camp-dungeons-panel{--dg:8px}
+#game-shell#game-shell#game-shell #camp-dungeons-panel .dungeon-level-pager{gap:2px!important}
+#game-shell#game-shell#game-shell #camp-dungeons-panel .dungeon-level-pager>button{width:18px!important;min-width:0!important;padding:0!important}
+#game-shell#game-shell#game-shell #camp-dungeons-panel .dungeon-level-pager>strong{width:auto!important;min-width:40px!important}}
+@media(max-height:360px){#game-shell#game-shell#game-shell #camp-dungeons-panel{--dg:7px}}
