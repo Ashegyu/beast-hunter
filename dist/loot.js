@@ -1,20 +1,20 @@
-import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily,inventoryItem} from './equipment-slots.js?v=0.144.9';
-import {CRAFTED_CATALOG,craftedDefinition,FORGE_EFFECT_BY_ID,FORGE_EFFECT_POWER,FORGE_AWAKEN_POWER} from './crafting.js?v=0.144.9';
-import {ANCIENT_POWER,ANCIENT_STATS} from './ancient-stats.js?v=0.144.9';
-export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.144.9';
-import {huntMode,BOSS_DROP_TABLES} from './hunt-modes.js?v=0.144.9';
-import {UNIQUE_EFFECTS,EFFECT_ROWS,uniquePower} from './unique-effects.js?v=0.144.9';
-import {ANCIENT_POWER_BY_ID,NIGHTMARE_POWERS,RAID_POWERS as BASE_RAID_POWERS,RAID_AWAKEN_POWERS as BASE_RAID_AWAKEN,RAID_ABYSS_POWERS,describePower,SOVEREIGN_RAID_POWERS,SOVEREIGN_AWAKEN} from './ancient-powers.js?v=0.144.9';
+import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily,inventoryItem} from './equipment-slots.js?v=0.145.0';
+import {CRAFTED_CATALOG,craftedDefinition,FORGE_EFFECT_BY_ID,FORGE_EFFECT_POWER,FORGE_AWAKEN_POWER} from './crafting.js?v=0.145.0';
+import {ANCIENT_POWER,ANCIENT_STATS} from './ancient-stats.js?v=0.145.0';
+export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.145.0';
+import {huntMode,BOSS_DROP_TABLES} from './hunt-modes.js?v=0.145.0';
+import {UNIQUE_EFFECTS,EFFECT_ROWS,uniquePower} from './unique-effects.js?v=0.145.0';
+import {ANCIENT_POWER_BY_ID,NIGHTMARE_POWERS,RAID_POWERS as BASE_RAID_POWERS,RAID_AWAKEN_POWERS as BASE_RAID_AWAKEN,RAID_ABYSS_POWERS,describePower,SOVEREIGN_RAID_POWERS,SOVEREIGN_AWAKEN} from './ancient-powers.js?v=0.145.0';
 const RAID_POWERS={...BASE_RAID_POWERS,...SOVEREIGN_RAID_POWERS},RAID_AWAKEN_POWERS={...BASE_RAID_AWAKEN,sovereign:SOVEREIGN_AWAKEN};
-import {RAID_ANCIENTS,RAID_REGION,RAID_ANCIENT_STATS} from './raids.js?v=0.144.9';
-import {REGION_ANCIENTS,REGION_ANCIENT_BOSSES} from './ancient-regions.js?v=0.144.9';
-import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.144.9';
-import {isSeal,sealSignatures,SEAL_GRADES} from './seals.js?v=0.144.9';
-export {EQUIPMENT_SETS,SET_SLOTS,SET_STATS,CHAPTER_SETS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.144.9';
-export {UNIQUE_EFFECTS,uniquePower} from './unique-effects.js?v=0.144.9';
+import {RAID_ANCIENTS,RAID_REGION,RAID_ANCIENT_STATS} from './raids.js?v=0.145.0';
+import {REGION_ANCIENTS,REGION_ANCIENT_BOSSES} from './ancient-regions.js?v=0.145.0';
+import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.145.0';
+import {isSeal,sealSignatures,SEAL_GRADES} from './seals.js?v=0.145.0';
+export {EQUIPMENT_SETS,SET_SLOTS,SET_STATS,CHAPTER_SETS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.145.0';
+export {UNIQUE_EFFECTS,uniquePower} from './unique-effects.js?v=0.145.0';
 // Item definitions and pure rolls; the combat state owns identities and delivery.
-import {INVENTORY_LIMIT,MAX_PENDING_LOOT,cleanBagRules} from './inventory-rules.js?v=0.144.9';
-export {INVENTORY_LIMIT,MAX_PENDING_LOOT} from './inventory-rules.js?v=0.144.9';
+import {INVENTORY_LIMIT,MAX_PENDING_LOOT,cleanBagRules} from './inventory-rules.js?v=0.145.0';
+export {INVENTORY_LIMIT,MAX_PENDING_LOOT} from './inventory-rules.js?v=0.145.0';
 // Alpha 0.120: 극옵 (every rolled stat at its maximum) comes only from this 1% draw; ordinary rolls stop one below the maximum.
 export const LEGENDARY_PITY_LIMIT=100,PERFECT_ROLL_CHANCE=.01;
 // Per-item stat caps. Alpha 0.120 raised flat damage/HP (80/250) so late tiers, mythic promotions and hunt modes keep their spread.
@@ -257,12 +257,16 @@ export function isPerfectRoll(item,affixes=item?.affixes){
  const ranges=itemRollRanges(item),keys=Object.keys(ranges),row=CATALOG_BY_ID.get(item?.catalogId),count=item?.rarity>=5?Object.keys(row?.base??{}).length:[2,2,3,4,5][item?.rarity];
  return !!count&&keys.length===count&&Object.keys(row.base).every(k=>Object.hasOwn(affixes??{},k))&&keys.every(k=>affixes?.[k]===ranges[k].max)&&(!row.raid||item.powerRoll===RAID_POWER_ROLL.max);
 }
-// Alpha 0.123: raid ancients roll wide (stats 60~125% of base, effect power 60~120%) and skewed low: each draw is
-// cubed, so a stat in the top fifth of its range comes about 7% of the time and full effect power only with 극옵.
-export const RAID_ROLL_SKEW=3,RAID_POWER_ROLL=Object.freeze({min:60,max:120});
+// Alpha 0.123: raid ancients roll wide (stats 60~125% of base, effect power 60~120%) and skewed low; full effect power
+// and the top of every stat only with 극옵 (PERFECT_ROLL_CHANCE).
+// Alpha 0.145.0 (사용자 요청 '좋은 수치·특수효과는 낮은 확률'): the n³ curve (top fifth 6.9%, top tenth 3.5%) became a
+// band table — [band top as a share of the range, chance]; uniform inside a band. Top fifth 3.5%, top tenth 1%.
+export const RAID_ROLL_BANDS=Object.freeze([[.2,.58],[.4,.2],[.6,.12],[.8,.065],[.9,.025],[1,.01]].map(r=>Object.freeze(r)));
+export const RAID_POWER_ROLL=Object.freeze({min:60,max:120});
+export function raidRollPosition(n){let low=0,seen=0;for(const [high,chance]of RAID_ROLL_BANDS){if(n<seen+chance||high===1)return Math.min(.999999,low+(high-low)*Math.max(0,n-seen)/chance);seen+=chance;low=high;}return 0;}
 const raidRow=item=>item?.rarity===5&&ancientDefinition(item)?.raid?ancientDefinition(item):null;
-const skewed=(item,n)=>raidRow(item)?n**RAID_ROLL_SKEW:n;
-export function rollRaidPower(n,perfect){return perfect?RAID_POWER_ROLL.max:RAID_POWER_ROLL.min+Math.min(RAID_POWER_ROLL.max-RAID_POWER_ROLL.min-1,Math.floor(n**RAID_ROLL_SKEW*(RAID_POWER_ROLL.max-RAID_POWER_ROLL.min)));}
+const skewed=(item,n)=>raidRow(item)?raidRollPosition(n):n;
+export function rollRaidPower(n,perfect){return perfect?RAID_POWER_ROLL.max:RAID_POWER_ROLL.min+Math.min(RAID_POWER_ROLL.max-RAID_POWER_ROLL.min-1,Math.floor(raidRollPosition(n)*(RAID_POWER_ROLL.max-RAID_POWER_ROLL.min)));}
 export function rollItemAffixes(item,rng){
  const ranges=itemRollRanges(item),forced=rng()<PERFECT_ROLL_CHANCE,result={};
  for(const [key,range]of Object.entries(ranges)){const n=skewed(item,rng());result[key]=rollWithin(range,n,forced);}return result;

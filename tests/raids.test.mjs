@@ -73,12 +73,14 @@ test('raid ancients: fifteen authored identities, never in chapter boss pools; �
  const tier6=g.ANCIENT_CATALOG.find(a=>a.tier===6&&a.slot==='weapon'&&!a.raid);assert.ok(row.base.damage>tier6.base.damage);
 });
 
-test('raid ancient rolls are wide and skewed low: stats 60~125%, effect power 60~120%, top results rare (Alpha 0.123)',async()=>{
+test('raid ancient rolls are wide and skewed low: stats 60~125%, effect power 60~120%, top results rare (Alpha 0.123, 0.145.0 band table)',async()=>{
  const L=await import('../dist/loot.js?v=0.136.2');let seed=99;const rng=()=>{seed=(Math.imul(1664525,seed)+1013904223)>>>0;return seed/4294967296;};
  const row=g.ANCIENT_CATALOG.find(r=>r.raid==='judge'&&r.slot==='weapon'),N=4000,power=[];let high=0;
  for(let i=0;i<N;i++){const it=L.rollAncient({id:1,tier:6,slot:'weapon',raid:'judge'},rng(),rng);power.push(it.powerRoll);const r=L.itemRollRanges(it);if(it.affixes.damage>=r.damage.min+(r.damage.max-r.damage.min)*.8)high++;}
  const ranges=L.itemRollRanges({id:1,slot:'weapon',tier:6,rarity:5,catalogId:row.id,artId:row.artId,affixes:{...row.base}});assert.equal(ranges.damage.min,Math.round(row.base.damage*.6));assert.equal(ranges.damage.max,Math.round(row.base.damage*1.25));
- power.sort((a,b)=>a-b);assert.ok(power[0]>=60&&power.at(-1)<=120);assert.ok(power[N/2]<=70,'median '+power[N/2]);const top=power.filter(v=>v>=110).length/N;assert.ok(top>.04&&top<.1,'≥110%: '+top);assert.ok(high/N<.12,'top-fifth damage '+high/N);
+ power.sort((a,b)=>a-b);assert.ok(power[0]>=60&&power.at(-1)<=120);assert.ok(power[N/2]<=71,'median '+power[N/2]);const top=power.filter(v=>v>=110).length/N;assert.ok(top>.015&&top<.05,'≥110%: '+top);assert.ok(high/N<.06,'top-fifth damage '+high/N);
+ // 0.145.0 band table: the top tenth of effect power (≥114%) only ~1% plus 극옵.
+ assert.ok(power.filter(v=>v>=114).length/N<.03,'≥114%');
  // Effect power scales the authored amounts; it survives save/restore and a 수치작 rerolls it.
  const p=profile(),item={...L.rollAncient({id:7,tier:6,slot:'weapon',raid:'judge'},0,rng),powerRoll:75};p.inventory=[item];p.gold=1e6;p.cores=100;p.materials.boneIron=100;
  assert.ok(Math.abs(g.ancientSignatures(item)[0].damage-row.signature.damage*.75)<.0011);assert.match(g.ancientSignatures(item)[0].description,/83% 피해/);
