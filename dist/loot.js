@@ -1,20 +1,20 @@
-import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily,inventoryItem} from './equipment-slots.js?v=0.143.0';
-import {CRAFTED_CATALOG,craftedDefinition,FORGE_EFFECT_BY_ID,FORGE_EFFECT_POWER,FORGE_AWAKEN_POWER} from './crafting.js?v=0.143.0';
-import {ANCIENT_POWER,ANCIENT_STATS} from './ancient-stats.js?v=0.143.0';
-export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.143.0';
-import {huntMode,BOSS_DROP_TABLES} from './hunt-modes.js?v=0.143.0';
-import {UNIQUE_EFFECTS,EFFECT_ROWS,uniquePower} from './unique-effects.js?v=0.143.0';
-import {ANCIENT_POWER_BY_ID,NIGHTMARE_POWERS,RAID_POWERS as BASE_RAID_POWERS,RAID_AWAKEN_POWERS as BASE_RAID_AWAKEN,RAID_ABYSS_POWERS,describePower,SOVEREIGN_RAID_POWERS,SOVEREIGN_AWAKEN} from './ancient-powers.js?v=0.143.0';
+import {SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,isEquippedItem,equipmentFamily,inventoryItem} from './equipment-slots.js?v=0.143.1';
+import {CRAFTED_CATALOG,craftedDefinition,FORGE_EFFECT_BY_ID,FORGE_EFFECT_POWER,FORGE_AWAKEN_POWER} from './crafting.js?v=0.143.1';
+import {ANCIENT_POWER,ANCIENT_STATS} from './ancient-stats.js?v=0.143.1';
+export {CRAFTED_CATALOG,craftedDefinition} from './crafting.js?v=0.143.1';
+import {huntMode,BOSS_DROP_TABLES} from './hunt-modes.js?v=0.143.1';
+import {UNIQUE_EFFECTS,EFFECT_ROWS,uniquePower} from './unique-effects.js?v=0.143.1';
+import {ANCIENT_POWER_BY_ID,NIGHTMARE_POWERS,RAID_POWERS as BASE_RAID_POWERS,RAID_AWAKEN_POWERS as BASE_RAID_AWAKEN,RAID_ABYSS_POWERS,describePower,SOVEREIGN_RAID_POWERS,SOVEREIGN_AWAKEN} from './ancient-powers.js?v=0.143.1';
 const RAID_POWERS={...BASE_RAID_POWERS,...SOVEREIGN_RAID_POWERS},RAID_AWAKEN_POWERS={...BASE_RAID_AWAKEN,sovereign:SOVEREIGN_AWAKEN};
-import {RAID_ANCIENTS,RAID_REGION,RAID_ANCIENT_STATS} from './raids.js?v=0.143.0';
-import {REGION_ANCIENTS,REGION_ANCIENT_BOSSES} from './ancient-regions.js?v=0.143.0';
-import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.143.0';
-import {isSeal,sealSignatures,SEAL_GRADES} from './seals.js?v=0.143.0';
-export {EQUIPMENT_SETS,SET_SLOTS,SET_STATS,CHAPTER_SETS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.143.0';
-export {UNIQUE_EFFECTS,uniquePower} from './unique-effects.js?v=0.143.0';
+import {RAID_ANCIENTS,RAID_REGION,RAID_ANCIENT_STATS} from './raids.js?v=0.143.1';
+import {REGION_ANCIENTS,REGION_ANCIENT_BOSSES} from './ancient-regions.js?v=0.143.1';
+import {EQUIPMENT_SETS,SET_SLOTS,setArtId} from './equipment-sets.js?v=0.143.1';
+import {isSeal,sealSignatures,SEAL_GRADES} from './seals.js?v=0.143.1';
+export {EQUIPMENT_SETS,SET_SLOTS,SET_STATS,CHAPTER_SETS,setArtId,setBonusStats,setBonusText} from './equipment-sets.js?v=0.143.1';
+export {UNIQUE_EFFECTS,uniquePower} from './unique-effects.js?v=0.143.1';
 // Item definitions and pure rolls; the combat state owns identities and delivery.
-import {INVENTORY_LIMIT,MAX_PENDING_LOOT,cleanBagRules} from './inventory-rules.js?v=0.143.0';
-export {INVENTORY_LIMIT,MAX_PENDING_LOOT} from './inventory-rules.js?v=0.143.0';
+import {INVENTORY_LIMIT,MAX_PENDING_LOOT,cleanBagRules} from './inventory-rules.js?v=0.143.1';
+export {INVENTORY_LIMIT,MAX_PENDING_LOOT} from './inventory-rules.js?v=0.143.1';
 // Alpha 0.120: 극옵 (every rolled stat at its maximum) comes only from this 1% draw; ordinary rolls stop one below the maximum.
 export const LEGENDARY_PITY_LIMIT=100,PERFECT_ROLL_CHANCE=.01;
 // Per-item stat caps. Alpha 0.120 raised flat damage/HP (80/250) so late tiers, mythic promotions and hunt modes keep their spread.

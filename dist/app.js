@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.143.0';
-import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.143.0';
-import { createCombatAudio } from './sound.js?v=0.143.0';
-import * as game from './game-engine.js?v=0.143.0';
-import {FrameMetrics} from './frame-metrics.js?v=0.143.0';
-import { frameIndex, frameRect, validateClip } from './engine.js?v=0.143.0';
-import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.143.0';
-import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.143.0';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.143.0';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.143.0';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.143.0';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.143.0';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.143.1';
+import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.143.1';
+import { createCombatAudio } from './sound.js?v=0.143.1';
+import * as game from './game-engine.js?v=0.143.1';
+import {FrameMetrics} from './frame-metrics.js?v=0.143.1';
+import { frameIndex, frameRect, validateClip } from './engine.js?v=0.143.1';
+import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.143.1';
+import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.143.1';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.143.1';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.143.1';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.143.1';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.143.1';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -1510,7 +1510,7 @@ function refreshHomeDashboard(selected){
  $('lobby-growth-badge').hidden=game.growthPoints(profile)<=0;
  const xpPercent=profile.level===game.MAX_LEVEL?100:Math.floor(clamp(profile.xp/game.xpNeeded(profile.level)*100,0,100));
  $('home-xp-label').textContent=profile.level===game.MAX_LEVEL?'MAX':xpPercent+'%';$('home-xp-fill').style.width=xpPercent+'%';$('home-xp').setAttribute('aria-valuenow',String(xpPercent));
- $('home-route-chapter').textContent='CHAPTER '+String(selected.id).padStart(2,'0');$('home-route-title').textContent=selected.name;$('home-route-stage').textContent='STAGE '+String(selectedRunStage).padStart(2,'0')+' · '+game.HUNT_MODES[selectedDifficulty].name;$('home-route-description').textContent=HOME_ROUTE_TEXT[selected.theme-1]??selected.subtitle;
+ $('home-route-chapter').textContent='CHAPTER '+String(selected.id).padStart(2,'0')+' · '+selected.region;$('hub-route').dataset.mapRegion=String(Math.min(6,Math.ceil(selected.id/10)));$('home-route-title').textContent=selected.name;$('home-route-stage').textContent='STAGE '+String(selectedRunStage).padStart(2,'0')+' · '+game.HUNT_MODES[selectedDifficulty].name;$('home-route-description').textContent=HOME_ROUTE_TEXT[selected.theme-1]??selected.subtitle;
  $('hub-player-level').textContent='Lv. '+profile.level;$('hub-identity-chapter').textContent='CHAPTER '+String(selected.id).padStart(2,'0');$('hub-identity-name').textContent=selected.name;
  const completed=game.completedStages(profile,selected.id,selectedDifficulty);$('hub-progress-fill').style.width=completed/game.STAGES_PER_CHAPTER*100+'%';$('hub-progress-text').textContent=completed+' / '+game.STAGES_PER_CHAPTER;
  gearThumbnail($('dashboard-weapon-art'),weapon??{slot:'weapon',tier:1},172);$('dashboard-weapon-name').textContent=weapon?.name??'사냥꾼의 검';$('dashboard-weapon-grade').textContent=weapon?game.RARITIES[weapon.rarity]+' · 무기':'기본 무기';$('dashboard-weapon-trait').textContent=game.equippedWeaponTrait(profile)?.description??'첫 사냥을 준비하는 리리안의 검';
