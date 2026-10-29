@@ -1682,15 +1682,15 @@
    여백 --hg 하나로 맞춘다. 위: 프로필과 지갑 줄이 같은 윗선. 아래: 안내 줄과 사냥 버튼이 같은 아랫선(전에는 381 ↔ 363).
    오른쪽 판은 지갑 줄 아래부터 바닥 여백까지 챕터 카드 / 메뉴 4×2 / 사냥 버튼을 같은 간격으로 쌓는다.
    챕터 카드 배경은 사냥 지도와 같은 지역 원화(#hub-route[data-map-region], app.js)이고 'CHAPTER · 지역'을 적는다. */
-#game-shell#game-shell#game-shell[data-camp-view=home]{--hg:10px;--hwal:28px;--hstart:48px}
-#game-shell#game-shell#game-shell[data-camp-view=home] .masthead{inset:var(--hg) var(--home-right) auto auto!important;right:var(--hg)!important;height:var(--hwal)!important;min-height:0!important;display:flex;align-items:center}
-#game-shell#game-shell#game-shell[data-camp-view=home] .masthead>.wallet{height:100%;align-items:center;margin:0!important}
-#game-shell#game-shell#game-shell[data-camp-view=home] #home-profile{inset:var(--hg) auto auto var(--hg)!important;margin:0!important}
-#game-shell#game-shell#game-shell[data-camp-view=home] .home-dashboard{inset:calc(2 * var(--hg) + var(--hwal)) var(--hg) var(--hg) auto!important;grid-template-rows:minmax(0,1.25fr) minmax(0,1fr) var(--hstart)!important;row-gap:var(--hg)!important;height:auto!important}
-#game-shell#game-shell#game-shell[data-camp-view=home] .home-dashboard>#hub-route{grid-row:1!important}
-#game-shell#game-shell#game-shell[data-camp-view=home] .home-dashboard>.home-shortcuts{grid-row:2!important;height:100%!important;gap:6px!important;margin:0!important}
-#game-shell#game-shell#game-shell[data-camp-view=home] .home-dashboard>#start{grid-row:3!important;height:100%!important;min-height:0!important;margin:0!important}
-#game-shell#game-shell#game-shell[data-camp-view=home] #lobby-message{left:var(--hg)!important;bottom:var(--hg)!important;height:28px!important;margin:0!important;box-sizing:border-box}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=home]{--hg:10px;--hwal:28px;--hstart:48px}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=home] .masthead{inset:var(--hg) var(--home-right) auto auto!important;right:var(--hg)!important;height:var(--hwal)!important;min-height:0!important;display:flex;align-items:center}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=home] .masthead>.wallet{height:100%;align-items:center;margin:0!important}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=home] #home-profile{inset:var(--hg) auto auto var(--hg)!important;margin:0!important}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=home] .home-dashboard{inset:calc(2 * var(--hg) + var(--hwal)) var(--hg) var(--hg) auto!important;grid-template-rows:minmax(0,1.25fr) minmax(0,1fr) var(--hstart)!important;row-gap:var(--hg)!important;height:auto!important}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=home] .home-dashboard>#hub-route{grid-row:1!important}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=home] .home-dashboard>.home-shortcuts{grid-row:2!important;height:100%!important;gap:6px!important;margin:0!important}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=home] .home-dashboard>#start{grid-row:3!important;height:100%!important;min-height:0!important;margin:0!important}
+#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=home] #lobby-message{left:var(--hg)!important;bottom:var(--hg)!important;height:28px!important;margin:0!important;box-sizing:border-box}
 #game-shell[data-panel=camp][data-camp-view=home] #hub-route[data-map-region="1"]{--map-art:url('assets/hunt-map-r1-v0143.webp')}
 #game-shell[data-panel=camp][data-camp-view=home] #hub-route[data-map-region="2"]{--map-art:url('assets/hunt-map-r2-v0143.webp')}
 #game-shell[data-panel=camp][data-camp-view=home] #hub-route[data-map-region="3"]{--map-art:url('assets/hunt-map-r3-v0143.webp')}
@@ -1698,5 +1698,5 @@
 #game-shell[data-panel=camp][data-camp-view=home] #hub-route[data-map-region="5"]{--map-art:url('assets/hunt-map-r5-v0143.webp')}
 #game-shell[data-panel=camp][data-camp-view=home] #hub-route[data-map-region="6"]{--map-art:url('assets/hunt-map-r6-v0143.webp')}
 #game-shell#game-shell[data-panel=camp][data-camp-view=home] #hub-route[data-map-region]{background:linear-gradient(90deg,#050a10f5,#050b10b0 47%,#050b1030),var(--map-art) 60% 50%/cover!important}
-@media(max-width:760px){#game-shell#game-shell#game-shell[data-camp-view=home]{--hg:8px;--hstart:42px}}
-@media(max-height:360px){#game-shell#game-shell#game-shell[data-camp-view=home]{--hg:7px;--hwal:26px;--hstart:40px}}
+@media(max-width:760px){#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=home]{--hg:8px;--hstart:42px}}
+@media(max-height:360px){#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=home]{--hg:7px;--hwal:26px;--hstart:40px}}

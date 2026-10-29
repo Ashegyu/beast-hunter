@@ -1,13 +1,13 @@
-import {createSkillMotion} from './skill-motion.js?v=0.143.1';
-import {CHAPTERS,CHAPTER_BOSSES} from './chapters.js?v=0.143.1';
-import {beastTechniques,BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE,beastElementText} from './beast-techniques.js?v=0.143.1';
-export {BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE} from './beast-techniques.js?v=0.143.1';
-import {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary} from './skill-branches.js?v=0.143.1';
-export {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary} from './skill-branches.js?v=0.143.1';
-import {GEAR_SKILLS} from './raid-skills.js?v=0.143.1';
-import {treeBonus} from './growth.js?v=0.143.1';
-import {transcendBonus} from './transcendence.js?v=0.143.1';
-export {GEAR_SKILLS,GEAR_SKILL_BY_ANCIENT} from './raid-skills.js?v=0.143.1';
+import {createSkillMotion} from './skill-motion.js?v=0.143.2';
+import {CHAPTERS,CHAPTER_BOSSES} from './chapters.js?v=0.143.2';
+import {beastTechniques,BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE,beastElementText} from './beast-techniques.js?v=0.143.2';
+export {BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE} from './beast-techniques.js?v=0.143.2';
+import {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary} from './skill-branches.js?v=0.143.2';
+export {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary} from './skill-branches.js?v=0.143.2';
+import {GEAR_SKILLS} from './raid-skills.js?v=0.143.2';
+import {treeBonus} from './growth.js?v=0.143.2';
+import {transcendBonus} from './transcendence.js?v=0.143.2';
+export {GEAR_SKILLS,GEAR_SKILL_BY_ANCIENT} from './raid-skills.js?v=0.143.2';
 // Lirian skill rules: one catalog drives unlocks, rank values, UI and combat.
 const active=(id,name,unlock,damage,step,cost,cooldown,shape,description,extra={})=>({id,name,kind:'active',unlock,damage,step,cost,cooldown,shape,description,...extra});
 const passive=(id,name,unlock,value,step,unit,description)=>({id,name,kind:'passive',unlock,value,step,unit,description});
