@@ -2,7 +2,7 @@
 // Pure data and rules; game-engine.js owns the battle, rewards and settlement. The boss scales with the furthest chapter
 // the player has opened and fights on that chapter's ground (its monsters are the swarm queen's brood).
 // Alpha 0.123: every raid opens after clearing chapter 60 (user decision), so raids are fought at the chapter 60 scale.
-export const RAID_WEEKLY_ENTRIES=3,RAID_TIME_LIMIT=120,RAID_ANCIENT_CHANCE=.1;
+export const RAID_WEEKLY_ENTRIES=3,RAID_TIME_LIMIT=120,RAID_ANCIENT_CHANCE=1;// 0.145.1 (사용자 요청): 레이드 클리어마다 고대 확정 (예전 10%)
 // Raid boss damage against the opened chapter's boss; health is per raid (`hp`, × the chapter boss), tuned so the
 // matching build clears in roughly 60-100 seconds of the two minutes.
 export const RAID_DAMAGE=1.2;
