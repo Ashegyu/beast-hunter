@@ -1,6 +1,6 @@
-import {EQUIPMENT_KEYS} from './equipment-slots.js?v=0.143.5';
-import {uniqueLoadout} from './loot.js?v=0.143.5';
-import {equipmentArt} from './chapters.js?v=0.143.5';
+import {EQUIPMENT_KEYS} from './equipment-slots.js?v=0.143.6';
+import {uniqueLoadout} from './loot.js?v=0.143.6';
+import {equipmentArt} from './chapters.js?v=0.143.6';
 
 export const EQUIPMENT_SYNERGIES=Object.freeze([
  Object.freeze({id:'shatter',name:'빙결 파쇄',color:'#a5eaff',cooldown:1.5,bonus:.65,bossBonus:.3,

@@ -1744,3 +1744,12 @@
 #game-shell#game-shell#game-shell[data-panel=inventory] #bag-material-craft{height:100%!important;min-height:0!important;max-height:100%!important;box-sizing:border-box}
 @media(max-width:760px){#game-shell#game-shell#game-shell[data-panel=inventory] #inventory-content{--bg:8px}#game-shell#game-shell#game-shell[data-panel=inventory] #inventory-content .armory-bag{padding:6px!important;--bp:6px}}
 @media(max-height:360px){#game-shell#game-shell#game-shell[data-panel=inventory] #inventory-content{--bg:7px}}
+/* 0.143.6 · 스킬 화면 정렬(사용자 요청 '스킬 화면도 정렬 맞춰보자'): 판 바깥 여백이 옆 12·위 6·아래 8px, 칸 사이 7·8px로
+   다른 화면(장비·가방 10px)과 달랐다. 여백 --sg 하나(10px, 폭 760 미만 8, 높이 360 이하 7)로 위·아래·옆과 칸 사이를 맞춘다. */
+#game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=skills] #skill-board{--sg:10px;padding:var(--sg)!important;gap:var(--sg)!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=skills] #skill-board .sb-slot{padding:1px 2px!important;gap:0!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=skills] #skill-board .sb-slot>:is(small,strong){flex:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=skills] #skill-board .sb-branch{gap:0!important;padding-block:1px!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=skills] #skill-board .sb-branch>*{flex:none!important;line-height:1.15!important}
+@media(max-width:760px){#game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=skills] #skill-board{--sg:8px}}
+@media(max-height:360px){#game-shell#game-shell#game-shell#game-shell#game-shell#game-shell[data-panel=camp][data-camp-view=skills] #skill-board{--sg:7px}}
