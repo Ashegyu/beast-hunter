@@ -411,6 +411,14 @@ test('skill screen shows per-skill DPS on cards and in the detail line (0.148.3)
  const lo=prof.skillBook.loadout;for(const kind of ['active','ultimate','passive'])lo[kind].forEach((id,i)=>{const e=ui.nodes.get('skill-slot-dps-'+kind+'-'+i),d=id&&game.skillDpsOf(prof,id);assert.equal(e.hidden,!d,kind+i);if(d)assert.equal(e.textContent,'DPS '+Math.round(d.dps));});
  assert.ok(lo.active.some(id=>id&&game.skillDpsOf(prof,id)),'장착 칸에 DPS가 하나 이상');
 });
+test('combat HUD shows skill button DPS and live/average DPS from damage dealt (0.148.5)',async()=>{
+ const p=game.createProfile(0);p.level=200;p.skillBook=game.restoreSkillBook(null,200);
+ const ui=await host({saved:p});ui.emit('start','click');await ui.settle();assert.equal(ui.state.phase,'playing');
+ for(let i=0;i<40&&!(game.liveDps(ui.state).dealt>0);i++)ui.run(.5);
+ const live=game.liveDps(ui.state);assert.ok(live.dealt>0&&live.now>0&&live.average>0,'피해가 쌓이면 DPS가 오른다');ui.run(.02);
+ const now=game.liveDps(ui.state);assert.equal(ui.nodes.get('live-dps-now').textContent,String(Math.round(now.now)));assert.equal(ui.nodes.get('live-dps-average').textContent,'평균 '+Math.round(now.average));
+ const id=ui.profile().skillBook.loadout.active[0],d=game.skillDpsOf(ui.profile(),id);assert.equal(ui.nodes.get('combat-skill-dps-0').hidden,false);assert.equal(ui.nodes.get('combat-skill-dps-0').textContent,'DPS '+Math.round(d.dps));
+});
 test('character stats sheet opens from home and equipment, mirrors playerStats and the combat HUD shows an XP bar',async()=>{
  const p=bagFixture();p.level=47;p.xp=Math.ceil(game.xpNeeded(47)*.63);p.growthTree=['blade-r','blade-1'];
  const ui=await host({saved:p}),before=ui.profile(),stats=game.playerStats(ui.profile());

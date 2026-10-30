@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.148.4';
-import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.148.4';
-import { createCombatAudio } from './sound.js?v=0.148.4';
-import * as game from './game-engine.js?v=0.148.4';
-import {FrameMetrics} from './frame-metrics.js?v=0.148.4';
-import { frameIndex, frameRect, validateClip } from './engine.js?v=0.148.4';
-import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.148.4';
-import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.148.4';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.148.4';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.148.4';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.148.4';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.148.4';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.148.5';
+import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.148.5';
+import { createCombatAudio } from './sound.js?v=0.148.5';
+import * as game from './game-engine.js?v=0.148.5';
+import {FrameMetrics} from './frame-metrics.js?v=0.148.5';
+import { frameIndex, frameRect, validateClip } from './engine.js?v=0.148.5';
+import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.148.5';
+import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.148.5';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.148.5';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.148.5';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.148.5';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.148.5';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -1707,8 +1707,12 @@ function refreshSkills(){
 const combatSkillIds=()=>{const {active,ultimate,beast}=profile.skillBook.loadout;return [active[0],active[1],ultimate[0],active[2],active[3],beast?.[0]];};
 function useCombatSkill(index){const id=combatSkillIds()[index];if(!ready||!id||state.phase!=='playing'||state.paused)return;audio.unlock();manual();if(!game.useSkill(state,id,state.auto?undefined:currentAim())&&state.auto&&!((state.skillRuntime.cooldowns[id]??0)>0)&&state.player.stamina>=game.SKILL_BY_ID[id].cost)skillRequest={id,until:state.run.time+3};canvas.focus({preventScroll:true});updateHud();}
 for(let i=0;i<6;i++){const action=()=>useCombatSkill(i),button=$('combat-skill-'+i);button.addEventListener('pointerdown',combatPress(action));button.addEventListener('click',combatClick(action));}
+let combatDpsKey='';
 function refreshCombatSkills(){
  const ids=combatSkillIds(),r=state.skillRuntime;
+ // 0.148.5: 스킬 버튼 위 DPS(스킬 화면과 같은 skillDpsOf)는 1초마다, 실시간·평균 DPS(엔진 liveDps)는 매 프레임.
+ {const sec=Math.floor(state.run?.time??0),key=ids.join()+'|'+sec;if(key!==combatDpsKey){combatDpsKey=key;const atk=game.playerStats(profile).damage;for(let i=0;i<6;i++){const d=ids[i]&&game.skillDpsOf(profile,ids[i],atk),e=$('combat-skill-dps-'+i);if(e){e.hidden=!d;hudText(e,d?'DPS '+Math.round(d.dps):'');}}}
+   const live=game.liveDps(state);hudText($('live-dps-now'),String(Math.round(live.now)));hudText($('live-dps-average'),'평균 '+Math.round(live.average));}
  for(let i=0;i<6;i++){const id=ids[i],node=$('combat-skill-'+i),d=game.SKILL_BY_ID[id];node.hidden=!d;if(!d)continue;const cd=r.cooldowns[id]??0,usable=state.auto?state.phase==='playing'&&!state.paused&&state.run.flow==='combat'&&cd<=0&&state.player.stamina>=d.cost:game.skillReady(state,id);if(combatSkillIcons[i]!==d.icon){combatSkillIcons[i]=d.icon;$('combat-skill-icon-'+i).src=d.icon;}hudText($('combat-skill-name-'+i),d.name);hudText($('combat-skill-state-'+i),cd>0?Math.ceil(cd)+'초':state.player.stamina<d.cost?'기력 부족':'준비');node.disabled=!usable;node.setAttribute('data-ultimate',String(i===2));node.setAttribute('data-ready',String(usable));node.setAttribute('data-cooldown',String(cd>0));node.setAttribute('data-queued',String(skillRequest?.id===id));node.setAttribute('aria-label',d.name+' · '+$('combat-skill-state-'+i).textContent);}
 }
 
