@@ -25,7 +25,7 @@ test('two point pools: training is free of level caps, the tree is learned along
  // The ring links every start: ward-r touches blade-r, so it opens without the 중심 path being the only way.
  assert.equal(g.nodeStatus(p,'ward-r'),'');assert.ok(g.learnGrowthNode(s,'ward-r'));
  assert.ok(g.learnGrowthNode(s,'ward-1'));assert.equal(g.treePoints(p),1);assert.equal(g.nodeStatus(p,BODY),'트리 포인트 부족');
- assert.equal(g.TREE_COST,390);assert.equal(Object.keys(g.TREE_NODES).length,120);
+ assert.equal(g.TREE_COST,352);assert.equal(Object.keys(g.TREE_NODES).length,101);
  {const top=profile(g.MAX_LEVEL);top.starChests=g.STAGES.map(()=>7);assert.equal(g.treePointsTotal(top),99+g.STAGES.length);assert.ok(g.treePointsTotal(top)<=g.TREE_COST*.52,'Lv.200에 ★30 상자를 모두 받아도 절반쯤만 찍는다');}
  // Giving back: only nodes nothing hangs on.
  assert.equal(g.forgetGrowthNode(s,'ward-r'),false);assert.equal(g.forgetStatus(p,'ward-r'),'뒤에 이어진 노드가 있음');assert.ok(g.forgetGrowthNode(s,'ward-1'));assert.equal(g.treePoints(p),3);
@@ -84,3 +84,14 @@ test('tree keystones and branch nodes act in combat: execute, finisher, drain, l
  const fury=skill(nearest('skillFury'));assert.ok(fury.s.skillRuntime.treeFuryUntil>fury.s.run.time,'연환');
 });
 
+
+test('0.147.3: on the tightest screens no two nodes overlap and no link runs over a third node',()=>{
+ // 667×375 → web 623×232 px, nodes 16/23/30 px; 568×320 → 530×196 px, nodes 13/19/25 px (layout-fit.css 0.147.3).
+ const screens=[{sx:623/600,sy:232/240,r:{small:8,notable:11.5,keystone:15,core:15}},{sx:530/600,sy:196/240,r:{small:6.5,notable:9.5,keystone:12.5,core:12.5}}];
+ const nodes=Object.values(g.TREE_NODES);
+ for(const sc of screens){
+  for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){const a=nodes[i],b=nodes[j];assert.ok(Math.hypot((a.x-b.x)*sc.sx,(a.y-b.y)*sc.sy)>=sc.r[a.kind]+sc.r[b.kind]+3,a.id+'/'+b.id);}
+  for(const [a,b] of g.TREE_EDGES){const p=g.TREE_NODES[a],q=g.TREE_NODES[b],ax=p.x*sc.sx,ay=p.y*sc.sy,bx=q.x*sc.sx,by=q.y*sc.sy,L2=(bx-ax)**2+(by-ay)**2;
+   for(const n of nodes){if(n.id===a||n.id===b)continue;const nx=n.x*sc.sx,ny=n.y*sc.sy,u=Math.max(0,Math.min(1,((nx-ax)*(bx-ax)+(ny-ay)*(by-ay))/L2));assert.ok(Math.hypot(nx-(ax+u*(bx-ax)),ny-(ay+u*(by-ay)))>=sc.r[n.kind]+5,a+'--'+b+' over '+n.id);}}
+ }
+});

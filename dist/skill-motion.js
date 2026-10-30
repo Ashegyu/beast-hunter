@@ -1,5 +1,5 @@
 // Presentation timeline only. World travel and damage remain owned by combat-skills.
-import {attackFrame,directionIndex,swingMotion} from './motion.js?v=0.147.2';
+import {attackFrame,directionIndex,swingMotion} from './motion.js?v=0.147.3';
 const clamp=(n,a=0,b=1)=>Math.max(a,Math.min(b,n));
 const lerp=(a,b,t)=>a+(b-a)*clamp(t);
 const recipes={

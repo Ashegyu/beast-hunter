@@ -1924,3 +1924,8 @@
 #game-shell#game-shell #growth-tree .tree-detail{grid-template-columns:auto minmax(0,1fr) minmax(0,1.1fr) auto auto auto}
 #game-shell #growth-tree #tree-detail-links{font-style:normal;font-size:10px;color:#a8c4d8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 @media(max-width:700px){#game-shell#game-shell #growth-tree .tree-detail{grid-template-columns:auto minmax(0,.9fr) minmax(0,1fr) auto auto auto;gap:5px}#game-shell #growth-tree #tree-detail-links{font-size:9px}}
+/* 0.147.3 성장 트리 노드 크기: 노드 105개가 모든 검수 해상도에서 겹치지 않게 조금 줄임 (16/23/30px, 높이 360 이하 13/19/25px) */
+#game-shell#game-shell #growth-tree .tree-node{--node:16px}
+#game-shell#game-shell #growth-tree .tree-node[data-kind=notable]{--node:23px}
+#game-shell#game-shell #growth-tree .tree-node:is([data-kind=keystone],[data-kind=core]){--node:30px}
+@media(max-height:360px){#game-shell#game-shell #growth-tree .tree-node{--node:13px}#game-shell#game-shell #growth-tree .tree-node[data-kind=notable]{--node:19px}#game-shell#game-shell #growth-tree .tree-node:is([data-kind=keystone],[data-kind=core]){--node:25px}}

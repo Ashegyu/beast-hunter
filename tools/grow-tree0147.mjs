@@ -4,10 +4,17 @@
 //   node tools/grow-tree0147.mjs [seed]   → prints `const ROWS=[…];` (paste into dist/growth.js between the markers)
 // Node kinds: s = small (2P), n = notable (6P), k = keystone (10P). Themes give the bonus, the name and the icon.
 const SEED=Number(process.argv[2]??1);
-const W=600,H=240,CORE={x:300,y:128},MIN_GAP=19,PAD_X=16,PAD_Y=12;
-// 0.147.1: the web is drawn about 1.25× wider per unit than tall (600×240 box on a ~800×240 px panel), so spacing is
-// measured on screen: horizontal gaps count 1.25×. Step lengths are screen lengths too.
-const SX=1.25,gap=(a,b)=>Math.hypot((a.x-b.x)*SX,a.y-b.y);
+const W=600,H=240,CORE={x:300,y:128},PAD_X=16,PAD_Y=12;
+// 0.147.3 (사용자 요청 '이미지가 겹치는 구간이 많다'): spacing is checked on the real screens, with each node's own size.
+// The two tightest 검수 layouts (measured): 667×375 → web 623×232 px, 568×320 → 530×196 px; nodes 16/23/30 px there and
+// 13/19/25 px at heights ≤ 360 (layout-fit.css 0.147.3).
+// Two nodes need radius + radius + 3 px on both; a link must pass a third node by its radius + 5 px (the branch is ~10 px).
+const SCREENS=[{sx:623/600,sy:232/240,r:{s:8,n:11.5,k:15,core:15}},{sx:530/600,sy:196/240,r:{s:6.5,n:9.5,k:12.5,core:12.5}}];
+const rad=(n,sc)=>sc.r[n.spec.kind]??sc.r.s;
+// How far a pair falls short (>1 = overlapping on some screen) and the free room around a spot (px, tightest screen).
+const shortfall=(a,b)=>Math.max(...SCREENS.map(sc=>(rad(a,sc)+rad(b,sc)+3)/Math.max(.01,Math.hypot((a.x-b.x)*sc.sx,(a.y-b.y)*sc.sy))));
+const roomAt=(spot,kind,nodes)=>{let room=Infinity;for(const o of nodes)for(const sc of SCREENS)room=Math.min(room,Math.hypot((o.x-spot.x)*sc.sx,(o.y-spot.y)*sc.sy)-(sc.r[kind]+rad(o,sc)+3));return room;};
+const segGap=(p,q,n,sc)=>{const ax=p.x*sc.sx,ay=p.y*sc.sy,bx=q.x*sc.sx,by=q.y*sc.sy,nx=n.x*sc.sx,ny=n.y*sc.sy,L2=(bx-ax)**2+(by-ay)**2,u=Math.max(0,Math.min(1,((nx-ax)*(bx-ax)+(ny-ay)*(by-ay))/L2));return Math.hypot(nx-(ax+u*(bx-ax)),ny-(ay+u*(by-ay)))-rad(n,sc)-5;};
 // Screen furniture over the web (box units): 프리셋 (top left), 확대 (top right), 영역 이름표 (bottom left). Nodes stay out.
 const KEEP_OUT=[[0,0,290,30],[460,0,600,30],[0,176,62,240]];// 0.147.1: sized for 568×320, where the tools cover more of the web
 const blocked=(x,y)=>KEEP_OUT.some(([a,b,c,d])=>x>=a-10&&x<=c+10&&y>=b-10&&y<=d+10);
@@ -36,24 +43,24 @@ const NAMED={
 // (0.147.1, 사용자 요청 '끊기는 구간을 더') sprouts a short dead-end side branch and the path goes on. Lengths and spreads differ on purpose.
 const nn=k=>NAMED[k],F=(...arms)=>({fork:arms}),T=(off,...steps)=>({twig:[off,steps]});
 const PLAN={
- blade:{angle:180,path:[S('dmg'),T(-75,S('crit')),nn('sharp'),F(
-  [-38,[S('aspd'),T(-65,S('aspd'),S('crit')),S('aspd'),nn('haste'),F([-30,[S('fin'),T(60,S('fin')),S('fin'),nn('bloodmoon'),S('fin'),nn('frenzy')]],[24,[S('aspd'),S('crit'),T(55,S('critd')),S('critd')]])]],
-  [6,[S('range'),nn('edge'),T(-65,S('range'),S('dmg')),S('critd'),S('critd'),nn('vital'),F([-26,[S('crit'),S('crit'),nn('weak'),T(55,S('crit'))]],[30,[S('dmg'),T(-60,S('dmg')),S('dmg'),nn('soul')]])]],
-  [44,[S('exec'),T(65,S('exec'),S('critd')),S('exec'),nn('executioner'),S('exec'),T(-55,S('exec')),S('critd'),nn('behead')]])]},
+ blade:{angle:180,path:[S('dmg'),nn('sharp'),F(
+  [-38,[S('aspd'),T(-80,S('aspd'),S('crit')),S('aspd'),nn('haste'),F([-30,[S('fin'),S('fin'),nn('bloodmoon'),S('fin'),nn('frenzy')]],[26,[S('aspd'),S('critd')]])]],
+  [6,[S('range'),nn('edge'),S('critd'),S('critd'),nn('vital'),F([-28,[S('crit'),S('crit'),nn('weak')]],[32,[S('dmg'),S('dmg'),nn('soul')]])]],
+  [46,[S('exec'),T(80,S('exec'),S('critd')),S('exec'),nn('executioner'),S('exec'),S('critd'),nn('behead')]])]},
  ward:{angle:-90,path:[S('hp'),nn('body'),F(
-  [-78,[S('red'),T(55,S('red')),nn('wall'),F([-15,[S('guard'),S('guard'),nn('unbroken')]],[45,[S('red'),nn('fortress')]])]],
+  [-78,[S('red'),nn('wall'),F([-15,[S('guard'),S('guard'),nn('unbroken')]],[45,[S('red'),nn('fortress')]])]],
   [4,[S('hp'),nn('oath')]],
-  [78,[S('regen'),S('regen'),nn('regrow'),S('drain'),T(60,S('drain')),S('drain'),nn('thirst'),S('drain'),nn('ghoul')]])]},
- art:{angle:0,path:[S('stam'),T(70,S('stam')),nn('cycle'),F(
-  [-46,[S('cd'),T(-60,S('cd')),S('cd'),nn('quick'),F([-18,[S('area'),T(55,S('area')),S('area'),nn('wide'),nn('overload')]],[34,[S('stam'),S('cd'),S('stam')]])]],
-  [14,[S('sdmg'),nn('flowing'),T(60,S('sdmg'),S('stam')),S('sdmg'),S('sdmg'),nn('might'),F([-26,[S('sdmg'),T(-55,S('sdmg')),nn('artsoul'),nn('oneness')]],[28,[S('fury'),T(55,S('fury')),S('fury'),nn('chain')]])]],
-  [58,[S('area'),S('stam'),T(50,S('cd'))]])]},
- ab:{angle:90,path:[S('speed'),T(-70,S('speed')),nn('gale'),F(
-  [-58,[S('speed'),T(-55,S('critspeed')),S('range'),nn('dash'),S('critspeed'),T(50,S('speed'))]],
-  [52,[S('speed'),T(55,S('speed')),S('sdmg'),nn('afterimage'),S('sdmg'),T(-50,S('area'))]])]},
+  [78,[S('regen'),S('regen'),nn('regrow'),S('drain'),T(75,S('drain')),S('drain'),nn('thirst'),S('drain'),nn('ghoul')]])]},
+ art:{angle:0,path:[S('stam'),nn('cycle'),F(
+  [-46,[S('cd'),S('cd'),nn('quick'),F([-18,[S('area'),S('area'),nn('wide'),nn('overload')]],[36,[S('stam'),S('cd'),S('stam')]])]],
+  [14,[S('sdmg'),nn('flowing'),T(80,S('sdmg'),S('stam')),S('sdmg'),S('sdmg'),nn('might'),F([-28,[S('sdmg'),nn('artsoul'),nn('oneness')]],[30,[S('fury'),T(75,S('fury')),S('fury'),nn('chain')]])]],
+  [60,[S('area'),S('stam')]])]},
+ ab:{angle:90,path:[S('speed'),nn('gale'),F(
+  [-58,[S('speed'),T(-75,S('critspeed')),S('range'),nn('dash'),S('critspeed')]],
+  [52,[S('speed'),S('sdmg'),nn('afterimage'),S('sdmg')]])]},
 };
 // Ring around the core (fixed, so every region starts next to the 중심).
-const RING={blade:{x:270,y:128},ward:{x:300,y:103},art:{x:330,y:128},ab:{x:300,y:153}};
+const RING={blade:{x:267,y:128},ward:{x:300,y:96},art:{x:333,y:128},ab:{x:300,y:160}};
 const RING_BONUS={blade:{damagePct:.025},ward:{hpPct:.025},art:{staminaRegen:.05},ab:{speed:.025}};
 function mulberry(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
 function grow(seed){
@@ -61,7 +68,6 @@ function grow(seed){
  const add=(region,spec,x,y,from)=>{const n=(count[region]=(count[region]??0)+1),id=region+'-'+n;nodes.push({id,region,spec,x,y});if(from)edges.push([from,id]);return id;};
  nodes.push({id:'core',region:'core',spec:{kind:'core'},x:CORE.x,y:CORE.y});
  const ringIds={};for(const r of Object.keys(RING)){const id=r+'-r';nodes.push({id,region:r,spec:{kind:'s',bonus:RING_BONUS[r]},x:RING[r].x,y:RING[r].y});edges.push(['core',id]);ringIds[r]=id;}
- edges.push(['blade-r','ward-r'],['ward-r','art-r'],['blade-r','ab-r'],['art-r','ab-r']);
  const walk=(region,path,fromId,x,y,angle)=>{
   for(const step of path){
    if(step.fork){for(const [off,arm] of step.fork)if(!walk(region,arm,fromId,x,y,angle+off+(rnd()-.5)*16))return false;return true;}
@@ -69,11 +75,12 @@ function grow(seed){
    // Jittered candidates; the one farthest from every placed node wins (keeps the walk random but uncrowded). Candidates
    // outside the box or crossing a placed link are dropped; when the near ones are all crowded the walk may bend up to ±100°.
    let best=null;const from=nodes.find(n=>n.id===fromId);
-   for(let k=0;k<48;k++){if(k===8&&best&&best.room>=MIN_GAP+3)break;const spread=k<8?44:200,a=angle+(rnd()-.5)*spread,c=Math.cos(a*Math.PI/180),sn=Math.sin(a*Math.PI/180),len=((step.kind==='s'?22:27)+rnd()*6)/Math.hypot(c*SX,sn);
+   for(let k=0;k<96;k++){if(k===8&&best&&best.room>=3||k===48&&best)break;const spread=k<8?44:200,a=angle+(rnd()-.5)*spread,c=Math.cos(a*Math.PI/180),sn=Math.sin(a*Math.PI/180),sc=SCREENS[0],
+     px=(rad(from,sc)+(sc.r[step.kind]??sc.r.s)+7+rnd()*8)*(k<48?1:.8),len=px/Math.hypot(c*sc.sx,sn*sc.sy);
     const nx=x+c*len,ny=y+sn*len;
     if(nx<PAD_X||nx>W-PAD_X||ny<PAD_Y||ny>H-PAD_Y||blocked(nx,ny))continue;
     const me={x:nx,y:ny};if(edges.some(([p,q])=>p!==fromId&&q!==fromId&&cross(from,me,nodes.find(n=>n.id===p),nodes.find(n=>n.id===q))))continue;
-    let room=Infinity;for(const o of nodes)room=Math.min(room,gap(o,me));
+    const room=roomAt(me,step.kind,nodes);
     if(!best||room>best.room)best={a,nx,ny,room};}
    if(!best)return false;
    let {a,nx,ny}=best;
@@ -93,14 +100,17 @@ function grow(seed){
 // Relaxation (0.147.1): nudge pairs that sit closer than MIN_GAP apart, a little at a time, keeping the 중심 and its ring
 // fixed and every node inside the box and off the screen furniture. The shape stays; only the crowding is undone.
 function relax(t){
- if(!t)return t;const {nodes}=t,fixed=n=>n.id==='core'||n.id.endsWith('-r');
- for(let it=0;it<600;it++){let moved=false;
-  for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){const a=nodes[i],b=nodes[j],d=gap(a,b);if(d>=MIN_GAP+.5)continue;moved=true;
-   let dx=(b.x-a.x)*SX,dy=b.y-a.y;if(Math.hypot(dx,dy)<.01){dx=1;dy=0;}const L=Math.hypot(dx,dy),push=(MIN_GAP+.6-d)/2,ux=dx/L/SX*push,uy=dy/L*push;
-   const fa=fixed(a),fb=fixed(b);if(fa&&fb)continue;const ka=fa?0:fb?2:1,kb=fb?0:fa?2:1;
-   a.x-=ux*ka;a.y-=uy*ka;b.x+=ux*kb;b.y+=uy*kb;}
-  for(const n of nodes){if(fixed(n))continue;n.x=Math.max(PAD_X,Math.min(W-PAD_X,n.x));n.y=Math.max(PAD_Y,Math.min(H-PAD_Y,n.y));
-   for(const [a,b,c,d] of KEEP_OUT)if(n.x>=a-10&&n.x<=c+10&&n.y>=b-10&&n.y<=d+10){const out=[[n.x-(a-11),'x',a-11],[(c+11)-n.x,'x',c+11],[n.y-(b-11),'y',b-11],[(d+11)-n.y,'y',d+11]].filter(([,k,v])=>k==='x'?v>=PAD_X&&v<=W-PAD_X:v>=PAD_Y&&v<=H-PAD_Y).sort((p,q)=>p[0]-q[0])[0];if(out)n[out[1]]=out[2];}}
+ if(!t)return t;const {nodes,edges}=t,fixed=n=>n.id==='core'||n.id.endsWith('-r'),by=Object.fromEntries(nodes.map(n=>[n.id,n]));
+ const keepIn=n=>{n.x=Math.max(PAD_X,Math.min(W-PAD_X,n.x));n.y=Math.max(PAD_Y,Math.min(H-PAD_Y,n.y));
+  for(const [a,b,c,d] of KEEP_OUT)if(n.x>=a-10&&n.x<=c+10&&n.y>=b-10&&n.y<=d+10){const out=[[n.x-(a-11),'x',a-11],[(c+11)-n.x,'x',c+11],[n.y-(b-11),'y',b-11],[(d+11)-n.y,'y',d+11]].filter(([,k,v])=>k==='x'?v>=PAD_X&&v<=W-PAD_X:v>=PAD_Y&&v<=H-PAD_Y).sort((p,q)=>p[0]-q[0])[0];if(out)n[out[1]]=out[2];}};
+ for(let it=0;it<1500;it++){let moved=false;
+  for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){const a=nodes[i],b=nodes[j],f=shortfall(a,b)*1.05;if(f<=1)continue;moved=true;
+   let dx=b.x-a.x,dy=b.y-a.y;if(Math.hypot(dx,dy)<.01){dx=1;dy=0;}const L=Math.hypot(dx,dy),push=L*(f-1)*.55+.15,ux=dx/L*push/2,uy=dy/L*push/2;
+   const fa=fixed(a),fb=fixed(b);if(fa&&fb)continue;const ka=fa?0:fb?2:1,kb=fb?0:fa?2:1;a.x-=ux*ka;a.y-=uy*ka;b.x+=ux*kb;b.y+=uy*kb;}
+  // A node sitting on someone else's link is pushed off it, sideways.
+  for(const [ia,ib] of edges){const p=by[ia],q=by[ib];for(const n of nodes){if(n===p||n===q||fixed(n))continue;const g=Math.min(...SCREENS.map(sc=>segGap(p,q,n,sc)))-1.5;if(g>=0)continue;moved=true;
+   const L=Math.hypot(q.x-p.x,q.y-p.y)||1,side=Math.sign((q.x-p.x)*(n.y-p.y)-(q.y-p.y)*(n.x-p.x))||1;n.x+=-(q.y-p.y)/L*side*(.8-g*.4);n.y+=(q.x-p.x)/L*side*(.8-g*.4);}}
+  for(const n of nodes)if(!fixed(n))keepIn(n);
   if(!moved)break;}
  for(const n of nodes){n.x=Math.round(n.x);n.y=Math.round(n.y);}
  return t;
@@ -109,10 +119,10 @@ const cross=(p,q,r,s)=>{const d=(a,b,c)=>(b.x-a.x)*(c.y-a.y)-(b.y-a.y)*(c.x-a.x)
 function valid(t){
  if(!t)return false;const {nodes,edges,by}=t;
  if(nodes.some(n=>blocked(n.x,n.y)))return false;
- for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++)if(gap(nodes[i],nodes[j])<MIN_GAP)return false;
+ for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++)if(shortfall(nodes[i],nodes[j])>1)return false;
  for(let i=0;i<edges.length;i++)for(let j=i+1;j<edges.length;j++){const [a,b]=edges[i],[c,d]=edges[j];if(new Set([a,b,c,d]).size<4)continue;if(cross(by(a),by(b),by(c),by(d)))return false;}
- // No link may pass right over a third node.
- for(const [a,b] of edges){const p=by(a),q=by(b);for(const n of nodes){if(n.id===a||n.id===b)continue;const L=Math.hypot(q.x-p.x,q.y-p.y),u=((n.x-p.x)*(q.x-p.x)+(n.y-p.y)*(q.y-p.y))/(L*L);if(u<=0||u>=1)continue;if(Math.abs((q.x-p.x)*(n.y-p.y)-(q.y-p.y)*(n.x-p.x))/L<9)return false;}}
+ // No link may pass over a third node on any screen.
+ for(const [a,b] of edges){const p=by(a),q=by(b);for(const n of nodes){if(n.id===a||n.id===b)continue;if(SCREENS.some(sc=>segGap(p,q,n,sc)<0))return false;}}
  return true;
 }
 let tree=null,seed=SEED;for(;seed<SEED+20000;seed++){const t=relax(grow(seed));if(valid(t)){tree=t;break;}}
