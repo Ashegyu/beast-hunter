@@ -1,0 +1,29 @@
+{
+  "id": "branch-1",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production connector strips for the skill-tree screen of a dark fantasy 2D action RPG (crimson-moon swordswoman heroine). Image1 shows this game's skill-tree node emblems: match their painterly dark fantasy rendering, dark iron and blackened wood, blood-crimson accents, fine silver detail and crisp edges. Create ONE transparent RGBA image, wide landscape 2048x1024 or larger, with exactly FOUR separate HORIZONTAL branch strips stacked in an invisible 1 column x 4 rows grid (one strip per row, rows evenly spaced, wide transparent gaps between rows). Every strip runs from the far left to the far right of its row (about 96% of the image width) as one continuous piece, both ends exactly at the vertical middle of its row, gently organic (a slight natural wave, at most a small bend) but overall straight horizontal so it can be stretched between two tree nodes; thickness about 1/12 of the image height; ends taper to a clean blunt tip. No circles, no nodes, no emblems on the strips. STRIPS top to bottom: (1) a gnarled dark wooden branch with rough bark, knots and a few tiny thorns. (2) a twisting dark vine of two strands wound around each other with a few very small dark leaves. (3) a smooth blackened branch with one thin glowing blood-crimson vein running along its whole length. (4) a slender dark twig wrapped every few centimetres by thin silver filigree bands. Outside the strips: actual alpha transparency, no background, no floor, no shadow, no glow halo, no text, no letters, no numbers, no labels, no frames.",
+  "referenceImages": [
+    {
+      "path": "art/growth0139/node-1.png",
+      "sha256": "051fda9447b5a1b001d624fe767d88772dc3915c90e37530bf8257053140de67"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1774,
+        887
+      ],
+      "transparent": 0.707,
+      "parts": 4,
+      "seconds": 96,
+      "sha256": "a48f5db23f0db2dd8b3717fd242308adf0d7f748c00f32f60a9a7ac8bfaa742b"
+    }
+  ],
+  "final": {
+    "path": "art/tree0147/branch-1.png",
+    "sha256": "a48f5db23f0db2dd8b3717fd242308adf0d7f748c00f32f60a9a7ac8bfaa742b"
+  }
+}

@@ -34,3 +34,5 @@ CLAUDE.md에서 옮겨 온 작업 메모. 내용이 바뀌면 이 파일을 고�
 - 승화 제작(0.142): `art/forge0142/sheets.json`(forge-1 무기·투구·갑옷·각반·장화, forge-2 목걸이·귀걸이·재료 3종) → `python3 tools/pack-forge0142.py`(입력 사본 craft-equipment-v0140.webp·materials-v0141.webp가 같은 폴더에 있음). 사양의 `style` 경로가 없으면 생성기가 그림을 만든 뒤 기록 단계에서 멈춘다(0.142에서 겪음) — 경로를 먼저 확인.
 - 악몽 콘텐츠(0.142): `art/nightmare0142`(bosses/bosses.json 보스 시트, ancients.json 고대 5점, scenes.json 장면 2장, icons.json nm-1). 포장 순서 `pack-forge0142.py` → `pack-monsters0106.py art/nightmare0142/bosses v0142` → `pack-nightmare0142.py`(뒤 둘이 manifest를 고치므로 순서 지킬 것). `pack-monsters0106.py`는 이제 delivery에서 같은 태그의 `monsters-` 항목만 지운다(전엔 `craft-equipment-v0142` 등도 지워 404). 장면 스타일 그림의 인물이 새어 들어오면 프롬프트에 'NO figures'. 같은 id 작업 둘은 `.codex-work`에서 겹치니 id를 다르게.
 - 사냥 지도 지역 배경(0.143): `art/maps0143/scenes.json`(r1~r6, `kind:scene`, 스타일 `hunt-map-forest-v036.webp`, 가운데 띠에 길·가장자리 어둡게) → `python3 tools/pack-maps0143.py`(1280×853 webp). 생성기 두 개를 동시에 돌려 약 10분.
+
+- 성장 트리 연결선(0.147.2): `art/tree0147/branches.json`(sprite, 4줄 가로 줄기, 스타일 `art/growth0139/node-1.png`) → `python3 tools/pack-tree0147.py`(줄기 4개를 잘라 512×44, 4줄 webp). 첫 시도 통과, 약 2분.
