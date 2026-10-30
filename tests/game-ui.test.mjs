@@ -408,6 +408,8 @@ test('skill screen shows per-skill DPS on cards and in the detail line (0.148.3)
  assert.equal(game.skillDpsOf(prof,'lone'),null,'패시브는 DPS 없음');
  ui.emit('skill-card-crescent','click');assert.ok(ui.nodes.get('skill-detail-resource').textContent.endsWith(' · DPS '+Math.round(c.dps)));
  const sk=game.skillDps(prof);for(const r of sk.rows)assert.deepEqual(r,game.skillDpsOf(prof,r.id));
+ const lo=prof.skillBook.loadout;for(const kind of ['active','ultimate','passive'])lo[kind].forEach((id,i)=>{const e=ui.nodes.get('skill-slot-dps-'+kind+'-'+i),d=id&&game.skillDpsOf(prof,id);assert.equal(e.hidden,!d,kind+i);if(d)assert.equal(e.textContent,'DPS '+Math.round(d.dps));});
+ assert.ok(lo.active.some(id=>id&&game.skillDpsOf(prof,id)),'장착 칸에 DPS가 하나 이상');
 });
 test('character stats sheet opens from home and equipment, mirrors playerStats and the combat HUD shows an XP bar',async()=>{
  const p=bagFixture();p.level=47;p.xp=Math.ceil(game.xpNeeded(47)*.63);p.growthTree=['blade-r','blade-1'];

@@ -1986,3 +1986,9 @@
 #game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-card .sb-dps{display:block!important;max-width:100%!important;font-style:normal!important;font-size:8.5px!important;line-height:1.1!important;color:#ffb48a!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;font-variant-numeric:tabular-nums!important}
 #game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-card .sb-dps[hidden]{display:none!important}
 #game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-card[data-locked=true] .sb-dps{color:#8f8672!important}
+/* 0.148.4 장착 칸의 스킬별 DPS(.sb-dps, 카드와 같은 모양) */
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-slot .sb-dps{display:block!important;max-width:100%!important;font-style:normal!important;font-size:8.5px!important;line-height:1.1!important;color:#ffb48a!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;font-variant-numeric:tabular-nums!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-slot .sb-dps[hidden]{display:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-slot:has(.sb-dps:not([hidden]))>small{display:none!important}
+@media(max-height:360px){#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-slot:has(.sb-dps:not([hidden])){gap:0!important}#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-slot:has(.sb-dps:not([hidden])) .sb-slot-art{width:min(24px,40%)!important}}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-slot .sb-dps{flex:none!important}
