@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.147.3';
-import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.147.3';
-import { createCombatAudio } from './sound.js?v=0.147.3';
-import * as game from './game-engine.js?v=0.147.3';
-import {FrameMetrics} from './frame-metrics.js?v=0.147.3';
-import { frameIndex, frameRect, validateClip } from './engine.js?v=0.147.3';
-import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.147.3';
-import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.147.3';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.147.3';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.147.3';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.147.3';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.147.3';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.147.4';
+import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.147.4';
+import { createCombatAudio } from './sound.js?v=0.147.4';
+import * as game from './game-engine.js?v=0.147.4';
+import {FrameMetrics} from './frame-metrics.js?v=0.147.4';
+import { frameIndex, frameRect, validateClip } from './engine.js?v=0.147.4';
+import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.147.4';
+import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.147.4';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.147.4';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.147.4';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.147.4';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.147.4';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -1149,7 +1149,11 @@ function skillTagNote(id){const syn=game.tagSynergy(profile);return game.skillTa
 const TREE_ADJ=(()=>{const out={};for(const [a,b] of game.TREE_EDGES){(out[a]??=[]).push(b);(out[b]??=[]).push(a);}return out;})();
 function treeLinksText(id){const held=new Set(['core',...profile.growthTree]),list=TREE_ADJ[id]??[],got=list.filter(n=>held.has(n)).length;
  return '이어진 노드 '+list.length+' (습득 '+got+') '+list.map(n=>(held.has(n)?'●':'○')+game.TREE_NODES[n].name).join(' ');}
+// 0.147.4: the growth notice floats over the board, so it clears itself 2.5 s after it last changed.
+let growthNoticeText='',growthNoticeAt=0;
+function fadeGrowthNotice(){const f=$('growth-feedback');if(!f)return;const t=f.textContent,now=Date.now();if(t!==growthNoticeText){growthNoticeText=t;growthNoticeAt=now;}else if(t&&now-growthNoticeAt>2500){f.textContent='';growthNoticeText='';}}
 function updateHud(){
+  fadeGrowthNotice();
   if(profile.testMode&&state.phase==='camp'&&game.applyTestMode(profile))save();
   {const b=$('test-mode');b.setAttribute('aria-pressed',String(!!profile.testMode));hudText(b,profile.testMode?'테스트 모드 켬':testModeArmed?'한 번 더 눌러 켜기':'테스트 모드 끔');}
   $('start').disabled=!ready;if(!ready)return;

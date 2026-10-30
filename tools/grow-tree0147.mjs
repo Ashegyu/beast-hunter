@@ -99,6 +99,12 @@ function grow(seed){
 }
 // Relaxation (0.147.1): nudge pairs that sit closer than MIN_GAP apart, a little at a time, keeping the 중심 and its ring
 // fixed and every node inside the box and off the screen furniture. The shape stays; only the crowding is undone.
+// 0.147.4 (사용자 요청 '좌우 여백이 많이 남는다'): the grown web is stretched to fill the box before relaxing.
+function stretch(t){
+ if(!t)return t;const {nodes}=t,xs=nodes.map(n=>n.x),ys=nodes.map(n=>n.y),[x0,x1,y0,y1]=[Math.min(...xs),Math.max(...xs),Math.min(...ys),Math.max(...ys)];
+ for(const n of nodes){n.x=PAD_X+2+(n.x-x0)*(W-2*PAD_X-4)/(x1-x0);n.y=PAD_Y+2+(n.y-y0)*(H-2*PAD_Y-4)/(y1-y0);}
+ return t;
+}
 function relax(t){
  if(!t)return t;const {nodes,edges}=t,fixed=n=>n.id==='core'||n.id.endsWith('-r'),by=Object.fromEntries(nodes.map(n=>[n.id,n]));
  const keepIn=n=>{n.x=Math.max(PAD_X,Math.min(W-PAD_X,n.x));n.y=Math.max(PAD_Y,Math.min(H-PAD_Y,n.y));
@@ -125,7 +131,7 @@ function valid(t){
  for(const [a,b] of edges){const p=by(a),q=by(b);for(const n of nodes){if(n.id===a||n.id===b)continue;if(SCREENS.some(sc=>segGap(p,q,n,sc)<0))return false;}}
  return true;
 }
-let tree=null,seed=SEED;for(;seed<SEED+20000;seed++){const t=relax(grow(seed));if(valid(t)){tree=t;break;}}
+let tree=null,seed=SEED;for(;seed<SEED+20000;seed++){const t=relax(stretch(grow(seed)));if(valid(t)){tree=t;break;}}
 if(!tree)throw new Error('no valid layout');
 const KIND={s:'small',n:'notable',k:'keystone',core:'core'};
 const links=id=>tree.edges.filter(([,b])=>b===id).map(([a])=>a).concat(tree.edges.filter(([a,b])=>a===id&&b.endsWith('-r')&&false).map(([,b])=>b));
