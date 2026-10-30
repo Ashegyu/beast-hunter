@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.148.2';
-import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.148.2';
-import { createCombatAudio } from './sound.js?v=0.148.2';
-import * as game from './game-engine.js?v=0.148.2';
-import {FrameMetrics} from './frame-metrics.js?v=0.148.2';
-import { frameIndex, frameRect, validateClip } from './engine.js?v=0.148.2';
-import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.148.2';
-import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.148.2';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.148.2';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.148.2';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.148.2';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.148.2';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.148.3';
+import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.148.3';
+import { createCombatAudio } from './sound.js?v=0.148.3';
+import * as game from './game-engine.js?v=0.148.3';
+import {FrameMetrics} from './frame-metrics.js?v=0.148.3';
+import { frameIndex, frameRect, validateClip } from './engine.js?v=0.148.3';
+import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.148.3';
+import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.148.3';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.148.3';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.148.3';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.148.3';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.148.3';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -1665,7 +1665,9 @@ function refreshSkills(){
  for(const tab of ['all','active','passive','ultimate','beast','settings'])$('skill-tab-'+tab).setAttribute('aria-pressed',String(skillTab===tab));const settings=skillTab==='settings';$('skill-settings').hidden=!settings;$('skill-catalog').hidden=settings;$('skill-pager').hidden=settings;$('skill-library').setAttribute('data-view',settings?'settings':'list');
  // '전체' lists Lilian's own skills; the 60 괴수 기술 have their own tab (Alpha 0.125).
  const visibleSkills=settings?[]:game.SKILL_CATALOG.filter(row=>skillTab==='all'?row.kind!=='beast':row.kind===skillTab),pageCount=Math.max(1,Math.ceil(visibleSkills.length/skillPageSize));skillPage=Math.max(0,Math.min(pageCount-1,skillPage));const pageIds=new Set(visibleSkills.slice(skillPage*skillPageSize,(skillPage+1)*skillPageSize).map(row=>row.id));$('skill-page-label').textContent=(skillPage+1)+' / '+pageCount+' · '+visibleSkills.length+'개';$('skill-page-prev').disabled=skillPage===0;$('skill-page-next').disabled=skillPage===pageCount-1;
- for(const row of game.SKILL_CATALOG){const r=game.skillRank(profile,row.id),node=$('skill-card-'+row.id),on=book.loadout[row.kind].includes(row.id);node.hidden=!pageIds.has(row.id);node.setAttribute('data-locked',String(!r));node.setAttribute('aria-pressed',String(row.id===selectedSkill));$('skill-state-'+row.id).textContent=row.kind==='beast'?(r?game.BEAST_GRADES[r].name+(on?' · 장착':''):row.chapter+'장 보스'):r?'Lv.'+r+(on?' · 장착':''):'캐릭터 Lv.'+row.unlock;}
+ const dpsAttack=game.playerStats(profile).damage;
+ for(const row of game.SKILL_CATALOG){const r=game.skillRank(profile,row.id),node=$('skill-card-'+row.id),on=book.loadout[row.kind].includes(row.id);node.hidden=!pageIds.has(row.id);node.setAttribute('data-locked',String(!r));node.setAttribute('aria-pressed',String(row.id===selectedSkill));$('skill-state-'+row.id).textContent=row.kind==='beast'?(r?game.BEAST_GRADES[r].name+(on?' · 장착':''):row.chapter+'장 보스'):r?'Lv.'+r+(on?' · 장착':''):'캐릭터 Lv.'+row.unlock;
+  {const dps=game.skillDpsOf(profile,row.id,dpsAttack),e=$('skill-dps-'+row.id);if(e){e.hidden=!dps;e.textContent=dps?'DPS '+Math.round(dps.dps):'';}}}
  for(const [kind,count]of Object.entries(game.MAX_SLOTS))for(let i=0;i<count;i++){
   const id=book.loadout[kind][i],node=$('skill-slot-'+kind+'-'+i),art=$('skill-slot-art-'+kind+'-'+i),label=i>=slots[kind]?'Lv.'+game.SKILL_SLOT_UNLOCKS.find(row=>row.kind===kind&&row.index===i).level+' 해금':id?game.SKILL_BY_ID[id].name+(kind==='beast'?' · '+game.BEAST_GRADES[game.skillRank(profile,id)].name:''):'비어 있음';
   node.setAttribute('data-kind',kind);node.disabled=i>=slots[kind];$('skill-slot-name-'+kind+'-'+i).textContent=label;
@@ -1677,6 +1679,7 @@ function refreshSkills(){
  const areaNote=growing?' 범위는 기본 기준이며 현재 광역 범위 +'+Math.round((areaScale-1)*100)+'% (캐릭터 Lv.10마다 +10%, 최대 +40%).':'';$('skill-detail-description').textContent=d.description;
  $('skill-current-effect').textContent=beast?(rank?'현재 ':'미획득 · 기본 기준 · ')+game.skillNumbers(profile,d.id,rank||1):(rank?'현재 Lv.'+rank+' · ':'미해금 · Lv.1 기준 · ')+game.skillNumbers(profile,d.id,rank||1);
  const cooldown=Math.round((beast&&!rank?d.cooldown:game.skillCooldown(profile,d.id))*10)/10;$('skill-detail-resource').textContent=beast?'기력 '+d.cost+' · 재사용 '+cooldown+'초 · 자동 시전':d.kind==='passive'?'장착한 동안 조건에 따라 발동':d.kind==='ultimate'?'재사용 '+cooldown+'초 · 기력 소모 없음':'기력 '+game.skillCost(profile,d.id)+' · 재사용 '+cooldown+'초';
+ {const dps=game.skillDpsOf(profile,d.id);if(dps)$('skill-detail-resource').textContent+=' · DPS '+Math.round(dps.dps);$('skill-detail-resource').title=dps?'한 번 피해 '+Math.round(dps.perCast)+' ÷ 재사용 '+dps.cooldown.toFixed(2)+'초 = DPS '+Math.round(dps.dps)+' (한 대상, 기력 보정 전)':'';}
  // Alpha 0.142 단계 갈래: every skill has a tier per 5 levels (ultimates 4), each with three branches bought with 검술서;
  // the tier tabs choose which tier's three branches show, and one branch per tier is in use.
  const branches=game.SKILL_BRANCHES[d.id],tiers=branches?.length??0,view=branches||skillDetailView!=='branch'?skillDetailView:'info';skillBranchTier=Math.max(0,Math.min(tiers-1,skillBranchTier));const tier=skillBranchTier;$('skill-detail').setAttribute('data-view',view);$('skill-branches').hidden=view!=='branch';$('skill-info').hidden=view!=='info';$('skill-levels').hidden=view!=='levels';

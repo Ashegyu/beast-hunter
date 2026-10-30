@@ -1982,3 +1982,7 @@
  #game-shell .formula-list span,#game-shell .formula-list em{line-height:1.15}
  #game-shell .formula-note{padding:2px 10px 4px;line-height:1.2}
 }
+/* 0.148.3 스킬 카드의 스킬별 DPS 줄(.sb-dps, 계산 안 되는 스킬은 hidden) — 스킬 판 리셋 블록과 같은 아이디 5개로 */
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-card .sb-dps{display:block!important;max-width:100%!important;font-style:normal!important;font-size:8.5px!important;line-height:1.1!important;color:#ffb48a!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;font-variant-numeric:tabular-nums!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-card .sb-dps[hidden]{display:none!important}
+#game-shell#game-shell#game-shell#game-shell#game-shell #skill-board .sb-card[data-locked=true] .sb-dps{color:#8f8672!important}

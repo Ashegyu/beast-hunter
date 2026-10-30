@@ -400,6 +400,15 @@ test('equipment and bag are distinct screens and cold camp renders the real hunt
  const scene=html.slice(html.indexOf('<div id="equipment-content"'),html.indexOf('<div id="inventory-content"'));assert.equal([...scene.matchAll(/<canvas /g)].length,1);assert.ok(scene.includes('id="equipment-preview"'));for(const slot of game.EQUIPMENT_KEYS)assert.ok(scene.includes('id="equipped-open-'+slot+'"'));
  assert.equal(html.slice(html.indexOf('<div id="inventory-content"')).includes('id="equipment-preview"'),false);
 });
+test('skill screen shows per-skill DPS on cards and in the detail line (0.148.3)',async()=>{
+ const p=game.createProfile(0);p.level=200;p.skillBook=game.restoreSkillBook(null,200);
+ const ui=await host({saved:p});ui.emit('lobby-skills','click');const prof=ui.profile();
+ const c=game.skillDpsOf(prof,'crescent');assert.ok(c&&c.dps>0);assert.equal(ui.nodes.get('skill-dps-crescent').hidden,false);assert.equal(ui.nodes.get('skill-dps-crescent').textContent,'DPS '+Math.round(c.dps));
+ for(const id of ['parry','stance','bloodblade'])assert.equal(ui.nodes.get('skill-dps-'+id).hidden,true,id+' 제외');
+ assert.equal(game.skillDpsOf(prof,'lone'),null,'패시브는 DPS 없음');
+ ui.emit('skill-card-crescent','click');assert.ok(ui.nodes.get('skill-detail-resource').textContent.endsWith(' · DPS '+Math.round(c.dps)));
+ const sk=game.skillDps(prof);for(const r of sk.rows)assert.deepEqual(r,game.skillDpsOf(prof,r.id));
+});
 test('character stats sheet opens from home and equipment, mirrors playerStats and the combat HUD shows an XP bar',async()=>{
  const p=bagFixture();p.level=47;p.xp=Math.ceil(game.xpNeeded(47)*.63);p.growthTree=['blade-r','blade-1'];
  const ui=await host({saved:p}),before=ui.profile(),stats=game.playerStats(ui.profile());
