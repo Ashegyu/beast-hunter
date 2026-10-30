@@ -405,11 +405,14 @@ test('character stats sheet opens from home and equipment, mirrors playerStats a
  const ui=await host({saved:p}),before=ui.profile(),stats=game.playerStats(ui.profile());
  assert.equal(ui.nodes.get('stats-sheet').hidden,true);ui.emit('home-profile','click');assert.equal(ui.nodes.get('stats-sheet').hidden,false);assert.equal(ui.document.activeElement.id,'stats-sheet-close');
  assert.equal(ui.nodes.get('stat-sheet-level').textContent,'Lv. 47');assert.equal(ui.nodes.get('stat-sheet-xp').attributes['aria-valuenow'],'63');
- assert.equal(ui.nodes.get('stat-sheet-damage').textContent,String(Math.round(stats.damage)));assert.equal(ui.nodes.get('stat-sheet-health').textContent,String(Math.round(stats.maxHp)));
+ const power=game.combatPower(ui.profile());assert.equal(ui.nodes.get('stat-sheet-damage').textContent,Math.round(power.attackBase)+' × '+Math.round(power.attackPct*100)+'%');assert.equal(ui.nodes.get('stat-sheet-power').textContent,String(Math.round(stats.damage)));assert.equal(ui.nodes.get('stat-sheet-dps').textContent,String(Math.round(power.dps)));assert.equal(ui.nodes.get('stat-sheet-health').textContent,String(Math.round(stats.maxHp)));
  assert.equal(ui.nodes.get('stat-sheet-crit').textContent,(stats.crit*100).toFixed(1)+'% · 피해 '+Math.round((1+stats.critDamage)*100)+'%');assert.equal(ui.nodes.get('stat-sheet-attack-speed').textContent,Math.round(stats.attackSpeed*100)+'%');
  assert.equal(ui.nodes.get('stat-sheet-speed').textContent,String(Math.round(stats.speed)));assert.equal(ui.nodes.get('stat-sheet-execute').textContent,'0%');
  ui.emit('document','keydown',{key:'Escape'});assert.equal(ui.nodes.get('stats-sheet').hidden,true);assert.equal(ui.document.activeElement.id,'home-profile');
  ui.emit('nav-equipment','click');ui.emit('equipment-stats-open','click');assert.equal(ui.nodes.get('stats-sheet').hidden,false);ui.emit('stats-sheet-close','click');assert.equal(ui.nodes.get('stats-sheet').hidden,true);
+ ui.emit('home-settings','click');assert.equal(ui.nodes.get('formula-sheet').hidden,true);ui.emit('formula-open','click');assert.equal(ui.nodes.get('formula-sheet').hidden,false);assert.equal(ui.document.activeElement.id,'formula-sheet-close');
+ assert.ok(ui.nodes.get('formula-attack').textContent.endsWith('= '+Math.round(stats.damage)));assert.ok(ui.nodes.get('formula-dps').textContent.endsWith('= '+Math.round(power.dps)));
+ ui.emit('document','keydown',{key:'Escape'});assert.equal(ui.nodes.get('formula-sheet').hidden,true);assert.equal(ui.document.activeElement.id,'formula-open');
  assert.deepEqual(ui.profile(),before);
  ui.emit('nav-home','click');ui.emit('start','click');ui.tick();ui.emit('home-profile','click');assert.equal(ui.nodes.get('stats-sheet').hidden,true);
  assert.equal(ui.nodes.get('xp-fill').style.width,ui.profile().xp/game.xpNeeded(ui.profile().level)*100+'%');

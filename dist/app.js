@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.147.8';
-import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.147.8';
-import { createCombatAudio } from './sound.js?v=0.147.8';
-import * as game from './game-engine.js?v=0.147.8';
-import {FrameMetrics} from './frame-metrics.js?v=0.147.8';
-import { frameIndex, frameRect, validateClip } from './engine.js?v=0.147.8';
-import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.147.8';
-import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.147.8';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.147.8';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.147.8';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.147.8';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.147.8';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.148.0';
+import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.148.0';
+import { createCombatAudio } from './sound.js?v=0.148.0';
+import * as game from './game-engine.js?v=0.148.0';
+import {FrameMetrics} from './frame-metrics.js?v=0.148.0';
+import { frameIndex, frameRect, validateClip } from './engine.js?v=0.148.0';
+import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.148.0';
+import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.148.0';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.148.0';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.148.0';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.148.0';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.148.0';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -707,7 +707,7 @@ document.addEventListener('keydown',event=>{
   if(event.key==='Tab'&&pauseMenuActive()){event.preventDefault();const active=document.activeElement;const next=active===$('resume')?'retreat':active===$('retreat')?'resume':event.shiftKey?'retreat':'resume';$(next).focus({preventScroll:true});return;}
   // A Space held for combat must not click the result button after focus changes.
   if(event.key===' '&&suppressHeldSpace){if(event.repeat){event.preventDefault();return;}suppressHeldSpace=false;}
-  if(event.key==='Escape'){event.preventDefault();if(!$('stats-sheet').hidden){closeStatsSheet();}else if(campDrawer){closeCampDrawer();}else if(trackOpen){closeTrack();}else if(craftOpen){craftOpen=false;updateHud();}else if(codexOpen){if(codexDetailOpen)closeCodexDetail();else{codexOpen=false;updateHud();}}else if(inventoryOpen){if(bagSelectedId!==null)closeBagDetail();else if(inventoryPanel==='build')setInventoryPanel('gear');else{inventoryOpen=false;updateHud();}}else if(campChoices){campChoices=false;updateHud();}else togglePause();return;}
+  if(event.key==='Escape'){event.preventDefault();if(!$('formula-sheet').hidden){closeFormulaSheet();}else if(!$('stats-sheet').hidden){closeStatsSheet();}else if(campDrawer){closeCampDrawer();}else if(trackOpen){closeTrack();}else if(craftOpen){craftOpen=false;updateHud();}else if(codexOpen){if(codexDetailOpen)closeCodexDetail();else{codexOpen=false;updateHud();}}else if(inventoryOpen){if(bagSelectedId!==null)closeBagDetail();else if(inventoryPanel==='build')setInventoryPanel('gear');else{inventoryOpen=false;updateHud();}}else if(campChoices){campChoices=false;updateHud();}else togglePause();return;}
   if(event.key.toLowerCase()==='i'){event.preventDefault();openInventory();return;}
   if(['INPUT','SELECT','TEXTAREA','BUTTON'].includes(event.target?.tagName)||event.target?.isContentEditable)return;
   // Live hunts move, attack and dodge automatically, so only skills and pickup stay on keys.
@@ -1559,12 +1559,27 @@ function refreshStatsSheet(){
  if($('stats-sheet').hidden)return;
  const stats=game.playerStats(profile),tree=game.treeBonus(profile),max=profile.level===game.MAX_LEVEL,need=game.xpNeeded(profile.level),xp=max?100:Math.floor(clamp(profile.xp/need*100,0,100));
  hudText($('stat-sheet-level'),'Lv. '+profile.level);hudText($('stat-sheet-xp-text'),max?'최고 레벨':profile.xp+' / '+need+' ('+xp+'%)');$('stat-sheet-xp-fill').style.width=xp+'%';$('stat-sheet-xp').setAttribute('aria-valuenow',String(xp));
- const rows={damage:Math.round(stats.damage),crit:(stats.crit*100).toFixed(1)+'% · 피해 '+Math.round((1+stats.critDamage)*100)+'%','attack-speed':Math.round(stats.attackSpeed*100)+'%',range:Math.round(stats.range),execute:signed(tree.execute*100),finisher:signed(tree.finisher*100),
+ const power=game.combatPower(profile);hudText($('stat-sheet-power'),String(Math.round(power.attack)));hudText($('stat-sheet-dps'),String(Math.round(power.dps)));
+ const rows={damage:Math.round(power.attackBase)+' × '+pctOf(power.attackPct),crit:(stats.crit*100).toFixed(1)+'% · 피해 '+Math.round((1+stats.critDamage)*100)+'%','attack-speed':Math.round(stats.attackSpeed*100)+'%',range:Math.round(stats.range),execute:signed(tree.execute*100),finisher:signed(tree.finisher*100),
   health:Math.round(stats.maxHp),reduction:(stats.reduction*100).toFixed(1)+'%',regeneration:Math.round(stats.regeneration)+' / 초',drain:signed(tree.drain*100),guard:signed(-tree.lowHpGuard*100),
   speed:Math.round(stats.speed),collection:Math.round(stats.collection),stamina:signed(tree.staminaRegen*100),cooldown:signed(-tree.skillCooldown*100),area:signed((game.SKILL_AREA_BOOST*(1+tree.skillArea)-1)*100),'skill-damage':signed(tree.skillDamage*100)};
  for(const [k,v] of Object.entries(rows))hudText($('stat-sheet-'+k),String(v));
  hudText($('stat-sheet-note'),'남은 포인트 '+growthBudget()+' · 레벨·능력치 단련·성장 트리·장비·세트·인장을 합한 값');
 }
+// 0.148.0: 더보기의 '전투력 계산 공식' 창 — 능력치 창의 총 공격력·DPS를 지금 값으로 풀어 보인다.
+let formulaReturn=null;
+function refreshFormulaSheet(){
+ if($('formula-sheet').hidden)return;const c=game.combatPower(profile),n=v=>String(Math.round(v)),sec=v=>v.toFixed(2)+'초';
+ const rows={base:n(c.attackLevel)+' + '+n(c.attackEquip)+' = '+n(c.attackBase),attack:n(c.attackBase)+' × '+pctOf(c.attackPct)+' = '+n(c.attack),
+  chain:'마무리 '+(c.finisher>0?'+':'')+pctOf(c.finisher)+' → '+pctOf(c.chain),cycle:sec(c.baseCycle)+' ÷ '+pctOf(c.attackSpeed)+' = '+sec(c.cycle),
+  crit:(c.critChance*100).toFixed(1)+'% × '+pctOf(c.critDamage)+' → '+pctOf(c.crit),dps:n(c.attack)+' × '+pctOf(c.chain)+' × '+pctOf(c.crit)+' ÷ '+sec(c.cycle)+' = '+n(c.dps)};
+ for(const [k,v] of Object.entries(rows))hudText($('formula-'+k),v);
+}
+function openFormulaSheet(from){if(!ready||state.phase!=='camp')return;formulaReturn=from??null;$('formula-sheet').hidden=false;refreshFormulaSheet();$('formula-sheet-close').focus({preventScroll:true});}
+function closeFormulaSheet(){if($('formula-sheet').hidden)return;$('formula-sheet').hidden=true;const back=formulaReturn&&$(formulaReturn);formulaReturn=null;back?.focus({preventScroll:true});}
+$('formula-open').addEventListener('click',()=>openFormulaSheet('formula-open'));
+$('formula-sheet-close').addEventListener('click',closeFormulaSheet);
+$('formula-sheet').addEventListener('click',event=>{if(event.target===$('formula-sheet'))closeFormulaSheet();});
 function openStatsSheet(from){if(!ready||state.phase!=='camp')return;statsSheetReturn=from??null;$('stats-sheet').hidden=false;refreshStatsSheet();$('stats-sheet-close').focus({preventScroll:true});}
 function closeStatsSheet(){if($('stats-sheet').hidden)return;$('stats-sheet').hidden=true;const back=statsSheetReturn&&$(statsSheetReturn);statsSheetReturn=null;back?.focus({preventScroll:true});}
 $('home-profile').addEventListener('click',()=>openStatsSheet('home-profile'));

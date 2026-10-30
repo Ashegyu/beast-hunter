@@ -32,7 +32,7 @@ const SCREENS=[
  ['codex',['camp-codex']],['codex-materials',['camp-codex','codex-tab-materials']],
  ['growth-tree',['hub-growth','growth-tab-tree']],['growth-tree-links',['hub-growth','growth-tab-tree','tree-node-art-2']],['growth-tree-keystone',['hub-growth','growth-tab-tree','tree-node-blade-33']],['growth-training',['hub-growth','growth-tab-training']],['growth-transcend',['hub-growth','growth-tab-transcend']],
  // 0.144.8: 메뉴 안에서 열리는 창과 전투 쪽 화면. 'wait:N'은 N밀리초 기다림.
- ['settings',['home-settings']],['build',['lobby-equipment','loadout-build-open']],
+ ['settings',['home-settings']],['formula',['home-settings','formula-open']],['stats',['home-profile']],['build',['lobby-equipment','loadout-build-open']],
  ['workshop-enhance',['lobby-bag','bag-0','item-workshop-open','workshop-tab-enhance']],['workshop-promote',['lobby-bag','bag-0','item-workshop-open','workshop-tab-promote']],
  ['workshop-reroll',['lobby-bag','bag-0','item-workshop-open','workshop-tab-reroll']],
 ['battle',['nav-hunt','camp-map-start','start','wait:5000']],['pause',['nav-hunt','camp-map-start','start','wait:3000','pause']],
@@ -54,10 +54,12 @@ async function profile(){
 
 function measure(){
  const out=[],rng=document.createRange(),vw=innerWidth,vh=innerHeight,root=document.getElementById('game-shell');
+ // 0.148.0: 모달 창(aria-modal, 능력치·계산 공식)이 열려 있으면 그 아래 화면은 가려지므로 창 안만 잰다.
+ const modal=[...root.querySelectorAll('[aria-modal=true]')].find(d=>!d.closest('[hidden]')&&d.getBoundingClientRect().width>2),scope=modal??root;
  // 접근성용으로 1px로 접거나 clip-path로 가린 요소(sr-only 등)와 그 자식, 닫힌 <details>의 본문은 보이지 않으므로 뺀다.
  const hiddenByClip=el=>{const d=el.closest('details:not([open])');if(d&&!el.closest('summary')&&el!==d)return true;for(let x=el;x&&x!==root;x=x.parentElement){const c=getComputedStyle(x),b=x.getBoundingClientRect();if(c.clipPath&&c.clipPath!=='none'||b.width<=2||b.height<=2||x.classList.contains('sr-only'))return true;}return false;};
  const name=el=>{const own=el.id||(typeof el.className==='string'&&el.className.trim().split(/\s+/)[0]);if(own)return own;const p=el.closest('[id]');return (p?p.id+'>':'')+el.tagName.toLowerCase();};
- for(const el of root.querySelectorAll('*')){
+ for(const el of scope.querySelectorAll('*')){
   if(!el.offsetParent||el.closest('[hidden]')||el.closest('canvas'))continue;const cs=getComputedStyle(el);if(cs.visibility==='hidden'||+cs.opacity===0)continue;
   const r=el.getBoundingClientRect();if(r.width<=2||r.height<=2)continue;
   if(hiddenByClip(el))continue;
@@ -74,7 +76,7 @@ function measure(){
  for(const el of root.querySelectorAll('[hidden]')){const r=el.getBoundingClientRect();if(r.width>2&&r.height>2&&getComputedStyle(el).display!=='none'&&!el.parentElement?.closest('[hidden]'))out.push('hidden-shown:'+name(el));}
  // 글자 겹침: 서로 다른 두 요소의 보이는 글자 상자가 겹치면 'overlap:a/b'(숨겨야 할 칸이 보이는 경우 등, 0.144.3 도감 재료 탭).
  const texts=[];
- for(const el of root.querySelectorAll('*')){
+ for(const el of scope.querySelectorAll('*')){
   if(texts.length>600)break;if(!el.offsetParent||el.closest('[hidden]')||el.closest('[aria-hidden=true]')||hiddenByClip(el))continue;
   const cs=getComputedStyle(el);if(cs.visibility==='hidden'||+cs.opacity===0||![...el.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()))continue;
   rng.selectNodeContents(el);const t=rng.getBoundingClientRect();let a=el.parentElement;while(a&&a!==root&&getComputedStyle(a).overflow==='visible')a=a.parentElement;
