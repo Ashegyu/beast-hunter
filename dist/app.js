@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.146.0';
-import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.146.0';
-import { createCombatAudio } from './sound.js?v=0.146.0';
-import * as game from './game-engine.js?v=0.146.0';
-import {FrameMetrics} from './frame-metrics.js?v=0.146.0';
-import { frameIndex, frameRect, validateClip } from './engine.js?v=0.146.0';
-import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.146.0';
-import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.146.0';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.146.0';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.146.0';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.146.0';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.146.0';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.147.0';
+import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.147.0';
+import { createCombatAudio } from './sound.js?v=0.147.0';
+import * as game from './game-engine.js?v=0.147.0';
+import {FrameMetrics} from './frame-metrics.js?v=0.147.0';
+import { frameIndex, frameRect, validateClip } from './engine.js?v=0.147.0';
+import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.147.0';
+import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.147.0';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.147.0';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.147.0';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.147.0';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.147.0';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -296,10 +296,10 @@ function statGauge(id,rank,edges){const fill=$(id+'-gauge');if(!fill)return;let 
 let growthStatsPrev=null,growthStatsFlash=0;
 function refreshGrowthStats(){
  const st=game.playerStats(profile),tree=game.treeBonus(profile),tr=game.transcendBonus(profile);
- const v={damage:Math.round(st.damage),crit:st.crit*100,aspd:st.attackSpeed*100,range:Math.round(st.range),hp:Math.round(st.maxHp),reduction:st.reduction*100,regen:st.regeneration,speed:Math.round(st.speed),boss:tr.bossDamage*100,skill:(tree.skillDamage+tr.skillDamage)*100};
- const text={damage:String(v.damage),crit:v.crit.toFixed(1)+'%',aspd:Math.round(v.aspd)+'%',range:String(v.range),hp:v.hp.toLocaleString('ko-KR'),reduction:v.reduction.toFixed(1)+'%',regen:Math.round(v.regen)+'/초',speed:String(v.speed),boss:'+'+v.boss.toFixed(1)+'%',skill:'+'+v.skill.toFixed(1)+'%'};
+ const v={damage:Math.round(st.damage),crit:st.crit*100,critdmg:(1+st.critDamage)*100,aspd:st.attackSpeed*100,range:Math.round(st.range),hp:Math.round(st.maxHp),reduction:st.reduction*100,regen:st.regeneration,speed:Math.round(st.speed),boss:tr.bossDamage*100,skill:(tree.skillDamage+tr.skillDamage)*100};
+ const text={damage:String(v.damage),crit:v.crit.toFixed(1)+'%',critdmg:Math.round(v.critdmg)+'%',aspd:Math.round(v.aspd)+'%',range:String(v.range),hp:v.hp.toLocaleString('ko-KR'),reduction:v.reduction.toFixed(1)+'%',regen:Math.round(v.regen)+'/초',speed:String(v.speed),boss:'+'+v.boss.toFixed(1)+'%',skill:'+'+v.skill.toFixed(1)+'%'};
  const now=Date.now();
- if(growthStatsPrev){let changed=false;for(const k of Object.keys(v)){const d=v[k]-growthStatsPrev[k];if(Math.abs(d)>1e-6){changed=true;const unit=['crit','aspd','reduction','boss','skill'].includes(k)?'%':'';hudText($('gstat-'+k+'-delta'),(d>0?'+':'')+(Number.isInteger(d)?d:d.toFixed(unit?1:2))+unit);$('gstat-'+k+'-delta').setAttribute('data-sign',d>0?'up':'down');}}if(changed)growthStatsFlash=now+1600;}
+ if(growthStatsPrev){let changed=false;for(const k of Object.keys(v)){const d=v[k]-growthStatsPrev[k];if(Math.abs(d)>1e-6){changed=true;const unit=['crit','critdmg','aspd','reduction','boss','skill'].includes(k)?'%':'';hudText($('gstat-'+k+'-delta'),(d>0?'+':'')+(Number.isInteger(d)?d:d.toFixed(unit?1:2))+unit);$('gstat-'+k+'-delta').setAttribute('data-sign',d>0?'up':'down');}}if(changed)growthStatsFlash=now+1600;}
  growthStatsPrev=v;
  if(now>growthStatsFlash)for(const k of Object.keys(v))hudText($('gstat-'+k+'-delta'),'');
  for(const [k,t]of Object.entries(text))hudText($('gstat-'+k),t);
@@ -1551,7 +1551,7 @@ function refreshStatsSheet(){
  if($('stats-sheet').hidden)return;
  const stats=game.playerStats(profile),tree=game.treeBonus(profile),max=profile.level===game.MAX_LEVEL,need=game.xpNeeded(profile.level),xp=max?100:Math.floor(clamp(profile.xp/need*100,0,100));
  hudText($('stat-sheet-level'),'Lv. '+profile.level);hudText($('stat-sheet-xp-text'),max?'최고 레벨':profile.xp+' / '+need+' ('+xp+'%)');$('stat-sheet-xp-fill').style.width=xp+'%';$('stat-sheet-xp').setAttribute('aria-valuenow',String(xp));
- const rows={damage:Math.round(stats.damage),crit:(stats.crit*100).toFixed(1)+'%','attack-speed':Math.round(stats.attackSpeed*100)+'%',range:Math.round(stats.range),execute:signed(tree.execute*100),finisher:signed(tree.finisher*100),
+ const rows={damage:Math.round(stats.damage),crit:(stats.crit*100).toFixed(1)+'% · 피해 '+Math.round((1+stats.critDamage)*100)+'%','attack-speed':Math.round(stats.attackSpeed*100)+'%',range:Math.round(stats.range),execute:signed(tree.execute*100),finisher:signed(tree.finisher*100),
   health:Math.round(stats.maxHp),reduction:(stats.reduction*100).toFixed(1)+'%',regeneration:Math.round(stats.regeneration)+' / 초',drain:signed(tree.drain*100),guard:signed(-tree.lowHpGuard*100),
   speed:Math.round(stats.speed),collection:Math.round(stats.collection),stamina:signed(tree.staminaRegen*100),cooldown:signed(-tree.skillCooldown*100),area:signed((game.SKILL_AREA_BOOST*(1+tree.skillArea)-1)*100),'skill-damage':signed(tree.skillDamage*100)};
  for(const [k,v] of Object.entries(rows))hudText($('stat-sheet-'+k),String(v));
