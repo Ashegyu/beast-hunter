@@ -1,13 +1,13 @@
-import {createSkillMotion} from './skill-motion.js?v=0.147.6';
-import {CHAPTERS,CHAPTER_BOSSES} from './chapters.js?v=0.147.6';
-import {beastTechniques,BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE,beastElementText} from './beast-techniques.js?v=0.147.6';
-export {BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE} from './beast-techniques.js?v=0.147.6';
-import {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary,SKILL_TAGS,TAG_NAMES,TAG_SYNERGY} from './skill-branches.js?v=0.147.6';
-export {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary,SKILL_TAGS,TAG_NAMES,TAG_SYNERGY} from './skill-branches.js?v=0.147.6';
-import {GEAR_SKILLS} from './raid-skills.js?v=0.147.6';
-import {treeBonus} from './growth.js?v=0.147.6';
-import {transcendBonus} from './transcendence.js?v=0.147.6';
-export {GEAR_SKILLS,GEAR_SKILL_BY_ANCIENT} from './raid-skills.js?v=0.147.6';
+import {createSkillMotion} from './skill-motion.js?v=0.147.7';
+import {CHAPTERS,CHAPTER_BOSSES} from './chapters.js?v=0.147.7';
+import {beastTechniques,BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE,beastElementText} from './beast-techniques.js?v=0.147.7';
+export {BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE} from './beast-techniques.js?v=0.147.7';
+import {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary,SKILL_TAGS,TAG_NAMES,TAG_SYNERGY} from './skill-branches.js?v=0.147.7';
+export {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary,SKILL_TAGS,TAG_NAMES,TAG_SYNERGY} from './skill-branches.js?v=0.147.7';
+import {GEAR_SKILLS} from './raid-skills.js?v=0.147.7';
+import {treeBonus} from './growth.js?v=0.147.7';
+import {transcendBonus} from './transcendence.js?v=0.147.7';
+export {GEAR_SKILLS,GEAR_SKILL_BY_ANCIENT} from './raid-skills.js?v=0.147.7';
 // Lirian skill rules: one catalog drives unlocks, rank values, UI and combat.
 const active=(id,name,unlock,damage,step,cost,cooldown,shape,description,extra={})=>({id,name,kind:'active',unlock,damage,step,cost,cooldown,shape,description,...extra});
 const passive=(id,name,unlock,value,step,unit,description)=>({id,name,kind:'passive',unlock,value,step,unit,description});
@@ -254,7 +254,7 @@ export function castSkill(s,id,aim,h){
  const more=(rt,at0,c)=>{if(r.jobs.length+count>128)return;for(let i=0;i<count;i++)r.jobs.push({root:rt,at:at0+i*interval,index:i,center:c,interruptible,rootToken:r.token});};
  if(br.fan&&FAN_SHAPES.has(d.shape))for(let k=1;k<=br.fan;k++){const a=(k%2?1:-1)*Math.ceil(k/2)*FAN_ANGLE,c=Math.cos(a),sn=Math.sin(a),nn={x:n.x*c-n.y*sn,y:n.x*sn+n.y*c},copy={...root,n:nn,serial:++r.serial,damage:root.damage*FAN_SCALE,recovered:false};more(copy,now+delay,center);h.visual(s,'skillCast',{skillId:vid,x:center.x,y:center.y,radius:root.radius??root.range,areaScale,n:nn,fromX:root.castX,fromY:root.castY,targetX:center.x+nn.x*d.range,targetY:center.y+nn.y*d.range,serial:copy.serial},Math.max(.025,delay));}
  if(br.repeat)more({...root,serial:++r.serial,damage:root.damage*br.repeat.scale,recovered:false},now+delay+br.repeat.delay,center);
- if(br.zone&&r.jobs.length<128){const zr={...root,serial:++r.serial,damage:root.damage*br.zone.scale,count:1,poise:root.poise*.3},end=now+delay+(count-1)*interval+.2,
+ if(br.zone&&r.jobs.length<128){const zr={...root,serial:++r.serial,damage:root.damage*br.zone.scale,count:1,poise:0},end=now+delay+(count-1)*interval+.2,
    zc=d.shape==='circle'||d.shape==='ultimateArea'?{x:p.x,y:p.y}:d.shape==='field'||d.shape==='targetArea'?center:{x:center.x+n.x*Math.min(reach,320)*.5,y:center.y+n.y*Math.min(reach,320)*.5},radius=Math.min(170,root.radius??reach*.5);
   for(let t=0;t<br.zone.seconds-1e-9;t+=.5)r.jobs.push({root:zr,at:end+t,index:0,center:zc,zone:radius,interruptible:false,rootToken:r.token});}
  if(root.sigColor)h.visual(s,'ancientSig',{x:center.x,y:center.y,radius:root.radius??root.range,color:root.sigColor,rune:SKILL_CATALOG.indexOf(d)},.6);

@@ -138,8 +138,10 @@ export const SKILL_TAGS=Object.freeze({crescent:['wave'],seeking:['wave'],return
 export const TAG_NAMES=Object.freeze({wave:'검기',dash:'돌진',area:'영역',precision:'일격',spirit:'잔상'});
 export const TAG_SYNERGY=Object.freeze({
  wave:[[2,{damage:1.08},'피해 +8%'],[3,{area:1.15},'범위 +15%'],[4,{refundKill:.5,damage:1.08},'처치 시 재사용 0.5초 감소 · 피해 +8%']],
- dash:[[2,{damage:1.08},'피해 +8%'],[3,{after:{kind:'guard',value:15,seconds:1.5}},'사용 뒤 1.5초 받는 피해 −15%'],[4,{cooldown:.85},'재사용 −15%']],
- area:[[2,{damage:1.08},'피해 +8%'],[3,{pull:.15},'괴수를 끌어당김'],[4,{zone:{seconds:1.5,scale:.1}},'끝난 자리에 1.5초 잔류 영역']],
+ // 0.147.7: 돌진 스킬은 3개(질풍참·잔영참·낙월)라 4개 보너스가 닿지 않았다 → 재사용 −15%를 3개 보너스에 합침.
+ dash:[[2,{damage:1.08},'피해 +8%'],[3,{after:{kind:'guard',value:15,seconds:1.5},cooldown:.85},'사용 뒤 1.5초 받는 피해 −15% · 재사용 −15%']],
+ // 0.147.7: 잔류 영역 10% → 6%, 경직 없음(측정 tools/reports/branches-benchmark-0146: 보스 DPS +62%의 대부분이 잔류 영역의 경직 누적이었다).
+ area:[[2,{damage:1.08},'피해 +8%'],[3,{pull:.15},'괴수를 끌어당김'],[4,{zone:{seconds:1.5,scale:.06}},'끝난 자리에 1.5초 잔류 영역']],
  precision:[[2,{boss:10},'보스·정예 +10%'],[3,{execute:20},'빈사 적 +20%'],[4,{expose:1.5,damage:1.1},'적중 시 1.5초 노출 · 피해 +10%']],
  spirit:[[2,{damage:1.05,duration:1.15},'피해 +5% · 지속 +15%'],[3,{primed:15},'다른 스킬 직후 +15%'],[4,{cost:-5,cooldown:.9},'기력 −5 · 재사용 −10%']],
 });
