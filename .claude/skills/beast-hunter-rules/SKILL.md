@@ -51,6 +51,7 @@ CLAUDE.md에서 옮겨 온 작업 메모. 내용이 바뀌면 이 파일을 고�
 - strict(normal이 아닌) 스테이지는 체크포인트 → 실패/이탈 시 롤백, 클리어 시 `confirmSettlement`로 2단계 정산.
 
 ## 알려진 문제 (코드에서 확인)
+- (0.147.6 측정, Codex 작성 `tools/benchmark-branches0146.mjs` → `tools/reports/branches-benchmark-0146.md`, 약 200초) 빌드 태그 '영역' 시너지가 보스전 DPS +62%(평균 +16%, 받은 피해 236→54)로 과함. 돌진 태그 스킬은 3개뿐이라 4개 보너스(재사용 −15%)에 도달할 수 없음. 개별 갈래 +30% 이상은 없고 ±3% 이내 151개(조건부 갈래는 자동 전투에서 발동이 적을 수 있어 무용 확정 아님). 조건: Lv200 무장비 30장, 생존율은 모두 100%라 방어 갈래 구분 못 함. 밸런스는 아직 고치지 않음.
 - 스테이지 드롭 등급은 난이도(`hunt`)로만 정한다(0.140에서 `makeItem`/`awardItem`의 안 쓰던 인자 제거). `rollItem`의 `rollRarity`(DROP_TABLES, BOSS_DROP_TABLES)는 quality가 정해져도 난수 하나를 소비하므로 지우면 모든 드롭 순서가 바뀐다 → 남김(테스트가 rollItem({minimum})로 등급별 장비를 만든다). 고대는 0.110부터 `dropBossAncient`가 따로 떨어뜨린다.
 - 제작 재료(0.122): 원질 핵 보스 2%, 무명의 기원 보스 0.3%(예전 0.1%·0.001%로 제작이 사실상 불가능했음).
 - 0.140에서 상자·조우 상호작용(`interact`, `s.encounters/caches/nodes`), 적 무리(group)·귀환(`homeX`), 세로 화면 전용 CSS를 지웠다. `flow==='break'`는 게임에서 설정하지 않지만 테스트(combat-fixture 등)가 웨이브를 멈추는 고리로 쓰므로 남김.
