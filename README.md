@@ -4,6 +4,7 @@
 - 정예·악몽 버튼을 골라도 빨간 알약 선택 그림이 안 보였다: 두 번째·세 번째 버튼의 `::before`가 버튼 사이 구분선(`width:1px`, hunt-map-scene.css)이라 선택 장식이 2px로 눌림 → 선택된 버튼은 `width/height:auto`(layout-fit.css 끝).
 - 정예에서 다음 장이 정예로 안 열렸는데도 다음 화살표가 일반 기준(`unlockedStage`)으로 켜져 있었고, 누르면 그 장이 정예로 안 열려 일반으로 바뀌었다 → 지금 난이도로 다음 장이 열렸을 때만(`stageLimit`) 화살표를 켜고, 눌러도 막는다.
 - 검증: `npm test` 999/999(정예 지도 화살표 테스트, 옛 코드에서 실패 확인), check-layout 170화면 새 문제 없음.
+- 백업 `tools/saves/nightmare-60-cleared.json`(사용자 요청): Lv.200, 일반·정예·악몽 60장 보스 모두 처치(bossMastery 2·difficultyProgress 10), 별 ★3·상자 180개, 괴수 기술 60종(기본 등급), 초월 악몽 챕터 60. `node tools/make-cleared-save.mjs 200 tools/saves/nightmare-60-cleared.json 2`(세 번째 인자 난이도 추가). 장비·스킬 레벨은 새 캐릭터 그대로.
 
 ## 입장 전 빌드 선택에 스킬 빌드 (Alpha 0.148.6, 사용자 보고·결정)
 - 버그: 사냥 지도·던전·레이드(탑·균열·보스 러시 공유) 입장 선택 5칸은 장비 화면 통합 빌드(`savedBuilds`)만 읽어, 스킬 화면에서 저장한 빌드 1~3(`skillBook.presets`)은 고를 수 없었다(원인 조사: Codex).
