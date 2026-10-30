@@ -68,3 +68,17 @@ test('0.139: 정예/악몽 continue the chapter curve, 악몽 gives no experienc
  assert.equal(g.restoreProfile(g.encodeProfile(faster.profile,1000),1000).nightmareRecords[0],faster.profile.nightmareRecords[0]);
  assert.equal(g.restoreProfile({...JSON.parse(g.encodeProfile(p,1000)),nightmareRecords:pad([12.3])},1000).nightmareRecords[0],0,'악몽 보스를 못 잡은 챕터의 기록은 버린다');
 });
+test('0.148.10: 정예·악몽 방어 태세 보스는 약점 노출 한 번에 exposeCap까지만 제대로 깎이고 넘는 피해는 20%만',()=>{
+ assert.equal(g.exposeCap(1),.3);assert.equal(g.exposeCap(60),.5);assert.ok(g.exposeCap(30)>.3&&g.exposeCap(30)<.5);
+ const chapter=30; // 심연의 군주: 방어 태세(defense) 보스
+ const ratio=difficulty=>{const p=g.createProfile(1000);p.level=200;p.clearedStage=p.unlockedStage=g.STAGES.length;p.stageProgress=g.STAGES.map(()=>10);p.bossMastery=g.STAGES.map(()=>2);p.difficultyProgress=p.difficultyProgress.map(r=>r.map(()=>10));
+  const s=g.createGame(p);assert.ok(g.launch(s,chapter,10,null,difficulty));
+  for(let i=0;i<400&&!s.enemies.some(e=>e.boss);i++)g.advanceGame(s,.025);const b=s.enemies.find(e=>e.boss);assert.ok(b,'보스 등장');
+  s.enemies=[b];s.spawns.length=0;b.hp=b.maxHp=4000;b.guard=0;b.gateGuard=0;b.action='idle';b.cooldown=99;b.x=s.player.x+70;b.y=s.player.y;
+  const hit=()=>{const p=s.player,before=b.hp;s.run.time=8.1;p.action='idle';p.attackCooldown=0;p.thunderCooldown=0;p.stamina=99;p.combo=0;p.comboWindow=0;s.rng=0;b.cooldown=99;b.x=p.x+70;b.y=p.y;assert.ok(g.thunder(s,{x:1,y:0}));for(let t=0;t<p.swing.impact+.001;t+=.025)g.advanceGame(s,.025);s.hitStop=0;return before-b.hp;};
+  const first=hit();let last=first;for(let i=0;i<30&&(4000-b.hp)/4000<g.exposeCap(chapter)+.05&&b.hp>0;i++)last=hit();return {first,last,lost:(4000-b.hp)/4000};};
+ const nm=ratio(2),normal=ratio(0);
+ assert.ok(nm.first>0&&normal.first>0);
+ assert.ok(nm.last/nm.first<.3,'악몽: 상한을 넘긴 뒤 한 방은 처음의 30% 미만 ('+nm.first+' → '+nm.last+')');
+ assert.ok(normal.last/normal.first>.7,'일반 난이도는 상한 없음 ('+normal.first+' → '+normal.last+')');
+});
