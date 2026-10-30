@@ -20,7 +20,8 @@ test('a tier opens at its skill level, picks of all tiers add up, and a lowered 
  const before=p.materials.skillPage;assert.equal(g.unlockSkillBranch(s,'crescent',1,0),true);assert.equal(p.materials.skillPage,before-g.SKILL_BRANCH_COSTS[0].pages);
  while(g.upgradeSkill(s,'crescent'));assert.equal(g.unlockSkillBranch(s,'crescent',0,1),true);assert.equal(g.unlockSkillBranch(s,'crescent',1,2),true);
  assert.equal(p.materials.skillPage,before-g.SKILL_BRANCH_COSTS[0].pages-g.SKILL_BRANCH_COSTS[1].pages-g.SKILL_BRANCH_COSTS[2].pages);
- const m=g.branchMods(p,'crescent');assert.ok(Math.abs(m.damage-1.35*1.2)<1e-9);assert.equal(m.boss,20);assert.equal(m.execute,40);assert.equal(m.cost,4);
+ // 0.146.0: tier 2·3 are rule branches (삼일월 fan, 빙월 파쇄 shatter); the default loadout holds two 검기 skills (×1.08 tag bonus).
+ const m=g.branchMods(p,'crescent');assert.ok(Math.abs(m.damage-1.35*1.08)<1e-9);assert.equal(m.boss,20);assert.equal(m.cost,4);assert.equal(m.fan,2);assert.equal(m.shatter,45);assert.equal(m.element.chill,.8);
  assert.equal(g.activeBranches(p,'crescent').length,3);
  g.chooseSkillBranch(s,'crescent',0,1);assert.equal(g.skillBranchIndex(p,'crescent',1),-1,'tapping the branch in use turns its tier off');assert.equal(g.activeBranches(p,'crescent').length,2);
  g.chooseSkillBranch(s,'crescent',0,1);p.skillBook.ranks.crescent=8;assert.equal(g.activeBranches(p,'crescent').length,1,'Lv.9 keeps only the Lv.5 tier');
@@ -32,8 +33,10 @@ test('a tier opens at its skill level, picks of all tiers add up, and a lowered 
 test('passive branches scale the passive number or add stats while the passive is equipped',()=>{
  const s=camp(200),p=s.profile;p.skillBook.loadout.passive=['reserve',null,null];for(let i=0;i<14;i++)g.upgradeSkill(s,'reserve');
  const plain=g.playerStats(p).reduction,valueBefore=g.skillValue(p,'reserve');
- assert.equal(g.unlockSkillBranch(s,'reserve',1,2),true);assert.ok(Math.abs(g.playerStats(p).reduction-plain-g.SKILL_BRANCHES.reserve[2][1].mods.stat.reduction)<1e-9);
+ assert.equal(g.unlockSkillBranch(s,'reserve',1,0),true);assert.ok(Math.abs(g.playerStats(p).reduction-plain-g.SKILL_BRANCHES.reserve[0][1].mods.stat.reduction)<1e-9);
+ // 0.146.0: tiers 2·3 of a passive are build rules for every skill while it is equipped.
+ assert.equal(g.unlockSkillBranch(s,'reserve',1,2),true);assert.equal(g.passiveRules(p).drainAll,1);
  assert.equal(g.unlockSkillBranch(s,'reserve',0,0),true);assert.equal(g.passiveValueScale(p,'reserve'),1.2);assert.equal(g.skillValue(p,'reserve'),valueBefore);
  assert.ok(g.passiveValueScale(p,'resolve')===1);for(let i=0;i<4;i++)g.upgradeSkill(s,'resolve');g.unlockSkillBranch(s,'resolve',0,0);assert.ok(g.passiveValueScale(p,'resolve')<1,'적월의 결의 waits less');
- p.skillBook.loadout.passive=[null,null,null];assert.equal(g.playerStats(p).reduction,plain,'stats only while equipped');
+ p.skillBook.loadout.passive=[null,null,null];assert.equal(g.playerStats(p).reduction,plain,'stats only while equipped');assert.equal(g.passiveRules(p).drainAll,undefined,'rules only while equipped');
 });

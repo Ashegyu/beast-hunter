@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.145.2';
-import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.145.2';
-import { createCombatAudio } from './sound.js?v=0.145.2';
-import * as game from './game-engine.js?v=0.145.2';
-import {FrameMetrics} from './frame-metrics.js?v=0.145.2';
-import { frameIndex, frameRect, validateClip } from './engine.js?v=0.145.2';
-import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.145.2';
-import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.145.2';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.145.2';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.145.2';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.145.2';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.145.2';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.146.0';
+import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.146.0';
+import { createCombatAudio } from './sound.js?v=0.146.0';
+import * as game from './game-engine.js?v=0.146.0';
+import {FrameMetrics} from './frame-metrics.js?v=0.146.0';
+import { frameIndex, frameRect, validateClip } from './engine.js?v=0.146.0';
+import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.146.0';
+import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.146.0';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.146.0';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.146.0';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.146.0';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.146.0';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -1143,6 +1143,8 @@ function ancientPowerText(item){const row=game.ancientDefinition(item);if(!row)r
  // Each raid ancient also carries a 장비 기술 that casts by itself while worn (Alpha 0.127), scaled by the same roll.
  if(row.raid){const skill=game.GEAR_SKILL_BY_ANCIENT[row.id],power=game.raidPowerRoll(item);return lines+(skill?'\n◆ 장비 기술 '+skill.name+' · 피해 '+Math.round(skill.damage*power/100)+'% · 재사용 '+skill.cooldown+'초 · '+skill.description+' (착용 중 자동 시전)':'')+'\n레이드 고대 · 효과 위력 '+power+'% (범위 '+game.RAID_POWER_ROLL.min+'~'+game.RAID_POWER_ROLL.max+'%, 장비 기술 피해에도 적용, 수치작으로 다시 굴림)';}
  return lines+'\n'+row.tier+'티어 위력 '+pctOf(game.ANCIENT_TIER_POWER[row.tier-1])+(hunt?' · '+game.HUNT_MODES[hunt].name+' 획득 '+pctOf(game.ANCIENT_HUNT_POWER[hunt])+(hunt===2?' · 추가 특수효과':''):'');}
+// Alpha 0.146.0 빌드 태그: '검기 2/4 · 피해 +8% ✓ / 3개 범위 +15%' per tag of the skill, ahead of the long note.
+function skillTagNote(id){const syn=game.tagSynergy(profile);return game.skillTags(id).map(t=>{const x=syn[t];return game.TAG_NAMES[t]+' '+x.count+'개 장착 · '+x.rows.map(r=>(r.active?'●':'○')+r.n+' '+r.text).join(' · ');}).join('\n');}
 function updateHud(){
   if(profile.testMode&&state.phase==='camp'&&game.applyTestMode(profile))save();
   {const b=$('test-mode');b.setAttribute('aria-pressed',String(!!profile.testMode));hudText(b,profile.testMode?'테스트 모드 켬':testModeArmed?'한 번 더 눌러 켜기':'테스트 모드 끔');}
@@ -1642,7 +1644,7 @@ function refreshSkills(){
   node.setAttribute('data-kind',kind);node.disabled=i>=slots[kind];$('skill-slot-name-'+kind+'-'+i).textContent=label;
   art.hidden=!id;if(id)art.src=game.SKILL_BY_ID[id].icon;node.setAttribute('data-empty',String(!id));node.setAttribute('aria-label',skillKinds[kind]+' '+(i+1)+' · '+label);
  }
- $('skill-detail-icon').src=d.icon;$('skill-detail-name').textContent=d.name;$('skill-detail-kind').textContent=skillKinds[d.kind]+(equipped?' · 장착 중':'');const beast=d.kind==='beast';$('skill-detail-unlock').textContent=beast?d.chapter+'장 '+d.bossName+' 처치로 획득'+(rank?' · 현재 '+game.BEAST_GRADES[rank].name:' · 아직 미획득'):'캐릭터 Lv.'+d.unlock+' 해금'+(rank?' · 현재 Lv.'+rank:' · 아직 잠김');
+ $('skill-detail-icon').src=d.icon;$('skill-detail-name').textContent=d.name;$('skill-detail-kind').textContent=skillKinds[d.kind]+(equipped?' · 장착 중':'')+game.skillTags(d.id).map(t=>' · '+game.TAG_NAMES[t]).join('');const beast=d.kind==='beast';$('skill-detail-unlock').textContent=beast?d.chapter+'장 '+d.bossName+' 처치로 획득'+(rank?' · 현재 '+game.BEAST_GRADES[rank].name:' · 아직 미획득'):'캐릭터 Lv.'+d.unlock+' 해금'+(rank?' · 현재 Lv.'+rank:' · 아직 잠김');
  const areaScale=game.skillAreaScale(profile,d.id),growing=['line','dash','circle','cone','targetArea','echo','returning','field','gather','ultimateArea'].includes(d.shape);
  // The area growth note lives under '전체 단계별 수치' (Alpha 0.128) so the description stays short.
  const areaNote=growing?' 범위는 기본 기준이며 현재 광역 범위 +'+Math.round((areaScale-1)*100)+'% (캐릭터 Lv.10마다 +10%, 최대 +40%).':'';$('skill-detail-description').textContent=d.description;
@@ -1662,7 +1664,7 @@ function refreshSkills(){
  const rankRows=beast?[1,2,3]:d.kind==='ultimate'?[1,5,10,15,20]:[1,5,10,15,...(rank&&![1,5,10,15].includes(rank)?[rank]:[])].sort((a,b)=>a-b);
  for(let i=1;i<=5;i++){const r=rankRows[i-1];$('skill-rank-row-'+i).hidden=r===undefined;if(r===undefined)continue;$('skill-rank-label-'+i).textContent=beast?game.BEAST_GRADES[r].name:'Lv.'+r;$('skill-rank-row-'+i).setAttribute('data-current',String(rank===r));$('skill-rank-value-'+i).textContent=game.skillNumbers(profile,d.id,r);$('skill-rank-gate-'+i).textContent=beast?['첫 처치','정예 처치 '+Math.round(game.BEAST_GRADE_CHANCE[1]*100)+'%','악몽 처치 '+Math.round(game.BEAST_GRADE_CHANCE[2]*100)+'%',''][i-1]??'':'Lv.'+game.skillLevelGate(d.id,r)+(r>=5&&r%5===0?' · 갈래':'');}
  const next=game.skillLevelGate(d.id,rank+1);
- $('skill-detail-note').textContent=(beast?'괴수 기술 칸 1개에 장착하며, 준비되면 자동으로 시전합니다. 보스를 처음 쓰러뜨리면 기본을 배우고, 정예·악몽에서 다시 쓰러뜨리면 확률로 강화·극을 배웁니다(낮은 등급으로 내려가지 않음).':d.kind==='ultimate'?'궁극기도 강화 포인트로 올립니다(최대 Lv.'+game.MAX_ULTIMATE_RANK+', Lv.5·10·15·20마다 갈래, Lv.6부터 단계당 상승폭 절반). 사냥 시작 시 바로 사용하며, 사용 후 60초 동안 기다립니다.':'해금 시 Lv.1을 바로 사용합니다. 이후 단계당 강화 포인트 1개(최대 Lv.'+game.MAX_SKILL_RANK+', Lv.5·10·15마다 갈래, Lv.6부터 단계당 상승폭 절반).')+areaNote;
+ {const t=skillTagNote(d.id);$('skill-tag-synergy').textContent=t;$('skill-tag-synergy').hidden=!t;}$('skill-detail-note').textContent=(beast?'괴수 기술 칸 1개에 장착하며, 준비되면 자동으로 시전합니다. 보스를 처음 쓰러뜨리면 기본을 배우고, 정예·악몽에서 다시 쓰러뜨리면 확률로 강화·극을 배웁니다(낮은 등급으로 내려가지 않음).':d.kind==='ultimate'?'궁극기도 강화 포인트로 올립니다(최대 Lv.'+game.MAX_ULTIMATE_RANK+', Lv.5·10·15·20마다 갈래, Lv.6부터 단계당 상승폭 절반). 사냥 시작 시 바로 사용하며, 사용 후 60초 동안 기다립니다.':'해금 시 Lv.1을 바로 사용합니다. 이후 단계당 강화 포인트 1개(최대 Lv.'+game.MAX_SKILL_RANK+', Lv.5·10·15마다 갈래, Lv.6부터 단계당 상승폭 절반).')+areaNote;
  const maxRank=game.maxSkillRank(d.id);$('skill-upgrade').hidden=beast;$('skill-upgrade').disabled=!rank||rank>=maxRank||!game.skillPoints(profile)||profile.level<next;$('skill-upgrade').textContent=!rank?'캐릭터 Lv.'+d.unlock+' 필요':rank>=maxRank?'최대 강화 Lv.'+maxRank:profile.level<next?'다음 강화 · 캐릭터 Lv.'+next:game.skillPoints(profile)?'Lv.'+(rank+1)+' 강화 · 포인트 1':'강화 포인트 부족';
  for(let i=0;i<4;i++){const node=$('skill-equip-'+i);node.hidden=i>=game.MAX_SLOTS[d.kind];node.disabled=!rank||i>=slots[d.kind];const on=book.loadout[d.kind][i]===d.id,action=on?'해제':'장착';node.textContent=game.MAX_SLOTS[d.kind]>1?String(i+1):action;node.setAttribute('aria-pressed',String(on));node.title='슬롯 '+(i+1)+' '+action;node.setAttribute('aria-label','슬롯 '+(i+1)+' '+action);}
  $('skill-preset-save').setAttribute('aria-pressed',String(presetSaveArmed));$('skill-preset-save').textContent=presetSaveArmed?'취소':'저장';const loadoutKey=JSON.stringify([book.loadout,book.auto]);

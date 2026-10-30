@@ -37,20 +37,112 @@ const FIRST={
  eclipse:[b('개기 월식','더 강한 일격. 보스·정예에게 더 강하다.',{damage:1.3,boss:25}),b('짧은 월식','재사용이 크게 줄어든다.',{cooldown:.65}),b('넓은 월식','더 굵은 선으로 벤다.',{area:1.35})],
  phantoms:[b('잔상 군단','잔상이 오래 남아 더 많이 동행한다.',{duration:1.5}),b('날선 잔상','잔상 하나하나가 강하다.',{damage:1.4}),b('짧은 군무','재사용이 줄어든다.',{cooldown:.75})],
 };
-// Later tiers follow the skill's kind: area skills widen, single-target ones save 기력, buffs grow stronger or last longer.
-const AREA=new Set(['crescent','gale','dance','draw','plunge','echo','triple','returning','field','breach','gather','bloodmoon','eclipse']);
-const BUFF=new Set(['stance','bloodblade']);
-const ELEMENT={crescent:['서리',{chill:1.5}],gale:['돌풍',{push:70}],dance:['핏빛',{bleed:3}],draw:['파쇄',{breach:12}],plunge:['빙하',{chill:1.5}],parry:['수호',{shield:.08}],echo:['약화',{breach:10}],triple:['핏빛',{bleed:4}],seeking:['출혈',{bleed:3}],returning:['서리',{chill:1.5}],field:['붕괴',{breach:12}],breach:['파쇄',{breach:15}],gather:['출혈',{bleed:3}],mark:['약화',{breach:12}],bloodmoon:['핏빛',{bleed:4}],eclipse:['파쇄',{breach:15}],phantoms:['출혈',{bleed:2}]};
-function attackTiers(id,name){
- const [elementName,element]=ELEMENT[id];
- const second=[b('날 선 '+name,'피해가 커진다.',{damage:1.2}),b('빠른 '+name,'재사용이 짧아진다.',{cooldown:.82}),AREA.has(id)?b('넓은 '+name,'범위가 넓어진다.',{area:1.2}):b('가벼운 '+name,'기력을 덜 쓰고 조금 자주 쓴다.',{cost:-6,cooldown:.92})];
- const third=[b('사냥꾼의 '+name,'보스·정예에게 강하다.',{boss:25}),b('처형자의 '+name,'빈사의 적을 끝낸다.',{execute:40}),b(elementName+'의 '+name,'타격마다 속성을 남긴다.',{element})];
- return [second,third];
-}
-function buffTiers(name){
- return [[b('짙은 '+name,'효과가 커진다.',{power:8}),b('긴 '+name,'오래 유지된다.',{duration:1.3}),b('빠른 '+name,'재사용이 짧아진다.',{cooldown:.8})],
-  [b('완성된 '+name,'효과가 크게 커진다.',{power:12}),b('끝없는 '+name,'훨씬 오래 유지된다.',{duration:1.5}),b('가벼운 '+name,'기력을 덜 쓰고 자주 쓴다.',{cost:-10,cooldown:.85})]];
-}
+// Alpha 0.146.0 (사용자 요청 '갈래가 너무 단순하고 스킬끼리 비슷하다, 빌드가 단순하다'): tiers 2 and 3 no longer add plain
+// numbers. Each skill gets its own rule changes (combat-skills.js applies them):
+//  fan n            extra copies of the skill turned ±22° (half damage each)        repeat {delay,scale}  the skill strikes again
+//  zone {seconds,scale}  leaves a cutting zone that ticks every .5s              pull f       drags common monsters toward the hit
+//  detonate f       hitting a bleeding enemy bursts the bleed: attack×f per tick left   shatter %   bonus against a frozen enemy (thaws it)
+//  chain {n,range,scale} the first target's hit jumps to n more enemies            refundKill s  a kill by this skill takes s off its cooldown
+//  stack {per,max}  every recast within 8s adds per% (up to max)                    prime {tag,pct}  the next skill of that tag within 4s +pct%
+//  primed %         +% when another skill was cast within the last 3s               hpCost f    also costs f of max health (never below 1)
+//  drainHit %       heals % of the damage it deals (≤6% max health per cast)        expose s    hit enemies are exposed (staggered) for s
+//  after {kind,value,seconds}  after the cast: fury (basic attack +%), haste (move +%), guard (damage taken −%)
+//  skill-only: stanceCounter %, stanceShield f, bladeWave %, bladeDrain f, bladeBleed n, markSpread n, markBlast radius,
+//   markRefund s, parryReset s, parryRadius ×, parryGuard %, phantomBleed n, phantomChain %, phantomBurst %, phantomDrain f.
+// Passive tiers 2·3 are build rules (see PASSIVE_RULES below).
+const A=(name,text,mods)=>b(name,text,mods);
+const RULES={
+ crescent:[[A('삼일월','검기가 양옆으로 하나씩 더 갈라진다(각 50%).',{fan:2}),A('잔향 월아','0.5초 뒤 같은 검기가 한 번 더 지나간다(60%). 재사용 +15%.',{repeat:{delay:.5,scale:.6},cooldown:1.15}),A('흡월','검기가 준 피해의 4%만큼 체력을 회복한다.',{drainHit:4})],
+  [A('혈흔 폭발','출혈 중인 적을 베면 남은 출혈을 한꺼번에 터뜨린다.',{detonate:.35}),A('빙월 파쇄','빙결된 적에게 +45% 피해를 주고 녹인다. 맞은 적을 얼린다.',{shatter:45,element:{chill:.8}}),A('사냥 검풍','이 검기로 적을 처치하면 재사용 1.5초 감소.',{refundKill:1.5})]],
+ gale:[[A('왕복 질풍','돌진이 지나간 길을 0.45초 뒤 다시 벤다(70%).',{repeat:{delay:.45,scale:.7}}),A('돌개바람','돌진 경로 주변의 일반 괴수를 끌어당긴다.',{pull:.45}),A('질풍 가속','돌진 뒤 2초 동안 이동 속도 +25%. 기력 −5.',{after:{kind:'haste',value:25,seconds:2},cost:-5})],
+  [A('바람 사냥','이 돌진으로 처치하면 재사용 2초 감소.',{refundKill:2}),A('질풍 연계','돌진 뒤 4초 안의 일격 스킬 피해 +30%.',{prime:{tag:'precision',pct:30}}),A('피의 질주','출혈 중인 적을 지나가며 출혈을 터뜨린다.',{detonate:.3})]],
+ dance:[[A('회오리 윤무','벨 때마다 주변 괴수를 안쪽으로 끌어당긴다.',{pull:.25}),A('칼바람 잔류','윤무가 끝난 자리에 2초간 칼바람이 남는다.',{zone:{seconds:2,scale:.12}}),A('방패 윤무','윤무 뒤 2초 동안 받는 피해 −20%.',{after:{kind:'guard',value:20,seconds:2}})],
+  [A('고조되는 윤무','8초 안에 다시 쓸 때마다 피해 +12% (최대 +36%).',{stack:{per:12,max:36}}),A('혈풍','출혈 중인 적을 베면 출혈을 터뜨린다.',{detonate:.25}),A('흡혈 윤무','준 피해의 3%만큼 체력을 회복한다.',{drainHit:3})]],
+ draw:[[A('이단 발도','0.35초 뒤 칼을 한 번 더 뽑는다(50%).',{repeat:{delay:.35,scale:.5}}),A('섬광 발도','맞은 적을 2초 동안 무너뜨린다(노출).',{expose:2}),A('쾌도','다른 스킬 직후 3초 안에 뽑으면 피해 +30%.',{primed:30})],
+  [A('참철','빙결된 적에게 +60% 피해를 주고 녹인다.',{shatter:60}),A('결단','발도로 처치하면 재사용 3초 감소.',{refundKill:3}),A('혈도','최대 체력 5%를 바쳐 피해 +35%.',{hpCost:.05,damage:1.35})]],
+ plunge:[[A('여진','내려친 자리에 2.5초간 여진이 남는다.',{zone:{seconds:2.5,scale:.15}}),A('중력 낙월','내려치며 주변 괴수를 중심으로 끌어당긴다.',{pull:.5}),A('연속 낙하','0.6초 뒤 같은 자리를 한 번 더 내려친다(50%).',{repeat:{delay:.6,scale:.5}})],
+  [A('얼음 운석','맞은 적을 얼리고, 빙결된 적에게 +50% 피해.',{shatter:50,element:{chill:1}}),A('낙월 연계','착지 뒤 4초 안의 영역 스킬 피해 +30%.',{prime:{tag:'area',pct:30}}),A('처형 낙하','낙월로 처치하면 재사용 2초 감소.',{refundKill:2})]],
+ parry:[[A('되감기','받아내면 모든 일반 스킬 재사용 2초 감소.',{parryReset:2}),A('반격 파동','반격이 주변 전체로 퍼진다.',{parryRadius:1.8}),A('철벽 흘리기','받아내면 2초 동안 받는 피해 −30%.',{parryGuard:30})],
+  [A('역습','흘려베기 뒤 4초 안의 일격 스킬 피해 +40%.',{prime:{tag:'precision',pct:40}}),A('흘림 흡수','반격 피해의 8%만큼 체력을 회복한다.',{drainHit:8}),A('노출 반격','반격에 맞은 적을 3초 동안 무너뜨린다.',{expose:3})]],
+ echo:[[A('삼중 잔상','0.4초 뒤 잔상이 한 번 더 벤다(60%).',{repeat:{delay:.4,scale:.6}}),A('잔상 지대','벤 자리에 2초간 잔상이 남아 벤다.',{zone:{seconds:2,scale:.12}}),A('그림자 연계','잔영참 뒤 4초 안의 잔상 스킬 피해 +30%.',{prime:{tag:'spirit',pct:30}})],
+  [A('그림자 출혈','출혈 중인 적을 베면 출혈을 터뜨린다.',{detonate:.3}),A('잔상 회수','잔영참으로 처치하면 재사용 2초 감소.',{refundKill:2}),A('어둠 걸음','잔영참 뒤 2초 동안 이동 속도 +30%.',{after:{kind:'haste',value:30,seconds:2}})]],
+ triple:[[A('부채 연월','세 번의 베기가 양옆으로도 퍼진다(각 50%).',{fan:2}),A('누적 연월','8초 안에 다시 쓸 때마다 피해 +10% (최대 +40%).',{stack:{per:10,max:40}}),A('연계 연월','다른 스킬 직후 3초 안에 쓰면 피해 +25%.',{primed:25})],
+  [A('출혈 마무리','출혈 중인 적을 베면 출혈을 터뜨린다.',{detonate:.3}),A('빙결 마무리','빙결된 적에게 +50% 피해를 주고 녹인다.',{shatter:50}),A('연격 고조','연월참 뒤 3초 동안 기본 공격 피해 +20%.',{after:{kind:'fury',value:20,seconds:3}})]],
+ seeking:[[A('연쇄 검기','맞은 적에게서 가까운 적 3명에게 튄다(각 50%).',{chain:{n:3,range:220,scale:.5}}),A('사냥 검기','맞은 적을 2초 동안 무너뜨린다.',{expose:2}),A('잔향 추적','0.5초 뒤 검기가 한 번 더 쫓아간다(60%).',{repeat:{delay:.5,scale:.6}})],
+  [A('표적 처형','추적 검기로 처치하면 재사용 3초 감소.',{refundKill:3}),A('혈침','출혈 중인 적에게 꽂혀 출혈을 터뜨린다.',{detonate:.4}),A('빙침','빙결된 적에게 +60% 피해를 주고 녹인다.',{shatter:60})]],
+ returning:[[A('삼방 회귀','검기가 세 갈래로 나갔다 돌아온다(곁가지 각 50%).',{fan:2}),A('휘감는 귀환','돌아오는 검기가 괴수를 끌고 온다.',{pull:.25}),A('검기 잔류','검기가 지난 자리에 2초간 검기가 남는다.',{zone:{seconds:2,scale:.12}})],
+  [A('회수 가속','회귀월로 처치하면 재사용 1초 감소.',{refundKill:1}),A('혈월 귀환','출혈 중인 적을 베면 출혈을 터뜨린다.',{detonate:.3}),A('회귀 연계','회귀월 뒤 4초 안의 검기 스킬 피해 +30%.',{prime:{tag:'wave',pct:30}})]],
+ field:[[A('중력진','진 안의 일반 괴수가 중심으로 끌려간다.',{pull:.2}),A('겹진','1.5초 뒤 같은 자리에 진이 한 번 더 펼쳐진다(50%).',{repeat:{delay:1.5,scale:.5}}),A('흡혈진','진이 준 피해의 2%만큼 체력을 회복한다.',{drainHit:2})],
+  [A('빙결진','진 안의 적을 얼리고, 빙결된 적에게 +30% 피해.',{shatter:30,element:{chill:.6}}),A('혈진','출혈 중인 적의 출혈을 터뜨린다.',{detonate:.2}),A('누적진','8초 안에 다시 펼칠 때마다 피해 +15% (최대 +45%).',{stack:{per:15,max:45}})]],
+ breach:[[A('균열 확산','강타가 주변 적 4명에게 균열로 번진다(각 40%).',{chain:{n:4,range:200,scale:.4}}),A('연속 파갑','0.5초 뒤 한 번 더 내려친다(50%).',{repeat:{delay:.5,scale:.5}}),A('노출 강타','맞은 적을 3초 동안 무너뜨린다.',{expose:3})],
+  [A('파갑 연계','파갑참 뒤 4초 안의 일격 스킬 피해 +35%.',{prime:{tag:'precision',pct:35}}),A('갑옷 파쇄','빙결된 적에게 +50% 피해를 주고 녹인다.',{shatter:50}),A('분쇄 흡수','준 피해의 5%만큼 체력을 회복한다.',{drainHit:5})]],
+ gather:[[A('월쇄 폭발','모은 자리에 1.5초간 사슬 폭풍이 남는다.',{zone:{seconds:1.5,scale:.2}}),A('이중 월쇄','0.6초 뒤 한 번 더 끌어모아 벤다(50%).',{repeat:{delay:.6,scale:.5}}),A('사슬 노출','모은 적을 2초 동안 무너뜨린다.',{expose:2})],
+  [A('사슬 연계','월쇄 뒤 4초 안의 영역 스킬 피해 +30%.',{prime:{tag:'area',pct:30}}),A('혈사슬','출혈 중인 적의 출혈을 터뜨린다.',{detonate:.3}),A('처형 사슬','월쇄로 처치하면 재사용 1.5초 감소.',{refundKill:1.5})]],
+ stance:[[A('반격의 자세','자세 중 맞으면 주변 180에 공격력 60% 반격.',{stanceCounter:60}),A('물의 장막','자세를 잡으며 최대 체력 8% 보호막.',{stanceShield:.08}),A('물살 걸음','자세를 잡은 뒤 3초 동안 이동 속도 +20%, 재사용 −15%.',{after:{kind:'haste',value:20,seconds:3},cooldown:.85})],
+  [A('수월 연계','자세 뒤 4초 안의 다음 스킬 피해 +50%.',{prime:{tag:'any',pct:50}}),A('수월 반사','반격이 공격력 140%로 커진다.',{stanceCounter:140}),A('부동명왕','자세의 피해 감소 +20%p.',{power:20})]],
+ bloodblade:[[A('혈월 검풍','칼날 중 3연격 마무리마다 전방 260에 검기(공격력 35%).',{bladeWave:35}),A('피의 대가','최대 체력 6%를 바쳐 연격 피해 +20%p.',{hpCost:.06,power:20}),A('질주하는 혈월','칼날을 세운 뒤 6초 동안 이동 속도 +20%.',{after:{kind:'haste',value:20,seconds:6}})],
+  [A('흡혈 칼날','칼날 중 기본 공격 적중마다 최대 체력 0.3% 회복.',{bladeDrain:.003}),A('혈월 출혈','칼날 중 기본 공격이 출혈을 남긴다.',{bladeBleed:3}),A('혈월 연계','칼날을 세운 뒤 4초 안의 다음 스킬 피해 +30%.',{prime:{tag:'any',pct:30}})]],
+ mark:[[A('전염 표식','표식이 터지면 주변 적 2명에게 새 표식이 옮는다.',{markSpread:2}),A('폭쇄 표식','표식 폭발이 주변 160에도 60% 피해.',{markBlast:160}),A('노출 표식','표식을 새길 때 3초 동안 무너뜨린다.',{expose:3})],
+  [A('표식 회수','표식 폭발로 처치하면 재사용 4초 감소.',{markRefund:4}),A('피의 표식','표식 대상의 출혈을 폭발 때 터뜨린다.',{detonate:.4}),A('표식 연계','표식을 새긴 뒤 4초 안의 일격 스킬 피해 +35%.',{prime:{tag:'precision',pct:35}})]],
+ bloodmoon:[[A('적월 소용돌이','벨 때마다 주변 괴수를 끌어당긴다.',{pull:.3}),A('핏빛 영역','끝난 자리에 3초간 핏빛 영역이 남는다.',{zone:{seconds:3,scale:.15}}),A('적월 흡혈','준 피해의 3%만큼 체력을 회복한다.',{drainHit:3})],
+  [A('혈폭','출혈 중인 적의 출혈을 크게 터뜨린다.',{detonate:.5}),A('적월 연계','적월난무 뒤 4초 안의 다음 스킬 피해 +40%.',{prime:{tag:'any',pct:40}}),A('처형의 달','적월난무로 처치하면 재사용 4초 감소.',{refundKill:4})]],
+ eclipse:[[A('삼일 월식','일섬이 양옆으로 갈라진다(각 50%).',{fan:2}),A('잔광','0.6초 뒤 같은 선을 한 번 더 벤다(50%).',{repeat:{delay:.6,scale:.5}}),A('월식 노출','맞은 적을 4초 동안 무너뜨린다.',{expose:4})],
+  [A('빙월식','빙결된 적에게 +80% 피해를 주고 녹인다.',{shatter:80}),A('월식 처형','일섬으로 처치하면 재사용 8초 감소.',{refundKill:8}),A('혈식','최대 체력 8%를 바쳐 피해 +45%.',{hpCost:.08,damage:1.45})]],
+ phantoms:[[A('피의 군무','잔상 타격이 출혈을 남긴다.',{phantomBleed:3}),A('연쇄 잔상','잔상 타격이 가까운 적 하나에 더 튄다(60%).',{phantomChain:60}),A('군무 가속','군무 중 이동 속도 +25%.',{after:{kind:'haste',value:25,seconds:8}})],
+  [A('잔상 폭발','군무가 끝날 때 주변 260에 공격력 150% 폭발.',{phantomBurst:150}),A('군무 연계','군무 뒤 4초 안의 다음 스킬 피해 +40%.',{prime:{tag:'any',pct:40}}),A('흡혈 잔상','잔상 타격마다 최대 체력 0.4% 회복.',{phantomDrain:.004})]],
+};
+// Passives: tier 1 keeps the number/stat choice; tiers 2·3 are build rules while the passive is equipped:
+//  tagBonus {tag:%} skills of that tag deal more · costCut n · cooldownCut f · elementAll {bleed|chill} on every skill hit
+//  bleedBonus/chillBonus/bossDamage/crowdDamage(3+ near)/lowHpDamage(<50%)/highStaminaDamage(≥70)/primedAll % (skill damage when …)
+//  killStamina n · killHeal f · killFury % (3s) · perfectReset s · perfectFury % (3s) · perfectStamina n · perfectShield f
+//  exposeAll s (skill hits expose) · drainAll % (skill damage heals) · finisherBleed n · finisherExpose s (3연격 마무리)
+const P=(name,text,mods)=>b(name,text,mods);
+const PASSIVE_RULES={
+ opening:[[P('찰나 재정비','완벽 회피 시 모든 일반 스킬 재사용 2초 감소.',{perfectReset:2}),P('틈새 일격','완벽 회피 뒤 3초 동안 스킬 피해 +30%.',{perfectFury:30}),P('찰나 호흡','완벽 회피 시 기력 +20.',{perfectStamina:20})],
+  [P('반격 본능','일격 스킬 피해 +15%.',{tagBonus:{precision:15}}),P('잔상 회피','완벽 회피 시 최대 체력 6% 보호막.',{perfectShield:.06}),P('가벼운 칼끝','모든 일반 스킬 기력 −4.',{costCut:4})]],
+ flow:[[P('흐름 고조','다른 스킬 직후 3초 안에 쓰는 스킬 피해 +15%.',{primedAll:15}),P('끊김 없는 검무','일반 스킬 재사용 −6%.',{cooldownCut:.06}),P('흐름의 숨','처치 시 기력 +4.',{killStamina:4})],
+  [P('잔상의 흐름','잔상 스킬 피해 +15%.',{tagBonus:{spirit:15}}),P('가벼운 검무','모든 일반 스킬 기력 −5.',{costCut:5}),P('검무 폭주','처치 뒤 3초 동안 스킬 피해 +15%.',{killFury:15})]],
+ finisher:[[P('검끝 출혈','3연격 마무리가 출혈을 남긴다.',{finisherBleed:3}),P('검끝 노출','3연격 마무리가 적을 1.5초 무너뜨린다.',{finisherExpose:1.5}),P('검끝 일격','일격 스킬 피해 +12%.',{tagBonus:{precision:12}})],
+  [P('상처 벌리기','출혈 중인 적에게 스킬 피해 +20%.',{bleedBonus:20}),P('거인 사냥','보스·정예에게 스킬 피해 +15%.',{bossDamage:15}),P('검끝 연타','처치 뒤 3초 동안 스킬 피해 +15%.',{killFury:15})]],
+ footwork:[[P('돌진 숙련','돌진 스킬 피해 +15%.',{tagBonus:{dash:15}}),P('발걸음 재정비','완벽 회피 시 모든 일반 스킬 재사용 1.5초 감소.',{perfectReset:1.5}),P('가벼운 발','모든 일반 스킬 기력 −3.',{costCut:3})],
+  [P('질주 일격','완벽 회피 뒤 3초 동안 스킬 피해 +25%.',{perfectFury:25}),P('바람 걸음','돌진 스킬 피해 +12% · 일반 스킬 재사용 −5%.',{tagBonus:{dash:12},cooldownCut:.05}),P('사냥꾼의 숨','처치 시 최대 체력 1% 회복.',{killHeal:.01})]],
+ pursuit:[[P('추격 숙련','돌진 스킬 피해 +15%.',{tagBonus:{dash:15}}),P('추격의 숨','처치 시 기력 +5.',{killStamina:5}),P('피 냄새','출혈 중인 적에게 스킬 피해 +15%.',{bleedBonus:15})],
+  [P('피의 추격','모든 스킬 타격이 출혈 2회를 남긴다.',{elementAll:{bleed:2}}),P('잔상 추격술','잔상 스킬 피해 +12%.',{tagBonus:{spirit:12}}),P('추격 폭주','처치 뒤 3초 동안 스킬 피해 +15%.',{killFury:15})]],
+ imbalance:[[P('거인 무너뜨리기','보스·정예에게 스킬 피해 +12%.',{bossDamage:12}),P('얼어붙은 틈','빙결된 적에게 스킬 피해 +20%.',{chillBonus:20}),P('벌어진 상처','출혈 중인 적에게 스킬 피해 +15%.',{bleedBonus:15})],
+  [P('붕괴','모든 스킬 타격이 적을 0.8초 무너뜨린다.',{exposeAll:.8}),P('일격 붕괴','일격 스킬 피해 +15%.',{tagBonus:{precision:15}}),P('영역 붕괴','영역 스킬 피해 +15%.',{tagBonus:{area:15}})]],
+ breath:[[P('충만한 기','기력 70 이상일 때 스킬 피해 +15%.',{highStaminaDamage:15}),P('가벼운 호흡','모든 일반 스킬 기력 −4.',{costCut:4}),P('사냥의 숨','처치 시 기력 +4.',{killStamina:4})],
+  [P('명상','잔상 스킬 피해 +15%.',{tagBonus:{spirit:15}}),P('고요한 칼','일반 스킬 재사용 −6%.',{cooldownCut:.06}),P('벼랑 끝 호흡','체력 50% 미만일 때 스킬 피해 +20%.',{lowHpDamage:20})]],
+ resolve:[[P('결사','체력 50% 미만일 때 스킬 피해 +20%.',{lowHpDamage:20}),P('피의 결의','처치 시 최대 체력 1.5% 회복.',{killHeal:.015}),P('거인 앞의 결의','보스·정예에게 스킬 피해 +10%.',{bossDamage:10})],
+  [P('최후의 일격','체력 50% 미만일 때 스킬 피해 +35%.',{lowHpDamage:35}),P('흡혈 결의','스킬 피해의 1.5%만큼 체력을 회복한다.',{drainAll:1.5}),P('포위 결의','영역 스킬 피해 +12%.',{tagBonus:{area:12}})]],
+ lone:[[P('일대일','보스·정예에게 스킬 피해 +15%.',{bossDamage:15}),P('고독한 일격','일격 스킬 피해 +12%.',{tagBonus:{precision:12}}),P('고독한 숨','처치 시 기력 +5.',{killStamina:5})],
+  [P('보스 사냥꾼','보스·정예에게 스킬 피해 +25%.',{bossDamage:25}),P('얼음 사냥','빙결된 적에게 스킬 피해 +25%.',{chillBonus:25}),P('표적 붕괴','모든 스킬 타격이 적을 0.6초 무너뜨린다.',{exposeAll:.6})]],
+ surrounded:[[P('난전','주변 240에 적이 3명 이상이면 스킬 피해 +15%.',{crowdDamage:15}),P('영역 숙련','영역 스킬 피해 +12%.',{tagBonus:{area:12}}),P('난전의 숨','처치 시 기력 +4.',{killStamina:4})],
+  [P('포위 섬멸','주변에 적이 3명 이상이면 스킬 피해 +25%.',{crowdDamage:25}),P('얼음 포위','모든 스킬 타격이 0.6초 빙결을 남긴다.',{elementAll:{chill:.6}}),P('난전 회복','처치 시 최대 체력 1% 회복.',{killHeal:.01})]],
+ scar:[[P('검흔 출혈','3연격 마무리가 출혈을 남긴다.',{finisherBleed:3}),P('깊은 상처','출혈 중인 적에게 스킬 피해 +20%.',{bleedBonus:20}),P('검흔 일격','일격 스킬 피해 +10%.',{tagBonus:{precision:10}})],
+  [P('피의 검흔','모든 스킬 타격이 출혈 2회를 남긴다.',{elementAll:{bleed:2}}),P('찢어진 상처','출혈 중인 적에게 스킬 피해 +30%.',{bleedBonus:30}),P('검흔 사냥','처치 시 기력 +5.',{killStamina:5})]],
+ recovery:[[P('검기 숙련','검기 스킬 피해 +15%.',{tagBonus:{wave:15}}),P('가벼운 회수','모든 일반 스킬 기력 −4.',{costCut:4}),P('회수의 숨','처치 시 기력 +4.',{killStamina:4})],
+  [P('검기 극의','검기 스킬 피해 +20%.',{tagBonus:{wave:20}}),P('순환','일반 스킬 재사용 −6%.',{cooldownCut:.06}),P('서리 궤적','빙결된 적에게 스킬 피해 +20%.',{chillBonus:20})]],
+ steady:[[P('거목','보스·정예에게 스킬 피해 +12%.',{bossDamage:12}),P('정심','일격 스킬 피해 +15%.',{tagBonus:{precision:15}}),P('흔들림 없는 기','기력 70 이상일 때 스킬 피해 +12%.',{highStaminaDamage:12})],
+  [P('부동의 일격','기력 70 이상일 때 스킬 피해 +20%.',{highStaminaDamage:20}),P('빙벽 가르기','빙결된 적에게 스킬 피해 +25%.',{chillBonus:25}),P('산을 베다','보스·정예에게 스킬 피해 +20%.',{bossDamage:20})]],
+ resonance:[[P('공명 숙련','잔상 스킬 피해 +15%.',{tagBonus:{spirit:15}}),P('그림자 돌진','돌진 스킬 피해 +12%.',{tagBonus:{dash:12}}),P('공명의 숨','처치 시 기력 +4.',{killStamina:4})],
+  [P('완전 공명','잔상 스킬 피해 +22%.',{tagBonus:{spirit:22}}),P('공명 연쇄','다른 스킬 직후 3초 안에 쓰는 스킬 피해 +15%.',{primedAll:15}),P('공명 붕괴','모든 스킬 타격이 적을 0.6초 무너뜨린다.',{exposeAll:.6})]],
+ momentum:[[P('여세의 숨','처치 시 기력 +5.',{killStamina:5}),P('여세 회복','처치 시 최대 체력 1% 회복.',{killHeal:.01}),P('난전 여세','주변에 적이 3명 이상이면 스킬 피해 +12%.',{crowdDamage:12})],
+  [P('폭주','처치 뒤 3초 동안 스킬 피해 +20%.',{killFury:20}),P('끝없는 사냥','일반 스킬 재사용 −6%.',{cooldownCut:.06}),P('사냥 본능','영역 스킬 피해 +12%.',{tagBonus:{area:12}})]],
+ reserve:[[P('여유','기력 70 이상일 때 스킬 피해 +15%.',{highStaminaDamage:15}),P('절약','모든 일반 스킬 기력 −3.',{costCut:3}),P('배수진','체력 50% 미만일 때 스킬 피해 +15%.',{lowHpDamage:15})],
+  [P('넘치는 여력','기력 70 이상일 때 스킬 피해 +25%.',{highStaminaDamage:25}),P('비축','스킬 피해의 1%만큼 체력을 회복한다.',{drainAll:1}),P('여력의 회복','처치 시 최대 체력 1.2% 회복.',{killHeal:.012})]],
+};
+// Build tags (0.146.0): equipped active and ultimate skills of one tag add up (2·3·4 skills). The bonuses apply to the skills of
+// that tag as extra branch mods (TAG_SYNERGY[tag][n] for n = 2,3,4 equipped), so they reuse the same rules.
+export const SKILL_TAGS=Object.freeze({crescent:['wave'],seeking:['wave'],returning:['wave'],eclipse:['wave','precision'],gale:['dash'],echo:['dash','spirit'],plunge:['dash','area'],
+ dance:['area'],field:['area'],gather:['area'],bloodmoon:['area'],draw:['precision'],breach:['precision'],triple:['precision'],parry:['precision'],mark:['precision','spirit'],stance:['spirit'],bloodblade:['spirit'],phantoms:['spirit']});
+export const TAG_NAMES=Object.freeze({wave:'검기',dash:'돌진',area:'영역',precision:'일격',spirit:'잔상'});
+export const TAG_SYNERGY=Object.freeze({
+ wave:[[2,{damage:1.08},'피해 +8%'],[3,{area:1.15},'범위 +15%'],[4,{refundKill:.5,damage:1.08},'처치 시 재사용 0.5초 감소 · 피해 +8%']],
+ dash:[[2,{damage:1.08},'피해 +8%'],[3,{after:{kind:'guard',value:15,seconds:1.5}},'사용 뒤 1.5초 받는 피해 −15%'],[4,{cooldown:.85},'재사용 −15%']],
+ area:[[2,{damage:1.08},'피해 +8%'],[3,{pull:.15},'괴수를 끌어당김'],[4,{zone:{seconds:1.5,scale:.1}},'끝난 자리에 1.5초 잔류 영역']],
+ precision:[[2,{boss:10},'보스·정예 +10%'],[3,{execute:20},'빈사 적 +20%'],[4,{expose:1.5,damage:1.1},'적중 시 1.5초 노출 · 피해 +10%']],
+ spirit:[[2,{damage:1.05,duration:1.15},'피해 +5% · 지속 +15%'],[3,{primed:15},'다른 스킬 직후 +15%'],[4,{cost:-5,cooldown:.9},'기력 −5 · 재사용 −10%']],
+});
 // Ultimate tier 4 (Lv.20).
 const ULT_LAST={
  bloodmoon:[b('극 · 적월','적월난무가 훨씬 강하다.',{damage:1.3}),b('극 · 쾌월','재사용이 크게 줄어든다.',{cooldown:.72}),b('극 · 만월','더 넓게 휘몰아친다.',{area:1.25,damage:1.1})],
@@ -62,16 +154,16 @@ const PASSIVE_STATS={opening:['crit','attackSpeed'],flow:['attackSpeed','regener
 const STAT_STEP={damagePct:[.03,.05,.08],hpPct:[.04,.06,.09],attackSpeed:[.03,.05,.08],speed:[.03,.05,.07],crit:[.02,.03,.05],reduction:[.02,.03,.04],regeneration:[1,2,3]};
 // [tier names ×3, stat text]
 const STAT_NAME={damagePct:[['맹공','격노','파괴'],'공격력'],hpPct:[['생명','활력','불멸'],'최대 체력'],attackSpeed:[['연격','쾌검','섬광'],'공격 속도'],speed:[['질주','질풍','신속'],'이동 속도'],crit:[['예리함','통찰','필살'],'치명타 확률'],reduction:[['견고함','철벽','불굴'],'받는 피해 감소'],regeneration:[['회복','재생','소생'],'체력 재생']};
-const VALUE_STEP=[1.2,1.25,1.3],VALUE_NAME=['깊은','짙은','완성된'];
-function passiveTiers(id,name){
- return [0,1,2].map(t=>[b(VALUE_NAME[t]+' '+name,id==='resolve'?'재발동 대기 시간이 짧아진다.':'효과 수치가 커진다.',{value:VALUE_STEP[t]}),
-  ...PASSIVE_STATS[id].map(k=>b(STAT_NAME[k][0][t]+'의 '+name,'장착한 동안 '+STAT_NAME[k][1]+'이 오른다.',{stat:{[k]:STAT_STEP[k][t]}}))]);
+// Tier 1: a stronger number or one of two stats that suit the passive (0.142, kept so bought branches stay).
+function passiveFirst(id,name){
+ return [b('깊은 '+name,id==='resolve'?'재발동 대기 시간이 짧아진다.':'효과 수치가 커진다.',{value:1.2}),
+  ...PASSIVE_STATS[id].map(k=>b(STAT_NAME[k][0][0]+'의 '+name,'장착한 동안 '+STAT_NAME[k][1]+'이 오른다.',{stat:{[k]:STAT_STEP[k][0]}}))];
 }
 const NAMES={crescent:'월아참',gale:'질풍참',dance:'윤무',draw:'발도',plunge:'낙월',parry:'흘려베기',echo:'잔영참',triple:'연월참',seeking:'추적 검기',returning:'회귀월',field:'잔월진',breach:'파갑참',gather:'월쇄',stance:'수월의 자세',mark:'월영 표식',bloodblade:'혈월의 칼날',bloodmoon:'적월난무',eclipse:'일섬·월식',phantoms:'월영군무',
  opening:'찰나의 틈',flow:'검무의 흐름',finisher:'마지막 검끝',footwork:'사냥꾼의 발걸음',pursuit:'잔상 추격',imbalance:'무너진 균형',breath:'절제된 호흡',resolve:'적월의 결의',lone:'고독한 사냥',surrounded:'포위 돌파',scar:'깊은 검흔',recovery:'회수의 궤적',steady:'흔들리지 않는 검',resonance:'월영 공명',momentum:'사냥의 여세',reserve:'남겨둔 여력'};
 const tiers={};
-for(const [id,first] of Object.entries(FIRST)){const rest=BUFF.has(id)?buffTiers(NAMES[id]):attackTiers(id,NAMES[id]);tiers[id]=[first,...rest,...(ULT_LAST[id]?[ULT_LAST[id]]:[])].map(t=>Object.freeze(t));}
-for(const id of Object.keys(PASSIVE_STATS))tiers[id]=passiveTiers(id,NAMES[id]).map(t=>Object.freeze(t));
+for(const [id,first] of Object.entries(FIRST))tiers[id]=[first,...RULES[id],...(ULT_LAST[id]?[ULT_LAST[id]]:[])].map(t=>Object.freeze(t));
+for(const id of Object.keys(PASSIVE_STATS))tiers[id]=[passiveFirst(id,NAMES[id]),...PASSIVE_RULES[id]].map(t=>Object.freeze(t));
 // SKILL_BRANCHES[id] = [tier][option]. Tier t opens at skill Lv.(t+1)×5.
 export const SKILL_BRANCHES=Object.freeze(Object.fromEntries(Object.entries(tiers).map(([k,v])=>[k,Object.freeze(v)])));
 const pct=v=>Math.round(v*100);
@@ -96,5 +188,31 @@ export function branchSummary(mods){
  if(e.push)out.push('밀쳐내기 '+e.push);
  if(e.breach)out.push('받는 피해 +'+e.breach+'%');
  if(e.shield)out.push('보호막 '+pct(e.shield)+'%');
+ // 0.146.0 rule branches
+ const AFTER={fury:'기본 공격',haste:'이동 속도',guard:'받는 피해'};
+ if(mods.fan)out.push('분열 +'+mods.fan);
+ if(mods.repeat)out.push(mods.repeat.delay+'초 뒤 재타격 '+pct(mods.repeat.scale)+'%');
+ if(mods.zone)out.push('잔류 '+mods.zone.seconds+'초');
+ if(mods.pull)out.push('괴수 끌어당김 '+pct(mods.pull)+'%');
+ if(mods.detonate)out.push('출혈 폭발');
+ if(mods.shatter)out.push('빙결 +'+mods.shatter+'%');
+ if(mods.chain)out.push('연쇄 '+mods.chain.n+'명');
+ if(mods.refundKill)out.push('처치 시 재사용 −'+mods.refundKill+'초');
+ if(mods.stack)out.push('누적 최대 +'+mods.stack.max+'%');
+ if(mods.prime)out.push('다음 '+(TAG_NAMES[mods.prime.tag]??'')+' 스킬 +'+mods.prime.pct+'%');
+ if(mods.primed)out.push('연계 시 +'+mods.primed+'%');
+ if(mods.hpCost)out.push('체력 −'+pct(mods.hpCost)+'%');
+ if(mods.drainHit)out.push('흡혈 '+mods.drainHit+'%');
+ if(mods.expose)out.push('노출 '+mods.expose+'초');
+ if(mods.after)out.push(AFTER[mods.after.kind]+' '+(mods.after.kind==='guard'?'−':'+')+mods.after.value+'% '+mods.after.seconds+'초');
+ for(const [k,v] of Object.entries(mods.tagBonus??{}))out.push(TAG_NAMES[k]+' 스킬 +'+v+'%');
+ const RULE_TEXT={stanceCounter:v=>'반격 '+v+'%',stanceShield:v=>'보호막 '+pct(v)+'%',bladeWave:v=>'검풍 '+v+'%',bladeDrain:v=>'타격 회복 '+(v*100).toFixed(1)+'%',bladeBleed:v=>'연격 출혈',markSpread:v=>'표식 전염 '+v,markBlast:v=>'폭발 범위 '+v,markRefund:v=>'처치 시 재사용 −'+v+'초',
+  parryReset:v=>'재사용 −'+v+'초',parryRadius:v=>'반격 범위 ×'+v,parryGuard:v=>'받는 피해 −'+v+'%',phantomBleed:v=>'잔상 출혈',phantomChain:v=>'잔상 연쇄 '+v+'%',phantomBurst:v=>'종료 폭발 '+v+'%',phantomDrain:v=>'잔상 회복',
+  costCut:v=>'기력 −'+v,cooldownCut:v=>'재사용 −'+pct(v)+'%',bleedBonus:v=>'출혈 적 +'+v+'%',chillBonus:v=>'빙결 적 +'+v+'%',bossDamage:v=>'보스·정예 +'+v+'%',crowdDamage:v=>'난전 +'+v+'%',lowHpDamage:v=>'빈사 시 +'+v+'%',highStaminaDamage:v=>'기력 충만 +'+v+'%',primedAll:v=>'연계 +'+v+'%',
+  killStamina:v=>'처치 기력 +'+v,killHeal:v=>'처치 회복 '+(v*100).toFixed(1)+'%',killFury:v=>'처치 후 +'+v+'%',perfectReset:v=>'회피 시 재사용 −'+v+'초',perfectFury:v=>'회피 후 +'+v+'%',perfectStamina:v=>'회피 기력 +'+v,perfectShield:v=>'회피 보호막 '+pct(v)+'%',
+  exposeAll:v=>'적중 노출 '+v+'초',drainAll:v=>'흡혈 '+v+'%',finisherBleed:v=>'마무리 출혈',finisherExpose:v=>'마무리 노출 '+v+'초'};
+ for(const [k,f] of Object.entries(RULE_TEXT))if(mods[k])out.push(f(mods[k]));
+ if(mods.elementAll?.bleed)out.push('모든 스킬 출혈');
+ if(mods.elementAll?.chill)out.push('모든 스킬 빙결');
  return out.join(' · ');
 }
