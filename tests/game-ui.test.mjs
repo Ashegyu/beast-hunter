@@ -419,6 +419,16 @@ test('combat HUD shows skill button DPS and live/average DPS from damage dealt (
  const now=game.liveDps(ui.state);assert.equal(ui.nodes.get('live-dps-now').textContent,String(Math.round(now.now)));assert.equal(ui.nodes.get('live-dps-average').textContent,'평균 '+Math.round(now.average));
  const id=ui.profile().skillBook.loadout.active[0],d=game.skillDpsOf(ui.profile(),id);assert.equal(ui.nodes.get('combat-skill-dps-0').hidden,false);assert.equal(ui.nodes.get('combat-skill-dps-0').textContent,'DPS '+Math.round(d.dps));
 });
+test('DPS dummy: stats sheet starts a 60-second run, the boss bar shows damage dealt and the result saves the record (0.148.8)',async()=>{
+ const p=game.createProfile(0);p.level=200;p.skillBook=game.restoreSkillBook(null,200);
+ const ui=await host({saved:p});ui.emit('home-profile','click');assert.match(ui.nodes.get('dummy-record').textContent,/실제 DPS/);
+ ui.emit('dummy-start','click');await ui.settle();assert.equal(ui.state.run.dungeonId,'dummy');assert.equal(ui.nodes.get('stats-sheet').hidden,true);
+ ui.run(5);assert.equal(ui.nodes.get('boss-name').textContent,'DPS 허수아비');assert.match(ui.nodes.get('boss-hp').textContent,/^누적 피해 /);
+ for(let i=0;i<70&&!game.resultReady(ui.state);i++)ui.run(1);
+ assert.ok(game.resultReady(ui.state));const r=ui.state.run.dungeonReward.dummy,saved=ui.profile().dummy;
+ assert.ok(r.dps>0&&r.record);assert.equal(saved.runs,1);assert.ok(Math.abs(saved.best-r.dps)<1e-6);
+ assert.match(ui.nodes.get('dungeon-result-list').textContent,new RegExp('^DPS '+Math.round(r.dps).toLocaleString('ko-KR')));assert.equal(ui.nodes.get('next-stage').textContent.startsWith('다시 측정'),true);
+});
 test('character stats sheet opens from home and equipment, mirrors playerStats and the combat HUD shows an XP bar',async()=>{
  const p=bagFixture();p.level=47;p.xp=Math.ceil(game.xpNeeded(47)*.63);p.growthTree=['blade-r','blade-1'];
  const ui=await host({saved:p}),before=ui.profile(),stats=game.playerStats(ui.profile());

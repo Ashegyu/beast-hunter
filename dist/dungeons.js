@@ -1,5 +1,5 @@
 // Growth dungeons reuse existing enemies, art and resource identities.
-import {enemyHpScale,enemyDamageScale} from './chapters.js?v=0.148.7';
+import {enemyHpScale,enemyDamageScale} from './chapters.js?v=0.148.8';
 // Alpha 0.141 (사용자 요청 '던전 단계가 너무 적다'): 100 levels on the chapter curve. Level L is fought like chapter
 // 1+(L−1)×0.9 (dungeonChapter: 10단계 ≈ 9장, 50단계 ≈ 45장, 100단계 ≈ 90장 = 정예 60장), times the dungeon's own hp/damage.
 export const DUNGEON_MAX_LEVEL=100,DUNGEON_CHAPTER_STEP=.9;
@@ -64,7 +64,12 @@ export function riftPlan(depth,week=0){
  const waves=RIFT_WAVES[kind].map(w=>Object.freeze({...w,elites:Object.freeze(extra?[...w.elites,...['skitter','spitter','bulwark'].filter(t=>!w.elites.includes(t)).slice(0,extra)]:w.elites)}));
  return {...RIFT,chapter:riftChapter(depth),floorKind:kind,mutators:m,stageType:'dungeon',timeLimit:m.reduce((v,r)=>Math.min(v,r.time??60),60),barrels:0,interval:kind==='boss'?0:.1,minimumTime:0,levelChapter:chapter,formation:kind==='boss'?'boss':'surge',hpScale:enemyHpScale(chapter)*k('hp'),damageScale:enemyDamageScale(chapter)*k('damage'),speedScale:k('speed'),armor:m.reduce((v,r)=>Math.max(v,r.armor??0),0),waves:Object.freeze(waves)};
 }
-export const dungeonDefinition=id=>id==='tower'?TOWER:id==='rift'?RIFT:DUNGEONS.find(d=>d.id===id)??null;
+// Alpha 0.148.8 DPS 허수아비 (사용자 요청): 1장 땅에 1장 보스 모습의 허수아비 하나. 움직이지도 공격하지도 않고 죽지 않는다(game-engine `e.dummy`).
+// 60초 동안 준 피해 ÷ 60초가 기록(profile.dummy). 입장 제한·보상 없음.
+export const DUMMY_SECONDS=60;
+export const DUMMY=Object.freeze({id:'dummy',name:'DPS 허수아비',kind:'DPS 측정',chapter:1,icon:'boss',tag:'DUMMY',rule:'60초 동안 움직이지도 공격하지도 않는 허수아비를 벱니다. 준 피해 ÷ 60초가 기록됩니다.',hint:'지금 빌드의 화력',use:'DPS 기록',hp:1,damage:0,formation:'boss',waves:Object.freeze([Object.freeze({boss:true,skitter:0,spitter:0,bulwark:0,elites:Object.freeze([])})])});
+export const dummyPlan=()=>({...DUMMY,stageType:'dungeon',timeLimit:DUMMY_SECONDS,barrels:0,interval:0,minimumTime:0,levelChapter:1,hpScale:1,damageScale:0});
+export const dungeonDefinition=id=>id==='tower'?TOWER:id==='rift'?RIFT:id==='dummy'?DUMMY:DUNGEONS.find(d=>d.id===id)??null;
 // The chapter whose land and monsters a dungeon level is fought on.
 export const dungeonStageId=(id,level)=>id==='tower'?towerChapter(level):id==='rift'?riftChapter(level):dungeonDefinition(id)?.chapter??1;
 export const emptyDungeonProgress=()=>Object.fromEntries(DUNGEONS.map(d=>[d.id,0]));
@@ -81,7 +86,7 @@ export function repeatRewards(reward){
  if(!reward)return null;const cut=n=>n>0?Math.max(1,Math.floor(n*DUNGEON_REPEAT_RATE)):0;
  return {...reward,gold:cut(reward.gold),...(reward.xp?{xp:cut(reward.xp)}:{}),materials:Object.fromEntries(Object.entries(reward.materials).map(([k,n])=>[k,cut(n)])),repeat:true};
 }
-export function dungeonLimit(profile,id){if(id==='tower')return Math.min(TOWER_MAX_FLOOR,(profile.tower?.best??0)+1);return dungeonDefinition(id)?Math.min(DUNGEON_MAX_LEVEL,(profile.dungeonProgress?.[id]??0)+1):0;}
+export function dungeonLimit(profile,id){if(id==='dummy')return 1;if(id==='tower')return Math.min(TOWER_MAX_FLOOR,(profile.tower?.best??0)+1);return dungeonDefinition(id)?Math.min(DUNGEON_MAX_LEVEL,(profile.dungeonProgress?.[id]??0)+1):0;}
 // Levels 1~10 pay exactly what they paid before 0.141; past 10 every reward keeps growing more slowly (`past`).
 const past=(level,every)=>Math.floor(Math.max(0,level-10)/every);
 export function dungeonRewards(id,level){
@@ -101,6 +106,7 @@ export function dungeonRewards(id,level){
 export function dungeonPlan(id,level,week=0){
  if(id==='tower')return towerPlan(level);
  if(id==='rift')return riftPlan(level,week);
+ if(id==='dummy')return dummyPlan();
  const d=dungeonDefinition(id);if(!d||!dungeonRewards(id,level))return null;
  const chapter=dungeonChapter(level);
  return {...d,stageType:'dungeon',timeLimit:60,barrels:0,interval:id==='gold'?.065:.14,minimumTime:0,chapter:d.chapter,levelChapter:chapter,hpScale:d.hp*enemyHpScale(chapter),damageScale:d.damage*enemyDamageScale(chapter)};

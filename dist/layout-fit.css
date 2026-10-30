@@ -2005,3 +2005,8 @@
 #game-shell#game-shell#game-shell .entry-build-grid>button[hidden],#game-shell#game-shell#game-shell .dungeon-build-grid>button[hidden]{display:none!important}
 /* 0.148.7 사냥 지도 난이도: 정예·악몽 버튼의 ::before는 버튼 사이 구분선(width:1px, hunt-map-scene.css)이라 선택 장식이 2px로 눌려 안 보였다 → 선택된 버튼은 폭을 풀어 알약 전체를 칠한다 */
 #game-shell#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel .map-difficulty-modes>button[data-common-skin][data-common-skin][aria-pressed=true]::before{width:auto!important;height:auto!important}
+/* 0.148.8 능력치 창 아래 DPS 허수아비 측정 줄 */
+#game-shell .stats-sheet-dummy{display:flex;align-items:center;gap:10px;flex:none;padding:0 12px 8px}
+#game-shell#game-shell #dummy-start{flex:none;min-height:28px;padding:0 12px;border:1px solid #d6ba88aa;border-radius:4px;background:linear-gradient(#5a1a24,#2a0d14);color:#ffe3b0;font-size:12px;font-weight:700;white-space:nowrap;cursor:pointer}
+#game-shell #dummy-record{min-width:0;font-size:11px;color:#cdbfa6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums}
+@media(max-height:360px){#game-shell .stats-sheet-dummy{padding:0 10px 5px;gap:8px}#game-shell#game-shell #dummy-start{min-height:22px;font-size:11px;padding:0 10px}#game-shell #dummy-record{font-size:10px}}

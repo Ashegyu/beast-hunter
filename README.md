@@ -1,4 +1,12 @@
-# 괴수 사냥꾼 — Alpha 0.148.7
+# 괴수 사냥꾼 — Alpha 0.148.8
+
+## DPS 허수아비 (Alpha 0.148.8, 사용자 요청 — 경쟁 콘텐츠 1단계)
+- 능력치 창 아래 'DPS 허수아비 측정 · 60초'(최고·최근 DPS, 측정 횟수 표시). 1장 땅에 1장 보스 모습의 허수아비 하나: 움직이지도 공격하지도 않고 죽지 않음(체력이 매 프레임 가득). 60초 동안 실제로 준 피해(0.148.5 `logDamage`) ÷ 60초가 기록. 입장 제한·보상 없음.
+- 전투 중 보스 막대는 이름 'DPS 허수아비'·'누적 피해 N'·막대는 남은 시간. 결과 창은 'DPS 측정 · 새 기록!', '측정 기록 · DPS · 총 피해 · 최고 · 예상(능력치 창 스킬 포함 DPS)', '다시 측정'.
+- 엔진: dungeons.js `DUMMY`·`dummyPlan`·`DUMMY_SECONDS`(던전 id 'dummy', 주간 횟수 없음, dungeonProgress에 안 들어감), game-engine `e.dummy`(spawnEnemy), updateEnemy 첫머리에서 상태만 흐름, expireHunt → `completeDummy`, `profile.dummy`={best,bestDamage,last,runs}(`cleanDummy`, 저널 REWARD·PROGRESS 필드).
+- 측정 예: Lv.200 장비 없음·기본 장착 스킬 Lv.1 → 실측 약 1,360(예상 1,236), 화면 점검 프로필 → 834(예상 984). 예상은 한 대상에 쉬지 않고 칠 때라 이동·스킬 순서·출혈 등으로 차이가 난다.
+- 테스트: `tests/dps-dummy.test.mjs`(Codex 작성: 한 마리·위치 고정·무피해·60초 승리, DPS = 피해 ÷ 60, 기록 유지·갱신, 횟수 무관 반복, 복원 정리, durable 정산), game-ui 허수아비 흐름 테스트. check-layout 화면 `dummy`.
+- 검증: `npm test` 1003/1003, check-layout 175화면 새 문제 없음, 브라우저로 60초 측정·결과 창 확인.
 
 ## 사냥 지도 정예·악몽 선택 그림·다음 장 화살표 (Alpha 0.148.7, 사용자 보고)
 - 정예·악몽 버튼을 골라도 빨간 알약 선택 그림이 안 보였다: 두 번째·세 번째 버튼의 `::before`가 버튼 사이 구분선(`width:1px`, hunt-map-scene.css)이라 선택 장식이 2px로 눌림 → 선택된 버튼은 `width/height:auto`(layout-fit.css 끝).

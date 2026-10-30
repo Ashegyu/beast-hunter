@@ -1,4 +1,4 @@
-import {CHAPTERS} from './chapters.js?v=0.148.7';
+import {CHAPTERS} from './chapters.js?v=0.148.8';
 // Chapter art/AI varies independently; encounters own role mix and arrival pacing.
 const wave=(skitter,spitter,bulwark,elite=null)=>Object.freeze({skitter,spitter,bulwark,elite});
 export const BATTLE_PLANS=Object.freeze([

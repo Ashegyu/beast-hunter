@@ -32,7 +32,7 @@ const SCREENS=[
  ['codex',['camp-codex']],['codex-materials',['camp-codex','codex-tab-materials']],
  ['growth-tree',['hub-growth','growth-tab-tree']],['growth-tree-links',['hub-growth','growth-tab-tree','tree-node-art-2']],['growth-tree-keystone',['hub-growth','growth-tab-tree','tree-node-blade-33']],['growth-training',['hub-growth','growth-tab-training']],['growth-transcend',['hub-growth','growth-tab-transcend']],
  // 0.144.8: 메뉴 안에서 열리는 창과 전투 쪽 화면. 'wait:N'은 N밀리초 기다림.
- ['settings',['home-settings']],['formula',['home-settings','formula-open']],['stats',['home-profile']],['build',['lobby-equipment','loadout-build-open']],
+ ['settings',['home-settings']],['formula',['home-settings','formula-open']],['stats',['home-profile']],['dummy',['home-profile','dummy-start','wait:4000']],['build',['lobby-equipment','loadout-build-open']],
  ['workshop-enhance',['lobby-bag','bag-0','item-workshop-open','workshop-tab-enhance']],['workshop-promote',['lobby-bag','bag-0','item-workshop-open','workshop-tab-promote']],
  ['workshop-reroll',['lobby-bag','bag-0','item-workshop-open','workshop-tab-reroll']],
 ['battle',['nav-hunt','camp-map-start','start','wait:5000']],['pause',['nav-hunt','camp-map-start','start','wait:3000','pause']],

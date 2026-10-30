@@ -48,3 +48,4 @@ CLAUDE.md에서 옮겨 온 작업 메모. 내용이 바뀌면 이 파일을 고�
 - 장비 상세 DPS(0.148.1): '착용 비교' 칸 `item-change-dps-<n>`(옛 thunderDamage 칸 자리, app.js `ITEM_COMPARISON_FIELDS`에서 빠지고 따로 채움) = 엔진 `itemDps`의 delta. 안 낀 장비는 착용 후 변화, 낀 장비는 그 장비의 몫.
 - 스킬별 DPS(0.148.3): 카드 `.sb-dps`(`skill-dps-<id>`, small 아래 em, hidden이면 숨김 — 스킬 판 리셋 블록이라 아이디 5개 규칙), 상세 `skill-detail-resource` 끝 ' · DPS N'. 값은 엔진 `skillDpsOf`. 0.148.4 장착 칸 `skill-slot-dps-<종류>-<n>`: DPS가 보이면 칸 종류 small을 `:has`로 숨기고, em은 `flex:none`(안 하면 세로 flex에서 눌려 글자 잘림).
 - 전투 DPS(0.148.5): 스킬 버튼 위 배지 `.combat-skill-dps`(top:-8px, 아래 대기 시간 배지와 대칭), 체력 창(.hunter-hud, relative) 아래 absolute `#live-dps`(`live-dps-now`/`live-dps-average`). app.js `refreshCombatSkills`가 스킬 DPS는 `combatDpsKey`(장착+초)로 1초마다, 실시간은 매 프레임 `game.liveDps`.
+- DPS 허수아비(0.148.8): 능력치 창 아래 `.stats-sheet-dummy`(`dummy-start`·`dummy-record`), 전투 보스 막대는 `boss.dummy`면 이름·'누적 피해'·남은 시간 막대, 결과 창 `dungeon-result-label`이 '측정 기록'. check-layout 화면 `dummy`(능력치 창 → 측정 4초).
