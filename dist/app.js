@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.148.1';
-import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.148.1';
-import { createCombatAudio } from './sound.js?v=0.148.1';
-import * as game from './game-engine.js?v=0.148.1';
-import {FrameMetrics} from './frame-metrics.js?v=0.148.1';
-import { frameIndex, frameRect, validateClip } from './engine.js?v=0.148.1';
-import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.148.1';
-import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.148.1';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.148.1';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.148.1';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.148.1';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.148.1';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.148.2';
+import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.148.2';
+import { createCombatAudio } from './sound.js?v=0.148.2';
+import * as game from './game-engine.js?v=0.148.2';
+import {FrameMetrics} from './frame-metrics.js?v=0.148.2';
+import { frameIndex, frameRect, validateClip } from './engine.js?v=0.148.2';
+import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.148.2';
+import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.148.2';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.148.2';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.148.2';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.148.2';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.148.2';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -1561,7 +1561,7 @@ function refreshStatsSheet(){
  if($('stats-sheet').hidden)return;
  const stats=game.playerStats(profile),tree=game.treeBonus(profile),max=profile.level===game.MAX_LEVEL,need=game.xpNeeded(profile.level),xp=max?100:Math.floor(clamp(profile.xp/need*100,0,100));
  hudText($('stat-sheet-level'),'Lv. '+profile.level);hudText($('stat-sheet-xp-text'),max?'최고 레벨':profile.xp+' / '+need+' ('+xp+'%)');$('stat-sheet-xp-fill').style.width=xp+'%';$('stat-sheet-xp').setAttribute('aria-valuenow',String(xp));
- const power=game.combatPower(profile);hudText($('stat-sheet-power'),String(Math.round(power.attack)));hudText($('stat-sheet-dps'),String(Math.round(power.dps)));
+ const power=game.combatPower(profile);hudText($('stat-sheet-power'),String(Math.round(power.attack)));hudText($('stat-sheet-dps'),String(Math.round(power.dps)));hudText($('stat-sheet-total'),String(Math.round(power.total)));
  const rows={damage:Math.round(power.attackBase)+' × '+pctOf(power.attackPct),crit:(stats.crit*100).toFixed(1)+'% · 피해 '+Math.round((1+stats.critDamage)*100)+'%','attack-speed':Math.round(stats.attackSpeed*100)+'%',range:Math.round(stats.range),execute:signed(tree.execute*100),finisher:signed(tree.finisher*100),
   health:Math.round(stats.maxHp),reduction:(stats.reduction*100).toFixed(1)+'%',regeneration:Math.round(stats.regeneration)+' / 초',drain:signed(tree.drain*100),guard:signed(-tree.lowHpGuard*100),
   speed:Math.round(stats.speed),collection:Math.round(stats.collection),stamina:signed(tree.staminaRegen*100),cooldown:signed(-tree.skillCooldown*100),area:signed((game.SKILL_AREA_BOOST*(1+tree.skillArea)-1)*100),'skill-damage':signed(tree.skillDamage*100)};
@@ -1574,7 +1574,9 @@ function refreshFormulaSheet(){
  if($('formula-sheet').hidden)return;const c=game.combatPower(profile),n=v=>String(Math.round(v)),sec=v=>v.toFixed(2)+'초';
  const rows={base:n(c.attackLevel)+' + '+n(c.attackEquip)+' = '+n(c.attackBase),attack:n(c.attackBase)+' × '+pctOf(c.attackPct)+' = '+n(c.attack),
   chain:'마무리 '+(c.finisher>0?'+':'')+pctOf(c.finisher)+' → '+pctOf(c.chain),cycle:sec(c.baseCycle)+' ÷ '+pctOf(c.attackSpeed)+' = '+sec(c.cycle),
-  crit:(c.critChance*100).toFixed(1)+'% × '+pctOf(c.critDamage)+' → '+pctOf(c.crit),dps:n(c.attack)+' × '+pctOf(c.chain)+' × '+pctOf(c.crit)+' ÷ '+sec(c.cycle)+' = '+n(c.dps)};
+  crit:(c.critChance*100).toFixed(1)+'% × '+pctOf(c.critDamage)+' → '+pctOf(c.crit),dps:n(c.attack)+' × '+pctOf(c.chain)+' × '+pctOf(c.crit)+' ÷ '+sec(c.cycle)+' = '+n(c.dps),
+  skill:c.skill.rows.length+'개 합 '+n(c.skill.raw)+' × 기력 '+pctOf(c.skill.stamina)+' = '+n(c.skillDps),total:n(c.dps)+' + '+n(c.skillDps)+' = '+n(c.total)};
+ $('formula-skill').setAttribute('title',c.skill.rows.map(r=>r.name+' '+n(r.perCast)+' ÷ '+sec(r.cooldown)+' = '+n(r.dps)).join('\n')||'장착한 공격 스킬 없음');
  for(const [k,v] of Object.entries(rows))hudText($('formula-'+k),v);
 }
 function openFormulaSheet(from){if(!ready||state.phase!=='camp')return;formulaReturn=from??null;$('formula-sheet').hidden=false;refreshFormulaSheet();$('formula-sheet-close').focus({preventScroll:true});}

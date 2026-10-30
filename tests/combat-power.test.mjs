@@ -66,3 +66,78 @@ test('마무리 피해 노드를 배우면 마지막 타 배율과 DPS가 오른
  learn(s,path.slice(-1));const after=checkFormula(p),gain=g.treeBonus(p).finisher-oldFinisher;
  assert.ok(gain>0);close(after.chain-before.chain,g.COMBOS.at(-1).damage*gain,'마지막 타에만 마무리 피해 적용');assert.ok(after.dps>before.dps);
 });
+
+// skill-rules.test.mjs와 같은 방식으로 소유·선택한 갈래를 구성한다.
+function giveBranch(p,id,t,i){
+ p.skillBook.branchOwned[id]=(p.skillBook.branchOwned[id]??0)|(1<<(t*3+i));
+ const picks=p.skillBook.branchPick[id]??Array(g.branchTierCount(id)).fill(null);
+ picks[t]=i;p.skillBook.branchPick[id]=picks;
+}
+function checkSkillFormula(p,attack=g.playerStats(p).damage){
+ const sk=g.skillDps(p,attack),tree=g.treeBonus(p),scale=1+tree.skillDamage+g.transcendBonus(p).skillDamage;
+ const ids=['active','ultimate','beast'].flatMap(kind=>p.skillBook.loadout[kind]??[]).filter(id=>id&&id!=='parry'&&g.skillRank(p,id)>0&&g.skillValue(p,id)>0);
+ assert.deepEqual(sk.rows.map(r=>r.id),ids,'피해가 있는 장착 스킬만 포함');
+ close(sk.scale,scale,'스킬 피해 배율');
+ let raw=0,drain=0;
+ for(const row of sk.rows){
+  const perCast=g.skillValue(p,row.id)/100*attack*(g.branchMods(p,row.id).damage??1)*scale;
+  const cooldown=g.skillCooldown(p,row.id),cost=g.skillCost(p,row.id);
+  close(row.perCast,perCast,`${row.id} 한 번 피해`);close(row.cooldown,cooldown,`${row.id} 재사용`);close(row.cost,cost,`${row.id} 기력`);
+  close(row.dps,perCast/cooldown,`${row.id} DPS`);raw+=perCast/cooldown;drain+=cost/cooldown;
+ }
+ const regen=18*(1+tree.staminaRegen),stamina=drain>regen?regen/drain:1;
+ close(sk.raw,raw,'보정 전 합계');close(sk.drain,drain,'초당 기력 소비');close(sk.regen,regen,'초당 기력 회복');close(sk.stamina,stamina,'기력 보정');close(sk.dps,raw*stamina,'보정 후 스킬 DPS');
+ return sk;
+}
+
+test('레벨 200 기본 장착의 스킬별 공식과 전체 DPS 합계',()=>{
+ const p=profile(),power=checkFormula(p),sk=checkSkillFormula(p);
+ assert.ok(sk.rows.length>0);assert.ok(sk.dps>0);
+ assert.deepEqual(power.skill,sk);close(power.skillDps,sk.dps,'스킬 DPS 필드');close(power.total,power.dps+sk.dps,'전체 DPS');
+ checkSkillFormula(p,1234); // 명시한 공격력도 한 번 피해에 반영한다.
+});
+
+test('흘려베기·수월의 자세·혈월의 칼날은 스킬 DPS에서 제외한다',()=>{
+ const p=profile();p.skillBook.loadout.active=['parry','stance','bloodblade','crescent'];
+ for(const id of p.skillBook.loadout.active)p.skillBook.ranks[id]=14;
+ const sk=checkSkillFormula(p);
+ assert.ok(sk.rows.some(r=>r.id==='crescent'));
+ for(const id of ['parry','stance','bloodblade'])assert.ok(!sk.rows.some(r=>r.id===id),id);
+ p.skillBook.loadout.beast=['beast-boar'];
+ assert.ok(!checkSkillFormula(p).rows.some(r=>r.id==='beast-boar'),'미습득 괴수 기술 제외');
+});
+
+test('스킬 랭크와 그믐 검기 피해 갈래가 스킬 DPS를 높인다',()=>{
+ const p=profile();p.skillBook.loadout.active=['crescent',null,null,null];
+ p.skillBook.ranks.crescent=1;const low=checkSkillFormula(p);
+ p.skillBook.ranks.crescent=14;const ranked=checkSkillFormula(p);
+ assert.ok(ranked.dps>low.dps);
+ const before=ranked.rows.find(r=>r.id==='crescent').perCast;
+ giveBranch(p,'crescent',0,1);const branched=checkSkillFormula(p);
+ close(g.branchMods(p,'crescent').damage,1.35,'그믐 검기 배율');
+ close(branched.rows.find(r=>r.id==='crescent').perCast,before*1.35,'갈래 피해 배율 적용');
+});
+
+test('짧은 재사용 조합은 기력 소비가 회복을 넘으면 DPS가 줄어든다',()=>{
+ const p=profile();p.skillBook.loadout.active=['gale','dance','seeking','echo'];p.skillBook.loadout.beast=['beast-boar'];p.beastSkills={'beast-boar':3};
+ for(const id of [...p.skillBook.loadout.active,...p.skillBook.loadout.beast])p.skillBook.ranks[id]=14;
+ giveBranch(p,'gale',0,0);giveBranch(p,'echo',0,1);
+ const sk=checkSkillFormula(p);
+ assert.ok(sk.drain>sk.regen,'기력 부족 조합');assert.ok(sk.stamina>0&&sk.stamina<1);
+ close(sk.dps,sk.raw*sk.stamina,'기력 부족 시 지속 DPS');assert.ok(sk.dps<sk.raw);
+ assert.ok(sk.rows.some(r=>r.id==='beast-boar'),'괴수 기술도 포함');
+});
+
+test('공격력 무기의 itemDps는 착용·해제 전후 전체 DPS 차이다',()=>{
+ const p=profile(),s=g.createGame(p),before=g.combatPower(p);
+ const item=rollItem({id:p.nextItemId++,tier:1,slot:'weapon',quality:0},()=>.5);
+ assert.ok(item.affixes.damage>0);p.inventory.push(item);
+ const preview=g.itemDps(p,item.id);
+ assert.equal(preview.equipped,false);assert.equal(g.equipItem(s,item.id),true);
+ const after=g.combatPower(p),equipped=g.itemDps(p,item.id);
+ assert.ok(after.skillDps>before.skillDps,'공격력으로 스킬 DPS도 증가');
+ for(const result of [preview,equipped]){
+  close(result.dps,after.total,'착용 전체 DPS');close(result.other,before.total,'미착용 전체 DPS');close(result.delta,after.total-before.total,'전체 DPS 차이');
+ }
+ assert.equal(equipped.equipped,true);
+});
