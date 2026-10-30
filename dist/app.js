@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.148.0';
-import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.148.0';
-import { createCombatAudio } from './sound.js?v=0.148.0';
-import * as game from './game-engine.js?v=0.148.0';
-import {FrameMetrics} from './frame-metrics.js?v=0.148.0';
-import { frameIndex, frameRect, validateClip } from './engine.js?v=0.148.0';
-import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.148.0';
-import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.148.0';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.148.0';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.148.0';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.148.0';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.148.0';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.148.1';
+import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.148.1';
+import { createCombatAudio } from './sound.js?v=0.148.1';
+import * as game from './game-engine.js?v=0.148.1';
+import {FrameMetrics} from './frame-metrics.js?v=0.148.1';
+import { frameIndex, frameRect, validateClip } from './engine.js?v=0.148.1';
+import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.148.1';
+import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.148.1';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.148.1';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.148.1';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.148.1';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.148.1';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -28,7 +28,7 @@ let lastAudioHunt=0,lastAudioId=0,growthRenderKey='';
 // The page reuses the 48 tile/detail nodes in index.html, independently of storage capacity.
 const RESULT_LOOT_PAGE_SIZE=12,RESULT_LOOT_FIGURES=40,BAG_SLOT_COUNT=48;
 const ITEM_AFFIX_FIELDS=Object.entries(game.AFFIXES);
-const ITEM_COMPARISON_FIELDS=[['damage','공격',1],['maxHp','체력',1],['speed','이동',1],['crit','치명타',100],['reduction','피해 감소',100],['thunderDamage','강공격',1]];
+const ITEM_COMPARISON_FIELDS=[['damage','공격',1],['maxHp','체력',1],['speed','이동',1],['crit','치명타',100],['reduction','피해 감소',100]];
 let resultLootSource=null,resultLootRows=[],resultLootPage=0,resultLootRenderKey='',resultLootLayoutKey='',resultLootPageSize=12,resultLootTab='gear',resultLootExpanded=false,resultLootInventory=null;
 let saved=null,storageBlocked=false,recoveredSave=false,storageReadFailed=false;
 let restoreCommitted=false,backupCandidate=null,backupReading=false,backupRevision=0,previousBackup=null;
@@ -525,6 +525,8 @@ function refreshBag(){
   $('favorite-'+i).textContent=favorite?'★ 보호 해제':'☆ 즐겨찾기';$('favorite-'+i).setAttribute('aria-pressed',String(favorite));
   const c=game.compareItem(profile,item.id,item.slot==='earring'?earringPosition:null);$('item-compare-'+i).textContent=(equipped?'현재 착용 중':'착용 후 변화 · '+comparisonText(c));$('item-synergy-'+i).textContent=synergyChangeText(c);
   for(const [key,,scale]of ITEM_COMPARISON_FIELDS){const value=Math.round(c.deltas[key]*scale*10)/10,node=$('item-change-'+key+'-'+i);node.textContent=value===0?'—':(value>0?'+':'')+value+(scale===100?'%p':'');node.setAttribute('data-sign',value>0?'positive':value<0?'negative':'zero');}
+  {const d=game.itemDps(profile,item.id,item.slot==='earring'?earringPosition:null),node=$('item-change-dps-'+i),v=d?Math.round(d.delta):0;node.textContent=v===0?'—':(v>0?'+':'')+v;node.setAttribute('data-sign',v>0?'positive':v<0?'negative':'zero');
+   node.setAttribute('title',!d?'':d.equipped?'이 장비의 DPS 몫 '+v+' (지금 '+Math.round(d.dps)+', 빼면 '+Math.round(d.other)+')':'착용 후 DPS '+Math.round(d.dps)+' (지금 '+Math.round(d.other)+')');}
   const current=profile.inventory.find(it=>it.id===profile.equipment[item.slot==='earring'?earringPosition:item.slot]),before=game.uniqueEffect(current),after=game.uniqueEffect(item);
   if(!equipped&&before?.id!==after?.id)$('item-synergy-'+i).textContent+='\n고유 효과: '+(before?.name??'없음')+' → '+(after?.name??'없음');
   $('salvage-'+i).disabled=!!protection||state.phase!=='camp'&&!state.paused;$('salvage-'+i).textContent=protection?protection+' 보호':'분해 +'+game.salvageValue(item);
