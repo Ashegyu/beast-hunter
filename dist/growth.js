@@ -154,11 +154,13 @@ const ROWS=[
  ['wa-1','small',453,119,['ward-15'],{regeneration:.4,staminaRegen:.04},null],
  ['wa-2','notable',468,137,['wa-1'],{regeneration:1.25,staminaRegen:.125},'고요한 호흡','wa-2'],
 ];
+// 0.147.5 (사용자 요청 '노드 이름이 길어서 잘린다'): small nodes take a short name; the full effect stays in their text.
+const SHORT_NAME=Object.freeze({lowHpGuard:'버티기',execute:'처형 일격',drain:'흡혈',skillFury:'연격 기세',finisher:'마무리',regeneration:'체력 재생'});
 const REGIONS=Object.freeze({blade:['blade'],ward:['ward'],art:['art'],bw:['blade','ward'],wa:['ward','art'],ab:['art','blade'],core:[]});
 export const TREE_NODES=Object.freeze(Object.fromEntries(ROWS.map(([id,kind,x,y,links,bonus,name,icon])=>{
  const first=Object.keys(bonus)[0];
  return [id,Object.freeze({id,kind,x,y,...(icon?{icon}:{}),links:Object.freeze(links),branches:Object.freeze(REGIONS[id.split('-')[0]]),cost:TREE_KIND_COST[kind],bonus:Object.freeze(bonus),
-  name:name??BONUS_TEXT[first][0],text:kind==='core'?'모든 길이 시작되는 곳':(kind==='keystone'?'핵심 · ':'')+bonusText(bonus)})];
+  name:name??SHORT_NAME[first]??BONUS_TEXT[first][0],text:kind==='core'?'모든 길이 시작되는 곳':(kind==='keystone'?'핵심 · ':'')+bonusText(bonus)})];
 })));
 export const TREE_ROOT='core';
 // Learnable nodes (the 중심 is always held and never stored), in definition order.
