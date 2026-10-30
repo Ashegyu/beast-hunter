@@ -30,7 +30,7 @@ const SCREENS=[
  ['dungeon-growth',['lobby-summon','dungeon-mode-growth']],['dungeon-tower',['lobby-summon','dungeon-mode-tower']],['dungeon-rift',['lobby-summon','dungeon-mode-rift']],
  ['dungeon-raid',['lobby-summon','dungeon-mode-raid']],['dungeon-rush',['lobby-summon','dungeon-mode-rush']],
  ['codex',['camp-codex']],['codex-materials',['camp-codex','codex-tab-materials']],
- ['growth-tree',['hub-growth','growth-tab-tree']],['growth-training',['hub-growth','growth-tab-training']],['growth-transcend',['hub-growth','growth-tab-transcend']],
+ ['growth-tree',['hub-growth','growth-tab-tree']],['growth-tree-links',['hub-growth','growth-tab-tree','tree-node-art-2']],['growth-tree-keystone',['hub-growth','growth-tab-tree','tree-node-blade-33']],['growth-training',['hub-growth','growth-tab-training']],['growth-transcend',['hub-growth','growth-tab-transcend']],
  // 0.144.8: 메뉴 안에서 열리는 창과 전투 쪽 화면. 'wait:N'은 N밀리초 기다림.
  ['settings',['home-settings']],['build',['lobby-equipment','loadout-build-open']],
  ['workshop-enhance',['lobby-bag','bag-0','item-workshop-open','workshop-tab-enhance']],['workshop-promote',['lobby-bag','bag-0','item-workshop-open','workshop-tab-promote']],

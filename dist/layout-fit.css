@@ -1920,10 +1920,10 @@
 @keyframes tree-edge-breathe{50%{filter:sepia(.6) saturate(1.8) brightness(1.15) drop-shadow(0 0 4px #e8b86a)}}
 @media(prefers-reduced-motion:reduce){#game-shell #growth-tree .tree-edge[data-state=open]{animation:none}}
 @media(max-height:360px){#game-shell #growth-tree .tree-edge{height:9px;--bh:9px}#game-shell #growth-tree .tree-edge[data-state=owned]{height:10px;--bh:10px}}
-/* 상세 줄: 이어진 노드 목록 (● 습득 ○ 미습득) */
-#game-shell#game-shell #growth-tree .tree-detail{grid-template-columns:auto minmax(0,1fr) minmax(0,1.1fr) auto auto auto}
+/* 상세 줄: 이어진 노드 목록 (● 습득 ○ 미습득). 0.147.6: 효과 칸이 먼저 글 폭만큼, 남는 폭은 연결 목록(최소 84/64px) */
+#game-shell#game-shell #growth-tree .tree-detail{grid-template-columns:auto minmax(0,max-content) minmax(84px,1fr) auto auto auto}
 #game-shell #growth-tree #tree-detail-links{font-style:normal;font-size:10px;color:#a8c4d8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
-@media(max-width:700px){#game-shell#game-shell #growth-tree .tree-detail{grid-template-columns:auto minmax(0,.9fr) minmax(0,1fr) auto auto auto;gap:5px}#game-shell #growth-tree #tree-detail-links{font-size:9px}}
+@media(max-width:700px){#game-shell#game-shell #growth-tree .tree-detail{grid-template-columns:auto minmax(0,max-content) minmax(64px,1fr) auto auto auto;gap:5px}#game-shell #growth-tree #tree-detail-links{font-size:9px}}
 /* 0.147.3 성장 트리 노드 크기: 노드 105개가 모든 검수 해상도에서 겹치지 않게 조금 줄임 (16/23/30px, 높이 360 이하 13/19/25px) */
 #game-shell#game-shell #growth-tree .tree-node{--node:16px}
 #game-shell#game-shell #growth-tree .tree-node[data-kind=notable]{--node:23px}

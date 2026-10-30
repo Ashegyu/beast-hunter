@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.147.5';
-import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.147.5';
-import { createCombatAudio } from './sound.js?v=0.147.5';
-import * as game from './game-engine.js?v=0.147.5';
-import {FrameMetrics} from './frame-metrics.js?v=0.147.5';
-import { frameIndex, frameRect, validateClip } from './engine.js?v=0.147.5';
-import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.147.5';
-import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.147.5';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.147.5';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.147.5';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.147.5';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.147.5';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.147.6';
+import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.147.6';
+import { createCombatAudio } from './sound.js?v=0.147.6';
+import * as game from './game-engine.js?v=0.147.6';
+import {FrameMetrics} from './frame-metrics.js?v=0.147.6';
+import { frameIndex, frameRect, validateClip } from './engine.js?v=0.147.6';
+import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.147.6';
+import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.147.6';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.147.6';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.147.6';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.147.6';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.147.6';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -331,7 +331,7 @@ function refreshGrowthBoard(){
  for(const n of Object.values(game.TREE_NODES)){const why=n.kind==='core'?'':game.nodeStatus(profile,n.id),st=held.has(n.id)?'owned':why==='이어진 노드 필요'?'locked':'open',node=$('tree-node-'+n.id);node.setAttribute('data-state',st);node.setAttribute('aria-pressed',String(treeSelected===n.id));node.setAttribute('aria-label',n.name+' · '+n.text+(n.cost?' · '+n.cost+'포인트':'')+' · '+(st==='owned'?'습득':why||'습득 가능'));}
  for(const [a,b]of game.TREE_EDGES)$('tree-edge-'+a+'--'+b).setAttribute('data-state',held.has(a)&&held.has(b)?'owned':held.has(a)||held.has(b)?'open':'locked');
  const n=game.TREE_NODES[treeSelected]??game.TREE_NODES[game.TREE_ROOT],owned=held.has(n.id),why=n.kind==='core'?'':owned?game.forgetStatus(profile,n.id):game.nodeStatus(profile,n.id);
- hudText($('tree-detail-name'),n.name+(n.kind==='notable'?' · 주요':n.kind==='keystone'?' · 핵심':''));hudText($('tree-detail-text'),n.kind==='core'?game.GROWTH_TREE.map(b=>b.name+' '+game.branchPoints(profile,b.id)+'P').join(' · '):n.kind==='keystone'?n.text.slice(5):n.text);hudText($('tree-detail-links'),treeLinksText(n.id));hudText($('tree-detail-cost'),n.kind==='core'?'':owned?'습득':n.cost+'P');
+ hudText($('tree-detail-name'),n.name+(n.kind==='notable'?' · 주요':n.kind==='keystone'?' · 핵심':''));const effectText=n.kind==='core'?game.GROWTH_TREE.map(b=>b.name+' '+game.branchPoints(profile,b.id)+'P').join(' · '):n.kind==='keystone'?n.text.slice(5):n.text;hudText($('tree-detail-text'),effectText);$('tree-detail-text').title=effectText;const linksText=treeLinksText(n.id);hudText($('tree-detail-links'),linksText);$('tree-detail-links').title=linksText;hudText($('tree-detail-cost'),n.kind==='core'?'':owned?'습득':n.cost+'P');
  $('tree-learn').hidden=owned||n.kind==='core';$('tree-learn').disabled=!!why;hudText($('tree-learn'),why&&!owned?why:'습득');
  $('tree-forget').hidden=!owned||n.kind==='core';$('tree-forget').disabled=!!why;
 }
@@ -1148,7 +1148,7 @@ function skillTagNote(id){const syn=game.tagSynergy(profile);return game.skillTa
 // 0.147.1 (사용자 요청 '연결된 상황도 글로'): the detail bar lists the picked node's neighbours (● learned ○ not yet).
 const TREE_ADJ=(()=>{const out={};for(const [a,b] of game.TREE_EDGES){(out[a]??=[]).push(b);(out[b]??=[]).push(a);}return out;})();
 function treeLinksText(id){const held=new Set(['core',...profile.growthTree]),list=TREE_ADJ[id]??[],got=list.filter(n=>held.has(n)).length;
- return '이어진 노드 '+list.length+' (습득 '+got+') '+list.map(n=>(held.has(n)?'●':'○')+game.TREE_NODES[n].name).join(' ');}
+ return '연결 '+got+'/'+list.length+' '+list.map(n=>(held.has(n)?'●':'○')+game.TREE_NODES[n].name).join(' ');}
 // 0.147.4: the growth notice floats over the board, so it clears itself 2.5 s after it last changed.
 let growthNoticeText='',growthNoticeAt=0;
 function fadeGrowthNotice(){const f=$('growth-feedback');if(!f)return;const t=f.textContent,now=Date.now();if(t!==growthNoticeText){growthNoticeText=t;growthNoticeAt=now;}else if(t&&now-growthNoticeAt>2500){f.textContent='';growthNoticeText='';}}

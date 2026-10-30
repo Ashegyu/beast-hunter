@@ -3,9 +3,9 @@
 // 특수효과는 성장 트리와 같은 키(growth.js treeBonus: execute·finisher·drain·lowHpGuard·skillCooldown·skillDamage)라
 // 전투 코드가 이미 읽는 자리에서 그대로 발동한다(game-engine이 growth.addBonusSource로 이어 붙임).
 // 승화 제작 장비(rarity 6, forge.ancient)는 바친 고대의 세트로 센다. 같은 고대를 두 개(귀걸이 두 칸 등) 껴도 한 부위.
-import {ANCIENT_CATALOG} from './loot.js?v=0.147.5';
-import {bonusText} from './growth.js?v=0.147.5';
-import {setStatText} from './equipment-sets.js?v=0.147.5';
+import {ANCIENT_CATALOG} from './loot.js?v=0.147.6';
+import {bonusText} from './growth.js?v=0.147.6';
+import {setStatText} from './equipment-sets.js?v=0.147.6';
 
 const stage=(pieces,stats,special=null)=>Object.freeze({pieces,stats:Object.freeze(stats),special:special&&Object.freeze({...special,bonus:Object.freeze(special.bonus)})});
 // [id, 이름, 색, 지역 tier | 레이드 id, 단계들]
