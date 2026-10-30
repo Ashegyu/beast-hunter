@@ -1,6 +1,6 @@
-import {equipmentFamily} from './equipment-slots.js?v=0.148.8';
-import {SEAL_EFFECTS,sealArtId} from './seals.js?v=0.148.8';
-import {EQUIPMENT_SETS,SET_SLOTS,CHAPTER_SETS,setArtId} from './equipment-sets.js?v=0.148.8';
+import {equipmentFamily} from './equipment-slots.js?v=0.148.9';
+import {SEAL_EFFECTS,sealArtId} from './seals.js?v=0.148.9';
+import {EQUIPMENT_SETS,SET_SLOTS,CHAPTER_SETS,setArtId} from './equipment-sets.js?v=0.148.9';
 // Sixty chapters in six regions of ten: 1–10 forest, 11–20 fire and ice (11–15 fire,
 // 16–20 ice), 21–30 darkness (Alpha 0.107), 31–40 sunken kingdom, 41–50 storm sky isles,
 // 51–60 twilight sanctum (Alpha 0.118). A region drives the map tabs, item and
@@ -129,7 +129,12 @@ export const enemyDamageScale=id=>threat(id,THREAT.damage);
 export const MODE_CHAPTERS=60,MODE_STEP=.5;
 export const modeChapter=(id,difficulty=0)=>{const d=Math.max(0,difficulty|0);return d?MODE_CHAPTERS+((d-1)*MODE_CHAPTERS+id)*MODE_STEP:id;};
 export function modeScale(id,difficulty=0){if(!difficulty)return {hp:1,damage:1,reward:1,chapter:id};const v=modeChapter(id,difficulty);
- return {hp:enemyHpScale(v)/enemyHpScale(id),damage:enemyDamageScale(v)/enemyDamageScale(id),reward:chapterMultiplier(v)/chapterMultiplier(id),chapter:v};}
+ const x=modeExtra(id,difficulty);return {hp:enemyHpScale(v)/enemyHpScale(id)*x.hp,damage:enemyDamageScale(v)/enemyDamageScale(id)*x.damage,reward:chapterMultiplier(v)/chapterMultiplier(id),chapter:v};}
+// Alpha 0.148.9 (사용자 보고 '장비를 강화하니 레이드·정예·악몽이 너무 쉽다', 결정 '단계별로'): 강화한 장비로 정예·악몽 보스가 8~11초에
+// 잡혔다(tools/reports/endgame-difficulty-0148). 곡선 위에 체력 배율을 더 얹되 챕터를 따라 올린다 — 정예는 고대 +20 장비,
+// 악몽은 레이드·승화 +40 이상 장비가 60장(레이드는 60장 기준)에서 30~45초 걸리게. MODE_EXTRA[d] = [1장, 60장].
+export const MODE_EXTRA=Object.freeze({1:Object.freeze({hp:[2,3],damage:[.9,.85]}),2:Object.freeze({hp:[4,5],damage:[.85,.8]})});
+export function modeExtra(id,difficulty){const m=MODE_EXTRA[difficulty];if(!m)return {hp:1,damage:1};const t=Math.min(1,Math.max(0,(id-1)/(MODE_CHAPTERS-1))),at=([a,b])=>a+(b-a)*t;return {hp:at(m.hp),damage:at(m.damage)};}
 // Each chapter takes two species per role from its biome pool (pairs rotate by chapter,
 // offset per role). Stages 1–8 visit all eight role combinations in an order where every
 // stage changes at least two roles; stage 9 (swarm, skitters only) differs from stage 8.

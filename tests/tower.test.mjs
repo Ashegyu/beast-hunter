@@ -4,7 +4,7 @@ function finish(s){s.enemies=[];s.spawns=[];s.barrels=[];s.run.wave=s.run.wave||
 test('무한의 탑 floors: chapter curve, land of chapter ((F−1) mod 60)+1, elites every 5th and a boss every 10th floor',()=>{
  assert.equal(g.towerChapter(1),1);assert.equal(g.towerChapter(60),60);assert.equal(g.towerChapter(61),1);assert.equal(g.towerChapter(130),10);
  assert.deepEqual([1,5,10,15,20].map(g.towerFloorKind),['normal','elite','boss','elite','boss']);
- const a=g.towerPlan(60),b=g.towerPlan(120);assert.equal(a.hpScale,g.STAGES[59].hpScale);assert.ok(Math.abs(b.hpScale/a.hpScale-g.modeScale(60,2).hp)<1e-9,'120층 = 악몽 60장');
+ const a=g.towerPlan(60),b=g.towerPlan(120);assert.equal(a.hpScale,g.STAGES[59].hpScale);assert.ok(Math.abs(b.hpScale/a.hpScale-g.modeScale(60,2).hp/g.modeExtra(60,2).hp)<1e-9,'120층 = 악몽 60장 곡선(0.148.9 악몽 추가 배율 제외)');
  assert.deepEqual(dungeonActors(g.towerPlan(10),1),[{type:'bulwark',boss:true,elite:false}]);assert.ok(dungeonActors(g.towerPlan(5),1).some(a=>a.elite));assert.equal(g.towerPlan(0),null);assert.equal(g.towerPlan(g.TOWER_MAX_FLOOR+1),null);
 });
 test('a floor opens after the one below; rewards come once, on the first clear; boss floors spawn the chapter boss',()=>{

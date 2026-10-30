@@ -53,7 +53,8 @@ test('restore bounds advanced rows and backup rejects malformed version-nine pro
 });
 test('0.139: 정예/악몽 continue the chapter curve, 악몽 gives no experience and keeps the fastest boss record',()=>{
  assert.deepEqual(g.modeScale(7,0),{hp:1,damage:1,reward:1,chapter:7});assert.equal(g.modeScale(1,1).chapter,60.5);assert.equal(g.modeScale(60,1).chapter,90);assert.equal(g.modeScale(1,2).chapter,90.5);assert.equal(g.modeScale(60,2).chapter,120);
- assert.ok(Math.abs(g.modeScale(1,1).hp-g.STAGES[59].hpScale/g.STAGES[0].hpScale)<.1*g.modeScale(1,1).hp,'정예 1장은 일반 60장 남짓');
+ {const x=g.modeExtra(1,1).hp;assert.ok(Math.abs(g.modeScale(1,1).hp/x-g.STAGES[59].hpScale/g.STAGES[0].hpScale)<.1*g.modeScale(1,1).hp/x,'정예 1장은 일반 60장 남짓(0.148.9 MODE_EXTRA 제외)');}
+ for(const [c,d] of [[1,1],[60,1],[1,2],[60,2]])assert.ok(g.modeExtra(c,d).hp>1,'0.148.9 정예·악몽 체력 추가 배율 '+d+'-'+c);assert.ok(g.modeExtra(60,2).hp>g.modeExtra(60,1).hp);
  for(const d of [1,2])for(let c=2;c<=60;c++)assert.ok(g.modeChapter(c,d)>g.modeChapter(c-1,d)&&g.modeScale(c,d).hp*g.STAGES[c-1].hpScale>g.modeScale(c-1,d).hp*g.STAGES[c-2].hpScale,'계속 오른다 '+d+'-'+c);
  const p=openMode(g,g.createProfile(1000),2,1);p.bossMastery=p.bossMastery.map(()=>1);p.difficultyProgress=[g.STAGES.map(()=>10),pad([9])];p.level=150;
  const xp=mode=>{const q=structuredClone(p);if(!mode)q.difficultyProgress[1][0]=0;const s=g.createGame(q);assert.ok(g.launch(s,1,1,null,mode));s.enemies=[];s.spawns=[];s.player.invulnerable=999;s.pickups=[{id:9999,x:s.player.x,y:s.player.y,gold:5,xp:400,cores:0}];advance(s,.1);return {xp:q.xp,gold:q.gold};};
