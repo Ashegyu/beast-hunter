@@ -2003,3 +2003,5 @@
 @media(max-height:360px){#game-shell .battle .top-hud .hunter-hud .live-dps{top:calc(100% + 8px);padding:1px 6px}#game-shell .battle .top-hud .hunter-hud .live-dps b{font-size:12px;line-height:13px}}
 /* 0.148.6 입장 빌드 선택: 스킬 빌드 → 통합 빌드 순으로 채우고 남는 칸은 hidden(공통 스킨의 display를 이기도록 아이디 3개) */
 #game-shell#game-shell#game-shell .entry-build-grid>button[hidden],#game-shell#game-shell#game-shell .dungeon-build-grid>button[hidden]{display:none!important}
+/* 0.148.7 사냥 지도 난이도: 정예·악몽 버튼의 ::before는 버튼 사이 구분선(width:1px, hunt-map-scene.css)이라 선택 장식이 2px로 눌려 안 보였다 → 선택된 버튼은 폭을 풀어 알약 전체를 칠한다 */
+#game-shell#game-shell#game-shell#game-shell[data-camp-view=map] #camp-map-panel .map-difficulty-modes>button[data-common-skin][data-common-skin][aria-pressed=true]::before{width:auto!important;height:auto!important}

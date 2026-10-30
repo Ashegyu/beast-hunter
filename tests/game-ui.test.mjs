@@ -1861,6 +1861,13 @@ test('entry build pickers list saved skill builds before full builds and load th
  assert.equal(ui.nodes.get('dungeon-build-pick-0').textContent,'스킬 빌드 2');ui.emit('dungeon-build-pick-0','click');assert.equal(ui.profile().skillBook.auto.mode,mode,'던전 입장 선택도 스킬 빌드 불러옴');
  assert.equal(ui.nodes.get('dungeon-build-state').textContent,'스킬 빌드 2');
 });
+test('elite map: next-chapter arrow stays closed until that chapter opens in elite, so it never flips back to normal (0.148.7)',async()=>{
+ const p=openMode(game,game.createProfile(1_000_000),1,2);const ui=await host({saved:p});ui.emit('nav-hunt','click');pickChapter(ui,1);ui.emit('map-mode-1','click');ui.tick(0);
+ assert.equal(ui.nodes.get('map-mode-1').attributes['aria-pressed'],'true');assert.equal(ui.nodes.get('chapter-next').disabled,false,'정예 2장은 열림');
+ ui.emit('chapter-next','click');assert.equal(ui.nodes.get('map-mode-1').attributes['aria-pressed'],'true','정예 그대로 2장');assert.equal(ui.nodes.get('chapter-next').disabled,true,'정예 3장은 아직');
+ ui.emit('chapter-next','click');assert.equal(ui.nodes.get('map-mode-1').attributes['aria-pressed'],'true','눌러도 일반으로 안 바뀜');assert.match(ui.nodes.get('chapter-label').textContent,/CHAPTER 02/);
+ ui.emit('map-mode-0','click');assert.equal(ui.nodes.get('chapter-next').disabled,false,'일반에서는 다음 장 열림');
+});
 test('bag rarity sort puts the higher-stat item first within the same grade, ignoring enhancement (0.144)',async()=>{
  const p=bagFixture();const r=game.ITEM_CATALOG.find(r=>r.id==='1-weapon-1');
  p.inventory=[[11,2,10,'약한 검'],[12,2,40,'강한 검'],[13,3,5,'영웅 검'],[14,2,25,'중간 검']].map(([id,rarity,damage,name])=>({id,catalogId:r.id,slot:r.slot,tier:1,artId:r.artId,name,rarity,affixes:{damage}}));p.equipment={};
