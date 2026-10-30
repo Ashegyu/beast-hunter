@@ -13,18 +13,19 @@ function pathTo(target){const prev={core:null},queue=['core'];while(queue.length
 const named=name=>Object.values(g.TREE_NODES).find(n=>n.name===name).id;
 const sum=(path,key)=>path.reduce((a,id)=>a+(g.TREE_NODES[id].bonus[key]??0),0);
 const nearest=key=>Object.keys(g.TREE_NODES).filter(id=>g.TREE_NODES[id].bonus[key]>0).map(pathTo).sort((a,b)=>a.length-b.length)[0];
+const SHARP=named('날 선 검'),BODY=named('단단한 몸');
 const BLADE_FINISHER=pathTo(named('혈월의 검')),BLADE_EXECUTE=pathTo(named('처형자'));
 
 test('two point pools: training is free of level caps, the tree is learned along links',()=>{
  const p=profile(31),s=g.createGame(p);assert.equal(g.trainingPointsTotal(p),30);assert.equal(g.treePointsTotal(p),15);assert.equal(g.growthPointsTotal(p),45);
  for(let i=0;i<25;i++)assert.ok(g.trainStat(s,'power'),'rank '+i);assert.equal(p.training.power,25);assert.equal(g.trainingPoints(p),5);assert.equal(g.treePoints(p),15,'단련은 트리 포인트를 쓰지 않는다');
  for(let i=0;i<5;i++)assert.ok(g.trainStat(s,'guard'));assert.equal(g.trainStat(s,'guard'),false);assert.equal(g.trainStatus(p,'guard'),'능력치 포인트 부족');
- assert.equal(g.learnGrowthNode(s,'blade-2'),false);assert.equal(g.nodeStatus(p,'blade-2'),'이어진 노드 필요');
- for(const id of ['blade-r','blade-1','blade-2'])assert.ok(g.learnGrowthNode(s,id),id);assert.equal(g.treePoints(p),5);
+ assert.equal(g.learnGrowthNode(s,SHARP),false);assert.equal(g.nodeStatus(p,SHARP),'이어진 노드 필요');
+ for(const id of ['blade-r','blade-1',SHARP])assert.ok(g.learnGrowthNode(s,id),id);assert.equal(g.treePoints(p),5);
  // The ring links every start: ward-r touches blade-r, so it opens without the 중심 path being the only way.
  assert.equal(g.nodeStatus(p,'ward-r'),'');assert.ok(g.learnGrowthNode(s,'ward-r'));
- assert.ok(g.learnGrowthNode(s,'ward-1'));assert.equal(g.treePoints(p),1);assert.equal(g.nodeStatus(p,'ward-2'),'트리 포인트 부족');
- assert.equal(g.TREE_COST,326);assert.equal(Object.keys(g.TREE_NODES).length,88);
+ assert.ok(g.learnGrowthNode(s,'ward-1'));assert.equal(g.treePoints(p),1);assert.equal(g.nodeStatus(p,BODY),'트리 포인트 부족');
+ assert.equal(g.TREE_COST,390);assert.equal(Object.keys(g.TREE_NODES).length,120);
  {const top=profile(g.MAX_LEVEL);top.starChests=g.STAGES.map(()=>7);assert.equal(g.treePointsTotal(top),99+g.STAGES.length);assert.ok(g.treePointsTotal(top)<=g.TREE_COST*.52,'Lv.200에 ★30 상자를 모두 받아도 절반쯤만 찍는다');}
  // Giving back: only nodes nothing hangs on.
  assert.equal(g.forgetGrowthNode(s,'ward-r'),false);assert.equal(g.forgetStatus(p,'ward-r'),'뒤에 이어진 노드가 있음');assert.ok(g.forgetGrowthNode(s,'ward-1'));assert.equal(g.treePoints(p),3);
@@ -42,7 +43,7 @@ test('training ranks count less past 20 and 60, so one stat cannot run away',()=
 
 test('levels bring the old forge/숙련 values by Lv.25; training and tree bonuses add on top',()=>{
  const l1=g.levelGrowth(1),l25=g.levelGrowth(25),l90=g.levelGrowth(90);assert.equal(l1.damage,0);assert.deepEqual(l25,l90);assert.ok(Math.abs(l25.damage-1.36)<1e-9&&Math.abs(l25.reduction-.27)<1e-9&&Math.abs(l25.hp-208)<1e-9);
- const base=g.playerStats(profile(150)),p=profile(150);p.training={power:10,vitality:10,guard:10,precision:10,ferocity:10,tempo:10,stride:10};p.growthTree=['blade-r','blade-1','blade-2','ward-r','ward-1','ab-r','ab-1'];const st=g.playerStats(p);
+ const base=g.playerStats(profile(150)),p=profile(150);p.training={power:10,vitality:10,guard:10,precision:10,ferocity:10,tempo:10,stride:10};p.growthTree=['blade-r','blade-1',SHARP,'ward-r','ward-1','ab-r','ab-1'];const st=g.playerStats(p);
  assert.ok(Math.abs(base.damage-24*(1+149*.035+1.36))<1e-9);assert.ok(Math.abs(st.damage-24*(1+149*.035+1.36+10*.05)*1.165)<1e-9,base.damage+' → '+st.damage);
  assert.ok(Math.abs(st.maxHp-(base.maxHp+120)*1.065)<.01);assert.ok(Math.abs(st.reduction-(.27+.1))<1e-9);assert.ok(Math.abs(st.crit-(.05+.05))<1e-9);assert.ok(Math.abs(st.critDamage-(.6+.2))<1e-9,'치명 피해 단련 +2%p');assert.ok(Math.abs(base.critDamage-.6)<1e-9);
  assert.ok(Math.abs(st.attackSpeed-(1+.3+.1))<1e-9);assert.ok(Math.abs(st.speed-280*(1+.18+.1+.05))<1e-9);assert.ok(Math.abs(st.range-135*(1+.32))<1e-9);assert.equal(st.collection,base.collection+50);

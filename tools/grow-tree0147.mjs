@@ -5,8 +5,11 @@
 // Node kinds: s = small (2P), n = notable (6P), k = keystone (10P). Themes give the bonus, the name and the icon.
 const SEED=Number(process.argv[2]??1);
 const W=600,H=240,CORE={x:300,y:128},MIN_GAP=19,PAD_X=16,PAD_Y=12;
+// 0.147.1: the web is drawn about 1.25× wider per unit than tall (600×240 box on a ~800×240 px panel), so spacing is
+// measured on screen: horizontal gaps count 1.25×. Step lengths are screen lengths too.
+const SX=1.25,gap=(a,b)=>Math.hypot((a.x-b.x)*SX,a.y-b.y);
 // Screen furniture over the web (box units): 프리셋 (top left), 확대 (top right), 영역 이름표 (bottom left). Nodes stay out.
-const KEEP_OUT=[[0,0,196,26],[516,0,600,26],[0,176,62,240]];
+const KEEP_OUT=[[0,0,290,30],[460,0,600,30],[0,176,62,240]];// 0.147.1: sized for 568×320, where the tools cover more of the web
 const blocked=(x,y)=>KEEP_OUT.some(([a,b,c,d])=>x>=a-10&&x<=c+10&&y>=b-10&&y<=d+10);
 // theme → small bonus; named notables/keystones carry their own bonus and icon (art/growth0139 icon keys).
 const SMALL={dmg:{damagePct:.04},aspd:{attackSpeed:.025},fin:{finisher:.125},crit:{crit:.01},critd:{critDamage:.06},exec:{execute:.06},range:{range:.025,damagePct:.02},
@@ -29,22 +32,25 @@ const NAMED={
  gale:N('검풍',{range:.1,speed:.06},'ab-l3'),dash:N('질주',{speed:.075,staminaRegen:.06},'ab-r3'),afterimage:N('잔상 보법',{skillArea:.05,speed:.05},'core'),
  fighter:N('투사의 기개',{damagePct:.06,hpPct:.06},'bw-2'),calm:N('고요한 호흡',{regeneration:1.25,staminaRegen:.125},'wa-2'),
 };
-// A path is a list of nodes; {fork:[[angleOffset°, path], …]} splits it. Lengths and spreads differ on purpose.
-const nn=k=>NAMED[k],F=(...arms)=>({fork:arms});
+// A path is a list of nodes; {fork:[[angleOffset°, path], …]} splits it and ends the path; {twig:[angleOffset°, path]}
+// (0.147.1, 사용자 요청 '끊기는 구간을 더') sprouts a short dead-end side branch and the path goes on. Lengths and spreads differ on purpose.
+const nn=k=>NAMED[k],F=(...arms)=>({fork:arms}),T=(off,...steps)=>({twig:[off,steps]});
 const PLAN={
- blade:{angle:180,path:[S('dmg'),nn('sharp'),F(
-  [-38,[S('aspd'),S('aspd'),nn('haste'),F([-30,[S('fin'),S('fin'),nn('bloodmoon'),S('fin'),nn('frenzy')]],[22,[S('aspd'),S('crit')]])]],
-  [6,[S('range'),nn('edge'),S('critd'),S('critd'),nn('vital'),F([-24,[S('crit'),S('crit'),nn('weak')]],[30,[S('dmg'),nn('soul')]])]],
-  [44,[S('exec'),S('exec'),nn('executioner'),S('exec'),S('critd'),nn('behead')]])]},
+ blade:{angle:180,path:[S('dmg'),T(-75,S('crit')),nn('sharp'),F(
+  [-38,[S('aspd'),T(-65,S('aspd'),S('crit')),S('aspd'),nn('haste'),F([-30,[S('fin'),T(60,S('fin')),S('fin'),nn('bloodmoon'),S('fin'),nn('frenzy')]],[24,[S('aspd'),S('crit'),T(55,S('critd')),S('critd')]])]],
+  [6,[S('range'),nn('edge'),T(-65,S('range'),S('dmg')),S('critd'),S('critd'),nn('vital'),F([-26,[S('crit'),S('crit'),nn('weak'),T(55,S('crit'))]],[30,[S('dmg'),T(-60,S('dmg')),S('dmg'),nn('soul')]])]],
+  [44,[S('exec'),T(65,S('exec'),S('critd')),S('exec'),nn('executioner'),S('exec'),T(-55,S('exec')),S('critd'),nn('behead')]])]},
  ward:{angle:-90,path:[S('hp'),nn('body'),F(
-  [-62,[S('red'),nn('wall'),F([-20,[S('guard'),S('guard'),nn('unbroken')]],[40,[S('red'),nn('fortress')]])]],
-  [8,[S('hp'),nn('oath')]],
-  [64,[S('regen'),S('regen'),nn('regrow'),S('drain'),S('drain'),nn('thirst'),S('drain'),nn('ghoul')]])]},
- art:{angle:0,path:[S('stam'),nn('cycle'),F(
-  [-46,[S('cd'),S('cd'),nn('quick'),F([-18,[S('area'),S('area'),nn('wide'),nn('overload')]],[34,[S('stam'),S('cd')]])]],
-  [14,[S('sdmg'),nn('flowing'),S('sdmg'),S('sdmg'),nn('might'),F([-26,[S('sdmg'),nn('artsoul'),nn('oneness')]],[28,[S('fury'),S('fury'),nn('chain')]])]],
-  [58,[S('area'),S('stam')]])]},
- ab:{angle:90,path:[S('speed'),nn('gale'),F([-58,[S('speed'),nn('dash'),S('critspeed')]],[52,[S('speed'),nn('afterimage'),S('sdmg')]])]},
+  [-78,[S('red'),T(55,S('red')),nn('wall'),F([-15,[S('guard'),S('guard'),nn('unbroken')]],[45,[S('red'),nn('fortress')]])]],
+  [4,[S('hp'),nn('oath')]],
+  [78,[S('regen'),S('regen'),nn('regrow'),S('drain'),T(60,S('drain')),S('drain'),nn('thirst'),S('drain'),nn('ghoul')]])]},
+ art:{angle:0,path:[S('stam'),T(70,S('stam')),nn('cycle'),F(
+  [-46,[S('cd'),T(-60,S('cd')),S('cd'),nn('quick'),F([-18,[S('area'),T(55,S('area')),S('area'),nn('wide'),nn('overload')]],[34,[S('stam'),S('cd'),S('stam')]])]],
+  [14,[S('sdmg'),nn('flowing'),T(60,S('sdmg'),S('stam')),S('sdmg'),S('sdmg'),nn('might'),F([-26,[S('sdmg'),T(-55,S('sdmg')),nn('artsoul'),nn('oneness')]],[28,[S('fury'),T(55,S('fury')),S('fury'),nn('chain')]])]],
+  [58,[S('area'),S('stam'),T(50,S('cd'))]])]},
+ ab:{angle:90,path:[S('speed'),T(-70,S('speed')),nn('gale'),F(
+  [-58,[S('speed'),T(-55,S('critspeed')),S('range'),nn('dash'),S('critspeed'),T(50,S('speed'))]],
+  [52,[S('speed'),T(55,S('speed')),S('sdmg'),nn('afterimage'),S('sdmg'),T(-50,S('area'))]])]},
 };
 // Ring around the core (fixed, so every region starts next to the 중심).
 const RING={blade:{x:270,y:128},ward:{x:300,y:103},art:{x:330,y:128},ab:{x:300,y:153}};
@@ -59,14 +65,15 @@ function grow(seed){
  const walk=(region,path,fromId,x,y,angle)=>{
   for(const step of path){
    if(step.fork){for(const [off,arm] of step.fork)if(!walk(region,arm,fromId,x,y,angle+off+(rnd()-.5)*16))return false;return true;}
+   if(step.twig){if(!walk(region,step.twig[1],fromId,x,y,angle+step.twig[0]+(rnd()-.5)*20))return false;continue;}
    // Jittered candidates; the one farthest from every placed node wins (keeps the walk random but uncrowded). Candidates
    // outside the box or crossing a placed link are dropped; when the near ones are all crowded the walk may bend up to ±100°.
    let best=null;const from=nodes.find(n=>n.id===fromId);
-   for(let k=0;k<48;k++){if(k===8&&best&&best.room>=MIN_GAP+3)break;const spread=k<8?44:200,a=angle+(rnd()-.5)*spread,len=(step.kind==='s'?22:27)+rnd()*7;
-    const nx=x+Math.cos(a*Math.PI/180)*len,ny=y+Math.sin(a*Math.PI/180)*len;
+   for(let k=0;k<48;k++){if(k===8&&best&&best.room>=MIN_GAP+3)break;const spread=k<8?44:200,a=angle+(rnd()-.5)*spread,c=Math.cos(a*Math.PI/180),sn=Math.sin(a*Math.PI/180),len=((step.kind==='s'?22:27)+rnd()*6)/Math.hypot(c*SX,sn);
+    const nx=x+c*len,ny=y+sn*len;
     if(nx<PAD_X||nx>W-PAD_X||ny<PAD_Y||ny>H-PAD_Y||blocked(nx,ny))continue;
     const me={x:nx,y:ny};if(edges.some(([p,q])=>p!==fromId&&q!==fromId&&cross(from,me,nodes.find(n=>n.id===p),nodes.find(n=>n.id===q))))continue;
-    let room=Infinity;for(const o of nodes)room=Math.min(room,Math.hypot(o.x-nx,o.y-ny));
+    let room=Infinity;for(const o of nodes)room=Math.min(room,gap(o,me));
     if(!best||room>best.room)best={a,nx,ny,room};}
    if(!best)return false;
    let {a,nx,ny}=best;
@@ -77,23 +84,38 @@ function grow(seed){
  for(const [r,plan] of Object.entries(PLAN))if(!walk(r,plan.path,ringIds[r],RING[r].x,RING[r].y,plan.angle))return null;
  // Bridges: two nodes between the closest pair of two regions' nodes; the south arms hook onto their neighbours.
  const by=id=>nodes.find(n=>n.id===id),closest=(ra,rb,min=0)=>{let best=null;for(const a of nodes)if(a.region===ra&&!a.id.endsWith('-r'))for(const b of nodes)if(b.region===rb&&!b.id.endsWith('-r')){const d=Math.hypot(a.x-b.x,a.y-b.y);if(d>=min&&(!best||d<best.d))best={a,b,d};}return best;};
- for(const [name,ra,rb,small,notable] of [['bw','blade','ward','bw','fighter'],['wa','ward','art','wa','calm']]){const c=closest(ra,rb,66);if(!c||c.d>130)return null;
+ for(const [name,ra,rb,small,notable] of [['bw','blade','ward','bw','fighter'],['wa','ward','art','wa','calm']]){const c=closest(ra,rb,54);if(!c||c.d>170)return null;
   const p1={x:c.a.x+(c.b.x-c.a.x)/3,y:c.a.y+(c.b.y-c.a.y)/3},p2={x:c.a.x+(c.b.x-c.a.x)*2/3,y:c.a.y+(c.b.y-c.a.y)*2/3};
   const i1=add(name,S(small),Math.round(p1.x+(rnd()-.5)*6),Math.round(p1.y+(rnd()-.5)*6),c.a.id),i2=add(name,nn(notable),Math.round(p2.x+(rnd()-.5)*6),Math.round(p2.y+(rnd()-.5)*6),i1);edges.push([i2,c.b.id]);}
  for(const r of ['blade','art']){const c=closest('ab',r);if(c&&c.d<75)edges.push([c.a.id,c.b.id]);}
  return {nodes,edges,by};
 }
+// Relaxation (0.147.1): nudge pairs that sit closer than MIN_GAP apart, a little at a time, keeping the 중심 and its ring
+// fixed and every node inside the box and off the screen furniture. The shape stays; only the crowding is undone.
+function relax(t){
+ if(!t)return t;const {nodes}=t,fixed=n=>n.id==='core'||n.id.endsWith('-r');
+ for(let it=0;it<600;it++){let moved=false;
+  for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){const a=nodes[i],b=nodes[j],d=gap(a,b);if(d>=MIN_GAP+.5)continue;moved=true;
+   let dx=(b.x-a.x)*SX,dy=b.y-a.y;if(Math.hypot(dx,dy)<.01){dx=1;dy=0;}const L=Math.hypot(dx,dy),push=(MIN_GAP+.6-d)/2,ux=dx/L/SX*push,uy=dy/L*push;
+   const fa=fixed(a),fb=fixed(b);if(fa&&fb)continue;const ka=fa?0:fb?2:1,kb=fb?0:fa?2:1;
+   a.x-=ux*ka;a.y-=uy*ka;b.x+=ux*kb;b.y+=uy*kb;}
+  for(const n of nodes){if(fixed(n))continue;n.x=Math.max(PAD_X,Math.min(W-PAD_X,n.x));n.y=Math.max(PAD_Y,Math.min(H-PAD_Y,n.y));
+   for(const [a,b,c,d] of KEEP_OUT)if(n.x>=a-10&&n.x<=c+10&&n.y>=b-10&&n.y<=d+10){const out=[[n.x-(a-11),'x',a-11],[(c+11)-n.x,'x',c+11],[n.y-(b-11),'y',b-11],[(d+11)-n.y,'y',d+11]].filter(([,k,v])=>k==='x'?v>=PAD_X&&v<=W-PAD_X:v>=PAD_Y&&v<=H-PAD_Y).sort((p,q)=>p[0]-q[0])[0];if(out)n[out[1]]=out[2];}}
+  if(!moved)break;}
+ for(const n of nodes){n.x=Math.round(n.x);n.y=Math.round(n.y);}
+ return t;
+}
 const cross=(p,q,r,s)=>{const d=(a,b,c)=>(b.x-a.x)*(c.y-a.y)-(b.y-a.y)*(c.x-a.x);return d(p,q,r)*d(p,q,s)<0&&d(r,s,p)*d(r,s,q)<0;};
 function valid(t){
  if(!t)return false;const {nodes,edges,by}=t;
  if(nodes.some(n=>blocked(n.x,n.y)))return false;
- for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++)if(Math.hypot(nodes[i].x-nodes[j].x,nodes[i].y-nodes[j].y)<MIN_GAP)return false;
+ for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++)if(gap(nodes[i],nodes[j])<MIN_GAP)return false;
  for(let i=0;i<edges.length;i++)for(let j=i+1;j<edges.length;j++){const [a,b]=edges[i],[c,d]=edges[j];if(new Set([a,b,c,d]).size<4)continue;if(cross(by(a),by(b),by(c),by(d)))return false;}
  // No link may pass right over a third node.
- for(const [a,b] of edges){const p=by(a),q=by(b);for(const n of nodes){if(n.id===a||n.id===b)continue;const L=Math.hypot(q.x-p.x,q.y-p.y),u=((n.x-p.x)*(q.x-p.x)+(n.y-p.y)*(q.y-p.y))/(L*L);if(u<=0||u>=1)continue;if(Math.abs((q.x-p.x)*(n.y-p.y)-(q.y-p.y)*(n.x-p.x))/L<12)return false;}}
+ for(const [a,b] of edges){const p=by(a),q=by(b);for(const n of nodes){if(n.id===a||n.id===b)continue;const L=Math.hypot(q.x-p.x,q.y-p.y),u=((n.x-p.x)*(q.x-p.x)+(n.y-p.y)*(q.y-p.y))/(L*L);if(u<=0||u>=1)continue;if(Math.abs((q.x-p.x)*(n.y-p.y)-(q.y-p.y)*(n.x-p.x))/L<9)return false;}}
  return true;
 }
-let tree=null,seed=SEED;for(;seed<SEED+20000;seed++){const t=grow(seed);if(valid(t)){tree=t;break;}}
+let tree=null,seed=SEED;for(;seed<SEED+20000;seed++){const t=relax(grow(seed));if(valid(t)){tree=t;break;}}
 if(!tree)throw new Error('no valid layout');
 const KIND={s:'small',n:'notable',k:'keystone',core:'core'};
 const links=id=>tree.edges.filter(([,b])=>b===id).map(([a])=>a).concat(tree.edges.filter(([a,b])=>a===id&&b.endsWith('-r')&&false).map(([,b])=>b));

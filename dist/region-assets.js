@@ -1,5 +1,5 @@
-import {validMonsterEffects} from './monster-fx.js?v=0.147.0';
-import { runtimeClipIds } from './motion.js?v=0.147.0';
+import {validMonsterEffects} from './monster-fx.js?v=0.147.1';
+import { runtimeClipIds } from './motion.js?v=0.147.1';
 
 // Only images used by camp previews are decoded before the first hunt.
 export function campAssetPaths(manifest){return new Set([manifest.clips[manifest.directions.hunter.idle.s].image,manifest.equipment.image,manifest.equipmentRarities.image]);}
