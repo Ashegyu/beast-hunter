@@ -44,7 +44,8 @@ const FIRST={
 //  detonate f       hitting a bleeding enemy bursts the bleed: attack×f per tick left   shatter %   bonus against a frozen enemy (thaws it)
 //  chain {n,range,scale} the first target's hit jumps to n more enemies            refundKill s  a kill by this skill takes s off its cooldown
 //  stack {per,max}  every recast within 8s adds per% (up to max)                    prime {tag,pct}  the next skill of that tag within 4s +pct%
-//  primed %         +% when another skill was cast within the last 3s               hpCost f    also costs f of max health (never below 1)
+//  primed %         +% when another skill was cast within the last 3s
+//  keepBlade         casting this skill does not end 혈월의 칼날 (0.147.8, 잔상 태그 3개)               hpCost f    also costs f of max health (never below 1)
 //  drainHit %       heals % of the damage it deals (≤6% max health per cast)        expose s    hit enemies are exposed (staggered) for s
 //  after {kind,value,seconds}  after the cast: fury (basic attack +%), haste (move +%), guard (damage taken −%)
 //  skill-only: stanceCounter %, stanceShield f, bladeWave %, bladeDrain f, bladeBleed n, markSpread n, markBlast radius,
@@ -143,7 +144,8 @@ export const TAG_SYNERGY=Object.freeze({
  // 0.147.7: 잔류 영역 10% → 6%, 경직 없음(측정 tools/reports/branches-benchmark-0146: 보스 DPS +62%의 대부분이 잔류 영역의 경직 누적이었다).
  area:[[2,{damage:1.08},'피해 +8%'],[3,{pull:.15},'괴수를 끌어당김'],[4,{zone:{seconds:1.5,scale:.06}},'끝난 자리에 1.5초 잔류 영역']],
  precision:[[2,{boss:10},'보스·정예 +10%'],[3,{execute:20},'빈사 적 +20%'],[4,{expose:1.5,damage:1.1},'적중 시 1.5초 노출 · 피해 +10%']],
- spirit:[[2,{damage:1.05,duration:1.15},'피해 +5% · 지속 +15%'],[3,{primed:15},'다른 스킬 직후 +15%'],[4,{cost:-5,cooldown:.9},'기력 −5 · 재사용 −10%']],
+ // 0.147.8: 잔상 스킬(잔영참·표식·자세·군무)을 쓰면 같은 태그의 혈월의 칼날이 끊겨 태그를 켜는 편이 손해였다(−2.3%) → 3개에 keepBlade.
+ spirit:[[2,{damage:1.05,duration:1.15},'피해 +5% · 지속 +15%'],[3,{keepBlade:1,primed:15},'칼날 유지·연계 +15%'],[4,{cooldown:.9,duration:1.2},'재사용 −10%·지속 +20%']],
 });
 // Ultimate tier 4 (Lv.20).
 const ULT_LAST={

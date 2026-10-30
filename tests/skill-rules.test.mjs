@@ -78,6 +78,8 @@ test('passive build rules and tag synergy reach the skills they name', () => {
  const tag=fight({skills:['crescent','seeking','returning','eclipse']});const syn=g.tagSynergy(tag.p).wave;assert.equal(syn.count,4);assert.ok(syn.rows.every(r=>r.active));
  const m=g.branchMods(tag.p,'crescent');assert.ok(Math.abs(m.damage-1.08*1.08)<1e-9);assert.equal(m.area,1.15);assert.equal(m.refundKill,.5);
  assert.equal(g.branchMods(tag.p,'draw').damage,undefined,'untagged skills get nothing');
+ const sp=fight({skills:['bloodblade','mark','echo','stance']});assert.equal(g.tagSynergy(sp.p).spirit.count,4);cast(sp.s,'bloodblade');run(sp.s,.1);cast(sp.s,'mark');assert.ok(sp.s.skillRuntime.bloodbladeUntil>sp.s.run.time,'잔상 3개: 표식이 칼날을 끊지 않음');
+ const sp2=fight({skills:['bloodblade','crescent']});cast(sp2.s,'bloodblade');run(sp2.s,.1);cast(sp2.s,'crescent');assert.equal(sp2.s.skillRuntime.bloodbladeUntil,0,'다른 스킬은 칼날을 끊음');
  const tb=fight({skills:['crescent'],passives:['recovery'],branches:[['recovery',2,0]]});assert.ok(Math.abs(g.branchMods(tb.p,'crescent').damage-1.2)<1e-9,'검기 극의 +20%');
  const cut=fight({skills:['crescent'],passives:['footwork'],branches:[['footwork',1,2]]});assert.equal(g.skillCost(cut.p,'crescent'),g.SKILL_BY_ID.crescent.cost-3);
  const ks=fight({skills:['crescent'],passives:['momentum'],branches:[['momentum',1,0]]});ks.es[0].hp=1;ks.s.player.stamina=10;cast(ks.s,'crescent');const st=ks.s.player.stamina;run(ks.s,.6);assert.ok(ks.s.player.stamina>=st+5,'처치 시 기력');

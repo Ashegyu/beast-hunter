@@ -25,7 +25,7 @@ const ONLY=opt('screens')?.split(',')??null,SHOTS=opt('shots'),PORT=Number(opt('
 const SCREENS=[
  ['home',[]],['map',['nav-hunt']],['equipment',['lobby-equipment']],['bag',['lobby-bag']],['bag-detail',['lobby-bag','bag-0']],
  ['bag-organize',['lobby-bag','bag-organize']],['bag-materials',['lobby-bag','bag-tab-materials']],
- ['skills',['lobby-skills']],['skills-branch',['lobby-skills','skill-view-branch']],['skills-settings',['lobby-skills','skill-tab-settings']],
+ ['skills',['lobby-skills']],['skills-tags',['lobby-skills','skill-card-echo']],['skills-branch',['lobby-skills','skill-view-branch']],['skills-settings',['lobby-skills','skill-tab-settings']],
  ['craft',['lobby-craft']],['craft-awaken',['lobby-craft','forge-mode-awaken']],
  ['dungeon-growth',['lobby-summon','dungeon-mode-growth']],['dungeon-tower',['lobby-summon','dungeon-mode-tower']],['dungeon-rift',['lobby-summon','dungeon-mode-rift']],
  ['dungeon-raid',['lobby-summon','dungeon-mode-raid']],['dungeon-rush',['lobby-summon','dungeon-mode-rush']],

@@ -1,13 +1,13 @@
-import {createSkillMotion} from './skill-motion.js?v=0.147.7';
-import {CHAPTERS,CHAPTER_BOSSES} from './chapters.js?v=0.147.7';
-import {beastTechniques,BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE,beastElementText} from './beast-techniques.js?v=0.147.7';
-export {BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE} from './beast-techniques.js?v=0.147.7';
-import {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary,SKILL_TAGS,TAG_NAMES,TAG_SYNERGY} from './skill-branches.js?v=0.147.7';
-export {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary,SKILL_TAGS,TAG_NAMES,TAG_SYNERGY} from './skill-branches.js?v=0.147.7';
-import {GEAR_SKILLS} from './raid-skills.js?v=0.147.7';
-import {treeBonus} from './growth.js?v=0.147.7';
-import {transcendBonus} from './transcendence.js?v=0.147.7';
-export {GEAR_SKILLS,GEAR_SKILL_BY_ANCIENT} from './raid-skills.js?v=0.147.7';
+import {createSkillMotion} from './skill-motion.js?v=0.147.8';
+import {CHAPTERS,CHAPTER_BOSSES} from './chapters.js?v=0.147.8';
+import {beastTechniques,BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE,beastElementText} from './beast-techniques.js?v=0.147.8';
+export {BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE} from './beast-techniques.js?v=0.147.8';
+import {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary,SKILL_TAGS,TAG_NAMES,TAG_SYNERGY} from './skill-branches.js?v=0.147.8';
+export {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary,SKILL_TAGS,TAG_NAMES,TAG_SYNERGY} from './skill-branches.js?v=0.147.8';
+import {GEAR_SKILLS} from './raid-skills.js?v=0.147.8';
+import {treeBonus} from './growth.js?v=0.147.8';
+import {transcendBonus} from './transcendence.js?v=0.147.8';
+export {GEAR_SKILLS,GEAR_SKILL_BY_ANCIENT} from './raid-skills.js?v=0.147.8';
 // Lirian skill rules: one catalog drives unlocks, rank values, UI and combat.
 const active=(id,name,unlock,damage,step,cost,cooldown,shape,description,extra={})=>({id,name,kind:'active',unlock,damage,step,cost,cooldown,shape,description,...extra});
 const passive=(id,name,unlock,value,step,unit,description)=>({id,name,kind:'passive',unlock,value,step,unit,description});
@@ -221,7 +221,7 @@ export function castSkill(s,id,aim,h){
   for(const k of ['drainHit','expose','detonate','shatter','chain','pull','refundKill','parryReset','parryRadius','parryGuard'])if(br[k])root[k]=br[k];
   for(const a of afterList(br))r.buffs.push({kind:a.kind,value:a.value,until:now+a.seconds});if(r.buffs.length>12)r.buffs=r.buffs.filter(b=>b.until>now);
   if(br.hpCost)p.hp=Math.max(1,p.hp-p.maxHp*br.hpCost);}
- p.stamina-=skillCost(s.profile,id);if(!Object.hasOwn(r.cooldowns,id))r.cooldownKeys.push(id);r.cooldowns[id]=skillCooldown(s.profile,id);h.cast?.(s,id);if(!gear&&treeBonus(s.profile).skillFury)r.treeFuryUntil=now+3;r.stanceUntil=0;if(id!=='bloodblade')r.bloodbladeUntil=0;
+ p.stamina-=skillCost(s.profile,id);if(!Object.hasOwn(r.cooldowns,id))r.cooldownKeys.push(id);r.cooldowns[id]=skillCooldown(s.profile,id);h.cast?.(s,id);if(!gear&&treeBonus(s.profile).skillFury)r.treeFuryUntil=now+3;r.stanceUntil=0;if(id!=='bloodblade'&&!br.keepBlade)r.bloodbladeUntil=0;
  if(d.kind==='ultimate'){r.ultimatePresentation={id,startedAt:now,token:r.token,x:p.x,y:p.y,nx:n.x,ny:n.y};}
  if(d.kind==='active'){
   if(r.lastCast&&r.lastCast.id!==id&&now-r.lastCast.time<=4&&now>=r.flowReady&&pv(s,'flow')){capStamina(s,pv(s,'flow'));passiveVisual(s,'flow',h);r.flowReady=now+6;}
