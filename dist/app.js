@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.148.5';
-import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.148.5';
-import { createCombatAudio } from './sound.js?v=0.148.5';
-import * as game from './game-engine.js?v=0.148.5';
-import {FrameMetrics} from './frame-metrics.js?v=0.148.5';
-import { frameIndex, frameRect, validateClip } from './engine.js?v=0.148.5';
-import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.148.5';
-import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.148.5';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.148.5';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.148.5';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.148.5';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.148.5';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.148.6';
+import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.148.6';
+import { createCombatAudio } from './sound.js?v=0.148.6';
+import * as game from './game-engine.js?v=0.148.6';
+import {FrameMetrics} from './frame-metrics.js?v=0.148.6';
+import { frameIndex, frameRect, validateClip } from './engine.js?v=0.148.6';
+import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.148.6';
+import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.148.6';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.148.6';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.148.6';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.148.6';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.148.6';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -1758,12 +1758,12 @@ function refreshBuildSystem(){
   }else{$('build-skill-'+n).textContent='현재 장비·스킬·성장 트리·자동 정책을 함께 저장합니다.';$('build-effects-'+n).textContent='같은 장비는 여러 프리셋에서 공유합니다.';}
   $('build-save-'+n).disabled=state.phase!=='camp';$('build-delete-'+n).disabled=!b||state.phase!=='camp';
  }
- for(const id of ['entry-build','home-entry-build'])if(document.activeElement!==$(id))$(id).value=!match?'current':String(profile.selectedBuild);for(let n=0;n<5;n++){const b=$('entry-build-pick-'+n);hudText(b,profile.savedBuilds[n]?.name??game.BUILD_NAMES[n]);b.disabled=!profile.savedBuilds[n];b.setAttribute('aria-pressed',String(!!match&&profile.selectedBuild===n));b.setAttribute('title',profile.savedBuilds[n]?'이 프리셋으로 바꿔 입장':'저장된 프리셋 없음');}
+ for(const id of ['entry-build','home-entry-build'])if(document.activeElement!==$(id))$(id).value=!match?'current':String(profile.selectedBuild);renderEntryChoices('entry-build-pick-',match);
 }
 for(let n=0;n<5;n++)$('build-name-'+n).addEventListener('input',()=>{buildNameDrafts[n]=$('build-name-'+n).value;});
 for(let n=0;n<5;n++)$('build-tab-'+n).addEventListener('click',()=>{buildTab=n;bagRenderKey='';updateHud();});
 // Alpha 0.144: 사냥 출발 바의 입장 프리셋도 던전처럼 버튼 5개 격자(숨은 select는 상태·테스트용으로 남김).
- for(let n=0;n<5;n++)$('entry-build-pick-'+n).addEventListener('click',()=>{if(state.phase!=='camp')return;const r=game.applyBuild(state,n);bagFeedback=r.reason;if(r.ok){appearance=equippedDesigns(profile);save();}bagRenderKey='';skillRenderKey='';updateHud();});
+ for(let n=0;n<5;n++)$('entry-build-pick-'+n).addEventListener('click',()=>{const r=applyEntryChoice(n);if(!r)return;bagFeedback=r.reason;bagRenderKey='';updateHud();});
  for(const id of ['entry-build','home-entry-build'])$(id).addEventListener('change',()=>{if($(id).value==='current')return;const r=game.applyBuild(state,Number($(id).value));bagFeedback=r.reason;if(r.ok){appearance=equippedDesigns(profile);save();}bagRenderKey='';skillRenderKey='';updateHud();});
 $('result-build').addEventListener('click',()=>{if(!game.resultReady(state))return;retryPlan={chapter:state.stageId,stage:state.run.stage,difficulty:state.difficulty,dungeon:state.run.dungeonId,raid:state.run.raidId,rush:!!state.run.rush};returnCamp();openInventory('build');});
 $('build-retry').addEventListener('click',()=>{if(!retryPlan||state.phase!=='camp')return;const p=retryPlan;retryPlan=null;inventoryOpen=false;if(p.raid)startRaid(p.raid);else if(p.rush)startRush();else if(p.dungeon)startDungeon(p.dungeon,p.stage);else start(p.chapter,p.stage,p.difficulty);});
@@ -1832,9 +1832,21 @@ function refreshTower(){
  $('dungeon-rewards').textContent=first?'첫 클리어 · '+dungeonRewardText(reward)+(game.towerBonusAt(floor)?' · 영구 '+game.towerBonusAt(floor).text:''):'이미 오른 층 · 보상 없음';$('dungeon-use').hidden=true;$('dungeon-progress').textContent='1~'+limit+'층';
  $('dungeon-enter').disabled=dungeonBusy||!!combatWork||!!combatError;$('dungeon-enter').textContent=dungeonBusy?'전투 준비 중…':'탑 오르기 ›';
 }
+// 0.148.6 (사용자 요청 '입장 전 빌드 선택에 저장한 빌드를 고를 수 없다'): 입장 선택 5칸 = 저장된 스킬 빌드(스킬 화면 빌드 1~3, 장착·자동 정책만)
+// → 저장된 통합 빌드(장비 화면, 장비·스킬·트리) 순. 아무것도 저장하지 않았으면 스킬 빌드 1~3 자리를 비활성으로 보인다. 숨은 select는 통합 빌드 그대로.
+function entryChoices(){const out=[];profile.skillBook.presets.forEach((b,n)=>{if(b)out.push({type:'skill',n});});profile.savedBuilds.forEach((b,n)=>{if(b)out.push({type:'build',n});});
+ if(!out.length)for(let n=0;n<3;n++)out.push({type:'skill',n,empty:true});return out.slice(0,5);}
+const loadoutKey=b=>JSON.stringify(['active','passive','ultimate','beast'].map(k=>b?.[k]??null).concat([b?.auto??null]));
+function entryChoicePressed(c,match){return c.type==='skill'?!!profile.skillBook.presets[c.n]&&loadoutKey(profile.skillBook.presets[c.n])===loadoutKey({...profile.skillBook.loadout,auto:profile.skillBook.auto}):!!match&&profile.selectedBuild===c.n;}
+function renderEntryChoices(prefix,match){const list=entryChoices();for(let i=0;i<5;i++){const b=$(prefix+i),c=list[i];b.hidden=!c;if(!c)continue;
+ hudText(b,c.type==='skill'?'스킬 빌드 '+(c.n+1):profile.savedBuilds[c.n].name??game.BUILD_NAMES[c.n]);b.disabled=!!c.empty;b.setAttribute('data-choice',c.type);b.setAttribute('aria-pressed',String(!c.empty&&entryChoicePressed(c,match)));
+ b.setAttribute('title',c.empty?'스킬 화면에서 빌드를 저장하면 고를 수 있어':c.type==='skill'?'스킬 빌드 '+(c.n+1)+'로 바꿔 입장 (장착·자동 정책)':'통합 빌드로 바꿔 입장 (장비·스킬·성장 트리)');}}
+function applyEntryChoice(i){const c=entryChoices()[i];if(!c||c.empty||state.phase!=='camp')return null;
+ if(c.type==='skill'){const ok=game.skillPreset(state,c.n,'load');if(ok)save();skillRenderKey='';return {ok,reason:ok?'스킬 빌드 '+(c.n+1)+' 장착':'스킬 빌드를 불러오지 못했어.'};}
+ const r=game.applyBuild(state,c.n);if(r.ok){appearance=equippedDesigns(profile);save();}skillRenderKey='';return r;}
 function refreshDungeonBuild(){
  const selected=profile.selectedBuild!==null?profile.savedBuilds[profile.selectedBuild]:null,match=selected&&JSON.stringify(selected.equipment)===JSON.stringify(profile.equipment)&&JSON.stringify(selected.skill)===JSON.stringify({loadout:profile.skillBook.loadout,auto:profile.skillBook.auto,awakening:profile.skillBook.awakening,branchPick:profile.skillBook.branchPick});
- for(let n=0;n<5;n++){$('dungeon-build-option-'+n).textContent=(profile.savedBuilds[n]?.name??game.BUILD_NAMES[n])+(profile.savedBuilds[n]?'':' · 미저장');$('dungeon-build-option-'+n).disabled=!profile.savedBuilds[n];}for(let n=0;n<5;n++){const b=$('dungeon-build-pick-'+n);hudText(b,profile.savedBuilds[n]?.name??game.BUILD_NAMES[n]);b.disabled=!profile.savedBuilds[n];b.setAttribute('aria-pressed',String(!!match&&profile.selectedBuild===n));b.setAttribute('title',profile.savedBuilds[n]?'이 프리셋으로 바꿔 입장':'저장된 프리셋 없음');}hudText($('dungeon-build-state'),match?'프리셋':'프리셋 · 사용자 조합');if(document.activeElement!==$('dungeon-build'))$('dungeon-build').value=match?String(profile.selectedBuild):'current';
+ for(let n=0;n<5;n++){$('dungeon-build-option-'+n).textContent=(profile.savedBuilds[n]?.name??game.BUILD_NAMES[n])+(profile.savedBuilds[n]?'':' · 미저장');$('dungeon-build-option-'+n).disabled=!profile.savedBuilds[n];}renderEntryChoices('dungeon-build-pick-',match);{const sk=entryChoices().find(c=>c.type==='skill'&&!c.empty&&entryChoicePressed(c,match));hudText($('dungeon-build-state'),match?'프리셋':sk?'스킬 빌드 '+(sk.n+1):'프리셋 · 사용자 조합');}if(document.activeElement!==$('dungeon-build'))$('dungeon-build').value=match?String(profile.selectedBuild):'current';
 }
 // Alpha 0.136 보스 러시 tab: today's five bosses, entries and the 인장 성장 panel; the right-hand entry panel is shared.
 function rushResetText(){const left=game.nextRushReset(Date.now())-Date.now(),hours=Math.floor(left/36e5),minutes=Math.ceil(left%36e5/6e4);return '00:00 초기화 · '+(hours?hours+'시간 ':'')+minutes+'분 남음';}
@@ -1900,7 +1912,7 @@ $('dungeon-level').addEventListener('change',()=>{const n=Number($('dungeon-leve
 function pickDungeonBuild(n){if(state.phase!=='camp'||campDrawer!=='dungeons')return;const r=game.applyBuild(state,n);$('dungeon-feedback').textContent=r.reason;if(r.ok){appearance=equippedDesigns(profile);save();}skillRenderKey='';updateHud();}
 $('dungeon-build').addEventListener('change',()=>{if($('dungeon-build').value!=='current')pickDungeonBuild(Number($('dungeon-build').value));});
 // Alpha 0.141: presets are a grid of five buttons instead of a list; the hidden select stays for state and tests.
-for(let n=0;n<5;n++)$('dungeon-build-pick-'+n).addEventListener('click',()=>pickDungeonBuild(n));
+for(let n=0;n<5;n++)$('dungeon-build-pick-'+n).addEventListener('click',()=>{if(campDrawer!=='dungeons')return;const r=applyEntryChoice(n);if(r)$('dungeon-feedback').textContent=r.reason;updateHud();});
 $('dungeon-enter').addEventListener('click',()=>{if(state.phase==='camp'&&campDrawer==='dungeons'){if(dungeonMode==='raid')startRaid();else if(dungeonMode==='rush')startRush();else if(dungeonMode==='tower')startDungeon('tower',selectedTowerFloor);else if(dungeonMode==='rift')startDungeon('rift',selectedRiftDepth);else startDungeon();}});
 for(const [id,step]of [['tower-floor-down10',-10],['tower-floor-down',-1],['tower-floor-up',1],['tower-floor-up10',10]])$(id).addEventListener('click',()=>{if(state.phase!=='camp'||campDrawer!=='dungeons'||dungeonMode!=='tower'&&dungeonMode!=='rift')return;launchRevision++;if(dungeonMode==='rift')selectedRiftDepth=clamp(selectedRiftDepth+step,1,dungeonLimitFor('rift'));else selectedTowerFloor=clamp(selectedTowerFloor+step,1,game.dungeonLimit(profile,'tower'));refreshDungeons();});
 for(const mode of ['growth','raid','rush','tower','rift'])$('dungeon-mode-'+mode).addEventListener('click',()=>{if(state.phase!=='camp'||campDrawer!=='dungeons'||dungeonMode===mode)return;launchRevision++;dungeonMode=mode;if(mode==='tower')selectedTowerFloor=game.dungeonLimit(profile,'tower');if(mode==='rift')selectedRiftDepth=dungeonLimitFor('rift');sealFeedback='';$('dungeon-feedback').textContent='';refreshDungeons();});

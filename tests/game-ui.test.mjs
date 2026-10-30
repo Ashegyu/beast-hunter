@@ -1843,9 +1843,23 @@ test('stage B five presets save real gear and skill settings, expose two-tap ent
 test('hunt map entry presets are a five-button grid: saved presets apply on tap and the matching one is pressed (0.144)',async()=>{
  const p=bagFixture();p.level=30;const ui=await host({saved:p,campaign:true});ui.emit('lobby-equipment','click');ui.emit('loadout-build-open','click');ui.emit('build-tab-2','click');ui.emit('build-save-2','click');
  ui.emit('nav-home','click');ui.emit('hub-route','click');ui.tick(0);
- assert.equal(ui.nodes.get('entry-build-pick-2').disabled,false);assert.equal(ui.nodes.get('entry-build-pick-0').disabled,true);assert.equal(ui.nodes.get('entry-build-pick-2').textContent,'광역');
- assert.equal(ui.nodes.get('entry-build-pick-2').attributes['aria-pressed'],'true');
- ui.emit('entry-build-pick-2','click');assert.equal(ui.profile().selectedBuild,2);assert.equal(ui.nodes.get('entry-build-pick-2').attributes['aria-pressed'],'true');assert.equal(ui.nodes.get('entry-build-pick-1').attributes['aria-pressed'],'false');
+ // 0.148.6: 저장된 빌드만 앞에서부터(스킬 빌드 → 통합 빌드). 통합 빌드 3번만 저장했으면 첫 칸.
+ assert.equal(ui.nodes.get('entry-build-pick-0').disabled,false);assert.equal(ui.nodes.get('entry-build-pick-0').textContent,'광역');assert.equal(ui.nodes.get('entry-build-pick-1').hidden,true);
+ assert.equal(ui.nodes.get('entry-build-pick-0').attributes['aria-pressed'],'true');
+ ui.emit('entry-build-pick-0','click');assert.equal(ui.profile().selectedBuild,2);assert.equal(ui.nodes.get('entry-build-pick-0').attributes['aria-pressed'],'true');
+});
+test('entry build pickers list saved skill builds before full builds and load them (0.148.6)',async()=>{
+ const p=bagFixture();p.level=30;const ui=await host({saved:p,campaign:true});
+ ui.emit('nav-home','click');ui.emit('hub-route','click');ui.tick(0);
+ assert.equal(ui.nodes.get('entry-build-pick-0').textContent,'스킬 빌드 1');assert.equal(ui.nodes.get('entry-build-pick-0').disabled,true,'아무것도 저장 안 하면 비활성');
+ ui.emit('nav-home','click');ui.emit('lobby-skills','click');ui.emit('skill-preset-1','click');assert.ok(ui.profile().skillBook.presets[1],'스킬 빌드 2 저장');
+ const mode=ui.profile().skillBook.auto.mode,other=mode==='boss'?'farm':'boss';ui.emit('skill-tab-settings','click');ui.emit('skill-auto-mode-'+other,'click');assert.equal(ui.profile().skillBook.auto.mode,other);
+ ui.emit('nav-home','click');ui.emit('hub-route','click');ui.tick(0);
+ assert.equal(ui.nodes.get('entry-build-pick-0').textContent,'스킬 빌드 2');assert.equal(ui.nodes.get('entry-build-pick-0').disabled,false);assert.equal(ui.nodes.get('entry-build-pick-0').attributes['aria-pressed'],'false');assert.equal(ui.nodes.get('entry-build-pick-1').hidden,true);
+ ui.emit('entry-build-pick-0','click');assert.equal(ui.profile().skillBook.auto.mode,mode,'스킬 빌드 2 불러옴');assert.equal(ui.nodes.get('entry-build-pick-0').attributes['aria-pressed'],'true');
+ ui.emit('nav-home','click');ui.emit('lobby-skills','click');ui.emit('skill-tab-settings','click');ui.emit('skill-auto-mode-'+other,'click');ui.emit('nav-home','click');ui.emit('lobby-summon','click');ui.tick(0);
+ assert.equal(ui.nodes.get('dungeon-build-pick-0').textContent,'스킬 빌드 2');ui.emit('dungeon-build-pick-0','click');assert.equal(ui.profile().skillBook.auto.mode,mode,'던전 입장 선택도 스킬 빌드 불러옴');
+ assert.equal(ui.nodes.get('dungeon-build-state').textContent,'스킬 빌드 2');
 });
 test('bag rarity sort puts the higher-stat item first within the same grade, ignoring enhancement (0.144)',async()=>{
  const p=bagFixture();const r=game.ITEM_CATALOG.find(r=>r.id==='1-weapon-1');
@@ -1934,7 +1948,7 @@ test('Alpha 0.141 dungeon controls are buttons: level pager, preset grid and rai
  assert.equal(ui.nodes.get('camp-dungeons-panel').attributes['data-dungeon'],'gold');ui.emit('dungeon-card-xp','click');assert.equal(ui.nodes.get('camp-dungeons-panel').attributes['data-dungeon'],'xp');ui.emit('dungeon-card-gold','click');
  const before=ui.nodes.get('dungeon-level-value').textContent;ui.emit('dungeon-level-down10','click');const lowered=Number(ui.nodes.get('dungeon-level-value').textContent.replace('단계',''));assert.ok(lowered<Number(before.replace('단계',''))||lowered===1);assert.equal(ui.nodes.get('dungeon-level-value').attributes['data-state'],'cleared');
  for(let n=0;n<20;n++)ui.emit('dungeon-level-up','click');assert.equal(ui.nodes.get('dungeon-level-value').textContent,'13단계');assert.equal(ui.nodes.get('dungeon-level-up').disabled,true);assert.equal(ui.nodes.get('dungeon-level-value').attributes['data-state'],'new');
- for(let n=0;n<5;n++)assert.equal(ui.nodes.get('dungeon-build-pick-'+n).disabled,!p.savedBuilds[n]);
+ {const saved=p.savedBuilds.filter(Boolean).length+p.skillBook.presets.filter(Boolean).length;for(let n=0;n<5;n++)assert.equal(ui.nodes.get('dungeon-build-pick-'+n).hidden,n>=Math.max(saved?Math.min(saved,5):3,0),'pick '+n);}
  ui.emit('dungeon-mode-raid','click');assert.match(ui.nodes.get('camp-dungeons-panel').attributes['data-dungeon'],/^raid-/);assert.equal(ui.nodes.get('raid-tier-pick-0').attributes['aria-pressed'],'true');assert.equal(ui.nodes.get('raid-tier-pick-1').disabled,true);
  ui.emit('dungeon-mode-rush','click');assert.equal(ui.nodes.get('camp-dungeons-panel').attributes['data-dungeon'],'rush');
 });

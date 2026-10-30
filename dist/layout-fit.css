@@ -2001,3 +2001,5 @@
 #game-shell .battle .top-hud .hunter-hud .live-dps b{min-width:3ch;font-size:13px;line-height:15px;color:#ffd27a;font-variant-numeric:tabular-nums}
 #game-shell .battle .top-hud .hunter-hud .live-dps span{font-size:9px;color:#a99878;font-variant-numeric:tabular-nums}
 @media(max-height:360px){#game-shell .battle .top-hud .hunter-hud .live-dps{top:calc(100% + 8px);padding:1px 6px}#game-shell .battle .top-hud .hunter-hud .live-dps b{font-size:12px;line-height:13px}}
+/* 0.148.6 입장 빌드 선택: 스킬 빌드 → 통합 빌드 순으로 채우고 남는 칸은 hidden(공통 스킨의 display를 이기도록 아이디 3개) */
+#game-shell#game-shell#game-shell .entry-build-grid>button[hidden],#game-shell#game-shell#game-shell .dungeon-build-grid>button[hidden]{display:none!important}
