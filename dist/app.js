@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.148.10';
-import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.148.10';
-import { createCombatAudio } from './sound.js?v=0.148.10';
-import * as game from './game-engine.js?v=0.148.10';
-import {FrameMetrics} from './frame-metrics.js?v=0.148.10';
-import { frameIndex, frameRect, validateClip } from './engine.js?v=0.148.10';
-import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.148.10';
-import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.148.10';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.148.10';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.148.10';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.148.10';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.148.10';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.148.11';
+import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.148.11';
+import { createCombatAudio } from './sound.js?v=0.148.11';
+import * as game from './game-engine.js?v=0.148.11';
+import {FrameMetrics} from './frame-metrics.js?v=0.148.11';
+import { frameIndex, frameRect, validateClip } from './engine.js?v=0.148.11';
+import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.148.11';
+import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.148.11';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.148.11';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.148.11';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.148.11';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.148.11';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});

@@ -1,10 +1,10 @@
 {
   "title": "엔드게임 난이도 측정 0.148",
   "command": "node tools/benchmark-endgame0148.mjs",
-  "createdAt": "2026-10-30T20:49:35.004Z",
-  "engineVersion": "0.148.9",
+  "createdAt": "2026-10-31T00:17:38.182Z",
+  "engineVersion": "0.148.10",
   "node": "v22.22.0",
-  "elapsedSeconds": 45.494642366,
+  "elapsedSeconds": 42.542624841,
   "timeBudgetSeconds": 540,
   "plannedSeeds": [
     11,
@@ -1105,41 +1105,41 @@
     }
   ],
   "sourceSha256": {
-    "game-engine.js": "3f384cb5b8dae3bbefca326cddcea3131dbd81ddce4d7b4e6c3b39f2d4507536",
+    "game-engine.js": "1e2773e09747ede3356624cc21f4b43053d86376fe76d0f31e5e5701ae874590",
     "raids.js": "794712ad6eac920d4c208c4778ef4ca93dba80b54c49a0a0d6e2dad65d9e7c9d",
-    "dungeons.js": "ed75d59bef3a56b2263c1c57bd30e6776ea03d1e452b60dab612fbe4c3d2ec93",
-    "chapters.js": "eacedf3329ccff49302434ba2221ad33792043b67f9933d1b66238c3366d1d15",
-    "battle-progress.js": "61a689d5ea15b8711ea0eca6a776cfe55757dbad92026a99b3028ba1924170e0",
-    "build-effects.js": "0148c62940342d4ca4a7b9842b1408d7e536480a1d8de827f705fea9a52debb8",
-    "ancient-sets.js": "6e9bd93a902fc29517aaf49a8b86e573820820024ed642a4041e59a8b1299f0e",
-    "battle-plans.js": "4f07995fc16315106a4dca8cb97c7fc42e81d0456e217ec625f345c2656f8df2",
+    "dungeons.js": "3271fa4eb57b7c396e780da25b24f1117257bf4ec5f42cd4c99c50a293a796cc",
+    "chapters.js": "e8245d1856acb05524af8291c6d133334aed22679a6bc611303ee0a7fccd6017",
+    "battle-progress.js": "977ce32752a6dc73b861454593f18b96df810e2b9265c039e6c4feb31ee9a513",
+    "build-effects.js": "79fb7db72c79ba8bf822453fc1b3f4005c9c1259c645cc3523acb0542dcccd81",
+    "ancient-sets.js": "7a829c93438a3852f6a11204e41df57412405a84dbd9fed34dcbe8200472205a",
+    "battle-plans.js": "dfe48171bb98eb36e107d0ec74a81e150962e98ac50efdab2a281f60c8189a09",
     "equipment-slots.js": "797f49c3da7cba1d84eb82d791fd0de89aa7eddf2f177d263ebff1fdb8a54aae",
-    "equipment-progression.js": "b37e43896470eeb556353537aebfaaabaaa98d1d1892f206b83311e80bfc74d6",
+    "equipment-progression.js": "a8fda5de37905671889ccad56ef3e3d242f1e3bc1afcec27ff48d8894d91e69d",
     "skill-vfx.js": "0920604f25156b77250a8ffb4c6c2bd0036281a67bd087da2c76ef962e7c8b2c",
     "skill-image-fx.js": "1a4f3936a5843d2fdbe720f34d2641a31b283cfbca25407b0a0734b30d5cc44f",
-    "monster-fx.js": "ee5ff1845173dd187a4d0e47506a46a6ab81e7dc9b3faf1006f2360bd0991b6a",
-    "combat-feedback.js": "4af92dc4ac641ccb72bc84cd6b648ca3c75b9511b4bc06e336b58e34fd8ce759",
+    "monster-fx.js": "7fdf430864c02caf3f332efccb99acccfdb37000e67ae4de97b3a394a87631fd",
+    "combat-feedback.js": "5990a04b1a77d6a3368f4fe2120f060e48ae90b4408717a4267c6cd36057d10f",
     "ultimate-video.js": "6616608476f1c6a5d4ce85422f46767d3fc6a0dd88947ec90678bf2a3be1fe8f",
-    "skill-motion.js": "aabc9d9e5265f12d4d6738ace5896c500765a8ca1bcd73c35346ac38623e7902",
-    "combat-skills.js": "eaef0b4a51bd42b9a1fe97c6e699e514039bce9f3c9c66ecdc57462e4a288639",
-    "crafting.js": "1ff09ee3495110c6527c484e1cb587e00c6829fd2a14123fdcb86aa05de5f626",
-    "forge.js": "8f4f16d22cb652397f41eff8fb8eedac777c1cdbe3d41b417145d148a363c043",
-    "equipment-synergies.js": "22831bc9b9dc6f2ef628a390050af133bbdea0628799d9f9cbd1c45c8c303633",
-    "loot.js": "210863a92ff3e29720f795ce5e6a6a79f5f6c1075d261309c6c03d638ee5c33a",
+    "skill-motion.js": "ebefda1fad35a697f5c3e01248796b61953f8e72b7713d1f0d895fcc010468e1",
+    "combat-skills.js": "fa11adabcdc440eaa605c50c4ee73226ab592c3316986b52eff45064e972ab37",
+    "crafting.js": "7976d13d94c8abb2f9a16b2487e141a64a58d2eebed18cc685856cafac3bd0c1",
+    "forge.js": "96012bc5da7997d7d194eda469d194112e55c992dc34986f234f25d1740c55b9",
+    "equipment-synergies.js": "05fc5425ef6997dda05ef0bcfaf9e60498524cdccf08b63f494cebde824866e2",
+    "loot.js": "7e7dea5ee0ec207b184e7f8725cdacec6ab850163613a050134c8fd2ea8a91bc",
     "inventory-rules.js": "444a616e68c6d9908298e3a382d9248756bbdab8d4dda376068dc5da05fe998e",
     "hunt-modes.js": "8b2ebefd65ac62f75016ff3367f8636065b4107ac68fdae4c6e2f7f884085dd7",
     "motion.js": "0ec86ba981fe6773975828c6a3171f407293583708e990b514b0f0b46b643457",
     "world.js": "ef6349f7fedf03989060bf2b2dacf0d2c1b8edd729b0d5650d240b326e4930be",
     "growth.js": "82d262562a69c560422c61d7f7e797db9f474691ecfdd79eeb532268ef293a85",
     "transcendence.js": "17205ea9df6a9efd616f0b4d7a2b0aeff32eb2d893c7eb19f42021acdd0be211",
-    "stage-stars.js": "4bb7ae0d0097017a563bebe6dae9a3df5b8d7300b468529884f0b4ea6bc0d268",
-    "seals.js": "e29f1eeacc9540e08bcf609e8ce3ea88eb18ea3c73be66ac3398a72bf710cec8",
+    "stage-stars.js": "69c90fab7b84ac73e0f5085dd7b27580fd87764cb7ac579658aabff6c38c127a",
+    "seals.js": "7e80a792d1204e3bd6525cca2c358c409a0b572d183018d6ec82158860cbfeb8",
     "boss-rush.js": "a2692f886ba261a7b985754a6829cae3dd6a7072bb554d119614b541b6c14e37",
-    "stage-gates.js": "291a3dbb0163365190808cfde4d4ab013f78a7c36cabef629e3871a86cfec8c0",
+    "stage-gates.js": "dbe16e41768c1b727b921909a8fc820e9f748f91b232340f43684dead6ed630c",
     "equipment-sets.js": "ab6f9412c6f96e1400984e7c86278d610c60a2df062d47ffa63eebf279367155",
     "beast-techniques.js": "19700a42629d1f89c461c1cff3de2dee894955743d6f0c85b5e4d2b7c766e2cd",
     "skill-branches.js": "f7de9a4b015ea0b51f64557c945f7d6f799d290aa4a9da3fc07f1aa7c9796103",
-    "raid-skills.js": "602caae4d19e64b0c4ef5b2dbf28f2b1790b1abf7517dbebc0c2b990ae409bf1",
+    "raid-skills.js": "32822cf4e38c12e31f08bf96cb21c3dfe9c850073e9997b9a6edbd18ec8924fd",
     "ancient-stats.js": "28724a7aa404426818c4afc2d8ded584c21fbdba14abdbe2492ee8d4e41b05af",
     "ancient-powers.js": "49f6d8d2445723eeeca4ed50b8bbb79c5440fcd2108ebe06578903488a962b89",
     "unique-effects.js": "9ab6bed914db642d448e7712fd6ff827d9af0eca53427bf11fbeb2287c9ebab8",
@@ -2222,14 +2222,14 @@
           "initialRng": 2847514024,
           "cleared": false,
           "clearSeconds": null,
-          "observedSeconds": 13.350000000000122,
-          "engineSeconds": 11.855000000000096,
+          "observedSeconds": 13.500000000000124,
+          "engineSeconds": 11.870000000000097,
           "maxHp": 1504.8,
-          "damageTaken": 1507.8207500000003,
+          "damageTaken": 1507.8530000000005,
           "hpCost": 0,
-          "totalHpLost": 1507.8207500000003,
-          "lossRatio": 1.0020074096225415,
-          "enemyLossRatio": 1.0020074096225415,
+          "totalHpLost": 1507.8530000000005,
+          "lossRatio": 1.0020288410419993,
+          "enemyLossRatio": 1.0020288410419993,
           "lowestHpRatio": 0,
           "finalHpRatio": 0,
           "died": true,
@@ -2240,25 +2240,25 @@
           "flow": "combat",
           "bossRemaining": [
             {
-              "hp": 85247,
-              "maxHp": 149148
+              "hp": 434375,
+              "maxHp": 506975
             }
           ],
-          "dealt": 78316
+          "dealt": 72600
         },
         {
           "seed": 97,
           "initialRng": 2144891126,
           "cleared": false,
           "clearSeconds": null,
-          "observedSeconds": 13.025000000000118,
-          "engineSeconds": 11.465000000000092,
+          "observedSeconds": 13.500000000000124,
+          "engineSeconds": 11.870000000000099,
           "maxHp": 1504.8,
-          "damageTaken": 1506.6275000000003,
+          "damageTaken": 1507.4982500000003,
           "hpCost": 0,
-          "totalHpLost": 1506.6275000000003,
-          "lossRatio": 1.0012144471026052,
-          "enemyLossRatio": 1.0012144471026052,
+          "totalHpLost": 1507.4982500000003,
+          "lossRatio": 1.0017930954279641,
+          "enemyLossRatio": 1.0017930954279641,
           "lowestHpRatio": 0,
           "finalHpRatio": 0,
           "died": true,
@@ -2269,25 +2269,25 @@
           "flow": "combat",
           "bossRemaining": [
             {
-              "hp": 78464,
-              "maxHp": 149148
+              "hp": 423204,
+              "maxHp": 506975
             }
           ],
-          "dealt": 85396
+          "dealt": 83771
         },
         {
           "seed": 313,
           "initialRng": 2178057134,
           "cleared": false,
           "clearSeconds": null,
-          "observedSeconds": 13.000000000000117,
-          "engineSeconds": 11.440000000000092,
+          "observedSeconds": 13.500000000000124,
+          "engineSeconds": 11.870000000000099,
           "maxHp": 1504.8,
-          "damageTaken": 1506.5737500000002,
+          "damageTaken": 1507.4982500000003,
           "hpCost": 0,
-          "totalHpLost": 1506.5737500000002,
-          "lossRatio": 1.0011787280701756,
-          "enemyLossRatio": 1.0011787280701756,
+          "totalHpLost": 1507.4982500000003,
+          "lossRatio": 1.0017930954279641,
+          "enemyLossRatio": 1.0017930954279641,
           "lowestHpRatio": 0,
           "finalHpRatio": 0,
           "died": true,
@@ -2298,11 +2298,11 @@
           "flow": "combat",
           "bossRemaining": [
             {
-              "hp": 79060,
-              "maxHp": 149148
+              "hp": 429745,
+              "maxHp": 506975
             }
           ],
-          "dealt": 84169
+          "dealt": 77230
         }
       ],
       "summary": {
@@ -2310,8 +2310,8 @@
         "clears": 0,
         "clearRate": 0,
         "clearSeconds": null,
-        "lossRatio": 1.0014668615984408,
-        "enemyLossRatio": 1.0014668615984408,
+        "lossRatio": 1.0018716772993093,
+        "enemyLossRatio": 1.0018716772993093,
         "lowestHpRatio": 0,
         "worstHpRatio": 0,
         "deaths": 3,
@@ -2454,8 +2454,8 @@
           "flow": "combat",
           "bossRemaining": [
             {
-              "hp": 519791,
-              "maxHp": 528316
+              "hp": 1047920,
+              "maxHp": 1056445
             }
           ],
           "dealt": 8525
@@ -2483,8 +2483,8 @@
           "flow": "combat",
           "bossRemaining": [
             {
-              "hp": 517736,
-              "maxHp": 528316
+              "hp": 1045865,
+              "maxHp": 1056445
             }
           ],
           "dealt": 10580
@@ -2512,8 +2512,8 @@
           "flow": "combat",
           "bossRemaining": [
             {
-              "hp": 516607,
-              "maxHp": 528316
+              "hp": 1044736,
+              "maxHp": 1056445
             }
           ],
           "dealt": 11709
@@ -3770,17 +3770,17 @@
           "seed": 11,
           "initialRng": 2847514024,
           "cleared": true,
-          "clearSeconds": 16.300000000000143,
-          "observedSeconds": 16.300000000000143,
-          "engineSeconds": 14.300000000000132,
+          "clearSeconds": 35.72499999999904,
+          "observedSeconds": 35.72499999999904,
+          "engineSeconds": 30.604999999999425,
           "maxHp": 3226.464,
-          "damageTaken": 1102.25168,
+          "damageTaken": 3142.2516800000003,
           "hpCost": 0,
-          "totalHpLost": 1102.25168,
-          "lossRatio": 0.3416283832703542,
-          "enemyLossRatio": 0.3416283832703542,
-          "lowestHpRatio": 0.7034215940422706,
-          "finalHpRatio": 0.7484215940422706,
+          "totalHpLost": 3142.2516800000003,
+          "lossRatio": 0.9738995011256907,
+          "enemyLossRatio": 0.9738995011256907,
+          "lowestHpRatio": 0.20907581488589597,
+          "finalHpRatio": 0.254075814885896,
           "died": false,
           "lethalHits": 0,
           "timedOut": false,
@@ -3788,23 +3788,23 @@
           "end": "playing",
           "flow": "settling",
           "bossRemaining": [],
-          "dealt": 194508
+          "dealt": 552335
         },
         {
           "seed": 97,
           "initialRng": 2144891126,
           "cleared": true,
-          "clearSeconds": 15.850000000000158,
-          "observedSeconds": 15.850000000000158,
-          "engineSeconds": 13.915000000000127,
+          "clearSeconds": 38.39999999999889,
+          "observedSeconds": 38.39999999999889,
+          "engineSeconds": 32.96999999999931,
           "maxHp": 3226.464,
-          "damageTaken": 1102.25168,
+          "damageTaken": 2542.1216000000004,
           "hpCost": 0,
-          "totalHpLost": 1102.25168,
-          "lossRatio": 0.3416283832703542,
-          "enemyLossRatio": 0.3416283832703542,
-          "lowestHpRatio": 0.7483882758338541,
-          "finalHpRatio": 0.7483882758338541,
+          "totalHpLost": 2542.1216000000004,
+          "lossRatio": 0.787897091056959,
+          "enemyLossRatio": 0.787897091056959,
+          "lowestHpRatio": 0.4006025357791082,
+          "finalHpRatio": 0.4382823735209828,
           "died": false,
           "lethalHits": 0,
           "timedOut": false,
@@ -3812,23 +3812,23 @@
           "end": "playing",
           "flow": "settling",
           "bossRemaining": [],
-          "dealt": 194508
+          "dealt": 552335
         },
         {
           "seed": 313,
           "initialRng": 2178057134,
           "cleared": true,
-          "clearSeconds": 14.500000000000139,
-          "observedSeconds": 14.500000000000139,
-          "engineSeconds": 12.70000000000011,
+          "clearSeconds": 36.87499999999898,
+          "observedSeconds": 36.87499999999898,
+          "engineSeconds": 31.884999999999348,
           "maxHp": 3226.464,
-          "damageTaken": 954.61824,
+          "damageTaken": 3071.5185599999995,
           "hpCost": 0,
-          "totalHpLost": 954.61824,
-          "lossRatio": 0.29587134398524206,
-          "enemyLossRatio": 0.29587134398524206,
-          "lowestHpRatio": 0.7497483746913035,
-          "finalHpRatio": 0.7497483746913035,
+          "totalHpLost": 3071.5185599999995,
+          "lossRatio": 0.9519767026689279,
+          "enemyLossRatio": 0.9519767026689279,
+          "lowestHpRatio": 0.2536053121931655,
+          "finalHpRatio": 0.27628514993504016,
           "died": false,
           "lethalHits": 0,
           "timedOut": false,
@@ -3836,33 +3836,33 @@
           "end": "playing",
           "flow": "settling",
           "bossRemaining": [],
-          "dealt": 188196
+          "dealt": 552335
         }
       ],
       "summary": {
         "n": 3,
         "clears": 3,
         "clearRate": 1,
-        "clearSeconds": 15.550000000000148,
-        "lossRatio": 0.3263760368419835,
-        "enemyLossRatio": 0.3263760368419835,
-        "lowestHpRatio": 0.7338527481891428,
-        "worstHpRatio": 0.7034215940422706,
+        "clearSeconds": 36.99999999999897,
+        "lossRatio": 0.9045910982838592,
+        "enemyLossRatio": 0.9045910982838592,
+        "lowestHpRatio": 0.2877612209527232,
+        "worstHpRatio": 0.20907581488589597,
         "deaths": 0,
         "timeouts": 0
       },
       "easy": false,
       "estimate": {
         "hpMultiplier": [
-          1.9292604501607533,
-          2.89389067524113
+          0.8108108108108334,
+          1.21621621621625
         ],
-        "hpMid": 2.411575562700942,
+        "hpMid": 1.0135135135135418,
         "damageMultiplier": [
-          0.5082072454570964,
-          0.8893626795499185
+          0.4362928923525731,
+          0.7635125616170029
         ],
-        "damageMid": 0.6987849625035075
+        "damageMid": 0.5999027269847881
       }
     },
     {
@@ -3977,14 +3977,14 @@
           "initialRng": 2847514024,
           "cleared": false,
           "clearSeconds": null,
-          "observedSeconds": 26.324999999999573,
-          "engineSeconds": 22.924999999999805,
+          "observedSeconds": 26.72499999999955,
+          "engineSeconds": 23.0899999999998,
           "maxHp": 3226.464,
-          "damageTaken": 3672.001890000008,
+          "damageTaken": 3672.302890000008,
           "hpCost": 0,
-          "totalHpLost": 3672.001890000008,
-          "lossRatio": 1.1380885979202024,
-          "enemyLossRatio": 1.1380885979202024,
+          "totalHpLost": 3672.302890000008,
+          "lossRatio": 1.1381818889037685,
+          "enemyLossRatio": 1.1381818889037685,
           "lowestHpRatio": 0,
           "finalHpRatio": 0,
           "died": true,
@@ -3995,25 +3995,25 @@
           "flow": "combat",
           "bossRemaining": [
             {
-              "hp": 208404,
-              "maxHp": 528316
+              "hp": 716797,
+              "maxHp": 1056445
             }
           ],
-          "dealt": 400256
+          "dealt": 345030
         },
         {
           "seed": 97,
           "initialRng": 2144891126,
           "cleared": false,
           "clearSeconds": null,
-          "observedSeconds": 37.974999999998914,
-          "engineSeconds": 32.849999999999305,
+          "observedSeconds": 31.44999999999928,
+          "engineSeconds": 27.034999999999602,
           "maxHp": 3226.464,
-          "damageTaken": 3972.069400000016,
+          "damageTaken": 3817.6765200000077,
           "hpCost": 0,
-          "totalHpLost": 3972.069400000016,
-          "lossRatio": 1.2310905684985223,
-          "enemyLossRatio": 1.2310905684985223,
+          "totalHpLost": 3817.6765200000077,
+          "lossRatio": 1.183238529858076,
+          "enemyLossRatio": 1.183238529858076,
           "lowestHpRatio": 0,
           "finalHpRatio": 0,
           "died": true,
@@ -4024,25 +4024,25 @@
           "flow": "combat",
           "bossRemaining": [
             {
-              "hp": 114686,
-              "maxHp": 528316
+              "hp": 720274,
+              "maxHp": 1056445
             }
           ],
-          "dealt": 574318
+          "dealt": 416515
         },
         {
           "seed": 313,
           "initialRng": 2178057134,
           "cleared": false,
           "clearSeconds": null,
-          "observedSeconds": 37.99999999999891,
-          "engineSeconds": 32.73999999999931,
+          "observedSeconds": 35.149999999999075,
+          "engineSeconds": 30.519999999999413,
           "maxHp": 3226.464,
-          "damageTaken": 3970.9944000000155,
+          "damageTaken": 3818.6010200000073,
           "hpCost": 0,
-          "totalHpLost": 3970.9944000000155,
-          "lossRatio": 1.2307573864143582,
-          "enemyLossRatio": 1.2307573864143582,
+          "totalHpLost": 3818.6010200000073,
+          "lossRatio": 1.183525066450457,
+          "enemyLossRatio": 1.183525066450457,
           "lowestHpRatio": 0,
           "finalHpRatio": 0,
           "died": true,
@@ -4053,11 +4053,11 @@
           "flow": "combat",
           "bossRemaining": [
             {
-              "hp": 56181,
-              "maxHp": 528316
+              "hp": 646735,
+              "maxHp": 1056445
             }
           ],
-          "dealt": 632823
+          "dealt": 490054
         }
       ],
       "summary": {
@@ -4065,8 +4065,8 @@
         "clears": 0,
         "clearRate": 0,
         "clearSeconds": null,
-        "lossRatio": 1.199978850944361,
-        "enemyLossRatio": 1.199978850944361,
+        "lossRatio": 1.1683151617374339,
+        "enemyLossRatio": 1.1683151617374339,
         "lowestHpRatio": 0,
         "worstHpRatio": 0,
         "deaths": 3,
@@ -5311,9 +5311,9 @@
           "seed": 11,
           "initialRng": 2847514024,
           "cleared": true,
-          "clearSeconds": 9.825000000000072,
-          "observedSeconds": 9.825000000000072,
-          "engineSeconds": 8.665000000000049,
+          "clearSeconds": 19.774999999999945,
+          "observedSeconds": 19.774999999999945,
+          "engineSeconds": 17.560000000000077,
           "maxHp": 4912.6,
           "damageTaken": 314,
           "hpCost": 0,
@@ -5329,23 +5329,23 @@
           "end": "playing",
           "flow": "settling",
           "bossRemaining": [],
-          "dealt": 194508.00000000003
+          "dealt": 552335
         },
         {
           "seed": 97,
           "initialRng": 2144891126,
           "cleared": true,
-          "clearSeconds": 9.950000000000074,
-          "observedSeconds": 9.950000000000074,
-          "engineSeconds": 8.790000000000052,
+          "clearSeconds": 20.74999999999989,
+          "observedSeconds": 20.74999999999989,
+          "engineSeconds": 18.465000000000032,
           "maxHp": 4912.6,
-          "damageTaken": 0,
+          "damageTaken": 994,
           "hpCost": 0,
-          "totalHpLost": 0,
-          "lossRatio": 0,
-          "enemyLossRatio": 0,
-          "lowestHpRatio": 1,
-          "finalHpRatio": 1,
+          "totalHpLost": 994,
+          "lossRatio": 0.20233684810487318,
+          "enemyLossRatio": 0.20233684810487318,
+          "lowestHpRatio": 0.8615804258437487,
+          "finalHpRatio": 0.9735804258437487,
           "died": false,
           "lethalHits": 0,
           "timedOut": false,
@@ -5353,23 +5353,23 @@
           "end": "playing",
           "flow": "settling",
           "bossRemaining": [],
-          "dealt": 183214
+          "dealt": 552335
         },
         {
           "seed": 313,
           "initialRng": 2178057134,
           "cleared": true,
-          "clearSeconds": 9.075000000000061,
-          "observedSeconds": 9.075000000000061,
-          "engineSeconds": 8.02000000000004,
+          "clearSeconds": 18.62500000000001,
+          "observedSeconds": 18.62500000000001,
+          "engineSeconds": 16.710000000000118,
           "maxHp": 4912.6,
-          "damageTaken": 0,
+          "damageTaken": 994,
           "hpCost": 0,
-          "totalHpLost": 0,
-          "lossRatio": 0,
-          "enemyLossRatio": 0,
-          "lowestHpRatio": 1,
-          "finalHpRatio": 1,
+          "totalHpLost": 994,
+          "lossRatio": 0.20233684810487318,
+          "enemyLossRatio": 0.20233684810487318,
+          "lowestHpRatio": 0.8615804258437487,
+          "finalHpRatio": 0.9735804258437487,
           "died": false,
           "lethalHits": 0,
           "timedOut": false,
@@ -5377,33 +5377,33 @@
           "end": "playing",
           "flow": "settling",
           "bossRemaining": [],
-          "dealt": 194508
+          "dealt": 552335
         }
       ],
       "summary": {
         "n": 3,
         "clears": 3,
         "clearRate": 1,
-        "clearSeconds": 9.616666666666736,
-        "lossRatio": 0.021305757982873968,
-        "enemyLossRatio": 0.021305757982873968,
-        "lowestHpRatio": 0.978694242017126,
-        "worstHpRatio": 0.9360827260513781,
+        "clearSeconds": 19.716666666666615,
+        "lossRatio": 0.15619699005278942,
+        "enemyLossRatio": 0.15619699005278942,
+        "lowestHpRatio": 0.8864145259129584,
+        "worstHpRatio": 0.8615804258437487,
         "deaths": 0,
         "timeouts": 0
       },
-      "easy": true,
+      "easy": false,
       "estimate": {
         "hpMultiplier": [
-          3.1195840554592493,
-          4.679376083188874
+          1.5215553677092177,
+          2.282333051563827
         ],
-        "hpMid": 3.8994800693240617,
+        "hpMid": 1.9019442096365222,
         "damageMultiplier": [
-          4.814556602972435,
-          8.42547405520176
+          1.3464479119606105,
+          2.356283845931068
         ],
-        "damageMid": 6.620015329087098
+        "damageMid": 1.8513658789458396
       }
     },
     {
@@ -5517,41 +5517,17 @@
           "seed": 11,
           "initialRng": 2847514024,
           "cleared": true,
-          "clearSeconds": 19.84999999999994,
-          "observedSeconds": 19.84999999999994,
-          "engineSeconds": 17.395000000000085,
-          "maxHp": 4912.6,
-          "damageTaken": 816.74,
-          "hpCost": 0,
-          "totalHpLost": 816.74,
-          "lossRatio": 0.16625412205349507,
-          "enemyLossRatio": 0.16625412205349507,
-          "lowestHpRatio": 0.8668729389732525,
-          "finalHpRatio": 0.8695338517282114,
-          "died": false,
-          "lethalHits": 0,
-          "timedOut": false,
-          "interrupted": false,
-          "end": "playing",
-          "flow": "settling",
-          "bossRemaining": [],
-          "dealt": 689004
-        },
-        {
-          "seed": 97,
-          "initialRng": 2144891126,
-          "cleared": true,
-          "clearSeconds": 22.424999999999795,
-          "observedSeconds": 22.424999999999795,
-          "engineSeconds": 19.68999999999997,
+          "clearSeconds": 35.92499999999903,
+          "observedSeconds": 35.92499999999903,
+          "engineSeconds": 31.734999999999342,
           "maxHp": 4912.6,
           "damageTaken": 2232.74,
           "hpCost": 0,
           "totalHpLost": 2232.74,
           "lossRatio": 0.4544925294141594,
           "enemyLossRatio": 0.4544925294141594,
-          "lowestHpRatio": 0.5814726926678362,
-          "finalHpRatio": 0.6934726926678362,
+          "lowestHpRatio": 0.5819278487969739,
+          "finalHpRatio": 0.6978098053983692,
           "died": false,
           "lethalHits": 0,
           "timedOut": false,
@@ -5559,23 +5535,47 @@
           "end": "playing",
           "flow": "settling",
           "bossRemaining": [],
-          "dealt": 689004
+          "dealt": 1217132.9999999998
+        },
+        {
+          "seed": 97,
+          "initialRng": 2144891126,
+          "cleared": true,
+          "clearSeconds": 29.324999999999402,
+          "observedSeconds": 29.324999999999402,
+          "engineSeconds": 25.744999999999663,
+          "maxHp": 4912.6,
+          "damageTaken": 2232.74,
+          "hpCost": 0,
+          "totalHpLost": 2232.74,
+          "lossRatio": 0.4544925294141594,
+          "enemyLossRatio": 0.4544925294141594,
+          "lowestHpRatio": 0.5807899584741296,
+          "finalHpRatio": 0.695186092903965,
+          "died": false,
+          "lethalHits": 0,
+          "timedOut": false,
+          "interrupted": false,
+          "end": "playing",
+          "flow": "settling",
+          "bossRemaining": [],
+          "dealt": 1217132.9999999995
         },
         {
           "seed": 313,
           "initialRng": 2178057134,
           "cleared": true,
-          "clearSeconds": 18.874999999999996,
-          "observedSeconds": 18.874999999999996,
-          "engineSeconds": 16.75500000000012,
+          "clearSeconds": 31.924999999999255,
+          "observedSeconds": 31.924999999999255,
+          "engineSeconds": 27.99999999999954,
           "maxHp": 4912.6,
-          "damageTaken": 816.74,
+          "damageTaken": 2420.5899999999997,
           "hpCost": 0,
-          "totalHpLost": 816.74,
-          "lossRatio": 0.16625412205349507,
-          "enemyLossRatio": 0.16625412205349507,
-          "lowestHpRatio": 0.8668729389732525,
-          "finalHpRatio": 0.8692406261450168,
+          "totalHpLost": 2420.5899999999997,
+          "lossRatio": 0.4927309367748238,
+          "enemyLossRatio": 0.4927309367748238,
+          "lowestHpRatio": 0.5809890892806274,
+          "finalHpRatio": 0.6568754732728124,
           "died": false,
           "lethalHits": 0,
           "timedOut": false,
@@ -5583,33 +5583,33 @@
           "end": "playing",
           "flow": "settling",
           "bossRemaining": [],
-          "dealt": 689003.9999999999
+          "dealt": 1217132.999999999
         }
       ],
       "summary": {
         "n": 3,
         "clears": 3,
         "clearRate": 1,
-        "clearSeconds": 20.383333333333244,
-        "lossRatio": 0.2623335911737165,
-        "enemyLossRatio": 0.2623335911737165,
-        "lowestHpRatio": 0.7717395235381136,
-        "worstHpRatio": 0.5814726926678362,
+        "clearSeconds": 32.3916666666659,
+        "lossRatio": 0.46723866520104756,
+        "enemyLossRatio": 0.46723866520104756,
+        "lowestHpRatio": 0.5812356321839104,
+        "worstHpRatio": 0.5807899584741296,
         "deaths": 0,
         "timeouts": 0
       },
       "easy": false,
       "estimate": {
         "hpMultiplier": [
-          1.4717906786590416,
-          2.2076860179885625
+          0.9261641368665,
+          1.3892462052997498
         ],
-        "hpMid": 1.839738348323802,
+        "hpMid": 1.157705171083125,
         "damageMultiplier": [
-          0.8288005407521178,
-          1.4504009463162062
+          0.7394745701587718,
+          1.2940804977778504
         ],
-        "damageMid": 1.1396007435341622
+        "damageMid": 1.0167775339683112
       }
     },
     {
