@@ -98,3 +98,9 @@ test('0.148.12: 정예·악몽 격노 보스는 체력을 더 받고 공격은 �
  assert.ok(Math.abs(e.projectileDamageScale-g.modeScale(chapter,2).damage*g.MODE_FURY_DAMAGE[2])<1e-9,'악몽 격노 보스 공격 배율');
  assert.ok(g.MODE_FURY_DAMAGE[1]<1&&g.MODE_FURY_DAMAGE[2]<1&&g.MODE_FURY_HP[1]>1&&g.MODE_FURY_HP[2]>1);
 });
+test('0.148.13: 정예·악몽 소환 보스는 체력을 더 받는다',()=>{
+ const chapter=40;assert.equal(g.STAGES[chapter-1].bossRule,'summon');
+ const boss=d=>{const p=g.createProfile(1000);p.level=200;p.clearedStage=p.unlockedStage=g.STAGES.length;p.stageProgress=g.STAGES.map(()=>10);p.bossMastery=g.STAGES.map(()=>2);p.difficultyProgress=p.difficultyProgress.map(r=>r.map(()=>10));
+  const s=g.createGame(p);assert.ok(g.launch(s,chapter,10,null,d));for(let i=0;i<400&&!s.enemies.some(e=>e.boss);i++)g.advanceGame(s,.025);return s.enemies.find(e=>e.boss).maxHp;};
+ const n=boss(0),e=boss(1);assert.ok(Math.abs(e/n-g.modeScale(chapter,1).hp*g.modeBossBump(chapter,1)*g.MODE_SUMMON_HP[1])/(e/n)<.01);
+});
