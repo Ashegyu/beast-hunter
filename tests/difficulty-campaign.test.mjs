@@ -69,7 +69,7 @@ test('0.139: 정예/악몽 continue the chapter curve, 악몽 gives no experienc
  assert.equal(g.restoreProfile({...JSON.parse(g.encodeProfile(p,1000)),nightmareRecords:pad([12.3])},1000).nightmareRecords[0],0,'악몽 보스를 못 잡은 챕터의 기록은 버린다');
 });
 test('0.148.10: 정예·악몽 방어 태세 보스는 약점 노출 한 번에 exposeCap까지만 제대로 깎이고 넘는 피해는 20%만',()=>{
- assert.equal(g.exposeCap(1),.3);assert.equal(g.exposeCap(60),.5);assert.ok(g.exposeCap(30)>.3&&g.exposeCap(30)<.5);
+ assert.equal(g.exposeCap(1),g.EXPOSE_CAP[0]);assert.equal(g.exposeCap(60),g.EXPOSE_CAP[1]);assert.ok(g.exposeCap(30)>g.EXPOSE_CAP[0]&&g.exposeCap(30)<g.EXPOSE_CAP[1]);
  const chapter=30; // 심연의 군주: 방어 태세(defense) 보스
  const ratio=difficulty=>{const p=g.createProfile(1000);p.level=200;p.clearedStage=p.unlockedStage=g.STAGES.length;p.stageProgress=g.STAGES.map(()=>10);p.bossMastery=g.STAGES.map(()=>2);p.difficultyProgress=p.difficultyProgress.map(r=>r.map(()=>10));
   const s=g.createGame(p);assert.ok(g.launch(s,chapter,10,null,difficulty));
@@ -83,7 +83,7 @@ test('0.148.10: 정예·악몽 방어 태세 보스는 약점 노출 한 번에 
  assert.ok(normal.last/normal.first>.7,'일반 난이도는 상한 없음 ('+normal.first+' → '+normal.last+')');
 });
 test('0.148.11: 정예·악몽 보스 체력은 중간 장에서 가장 크게 오른다(1장·60장은 그대로, 일반 난이도 없음)',()=>{
- for(const d of [1,2]){assert.ok(Math.abs(g.modeBossBump(1,d)-1)<1e-4);assert.ok(Math.abs(g.modeBossBump(60,d)-1)<1e-4);assert.ok(Math.abs(g.modeBossBump(30,d)-(1+g.MODE_BOSS_BUMP[d]))<1e-9);assert.ok(g.modeBossBump(30,d)>g.modeBossBump(40,d)&&g.modeBossBump(40,d)>g.modeBossBump(45,d));assert.ok(g.modeBossBump(45,d)<1.1,'0.148.12: 45장 보스에는 거의 안 걸림');}
+ for(const d of [1,2]){assert.ok(Math.abs(g.modeBossBump(1,d)-1)<1e-4);assert.ok(Math.abs(g.modeBossBump(60,d)-g.MODE_FINAL_BOSS[d])<1e-3,'0.148.14 마지막 장 보스 배율');assert.ok(Math.abs(g.modeBossBump(30,d)-(1+g.MODE_BOSS_BUMP[d]))<1e-9);assert.ok(g.modeBossBump(30,d)>g.modeBossBump(40,d)&&g.modeBossBump(40,d)>g.modeBossBump(45,d));assert.ok(g.modeBossBump(45,d)<1.1,'0.148.12: 45장 보스에는 거의 안 걸림');}
  assert.equal(g.modeBossBump(30,0),1);
  const boss=d=>{const p=g.createProfile(1000);p.level=200;p.clearedStage=p.unlockedStage=g.STAGES.length;p.stageProgress=g.STAGES.map(()=>10);p.bossMastery=g.STAGES.map(()=>2);p.difficultyProgress=p.difficultyProgress.map(r=>r.map(()=>10));
   const s=g.createGame(p);assert.ok(g.launch(s,30,10,null,d));for(let i=0;i<400&&!s.enemies.some(e=>e.boss);i++)g.advanceGame(s,.025);return s.enemies.find(e=>e.boss).maxHp;};

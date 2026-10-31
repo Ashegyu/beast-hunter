@@ -1,13 +1,13 @@
-import {createSkillMotion} from './skill-motion.js?v=0.148.13';
-import {CHAPTERS,CHAPTER_BOSSES} from './chapters.js?v=0.148.13';
-import {beastTechniques,BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE,beastElementText} from './beast-techniques.js?v=0.148.13';
-export {BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE} from './beast-techniques.js?v=0.148.13';
-import {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary,SKILL_TAGS,TAG_NAMES,TAG_SYNERGY} from './skill-branches.js?v=0.148.13';
-export {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary,SKILL_TAGS,TAG_NAMES,TAG_SYNERGY} from './skill-branches.js?v=0.148.13';
-import {GEAR_SKILLS} from './raid-skills.js?v=0.148.13';
-import {treeBonus} from './growth.js?v=0.148.13';
-import {transcendBonus} from './transcendence.js?v=0.148.13';
-export {GEAR_SKILLS,GEAR_SKILL_BY_ANCIENT} from './raid-skills.js?v=0.148.13';
+import {createSkillMotion} from './skill-motion.js?v=0.148.14';
+import {CHAPTERS,CHAPTER_BOSSES} from './chapters.js?v=0.148.14';
+import {beastTechniques,BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE,beastElementText} from './beast-techniques.js?v=0.148.14';
+export {BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE} from './beast-techniques.js?v=0.148.14';
+import {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary,SKILL_TAGS,TAG_NAMES,TAG_SYNERGY} from './skill-branches.js?v=0.148.14';
+export {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary,SKILL_TAGS,TAG_NAMES,TAG_SYNERGY} from './skill-branches.js?v=0.148.14';
+import {GEAR_SKILLS} from './raid-skills.js?v=0.148.14';
+import {treeBonus} from './growth.js?v=0.148.14';
+import {transcendBonus} from './transcendence.js?v=0.148.14';
+export {GEAR_SKILLS,GEAR_SKILL_BY_ANCIENT} from './raid-skills.js?v=0.148.14';
 // Lirian skill rules: one catalog drives unlocks, rank values, UI and combat.
 const active=(id,name,unlock,damage,step,cost,cooldown,shape,description,extra={})=>({id,name,kind:'active',unlock,damage,step,cost,cooldown,shape,description,...extra});
 const passive=(id,name,unlock,value,step,unit,description)=>({id,name,kind:'passive',unlock,value,step,unit,description});
