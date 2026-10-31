@@ -150,3 +150,21 @@ test('60장 정예·악몽 보스: 체력 50%·25%에서 신성 보호막, 월�
   s.auto=true;s.player.invulnerable=100;for(let i=0;i<400&&!(e.hitAt>start);i++)run(s,.025);assert.ok(e.hitAt>start,'첫 타격');return e.holyShield;};
  const plain=firstHit(false),marked=firstHit(true);assert.ok(marked<=plain*(1-st.MARK_SHIELD_BREAK)+1e-6,`${marked} vs ${plain}`);
 });
+// Alpha 0.149.9 해제 각인: 인장 10단계·고대 장신구 +20에 아이템 번호로 정해지는 효과 하나(추첨·저장 불변).
+test('itemRelease: 인장 10단계·고대 목걸이·귀걸이 +20만, 번호로 두 효과가 모두 나오고 같은 아이템은 늘 같다',()=>{
+ const seal=(id,level)=>({id,slot:'special',seal:{grade:0,effects:['life'],level,shards:0},rarity:1});
+ assert.equal(st.itemRelease(seal(5,9)),null);assert.ok(st.itemRelease(seal(5,10)));
+ assert.equal(st.itemRelease({id:5,slot:'charm',rarity:5,enhancement:19}),null);assert.ok(st.itemRelease({id:5,slot:'earring',rarity:5,enhancement:20}));
+ assert.equal(st.itemRelease({id:5,slot:'charm',rarity:4,enhancement:30}),null,'고대만');for(let id=1;id<=20;id++)assert.equal(st.itemRelease({id,slot:'charm',rarity:5,enhancement:20}).id,'cleanseShield','고대 장신구는 정화의 결계만');assert.equal(st.itemRelease({id:5,slot:'weapon',rarity:5,enhancement:30}),null,'장신구만');
+ const ids=new Set();for(let id=1;id<=40;id++)ids.add(st.itemRelease(seal(id,10)).id);assert.deepEqual([...ids].sort(),['cleanseShield','sealImmune']);
+ assert.equal(st.itemRelease(seal(7,10)),st.itemRelease(seal(7,10)));
+ const both=[];for(let id=1;both.length<3;id++)if(st.itemRelease(seal(id,10)).id==='cleanseShield')both.push(seal(id,10));
+ const b=st.releaseBonus(both);close(b.cleanseShield,st.RELEASE_SHIELD_CAP);assert.equal(b.sealImmune,0);
+});
+test('해제 각인이 전투에 닿는다: 정화의 결계 보호막, 봉인 면역',()=>{
+ const pick=id=>{for(let n=1;;n++)if(st.itemRelease({id:n,slot:'charm',rarity:5,enhancement:20}).id===id)return n;};
+ {const {s}=fight(15,1,['stance']);const id=pick('cleanseShield');s.profile.inventory.push({id,slot:'charm',rarity:5,tier:1,name:'목걸이',affixes:{},enhancement:20});s.profile.equipment.charm=id;
+  close(g.treeBonus(s.profile).cleanseShield,.08);apply(s,'curse');assert.equal(g.cleansePlayer(s),1);close(s.uniqueState.shield,s.player.maxHp*.08);}
+ {const {s,e}=raidFight(1);let id=1;while(st.itemRelease({id,slot:'special',seal:{level:10}}).id!=='sealImmune')id++;s.profile.inventory.push({id,slot:'special',seal:{grade:0,effects:['life'],level:10,shards:0},rarity:1,tier:1,name:'인장',affixes:{},characterId:'lirian'});s.profile.equipment.special=id;
+  assert.equal(g.treeBonus(s.profile).sealImmune,1);e.sealClock=st.SEAL_EVERY-.05;run(s,.1);assert.ok(!g.hasStatus(s.player,'sealed',s.run.time));}
+});

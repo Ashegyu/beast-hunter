@@ -69,6 +69,22 @@ export const AFFLICTION_DEFS=Object.freeze({
  shred:Object.freeze({id:'shred',name:'룬 약화',kind:'debuff',target:'enemy',source:'player',color:'#5fd0c4',text:'방어·장갑 감소, 받는 피해 증가',read:(e)=>e.runeShredTime>0?{stacks:1,left:e.runeShredTime}:null}),
  scar:Object.freeze({id:'scar',name:'흉터',kind:'debuff',target:'enemy',source:'player',color:'#ffb3c7',text:'발도 적중 시 추가 피해',read:(e,now)=>e.skillScarUntil>now?{stacks:1,left:e.skillScarUntil-now}:null}),
 });
+// Alpha 0.149.9 해제 각인(사용자 요청 '인장·고대 특수효과 후보로'): 추첨 목록에 넣으면 새 인장·고대의 추첨 순서와 저장된 인장의
+// 5·10단계 효과(불러올 때 다시 계산)가 바뀌므로, 조건을 채운 장비에 아이템 번호로 정해지는 효과 하나를 덧붙인다(기존 효과는 그대로).
+// 인장 10단계(정화의 결계 또는 봉인 면역, 번호로), 고대 목걸이·귀걸이 +20 강화(정화의 결계). 같은 효과를 여럿 끼면 보호막은 RELEASE_SHIELD_CAP까지 합치고 면역은 하나로 충분하다.
+export const RELEASE_EFFECTS=Object.freeze({
+ cleanseShield:Object.freeze({id:'cleanseShield',name:'정화의 결계',text:'정화할 때 최대 체력 8% 보호막',bonus:Object.freeze({cleanseShield:.08})}),
+ sealImmune:Object.freeze({id:'sealImmune',name:'봉인 면역',text:'레이드 봉인에 걸리지 않는다',bonus:Object.freeze({sealImmune:1})}),
+});
+export const RELEASE_SEAL_LEVEL=10,RELEASE_ANCIENT_ENHANCE=20,RELEASE_SHIELD_CAP=.16;
+const RELEASE_ORDER=['cleanseShield','sealImmune'];
+export function itemRelease(item){
+ if(!item||!Number.isInteger(item.id))return null;
+ // 봉인 면역은 인장에서만(측정: 고대 장신구에서도 나오면 레이드 정예·악몽 장비 대부분이 면역이라 봉인이 사라졌다).
+ if(item.slot==='special'&&item.seal)return (item.seal.level|0)>=RELEASE_SEAL_LEVEL?RELEASE_EFFECTS[RELEASE_ORDER[((Math.imul(item.id,2654435761)>>>0)>>>9)%RELEASE_ORDER.length]]:null;
+ return (item.slot==='charm'||item.slot==='earring')&&item.rarity===5&&(item.enhancement|0)>=RELEASE_ANCIENT_ENHANCE?RELEASE_EFFECTS.cleanseShield:null;
+}
+export function releaseBonus(items){const out={cleanseShield:0,sealImmune:0};for(const item of items??[]){const r=itemRelease(item);if(r)for(const [k,v] of Object.entries(r.bonus))out[k]+=v;}out.cleanseShield=Math.min(RELEASE_SHIELD_CAP,out.cleanseShield);out.sealImmune=Math.min(1,out.sealImmune);return out;}
 export function afflictionList(e,now){const out=[];if(!e)return out;for(const d of Object.values(AFFLICTION_DEFS)){const x=d.read(e,now);if(x&&x.left>0)out.push({id:d.id,name:d.name,color:d.color,stacks:x.stacks,left:x.left,source:'player'});}return out;}
 // 적 하나의 모든 상태: 보스가 스스로 건 것·해체(statuses) + 플레이어가 건 것(afflictions).
 export function enemyStatusList(e,now){return [...statusList(e,now),...afflictionList(e,now)];}

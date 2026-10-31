@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.149.8';
-import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.149.8';
-import { createCombatAudio } from './sound.js?v=0.149.8';
-import * as game from './game-engine.js?v=0.149.8';
-import {FrameMetrics} from './frame-metrics.js?v=0.149.8';
-import { frameIndex, frameRect, validateClip } from './engine.js?v=0.149.8';
-import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.149.8';
-import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.149.8';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.149.8';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.149.8';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.149.8';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.149.8';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.149.9';
+import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.149.9';
+import { createCombatAudio } from './sound.js?v=0.149.9';
+import * as game from './game-engine.js?v=0.149.9';
+import {FrameMetrics} from './frame-metrics.js?v=0.149.9';
+import { frameIndex, frameRect, validateClip } from './engine.js?v=0.149.9';
+import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.149.9';
+import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.149.9';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.149.9';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.149.9';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.149.9';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.149.9';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -426,7 +426,7 @@ function refreshBagDetailReading(){
  const item=inventoryView[index],trait=$('item-trait-'+index),unique=$('item-unique-'+index),parts=['획득처 · '+game.equipmentAcquisition(item)+(game.huntGrade(item)?'\n'+game.HUNT_MODES[game.huntGrade(item)].name+' 난이도 장비 · 기본 능력치 '+pctOf(game.HUNT_POWER[game.huntGrade(item)]):'')];
  // Alpha 0.110: an ancient's special effect leads the reading text.
  const ancient=game.ancientDefinition(item);if(ancient)parts.unshift('고대 특수효과\n'+ancientPowerText(item));
- if(game.isSeal(item))parts.unshift('인장 효과 · '+game.SEAL_GRADES[item.seal.grade].name+' · 성장 '+item.seal.level+' / '+game.SEAL_MAX_LEVEL+'\n'+game.sealEffectLines(item).join('\n')+'\n성장은 던전 → 보스 러시 화면에서');
+ if(game.isSeal(item))parts.unshift('인장 효과 · '+game.SEAL_GRADES[item.seal.grade].name+' · 성장 '+item.seal.level+' / '+game.SEAL_MAX_LEVEL+'\n'+[...game.sealEffectLines(item),...(game.itemRelease(item)?['[해제] '+game.itemRelease(item).name+' · '+game.itemRelease(item).text]:[])].join('\n')+'\n성장은 던전 → 보스 러시 화면에서');
  if(item.perfect)parts.push('극옵 · 모든 기본 옵션 최댓값');
  {const aset=game.ancientSetOf(item);if(aset){const worn=game.equippedAncientSetCounts(profile)[aset]??0,set=game.ANCIENT_SETS[aset];parts.push('고대 세트 · '+set.name+' (착용 '+worn+'/'+set.pieces+')\n'+game.ancientSetText(aset,worn));}}
  const setId=game.itemSet(item);if(setId){const worn=game.equippedSetCounts(profile)[setId]??0;parts.push('세트 · '+game.EQUIPMENT_SETS[setId].name+' (착용 '+worn+'/'+game.SET_SLOTS.length+')\n'+game.setBonusText(setId,worn));}
@@ -514,9 +514,9 @@ function refreshBag(){
   tile.setAttribute('data-rarity',String(item.rarity));gearThumbnail($('bag-art-'+i),item,80,true);$('bag-badge-'+i).textContent=(game.isSeal(item)?(item.seal.level?'+'+item.seal.level+' ':''):game.enhancementLevel(item)?'+'+game.enhancementLevel(item)+' ':'')+(item.perfect?'극옵 ':'')+(equipped?'◆':'')+(favorite?'☆':'')+(reserved?'▣':'');$('bag-check-'+i).textContent=bagOrganizing&&bagSelectedIds.has(item.id)?'✓':'';
       $('item-'+i).setAttribute('data-rarity',String(item.rarity));$('item-'+i).setAttribute('data-kind',game.craftedDefinition(item)?'crafted':game.ancientDefinition(item)?'ancient':'ordinary');$('item-name-'+i).textContent=itemGradeName(item)+' '+item.name+(game.enhancementLevel(item)?' +'+game.enhancementLevel(item):'');$('item-name-'+i).style.color=game.RARITY_INFO[item.rarity].color;
       gearThumbnail($('item-art-'+i),item,96,true);
-      $('item-affixes-'+i).textContent=(item.perfect?'극옵 · 모든 옵션 최댓값\n':'')+Object.entries(item.affixes).map(([k,v])=>game.AFFIXES[k]+' +'+v+(['speed','crit','reduction'].includes(k)?'%':'')).join('\n')+(game.accessoryResist(item)?'\n저항 디버프 시간 −'+game.accessoryResist(item)+'%':'');
+      $('item-affixes-'+i).textContent=(item.perfect?'극옵 · 모든 옵션 최댓값\n':'')+Object.entries(item.affixes).map(([k,v])=>game.AFFIXES[k]+' +'+v+(['speed','crit','reduction'].includes(k)?'%':'')).join('\n')+(game.accessoryResist(item)?'\n저항 디버프 시간 −'+game.accessoryResist(item)+'%':'')+(game.itemRelease(item)?'\n해제 각인 '+game.itemRelease(item).name+' · '+game.itemRelease(item).text:'');
       const crafted=game.craftedDefinition(item),ancient=game.ancientDefinition(item),unique=game.uniqueEffect(item);$('item-powers-'+i).hidden=!unique;$('item-power-title-'+i).textContent='✦ '+(crafted?.signature.name??ancient?.signature.name??unique?.name??'고유 효과');$('item-unique-'+i).hidden=!unique;$('item-unique-'+i).textContent=unique?'✦ '+unique.name+' · '+unique.description+(item.rarity>3&&unique.scales?(item.rarity===6?' · 고유 고정 위력 ':item.rarity===5?' · 고대 고정 위력 ':' · 등급 효과 위력 ')+pctOf(item.rarity===6?1.5:item.rarity===5?1.36:1.12):'')+(crafted?'\n✦ '+crafted.signature.name+' · '+crafted.signature.description+'\n대장간 제작 전용 · 드롭되지 않음':''):'';$('item-unique-'+i).style.color=unique?.color??'';
-      for(const [key]of ITEM_AFFIX_FIELDS){const present=Object.hasOwn(item.affixes,key);$('item-affix-row-'+key+'-'+i).hidden=!present;$('item-affix-value-'+key+'-'+i).textContent=present?'+'+game.effectiveAffix(item,key)+(['speed','crit','reduction'].includes(key)?'%':''):'';if(present)$('item-affix-value-'+key+'-'+i).setAttribute('title','기본 '+item.affixes[key]+' + 강화 '+game.enhancementBonus(item,key)+' = '+game.effectiveAffix(item,key));}{const r=game.accessoryResist(item);$('item-affix-row-resist-'+i).hidden=!r;$('item-affix-value-resist-'+i).textContent=r?'−'+r+'%':'';}
+      for(const [key]of ITEM_AFFIX_FIELDS){const present=Object.hasOwn(item.affixes,key);$('item-affix-row-'+key+'-'+i).hidden=!present;$('item-affix-value-'+key+'-'+i).textContent=present?'+'+game.effectiveAffix(item,key)+(['speed','crit','reduction'].includes(key)?'%':''):'';if(present)$('item-affix-value-'+key+'-'+i).setAttribute('title','기본 '+item.affixes[key]+' + 강화 '+game.enhancementBonus(item,key)+' = '+game.effectiveAffix(item,key));}{const r=game.accessoryResist(item),rel=game.itemRelease(item);$('item-affix-row-resist-'+i).hidden=!r&&!rel;$('item-affix-value-resist-'+i).textContent=[r?'−'+r+'%':'',rel?rel.name:''].filter(Boolean).join(' · ');$('item-affix-row-resist-'+i).title=(r?'디버프 지속 시간 −'+r+'%':'')+(rel?(r?' · ':'')+'해제 각인 「'+rel.name+'」 '+rel.text:'');}
       const itemTrait=game.weaponTrait(item);$('item-trait-'+i).hidden=!itemTrait;$('item-trait-'+i).textContent=itemTrait?itemTrait.name+' · '+itemTrait.description:'';$('item-trait-'+i).style.color=itemTrait?.color??'';
       $('item-meta-'+i).textContent=(game.huntGrade(item)?game.HUNT_MODES[game.huntGrade(item)].name+' · ':'')+itemGradeName(item)+' 등급 · '+game.SLOTS[item.slot]+' · '+game.equipmentAcquisition(item);$('item-status-'+i).textContent=[equipped?'착용 중':'',favorite?'즐겨찾기':'',reserved?'저장 빌드':''].filter(Boolean).join(' · ')||'보관 중';
       if(item.id===bagSelectedId)$('bag-detail').setAttribute('aria-labelledby','item-name-'+i);
@@ -1883,7 +1883,7 @@ function refreshSealGrowth(){
  $('rush-seal-art').hidden=!item;if(item)gearThumbnail($('rush-seal-art'),item,56);
  $('rush-seal-name').textContent=item?item.name:'보유한 인장이 없어.';$('rush-seal-name').style.color=item?game.SEAL_GRADES[item.seal.grade].color:'';
  $('rush-seal-level').textContent=item?game.SEAL_GRADES[item.seal.grade].name+' · 성장 '+item.seal.level+' / '+game.SEAL_MAX_LEVEL+(profile.equipment.special===item.id?' · 착용 중':''):'보스 러시에서 얻을 수 있어.';
- $('rush-seal-effects').textContent=item?game.sealEffectLines(item).join('\n'):'하옵 = 생존 능력치 · 중옵 = 공격 능력치 · 상옵 = 특수효과 · 전용 = 캐릭터 전용 특수효과(2%)\n성장: 단계마다 효과 +10% · 5단계 중옵 · 10단계 상옵 추가';
+ $('rush-seal-effects').textContent=item?[...game.sealEffectLines(item),...(game.itemRelease(item)?['[해제] '+game.itemRelease(item).name+' · '+game.itemRelease(item).text]:item.seal.level<game.RELEASE_SEAL_LEVEL?['[해제] '+game.RELEASE_SEAL_LEVEL+'단계에 해제 각인(봉인 면역 또는 정화의 결계)']:[])].join('\n'):'하옵 = 생존 능력치 · 중옵 = 공격 능력치 · 상옵 = 특수효과 · 전용 = 캐릭터 전용 특수효과(2%)\n성장: 단계마다 효과 +10% · 5단계 중옵 · 10단계 상옵 추가';
  $('rush-seal-cost').textContent=(sealFeedback?sealFeedback+'\n':'')+(status?.cost?'다음 단계 · 인장 조각 '+status.cost.shards+' (보유 '+profile.materials.sealShard+') · 골드 '+status.cost.gold.toLocaleString('ko-KR')+' · '+status.reason:item?status.reason:'인장 조각 보유 '+profile.materials.sealShard);
  $('rush-seal-grow').disabled=!status?.ok||state.phase!=='camp';
 }

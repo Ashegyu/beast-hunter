@@ -112,6 +112,8 @@ const ROWS=[
  ['ward-18','notable',502,121,['ward-17'],{drain:.005},'피의 갈증','ward-b4'],
  ['ward-19','small',531,136,['ward-18'],{drain:.0012},null],
  ['ward-20','keystone',560,157,['ward-19'],{drain:.0075,regeneration:-1},'혈귀의 육체','ward-b6'],
+ // 0.149.9 (상태 효과 설계 5단계 '정화의 맹세', 사용자 요청): 수호의 맹세 뒤 핵심 노드 — 디버프 시간 −15%, 정화할 때 최대 체력 6% 보호막, 대신 공격력 −4%.
+ ['ward-21','keystone',438,28,['ward-11'],{resist:.15,cleanseShield:.06,damagePct:-.04},'정화의 맹세','ward-purify'],
  ['art-1','small',367,131,['art-r','ab-7'],{staminaRegen:.06},null],
  ['art-2','notable',399,150,['art-1'],{staminaRegen:.19},'기력 순환','art-n'],
  ['art-3','small',427,147,['art-2'],{skillCooldown:.025},null],

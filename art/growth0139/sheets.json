@@ -110,5 +110,15 @@
    "t-skillDamage",
    "t-skillFury"
   ]
+ },
+ "node-8": {
+  "kind": "sprite",
+  "minParts": 1,
+  "out": "art/growth0139/node-8.png",
+  "style": "art/growth0139/style-ref.png",
+  "prompt": "Use case: stylized-concept. Asset type: production skill-tree node icons (round medallion emblems) for a dark fantasy 2D action RPG whose heroine Lirian is a crimson-moon swordswoman. Image1 is the existing skill icon sheet of this game: match its painterly dark fantasy rendering, black-crimson mood, silver blades, glowing light and sharp detail, but each new icon is a ROUND MEDALLION, not a square card. Create ONE transparent RGBA square image (2048x2048 or larger) with exactly ONE round emblem placed in the TOP-LEFT cell of an invisible 4 columns x 2 rows grid; the other seven cells stay completely EMPTY. The emblem is a perfect circle centered in that cell, filling about 70% of the cell, with wide transparent margins, never touching the canvas edge. Outside the circle: actual alpha transparency, no background, no floor, no shadow, no text, no letters, no numbers, no labels, no characters or faces.\nEMBLEM: KEYSTONE, larger ornate spiked silver-blue rim with a small crown of light: a radiant white-gold sun sigil washing away dark purple chains and smoke (OATH OF PURIFICATION, cleansing debuffs), one bold simple silhouette readable at 20 pixels.",
+  "items": [
+   "ward-purify"
+  ]
  }
 }

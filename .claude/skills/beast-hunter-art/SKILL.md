@@ -38,3 +38,4 @@ CLAUDE.md에서 옮겨 온 작업 메모. 내용이 바뀌면 이 파일을 고�
 - 성장 트리 연결선(0.147.2): `art/tree0147/branches.json`(sprite, 4줄 가로 줄기, 스타일 `art/growth0139/node-1.png`) → `python3 tools/pack-tree0147.py`(줄기 4개를 잘라 512×44, 4줄 webp). 첫 시도 통과, 약 2분.
 
 - 상태 효과 아이콘(0.149.3): `art/status0149/icons.json`(sprite, minParts 6, 3×2 여섯 칸 모두, 스타일 `growth-tree-v0139.webp`) → `python3 tools/pack-status0149.py`(64px, 6×2 webp). 두 장 병렬, 첫 시도 통과, 약 3분.
+- 트리 노드 아이콘 추가(0.149.9): `art/growth0139/sheets.json`에 시트를 더하고(한 점이면 4×2 첫 칸, 크게 그려지면 원본을 `-source.png`로 두고 칸에 맞춰 줄임) `pack-growth0139.py` → 아틀라스 행 수가 바뀌면 layout-fit.css의 `growth-tree-v0139` 배경 크기(700% N00%)를 고치고 `make-growth-tree0139.mjs`. 새 노드 자리는 grow-tree0147의 SCREENS 간격·연결선 거리·교차 검사를 그대로 돌려 고른다.

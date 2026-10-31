@@ -25,7 +25,7 @@ test('two point pools: training is free of level caps, the tree is learned along
  // The ring links every start: ward-r touches blade-r, so it opens without the 중심 path being the only way.
  assert.equal(g.nodeStatus(p,'ward-r'),'');assert.ok(g.learnGrowthNode(s,'ward-r'));
  assert.ok(g.learnGrowthNode(s,'ward-1'));assert.equal(g.treePoints(p),1);assert.equal(g.nodeStatus(p,BODY),'트리 포인트 부족');
- assert.equal(g.TREE_COST,352);assert.equal(Object.keys(g.TREE_NODES).length,101);
+ assert.equal(g.TREE_COST,362);assert.equal(Object.keys(g.TREE_NODES).length,102);// 0.149.9 정화의 맹세 +1 핵심
  {const top=profile(g.MAX_LEVEL);top.starChests=g.STAGES.map(()=>7);assert.equal(g.treePointsTotal(top),99+g.STAGES.length);assert.ok(g.treePointsTotal(top)<=g.TREE_COST*.52,'Lv.200에 ★30 상자를 모두 받아도 절반쯤만 찍는다');}
  // Giving back: only nodes nothing hangs on.
  assert.equal(g.forgetGrowthNode(s,'ward-r'),false);assert.equal(g.forgetStatus(p,'ward-r'),'뒤에 이어진 노드가 있음');assert.ok(g.forgetGrowthNode(s,'ward-1'));assert.equal(g.treePoints(p),3);
@@ -64,7 +64,7 @@ test('saves keep training and the tree, trim hostile values, and builds remember
 test('every node is reachable from the 중심, the graph has loops and the web stays inside its box',()=>{
  assert.deepEqual(g.cleanTree(g.TREE_ORDER),[...g.TREE_ORDER]);assert.ok(g.TREE_EDGES.length>g.TREE_ORDER.length,'고리가 있다');
  for(const n of Object.values(g.TREE_NODES)){assert.ok(n.x>=0&&n.x<=g.TREE_BOX.width&&n.y>=0&&n.y<=g.TREE_BOX.height,n.id);assert.ok(n.text&&n.name,n.id);}
- const kinds=Object.values(g.TREE_NODES).map(n=>n.kind);assert.equal(kinds.filter(k=>k==='keystone').length,6);assert.equal(kinds.filter(k=>k==='core').length,1);
+ const kinds=Object.values(g.TREE_NODES).map(n=>n.kind);assert.equal(kinds.filter(k=>k==='keystone').length,7);// 0.149.9 정화의 맹세assert.equal(kinds.filter(k=>k==='core').length,1);
 });
 
 function arena(setup){const p=profile(60);setup?.(p);const s=g.createGame(p);g.launch(s,1);freezeCombat(s);s.run.flow='combat';s.run.waveQuota=1e6;s.barrels=[];s.auto=false;s.player.invulnerable=999;

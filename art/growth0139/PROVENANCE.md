@@ -19,3 +19,7 @@
 | `node-5` | `art-b6` · `art-b7` · `art-m2` · `art-m7` · `t-staminaRegen` · `t-skillCooldown` · `t-skillArea` |
 | `node-6` | `t-damagePct` · `t-attackSpeed` · `t-crit` · `t-execute` · `t-finisher` · `t-range` · `t-speed` |
 | `node-7` | `t-hpPct` · `t-reduction` · `t-lowHpGuard` · `t-regeneration` · `t-drain` · `t-skillDamage` · `t-skillFury` |
+
+## 0.149.9 정화의 맹세 (node-8)
+- 핵심 노드 `ward-21` '정화의 맹세' 아이콘 1점(`ward-purify`). Codex가 4×2 격자의 첫 칸보다 크게 그려 원본은 `node-8-source.png`로 두고, 같은 그림을 알파 경계로 잘라 첫 칸의 82%로 줄여 `node-8.png`에 다시 놓았다(픽셀은 크기만 바꿈). 첫 시도 통과·눈 검수.
+- 아틀라스가 7행 → 8행이 되어 layout-fit.css의 `growth-tree-v0139.webp` 배경 크기를 700% 800%로 바꾸고 `node tools/make-growth-tree0139.mjs`로 트리 DOM을 다시 썼다.
