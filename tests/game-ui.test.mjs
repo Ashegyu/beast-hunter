@@ -429,6 +429,13 @@ test('DPS dummy: stats sheet starts a 60-second run, the boss bar shows damage d
  assert.ok(r.dps>0&&r.record);assert.equal(saved.runs,1);assert.ok(Math.abs(saved.best-r.dps)<1e-6);
  assert.match(ui.nodes.get('dungeon-result-list').textContent,new RegExp('^DPS '+Math.round(r.dps).toLocaleString('ko-KR')));assert.equal(ui.nodes.get('next-stage').textContent.startsWith('다시 측정'),true);
 });
+test('0.149 status chips: hunter debuffs under the DPS line, hidden when none',async()=>{
+ const p=game.createProfile(0);p.level=200;p.skillBook=game.restoreSkillBook(null,200);
+ const ui=await host({saved:p});ui.emit('start','click');await ui.settle();ui.run(.5);
+ assert.equal(ui.nodes.get('player-status-0').hidden,true,'디버프 없으면 숨김');
+ const s=ui.state;s.player.statuses=[{id:'burn',stacks:2,until:s.run.time+3.2},{id:'curse',stacks:1,until:s.run.time+5}];ui.run(.05);
+ assert.equal(ui.nodes.get('player-status-0').hidden,false);assert.match(ui.nodes.get('player-status-0').textContent,/^화상 ×2 [34]초$/);assert.match(ui.nodes.get('player-status-1').textContent,/^저주 [45]초$/);assert.equal(ui.nodes.get('player-status-2').hidden,true);
+});
 test('character stats sheet opens from home and equipment, mirrors playerStats and the combat HUD shows an XP bar',async()=>{
  const p=bagFixture();p.level=47;p.xp=Math.ceil(game.xpNeeded(47)*.63);p.growthTree=['blade-r','blade-1'];
  const ui=await host({saved:p}),before=ui.profile(),stats=game.playerStats(ui.profile());

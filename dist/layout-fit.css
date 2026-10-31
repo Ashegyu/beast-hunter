@@ -2010,3 +2010,10 @@
 #game-shell#game-shell #dummy-start{flex:none;min-height:28px;padding:0 12px;border:1px solid #d6ba88aa;border-radius:4px;background:linear-gradient(#5a1a24,#2a0d14);color:#ffe3b0;font-size:12px;font-weight:700;white-space:nowrap;cursor:pointer}
 #game-shell #dummy-record{min-width:0;font-size:11px;color:#cdbfa6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums}
 @media(max-height:360px){#game-shell .stats-sheet-dummy{padding:0 10px 5px;gap:8px}#game-shell#game-shell #dummy-start{min-height:22px;font-size:11px;padding:0 10px}#game-shell #dummy-record{font-size:10px}}
+/* 0.149 상태 효과 칩: 체력 창 아래(DPS 줄 아래)에 내 디버프, 보스 막대 아래에 보스 상태(격노·방어 태세·재생·해체됨) */
+#game-shell .battle .top-hud .hunter-hud .status-chips{position:absolute;left:-9px;top:calc(100% + 34px);display:flex;flex-wrap:wrap;gap:3px;max-width:240px;pointer-events:none}
+#game-shell .battle .status-chip{display:inline-block;padding:1px 6px;border:1px solid var(--c,#c9b083);border-radius:9px;background:#0b1118d9;color:var(--c,#c9b083);font-size:10px;line-height:14px;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+#game-shell .battle .status-chip[hidden]{display:none}
+#game-shell .battle #boss-hud{position:relative}
+#game-shell .battle #boss-hud .boss-status-chips{position:absolute;right:6px;top:calc(100% + 4px);display:flex;gap:3px;pointer-events:none}
+@media(max-height:360px){#game-shell .battle .top-hud .hunter-hud .status-chips{top:calc(100% + 28px)}#game-shell .battle .status-chip{font-size:9px;line-height:12px;padding:0 5px}}

@@ -1,13 +1,13 @@
-import {createSkillMotion} from './skill-motion.js?v=0.148.14';
-import {CHAPTERS,CHAPTER_BOSSES} from './chapters.js?v=0.148.14';
-import {beastTechniques,BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE,beastElementText} from './beast-techniques.js?v=0.148.14';
-export {BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE} from './beast-techniques.js?v=0.148.14';
-import {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary,SKILL_TAGS,TAG_NAMES,TAG_SYNERGY} from './skill-branches.js?v=0.148.14';
-export {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary,SKILL_TAGS,TAG_NAMES,TAG_SYNERGY} from './skill-branches.js?v=0.148.14';
-import {GEAR_SKILLS} from './raid-skills.js?v=0.148.14';
-import {treeBonus} from './growth.js?v=0.148.14';
-import {transcendBonus} from './transcendence.js?v=0.148.14';
-export {GEAR_SKILLS,GEAR_SKILL_BY_ANCIENT} from './raid-skills.js?v=0.148.14';
+import {createSkillMotion} from './skill-motion.js?v=0.149.0';
+import {CHAPTERS,CHAPTER_BOSSES} from './chapters.js?v=0.149.0';
+import {beastTechniques,BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE,beastElementText} from './beast-techniques.js?v=0.149.0';
+export {BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE} from './beast-techniques.js?v=0.149.0';
+import {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary,SKILL_TAGS,TAG_NAMES,TAG_SYNERGY} from './skill-branches.js?v=0.149.0';
+export {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary,SKILL_TAGS,TAG_NAMES,TAG_SYNERGY} from './skill-branches.js?v=0.149.0';
+import {GEAR_SKILLS} from './raid-skills.js?v=0.149.0';
+import {treeBonus} from './growth.js?v=0.149.0';
+import {transcendBonus} from './transcendence.js?v=0.149.0';
+export {GEAR_SKILLS,GEAR_SKILL_BY_ANCIENT} from './raid-skills.js?v=0.149.0';
 // Lirian skill rules: one catalog drives unlocks, rank values, UI and combat.
 const active=(id,name,unlock,damage,step,cost,cooldown,shape,description,extra={})=>({id,name,kind:'active',unlock,damage,step,cost,cooldown,shape,description,...extra});
 const passive=(id,name,unlock,value,step,unit,description)=>({id,name,kind:'passive',unlock,value,step,unit,description});
@@ -241,7 +241,7 @@ export function castSkill(s,id,aim,h){
   if(vid==='plunge'){root.x=end.x;root.y=end.y;}
  }
 
- if(id==='stance'){r.stanceUntil=now+3*(br.duration??1);r.stanceCounter=br.stanceCounter??0;if(br.stanceShield)h.shield?.(s,br.stanceShield);h.visual(s,'skillCast',{skillId:id,x:p.x,y:p.y,radius:100},.5);return true;}
+ if(id==='stance'){h.cleanse?.(s);r.stanceUntil=now+3*(br.duration??1);r.stanceCounter=br.stanceCounter??0;if(br.stanceShield)h.shield?.(s,br.stanceShield);h.visual(s,'skillCast',{skillId:id,x:p.x,y:p.y,radius:100},.5);return true;}
  if(id==='bloodblade'){r.bloodbladeUntil=now+6*(br.duration??1);r.blade=br.bladeWave||br.bladeDrain||br.bladeBleed?{wave:br.bladeWave??0,drain:br.bladeDrain??0,bleed:br.bladeBleed??0}:null;h.visual(s,'skillCast',{skillId:id,x:p.x,y:p.y,radius:120},.5);return true;}
  if(id==='mark'){target.skillMark={root,count:0,need:br.markHits??5,expires:now+8,spread:br.markSpread??0,blast:br.markBlast??0,refund:br.markRefund??0};if(root.expose)exposeEnemy(target,root.expose);h.visual(s,'skillMark',{skillId:id,x:target.x,y:target.y,radius:45},.6);return true;}
  if(id==='phantoms'){r.phantomUntil=now+8*(br.duration??1);r.phantomHits=Math.round(8*(br.duration??1));r.phantomDamage=root.damage/8;r.phantomRule=br.phantomBleed||br.phantomChain||br.phantomDrain?{bleed:br.phantomBleed??0,chain:br.phantomChain??0,drain:br.phantomDrain??0}:null;r.phantomBurst=br.phantomBurst?{at:r.phantomUntil,value:root.attack*br.phantomBurst/100}:null;h.visual(s,'skillCast',{skillId:id,x:p.x,y:p.y,radius:160},.6);return true;}
@@ -307,6 +307,7 @@ function applyJob(s,j,h){const r=s.skillRuntime,root=j.root,d=SKILL_BY_ID[root.i
   if(root.chain&&count===1){let left=root.chain.n;const near=s.enemies.filter(o=>live(o)&&o!==e&&!targets.includes(o)&&distance(o,e)<=root.chain.range).sort((a,b)=>distance(a,e)-distance(b,e));for(const o of near){if(!left--||s.phase!=='playing')break;h.hit(s,o,value*root.chain.scale,false,'proc',e);h.visual(s,'gearProc',{x:o.x,y:o.y,trait:'pierce'},.4);}}
   if(root.refundKill&&e.dead&&(root.refunded??0)<root.refundKill*2){root.refunded=(root.refunded??0)+root.refundKill;r.cooldowns[root.id]=Math.max(0,(r.cooldowns[root.id]??0)-root.refundKill);}
   if(root.id==='breach'&&!e.dead)e.skillBreach={until:s.run.time+5,value:10+root.rank*2};
+  if(root.id==='breach'&&e.boss&&!e.dead)h.dispel?.(s,e);
   if(root.element&&!e.dead){const el=root.element;h.status?.(s,e,el,root.attack);if(el.breach)e.skillBreach={until:s.run.time+5,value:Math.max(e.skillBreach?.until>s.run.time?e.skillBreach.value:0,el.breach)};}
   if(d.shape==='gather'&&!e.dead&&!e.boss&&!e.elite){e.x=p.x+(e.x-p.x)*.35;e.y=p.y+(e.y-p.y)*.35;h.clamp(e,s.bounds);}
   if(!e.dead){let poise=root.poise;if(root.id==='draw'&&distance(p,{x:root.castX,y:root.castY})<4){poise*=1+pv(s,'steady')/100;passiveVisual(s,'steady',h);}if(['dance','gather'].includes(root.id)){poise*=1+surrounded/100;if(surrounded)passiveVisual(s,'surrounded',h);}if(root.id==='plunge'&&distance(e,j.center)<70)poise*=1.5;
@@ -358,7 +359,7 @@ export function basicSkillContact(s,swing,targets,h){const r=s.skillRuntime,p=s.
     if(pr.chain){const o=s.enemies.filter(o=>live(o)&&o!==e&&!targets.includes(o)&&distance(o,e)<=220).sort((a,b)=>distance(a,e)-distance(b,e))[0];if(o)h.hit(s,o,r.phantomDamage*pr.chain/100,false,'proc',e);}}}}h.visual(s,'skillImpact',{skillId:'phantoms',x:p.x,y:p.y,radius:180,n:{x:swing.x,y:swing.y}},.3);}
 }
 export function incomingSkillDamage(s,value,source,h){const r=s.skillRuntime,p=s.player,now=s.run.time;
- if(r.parryCast&&r.parryUntil>=now&&source){const n=unit(source.x-p.x,source.y-p.y);if(n.x*p.lookX+n.y*p.lookY>=.1){const root=r.parryCast;if(r.motion){r.motion.reactionAt=now;r.motion.duration=Math.max(r.motion.duration,now-r.motion.startedAt+.3);}r.parryCast=null;r.parryUntil=0;skillPerfect(s,h);applyJob(s,{root,index:0,center:{x:p.x,y:p.y}},h);
+ if(r.parryCast&&r.parryUntil>=now&&source){const n=unit(source.x-p.x,source.y-p.y);if(n.x*p.lookX+n.y*p.lookY>=.1){const root=r.parryCast;if(r.motion){r.motion.reactionAt=now;r.motion.duration=Math.max(r.motion.duration,now-r.motion.startedAt+.3);}r.parryCast=null;r.parryUntil=0;h.cleanse?.(s,1);skillPerfect(s,h);applyJob(s,{root,index:0,center:{x:p.x,y:p.y}},h);
    if(root.parryReset)for(const id of r.cooldownKeys)if(SKILL_BY_ID[id]?.kind==='active'&&id!=='parry')r.cooldowns[id]=Math.max(0,r.cooldowns[id]-root.parryReset);
    if(root.parryGuard)r.buffs.push({kind:'guard',value:root.parryGuard,until:now+2});h.visual(s,'perfectDodge',{x:p.x,y:p.y},.5);return 0;}}
  // 0.146.0 반격의 자세: a hit taken in stance strikes back around the hunter (every .5s at most).
@@ -376,6 +377,9 @@ export function gearSkill(s,n,h){const list=h.gearSkills?.(s);if(!list?.length)r
 export const STANCE_BURST=Object.freeze(new Set(['draw','eclipse','plunge','bloodblade','echo','imbalance','triple','crescent']));
 const holdForWeakPoint=(s,id,left)=>left>0&&skillCooldown(s.profile,id)>left;
 export function autoSkill(s,n,h){const p=s.player,r=s.skillRuntime,b=s.profile.skillBook,near=s.enemies.filter(e=>live(e)&&distance(e,p)<240),boss=near.some(e=>e.boss||e.elite),stance=h.stanceLeft?.(s)??0;
+ // 0.149 (궁극기보다 먼저 — Codex 측정에서 준비된 궁극기가 정화를 늦췄다): 디버프가 2종 이상이거나 저주가 걸리면 수월의 자세로 정화, 보스가 격노·방어 태세 중이면 파갑참으로 해체.
+ {const bad=h.debuffs?.(s)??[];if(b.loadout.active.includes('stance')&&(bad.length>=2||bad.some(x=>x.id==='curse'))&&castSkill(s,'stance',n,h))return true;
+  if(b.loadout.active.includes('breach')&&p.stamina>=skillCost(s.profile,'breach')){const reach=skillReach(s.profile,'breach'),bossE=s.enemies.find(e=>live(e)&&e.boss&&distance(e,p)<=reach&&h.bossBuffed?.(s,e));if(bossE&&castSkill(s,'breach',unit(bossE.x-p.x,bossE.y-p.y),h))return true;}}
  const ultimate=b.loadout.ultimate[0];if(ultimate&&b.auto.ultimate!=='off'&&(b.auto.ultimate==='any'||boss)&&!holdForWeakPoint(s,ultimate,stance)&&castSkill(s,ultimate,n,h))return true;
  // An equipped 파갑참 goes first whenever a guarded or still-armored enemy is within its reach.
  if(b.loadout.active.includes('breach')&&p.stamina>=skillCost(s.profile,'breach')+22){const reach=skillReach(s.profile,'breach'),shield=s.enemies.find(e=>live(e)&&(e.guard>0||e.plate>0&&!(e.plateBrokenUntil>s.run.time))&&distance(e,p)<=reach);if(shield&&castSkill(s,'breach',unit(shield.x-p.x,shield.y-p.y),h))return true;}

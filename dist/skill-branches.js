@@ -135,8 +135,8 @@ const PASSIVE_RULES={
 // Build tags (0.146.0): equipped active and ultimate skills of one tag add up (2·3·4 skills). The bonuses apply to the skills of
 // that tag as extra branch mods (TAG_SYNERGY[tag][n] for n = 2,3,4 equipped), so they reuse the same rules.
 export const SKILL_TAGS=Object.freeze({crescent:['wave'],seeking:['wave'],returning:['wave'],eclipse:['wave','precision'],gale:['dash'],echo:['dash','spirit'],plunge:['dash','area'],
- dance:['area'],field:['area'],gather:['area'],bloodmoon:['area'],draw:['precision'],breach:['precision'],triple:['precision'],parry:['precision'],mark:['precision','spirit'],stance:['spirit'],bloodblade:['spirit'],phantoms:['spirit']});
-export const TAG_NAMES=Object.freeze({wave:'검기',dash:'돌진',area:'영역',precision:'일격',spirit:'잔상'});
+ dance:['area'],field:['area'],gather:['area'],bloodmoon:['area'],draw:['precision'],breach:['precision','purify'],triple:['precision'],parry:['precision','purify'],mark:['precision','spirit'],stance:['spirit','purify'],bloodblade:['spirit'],phantoms:['spirit']});
+export const TAG_NAMES=Object.freeze({wave:'검기',dash:'돌진',area:'영역',precision:'일격',spirit:'잔상',purify:'정화'});
 export const TAG_SYNERGY=Object.freeze({
  wave:[[2,{damage:1.08},'피해 +8%'],[3,{area:1.15},'범위 +15%'],[4,{refundKill:.5,damage:1.08},'처치 시 재사용 0.5초 감소 · 피해 +8%']],
  // 0.147.7: 돌진 스킬은 3개(질풍참·잔영참·낙월)라 4개 보너스가 닿지 않았다 → 재사용 −15%를 3개 보너스에 합침.
@@ -145,6 +145,8 @@ export const TAG_SYNERGY=Object.freeze({
  area:[[2,{damage:1.08},'피해 +8%'],[3,{pull:.15},'괴수를 끌어당김'],[4,{zone:{seconds:1.5,scale:.06}},'끝난 자리에 1.5초 잔류 영역']],
  precision:[[2,{boss:10},'보스·정예 +10%'],[3,{execute:20},'빈사 적 +20%'],[4,{expose:1.5,damage:1.1},'적중 시 1.5초 노출 · 피해 +10%']],
  // 0.147.8: 잔상 스킬(잔영참·표식·자세·군무)을 쓰면 같은 태그의 혈월의 칼날이 끊겨 태그를 켜는 편이 손해였다(−2.3%) → 3개에 keepBlade.
+ // 0.149 정화 태그(수월의 자세·흘려베기·파갑참): 효과는 status-effects.js가 장착 수로 직접 읽는다(PURIFY_RESIST·PURIFY_HEAL).
+ purify:[[2,{},'디버프 시간 −30%'],[3,{},'정화 시 체력 4% 회복']],
  spirit:[[2,{damage:1.05,duration:1.15},'피해 +5% · 지속 +15%'],[3,{keepBlade:1,primed:15},'칼날 유지·연계 +15%'],[4,{cooldown:.9,duration:1.2},'재사용 −10%·지속 +20%']],
 });
 // Ultimate tier 4 (Lv.20).

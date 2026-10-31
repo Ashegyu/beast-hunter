@@ -1,4 +1,4 @@
-import {GROUND_DEPTH_SCALE} from './world.js?v=0.148.14';
+import {GROUND_DEPTH_SCALE} from './world.js?v=0.149.0';
 
 // Short local feedback only. These renderers never move actors or consume RNG.
 export function drawHitImpact(ctx,f,reducedMotion=false){

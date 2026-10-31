@@ -1,62 +1,64 @@
-import {RAIDS,RAID_WEEKLY_ENTRIES,RAID_DAMAGE,raidScale,RAID_ANCIENT_CHANCE,raidDefinition,raidPlan,raidRewards,raidWeek,raidEntriesLeft,raidUnlocked,raidChapter,emptyRaidProgress,raidTierUnlocked,raidTopTier,RAID_TIERS} from './raids.js?v=0.148.14';
-export * from './raids.js?v=0.148.14';
-import {DUMMY,DUMMY_SECONDS,DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonPlan,dungeonActors,emptyDungeonProgress,dungeonStageId,towerBonus,TOWER_MAX_FLOOR,emptyDungeonWeek,dungeonClearsLeft,isDungeonRepeat,repeatRewards,DUNGEON_WEEKLY_CLEARS,DUNGEON_REPEAT_RATE,RIFT_MAX_DEPTH,riftLimit} from './dungeons.js?v=0.148.14';
-export {DUMMY,DUMMY_SECONDS,DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonChapter,DUNGEON_CHAPTER_STEP,dungeonStageId,TOWER,TOWER_MAX_FLOOR,TOWER_BONUS,towerBonus,towerBonusAt,towerChapter,towerFloorKind,towerPlan,DUNGEON_WEEKLY_CLEARS,DUNGEON_REPEAT_RATE,dungeonClearsLeft,dungeonClearsUsed,isDungeonRepeat,repeatRewards,RIFT,RIFT_MAX_DEPTH,RIFT_MUTATORS,riftMutators,riftPlan,riftRewards,riftBest,riftLimit,riftChapter,riftDepthKind} from './dungeons.js?v=0.148.14';
-export {THREAT,MODE_CHAPTERS,MODE_EXTRA,MODE_BOSS_BUMP,MODE_FURY_DAMAGE,MODE_FURY_HP,MODE_SUMMON_HP,MODE_FINAL_BOSS,modeChapter,modeScale,modeExtra,modeBossBump} from './chapters.js?v=0.148.14';
-import {beginStageJournal,profileForSave,strictBattle,cancelStageJournal,prepareStageCommit,finishStageJournal,stageTransactionId,ownedAtStageStart} from './battle-progress.js?v=0.148.14';
-import {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_DROP_CHANCE,INSCRIPTION_COST} from './build-effects.js?v=0.148.14';
-import * as ancientSets from './ancient-sets.js?v=0.148.14';
-import {stageRule,STAGE_TYPE_NAMES} from './battle-plans.js?v=0.148.14';
+import {RAIDS,RAID_WEEKLY_ENTRIES,RAID_DAMAGE,raidScale,RAID_ANCIENT_CHANCE,raidDefinition,raidPlan,raidRewards,raidWeek,raidEntriesLeft,raidUnlocked,raidChapter,emptyRaidProgress,raidTierUnlocked,raidTopTier,RAID_TIERS} from './raids.js?v=0.149.0';
+export * from './raids.js?v=0.149.0';
+import {DUMMY,DUMMY_SECONDS,DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonPlan,dungeonActors,emptyDungeonProgress,dungeonStageId,towerBonus,TOWER_MAX_FLOOR,emptyDungeonWeek,dungeonClearsLeft,isDungeonRepeat,repeatRewards,DUNGEON_WEEKLY_CLEARS,DUNGEON_REPEAT_RATE,RIFT_MAX_DEPTH,riftLimit} from './dungeons.js?v=0.149.0';
+export {DUMMY,DUMMY_SECONDS,DUNGEONS,DUNGEON_MAX_LEVEL,dungeonDefinition,dungeonLimit,dungeonRewards,dungeonChapter,DUNGEON_CHAPTER_STEP,dungeonStageId,TOWER,TOWER_MAX_FLOOR,TOWER_BONUS,towerBonus,towerBonusAt,towerChapter,towerFloorKind,towerPlan,DUNGEON_WEEKLY_CLEARS,DUNGEON_REPEAT_RATE,dungeonClearsLeft,dungeonClearsUsed,isDungeonRepeat,repeatRewards,RIFT,RIFT_MAX_DEPTH,RIFT_MUTATORS,riftMutators,riftPlan,riftRewards,riftBest,riftLimit,riftChapter,riftDepthKind} from './dungeons.js?v=0.149.0';
+export {THREAT,MODE_CHAPTERS,MODE_EXTRA,MODE_BOSS_BUMP,MODE_FURY_DAMAGE,MODE_FURY_HP,MODE_SUMMON_HP,MODE_FINAL_BOSS,modeChapter,modeScale,modeExtra,modeBossBump} from './chapters.js?v=0.149.0';
+import {beginStageJournal,profileForSave,strictBattle,cancelStageJournal,prepareStageCommit,finishStageJournal,stageTransactionId,ownedAtStageStart} from './battle-progress.js?v=0.149.0';
+import {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_DROP_CHANCE,INSCRIPTION_COST} from './build-effects.js?v=0.149.0';
+import * as ancientSets from './ancient-sets.js?v=0.149.0';
+import {stageRule,STAGE_TYPE_NAMES} from './battle-plans.js?v=0.149.0';
 export {BUILD_EFFECTS,BUILD_EFFECT_IDS,buildEffects,buildEffectText,inscriptionStatus,INSCRIPTION_COST,stageRule,STAGE_TYPE_NAMES};
 export const PROFILE_VERSION=16,MAX_LEVEL=200,BUILD_NAMES=Object.freeze(['일반 사냥','보스','광역','생존','실험']);
-import {SLOTS,EQUIPMENT_SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,equipmentFamily,emptyEquipment,restoreEquipment,equipmentAfterEquip,equippedPosition,isEquippedItem,inventoryItem,equippedItems} from './equipment-slots.js?v=0.148.14';
-export * from './equipment-slots.js?v=0.148.14';
-import {enhanceOwned,promoteOwned,rerollOwned,resolveOwnedReroll,restoreEquipmentProgress} from './equipment-progression.js?v=0.148.14';
-export * from './equipment-progression.js?v=0.148.14';
-export * from './skill-vfx.js?v=0.148.14';
-export * from './skill-image-fx.js?v=0.148.14';
-export * from './monster-fx.js?v=0.148.14';
-export * from './combat-feedback.js?v=0.148.14';
-export * from './ultimate-video.js?v=0.148.14';
-export * from './skill-motion.js?v=0.148.14';
-import * as skills from './combat-skills.js?v=0.148.14';
-export * from './combat-skills.js?v=0.148.14';
-import {MATERIALS,MATERIAL_BY_ID,MATERIAL_LIMIT,emptyMaterials,rollMaterials,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress,FORGE_EFFECT_BY_ID,awakenOpen} from './crafting.js?v=0.148.14';
-import {forgeStatus,forgedItem,awakenStatus,awakenedItem} from './forge.js?v=0.148.14';
-export {forgeStatus,forgedItem,forgeTarget,awakenStatus,awakenedItem,awakenTarget} from './forge.js?v=0.148.14';
-export {FORGE_SLOTS,FORGE_EFFECTS,FORGE_EFFECT_BY_ID,FORGE_CATALOG,FORGE_REGION_MATERIAL,forgeCost,forgeRow,forgeOpen,forgeTierOpen,forgeGateChapter,FORGE_AWAKEN_POWER,awakenOpen,awakenTierOpen,awakenCost} from './crafting.js?v=0.148.14';
-export {MATERIALS,MATERIAL_BY_ID,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress,materialInfo,MATERIAL_ICON_INDEX} from './crafting.js?v=0.148.14';
-import {equipmentSynergies} from './equipment-synergies.js?v=0.148.14';
-import {itemProtection,forgeSource} from './loot.js?v=0.148.14';
-export {itemProtection,salvageValue,autoSalvageable,gradeSalvageIds,itemStatScore} from './loot.js?v=0.148.14';
-import {cleanBagRules,emptyBagRules,BAG_SLOTS,BAG_LIMIT_MIN,BAG_LIMIT_MAX,BAG_GRADE_MAX} from './inventory-rules.js?v=0.148.14';
-export {cleanBagRules,emptyBagRules,BAG_SLOTS,BAG_LIMIT_DEFAULT,BAG_LIMIT_MIN,BAG_LIMIT_MAX,BAG_LIMIT_STEP,BAG_GRADE_MAX} from './inventory-rules.js?v=0.148.14';
-export {equipmentSynergies,EQUIPMENT_SYNERGIES} from './equipment-synergies.js?v=0.148.14';
-import {HUNT_MODES,huntMode,REPLAY_CYCLES} from './hunt-modes.js?v=0.148.14';
-export {HUNT_MODES} from './hunt-modes.js?v=0.148.14';
+import {SLOTS,EQUIPMENT_SLOTS,EQUIPMENT_KEYS,STAGE_SLOTS,itemSlotForPosition,equipmentFamily,emptyEquipment,restoreEquipment,equipmentAfterEquip,equippedPosition,isEquippedItem,inventoryItem,equippedItems} from './equipment-slots.js?v=0.149.0';
+export * from './equipment-slots.js?v=0.149.0';
+import {enhanceOwned,promoteOwned,rerollOwned,resolveOwnedReroll,restoreEquipmentProgress} from './equipment-progression.js?v=0.149.0';
+export * from './equipment-progression.js?v=0.149.0';
+export * from './skill-vfx.js?v=0.149.0';
+export * from './skill-image-fx.js?v=0.149.0';
+export * from './monster-fx.js?v=0.149.0';
+export * from './combat-feedback.js?v=0.149.0';
+export * from './ultimate-video.js?v=0.149.0';
+export * from './skill-motion.js?v=0.149.0';
+import * as skills from './combat-skills.js?v=0.149.0';
+export * from './combat-skills.js?v=0.149.0';
+import {MATERIALS,MATERIAL_BY_ID,MATERIAL_LIMIT,emptyMaterials,rollMaterials,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress,FORGE_EFFECT_BY_ID,awakenOpen} from './crafting.js?v=0.149.0';
+import {forgeStatus,forgedItem,awakenStatus,awakenedItem} from './forge.js?v=0.149.0';
+export {forgeStatus,forgedItem,forgeTarget,awakenStatus,awakenedItem,awakenTarget} from './forge.js?v=0.149.0';
+export {FORGE_SLOTS,FORGE_EFFECTS,FORGE_EFFECT_BY_ID,FORGE_CATALOG,FORGE_REGION_MATERIAL,forgeCost,forgeRow,forgeOpen,forgeTierOpen,forgeGateChapter,FORGE_AWAKEN_POWER,awakenOpen,awakenTierOpen,awakenCost} from './crafting.js?v=0.149.0';
+export {MATERIALS,MATERIAL_BY_ID,CRAFTED_CATALOG,craftedDefinition,craftStatus,targetCraft,setCraftTarget,craftProgress,materialInfo,MATERIAL_ICON_INDEX} from './crafting.js?v=0.149.0';
+import {equipmentSynergies} from './equipment-synergies.js?v=0.149.0';
+import {itemProtection,forgeSource} from './loot.js?v=0.149.0';
+export {itemProtection,salvageValue,autoSalvageable,gradeSalvageIds,itemStatScore} from './loot.js?v=0.149.0';
+import {cleanBagRules,emptyBagRules,BAG_SLOTS,BAG_LIMIT_MIN,BAG_LIMIT_MAX,BAG_GRADE_MAX} from './inventory-rules.js?v=0.149.0';
+export {cleanBagRules,emptyBagRules,BAG_SLOTS,BAG_LIMIT_DEFAULT,BAG_LIMIT_MIN,BAG_LIMIT_MAX,BAG_LIMIT_STEP,BAG_GRADE_MAX} from './inventory-rules.js?v=0.149.0';
+export {equipmentSynergies,EQUIPMENT_SYNERGIES} from './equipment-synergies.js?v=0.149.0';
+import {HUNT_MODES,huntMode,REPLAY_CYCLES} from './hunt-modes.js?v=0.149.0';
+export {HUNT_MODES} from './hunt-modes.js?v=0.149.0';
 // Pure combat, random waves and persistent RPG rules. No rendering or storage dependencies.
-import { directionIndex, recoilProgress, ACTION_DURATIONS } from './motion.js?v=0.148.14';
-import { WORLD_BOUNDS, GROUND_DEPTH_SCALE } from './world.js?v=0.148.14';
-import { CHAPTERS, CHAPTERS_PER_THEME, THEMES, THREAT, modeScale, modeBossBump, MODE_FURY_DAMAGE, MODE_FURY_HP, MODE_SUMMON_HP, MODE_CHAPTERS, chapterTheme, MONSTERS, chapterMonsterPool, EQUIPMENT_ART, ALL_EQUIPMENT_ART, equipmentArt } from './chapters.js?v=0.148.14';
-import { STAGES_PER_CHAPTER, battlePlan, stageWaveCount, waveComposition } from './battle-plans.js?v=0.148.14';
-import { RAID_POWER_ROLL, raidPowerRoll } from './loot.js?v=0.148.14';
-import * as growth from './growth.js?v=0.148.14';
-import * as transcend from './transcendence.js?v=0.148.14';
-export {TRANSCEND,TRANSCEND_IDS,TRANSCEND_STEPS,transcendNeeded,transcendLevel,transcendProgress,transcendEffective,transcendPoints,transcendPointsTotal,transcendBonus,nightmareChapters,nightmareOpen,transcendStatus} from './transcendence.js?v=0.148.14';
-export * from './growth.js?v=0.148.14';
-import * as stars from './stage-stars.js?v=0.148.14';
-import * as seals from './seals.js?v=0.148.14';
-import * as rush from './boss-rush.js?v=0.148.14';
-export * from './boss-rush.js?v=0.148.14';
-export * from './seals.js?v=0.148.14';
-import * as gates from './stage-gates.js?v=0.148.14';
-export * from './stage-gates.js?v=0.148.14';
-export * from './stage-stars.js?v=0.148.14';
-export { RAID_POWER_ROLL, RAID_ROLL_BANDS, raidRollPosition, raidPowerRoll } from './loot.js?v=0.148.14';
-import { affixCap, INVENTORY_LIMIT, MAX_PENDING_LOOT, LEGENDARY_PITY_LIMIT, huntGrade, ITEM_CATALOG, ANCIENT_CATALOG, ancientIdOfBase, rollAncient, BOSS_LOOT, bossLootPool, discoverAncient, targetAncient, setAncientTarget, ancientDefinition, ancientForLegacy, effectiveAffix, RARITIES, RARITY_INFO, rollItem, rollStageItem, rollAccessory, storeItem, salvageValue, uniqueEffect, uniqueLoadout, equippedUniqueEffect, UNIQUE_EFFECTS, itemSet, setBonusStats, EQUIPMENT_SETS, SET_SLOTS } from './loot.js?v=0.148.14';
-export { ancientSignatures, ANCIENT_TIER_POWER, ANCIENT_HUNT_POWER, huntGrade, HUNT_POWER, HUNT_GRADE_TABLES, itemSet, setBonusStats, setBonusText, EQUIPMENT_SETS, SET_SLOTS, SET_STATS, CHAPTER_SETS, SET_CATALOG } from './loot.js?v=0.148.14';
-export { INVENTORY_LIMIT, LEGENDARY_PITY_LIMIT, ITEM_CATALOG, ANCIENT_CATALOG, BOSS_LOOT, RARITIES, RARITY_INFO, UNIQUE_EFFECTS, uniqueEffect, uniqueLoadout, targetAncient, setAncientTarget, ancientDefinition, gearDropPresentation, gearDropDuration } from './loot.js?v=0.148.14';
-export { STAGES_PER_CHAPTER, BATTLE_PLANS, battlePlan, stageWaveCount } from './battle-plans.js?v=0.148.14';
+import { directionIndex, recoilProgress, ACTION_DURATIONS } from './motion.js?v=0.149.0';
+import { WORLD_BOUNDS, GROUND_DEPTH_SCALE } from './world.js?v=0.149.0';
+import { CHAPTERS, CHAPTERS_PER_THEME, THEMES, THREAT, modeScale, modeBossBump, MODE_FURY_DAMAGE, MODE_FURY_HP, MODE_SUMMON_HP, MODE_CHAPTERS, chapterTheme, MONSTERS, chapterMonsterPool, EQUIPMENT_ART, ALL_EQUIPMENT_ART, equipmentArt } from './chapters.js?v=0.149.0';
+import { STAGES_PER_CHAPTER, battlePlan, stageWaveCount, waveComposition } from './battle-plans.js?v=0.149.0';
+import { RAID_POWER_ROLL, raidPowerRoll } from './loot.js?v=0.149.0';
+import * as growth from './growth.js?v=0.149.0';
+import * as transcend from './transcendence.js?v=0.149.0';
+import * as status from './status-effects.js?v=0.149.0';
+export {STATUS_DEFS,RULE_DEBUFF,DISPEL_SECONDS,PURIFY_RESIST,PURIFY_HEAL,statusList,statusStacks,hasStatus} from './status-effects.js?v=0.149.0';
+export {TRANSCEND,TRANSCEND_IDS,TRANSCEND_STEPS,transcendNeeded,transcendLevel,transcendProgress,transcendEffective,transcendPoints,transcendPointsTotal,transcendBonus,nightmareChapters,nightmareOpen,transcendStatus} from './transcendence.js?v=0.149.0';
+export * from './growth.js?v=0.149.0';
+import * as stars from './stage-stars.js?v=0.149.0';
+import * as seals from './seals.js?v=0.149.0';
+import * as rush from './boss-rush.js?v=0.149.0';
+export * from './boss-rush.js?v=0.149.0';
+export * from './seals.js?v=0.149.0';
+import * as gates from './stage-gates.js?v=0.149.0';
+export * from './stage-gates.js?v=0.149.0';
+export * from './stage-stars.js?v=0.149.0';
+export { RAID_POWER_ROLL, RAID_ROLL_BANDS, raidRollPosition, raidPowerRoll } from './loot.js?v=0.149.0';
+import { affixCap, INVENTORY_LIMIT, MAX_PENDING_LOOT, LEGENDARY_PITY_LIMIT, huntGrade, ITEM_CATALOG, ANCIENT_CATALOG, ancientIdOfBase, rollAncient, BOSS_LOOT, bossLootPool, discoverAncient, targetAncient, setAncientTarget, ancientDefinition, ancientForLegacy, effectiveAffix, RARITIES, RARITY_INFO, rollItem, rollStageItem, rollAccessory, storeItem, salvageValue, uniqueEffect, uniqueLoadout, equippedUniqueEffect, UNIQUE_EFFECTS, itemSet, setBonusStats, EQUIPMENT_SETS, SET_SLOTS } from './loot.js?v=0.149.0';
+export { ancientSignatures, ANCIENT_TIER_POWER, ANCIENT_HUNT_POWER, huntGrade, HUNT_POWER, HUNT_GRADE_TABLES, itemSet, setBonusStats, setBonusText, EQUIPMENT_SETS, SET_SLOTS, SET_STATS, CHAPTER_SETS, SET_CATALOG } from './loot.js?v=0.149.0';
+export { INVENTORY_LIMIT, LEGENDARY_PITY_LIMIT, ITEM_CATALOG, ANCIENT_CATALOG, BOSS_LOOT, RARITIES, RARITY_INFO, UNIQUE_EFFECTS, uniqueEffect, uniqueLoadout, targetAncient, setAncientTarget, ancientDefinition, gearDropPresentation, gearDropDuration } from './loot.js?v=0.149.0';
+export { STAGES_PER_CHAPTER, BATTLE_PLANS, battlePlan, stageWaveCount } from './battle-plans.js?v=0.149.0';
 export const ARRIVAL_EPSILON=.001;
 export const STAGES = CHAPTERS;
 export {THEMES,CHAPTERS_PER_THEME};
@@ -248,9 +250,9 @@ export function collectOffline(p,now=Date.now()){
   if(!p.clearedStage||!minutes)return{minutes:0,gold:0,xp:0};const gold=minutes*2*p.clearedStage,xp=growthXp(p,minutes*p.clearedStage);p.gold+=gold;gainXp(p,xp);return{minutes,gold,xp};
 }
 growth.addBonusSource(p=>ancientSets.ancientSetSpecial(ancientSets.ancientSetCounts(equippedItems(p))));
-export {ANCIENT_SETS,ancientSetOf,ancientSetCounts,ancientSetText} from './ancient-sets.js?v=0.148.14';
+export {ANCIENT_SETS,ancientSetOf,ancientSetCounts,ancientSetText} from './ancient-sets.js?v=0.149.0';
 export const equippedAncientSetCounts=p=>ancientSets.ancientSetCounts(equippedItems(p));
-export {setStatText} from './equipment-sets.js?v=0.148.14';
+export {setStatText} from './equipment-sets.js?v=0.149.0';
 export function equippedAncientSets(p){const counts=equippedAncientSetCounts(p);return Object.entries(counts).map(([id,count])=>({set:ancientSets.ANCIENT_SETS[id],count,active:ancientSets.ANCIENT_SETS[id].stages.filter(s=>count>=s.pieces)})).sort((a,b)=>b.active.length-a.active.length||b.count-a.count);}
 export function equipmentBonuses(p){const result={damage:0,hp:0,speed:0,crit:0,reduction:0},worn=equippedItems(p);for(const item of worn){for(const[k,v]of Object.entries(item.affixes))result[k]+=effectiveAffix(item,k);}const set=setBonusStats(equippedSetCounts(p));for(const k of ['speed','crit','reduction'])result[k]+=set[k];for(const k of ['damagePct','hpPct','attackSpeed','range','regeneration','collection'])result[k]=set[k];
  // Alpha 0.145.2 고대 세트: stats of every reached stage (special effects go through growth.treeBonus).
@@ -371,6 +373,23 @@ const themeOf=s=>stageOf(s)?.theme??1;
 // Boss rule and attack-effect sheet follow the chapter biome (forest/fire/frost/ruins).
 // Elite/nightmare boss cycles were authored for forest, ruins and frost; fire opens with a charge like frost.
 const REPLAY_ROW={forest:0,ruins:1,frost:2,fire:2,sea:2,sky:0,divine:1};
+// 0.149 상태 효과: 정예·악몽(레이드 정예·악몽 포함)에서만 보스가 디버프를 건다. 허수아비 제외.
+const statusOn=s=>!s.run?.dummy&&s.run?.dungeonId!=='dummy'&&(s.difficulty>0||(s.run?.raidTier??0)>0);
+const statusLevel=s=>Math.min(2,Math.max(1,s.difficulty||s.run?.raidTier||1));
+export function purifyCount(p){return skills.tagSynergy(p).purify?.count??0;}
+function inflictRuleDebuff(s){if(!statusOn(s))return;const id=status.RULE_DEBUFF[ruleOf(s)];if(!id)return;status.applyStatus(s.player,id,s.run.time,{resist:purifyCount(s.profile)>=2?status.PURIFY_RESIST:0});}
+export function cleansePlayer(s,n=Infinity){const removed=status.cleanse(s.player,s.run.time,n);if(removed){effect(s,'cleanse',{x:s.player.x,y:s.player.y,count:removed},.6);if(purifyCount(s.profile)>=3){const p=s.player;p.hp=Math.min(p.maxHp,p.hp+p.maxHp*status.PURIFY_HEAL);}}return removed;}
+export function dispelBoss(s,e){if(!e?.boss||e.dummy||!statusOn(s))return false;status.applyStatus(e,'dispelled',s.run.time);if(e.furyActive){e.furyScale=1;e.damage=e.baseDamage??e.damage;}effect(s,'dispel',{x:e.x,y:e.y},.6);return true;}
+export const playerStatusMods=s=>status.statusMods(s.player,s.run?.time??0);
+const dispelled=(s,e)=>status.hasStatus(e,'dispelled',s.run.time);
+// 화면용: 보스의 '강한 순간'(격노·방어 태세·재생)과 해체 상태, 그리고 그 보스가 거는 디버프.
+export function bossStatusList(s,e){if(!e?.boss||!statusOn(s))return [];const now=s.run.time,rule=ruleOf(s),out=[];
+ if(dispelled(s,e))out.push({id:'dispelled',name:'해체됨',color:status.STATUS_DEFS.dispelled.color,left:e.statuses.find(x=>x.id==='dispelled').until-now});
+ else if(e.furyActive)out.push({id:'fury',name:'격노',color:'#ff6a3d',left:12-now%12});
+ else if(rule==='defense'&&now%12<8)out.push({id:'stance',name:'방어 태세',color:'#c9b083',left:8-now%12});
+ else if(rule==='regen')out.push({id:'regen',name:'재생',color:'#7fd38a',left:8-(e.recoveryClock??0)});
+ return out;}
+export function bossDebuffInfo(s){if(!statusOn(s))return null;const id=status.RULE_DEBUFF[ruleOf(s)];return id?status.STATUS_DEFS[id]:null;}
 const ruleOf=s=>s.run?.raidId?raidDefinition(s.run.raidId).mechanic:s.run?.rush?STAGES[s.run.rushBoss-1]?.bossRule??'regen':stageOf(s)?.bossRule??'regen',fxOf=s=>stageOf(s)?.effects??1;
 function effect(s,type,data={},ttl=.6){if(s.effects.length>=400)return;s.effects.push({id:s.nextId++,type,ttl,maxTtl:ttl,...data});}
 function setLook(p,x,y,lock=false){if(Math.hypot(x,y)<.01)return;p.lookX=x;p.lookY=y;p.heading=directionIndex(x,y,lock?null:p.heading);}
@@ -471,7 +490,7 @@ export function launchDungeon(s,id,level=1,view=null,now=Date.now()){
 }
 function prepareStage(s,immediate=false){
   const plan=activePlan(s);s.run.stageType=plan.stageType;s.run.rule=s.run.raidId?{type:'raid',name:plan.name,rule:plan.rule,hint:plan.hint,armor:0}:s.run.rush?{type:'rush',name:plan.name,rule:plan.rule,hint:plan.hint,armor:0}:s.run.dungeonId?{type:'dungeon',name:plan.kind,rule:plan.rule,hint:plan.hint,armor:plan.armor??0}:stageRule(s.stageId,s.run.stage);s.run.stageKills=0;s.run.stageQuota=plan.waves.reduce((sum,w)=>sum+w.skitter+w.spitter+w.bulwark,0);s.run.timeLimit=s.run.timeRemaining=plan.timeLimit;s.run.timedOut=false;s.run.stars=null;s.run.lowestHp=1;s.run.gate=s.run.raidId||s.run.rush||s.run.dungeonId?null:gates.gateEffect(s.profile,gates.stageGate(s.stageId,s.run.stage,s.difficulty));
-  beginStageJournal(s);const p=s.player;skills.clearSkillStage(s);clearUniqueTransient(s);s.enemies.length=0;s.spawns.length=0;s.projectiles.length=0;s.barrels.length=0;s.pickups=s.pickups.filter(isResourcePickup);s.effects.length=0;
+  beginStageJournal(s);const p=s.player;p.statuses=[];skills.clearSkillStage(s);clearUniqueTransient(s);s.enemies.length=0;s.spawns.length=0;s.projectiles.length=0;s.barrels.length=0;s.pickups=s.pickups.filter(isResourcePickup);s.effects.length=0;
   p.action='idle';p.actionTime=0;p.queued=false;p.queuedAim=null;p.combo=0;p.comboWindow=0;p.swing=null;p.attackCooldown=0;
   s.assist={targetId:null,approaching:false,evade:null};s.run.wave=0;s.run.bossSpawned=false;s.hitStop=0;s.shake=0;
   for(let i=0;i<plan.barrels;i++){const pos=spawnPoint(s,s.barrels);s.barrels.push({id:s.nextId++,kind:'barrel',...pos,hp:18,status:'idle',fuse:0,radius:205});}
@@ -745,7 +764,7 @@ function startAttack(s,aim,heavy=false,counter=false){
   let travel=combo.step+(!heavy&&s.skillRuntime.pursuitUntil>s.run.time&&s.profile.skillBook.loadout.passive.includes('pursuit')?20:0);
   for(const target of s.enemies){if(!eligible(s,target))continue;const dx=target.x-p.x,dy=target.y-p.y,d=length(dx,dy);if(d<stats.range*combo.range+30&&(d<.01?1:(dx*p.aimX+dy*p.aimY)/d)>.65)travel=Math.min(travel,Math.max(0,d-55));}
   for(const target of s.barrels){if(target.status!=='idle')continue;const dx=target.x-p.x,dy=target.y-p.y,d=length(dx,dy);if(d<stats.range*combo.range+30&&(d<.01?1:(dx*p.aimX+dy*p.aimY)/d)>.65)travel=Math.min(travel,Math.max(0,d-55));}
-  p.swing={...combo,inscriptions:s.buildEffects,synergies:s.synergies,synergyTriggered:{},equipmentAtStart:equipmentSnapshot(s.profile),trait:equippedWeaponTrait(s.profile)?.id??null,unique:s.loadout.weapon,charm:s.loadout.charm,powersAtStart:s.loadout,momentum:s.uniqueState.momentum>0?s.uniqueState.momentumPower:0,step:travel,duration:combo.duration/(stats.attackSpeed*inscriptionSpeed(s)*(1+ancientBuff(s,'haste'))),impact:combo.impact/(stats.attackSpeed*inscriptionSpeed(s)),x:p.aimX,y:p.aimY,heavy,counter,motion:counter?'backhand':heavy||p.combo===3?'finisher':p.combo===2?'backhand':'forehand',sounded:false};
+  p.swing={...combo,inscriptions:s.buildEffects,synergies:s.synergies,synergyTriggered:{},equipmentAtStart:equipmentSnapshot(s.profile),trait:equippedWeaponTrait(s.profile)?.id??null,unique:s.loadout.weapon,charm:s.loadout.charm,powersAtStart:s.loadout,momentum:s.uniqueState.momentum>0?s.uniqueState.momentumPower:0,step:travel,duration:combo.duration/(stats.attackSpeed*inscriptionSpeed(s)*(1+ancientBuff(s,'haste'))*Math.max(.3,1+playerStatusMods(s).attackSpeed)),impact:combo.impact/(stats.attackSpeed*inscriptionSpeed(s)),x:p.aimX,y:p.aimY,heavy,counter,motion:counter?'backhand':heavy||p.combo===3?'finisher':p.combo===2?'backhand':'forehand',sounded:false};
   if(p.combo===3&&p.swing.unique?.definition.id==='whirlwind'){p.swing.dot=-1;p.swing.range*=1+UNIQUE_EFFECTS.whirlwind.rangeBonus*p.swing.unique.power;}s.uniqueState.momentum=0;
   setLook(p,p.swing.x,p.swing.y,true);p.action=heavy?'heavy':'attack';p.actionTime=0;p.attackHit=false;p.queued=false;p.queuedAim=null;p.attackCooldown=p.swing.duration;p.comboWindow=0;
   if(Math.abs(p.aimX)>.05)p.facing=p.aimX<0?-1:1;
@@ -808,7 +827,7 @@ function kill(s,e,inscriptions=s.buildEffects,explode=true){if(e.dead)return;e.d
 }
 const enemyHeightHint=e=>e.boss?150:e.elite?100:e.type==='bulwark'?95:70;
 function damageEnemy(s,e,value,critical=false,kind='normal',origin=s.player,piercing=false,synergy=null,swing=null){
-  if(!eligible(s,e)||s.phase!=='playing'||s.settlement)return 'miss';value*=1+ancientBuff(s,'fury');if(e.boss)value*=1+transcend.transcendBonus(s.profile).bossDamage;
+  if(!eligible(s,e)||s.phase!=='playing'||s.settlement)return 'miss';value*=1+ancientBuff(s,'fury');{const dm=status.statusMods(s.player,s.run.time).damage;if(dm)value*=Math.max(0,1+dm);}if(e.boss)value*=1+transcend.transcendBonus(s.profile).bossDamage;
   // 관문 '방어 태세': damage taken is cut; while a defense-rule boss shows its weak point the cut shrinks by the build's
   // counter (a full burst build ignores it there, an unprepared one barely notices the opening) (0.135).
   if(e.gateGuard)value/=e.boss&&ruleOf(s)==='defense'&&s.run.time%12>=8?1+(e.gateGuard-1)*(1-(e.gateCounter??0)):e.gateGuard;
@@ -820,7 +839,7 @@ function damageEnemy(s,e,value,critical=false,kind='normal',origin=s.player,pier
   // A defense stance is armor too: weakening applies before its mitigation.
   // Stage armor (철갑 진군) is countered by skills: 파갑참 strips it for a while and 마지막 검끝 lets combo strikes ignore it.
   const armorIgnored=e.plateBrokenUntil>s.run.time||swing?.damage!=null&&skills.finisherGuardBonus(s)>0;
-  value*=(1-Math.max(0,(armorIgnored?0:e.plate??0)+(defending?stanceGuard(s):0)-shred))*(1+shred*BUILD_EFFECTS.shred.vulnerability);
+  value*=(1-Math.max(0,(armorIgnored?0:e.plate??0)+(defending?stanceGuard(s)*(dispelled(s,e)?.5:1):0)-shred))*(1+shred*BUILD_EFFECTS.shred.vulnerability);
   if(e.boss&&ruleOf(s)==='defense'&&!defending)value*=1.5;
   if(e.raid&&raidDefinition(e.raid)?.broodShield&&raidBroodAlive(s))value*=1-raidDefinition(e.raid).broodShield;
   let guarded=false,broken=false;
@@ -1021,7 +1040,7 @@ function strike(s){
 function fireProjectiles(s,e,count=1){
   const n=direction(e.targetX-e.x,e.targetY-e.y),base=Math.atan2(n.y,n.x);
   for(let i=0;i<count;i++){if(s.projectiles.length>=64)break;const angle=base+(i-(count-1)/2)*(e.shotSpread??.2),dx=Math.cos(angle),dy=Math.sin(angle);
-    const speed=e.shotSpeed??(e.boss?420:360);s.projectiles.push({id:s.nextId++,x:e.x+dx*34,y:e.y+dy*34,vx:dx*speed,vy:dy*speed,damage:e.boss?12*(e.damageBase??stageOf(s).damageScale)*(e.projectileDamageScale??1)*(e.furyScale??1):e.damage,ttl:2.6,friendly:false,perfectDodged:false,color:e.shotColor??stageOf(s).shotColor,projectileStyle:e.projectileStyle,fxChapter:fxOf(s)});
+    const speed=e.shotSpeed??(e.boss?420:360);s.projectiles.push({id:s.nextId++,boss:!!e.boss,x:e.x+dx*34,y:e.y+dy*34,vx:dx*speed,vy:dy*speed,damage:e.boss?12*(e.damageBase??stageOf(s).damageScale)*(e.projectileDamageScale??1)*(e.furyScale??1):e.damage,ttl:2.6,friendly:false,perfectDodged:false,color:e.shotColor??stageOf(s).shotColor,projectileStyle:e.projectileStyle,fxChapter:fxOf(s)});
   }effect(s,'spit',{x:e.x,y:e.y,fxChapter:fxOf(s),nx:n.x,ny:n.y},.16);
 }
 function segmentHit(ax,ay,bx,by,x,y,r){const dx=bx-ax,dy=by-ay,d2=dx*dx+dy*dy,t=d2?clamp(((x-ax)*dx+(y-ay)*dy)/d2,0,1):0;return length(x-ax-dx*t,y-ay-dy*t)<=r?t:null;}
@@ -1035,7 +1054,7 @@ function updateProjectiles(s,dt){
     if(q.friendly){for(const e of s.enemies){if(!eligible(s,e))continue;const t=segmentHit(ax,ay,q.x,q.y,e.x,e.y,e.boss?65:28);if(t!==null&&t<best){target=e;best=t;}}}
     else{const t=segmentHit(ax,ay,q.x,q.y,s.player.x,s.player.y,26);if(t!==null&&t<best){target=s.player;best=t;}}
     if(!target)continue;
-    if(target.kind==='barrel')armBarrel(s,target);else if(target===s.player)hurtPlayer(s,q.damage,{x:ax,y:ay});else {const result=damageEnemy(s,target,q.damage,false,q.ancientSpec?'proc':'reflected',{x:ax,y:ay});if(q.ancientSpec&&result!=='miss')ancientStatus(s,target,q.ancientSig??(q.ancientSpec.ancient??q.ancientSpec.crafted??q.ancientSpec.seal).signature,q.ancientAttack);}
+    if(target.kind==='barrel')armBarrel(s,target);else if(target===s.player)hurtPlayer(s,q.damage,{x:ax,y:ay,boss:q.boss});else {const result=damageEnemy(s,target,q.damage,false,q.ancientSpec?'proc':'reflected',{x:ax,y:ay});if(q.ancientSpec&&result!=='miss')ancientStatus(s,target,q.ancientSig??(q.ancientSpec.ancient??q.ancientSpec.crafted??q.ancientSpec.seal).signature,q.ancientAttack);}
     effect(s,'acidImpact',{x:ax+(q.x-ax)*best,y:ay+(q.y-ay)*best,friendly:q.friendly,fxChapter:q.fxChapter},.3);s.projectiles.splice(i,1);if(s.phase!=='playing')return;
   }
 }
@@ -1051,11 +1070,12 @@ function updateBarrels(s,dt){
 function hurtPlayer(s,value,source=null){
  const p=s.player;if(s.phase!=='playing'||p.invulnerable>0)return;
  value=skills.incomingSkillDamage(s,value,source,SKILL_HOOKS);if(value<=0||s.phase!=='playing')return;skills.interruptSkill(s);
+ {const taken=status.statusMods(p,s.run.time).taken;if(taken)value*=1+taken;}
  {const guard=growth.treeBonus(s.profile).lowHpGuard;if(guard&&p.hp<p.maxHp*.5)value*=1-guard;}
  let damage=Math.max(1,Math.round(value));const u=s.uniqueState;
  if(u.shield>0){const blocked=Math.min(damage,u.shield);u.shield-=blocked;damage-=blocked;effect(s,'unique',{uniqueId:'barrier',x:p.x,y:p.y,radius:55},.4);}
  p.invulnerable=.42;if(!damage)return;
- for(const slot of ANCIENT_SLOTS){const shield=u.ancientShields[slot];if(shield&&damage>0){const blocked=Math.min(damage,shield.amount);damage-=blocked;shield.amount-=blocked;if(shield.amount<=0)u.ancientShields[slot]=null;}}if(!damage)return;p.hp=Math.max(0,p.hp-damage);s.run.lowestHp=Math.min(s.run.lowestHp??1,p.hp/p.maxHp);p.lastDamage=s.run.time;u.still=0;s.shake=6;effect(s,'playerDamage',{x:p.x,y:p.y-115,value:damage},.65);
+ for(const slot of ANCIENT_SLOTS){const shield=u.ancientShields[slot];if(shield&&damage>0){const blocked=Math.min(damage,shield.amount);damage-=blocked;shield.amount-=blocked;if(shield.amount<=0)u.ancientShields[slot]=null;}}if(!damage)return;if(source?.boss)inflictRuleDebuff(s);p.hp=Math.max(0,p.hp-damage);s.run.lowestHp=Math.min(s.run.lowestHp??1,p.hp/p.maxHp);p.lastDamage=s.run.time;u.still=0;s.shake=6;effect(s,'playerDamage',{x:p.x,y:p.y-115,value:damage},.65);
  p.queued=false;p.queuedAim=null;p.combo=0;p.comboWindow=0;p.counterReady=0;
  const armor=s.loadout.armor;
  if(!p.hp)skills.skillLastStand(s,SKILL_HOOKS);
@@ -1224,11 +1244,12 @@ export function advanceGame(s,elapsed,input={}){
       if(p.actionTime<=swing.impact){p.x+=swing.x*swing.step/swing.impact*step;p.y+=swing.y*swing.step/swing.impact*step;}
       const travel=s.skillRuntime.travel?0:Math.min(stats.speed*.15*step,remaining);p.x+=n.x*travel;p.y+=n.y*travel;
       if(p.actionTime>=swing.duration){const queued=p.queued&&!swing.heavy,queuedAim=p.queuedAim;p.comboWindow=swing.heavy?0:.5;p.attackCooldown=0;setAction(p,'idle');if(queued)startAttack(s,queuedAim);}
-    }else{setAction(p,controls.x||controls.y?'walk':'idle');p.actionTime+=step;const travel=Math.min(stats.speed*skills.skillMoveScale(s)*step,remaining);p.x+=n.x*travel;p.y+=n.y*travel;}
+    }else{setAction(p,controls.x||controls.y?'walk':'idle');p.actionTime+=step;const travel=Math.min(stats.speed*skills.skillMoveScale(s)*Math.max(.3,1+playerStatusMods(s).speed)*step,remaining);p.x+=n.x*travel;p.y+=n.y*travel;}
     clampPosition(p,s.bounds);const moved=length(p.x-previousX,p.y-previousY);updateUnique(s,step,moved);skills.afterSkillMovement(s,step,moved,SKILL_HOOKS);p.moving=p.action==='walk'&&moved>.0001;if(p.moving)p.motionDistance+=moved;if(!['attack','heavy'].includes(p.action)&&Math.abs(p.aimX)>.05)p.facing=p.aimX<0?-1:1;
     if(s.phase!=='playing')break;for(const e of s.enemies){const beforeX=e.x,beforeY=e.y;updateEnemy(s,e,step);const moved=length(e.x-beforeX,e.y-beforeY);e.moving=e.action==='walk'&&moved>.0001;if(e.moving)e.motionDistance=(e.motionDistance??0)+moved;if(s.phase!=='playing')break;}if(s.phase!=='playing')break;
     updateProjectiles(s,step);if(s.phase!=='playing')break;updateBarrels(s,step);if(s.phase!=='playing')break;
-    if(s.run.time-p.lastDamage>4)p.hp=Math.min(p.maxHp,p.hp+stats.regeneration*step);updatePickups(s,step);updateCampaign(s,step);
+    if(s.run.time-p.lastDamage>4)p.hp=Math.min(p.maxHp,p.hp+stats.regeneration*step);
+    {const dot=status.tickStatuses(p,s.run.time,step,statusLevel(s));if(dot>0&&p.hp>1)p.hp=Math.max(1,p.hp-p.maxHp*dot);}updatePickups(s,step);updateCampaign(s,step);
     if(s.settlement||s.run.stage!==previousStage)break; // The app releases held controls before the next stage's first update.
     // Resolve contacts at the deadline first. A completed clear/victory wins the tie.
     if(s.phase==='playing'&&s.run.flow!=='stageClear'&&s.run.timeRemaining<=1e-9){expireHunt(s);break;}
@@ -1267,7 +1288,7 @@ export const exposeCap=chapter=>EXPOSE_CAP[0]+(EXPOSE_CAP[1]-EXPOSE_CAP[0])*Math
 export const stanceGuard=s=>STANCE_GUARD[s.difficulty]??STANCE_GUARD[0];
 export function bossStanceLeft(s){if(ruleOf(s)!=='defense'||!s.enemies.some(e=>e.boss&&!e.dead))return 0;const t=s.run.time%12;return t<8?8-t:0;}
 export const SKILL_POSE_HOLD=.32;
-const SKILL_HOOKS={stanceLeft:bossStanceLeft,cast:(s,id)=>{capacitorCast(s,id);ancientAll(s,'skill');},gearSkills,heal:(s,f)=>{s.player.hp=Math.min(s.player.maxHp,s.player.hp+s.player.maxHp*f);},status:(s,e,r,attack)=>ancientStatus(s,e,r,attack),shield:(s,f)=>{const u=s.uniqueState,amount=s.player.maxHp*f;if(amount>u.shield){u.shield=amount;u.shieldTime=3;u.shieldOwner=null;}},inscriptions:s=>s.buildEffects,capture:s=>equipmentSnapshot(s.profile),stats:playerStats,hit:damageEnemy,visual:effect,clamp:clampPosition,motion(s,n,duration,id){
+const SKILL_HOOKS={stanceLeft:bossStanceLeft,cleanse:cleansePlayer,dispel:dispelBoss,debuffs:s=>status.statusList(s.player,s.run.time),bossBuffed:(s,e)=>!!e?.boss&&statusOn(s)&&!dispelled(s,e)&&(e.furyActive||ruleOf(s)==='defense'&&s.run.time%12<8),cast:(s,id)=>{capacitorCast(s,id);ancientAll(s,'skill');},gearSkills,heal:(s,f)=>{s.player.hp=Math.min(s.player.maxHp,s.player.hp+s.player.maxHp*f);},status:(s,e,r,attack)=>ancientStatus(s,e,r,attack),shield:(s,f)=>{const u=s.uniqueState,amount=s.player.maxHp*f;if(amount>u.shield){u.shield=amount;u.shieldTime=3;u.shieldOwner=null;}},inscriptions:s=>s.buildEffects,capture:s=>equipmentSnapshot(s.profile),stats:playerStats,hit:damageEnemy,visual:effect,clamp:clampPosition,motion(s,n,duration,id){
  const momentum=s.uniqueState.momentum;startAttack(s,n,true,false);s.uniqueState.momentum=momentum;const p=s.player;p.swing.name=skills.SKILL_BY_ID[id]?.name??p.swing.name;p.swing.skillId=id;p.swing.skillVisualOnly=true;p.swing.step=0;
  // Alpha 0.142 (사용자 요청 '스킬 쓰는 동안 캐릭터가 멈춰 있다'): the cast pose holds only a short moment (or a dash's travel);
  // the skill's remaining hits keep firing from their jobs while the hunter walks and swings normally again.
@@ -1393,9 +1414,9 @@ function updateBossRule(s,e,dt){
  if(s.run.flow!=='combat')return;
  const rule=ruleOf(s);
  if(s.run.raidId){raidRule(s,e,dt,raidDefinition(s.run.raidId));return;}
- if(rule==='regen'){e.recoveryClock=(e.recoveryClock??0)+dt;if(e.recoveryClock>=8){e.recoveryClock-=8;e.hp=Math.min(e.maxHp,e.hp+e.maxHp*.02);effect(s,'unique',{uniqueId:'recovery',x:e.x,y:e.y,radius:100},.6);}}
+ if(rule==='regen'){e.recoveryClock=(e.recoveryClock??0)+dt;if(e.recoveryClock>=8){e.recoveryClock-=8;if(!dispelled(s,e))e.hp=Math.min(e.maxHp,e.hp+e.maxHp*.02);effect(s,'unique',{uniqueId:'recovery',x:e.x,y:e.y,radius:100},.6);}}
  // Fire: 4 of every 12 seconds the boss burns hotter (contact and volley damage +50%).
- if(rule==='fury'){const active=s.run.time%12>=8;e.baseDamage??=e.damage;e.furyScale=active?1.5:1;e.damage=e.baseDamage*e.furyScale;if(active!==!!e.furyActive){e.furyActive=active;if(active)effect(s,'bossRage',{x:e.x,y:e.y},.8);}}
+ if(rule==='fury'){const active=s.run.time%12>=8&&!dispelled(s,e);e.baseDamage??=e.damage;e.furyScale=active?1.5:1;e.damage=e.baseDamage*e.furyScale;if(active!==!!e.furyActive){e.furyActive=active;if(active)effect(s,'bossRage',{x:e.x,y:e.y},.8);}}
  // Frost bosses and every special boss (chapters 10/20/30) call escorts at 70% and 35%.
  if(rule==='summon'||e.special){const phase=e.hp/e.maxHp<=.35?2:e.hp/e.maxHp<=.7?1:0;if(phase>(e.summonPhase??0)){e.summonPhase=phase;for(let i=0;i<(e.special?4:3)&&s.enemies.filter(q=>!q.dead).length<MAX_ACTIVE_ENEMIES;i++){const add=spawnEnemy(s,'skitter',clamp(e.x+(i-1.5)*90,s.bounds.padding,s.bounds.width-s.bounds.padding),clamp(e.y+140,s.bounds.padding,s.bounds.height-s.bounds.padding));add.objective=false;add.aggro=true;}effect(s,'bossRage',{x:e.x,y:e.y},1.2);}}
 }
