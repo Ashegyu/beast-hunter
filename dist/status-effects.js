@@ -18,6 +18,10 @@ export const STATUS_DEFS=Object.freeze({
 export const RULE_DEBUFF=Object.freeze({fury:'burn',summon:'frost',defense:'curse',regen:'corrode',nightmare:'burn',swarm:'frost',judgement:'curse',armor:'corrode'});
 export const DISPEL_SECONDS=4;
 // 0.149.3 레이드 패턴: 봉인은 SEAL_EVERY초마다, 신성 보호막은 HOLY_EVERY초마다 최대 체력 × HOLY_SHIELD[단계](10초, 해체로 벗김).
+// 0.149.7 (설계 4단계): 마지막 장(60장) 정예·악몽 보스는 체력 50%·25%에서 신성 보호막(최대 체력 × FINAL_HOLY[난이도]),
+// 월영 표식이 터지면 보호막 MARK_SHIELD_BREAK만큼 벗긴다. 격노 보스는 빙결이 걸려 있으면 격노가 1초 일찍 끝나고(FURY_CHILL_CUT),
+// 재생 보스는 출혈 BLEED_REGEN_STACKS회 이상이면 회복이 BLEED_REGEN_CUT만큼 준다.
+export const FINAL_HOLY=Object.freeze([0,.05,.06]),FINAL_HOLY_AT=Object.freeze([.5,.25]),MARK_SHIELD_BREAK=.3,FURY_CHILL_CUT=1,BLEED_REGEN_STACKS=3,BLEED_REGEN_CUT=.5;
 export const SEAL_EVERY=14,HOLY_EVERY=18,HOLY_SHIELD=Object.freeze([0,.04,.06]);
 // 정화 태그: 2 equipped → debuff time −30%, 3 → each cleanse heals 4% of max health.
 export const PURIFY_RESIST=.3,PURIFY_HEAL=.04,PURIFY_STAMINA=10;

@@ -1,13 +1,13 @@
-import {createSkillMotion} from './skill-motion.js?v=0.149.6';
-import {CHAPTERS,CHAPTER_BOSSES} from './chapters.js?v=0.149.6';
-import {beastTechniques,BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE,beastElementText} from './beast-techniques.js?v=0.149.6';
-export {BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE} from './beast-techniques.js?v=0.149.6';
-import {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary,SKILL_TAGS,TAG_NAMES,TAG_SYNERGY} from './skill-branches.js?v=0.149.6';
-export {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary,SKILL_TAGS,TAG_NAMES,TAG_SYNERGY} from './skill-branches.js?v=0.149.6';
-import {GEAR_SKILLS} from './raid-skills.js?v=0.149.6';
-import {treeBonus} from './growth.js?v=0.149.6';
-import {transcendBonus} from './transcendence.js?v=0.149.6';
-export {GEAR_SKILLS,GEAR_SKILL_BY_ANCIENT} from './raid-skills.js?v=0.149.6';
+import {createSkillMotion} from './skill-motion.js?v=0.149.7';
+import {CHAPTERS,CHAPTER_BOSSES} from './chapters.js?v=0.149.7';
+import {beastTechniques,BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE,beastElementText} from './beast-techniques.js?v=0.149.7';
+export {BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE} from './beast-techniques.js?v=0.149.7';
+import {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary,SKILL_TAGS,TAG_NAMES,TAG_SYNERGY} from './skill-branches.js?v=0.149.7';
+export {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary,SKILL_TAGS,TAG_NAMES,TAG_SYNERGY} from './skill-branches.js?v=0.149.7';
+import {GEAR_SKILLS} from './raid-skills.js?v=0.149.7';
+import {treeBonus} from './growth.js?v=0.149.7';
+import {transcendBonus} from './transcendence.js?v=0.149.7';
+export {GEAR_SKILLS,GEAR_SKILL_BY_ANCIENT} from './raid-skills.js?v=0.149.7';
 // Lirian skill rules: one catalog drives unlocks, rank values, UI and combat.
 const active=(id,name,unlock,damage,step,cost,cooldown,shape,description,extra={})=>({id,name,kind:'active',unlock,damage,step,cost,cooldown,shape,description,...extra});
 const passive=(id,name,unlock,value,step,unit,description)=>({id,name,kind:'passive',unlock,value,step,unit,description});
@@ -274,6 +274,7 @@ function shapeHits(s,e,j,d){const root=j.root,p=s.player,n=root.n;let origin=j.c
 }
 function markHit(s,e,h,allow){const m=e.skillMark;if(!allow||!m||s.run.time>m.expires)return;if(++m.count<(m.need??5))return;e.skillMark=null;const boost=pv(s,'resonance'),value=m.root.damage*(1+boost/100);passiveVisual(s,'resonance',h,e);
  // 0.146.0 표식 갈래: 피의 표식 bursts the bleed, 폭쇄 hits around, 전염 passes fresh marks on, 회수 shortens the cooldown on a kill.
+ h.markBreak?.(s,e);// 0.149.7: 터지면 신성 보호막 30% 벗김
  if(m.root.detonate&&e.bleedTicks>0){const burst=m.root.attack*m.root.detonate*e.bleedTicks;e.bleedTicks=0;e.bleedDamage=0;h.hit(s,e,burst,false,'proc',s.player);}
  if(!e.dead)h.hit(s,e,value,false,'proc',s.player);h.visual(s,'skillImpact',{skillId:'mark',x:e.x,y:e.y,radius:m.blast||80},.3);
  if(m.blast)for(const o of s.enemies)if(live(o)&&o!==e&&distance(o,e)<=m.blast&&s.phase==='playing')h.hit(s,o,value*.6,false,'proc',e);

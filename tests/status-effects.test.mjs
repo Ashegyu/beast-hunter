@@ -131,3 +131,22 @@ test('역류: 디버프가 걸려 있으면 스킬 피해 +20%',()=>{
  const dmg=debuffed=>{const {s}=fight(15,1,['draw']);withPassive(s,'resolve',2,2);s.player.hp=s.player.maxHp;if(debuffed)st.applyStatus(s.player,'frost',s.run.time);s.skillRuntime.lastAnyCast=null;assert.ok(cast(s,'draw'));const root=s.skillRuntime.jobs.map(j=>j.root).find(x=>x?.id==='draw');assert.ok(root,'발도 작업');return root.ruleBonus;};
  const a=dmg(false),b=dmg(true);assert.equal(b-a,20);
 });
+// Alpha 0.149.7 설계 4단계: 보스 버프 대응(빙결→격노 단축, 출혈→재생 감소, 표식→보호막), 60장 신성 보호막.
+test('격노 보스: 빙결이 걸려 있으면 격노가 1초 일찍 끝난다(정예·악몽)',()=>{
+ const {s,e}=fight(15,1);s.run.time=11.5-.025;e.chillRemaining=0;run(s,.05);assert.equal(e.furyActive,true,'빙결 없으면 격노 중');
+ e.chillRemaining=5;run(s,.05);assert.equal(e.furyActive,false,'마지막 1초 빙결로 끝남');
+ s.run.time=9-.025;run(s,.05);assert.equal(e.furyActive,true,'앞 3초는 그대로');
+});
+test('재생 보스: 출혈 3회 이상이면 회복이 절반',()=>{
+ const heal=ticks=>{const {s,e}=fight(10,1);e.hp=e.maxHp*.5;e.bleedTicks=ticks;e.bleedTimer=100;e.bleedDamage=0;e.recoveryClock=8-.01;const before=e.hp;run(s,.025);return (e.hp-before)/e.maxHp;};
+ close(Math.round(heal(0)*1e6)/1e6,.02);close(Math.round(heal(3)*1e6)/1e6,.02*(1-st.BLEED_REGEN_CUT));close(Math.round(heal(2)*1e6)/1e6,.02);
+});
+test('60장 정예·악몽 보스: 체력 50%·25%에서 신성 보호막, 월영 표식 폭발은 30% 벗김',()=>{
+ for(const d of [1,2]){const {s,e}=fight(60,d);e.hp=e.maxHp*.49;run(s,.025);close(e.holyShield,e.maxHp*st.FINAL_HOLY[d]);assert.equal(e.holyPhase,1);
+  e.holyShield=0;st.removeStatus(e,'holyShield');run(s,.025);assert.equal(e.holyShield,0,'같은 구간에서 다시 안 걸림');e.hp=e.maxHp*.2;run(s,.025);assert.equal(e.holyPhase,2);assert.ok(e.holyShield>0);}
+ {const {s,e}=fight(59,1);e.hp=e.maxHp*.2;run(s,.025);assert.ok(!(e.holyShield>0),'59장은 없음');}
+ // 월영 표식이 기본 공격으로 터질 때 보호막 30%를 벗긴다: 같은 전투를 표식 있음/없음으로 돌려 첫 타격 뒤 보호막을 비교.
+ const firstHit=mark=>{const {s,e}=fight(60,1);e.hp=e.maxHp*.49;run(s,.025);const start=s.run.time;if(mark)e.skillMark={root:{damage:0,attack:0},count:0,need:1,expires:start+9,blast:0};
+  s.auto=true;s.player.invulnerable=100;for(let i=0;i<400&&!(e.hitAt>start);i++)run(s,.025);assert.ok(e.hitAt>start,'첫 타격');return e.holyShield;};
+ const plain=firstHit(false),marked=firstHit(true);assert.ok(marked<=plain*(1-st.MARK_SHIELD_BREAK)+1e-6,`${marked} vs ${plain}`);
+});
