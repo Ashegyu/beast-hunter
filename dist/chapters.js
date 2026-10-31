@@ -1,6 +1,6 @@
-import {equipmentFamily} from './equipment-slots.js?v=0.148.11';
-import {SEAL_EFFECTS,sealArtId} from './seals.js?v=0.148.11';
-import {EQUIPMENT_SETS,SET_SLOTS,CHAPTER_SETS,setArtId} from './equipment-sets.js?v=0.148.11';
+import {equipmentFamily} from './equipment-slots.js?v=0.148.12';
+import {SEAL_EFFECTS,sealArtId} from './seals.js?v=0.148.12';
+import {EQUIPMENT_SETS,SET_SLOTS,CHAPTER_SETS,setArtId} from './equipment-sets.js?v=0.148.12';
 // Sixty chapters in six regions of ten: 1–10 forest, 11–20 fire and ice (11–15 fire,
 // 16–20 ice), 21–30 darkness (Alpha 0.107), 31–40 sunken kingdom, 41–50 storm sky isles,
 // 51–60 twilight sanctum (Alpha 0.118). A region drives the map tabs, item and
@@ -135,9 +135,15 @@ export function modeScale(id,difficulty=0){if(!difficulty)return {hp:1,damage:1,
 // 악몽은 레이드·승화 +40 이상 장비가 60장(레이드는 60장 기준)에서 30~45초 걸리게. MODE_EXTRA[d] = [1장, 60장].
 export const MODE_EXTRA=Object.freeze({1:Object.freeze({hp:[2,3],damage:[.9,.75]}),2:Object.freeze({hp:[4,5],damage:[.85,.8]})});
 // 0.148.11 (사용자 요청 '30장 보스도 30초 이상'): 장 곡선 때문에 중간 장 보스가 엔드 장비에 상대적으로 약해 30장 보스가 16~20초에
-// 잡혔다. 정예·악몽 보스 체력에만 중간 장에서 가장 큰 배율을 더 얹는다: 1 + MODE_BOSS_BUMP[d] × sin(π × (장−1)/59) — 1장·60장은 1배.
+// 잡혔다. 정예·악몽 보스 체력에만 30장 근처에서 가장 큰 배율을 더 얹는다(모양은 아래 modeBossBump).
 export const MODE_BOSS_BUMP=Object.freeze({1:2.4,2:1});
-export const modeBossBump=(id,difficulty)=>1+(MODE_BOSS_BUMP[difficulty]??0)*Math.sin(Math.PI*Math.min(1,Math.max(0,(id-1)/(MODE_CHAPTERS-1))));
+// 0.148.12: 사인 곡선은 45·50장(격노 보스)에도 크게 걸려 그 보스들이 60장보다 어려운 벽이 됐다 → 30장을 중심으로 한 좁은 종 모양
+// exp(−((장−30)/MODE_BOSS_WIDTH)²)으로(40장 ×0.21, 45장 ×0.03).
+export const MODE_BOSS_PEAK=30,MODE_BOSS_WIDTH=8;
+export const modeBossBump=(id,difficulty)=>1+(MODE_BOSS_BUMP[difficulty]??0)*Math.exp(-(((id-MODE_BOSS_PEAK)/MODE_BOSS_WIDTH)**2));
+// 0.148.12: 정예·악몽의 격노(fury, 12초 중 4초 공격 ×1.5) 보스는 길어진 싸움에서 공격이 너무 세 45·50장에서 쓰러졌다 → 공격 배율을 더 낮춘다.
+// 체력은 더 주고 공격은 더 낮춰 '오래 버티지만 한 방이 덜 아픈' 보스로(45·50장 30초 안팎·체력 손실 50~80% 목표).
+export const MODE_FURY_DAMAGE=Object.freeze({1:.45,2:.25}),MODE_FURY_HP=Object.freeze({1:2.5,2:2});
 export function modeExtra(id,difficulty){const m=MODE_EXTRA[difficulty];if(!m)return {hp:1,damage:1};const t=Math.min(1,Math.max(0,(id-1)/(MODE_CHAPTERS-1))),at=([a,b])=>a+(b-a)*t;return {hp:at(m.hp),damage:at(m.damage)};}
 // Each chapter takes two species per role from its biome pool (pairs rotate by chapter,
 // offset per role). Stages 1–8 visit all eight role combinations in an order where every

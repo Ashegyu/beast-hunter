@@ -1,10 +1,10 @@
 {
   "title": "엔드게임 난이도 측정 0.148",
   "command": "node tools/benchmark-endgame0148.mjs",
-  "createdAt": "2026-10-31T00:17:38.182Z",
-  "engineVersion": "0.148.10",
+  "createdAt": "2026-10-31T01:48:42.419Z",
+  "engineVersion": "0.148.12",
   "node": "v22.22.0",
-  "elapsedSeconds": 42.542624841,
+  "elapsedSeconds": 49.530757809,
   "timeBudgetSeconds": 540,
   "plannedSeeds": [
     11,
@@ -1105,41 +1105,41 @@
     }
   ],
   "sourceSha256": {
-    "game-engine.js": "1e2773e09747ede3356624cc21f4b43053d86376fe76d0f31e5e5701ae874590",
+    "game-engine.js": "5eeb3bbb17c2c42dd94496c718285611a438a6030557538f58a7c9996c615ce7",
     "raids.js": "794712ad6eac920d4c208c4778ef4ca93dba80b54c49a0a0d6e2dad65d9e7c9d",
-    "dungeons.js": "3271fa4eb57b7c396e780da25b24f1117257bf4ec5f42cd4c99c50a293a796cc",
-    "chapters.js": "e8245d1856acb05524af8291c6d133334aed22679a6bc611303ee0a7fccd6017",
-    "battle-progress.js": "977ce32752a6dc73b861454593f18b96df810e2b9265c039e6c4feb31ee9a513",
-    "build-effects.js": "79fb7db72c79ba8bf822453fc1b3f4005c9c1259c645cc3523acb0542dcccd81",
-    "ancient-sets.js": "7a829c93438a3852f6a11204e41df57412405a84dbd9fed34dcbe8200472205a",
-    "battle-plans.js": "dfe48171bb98eb36e107d0ec74a81e150962e98ac50efdab2a281f60c8189a09",
+    "dungeons.js": "b0a09c9db196028289a1d67e8aa66eda02f69c0b83737d5d0bcac846bc97317b",
+    "chapters.js": "6022a652e20dbd463f448af953c2418b95f23fe74bdbdd7eb5f66d5aafd3072f",
+    "battle-progress.js": "489b09e67113caddca30c92478ea5500eec6437d3d8145103b8d23e6fc5fbdd0",
+    "build-effects.js": "290e46682e2bbf0da51b1a930243f7d5dffd2c30893b89da28719bf2e841255f",
+    "ancient-sets.js": "ebc7eb65145383b10a16f7b86edd1b906c671bfe132f10fb8b2459c7a0b12845",
+    "battle-plans.js": "f92bb487b9df7395e39b223ee131685ae3fe01ad02fe9a082cb7440c14223b42",
     "equipment-slots.js": "797f49c3da7cba1d84eb82d791fd0de89aa7eddf2f177d263ebff1fdb8a54aae",
-    "equipment-progression.js": "a8fda5de37905671889ccad56ef3e3d242f1e3bc1afcec27ff48d8894d91e69d",
+    "equipment-progression.js": "322ffba505f832516583a36e82d9b011fc555c3f29b0d92d21381ccd2dd999de",
     "skill-vfx.js": "0920604f25156b77250a8ffb4c6c2bd0036281a67bd087da2c76ef962e7c8b2c",
     "skill-image-fx.js": "1a4f3936a5843d2fdbe720f34d2641a31b283cfbca25407b0a0734b30d5cc44f",
-    "monster-fx.js": "7fdf430864c02caf3f332efccb99acccfdb37000e67ae4de97b3a394a87631fd",
-    "combat-feedback.js": "5990a04b1a77d6a3368f4fe2120f060e48ae90b4408717a4267c6cd36057d10f",
+    "monster-fx.js": "eff9af5db941c9e98163da25454b76c69c132520001e855e6ca70355784f61f1",
+    "combat-feedback.js": "72bb03cfcab2af00fe7f34adb056663036f2c202039c621189d050fb7e3f42cd",
     "ultimate-video.js": "6616608476f1c6a5d4ce85422f46767d3fc6a0dd88947ec90678bf2a3be1fe8f",
-    "skill-motion.js": "ebefda1fad35a697f5c3e01248796b61953f8e72b7713d1f0d895fcc010468e1",
-    "combat-skills.js": "fa11adabcdc440eaa605c50c4ee73226ab592c3316986b52eff45064e972ab37",
-    "crafting.js": "7976d13d94c8abb2f9a16b2487e141a64a58d2eebed18cc685856cafac3bd0c1",
-    "forge.js": "96012bc5da7997d7d194eda469d194112e55c992dc34986f234f25d1740c55b9",
-    "equipment-synergies.js": "05fc5425ef6997dda05ef0bcfaf9e60498524cdccf08b63f494cebde824866e2",
-    "loot.js": "7e7dea5ee0ec207b184e7f8725cdacec6ab850163613a050134c8fd2ea8a91bc",
+    "skill-motion.js": "0bc847bdc73407e52a12bf8af5410c493e23b02c95d21e934bd362280c4ac220",
+    "combat-skills.js": "6042c677a047d20764d8591df2d653b1a2fa03961385c4419f290876249f18d9",
+    "crafting.js": "af05c1ab790876d34b6fbd9d50a7c214368a9271d856725134ac227490c61486",
+    "forge.js": "747ab87c93892f4ffcab293a961f5589cab114ccd68ad64d544369223477fa3b",
+    "equipment-synergies.js": "1cb40ef190ba5eb4d3409514b8988c5ed79a84b319a27b2332eb55b81e7f676f",
+    "loot.js": "f2aff8285459cb566069709b6a82b07e171f9bf292226c593e15e430342db2d3",
     "inventory-rules.js": "444a616e68c6d9908298e3a382d9248756bbdab8d4dda376068dc5da05fe998e",
     "hunt-modes.js": "8b2ebefd65ac62f75016ff3367f8636065b4107ac68fdae4c6e2f7f884085dd7",
     "motion.js": "0ec86ba981fe6773975828c6a3171f407293583708e990b514b0f0b46b643457",
     "world.js": "ef6349f7fedf03989060bf2b2dacf0d2c1b8edd729b0d5650d240b326e4930be",
     "growth.js": "82d262562a69c560422c61d7f7e797db9f474691ecfdd79eeb532268ef293a85",
     "transcendence.js": "17205ea9df6a9efd616f0b4d7a2b0aeff32eb2d893c7eb19f42021acdd0be211",
-    "stage-stars.js": "69c90fab7b84ac73e0f5085dd7b27580fd87764cb7ac579658aabff6c38c127a",
-    "seals.js": "7e80a792d1204e3bd6525cca2c358c409a0b572d183018d6ec82158860cbfeb8",
+    "stage-stars.js": "587b77b0c30fbb0346fc947fa0bac5f8ceb9c813e92fb185dcec98066a0c3aad",
+    "seals.js": "0a57ae1c18e4cafe8bebdbf135f6b346850fe79a6cc4483af924b178d3f32980",
     "boss-rush.js": "a2692f886ba261a7b985754a6829cae3dd6a7072bb554d119614b541b6c14e37",
-    "stage-gates.js": "dbe16e41768c1b727b921909a8fc820e9f748f91b232340f43684dead6ed630c",
+    "stage-gates.js": "6cf59cb928d59bee435e3f8edb35d00236e6e5ae80e8d49ecc4ca7640125f206",
     "equipment-sets.js": "ab6f9412c6f96e1400984e7c86278d610c60a2df062d47ffa63eebf279367155",
     "beast-techniques.js": "19700a42629d1f89c461c1cff3de2dee894955743d6f0c85b5e4d2b7c766e2cd",
     "skill-branches.js": "f7de9a4b015ea0b51f64557c945f7d6f799d290aa4a9da3fc07f1aa7c9796103",
-    "raid-skills.js": "32822cf4e38c12e31f08bf96cb21c3dfe9c850073e9997b9a6edbd18ec8924fd",
+    "raid-skills.js": "bc790c97efb35656b27929ffd39a8557ab2a979c80147583dc2765be6e2aa6fd",
     "ancient-stats.js": "28724a7aa404426818c4afc2d8ded584c21fbdba14abdbe2492ee8d4e41b05af",
     "ancient-powers.js": "49f6d8d2445723eeeca4ed50b8bbb79c5440fcd2108ebe06578903488a962b89",
     "unique-effects.js": "9ab6bed914db642d448e7712fd6ff827d9af0eca53427bf11fbeb2287c9ebab8",
@@ -2240,8 +2240,8 @@
           "flow": "combat",
           "bossRemaining": [
             {
-              "hp": 434375,
-              "maxHp": 506975
+              "hp": 434502,
+              "maxHp": 507102
             }
           ],
           "dealt": 72600
@@ -2269,8 +2269,8 @@
           "flow": "combat",
           "bossRemaining": [
             {
-              "hp": 423204,
-              "maxHp": 506975
+              "hp": 423331,
+              "maxHp": 507102
             }
           ],
           "dealt": 83771
@@ -2298,8 +2298,8 @@
           "flow": "combat",
           "bossRemaining": [
             {
-              "hp": 429745,
-              "maxHp": 506975
+              "hp": 429872,
+              "maxHp": 507102
             }
           ],
           "dealt": 77230
@@ -2347,8 +2347,8 @@
           "flow": "combat",
           "bossRemaining": [
             {
-              "hp": 298185,
-              "maxHp": 305075
+              "hp": 298186,
+              "maxHp": 305076
             }
           ],
           "dealt": 6890
@@ -2376,8 +2376,8 @@
           "flow": "combat",
           "bossRemaining": [
             {
-              "hp": 294964,
-              "maxHp": 305075
+              "hp": 294965,
+              "maxHp": 305076
             }
           ],
           "dealt": 10111
@@ -2405,8 +2405,8 @@
           "flow": "combat",
           "bossRemaining": [
             {
-              "hp": 297016,
-              "maxHp": 305075
+              "hp": 297017,
+              "maxHp": 305076
             }
           ],
           "dealt": 8059
@@ -2454,8 +2454,8 @@
           "flow": "combat",
           "bossRemaining": [
             {
-              "hp": 1047920,
-              "maxHp": 1056445
+              "hp": 1048108,
+              "maxHp": 1056633
             }
           ],
           "dealt": 8525
@@ -2483,8 +2483,8 @@
           "flow": "combat",
           "bossRemaining": [
             {
-              "hp": 1045865,
-              "maxHp": 1056445
+              "hp": 1046053,
+              "maxHp": 1056633
             }
           ],
           "dealt": 10580
@@ -2512,8 +2512,8 @@
           "flow": "combat",
           "bossRemaining": [
             {
-              "hp": 1044736,
-              "maxHp": 1056445
+              "hp": 1044924,
+              "maxHp": 1056633
             }
           ],
           "dealt": 11709
@@ -2561,8 +2561,8 @@
           "flow": "combat",
           "bossRemaining": [
             {
-              "hp": 948087,
-              "maxHp": 956276
+              "hp": 948088,
+              "maxHp": 956277
             }
           ],
           "dealt": 8189
@@ -2590,8 +2590,8 @@
           "flow": "combat",
           "bossRemaining": [
             {
-              "hp": 945377,
-              "maxHp": 956276
+              "hp": 945378,
+              "maxHp": 956277
             }
           ],
           "dealt": 10899
@@ -2619,8 +2619,8 @@
           "flow": "combat",
           "bossRemaining": [
             {
-              "hp": 947191,
-              "maxHp": 956276
+              "hp": 947192,
+              "maxHp": 956277
             }
           ],
           "dealt": 9085
@@ -3788,7 +3788,7 @@
           "end": "playing",
           "flow": "settling",
           "bossRemaining": [],
-          "dealt": 552335
+          "dealt": 552462
         },
         {
           "seed": 97,
@@ -3812,15 +3812,15 @@
           "end": "playing",
           "flow": "settling",
           "bossRemaining": [],
-          "dealt": 552335
+          "dealt": 552462
         },
         {
           "seed": 313,
           "initialRng": 2178057134,
           "cleared": true,
-          "clearSeconds": 36.87499999999898,
-          "observedSeconds": 36.87499999999898,
-          "engineSeconds": 31.884999999999348,
+          "clearSeconds": 37.449999999998944,
+          "observedSeconds": 37.449999999998944,
+          "engineSeconds": 32.39499999999932,
           "maxHp": 3226.464,
           "damageTaken": 3071.5185599999995,
           "hpCost": 0,
@@ -3836,14 +3836,14 @@
           "end": "playing",
           "flow": "settling",
           "bossRemaining": [],
-          "dealt": 552335
+          "dealt": 552462
         }
       ],
       "summary": {
         "n": 3,
         "clears": 3,
         "clearRate": 1,
-        "clearSeconds": 36.99999999999897,
+        "clearSeconds": 37.19166666666562,
         "lossRatio": 0.9045910982838592,
         "enemyLossRatio": 0.9045910982838592,
         "lowestHpRatio": 0.2877612209527232,
@@ -3854,15 +3854,15 @@
       "easy": false,
       "estimate": {
         "hpMultiplier": [
-          0.8108108108108334,
-          1.21621621621625
+          0.8066323101053331,
+          1.2099484651579997
         ],
-        "hpMid": 1.0135135135135418,
+        "hpMid": 1.0082903876316662,
         "damageMultiplier": [
-          0.4362928923525731,
-          0.7635125616170029
+          0.4385529681462913,
+          0.7674676942560097
         ],
-        "damageMid": 0.5999027269847881
+        "damageMid": 0.6030103312011506
       }
     },
     {
@@ -3891,7 +3891,7 @@
           "end": "playing",
           "flow": "settling",
           "bossRemaining": [],
-          "dealt": 415819
+          "dealt": 415820
         },
         {
           "seed": 97,
@@ -3915,7 +3915,7 @@
           "end": "playing",
           "flow": "settling",
           "bossRemaining": [],
-          "dealt": 415819
+          "dealt": 415820
         },
         {
           "seed": 313,
@@ -3939,7 +3939,7 @@
           "end": "playing",
           "flow": "settling",
           "bossRemaining": [],
-          "dealt": 415819
+          "dealt": 415820
         }
       ],
       "summary": {
@@ -3995,8 +3995,8 @@
           "flow": "combat",
           "bossRemaining": [
             {
-              "hp": 716797,
-              "maxHp": 1056445
+              "hp": 716985,
+              "maxHp": 1056633
             }
           ],
           "dealt": 345030
@@ -4024,8 +4024,8 @@
           "flow": "combat",
           "bossRemaining": [
             {
-              "hp": 720274,
-              "maxHp": 1056445
+              "hp": 720462,
+              "maxHp": 1056633
             }
           ],
           "dealt": 416515
@@ -4053,8 +4053,8 @@
           "flow": "combat",
           "bossRemaining": [
             {
-              "hp": 646735,
-              "maxHp": 1056445
+              "hp": 646923,
+              "maxHp": 1056633
             }
           ],
           "dealt": 490054
@@ -4102,8 +4102,8 @@
           "flow": "combat",
           "bossRemaining": [
             {
-              "hp": 600904,
-              "maxHp": 956276
+              "hp": 600905,
+              "maxHp": 956277
             }
           ],
           "dealt": 390122
@@ -4131,8 +4131,8 @@
           "flow": "combat",
           "bossRemaining": [
             {
-              "hp": 722623,
-              "maxHp": 956276
+              "hp": 722624,
+              "maxHp": 956277
             }
           ],
           "dealt": 233653
@@ -4160,8 +4160,8 @@
           "flow": "combat",
           "bossRemaining": [
             {
-              "hp": 711153,
-              "maxHp": 956276
+              "hp": 711154,
+              "maxHp": 956277
             }
           ],
           "dealt": 245123
@@ -5329,7 +5329,7 @@
           "end": "playing",
           "flow": "settling",
           "bossRemaining": [],
-          "dealt": 552335
+          "dealt": 552462
         },
         {
           "seed": 97,
@@ -5353,7 +5353,7 @@
           "end": "playing",
           "flow": "settling",
           "bossRemaining": [],
-          "dealt": 552335
+          "dealt": 552462
         },
         {
           "seed": 313,
@@ -5377,7 +5377,7 @@
           "end": "playing",
           "flow": "settling",
           "bossRemaining": [],
-          "dealt": 552335
+          "dealt": 552462
         }
       ],
       "summary": {
@@ -5432,7 +5432,7 @@
           "end": "playing",
           "flow": "settling",
           "bossRemaining": [],
-          "dealt": 403551
+          "dealt": 403552
         },
         {
           "seed": 97,
@@ -5456,7 +5456,7 @@
           "end": "playing",
           "flow": "settling",
           "bossRemaining": [],
-          "dealt": 415819
+          "dealt": 415820
         },
         {
           "seed": 313,
@@ -5480,7 +5480,7 @@
           "end": "playing",
           "flow": "settling",
           "bossRemaining": [],
-          "dealt": 415818.99999999994
+          "dealt": 415819.99999999994
         }
       ],
       "summary": {
@@ -5535,7 +5535,7 @@
           "end": "playing",
           "flow": "settling",
           "bossRemaining": [],
-          "dealt": 1217132.9999999998
+          "dealt": 1217320.9999999998
         },
         {
           "seed": 97,
@@ -5559,7 +5559,7 @@
           "end": "playing",
           "flow": "settling",
           "bossRemaining": [],
-          "dealt": 1217132.9999999995
+          "dealt": 1217320.9999999995
         },
         {
           "seed": 313,
@@ -5583,7 +5583,7 @@
           "end": "playing",
           "flow": "settling",
           "bossRemaining": [],
-          "dealt": 1217132.999999999
+          "dealt": 1217320.999999999
         }
       ],
       "summary": {
@@ -5638,7 +5638,7 @@
           "end": "playing",
           "flow": "settling",
           "bossRemaining": [],
-          "dealt": 1303395.9999999988
+          "dealt": 1303396.9999999988
         },
         {
           "seed": 97,
@@ -5662,7 +5662,7 @@
           "end": "playing",
           "flow": "settling",
           "bossRemaining": [],
-          "dealt": 1303395.9999999995
+          "dealt": 1303396.9999999995
         },
         {
           "seed": 313,
@@ -5686,7 +5686,7 @@
           "end": "playing",
           "flow": "settling",
           "bossRemaining": [],
-          "dealt": 1303395.9999999984
+          "dealt": 1303396.9999999984
         }
       ],
       "summary": {
