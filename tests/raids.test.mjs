@@ -104,3 +104,12 @@ test('0.139 raid tiers: 정예/악몽 open after every chapter of that mode, sha
  const reward=win.run.dungeonReward,plain=g.raidRewards(60);assert.equal(reward.gold,Math.round(plain.gold*g.modeScale(60,2).reward));assert.equal(reward.materials.source,plain.materials.source*3);assert.equal(reward.materials.promotionStone,undefined,'승급석은 성장 던전에서만');
  const item=reward.item;assert.equal(item.hunt,2);assert.equal(g.ancientSignatures(item).length,3);assert.equal(g.restoreProfile(g.encodeProfile(win.profile,1000),1000).inventory.find(i=>i.id===item.id).hunt,2);
 });
+// Alpha 0.149.4 (사용자 요청 '고대 +20 악몽 레이드 난이도 좀 낮춰줘'): 악몽 단계만 시간 180초·공격 ×0.8·심판 ×0.75·소환 무리 체력 ×0.4.
+test('악몽 레이드 완화: 시간 제한·적 공격·소환 무리, 일반·정예는 그대로',()=>{
+ const E=g.RAID_NIGHTMARE_EASE;assert.equal(g.raidTimeLimit(0),g.RAID_TIME_LIMIT);assert.equal(g.raidTimeLimit(1),g.RAID_TIME_LIMIT);assert.equal(g.raidTimeLimit(2),E.time);
+ const top=profile(60);top.bossMastery=top.bossMastery.map(()=>2);
+ const at=(id,tier)=>{const s=g.createGame(structuredClone(top));assert.equal(g.launchRaid(s,id,now,null,tier),true);return s;};
+ for(const tier of [0,1,2]){const s=at('judge',tier);assert.equal(s.run.timeLimit,g.raidTimeLimit(tier));}
+ const d1=boss(at('judge',1)).damage/g.modeScale(g.MODE_CHAPTERS,1).damage,d2=boss(at('judge',2)).damage/g.modeScale(g.MODE_CHAPTERS,2).damage;assert.ok(Math.abs(d2/d1-E.damage)<.01,'악몽 공격 완화');
+ const q1=boss(at('queen',1)).maxHp/g.modeScale(g.MODE_CHAPTERS,1).hp,q2=boss(at('queen',2)).maxHp/g.modeScale(g.MODE_CHAPTERS,2).hp;assert.ok(Math.abs(q2/q1-g.raidDefinition('queen').nightmareHp)<.01,'악몽 여왕 체력 배율');
+});

@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.149.3';
-import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.149.3';
-import { createCombatAudio } from './sound.js?v=0.149.3';
-import * as game from './game-engine.js?v=0.149.3';
-import {FrameMetrics} from './frame-metrics.js?v=0.149.3';
-import { frameIndex, frameRect, validateClip } from './engine.js?v=0.149.3';
-import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.149.3';
-import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.149.3';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.149.3';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.149.3';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.149.3';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.149.3';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.149.4';
+import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.149.4';
+import { createCombatAudio } from './sound.js?v=0.149.4';
+import * as game from './game-engine.js?v=0.149.4';
+import {FrameMetrics} from './frame-metrics.js?v=0.149.4';
+import { frameIndex, frameRect, validateClip } from './engine.js?v=0.149.4';
+import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.149.4';
+import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.149.4';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.149.4';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.149.4';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.149.4';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.149.4';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -1790,7 +1790,7 @@ function refreshRaids(){
  const now=Date.now(),chapter=game.raidChapter(profile,game.STAGES.length),r=game.raidDefinition(selectedRaid),left=game.raidEntriesLeft(profile,r.id,now),unlocked=game.raidUnlocked(profile,r.id),reward=game.raidRewards(chapter);
  for(const row of game.RAIDS){const open=game.raidUnlocked(profile,row.id);$('raid-card-'+row.id).setAttribute('aria-pressed',String(row.id===r.id));$('raid-card-'+row.id).setAttribute('data-locked',String(!open));$('raid-entries-'+row.id).textContent=open?(profile.testMode?'입장 무제한':'주간 입장 '+game.raidEntriesLeft(profile,row.id,now)+' / '+game.RAID_WEEKLY_ENTRIES):row.nightmare?'악몽 개방 후 (정예 60장)':row.unlock+'장 클리어 후 개방';$('raid-state-'+row.id).textContent='클리어 '+profile.raids.clears[row.id]+' · 고대 '+game.ANCIENT_CATALOG.filter(a=>a.raid===row.id&&profile.discoveredAncients.includes(a.id)).length+'/5';}
  $('raid-week-reset').textContent=raidResetText();$('raid-week-loot').textContent='보스는 지금까지 연 '+chapter+'장 기준으로 강해집니다.';
- $('dungeon-kind').textContent='레이드 · '+game.RAID_TIME_LIMIT+'초';$('dungeon-name').textContent=r.name;$('dungeon-rule').textContent=r.rule;$('dungeon-hint').textContent='추천 빌드 · '+r.build;
+ $('dungeon-kind').textContent='레이드 · '+game.raidTimeLimit(r.fixedTier??(game.raidTierUnlocked(profile,selectedRaidTier)?selectedRaidTier:0))+'초';$('dungeon-name').textContent=r.name;$('dungeon-rule').textContent=r.rule;$('dungeon-hint').textContent='추천 빌드 · '+r.build;
  {if(!game.raidTierUnlocked(profile,selectedRaidTier))selectedRaidTier=0;const fixed=r.fixedTier!=null,tier=fixed?r.fixedTier:selectedRaidTier;$('raid-tier-label').hidden=fixed;const k=game.modeScale(game.MODE_CHAPTERS,tier);for(let t=0;t<game.RAID_TIERS.length;t++){const o=$('raid-tier-'+t);o.disabled=!game.raidTierUnlocked(profile,t);o.textContent=game.RAID_TIERS[t]+(o.disabled?' · '+['','정예','악몽'][t]+' 60장 클리어 필요':'');}$('raid-tier').value=String(tier);for(let t=0;t<game.RAID_TIERS.length;t++){const b=$('raid-tier-pick-'+t);b.disabled=!game.raidTierUnlocked(profile,t);b.setAttribute('aria-pressed',String(t===tier));b.setAttribute('title',b.disabled?['','정예','악몽'][t]+' 60장 클리어 필요':game.RAID_TIERS[t]+' 레이드');}
  $('dungeon-rewards').textContent=dungeonRewardText({...reward,gold:Math.round(reward.gold*k.reward),materials:Object.fromEntries(Object.entries({...reward.materials,...(r.nightmare?{nightmareShard:4}:{})}).map(([id,n])=>[id,n*(1+tier)]))})+' · 레이드 고대 '+Math.round(game.DROP_CHANCE.raid*100)+'%';$('dungeon-hint').textContent=tier?game.RAID_TIERS[tier]+' · 보스 체력 '+timesText(k.hp)+' · 고대 능력치 '+pctOf(game.HUNT_POWER[tier])+' + 각성'+(tier>1?'·심연':'')+' 효과':'추천 빌드 · '+r.build;}
  $('dungeon-use').hidden=true;

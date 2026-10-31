@@ -2,6 +2,10 @@
 // Pure data and rules; game-engine.js owns the battle, rewards and settlement. The boss scales with the furthest chapter
 // the player has opened and fights on that chapter's ground (its monsters are the swarm queen's brood).
 // Alpha 0.123: every raid opens after clearing chapter 60 (user decision), so raids are fought at the chapter 60 scale.
+// Alpha 0.149.4 (사용자 요청 '고대 +20 악몽 레이드 난이도 좀 낮춰줘'): 악몽 단계(tier 2, 악몽의 군주 포함)만 시간 제한을 늘리고
+// 적 공격·심판 피해·소환 무리(군단·그림자) 체력을 줄인다. 체력은 그대로라 레이드·승화 장비의 클리어 시간은 거의 같다(tools/reports/endgame-difficulty-0148).
+export const RAID_NIGHTMARE_EASE=Object.freeze({time:180,hp:1,damage:.8,judgement:.75,brood:.4});
+export const raidTimeLimit=tier=>tier>=2?RAID_NIGHTMARE_EASE.time:RAID_TIME_LIMIT;
 export const RAID_WEEKLY_ENTRIES=3,RAID_TIME_LIMIT=120,RAID_ANCIENT_CHANCE=1;// 0.145.1 (사용자 요청): 레이드 클리어마다 고대 확정 (예전 10%)
 // Raid boss damage against the opened chapter's boss; health is per raid (`hp`, × the chapter boss), tuned so the
 // matching build clears in roughly 60-100 seconds of the two minutes.
@@ -13,7 +17,7 @@ export const RAIDS=Object.freeze([
  {id:'colossus',name:'강철 거신',species:'raid_colossus',mechanic:'armor',unlock:60,hp:10,color:'#ff9a4d',
   rule:'강철 장갑이 피해를 85% 막습니다. 파갑참으로 부수거나 마지막 검끝 연격으로 꿰뚫으세요.',
   build:'파갑참 · 마지막 검끝',cycle:['slam','charge','slam','slam','volley','charge'],armor:.85},
- {id:'queen',name:'군단의 여왕',species:'raid_queen',mechanic:'swarm',unlock:60,hp:5.5,broodHp:3,color:'#a6e05a',
+ {id:'queen',name:'군단의 여왕',species:'raid_queen',mechanic:'swarm',unlock:60,hp:5.5,nightmareHp:1.1,broodHp:3,color:'#a6e05a',
   rule:'10초마다 군단 8마리를 부르고, 군단이 살아 있으면 피해를 85% 덜 받습니다. 광역으로 먼저 쓸어내세요.',
   build:'광역 스킬 · 처치 효과',cycle:['volley','slam','volley','charge','volley','slam'],broodEvery:10,broodSize:8,broodShield:.85},
  {id:'judge',name:'황혼의 심판자',species:'raid_judge',mechanic:'judgement',unlock:60,hp:7.5,color:'#c9a2ff',
