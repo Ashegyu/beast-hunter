@@ -119,3 +119,18 @@ test('군단의 여왕 악몽: 군단의 가호 감소율과 체력 배율',()=>
  for(const [tier,want] of [[0,q.broodShield],[1,q.broodShield],[2,.6]])assert.equal(g.raidBroodShield({run:{raidTier:tier}},q),want);
  const sov=g.raidDefinition('sovereign');assert.equal(g.raidBroodShield({run:{raidTier:2}},sov),sov.broodShield,'군주는 그대로');
 });
+// Alpha 0.149.12 레이드 연습전 (외부 감사 P1): 같은 전투를 주간 입장·사냥 횟수 없이, 승리해도 보상·클리어 기록·고대 없이.
+test('레이드 연습전: 입장 횟수·보상·클리어 기록이 변하지 않고, 입장 횟수가 0이어도 연습할 수 있다',()=>{
+ const s=g.createGame(profile(60)),p=s.profile;const before=structuredClone({raids:p.raids,gold:p.gold,cores:p.cores,materials:p.materials,inventory:p.inventory.length,hunts:p.hunts,discovered:p.discoveredAncients.length});
+ assert.equal(g.launchRaid(s,'colossus',now,null,0,{practice:true}),true);assert.equal(s.run.practice,true);
+ assert.equal(g.raidEntriesLeft(p,'colossus',now),3,'입장 횟수 그대로');assert.equal(p.hunts,before.hunts,'사냥 횟수 그대로');
+ s.auto=false;s.player.invulnerable=1e6;const e=boss(s);e.hp=1;s.projectiles.push({id:s.nextId++,x:e.x,y:e.y,vx:0,vy:0,damage:1e6,ttl:1,friendly:true});
+ for(let i=0;i<400&&!s.settlement&&s.run.flow==='combat';i++)g.advanceGame(s,.025);
+ assert.ok(s.settlement||s.run.dungeonReward?.practice,'연습 정산');assert.equal(s.run.dungeonReward.practice,true);assert.equal(s.run.dungeonReward.gold,0);assert.equal(s.run.dungeonReward.item,undefined);
+ assert.deepEqual(p.raids,before.raids,'클리어·입장 기록 그대로');assert.equal(p.gold,before.gold);assert.equal(p.cores,before.cores);assert.deepEqual(p.materials,before.materials);assert.equal(p.inventory.length,before.inventory);assert.equal(p.discoveredAncients.length,before.discovered);
+ // 이번 주 입장을 다 써도 연습은 된다(정식 입장은 막힘).
+ const t=g.createGame(profile(60));for(let n=0;n<g.RAID_WEEKLY_ENTRIES;n++){assert.equal(g.launchRaid(t,'judge',now),true);assert.equal(g.returnToCamp(t),true);}
+ assert.equal(g.launchRaid(t,'judge',now),false);assert.equal(g.launchRaid(t,'judge',now,null,0,{practice:true}),true);assert.equal(g.raidEntriesLeft(t.profile,'judge',now),0);
+ // 정식 입장은 practice가 남지 않는다.
+ const u=g.createGame(profile(60));assert.equal(g.launchRaid(u,'queen',now,null,0,{practice:true}),true);assert.equal(g.returnToCamp(u),true);assert.equal(g.launchRaid(u,'queen',now),true);assert.equal(u.run.practice,false);assert.equal(g.raidEntriesLeft(u.profile,'queen',now),2);
+});

@@ -2041,3 +2041,9 @@
 @media(max-height:360px){#game-shell .battle .status-chip[data-status]::before{width:12px;height:12px;vertical-align:-2px}}
 /* 0.149.5 보스 칩 4개(보스 버프 + 플레이어가 건 효과): 보스 막대 폭 안에서 오른쪽 정렬로 줄바꿈(568에서 왼쪽 플레이어 칩과 닿았다) */
 #game-shell .battle #boss-hud .boss-status-chips{left:6px;flex-wrap:wrap;justify-content:flex-end;row-gap:2px}
+/* 0.149.12 레이드 연습전: 입장 버튼 왼쪽의 작은 버튼(레이드 탭만). 줄이 예전 입장 버튼 자리(아래 붙음)를 그대로 쓴다. */
+#game-shell #camp-dungeons-panel .dungeon-enter-row{display:flex;gap:6px;flex:none;margin-top:auto;width:100%}
+#game-shell #camp-dungeons-panel .dungeon-enter-row #dungeon-enter{flex:1 1 auto;width:auto;margin-top:0}
+#game-shell#game-shell #camp-dungeons-panel #raid-practice{flex:none;height:34px;min-height:0;padding:0 10px;border:1px solid #9e835399;border-radius:8px;background:#120d10dd;background-image:none;color:#e8d4a8;font-size:12px;font-weight:700;white-space:nowrap}
+#game-shell#game-shell #camp-dungeons-panel #raid-practice[hidden]{display:none}
+#game-shell#game-shell #camp-dungeons-panel #raid-practice:disabled{opacity:.4}
