@@ -11,7 +11,13 @@
     "fury",
     "stance",
     "regen",
-    "ward"
+    "ward",
+    "bleed",
+    "runeBleed",
+    "exposed",
+    "breach",
+    "shred",
+    "scar"
   ],
   "sources": [
     {
@@ -21,7 +27,11 @@
     {
       "sheet": "status-2",
       "sha256": "2196d6b3b4da09d21accbdbbcfcc2af86b17bbf2753a9f8539d0246e829bac51"
+    },
+    {
+      "sheet": "status-3",
+      "sha256": "6b48d55a3ebeab8dfc2c235f95de2ed948dc6cd51293fcc73cbafb9b9ccfbb2d"
     }
   ],
-  "webpBytes": 36380
+  "webpBytes": 54084
 }

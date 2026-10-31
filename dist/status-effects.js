@@ -53,5 +53,21 @@ export function cleanse(t,now,n=Infinity){
 export function statusMods(t,now){
  const out={damage:0,taken:0,attackSpeed:0,speed:0,cooldown:0};for(const x of list(t)){if(x.until<=now)continue;const m=STATUS_DEFS[x.id]?.mods;if(m)for(const [k,v] of Object.entries(m))out[k]+=v*x.stacks;}return out;
 }
+// Alpha 0.149.5 (설계 1단계 '공통 틀'): 플레이어가 적에게 거는 기존 효과(출혈·룬 출혈·빙결·노출·장갑 파괴·룬 약화·흉터)도
+// 같은 정의·같은 목록 형태로 읽는다. 시간은 예전처럼 적의 필드(bleedTicks, chillRemaining, exposed …)가 그대로 들고 있고
+// 피해 계산도 그 필드를 읽는다 — 숫자를 하나도 바꾸지 않으려고 저장 위치는 옮기지 않았다. 화면·자동 전투는 enemyStatusList로 읽는다.
+export const AFFLICTION_DEFS=Object.freeze({
+ bleed:Object.freeze({id:'bleed',name:'출혈',kind:'debuff',target:'enemy',source:'player',color:'#e2504a',text:'0.8초마다 출혈 피해',read:(e)=>e.bleedTicks>0?{stacks:e.bleedTicks,left:(e.bleedTicks-1)*.8+Math.max(0,e.bleedTimer??0)}:null}),
+ runeBleed:Object.freeze({id:'runeBleed',name:'룬 출혈',kind:'debuff',target:'enemy',source:'player',color:'#d1477a',text:'각인 출혈: 1초마다 중첩만큼 피해',read:(e)=>e.runeBleedTime>0?{stacks:e.runeBleedStacks||1,left:e.runeBleedTime}:null}),
+ chill:Object.freeze({id:'chill',name:'빙결',kind:'debuff',target:'enemy',source:'player',color:'#9cdeef',text:'이동 느려짐(보스 −15%, 일반 −35%)',read:(e)=>e.chillRemaining>0?{stacks:1,left:e.chillRemaining}:null}),
+ exposed:Object.freeze({id:'exposed',name:'노출',kind:'debuff',target:'enemy',source:'player',color:'#ffc35a',text:'받는 피해 ×1.5',read:(e)=>e.exposed>0?{stacks:1,left:e.exposed}:null}),
+ breach:Object.freeze({id:'breach',name:'장갑 파괴',kind:'debuff',target:'enemy',source:'player',color:'#ff9a4d',text:'장갑이 피해를 막지 못한다',read:(e,now)=>e.plateBrokenUntil>now?{stacks:1,left:e.plateBrokenUntil-now}:null}),
+ shred:Object.freeze({id:'shred',name:'룬 약화',kind:'debuff',target:'enemy',source:'player',color:'#5fd0c4',text:'방어·장갑 감소, 받는 피해 증가',read:(e)=>e.runeShredTime>0?{stacks:1,left:e.runeShredTime}:null}),
+ scar:Object.freeze({id:'scar',name:'흉터',kind:'debuff',target:'enemy',source:'player',color:'#ffb3c7',text:'발도 적중 시 추가 피해',read:(e,now)=>e.skillScarUntil>now?{stacks:1,left:e.skillScarUntil-now}:null}),
+});
+export function afflictionList(e,now){const out=[];if(!e)return out;for(const d of Object.values(AFFLICTION_DEFS)){const x=d.read(e,now);if(x&&x.left>0)out.push({id:d.id,name:d.name,color:d.color,stacks:x.stacks,left:x.left,source:'player'});}return out;}
+// 적 하나의 모든 상태: 보스가 스스로 건 것·해체(statuses) + 플레이어가 건 것(afflictions).
+export function enemyStatusList(e,now){return [...statusList(e,now),...afflictionList(e,now)];}
+export const statusDef=id=>STATUS_DEFS[id]??AFFLICTION_DEFS[id]??null;
 export function removeStatus(t,id){const arr=list(t),i=arr.findIndex(x=>x.id===id);if(i>=0)arr.splice(i,1);return i>=0;}
 export function statusList(t,now){return list(t).filter(x=>x.until>now).map(x=>({id:x.id,name:STATUS_DEFS[x.id].name,color:STATUS_DEFS[x.id].color,stacks:x.stacks,left:x.until-now}));}

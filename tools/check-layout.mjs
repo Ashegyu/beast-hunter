@@ -89,7 +89,7 @@ function measure(){
 }
 
 // 0.149.3 'chips': 전투 상태 칩(아이콘 포함)을 가장 긴 예시로 매 프레임 채운다(엔진 상태를 바꾸지 않고 화면만).
-const CHIPS=()=>{const P=[['burn','화상 ×3 4초','#ff7a3d'],['sealed','봉인 5초','#a98cff'],['curse','저주 ×2 6초','#b98cff'],['purified','정화의 기세 5초','#fff2a8']],B=[['holyShield','보호막 6% 10초','#fff0b0'],['ward','가호','#b48cff']];
+const CHIPS=()=>{const P=[['burn','화상 ×3 4초','#ff7a3d'],['sealed','봉인 5초','#a98cff'],['curse','저주 ×2 6초','#b98cff'],['purified','정화의 기세 5초','#fff2a8']],B=[['holyShield','보호막 6% 10초','#fff0b0'],['ward','가호','#b48cff'],['bleed','출혈 ×3 3초','#e2504a'],['exposed','노출 3초','#ffc35a']];
  const put=(id,[k,t,c])=>{const el=document.getElementById(id);if(!el)return;el.hidden=false;el.textContent=t;el.dataset.status=k;el.style.setProperty('--c',c);};
  const loop=()=>{P.forEach((x,i)=>put('player-status-'+i,x));B.forEach((x,i)=>put('boss-status-'+i,x));requestAnimationFrame(loop);};loop();};
 async function main(){

@@ -104,3 +104,17 @@ test('신성 보호막: HOLY_EVERY초마다 최대 체력 × 단계 비율, 피�
  // 일반 레이드는 없음.
  const {s:s4,e:e4}=raidFight(0);e4.holyClock=st.HOLY_EVERY-.1;run(s4,.3);assert.ok(!(e4.holyShield>0));
 });
+// Alpha 0.149.5 설계 1단계 '공통 틀': 플레이어가 적에게 거는 기존 효과를 같은 목록 형태로 읽는다(시간은 기존 필드).
+test('afflictionList: 출혈·룬 출혈·빙결·노출·장갑 파괴·룬 약화·흉터를 기존 필드에서 읽는다',()=>{
+ const e={bleedTicks:3,bleedTimer:.5,runeBleedTime:2,runeBleedStacks:4,chillRemaining:1.5,exposed:2.8,plateBrokenUntil:13,runeShredTime:3,skillScarUntil:11};
+ const list=st.afflictionList(e,10),by=Object.fromEntries(list.map(x=>[x.id,x]));
+ assert.deepEqual(list.map(x=>x.id),Object.keys(st.AFFLICTION_DEFS));
+ close(by.bleed.left,2*.8+.5);assert.equal(by.bleed.stacks,3);assert.equal(by.runeBleed.stacks,4);close(by.chill.left,1.5);close(by.exposed.left,2.8);close(by.breach.left,3);close(by.shred.left,3);close(by.scar.left,1);
+ assert.deepEqual(st.afflictionList({bleedTicks:0,chillRemaining:0,exposed:0,plateBrokenUntil:5,skillScarUntil:9},10),[]);
+ for(const id of Object.keys(st.AFFLICTION_DEFS))assert.equal(st.statusDef(id).name,by[id].name);
+ assert.equal(st.statusDef('burn'),st.STATUS_DEFS.burn);assert.equal(st.statusDef('nope'),null);
+});
+test('bossStatusList: 플레이어가 건 효과는 일반 난이도 보스에도 보이고, 보스 버프는 정예·악몽에서만',()=>{
+ const {s,e}=fight(15,1);e.exposed=2;e.bleedTicks=2;e.bleedTimer=.8;const ids=g.bossStatusList(s,e).map(x=>x.id);assert.ok(ids.includes('exposed')&&ids.includes('bleed'));
+ s.difficulty=0;const normal=g.bossStatusList(s,e).map(x=>x.id);assert.deepEqual(normal,['bleed','exposed']);
+});

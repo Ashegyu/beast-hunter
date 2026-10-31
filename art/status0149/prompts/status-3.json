@@ -1,0 +1,29 @@
+{
+  "id": "status-3",
+  "mode": "codex exec built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: production UI status-effect icons for a dark fantasy 2D action RPG battle HUD (shown at 18-24px next to a timer). Image1 is the existing growth-tree icon atlas of this game: match its painterly dark-metal style, glowing accents, dark outlines and readability at tiny size; never copy its icons. Create ONE transparent RGBA square image with exactly SIX separate round icon badges in an invisible 3 columns x 2 rows grid (row 1 cells 1-3, row 2 cells 4-6). Each badge is a small circular dark iron disc with a thin colored rim and ONE bold, simple, high-contrast symbol in the middle (thick shapes, no fine detail), centered in its own cell with wide transparent margins, never touching each other or the canvas edge, filling about 60% of its cell. Actual alpha transparency, no background, no text, no letters, no numbers, no characters, no faces. ICONS: (1) three dripping crimson blood drops (BLEED, dark red rim), (2) a glowing red rune sigil bleeding a thin blood stream (RUNE BLEED, crimson-violet rim), (3) a cracked target crosshair over a broken shield gap (EXPOSED weak point, amber rim), (4) a heavy armor plate split in two by a wedge (ARMOR BROKEN, steel-orange rim), (5) a blue rune circle eroding a shield into fragments (RUNE WEAKEN, teal rim), (6) a glowing jagged sword scar slash mark (SCAR, pale-pink rim)",
+  "referenceImages": [
+    {
+      "path": "dist/assets/growth-tree-v0139.webp",
+      "sha256": "852ab4b5282d6b3923d297193afa0232d5c160fde593753b5ff8c90088a703d8"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "ok": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": 0.571,
+      "parts": 6,
+      "seconds": 69,
+      "sha256": "6b48d55a3ebeab8dfc2c235f95de2ed948dc6cd51293fcc73cbafb9b9ccfbb2d"
+    }
+  ],
+  "final": {
+    "path": "art/status0149/status-3.png",
+    "sha256": "6b48d55a3ebeab8dfc2c235f95de2ed948dc6cd51293fcc73cbafb9b9ccfbb2d"
+  }
+}

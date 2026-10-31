@@ -1,7 +1,8 @@
 """Pack the Alpha 0.149.3 status-effect icons (art/status0149/status-1~2.png, Codex CLI) into dist/assets/status-icons-v0149.webp.
 
-Each sheet holds six round badges in a 3x2 grid (all six cells). The atlas is 6 columns x 2 rows of 64px cells in
-icons.json `items` order: burn frost curse corrode sealed purified / dispelled holyShield fury stance regen ward.
+Each sheet holds six round badges in a 3x2 grid (all six cells). The atlas is 6 columns x one row per sheet of 64px cells in
+icons.json `items` order: burn frost curse corrode sealed purified / dispelled holyShield fury stance regen ward /
+(0.149.5) bleed runeBleed exposed breach shred scar.
 layout-fit.css draws them before the battle status chips with background-position (`data-status`).
 """
 from pathlib import Path
@@ -54,7 +55,7 @@ def main():
         ids += sheet['items']
         crops += items(source)
         report.append({'sheet': key, 'sha256': hashlib.sha256(source.read_bytes()).hexdigest()})
-    atlas = Image.new('RGBA', (CELL * 6, CELL * 2))
+    atlas = Image.new('RGBA', (CELL * 6, CELL * len(sheets)))
     for n, crop in enumerate(crops):
         atlas.alpha_composite(crop, ((n % 6) * CELL + (CELL - crop.width) // 2, (n // 6) * CELL + (CELL - crop.height) // 2))
     out = ROOT / 'dist/assets/status-icons-v0149.webp'

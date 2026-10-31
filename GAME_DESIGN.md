@@ -3,6 +3,7 @@
 사용자 요청(2026-10-31): "보스도 걸 수 있고 그걸 해체하는 빌드도 있는" 버프·디버프. 기준 결정: 정예·악몽(레이드 정예·악몽 포함)에서만 건다 — 일반 캠페인은 시뮬레이션으로 맞춘 곡선이라 건드리지 않는다. 대응 빌드가 없으면 같은 보스에서 체력 손실이 약 20%p 크고 5~10초 길어지는 정도(악몽 후반은 거의 필수).
 
 ## 1. 데이터 모델 (`dist/status-effects.js`, 순수 로직)
+- 0.149.5 공통 틀: 플레이어가 적에게 거는 기존 효과 7종은 `AFFLICTION_DEFS`(read 함수가 적의 기존 필드에서 중첩·남은 시간을 읽음)로 같은 목록 형태가 된다. 시간·피해 계산은 기존 필드 그대로(숫자 불변). 보스 칩 = 보스 버프 + 플레이어가 건 효과(최대 4).
 - 효과 정의 `STATUS_DEFS[id]` = `{id, name, kind:'debuff'|'buff', target:'player'|'enemy', max(중첩), seconds, mods(중첩당), tick?, color, icon}`.
 - 대상마다 런타임 목록 `statuses` = `[{id, stacks, until}]`(저장하지 않음, 판이 끝나면 비움). 같은 효과는 중첩 +1·시간 갱신.
 - 함수: `applyStatus(s, target, id, stacks=1)` · `tickStatuses(s, dt)`(만료·지속 피해) · `cleanse(s, n)`(플레이어 디버프 n종 제거, n=Infinity 전부) · `dispel(s, enemy, seconds)`(보스 버프 무력화 창) · `statusMods(target)`(능력치 합산) · `statusList(target)`(화면용).
