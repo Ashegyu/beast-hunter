@@ -118,3 +118,16 @@ test('bossStatusList: 플레이어가 건 효과는 일반 난이도 보스에�
  const {s,e}=fight(15,1);e.exposed=2;e.bleedTicks=2;e.bleedTimer=.8;const ids=g.bossStatusList(s,e).map(x=>x.id);assert.ok(ids.includes('exposed')&&ids.includes('bleed'));
  s.difficulty=0;const normal=g.bossStatusList(s,e).map(x=>x.id);assert.deepEqual(normal,['bleed','exposed']);
 });
+// Alpha 0.149.6 설계 3단계 패시브 규칙: 면역의 호흡(절제된 호흡 2단계 3번) · 역류(적월의 결의 3단계 3번).
+function withPassive(s,id,t,i){const p=s.profile;p.skillBook.loadout.passive=[id,null,null];p.skillBook.ranks[id]=15;p.skillBook.branchOwned[id]=(p.skillBook.branchOwned[id]??0)|(1<<(t*3+i));const picks=p.skillBook.branchPick[id]??Array(g.branchTierCount(id)).fill(null);picks[t]=i;p.skillBook.branchPick[id]=picks;}
+test('면역의 호흡: 5초가 차면 디버프 1종 정화(정화의 기세 포함), 그 뒤 다시 5초',()=>{
+ assert.equal(g.SKILL_BRANCHES.breath[1][2].mods.autoCleanse,5);
+ const {s}=fight(15,1);withPassive(s,'breath',1,2);assert.equal(g.passiveRules(s.profile).autoCleanse,5);
+ run(s,5.1);apply(s,'curse');run(s,.05);assert.ok(!g.hasStatus(s.player,'curse',s.run.time),'차 있던 간격으로 바로 정화');assert.ok(g.hasStatus(s.player,'purified',s.run.time));
+ apply(s,'curse');run(s,2);assert.ok(g.hasStatus(s.player,'curse',s.run.time),'다음 정화까지 5초');run(s,3.2);assert.ok(!g.hasStatus(s.player,'curse',s.run.time));
+});
+test('역류: 디버프가 걸려 있으면 스킬 피해 +20%',()=>{
+ assert.equal(g.SKILL_BRANCHES.resolve[2][2].mods.debuffDamage,20);
+ const dmg=debuffed=>{const {s}=fight(15,1,['draw']);withPassive(s,'resolve',2,2);s.player.hp=s.player.maxHp;if(debuffed)st.applyStatus(s.player,'frost',s.run.time);s.skillRuntime.lastAnyCast=null;assert.ok(cast(s,'draw'));const root=s.skillRuntime.jobs.map(j=>j.root).find(x=>x?.id==='draw');assert.ok(root,'발도 작업');return root.ruleBonus;};
+ const a=dmg(false),b=dmg(true);assert.equal(b-a,20);
+});

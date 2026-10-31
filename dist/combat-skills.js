@@ -1,13 +1,13 @@
-import {createSkillMotion} from './skill-motion.js?v=0.149.5';
-import {CHAPTERS,CHAPTER_BOSSES} from './chapters.js?v=0.149.5';
-import {beastTechniques,BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE,beastElementText} from './beast-techniques.js?v=0.149.5';
-export {BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE} from './beast-techniques.js?v=0.149.5';
-import {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary,SKILL_TAGS,TAG_NAMES,TAG_SYNERGY} from './skill-branches.js?v=0.149.5';
-export {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary,SKILL_TAGS,TAG_NAMES,TAG_SYNERGY} from './skill-branches.js?v=0.149.5';
-import {GEAR_SKILLS} from './raid-skills.js?v=0.149.5';
-import {treeBonus} from './growth.js?v=0.149.5';
-import {transcendBonus} from './transcendence.js?v=0.149.5';
-export {GEAR_SKILLS,GEAR_SKILL_BY_ANCIENT} from './raid-skills.js?v=0.149.5';
+import {createSkillMotion} from './skill-motion.js?v=0.149.6';
+import {CHAPTERS,CHAPTER_BOSSES} from './chapters.js?v=0.149.6';
+import {beastTechniques,BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE,beastElementText} from './beast-techniques.js?v=0.149.6';
+export {BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE} from './beast-techniques.js?v=0.149.6';
+import {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary,SKILL_TAGS,TAG_NAMES,TAG_SYNERGY} from './skill-branches.js?v=0.149.6';
+export {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary,SKILL_TAGS,TAG_NAMES,TAG_SYNERGY} from './skill-branches.js?v=0.149.6';
+import {GEAR_SKILLS} from './raid-skills.js?v=0.149.6';
+import {treeBonus} from './growth.js?v=0.149.6';
+import {transcendBonus} from './transcendence.js?v=0.149.6';
+export {GEAR_SKILLS,GEAR_SKILL_BY_ANCIENT} from './raid-skills.js?v=0.149.6';
 // Lirian skill rules: one catalog drives unlocks, rank values, UI and combat.
 const active=(id,name,unlock,damage,step,cost,cooldown,shape,description,extra={})=>({id,name,kind:'active',unlock,damage,step,cost,cooldown,shape,description,...extra});
 const passive=(id,name,unlock,value,step,unit,description)=>({id,name,kind:'passive',unlock,value,step,unit,description});
@@ -215,7 +215,7 @@ export function castSkill(s,id,aim,h){
   if(r.lastAnyCast&&r.lastAnyCast.id!==id&&now-r.lastAnyCast.time<=3)bonus+=(br.primed??0)+(rules.primedAll??0);
   if(r.prime&&now<=r.prime.until&&r.prime.from!==id&&(r.prime.tag==='any'||tags.includes(r.prime.tag))){bonus+=r.prime.pct;r.prime=null;}
   if(br.prime)r.prime={...br.prime,until:now+4,from:id};
-  if(p.stamina>=70)bonus+=rules.highStaminaDamage??0;if(p.hp<p.maxHp*.5)bonus+=rules.lowHpDamage??0;
+  if(p.stamina>=70)bonus+=rules.highStaminaDamage??0;if(p.hp<p.maxHp*.5)bonus+=rules.lowHpDamage??0;if(rules.debuffDamage&&(h.debuffs?.(s)??[]).length)bonus+=rules.debuffDamage;
   if(r.killFuryUntil>now)bonus+=rules.killFury??0;if(r.perfectFuryUntil>now)bonus+=rules.perfectFury??0;
   if(bonus)root.damage*=1+bonus/100;root.ruleBonus=bonus;r.lastAnyCast={id,time:now};
   for(const k of ['drainHit','expose','detonate','shatter','chain','pull','refundKill','parryReset','parryRadius','parryGuard'])if(br[k])root[k]=br[k];
@@ -325,6 +325,8 @@ export function tickSkills(s,dt,h){const r=s.skillRuntime,p=s.player,now=s.run.t
  if(r.ultimatePresentation&&now-r.ultimatePresentation.startedAt>=1.35)r.ultimatePresentation=null;
  if(r.travel&&s.run.flow==='combat'){const v=r.travel,t=Math.max(0,Math.min(1,(now-v.startedAt)/v.duration));p.x=v.fromX+(v.toX-v.fromX)*t;p.y=v.fromY+(v.toY-v.fromY)*t;h.clamp(p,s.bounds);if(t>=1)r.travel=null;}
  if(r.motion&&now>=r.motion.startedAt+r.motion.duration&&!(r.motion.id==='parry'&&r.parryCast&&now<=r.parryUntil))r.motion=null;
+ // 0.149.6 면역의 호흡: 간격이 차면 디버프가 걸리는 순간 1종 정화(차 있는 동안은 기다린다).
+ {const every=passiveRules(s.profile).autoCleanse;if(every&&s.run.flow==='combat'&&p.hp>0){r.autoCleanseClock=Math.min(every,(r.autoCleanseClock??0)+dt);if(r.autoCleanseClock>=every&&(h.debuffs?.(s)??[]).length&&h.cleanse?.(s,1))r.autoCleanseClock=0;}}
  // 0.149.3 봉인: 재사용 대기가 느리게 흐른다.
  {const cdt=dt*Math.max(0,1+(h.cooldownRate?.(s)??0));for(const id of r.cooldownKeys)r.cooldowns[id]=Math.max(0,r.cooldowns[id]-cdt);}
  if(r.casting&&now>=r.casting.until)r.casting=null;

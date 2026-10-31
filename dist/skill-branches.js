@@ -97,6 +97,8 @@ const RULES={
 //  bleedBonus/chillBonus/bossDamage/crowdDamage(3+ near)/lowHpDamage(<50%)/highStaminaDamage(≥70)/primedAll % (skill damage when …)
 //  killStamina n · killHeal f · killFury % (3s) · perfectReset s · perfectFury % (3s) · perfectStamina n · perfectShield f
 //  exposeAll s (skill hits expose) · drainAll % (skill damage heals) · finisherBleed n · finisherExpose s (3연격 마무리)
+//  0.149.6 (상태 효과 설계 3단계): autoCleanse s (그 간격마다 디버프 1종 정화, 절제된 호흡 '사냥의 숨' 자리) ·
+//  debuffDamage % (디버프가 걸려 있는 동안 스킬 피해, 적월의 결의 '포위 결의' 자리) — 같은 효과가 다른 패시브에 이미 있던 칸을 바꿨다.
 const P=(name,text,mods)=>b(name,text,mods);
 const PASSIVE_RULES={
  opening:[[P('찰나 재정비','완벽 회피 시 모든 일반 스킬 재사용 2초 감소.',{perfectReset:2}),P('틈새 일격','완벽 회피 뒤 3초 동안 스킬 피해 +30%.',{perfectFury:30}),P('찰나 호흡','완벽 회피 시 기력 +20.',{perfectStamina:20})],
@@ -111,10 +113,10 @@ const PASSIVE_RULES={
   [P('피의 추격','모든 스킬 타격이 출혈 2회를 남긴다.',{elementAll:{bleed:2}}),P('잔상 추격술','잔상 스킬 피해 +12%.',{tagBonus:{spirit:12}}),P('추격 폭주','처치 뒤 3초 동안 스킬 피해 +15%.',{killFury:15})]],
  imbalance:[[P('거인 무너뜨리기','보스·정예에게 스킬 피해 +12%.',{bossDamage:12}),P('얼어붙은 틈','빙결된 적에게 스킬 피해 +20%.',{chillBonus:20}),P('벌어진 상처','출혈 중인 적에게 스킬 피해 +15%.',{bleedBonus:15})],
   [P('붕괴','모든 스킬 타격이 적을 0.8초 무너뜨린다.',{exposeAll:.8}),P('일격 붕괴','일격 스킬 피해 +15%.',{tagBonus:{precision:15}}),P('영역 붕괴','영역 스킬 피해 +15%.',{tagBonus:{area:15}})]],
- breath:[[P('충만한 기','기력 70 이상일 때 스킬 피해 +15%.',{highStaminaDamage:15}),P('가벼운 호흡','모든 일반 스킬 기력 −4.',{costCut:4}),P('사냥의 숨','처치 시 기력 +4.',{killStamina:4})],
+ breath:[[P('충만한 기','기력 70 이상일 때 스킬 피해 +15%.',{highStaminaDamage:15}),P('가벼운 호흡','모든 일반 스킬 기력 −4.',{costCut:4}),P('면역의 호흡','5초마다 걸려 있는 디버프 1종을 정화한다.',{autoCleanse:5})],
   [P('명상','잔상 스킬 피해 +15%.',{tagBonus:{spirit:15}}),P('고요한 칼','일반 스킬 재사용 −6%.',{cooldownCut:.06}),P('벼랑 끝 호흡','체력 50% 미만일 때 스킬 피해 +20%.',{lowHpDamage:20})]],
  resolve:[[P('결사','체력 50% 미만일 때 스킬 피해 +20%.',{lowHpDamage:20}),P('피의 결의','처치 시 최대 체력 1.5% 회복.',{killHeal:.015}),P('거인 앞의 결의','보스·정예에게 스킬 피해 +10%.',{bossDamage:10})],
-  [P('최후의 일격','체력 50% 미만일 때 스킬 피해 +35%.',{lowHpDamage:35}),P('흡혈 결의','스킬 피해의 1.5%만큼 체력을 회복한다.',{drainAll:1.5}),P('포위 결의','영역 스킬 피해 +12%.',{tagBonus:{area:12}})]],
+  [P('최후의 일격','체력 50% 미만일 때 스킬 피해 +35%.',{lowHpDamage:35}),P('흡혈 결의','스킬 피해의 1.5%만큼 체력을 회복한다.',{drainAll:1.5}),P('역류','디버프가 걸려 있는 동안 스킬 피해 +20%.',{debuffDamage:20})]],
  lone:[[P('일대일','보스·정예에게 스킬 피해 +15%.',{bossDamage:15}),P('고독한 일격','일격 스킬 피해 +12%.',{tagBonus:{precision:12}}),P('고독한 숨','처치 시 기력 +5.',{killStamina:5})],
   [P('보스 사냥꾼','보스·정예에게 스킬 피해 +25%.',{bossDamage:25}),P('얼음 사냥','빙결된 적에게 스킬 피해 +25%.',{chillBonus:25}),P('표적 붕괴','모든 스킬 타격이 적을 0.6초 무너뜨린다.',{exposeAll:.6})]],
  surrounded:[[P('난전','주변 240에 적이 3명 이상이면 스킬 피해 +15%.',{crowdDamage:15}),P('영역 숙련','영역 스킬 피해 +12%.',{tagBonus:{area:12}}),P('난전의 숨','처치 시 기력 +4.',{killStamina:4})],
@@ -214,7 +216,7 @@ export function branchSummary(mods){
  for(const [k,v] of Object.entries(mods.tagBonus??{}))out.push(TAG_NAMES[k]+' 스킬 +'+v+'%');
  const RULE_TEXT={stanceCounter:v=>'반격 '+v+'%',stanceShield:v=>'보호막 '+pct(v)+'%',bladeWave:v=>'검풍 '+v+'%',bladeDrain:v=>'타격 회복 '+(v*100).toFixed(1)+'%',bladeBleed:v=>'연격 출혈',markSpread:v=>'표식 전염 '+v,markBlast:v=>'폭발 범위 '+v,markRefund:v=>'처치 시 재사용 −'+v+'초',
   parryReset:v=>'재사용 −'+v+'초',parryRadius:v=>'반격 범위 ×'+v,parryGuard:v=>'받는 피해 −'+v+'%',phantomBleed:v=>'잔상 출혈',phantomChain:v=>'잔상 연쇄 '+v+'%',phantomBurst:v=>'종료 폭발 '+v+'%',phantomDrain:v=>'잔상 회복',
-  costCut:v=>'기력 −'+v,cooldownCut:v=>'재사용 −'+pct(v)+'%',bleedBonus:v=>'출혈 적 +'+v+'%',chillBonus:v=>'빙결 적 +'+v+'%',bossDamage:v=>'보스·정예 +'+v+'%',crowdDamage:v=>'난전 +'+v+'%',lowHpDamage:v=>'빈사 시 +'+v+'%',highStaminaDamage:v=>'기력 충만 +'+v+'%',primedAll:v=>'연계 +'+v+'%',
+  autoCleanse:v=>v+'초마다 디버프 정화',debuffDamage:v=>'디버프 중 +'+v+'%',costCut:v=>'기력 −'+v,cooldownCut:v=>'재사용 −'+pct(v)+'%',bleedBonus:v=>'출혈 적 +'+v+'%',chillBonus:v=>'빙결 적 +'+v+'%',bossDamage:v=>'보스·정예 +'+v+'%',crowdDamage:v=>'난전 +'+v+'%',lowHpDamage:v=>'빈사 시 +'+v+'%',highStaminaDamage:v=>'기력 충만 +'+v+'%',primedAll:v=>'연계 +'+v+'%',
   killStamina:v=>'처치 기력 +'+v,killHeal:v=>'처치 회복 '+(v*100).toFixed(1)+'%',killFury:v=>'처치 후 +'+v+'%',perfectReset:v=>'회피 시 재사용 −'+v+'초',perfectFury:v=>'회피 후 +'+v+'%',perfectStamina:v=>'회피 기력 +'+v,perfectShield:v=>'회피 보호막 '+pct(v)+'%',
   exposeAll:v=>'적중 노출 '+v+'초',drainAll:v=>'흡혈 '+v+'%',finisherBleed:v=>'마무리 출혈',finisherExpose:v=>'마무리 노출 '+v+'초'};
  for(const [k,f] of Object.entries(RULE_TEXT))if(mods[k])out.push(f(mods[k]));
