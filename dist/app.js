@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.149.12';
-import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.149.12';
-import { createCombatAudio } from './sound.js?v=0.149.12';
-import * as game from './game-engine.js?v=0.149.12';
-import {FrameMetrics} from './frame-metrics.js?v=0.149.12';
-import { frameIndex, frameRect, validateClip } from './engine.js?v=0.149.12';
-import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.149.12';
-import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.149.12';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.149.12';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.149.12';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.149.12';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.149.12';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.149.13';
+import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.149.13';
+import { createCombatAudio } from './sound.js?v=0.149.13';
+import * as game from './game-engine.js?v=0.149.13';
+import {FrameMetrics} from './frame-metrics.js?v=0.149.13';
+import { frameIndex, frameRect, validateClip } from './engine.js?v=0.149.13';
+import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.149.13';
+import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.149.13';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.149.13';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.149.13';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.149.13';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.149.13';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -550,7 +550,7 @@ function refreshEquipmentWorkshop(){
   $('workshop-next-'+key).textContent=!shown?'':promoting?(next?next[key]+suffix:'—'):mode?(next?Math.round((next[key]+bonus)*100)/100+suffix:'—'):(Math.round((item.affixes[key]+bonus+(level<cap?item.affixes[key]*.03:0))*100)/100+suffix);
  }
  const status=promoting?promotion:mode?reroll:enhance,cost=status.cost,percent=n=>Math.round(n*10000)/100;
- const chanceText=level===cap?'최대 강화 달성':enhance.mode==='incremental'?'고대 · 성공률 '+percent(enhance.chance)+'% · 보정 '+enhance.failures+'/'+enhance.maxBonusFailures:enhance.mode==='none'?'제작 · 성공률 '+percent(enhance.chance)+'% · 보정·보장 없음':(enhance.guaranteed?'이번 시도 확정 성공':(item.rarity===6?'제작':game.RARITIES[item.rarity])+' · 성공률 '+percent(enhance.chance)+'%')+' · 실패 '+enhance.failures+'회 · 보장까지 '+enhance.remaining+'회';
+ const chanceText=level===cap?'최대 강화 달성':enhance.mode==='incremental'?(item.rarity===6?'제작':'고대')+' · 성공률 '+percent(enhance.chance)+'% · 보정 '+enhance.failures+'/'+enhance.maxBonusFailures:enhance.mode==='none'?'제작 · 성공률 '+percent(enhance.chance)+'% · 보정·보장 없음':(enhance.guaranteed?'이번 시도 확정 성공':(item.rarity===6?'제작':game.RARITIES[item.rarity])+' · 성공률 '+percent(enhance.chance)+'%')+' · 실패 '+enhance.failures+'회 · 보장까지 '+enhance.remaining+'회';
  $('workshop-chance').textContent=promoting?(preview?game.RARITIES[item.rarity]+' +'+cap+' → '+game.RARITIES[preview.rarity]+' +0 · 승급 100%':promotion.reason):mode?(pending?(Number.isInteger(pending.powerRoll)?'효과 위력 '+game.raidPowerRoll(item)+'%→'+pending.powerRoll+'% · ':'')+(game.isPerfectRoll({...item,powerRoll:pending.powerRoll??item.powerRoll},pending.affixes)?'새 수치: 모든 옵션 최댓값 · 극옵':'새 수치를 확인하고 적용 여부를 선택하세요.'):'기본 수치만 재설정 · 누적 강화 수치는 유지'+(item.rarity===5&&game.ancientDefinition(item)?.raid?' · 효과 위력도 다시 굴림':'')):chanceText;
  $('workshop-cost').textContent=cost?(pending&&mode?'이미 지불한 비용 · ':'시도 비용 · ')+cost.gold+' 골드'+(cost.cores?' · 핵 '+cost.cores:'')+Object.entries(cost.materials).map(([k,v])=>' · '+game.MATERIAL_BY_ID[k].name+' '+v).join(''):'';
  $('workshop-cost').hidden=!mode;$('workshop-enhance-cost').hidden=mode||!cost;$('workshop-enhance-cost').setAttribute('aria-label',promoting?'1회 승급 비용':'1회 강화 비용');
@@ -1827,7 +1827,7 @@ function refreshRift(){
  const week=game.raidWeek(Date.now()),open=game.awakenOpen(profile),best=game.riftBest(profile,week),limit=game.riftLimit(profile,week);selectedRiftDepth=clamp(selectedRiftDepth,1,limit);const depth=selectedRiftDepth,plan=game.riftPlan(depth,week),st=game.STAGES[plan.chapter-1],boss=plan.floorKind==='boss',reward=game.dungeonRewards('rift',depth);
  hudText($('tower-best-label'),'이번 주 기록');hudText($('tower-bonus-label'),'이번 주 변이');$('tower-best').textContent=best?best+'단계':'기록 없음';$('tower-floor').textContent=depth+'단계';
  $('tower-floor-down10').disabled=$('tower-floor-down').disabled=depth<=1;$('tower-floor-up').disabled=$('tower-floor-up10').disabled=depth>=limit;
- $('tower-floor-info').textContent=(boss?'균열의 주인 · '+st.bossName:'일반 단계')+'\n'+plan.chapter+'장 '+st.name+' 지형 · 악몽 60장 이상 강도\n최고 기록 '+(profile.rift?.allBest??0)+'단계';
+ $('tower-floor-info').textContent=(boss?'균열의 주인 · '+st.bossName:'일반 단계')+'\n'+plan.chapter+'장 '+st.name+' 지형 · 악몽 60장 이상 강도\n최고 기록 '+(profile.rift?.allBest??0)+'단계'+(game.riftStart(profile)>1?' · 이번 주 '+game.riftStart(profile)+'단계부터':'');
  $('tower-next-bonus').textContent=plan.mutators.map(m=>m.name).join(' · ');$('tower-bonus').textContent=plan.mutators.map(m=>m.name+' — '+m.text).join('\n');
  $('dungeon-kind').textContent='심연의 균열 · '+plan.timeLimit+'초';$('dungeon-name').textContent='심연의 균열 '+depth+'단계';$('dungeon-rule').textContent=game.RIFT.rule;$('dungeon-hint').textContent='이번 주 변이 · '+plan.mutators.map(m=>m.text).join(' · ');
  $('dungeon-rewards').textContent=dungeonRewardText(reward);$('dungeon-use').hidden=true;$('dungeon-progress').textContent=open?'1~'+limit+'단계 · '+raidResetText():'정예 60장 클리어(악몽 개방) 후';

@@ -1,5 +1,5 @@
 // Growth dungeons reuse existing enemies, art and resource identities.
-import {enemyHpScale,enemyDamageScale} from './chapters.js?v=0.149.12';
+import {enemyHpScale,enemyDamageScale} from './chapters.js?v=0.149.13';
 // Alpha 0.141 (사용자 요청 '던전 단계가 너무 적다'): 100 levels on the chapter curve. Level L is fought like chapter
 // 1+(L−1)×0.9 (dungeonChapter: 10단계 ≈ 9장, 50단계 ≈ 45장, 100단계 ≈ 90장 = 정예 60장), times the dungeon's own hp/damage.
 export const DUNGEON_MAX_LEVEL=100,DUNGEON_CHAPTER_STEP=.9;
@@ -57,7 +57,11 @@ export const riftChapter=depth=>51+(Math.max(1,depth|0)-1)%10;
 export const riftDepthKind=depth=>depth%5===0?'boss':'normal';
 export function riftRewards(depth){if(!Number.isInteger(depth)||depth<1||depth>RIFT_MAX_DEPTH)return null;return {gold:1000+depth*150,materials:{nightmareShard:2+Math.floor(depth/5)}};}
 export function riftBest(profile,week){const r=profile?.rift;return r&&r.week===week?r.best??0:0;}
-export const riftLimit=(profile,week)=>Math.min(RIFT_MAX_DEPTH,riftBest(profile,week)+1);
+// 0.149.13 (외부 감사·사용자 결정 '균열을 매주 1층부터 다시'): 주가 바뀌어도 평생 최고 기록의 절반(RIFT_START_RATIO)까지는 바로
+// 들어갈 수 있다. 단계마다 클리어 보상이 있으니 건너뛰는 것은 선택이고, 낮은 단계도 그대로 고를 수 있다.
+export const RIFT_START_RATIO=.5;
+export const riftStart=profile=>Math.max(1,Math.min(RIFT_MAX_DEPTH,Math.floor((profile?.rift?.allBest??0)*RIFT_START_RATIO)));
+export const riftLimit=(profile,week)=>Math.min(RIFT_MAX_DEPTH,Math.max(riftBest(profile,week)+1,riftStart(profile)));
 const RIFT_WAVES={normal:[wave(12,4,3,['skitter']),wave(14,4,3,['spitter']),wave(12,5,4,['bulwark','skitter'])],boss:[{...wave(4,2,0),boss:true}]};
 export function riftPlan(depth,week=0){
  const reward=riftRewards(depth);if(!reward)return null;const kind=riftDepthKind(depth),m=riftMutators(week),k=key=>m.reduce((v,r)=>v*(r[key]??1),1),chapter=RIFT_BASE_CHAPTER+(depth-1)*RIFT_STEP,extra=m.reduce((v,r)=>v+(r.elites??0),0);

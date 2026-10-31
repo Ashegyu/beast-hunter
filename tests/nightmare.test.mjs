@@ -81,3 +81,11 @@ test('초월 확장: each chapter beaten on 악몽 adds a point; 수호·질풍 
  const low=g.createProfile(1000);low.level=g.MAX_LEVEL;low.transcendXp=1e7;assert.equal(g.nightmareOpen(low),false);assert.equal(g.transcendStatus(low,'aegis'),'악몽 개방 후');assert.equal(g.trainTranscend(g.createGame(low),'aegis'),false);
  const saved=g.restoreProfile(g.encodeProfile(p,1000),1000);assert.equal(saved.transcendence.aegis,1);assert.equal(saved.transcendence.swift,1);
 });
+// 0.149.13 (외부 감사·사용자 결정): 주가 바뀌면 평생 최고 기록의 절반 단계까지 바로 들어간다(낮은 단계도 그대로 선택 가능).
+test('균열: 새 주 입장 상한 = max(이번 주 최고+1, 평생 최고의 절반)',()=>{
+ const week=g.raidWeek(now),s=nightmareGame(0);s.profile.rift={week:week-1,best:80,allBest:80};
+ assert.equal(g.riftStart(s.profile),40);assert.equal(g.riftLimit(s.profile,week),40);
+ assert.equal(g.launchDungeon(s,'rift',41,null,now),false);assert.equal(g.launchDungeon(s,'rift',40,null,now),true);assert.equal(g.returnToCamp(s),true);assert.equal(g.launchDungeon(s,'rift',1,null,now),true,'낮은 단계도 된다');
+ const t=nightmareGame(0);t.profile.rift={week,best:50,allBest:80};assert.equal(g.riftLimit(t.profile,week),51);
+ const u=nightmareGame(0);u.profile.rift={week:-1,best:0,allBest:1};assert.equal(g.riftLimit(u.profile,week),1);
+});

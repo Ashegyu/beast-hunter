@@ -9,7 +9,7 @@ function fixture(grade=5,target=40,failures=0){
  const p=g.createProfile(1000);p.inventory=[item];p.nextItemId=2;p.gold=1e8;p.cores=1000;for(const m of g.MATERIALS)p.materials[m.id]=100000;return g.restoreProfile(p,1000);
 }
 test('ancient +30 and crafted +40 switch policy by target; preceding targets still guarantee success',()=>{
- for(const [grade,target,mode,attempts]of [[5,29,'guaranteed',30],[5,30,'incremental',null],[6,39,'guaranteed',40],[6,40,'none',null]]){
+ for(const [grade,target,mode,attempts]of [[5,29,'guaranteed',30],[5,30,'incremental',null],[6,39,'guaranteed',40],[6,40,'incremental',null]]){
   const p=fixture(grade,target,999),s=g.enhancementStatus(p,1);assert.equal(s.mode,mode);assert.equal(s.attempts,attempts);assert.equal(s.guaranteed,mode==='guaranteed');assert.equal(s.remaining,attempts?1:null);
   let draws=0;const r=enhanceOwned(p,1,()=>{draws++;return .999999;});assert.equal(draws,attempts?0:1);assert.equal(r.success,mode==='guaranteed');
  }
@@ -33,15 +33,16 @@ test('actual random threshold uses the corrected chance, and a successful new ta
  assert.equal(enhanceOwned(p,1,()=>.04).success,true);assert.equal(p.inventory[0].enhanceFailures,undefined);assert.equal(p.inventory[1].enhanceFailures,20);assert.equal(g.enhancementStatus(p,1).chance,g.enhancementRule(31,5).chance);
  const atLimit=fixture(5,40,20);assert.equal(enhanceOwned(atLimit,1,()=>.025).success,false);assert.equal(atLimit.inventory[0].enhanceFailures,20);
 });
-test('crafted +40 through +50 have no correction, no guaranteed attempt and no persisted failure counter',()=>{
+// 0.149.13: 제작 +40 이상은 보정 없음 → 고대와 같은 실패 보정(아래 테스트와 'crafted +40 and above …').
+test('crafted +40 through +50 keep a capped failure counter and still never guarantee success',()=>{
  for(let target=40;target<=50;target++){
-  const p=fixture(6,target,999);p.gold=1e12;assert.equal(p.inventory[0].enhanceFailures,undefined);let draws=0;
-  for(let n=0;n<60;n++){const s=g.enhancementStatus(p,1);assert.equal(s.chance,s.baseChance);assert.equal(s.failures,0);assert.equal(s.guaranteed,false);assert.equal(s.remaining,null);const r=enhanceOwned(p,1,()=>{draws++;return .99999;});assert.equal(r.success,false);assert.equal(p.inventory[0].enhanceFailures,undefined);assert.match(r.reason,/확률 보정·보장 없음/);}
-  assert.equal(draws,60);assert.equal(p.inventory[0].enhancement,target-1);
+  const p=fixture(6,target,0);p.gold=1e12;let draws=0;
+  for(let n=1;n<=30;n++){const r=enhanceOwned(p,1,()=>{draws++;return .99999;});assert.equal(r.success,false);assert.equal(p.inventory[0].enhanceFailures,Math.min(n,20));const s=g.enhancementStatus(p,1);assert.equal(s.guaranteed,false);assert.equal(s.remaining,null);}
+  assert.equal(draws,30);assert.equal(p.inventory[0].enhancement,target-1);
  }
 });
-test('save and backup preserve correction, clamp legacy ancient failures and discard crafted legacy pity',()=>{
- for(const [grade,target,failures,expected]of [[5,29,999,29],[5,30,29,20],[5,40,14,14],[6,39,999,39],[6,40,39,undefined],[6,50,49,undefined]]){
+test('save and backup preserve correction and clamp legacy failures to 20 for ancient and crafted',()=>{
+ for(const [grade,target,failures,expected]of [[5,29,999,29],[5,30,29,20],[5,40,14,14],[6,39,999,39],[6,40,39,20],[6,50,49,20]]){
   let p=fixture(grade,target,failures);assert.equal(p.inventory[0].enhanceFailures,expected);const before=structuredClone(p);
   for(let n=0;n<5;n++)p=readBackup(createBackup(p,1000),1000).profile;assert.deepEqual(p,before);
  }
@@ -57,4 +58,11 @@ test('unpayable, pending and non-camp attempts preserve correction, resources an
 });
 test('reroll acceptance and rejection preserve ancient correction and accumulated enhancement bonuses',()=>{
  for(const accept of [true,false]){let p=fixture(5,40,20);const before=structuredClone(p.inventory[0]);assert.equal(rerollOwned(p,1,()=>.999999).ok,true);p=readBackup(createBackup(p,1000),1000).profile;assert.equal(resolveOwnedReroll(p,1,accept).ok,true);assert.equal(p.inventory[0].enhanceFailures,20);assert.deepEqual(p.inventory[0].enhancementAffixes,before.enhancementAffixes);assert.equal(g.enhancementStatus(p,1).chance,.025);}
+});
+
+// 0.149.13 (외부 감사·사용자 결정): 제작 +40 이상도 고대와 같은 실패 보정(+0.1%p, 최대 20회).
+test('crafted +40 and above add 0.1 percentage point per failure up to 20 like ancients',()=>{
+ for(const target of [40,45,50])for(const failures of [0,5,20,30]){const s=g.enhancementStatus(fixture(6,target,failures),1),base=g.enhancementRule(target,6).chance;
+  assert.equal(s.mode,'incremental');assert.equal(s.chance,Math.round((base+Math.min(failures,20)*.001)*10000)/10000);assert.equal(s.failures,Math.min(failures,20));}
+ const p=fixture(6,45,0),item=p.inventory[0];for(let n=1;n<=3;n++){const r=enhanceOwned(p,1,()=>.99999);assert.equal(r.success,false);assert.equal(item.enhanceFailures,n);assert.match(r.reason,/확률 보정/);}
 });

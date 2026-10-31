@@ -134,3 +134,12 @@ test('레이드 연습전: 입장 횟수·보상·클리어 기록이 변하지 
  // 정식 입장은 practice가 남지 않는다.
  const u=g.createGame(profile(60));assert.equal(g.launchRaid(u,'queen',now,null,0,{practice:true}),true);assert.equal(g.returnToCamp(u),true);assert.equal(g.launchRaid(u,'queen',now),true);assert.equal(u.run.practice,false);assert.equal(g.raidEntriesLeft(u.profile,'queen',now),2);
 });
+// 0.149.13 (외부 감사·사용자 결정 '완전 극옵 확률 통일'): 수치작에서 능력치가 극옵이면 효과 위력도 최대 — 드롭과 같은 1%.
+test('레이드 고대 수치작: 능력치 극옵이면 위력도 최대, 아니면 위력은 따로 굴린다',async()=>{
+ const {rerollOwned}=await import('../dist/equipment-progression.js');const L=await import('../dist/loot.js?v=0.136.2');
+ const make=()=>{const p=profile();p.inventory=[{...L.rollAncient({id:7,tier:6,slot:'weapon',raid:'judge'},0,()=>.5),powerRoll:75}];p.gold=1e9;p.cores=1e6;for(const k of Object.keys(p.materials))p.materials[k]=1e5;return p;};
+ // 첫 난수 < 1% → 능력치 극옵, 위력 판정 난수는 .5(극옵 아님)
+ {const p=make(),seq=[.001,.3,.3,.3,.3,.3,.3,.5,.5];let i=0;const r=rerollOwned(p,7,()=>seq[Math.min(i++,seq.length-1)]);assert.ok(r.ok,r.reason);const c=p.inventory[0].rerollCandidate,ranges=g.itemRollRanges(p.inventory[0]);
+  assert.ok(Object.entries(ranges).every(([k,x])=>c.affixes[k]===x.max),'능력치 극옵');assert.equal(c.powerRoll,g.RAID_POWER_ROLL.max,'위력도 최대');}
+ {const p=make();const r=rerollOwned(p,7,()=>.5);assert.ok(r.ok);const c=p.inventory[0].rerollCandidate;assert.ok(c.powerRoll<g.RAID_POWER_ROLL.max,'극옵이 아니면 위력은 최대가 아니다');}
+});

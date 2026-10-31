@@ -1,11 +1,13 @@
-import {itemRollRanges,isPerfectRoll,effectiveAffix,enhancementBonus,rollItemAffixes,rollRaidPowerFor,promotionPreview,ENHANCEMENT_CAPS,MAX_ENHANCEMENT,enhancementCap,enhancementLevel} from './loot.js?v=0.149.12';
+import {RAID_POWER_ROLL,itemRollRanges,isPerfectRoll,effectiveAffix,enhancementBonus,rollItemAffixes,rollRaidPowerFor,promotionPreview,ENHANCEMENT_CAPS,MAX_ENHANCEMENT,enhancementCap,enhancementLevel} from './loot.js?v=0.149.13';
 export {itemRollRanges,isPerfectRoll,effectiveAffix,enhancementBonus,ENHANCEMENT_CAPS,MAX_ENHANCEMENT,enhancementCap,enhancementLevel};
 const CHANCE_BANDS=[[[100,92]],[[95,77.9]],[[90,73.8],[54,46.8]],[[80,65.6],[48,33.6]],[[65,53.3],[39,27.3],[13,1]],[[60,49.2],[36,25.2],[12,3],[1.5,.5]],[[55,45.1],[33,23.1],[11,3],[2,.8],[.6,.3]]];
 const bounded=(n,min,max,fallback=0)=>Number.isInteger(n)?Math.max(min,Math.min(max,n)):fallback;
 export function enhancementRule(target,rarity=0){
  const cap=enhancementCap(rarity);if(!Number.isInteger(target)||target<1||target>cap)return null;
  const band=Math.floor((target-1)/10),[start,end]=CHANCE_BANDS[rarity][band],length=Math.min(10,cap-band*10),progress=(target-band*10-1)/(length-1),percent=start+(end-start)*progress;
- const mode=rarity===5&&target>=30?'incremental':rarity===6&&target>=40?'none':'guaranteed';
+ // 0.149.13 (외부 감사·사용자 결정): 제작 +40 이상도 고대처럼 실패 1회당 +0.1%p(최대 20회 +2%p). 예전 'none'(보정·보장 없음)은
+ // +40→+50 평균 순수결정이 강화 던전 최고 반복 공급의 약 194주분이었다(보정 뒤 약 41주분).
+ const mode=rarity===5&&target>=30||rarity===6&&target>=40?'incremental':'guaranteed';
  return {chance:Math.round(percent*100)/10000,mode,attempts:mode==='guaranteed'?(band+1)*10:null,bonusPerFailure:mode==='incremental'?.001:0,maxBonusFailures:mode==='incremental'?20:0};
 }
 const failureLimit=rule=>rule.mode==='guaranteed'?rule.attempts-1:rule.maxBonusFailures;
@@ -65,7 +67,11 @@ export function rerollStatus(p,id){
 }
 export function rerollOwned(p,id,rng){
  const status=rerollStatus(p,id);if(!status.ok)return status;
- const affixes=rollItemAffixes(status.item,()=>unit(rng)),powerRoll=rollRaidPowerFor(status.item,()=>unit(rng));
+ const affixes=rollItemAffixes(status.item,()=>unit(rng));let powerRoll=rollRaidPowerFor(status.item,()=>unit(rng));
+ // 0.149.11 감사 후속(사용자 결정 '완전 극옵 확률 통일'): 드롭은 1% 극옵 한 번으로 능력치·효과 위력을 함께 최대로 하는데 수치작은 둘을
+ // 따로 1%씩 굴려 완전 극옵이 0.01%였다. 능력치가 극옵(전부 최대 — 극옵이 아니면 최대-1까지만 나온다)이면 위력도 최대로 맞춘다.
+ // 난수를 쓰는 순서와 개수는 그대로라 다른 수치작 결과는 바뀌지 않는다. 위력만 따로 최대가 나오는 1%도 그대로.
+ if(powerRoll!==null&&Object.entries(itemRollRanges(status.item)).every(([k,r])=>affixes[k]===r.max))powerRoll=RAID_POWER_ROLL.max;
  const bonuses=enhancementLevel(status.item)?bonusData(status.item):null;
  spend(p,status.cost);if(bonuses)status.item.enhancementAffixes=bonuses;status.item.rerollCandidate={affixes,...(powerRoll!==null?{powerRoll}:{})};
  return {ok:true,item:status.item,cost:status.cost,reason:'새 수치 준비 완료 · 적용 또는 기존 유지 선택'};
