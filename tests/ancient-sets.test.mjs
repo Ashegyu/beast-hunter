@@ -36,3 +36,13 @@ test('raid sets count 2·3·5 pieces; a duplicate earring counts once; a forged 
   const forged=q.inventory.find(i=>i.id===a.id);assert.equal(forged.rarity,6);assert.equal(g.ancientSetOf(forged),'ancient-1');assert.equal(g.equippedAncientSetCounts(q)['ancient-1'],2);
   assert.equal(g.ancientSetOf({...forged,forge:undefined}),null,'a crafted item without a forge record has no set');
 });
+
+// Alpha 0.149.8 (상태 효과 설계 5단계) 해제 계열 특수효과: 서리 장벽 저항, 거신의 불굴 정화 보호막, 최후 판결 봉인 면역.
+test('해제 계열 세트 특수효과가 저항·정화 보호막·봉인 면역으로 전투에 닿는다', () => {
+  {const s=game(),p=s.profile;for(const slot of REGION_SLOTS)wear(s,{tier:2,slot});assert.equal(g.treeBonus(p).resist,.2);assert.ok(Math.abs(g.statusResist(p).tree-.2)<1e-9);assert.match(g.ancientSetText('ancient-2',6),/디버프 시간 단축 \+20%/);}
+  {const s=game(),p=s.profile;for(const slot of ['weapon','helmet','armor','charm','special'])wear(s,{tier:6,slot,raid:'colossus'});assert.equal(g.treeBonus(p).cleanseShield,.08);
+   g.launch(s,1,1);s.run.flow='combat';s.player.statuses=[{id:'curse',stacks:1,until:s.run.time+5}];s.difficulty=1;assert.equal(g.cleansePlayer(s),1);assert.ok(Math.abs(s.uniqueState.shield-s.player.maxHp*.08)<1e-6,'정화 시 보호막');}
+  {const s=game(),p=s.profile;for(const slot of ['weapon','helmet','armor','charm','special'])wear(s,{tier:6,slot,raid:'judge'});assert.equal(g.treeBonus(p).sealImmune,1);assert.match(g.ancientSetText('raid-judge',5),/봉인 면역/);
+   p.bossMastery=p.bossMastery.map(()=>2);p.clearedStage=60;p.unlockedStage=61;assert.ok(g.launchRaid(s,'colossus',Date.UTC(2026,9,28),null,1));s.auto=false;s.player.invulnerable=1e6;
+   for(let i=0;i<400&&!s.enemies.some(e=>e.boss);i++)g.advanceGame(s,.025);const e=s.enemies.find(e=>e.boss);e.sealClock=g.SEAL_EVERY-.01;g.advanceGame(s,.025);assert.ok(!g.hasStatus(s.player,'sealed',s.run.time),'봉인 면역');}
+});

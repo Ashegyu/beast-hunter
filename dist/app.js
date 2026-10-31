@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.149.7';
-import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.149.7';
-import { createCombatAudio } from './sound.js?v=0.149.7';
-import * as game from './game-engine.js?v=0.149.7';
-import {FrameMetrics} from './frame-metrics.js?v=0.149.7';
-import { frameIndex, frameRect, validateClip } from './engine.js?v=0.149.7';
-import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.149.7';
-import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.149.7';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.149.7';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.149.7';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.149.7';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.149.7';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.149.8';
+import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.149.8';
+import { createCombatAudio } from './sound.js?v=0.149.8';
+import * as game from './game-engine.js?v=0.149.8';
+import {FrameMetrics} from './frame-metrics.js?v=0.149.8';
+import { frameIndex, frameRect, validateClip } from './engine.js?v=0.149.8';
+import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.149.8';
+import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.149.8';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.149.8';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.149.8';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.149.8';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.149.8';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -1010,6 +1010,8 @@ function worldActors(){
     }else if(f.type==='explosion'){
       const t=1-alpha;ctx.fillStyle='#9d4964'+Math.round(alpha*28).toString(16).padStart(2,'0');ctx.beginPath();ctx.ellipse(f.x,f.y-20,f.radius*t,f.radius*t*.65,0,0,Math.PI*2);ctx.fill();ring(f.x,f.y-15,f.radius*(.4+t*.6),COMBAT_INK.silver,4*alpha);
       for(let i=0;i<8;i++){const angle=i*Math.PI/4+f.id;ctx.fillStyle=i%2?COMBAT_INK.rose:COMBAT_INK.silver;ctx.fillRect(f.x+Math.cos(angle)*f.radius*t,f.y-35+Math.sin(angle)*f.radius*t*.65-30*t,4,4);}
+    }else if(f.type==='cleanse'||f.type==='dispel'){// 0.149.8 정화·해체 성공 알림
+      const c=f.type==='cleanse'?'#fff2a8':'#ffe08a';ring(f.x,f.y,40+(1-alpha)*70,c,3);ctx.fillStyle=c;ctx.font='bold 16px "Hunter UI", sans-serif';ctx.textAlign='center';label(f.type==='cleanse'?'정화'+(f.count>1?' ×'+f.count:''):'해체',f.x,f.y-(f.type==='cleanse'?150:175)-(1-alpha)*20,f.y);
     }else if(['perfectDodge','guardBreak','reflect'].includes(f.type)){
       ring(f.x,f.y,50+(1-alpha)*75,f.type==='guardBreak'?COMBAT_INK.rose:COMBAT_INK.silver,3);ctx.fillStyle=COMBAT_INK.silver;ctx.font='bold 16px "Hunter UI", sans-serif';ctx.textAlign='center';label(f.type==='perfectDodge'?'완벽 회피':f.type==='guardBreak'?'갑각 파쇄':'튕겨내기',f.x,f.y-145-(1-alpha)*20,f.y);
     }else if(f.type==='gearProc'){ring(f.x,f.y,30+(1-alpha)*35,game.WEAPON_TRAITS[f.trait].color,3);
@@ -1251,7 +1253,7 @@ function updateHud(){
     hudText($('stage-board-count'),completed+' / '+game.STAGES_PER_CHAPTER);$('stage-board-progress').setAttribute('aria-valuenow',String(completed));$('stage-board-fill').style.width=completed/game.STAGES_PER_CHAPTER*100+'%';
     const selectedPlan=game.battlePlan(selectedRunStage),bossStage=selectedRunStage===game.STAGES_PER_CHAPTER,previewSpecies=bossStage?selected.bossSpecies:stageHeadline(selected,selectedRunStage),previewClip=manifest.clips[manifest.directions[previewSpecies].walk.s];
     atlasThumbnail($('stage-preview-art'),previewClip.image,previewClip.frames[0],80);
-    hudText($('stage-preview-title'),selectedStage+'-'+selectedRunStage+' · '+selectedPlan.name);hudText($('stage-preview-kind'),game.HUNT_MODES[selectedDifficulty].name+' · '+(bossStage?'보스 단독전':game.stageWaveCount(selectedRunStage)+'웨이브'));const rule=game.stageRule(selectedStage,selectedRunStage);const [starFast,starRush]=game.starTimes(selectedRunStage);hudText($('stage-preview-kind'),game.HUNT_MODES[selectedDifficulty].name+' · '+game.STAGE_TYPE_NAMES[rule.type]+' · ★'+starFast+'초 · ★'+(starRush?starRush+'초':'체력 50%'));const gateNow=game.gateEffect(profile,game.stageGate(selectedStage,selectedRunStage,selectedDifficulty));hudText($('stage-preview-description'),(gateNow?game.gateText(gateNow)+' — ':'')+rule.rule+' — '+rule.hint+(rule.required?' 필요':' 유리'));$('camp-map-panel').setAttribute('data-gate',gateNow?gateNow.type:'');
+    hudText($('stage-preview-title'),selectedStage+'-'+selectedRunStage+' · '+selectedPlan.name);hudText($('stage-preview-kind'),game.HUNT_MODES[selectedDifficulty].name+' · '+(bossStage?'보스 단독전':game.stageWaveCount(selectedRunStage)+'웨이브'));const rule=game.stageRule(selectedStage,selectedRunStage);const [starFast,starRush]=game.starTimes(selectedRunStage);hudText($('stage-preview-kind'),game.HUNT_MODES[selectedDifficulty].name+' · '+game.STAGE_TYPE_NAMES[rule.type]+' · ★'+starFast+'초 · ★'+(starRush?starRush+'초':'체력 50%'));const gateNow=game.gateEffect(profile,game.stageGate(selectedStage,selectedRunStage,selectedDifficulty));{const deb=selectedDifficulty>0?game.STATUS_DEFS[game.RULE_DEBUFF[game.STAGES[selectedStage-1]?.bossRule]]:null;hudText($('stage-preview-description'),(gateNow?game.gateText(gateNow)+' — ':'')+rule.rule+' — '+rule.hint+(rule.required?' 필요':' 유리')+(deb?' · 보스 적중 시 '+deb.name+'(정화·저항)':''));}$('camp-map-panel').setAttribute('data-gate',gateNow?gateNow.type:'');
     hudText($('stage-progress-note'),game.HUNT_MODES[selectedDifficulty].name+' · '+(selectedRunStage===limit&&completed<10?'현재 공략 지점':'선택한 출발 지점')+' '+selectedStage+'-'+selectedRunStage);
     const environment=manifest.chapters[selected.environment].environment;
     $('chapter-banner').style.backgroundImage='linear-gradient(90deg,#101319a8,#10131925),url("assets/'+(manifest.delivery?.[environment]??environment)+'")';hudText($('chapter-label'),'CHAPTER '+String(selected.id).padStart(2,'0')+' · '+selected.region);$('camp-drawer').dataset.mapRegion=String(Math.min(6,Math.ceil(selected.id/10)));$('chapter-prev').disabled=selected.id<=1;$('chapter-next').disabled=selected.id>=Math.min(game.STAGES.length,profile.unlockedStage)||selectedDifficulty>0&&!game.stageLimit(profile,selected.id+1,selectedDifficulty);hudText($('chapter-preview-name'),selected.name);hudText($('chapter-preview-boss'),(selected.special?'특수 보스 · ':'챕터 보스 · ')+selected.bossName);hudText($('chapter-tactic'),selected.tactic);
@@ -1393,7 +1395,10 @@ function refreshFarmCamp(){
   mapButton.disabled=!ready||!available&&!jump;
   mapButton.setAttribute('aria-pressed',String(m.id===selectedDifficulty));$('map-mode-status-'+m.id).textContent=available?'완료 '+game.completedStages(profile,selectedStage,m.id)+'/10':locked;
  }
- {const record=selectedDifficulty===2?profile.nightmareRecords[selectedStage-1]:0;$('map-difficulty-note').textContent=mode.name+' · '+selectedRunStage+'스테이지 선택 · '+(selectedDifficulty===2?'경험치 없음 · '+(record?'보스 기록 '+record+'초':'보스 기록 없음'):'난이도를 바꾸면 1단계부터 시작해. 공략 기록은 난이도별로 저장돼.');}
+ {const record=selectedDifficulty===2?profile.nightmareRecords[selectedStage-1]:0;// 0.149.8: 정예·악몽은 보스가 거는 디버프와 대응을 한 줄로(상태 효과 설계 7. 화면).
+  const debuff=selectedDifficulty>0?game.STATUS_DEFS[game.RULE_DEBUFF[game.STAGES[selectedStage-1]?.bossRule]]:null,hint=debuff?'보스 적중 시 '+debuff.name+' · 대응 정화·저항':'';
+  $('map-difficulty-note').textContent=mode.name+' · '+selectedRunStage+'스테이지 선택 · '+(selectedDifficulty===2?'경험치 없음 · '+(record?'보스 기록 '+record+'초':'보스 기록 없음')+(hint?' · '+hint:''):hint||'난이도를 바꾸면 1단계부터 시작해. 공략 기록은 난이도별로 저장돼.');
+  $('map-difficulty-note').title=debuff?debuff.name+': '+debuff.text+' — 정화: 수월의 자세·흘려베기·면역의 호흡, 저항: 장신구·수호자 트리·정화 태그':'';}
  {const k=game.modeScale(selectedStage,selectedDifficulty);$('replay-info').textContent=mode.name+(selectedDifficulty?' · 일반 '+Math.round(k.chapter)+'장 강도':'')+' · 보스 체력 '+timesText(k.hp)+' / 피해 '+timesText(k.damage)+' · 보스 골드 '+timesText(k.reward)+' · 추가 장비당 고대 '+mode.ancientChance.toFixed(2)+'%'+(mode.shots?' · 탄막 +'+mode.shots+'발 · 패턴 순환 변경':'');}
  $('replay-unlock').textContent=game.bossModeAvailable(profile,selectedStage,2)?'악몽 해금 완료 · 원하는 난이도로 재도전할 수 있어.':'일반 60장을 모두 깨면 정예 1장부터, 정예 60장을 모두 깨면 악몽 1장부터 하나씩 열려.';
 }

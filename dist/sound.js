@@ -61,6 +61,7 @@ export function createCombatAudio(contextFactory){
     else if(type==='impact'){voice({noise:true,frequency:details.heavy?1000:1400,end:details.heavy?170:300,duration:details.heavy?.095:.055,gain:details.heavy?.42:.3});voice({frequency:details.heavy?95:160,end:details.heavy?35:55,duration:details.heavy?.12:.065,gain:details.heavy?.3:.2});}
     else if(type==='guardHit')voice({type:'square',frequency:330,end:180,duration:.065,gain:.09});
     else if(type==='guardBreak'||type==='explosion'){voice({noise:true,frequency:2300,end:100,duration:.28,gain:.6});voice({frequency:85,end:28,duration:.24,gain:.5});}
+    else if(type==='cleanse'||type==='dispel'){voice({frequency:type==='cleanse'?660:520,end:type==='cleanse'?1320:260,duration:.16,gain:.22});voice({frequency:type==='cleanse'?990:780,duration:.12,gain:.14,delay:.07});}
     else if(type==='perfectDodge'||type==='reflect'){voice({frequency:880,end:1100,duration:.09,gain:.3});voice({frequency:1320,duration:.13,gain:.2,delay:.065});}
     else if(type==='dash')voice({noise:true,frequency:2000,end:500,duration:.10,gain:.18,filter:'bandpass'});
     else if(type==='playerDamage')voice({type:'sawtooth',frequency:110,end:40,duration:.14,gain:.12});

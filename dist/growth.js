@@ -41,9 +41,11 @@ const BONUS_TEXT=Object.freeze({
  hpPct:['최대 체력','%',100],reduction:['피해 감소','%p',100],drain:['직접 검격 적중 시 최대 체력 회복','%',100],regeneration:['초당 체력 재생','',1],lowHpGuard:['체력 50% 미만일 때 받는 피해 감소','%',100],
  staminaRegen:['기력 재생','%',100],skillCooldown:['스킬 재사용 단축','%',100],skillArea:['스킬 범위','%',100],skillDamage:['스킬 피해','%',100],skillFury:['스킬 사용 뒤 3초 기본 공격 피해','%',100],
  speed:['이동 속도','%',100],range:['공격 범위','%',100],resist:['디버프 시간 단축','%',100],
+ // 0.149.8 고대 세트 해제 계열(상태 효과 설계 5단계): 정화할 때 최대 체력 보호막, 레이드 봉인 면역(scale 0 = 이름만).
+ cleanseShield:['정화 시 최대 체력 보호막','%',100],sealImmune:['봉인 면역','',0],
 });
 const num=v=>String(Math.round(v*10)/10);
-export function bonusText(bonus){return Object.entries(bonus).map(([k,v])=>{const [label,suffix,scale]=BONUS_TEXT[k];return label+' '+(v<0?'−':'+')+num(Math.abs(v)*scale)+suffix;}).join(' · ');}
+export function bonusText(bonus){return Object.entries(bonus).map(([k,v])=>{const [label,suffix,scale]=BONUS_TEXT[k];if(!scale)return label;return label+' '+(v<0?'−':'+')+num(Math.abs(v)*scale)+suffix;}).join(' · ');}
 // [id, kind, x, y, links, bonus, name, icon]; small nodes are named after their first bonus.
 // Alpha 0.147.0 (사용자 요청 '가지를 더 다양하게, 대칭일 필요 없이 나뭇가지처럼'): the web is grown by tools/grow-tree0147.mjs
 // (seeded random walk from the 중심 고리 along a branch plan, forks at uneven spreads, no crowding or crossing links) and
@@ -196,7 +198,7 @@ export function canForget(tree,id){const set=new Set(tree??[]);if(!set.has(id))r
 export function fitTree(p,tree){const out=cleanTree(tree),limit=treePointsTotal(p);while(out.length&&treeSpent(out)>limit){const id=[...out].filter(n=>canForget(out,n)).sort((a,b)=>DEPTH[b]-DEPTH[a]||TREE_ORDER.indexOf(b)-TREE_ORDER.indexOf(a))[0];out.splice(out.indexOf(id),1);}return out;}
 // 트리 포인트 spent in a region (bridges count for both neighbours); stage-gates.js turns it into the gate counter.
 export function branchPoints(p,branch){return (p?.growthTree??[]).reduce((a,id)=>a+(isTreeNode(id)&&TREE_NODES[id].branches.includes(branch)?TREE_NODES[id].cost:0),0);}
-const ZERO=Object.freeze({damagePct:0,attackSpeed:0,crit:0,critDamage:0,execute:0,finisher:0,hpPct:0,reduction:0,drain:0,regeneration:0,lowHpGuard:0,staminaRegen:0,skillCooldown:0,skillArea:0,skillDamage:0,skillFury:0,speed:0,range:0,resist:0});
+const ZERO=Object.freeze({damagePct:0,attackSpeed:0,crit:0,critDamage:0,execute:0,finisher:0,hpPct:0,reduction:0,drain:0,regeneration:0,lowHpGuard:0,staminaRegen:0,skillCooldown:0,skillArea:0,skillDamage:0,skillFury:0,speed:0,range:0,resist:0,cleanseShield:0,sealImmune:0});
 // Alpha 0.145.2: other sources of the same effects (고대 세트 특수효과) add here, so every place that reads treeBonus applies them.
 const bonusSources=[];
 export function addBonusSource(fn){if(!bonusSources.includes(fn))bonusSources.push(fn);}
