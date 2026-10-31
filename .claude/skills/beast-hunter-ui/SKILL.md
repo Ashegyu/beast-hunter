@@ -50,3 +50,4 @@ CLAUDE.md에서 옮겨 온 작업 메모. 내용이 바뀌면 이 파일을 고�
 - 전투 DPS(0.148.5): 스킬 버튼 위 배지 `.combat-skill-dps`(top:-8px, 아래 대기 시간 배지와 대칭), 체력 창(.hunter-hud, relative) 아래 absolute `#live-dps`(`live-dps-now`/`live-dps-average`). app.js `refreshCombatSkills`가 스킬 DPS는 `combatDpsKey`(장착+초)로 1초마다, 실시간은 매 프레임 `game.liveDps`.
 - DPS 허수아비(0.148.8): 능력치 창 아래 `.stats-sheet-dummy`(`dummy-start`·`dummy-record`), 전투 보스 막대는 `boss.dummy`면 이름·'누적 피해'·남은 시간 막대, 결과 창 `dungeon-result-label`이 '측정 기록'. check-layout 화면 `dummy`(능력치 창 → 측정 4초).
 - 상태 효과 칩(0.149): 체력 창 안 `#player-statuses`(`player-status-0..3`, DPS 줄 아래 absolute, 색은 --c), 보스 HUD `#boss-statuses`(`boss-status-0..1`, 막대 아래 오른쪽 absolute, 격노·방어 태세·재생·해체됨). 보스 규칙 줄 끝 ' · 적중 시 화상' + title에 대응. 값은 엔진 `statusList`·`bossStatusList`·`bossDebuffInfo`.
+- 저항 표시(0.149.2): 장비 상세 `item-affix-row-resist-<i>`(48장, 장신구만 보임), 성장 `gstat-resist`(생존 묶음), 능력치 창 `stat-sheet-resist`(값만; 내역은 title — 내역을 글로 넣으면 568에서 옆 칸을 침범했다).

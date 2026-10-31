@@ -40,7 +40,7 @@ const BONUS_TEXT=Object.freeze({
  damagePct:['공격력','%',100],attackSpeed:['공격 속도','%',100],crit:['치명타','%p',100],critDamage:['치명타 피해','%p',100],execute:['체력 35% 미만 적에게 주는 피해','%',100],finisher:['3연격 마무리 피해','%',100],
  hpPct:['최대 체력','%',100],reduction:['피해 감소','%p',100],drain:['직접 검격 적중 시 최대 체력 회복','%',100],regeneration:['초당 체력 재생','',1],lowHpGuard:['체력 50% 미만일 때 받는 피해 감소','%',100],
  staminaRegen:['기력 재생','%',100],skillCooldown:['스킬 재사용 단축','%',100],skillArea:['스킬 범위','%',100],skillDamage:['스킬 피해','%',100],skillFury:['스킬 사용 뒤 3초 기본 공격 피해','%',100],
- speed:['이동 속도','%',100],range:['공격 범위','%',100],
+ speed:['이동 속도','%',100],range:['공격 범위','%',100],resist:['디버프 시간 단축','%',100],
 });
 const num=v=>String(Math.round(v*10)/10);
 export function bonusText(bonus){return Object.entries(bonus).map(([k,v])=>{const [label,suffix,scale]=BONUS_TEXT[k];return label+' '+(v<0?'−':'+')+num(Math.abs(v)*scale)+suffix;}).join(' · ');}
@@ -92,15 +92,15 @@ const ROWS=[
  ['blade-33','keystone',51,150,['blade-32'],{execute:.3,critDamage:.3,hpPct:-.1},'참수','blade-b7'],
  ['ward-1','small',312,67,['ward-r'],{hpPct:.04},null],
  ['ward-2','notable',330,40,['ward-1'],{hpPct:.1},'단단한 몸','ward-n'],
- ['ward-3','small',307,14,['ward-2'],{reduction:.01},null],
+ ['ward-3','small',307,14,['ward-2'],{reduction:.01,resist:.04},null],
  ['ward-4','notable',287,41,['ward-3'],{reduction:.04},'철벽','ward-a2'],
  ['ward-5','small',256,49,['ward-4'],{lowHpGuard:.04},null],
  ['ward-6','small',228,52,['ward-5'],{lowHpGuard:.04},null],
  ['ward-7','notable',194,51,['ward-6'],{lowHpGuard:.15},'불굴','ward-a4'],
- ['ward-8','small',271,63,['ward-4'],{reduction:.01},null],
+ ['ward-8','small',271,63,['ward-4'],{reduction:.01,resist:.04},null],
  ['ward-9','keystone',248,83,['ward-8','bw-2'],{reduction:.08,speed:-.1},'부동의 성채','ward-a6'],
  ['ward-10','small',357,19,['ward-2'],{hpPct:.04},null],
- ['ward-11','notable',390,25,['ward-10'],{reduction:.03,hpPct:.06},'수호의 맹세','ward-u2'],
+ ['ward-11','notable',390,25,['ward-10'],{reduction:.03,hpPct:.06,resist:.1},'수호의 맹세','ward-u2'],
  ['ward-12','small',361,48,['ward-2'],{regeneration:.5},null],
  ['ward-13','small',386,61,['ward-12'],{regeneration:.5},null],
  ['ward-14','notable',416,76,['ward-13'],{regeneration:1.9},'재생','ward-b2'],
@@ -196,7 +196,7 @@ export function canForget(tree,id){const set=new Set(tree??[]);if(!set.has(id))r
 export function fitTree(p,tree){const out=cleanTree(tree),limit=treePointsTotal(p);while(out.length&&treeSpent(out)>limit){const id=[...out].filter(n=>canForget(out,n)).sort((a,b)=>DEPTH[b]-DEPTH[a]||TREE_ORDER.indexOf(b)-TREE_ORDER.indexOf(a))[0];out.splice(out.indexOf(id),1);}return out;}
 // 트리 포인트 spent in a region (bridges count for both neighbours); stage-gates.js turns it into the gate counter.
 export function branchPoints(p,branch){return (p?.growthTree??[]).reduce((a,id)=>a+(isTreeNode(id)&&TREE_NODES[id].branches.includes(branch)?TREE_NODES[id].cost:0),0);}
-const ZERO=Object.freeze({damagePct:0,attackSpeed:0,crit:0,critDamage:0,execute:0,finisher:0,hpPct:0,reduction:0,drain:0,regeneration:0,lowHpGuard:0,staminaRegen:0,skillCooldown:0,skillArea:0,skillDamage:0,skillFury:0,speed:0,range:0});
+const ZERO=Object.freeze({damagePct:0,attackSpeed:0,crit:0,critDamage:0,execute:0,finisher:0,hpPct:0,reduction:0,drain:0,regeneration:0,lowHpGuard:0,staminaRegen:0,skillCooldown:0,skillArea:0,skillDamage:0,skillFury:0,speed:0,range:0,resist:0});
 // Alpha 0.145.2: other sources of the same effects (고대 세트 특수효과) add here, so every place that reads treeBonus applies them.
 const bonusSources=[];
 export function addBonusSource(fn){if(!bonusSources.includes(fn))bonusSources.push(fn);}

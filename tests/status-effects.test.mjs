@@ -52,3 +52,23 @@ test('0.149.1 정화 보상: 정화하면 정화의 기세(피해 +20%)와 기�
  assert.ok(st.STATUS_DEFS.dispelled.mods.taken>0);assert.equal(st.STATUS_DEFS.purified.kind,'buff');
  const t={};st.applyStatus(t,'purified',0);st.applyStatus(t,'burn',0);assert.equal(st.cleanse(t,1),1);assert.deepEqual(t.statuses.map(x=>x.id),['purified'],'정화는 버프를 지우지 않는다');
 });
+// Alpha 0.149.2 저항: 장신구(목걸이·귀걸이)의 파생 수치와 수호자 트리 노드가 정화 태그와 합쳐져 디버프 시간을 줄인다.
+test('accessoryResist: 목걸이·귀걸이만, 2 + 등급(최대 5) + 번호 0~2, 저장하지 않음',()=>{
+ for(const slot of ['weapon','helmet','armor','pants','boots','special'])assert.equal(st.accessoryResist({slot,id:3,rarity:5}),0);
+ const vals=[];for(let id=1;id<=60;id++)for(const rarity of [0,3,5,6]){const v=st.accessoryResist({slot:id%2?'charm':'earring',id,rarity});const base=2+Math.min(5,rarity);assert.ok(v>=base&&v<=base+2,`${v}`);vals.push(v-base);}
+ assert.deepEqual([...new Set(vals)].sort(),[0,1,2],'번호에 따라 0~2가 모두 나온다');
+ assert.equal(st.accessoryResist({slot:'charm',id:7,rarity:2}),st.accessoryResist({slot:'charm',id:7,rarity:2}),'같은 장신구는 늘 같은 값');
+ assert.equal(st.accessoryResist(null),0);
+});
+test('statusResist: 정화 태그 + 장신구 + 트리, 80% 상한, 실제 디버프 시간 단축',()=>{
+ const p=g.createProfile(1000);close(g.statusResist(p).total,0);
+ p.inventory.push({id:11,slot:'charm',rarity:5,tier:1,name:'목걸이',affixes:{}},{id:12,slot:'earring',rarity:5,tier:1,name:'귀걸이',affixes:{}},{id:13,slot:'earring',rarity:5,tier:1,name:'귀걸이',affixes:{}});
+ Object.assign(p.equipment,{charm:11,earringLeft:12,earringRight:13});
+ const gear=[11,12,13].reduce((n,id)=>n+st.accessoryResist({slot:id===11?'charm':'earring',id,rarity:5}),0)/100;
+ close(g.gearResist(p),gear);close(g.statusResist(p).gear,gear);
+ p.growthTree=['ward-r','ward-1','ward-2','ward-3','ward-10','ward-11'];close(g.treeBonus(p).resist,.14);close(g.statusResist(p).tree,.14);close(g.statusResist(p).total,gear+.14);
+ assert.match(g.TREE_NODES['ward-11'].text,/디버프 시간 단축 \+10%/);
+ const {s}=fight(15,1,['stance','parry']);Object.assign(s.profile.equipment,{});s.profile.growthTree=p.growthTree;const r=g.statusResist(s.profile);close(r.purify,st.PURIFY_RESIST);close(r.total,Math.min(st.RESIST_CAP,st.PURIFY_RESIST+.14));
+ shot(s);const x=s.player.statuses.find(x=>x.id===st.RULE_DEBUFF.fury);assert.ok(x,'격노 보스 적중 시 디버프');close(x.seconds,st.STATUS_DEFS[x.id].seconds*(1-r.total));
+ const t={};st.applyStatus(t,'curse',0,{resist:5});close(t.statuses[0].seconds,st.STATUS_DEFS.curse.seconds*(1-st.RESIST_CAP));
+});

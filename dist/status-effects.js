@@ -16,13 +16,20 @@ export const RULE_DEBUFF=Object.freeze({fury:'burn',summon:'frost',defense:'curs
 export const DISPEL_SECONDS=4;
 // 정화 태그: 2 equipped → debuff time −30%, 3 → each cleanse heals 4% of max health.
 export const PURIFY_RESIST=.3,PURIFY_HEAL=.04,PURIFY_STAMINA=10;
+// Alpha 0.149.2 저항: every necklace and earring carries 'debuff time −N%' (N = 2 + rarity (최대 5) + 0~2 from its id, so
+// 2~9%). It is derived, not rolled or saved, so drops, rerolls and old saves stay as they were. Total resist caps at 80%.
+export const RESIST_CAP=.8;
+export function accessoryResist(item){
+ if(!item||(item.slot!=='charm'&&item.slot!=='earring')||!Number.isInteger(item.id))return 0;
+ return 2+Math.min(5,Math.max(0,item.rarity|0))+(Math.imul(item.id,2654435761)>>>0)%3;
+}
 
 const list=t=>t.statuses??=[];
 export function hasStatus(t,id,now){return list(t).some(x=>x.id===id&&x.until>now);}
 export function statusStacks(t,id,now){return list(t).find(x=>x.id===id&&x.until>now)?.stacks??0;}
 // Adds one stack (up to max) and refreshes the time; resist shortens hunter debuffs.
 export function applyStatus(t,id,now,{stacks=1,resist=0}={}){
- const d=STATUS_DEFS[id];if(!d)return null;const arr=list(t),seconds=d.seconds*(1-Math.min(.8,Math.max(0,resist)));
+ const d=STATUS_DEFS[id];if(!d)return null;const arr=list(t),seconds=d.seconds*(1-Math.min(RESIST_CAP,Math.max(0,resist)));
  let x=arr.find(x=>x.id===id);if(x&&x.until<=now){x.stacks=0;}
  if(!x){x={id,stacks:0,until:0};arr.push(x);}
  x.stacks=Math.min(d.max,x.stacks+stacks);x.until=now+seconds;x.seconds=seconds;return x;
