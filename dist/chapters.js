@@ -1,6 +1,6 @@
-import {equipmentFamily} from './equipment-slots.js?v=0.149.0';
-import {SEAL_EFFECTS,sealArtId} from './seals.js?v=0.149.0';
-import {EQUIPMENT_SETS,SET_SLOTS,CHAPTER_SETS,setArtId} from './equipment-sets.js?v=0.149.0';
+import {equipmentFamily} from './equipment-slots.js?v=0.149.1';
+import {SEAL_EFFECTS,sealArtId} from './seals.js?v=0.149.1';
+import {EQUIPMENT_SETS,SET_SLOTS,CHAPTER_SETS,setArtId} from './equipment-sets.js?v=0.149.1';
 // Sixty chapters in six regions of ten: 1–10 forest, 11–20 fire and ice (11–15 fire,
 // 16–20 ice), 21–30 darkness (Alpha 0.107), 31–40 sunken kingdom, 41–50 storm sky isles,
 // 51–60 twilight sanctum (Alpha 0.118). A region drives the map tabs, item and
@@ -145,7 +145,7 @@ export const MODE_FINAL_BOSS=Object.freeze({1:1.5,2:1.35});
 export const modeBossBump=(id,difficulty)=>(1+(MODE_BOSS_BUMP[difficulty]??0)*Math.exp(-(((id-MODE_BOSS_PEAK)/MODE_BOSS_WIDTH)**2)))*(id>=MODE_CHAPTERS?MODE_FINAL_BOSS[difficulty]??1:1);
 // 0.148.12: 정예·악몽의 격노(fury, 12초 중 4초 공격 ×1.5) 보스는 길어진 싸움에서 공격이 너무 세 45·50장에서 쓰러졌다 → 공격 배율을 더 낮춘다.
 // 체력은 더 주고 공격은 더 낮춰 '오래 버티지만 한 방이 덜 아픈' 보스로(45·50장 30초 안팎·체력 손실 50~80% 목표).
-export const MODE_FURY_DAMAGE=Object.freeze({1:.38,2:.2}),MODE_FURY_HP=Object.freeze({1:3.2,2:2.3});
+export const MODE_FURY_DAMAGE=Object.freeze({1:.3,2:.2}),MODE_FURY_HP=Object.freeze({1:3.2,2:2.3});
 // 0.148.13 (사용자 요청 '40장도 30초 이상'): 소환(summon) 보스(20·40장 등)는 30장 중심 배율이 줄어든 40장에서 16~17초에 잡혔다 → 체력만 더.
 export const MODE_SUMMON_HP=Object.freeze({1:2.2,2:2.2});
 export function modeExtra(id,difficulty){const m=MODE_EXTRA[difficulty];if(!m)return {hp:1,damage:1};const t=Math.min(1,Math.max(0,(id-1)/(MODE_CHAPTERS-1))),at=([a,b])=>a+(b-a)*t;return {hp:at(m.hp),damage:at(m.damage)};}

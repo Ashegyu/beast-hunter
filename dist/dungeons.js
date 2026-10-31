@@ -1,5 +1,5 @@
 // Growth dungeons reuse existing enemies, art and resource identities.
-import {enemyHpScale,enemyDamageScale} from './chapters.js?v=0.149.0';
+import {enemyHpScale,enemyDamageScale} from './chapters.js?v=0.149.1';
 // Alpha 0.141 (사용자 요청 '던전 단계가 너무 적다'): 100 levels on the chapter curve. Level L is fought like chapter
 // 1+(L−1)×0.9 (dungeonChapter: 10단계 ≈ 9장, 50단계 ≈ 45장, 100단계 ≈ 90장 = 정예 60장), times the dungeon's own hp/damage.
 export const DUNGEON_MAX_LEVEL=100,DUNGEON_CHAPTER_STEP=.9;
