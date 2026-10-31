@@ -1,5 +1,7 @@
 # GitHub Pages 배포: main에 푸시하면 dist/를 그대로 올린다(빌드 없음).
 # 처음 한 번 저장소 Settings → Pages → Source를 "GitHub Actions"로 바꿔야 한다.
+# 0.149.11 (외부 감사 '배포 전 검증이 없다'): npm test가 통과해야 배포한다. 테스트가 읽는 폴더만 받는다
+# (dist·tests·tools와 원화 검증용 art/monsters045·monsters065·skills053).
 name: Pages 배포
 
 on:
@@ -17,7 +19,25 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            dist
+            tests
+            tools
+            art/monsters045
+            art/monsters065
+            art/skills053
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm test
   deploy:
+    needs: test
     runs-on: ubuntu-latest
     environment:
       name: github-pages

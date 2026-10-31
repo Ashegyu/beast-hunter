@@ -1,16 +1,16 @@
 let bagPart='all',earringPosition='earringLeft',earringChoiceItemId=null;
-import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.149.10';
-import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.149.10';
-import { createCombatAudio } from './sound.js?v=0.149.10';
-import * as game from './game-engine.js?v=0.149.10';
-import {FrameMetrics} from './frame-metrics.js?v=0.149.10';
-import { frameIndex, frameRect, validateClip } from './engine.js?v=0.149.10';
-import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.149.10';
-import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.149.10';
-import { visibleTiles, createDecorations } from './terrain.js?v=0.149.10';
-import { MONSTERS, equipmentArt } from './chapters.js?v=0.149.10';
-import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.149.10';
-import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.149.10';
+import { regionAssetPlan, createRegionAssets, validPickupEffects, campAssetPaths } from './region-assets.js?v=0.149.11';
+import { DIRECTION_VIEWS, actorHeading, directionalClipId, walkingFrame, attackFrame, swingMotion, slashPresentation, recoilProgress, actionFrame, ACTION_DURATIONS, skitterFrame, skitterDeathAlpha } from './motion.js?v=0.149.11';
+import { createCombatAudio } from './sound.js?v=0.149.11';
+import * as game from './game-engine.js?v=0.149.11';
+import {FrameMetrics} from './frame-metrics.js?v=0.149.11';
+import { frameIndex, frameRect, validateClip } from './engine.js?v=0.149.11';
+import { GROUND_DEPTH_SCALE, cameraFor, worldToScreen, screenToWorld, visibleInCamera } from './world.js?v=0.149.11';
+import { viewportFor, renderSurfaceFor, stickVector, guidePointFor, supportsLandscape } from './view-controls.js?v=0.149.11';
+import { visibleTiles, createDecorations } from './terrain.js?v=0.149.11';
+import { MONSTERS, equipmentArt } from './chapters.js?v=0.149.11';
+import { equippedDesigns, validEquipmentSocket, drawEquipmentPreview, visualDesign, gearFrame, snapshotDesigns, validRarityAtlas, drawEquipmentAura, drawEquipmentAttack, drawAncientRune } from './equipment-visuals.js?v=0.149.11';
+import {createBackup,readBackup,MAX_BACKUP_BYTES} from './profile-backup.js?v=0.149.11';
 
 const COMBAT_INK=Object.freeze({silver:'#f7dfe9',rose:'#c46b8e',wine:'#70304c',danger:'#f2b58b',urgent:'#ffe1ad',edge:'#25101d'});
 const BASE_APPEARANCE=Object.freeze({weapon:null,armor:null,charm:null});
@@ -497,7 +497,7 @@ function refreshBag(){
   for(const slot of game.BAG_SLOTS){const limit=rules.limits[slot],count=profile.inventory.filter(i=>i.slot===slot).length;$('bag-limit-'+slot).textContent=count+'/'+(limit>=game.BAG_LIMIT_MAX?'∞':limit);$('bag-limit-row-'+slot).setAttribute('data-over',String(count>limit));$('bag-limit-down-'+slot).disabled=!camp||limit<=game.BAG_LIMIT_MIN;$('bag-limit-up-'+slot).disabled=!camp||limit>=game.BAG_LIMIT_MAX;}}$('bag-hint').hidden=bagOrganizing||bagSelectedId!==null;$('bag-detail').hidden=bagOrganizing||bagSelectedId===null;$('bag-feedback').textContent=bagFeedback;
  $('bag-hint').textContent=materials?'재료는 장비 보관 칸을 사용하지 않아.':'장비를 눌러 비교하기';
  $('bag-inspect-title').textContent=materials?'성장·제작 재료':bagOrganizing?'장비 정리':'장비 상세 정보';
- $('bag-inspect-description').textContent=materials?'검술서는 스킬 → 검술서 연구에서 사용합니다.':bagOrganizing?'목록에서 분해할 장비를 선택하세요.':bagSlot==='special'?'캐릭터 전용장비 · 던전에서 낮은 확률로 획득 예정. 제작 장비는 제작 탭에서 확인하세요.':bagSlot==='charm'?'목걸이 1개 · 귀걸이 2개. 일반 장신구는 추후 던전에서 획득. 제작 장신구는 제작 탭에서 확인하세요.':'목록에서 장비를 선택하세요.';
+ $('bag-inspect-description').textContent=materials?'검술서는 스킬 → 갈래에서 갈래를 해금할 때 사용합니다.':bagOrganizing?'목록에서 분해할 장비를 선택하세요.':bagSlot==='special'?'캐릭터 전용장비 · 던전 → 보스 러시에서 인장으로 획득. 제작 장비는 제작 탭에서 확인하세요.':bagSlot==='charm'?'목걸이 1개 · 귀걸이 2개. 일반 장신구는 성장 던전 완료 보상으로 획득. 제작 장신구는 제작 탭에서 확인하세요.':'목록에서 장비를 선택하세요.';
  $('bag-inspect-note').textContent=materials?'재료는 장비 보관 칸을 사용하지 않습니다.':bagOrganizing?'착용·즐겨찾기·저장 빌드는 보호됩니다.':'강화 · 승급 · 수치작';
  $('inventory-empty').hidden=materials||inventoryView.length>0;$('inventory-empty').textContent=profile.inventory.length?'이 조건에 맞는 장비가 없어.':'사냥에서 얻은 장비가 여기 모여.';
  const selected=profile.inventory.filter(i=>bagSelectedIds.has(i.id));$('bag-selected').textContent=selected.length+'개 선택 · 골드 +'+selected.reduce((sum,i)=>sum+game.salvageValue(i),0);$('bag-review').disabled=!selected.length;
@@ -1270,7 +1270,7 @@ function updateHud(){
     const learned=state.run.beastLearned;$('result-boss-ancients').hidden=!state.run.bossAncients.length&&!learned;hudText($('result-boss-ancients'),[state.run.bossAncients.length?'보스 고대 유물 · '+state.run.bossAncients.map(id=>game.ANCIENT_CATALOG.find(r=>r.id===id).name).join(' / '):'',learned?'괴수 기술 '+(learned.before?'등급 상승':'획득')+' · '+game.SKILL_BY_ID[learned.id].name+' ('+game.BEAST_GRADES[learned.grade].name+')':''].filter(Boolean).join('\n'));hudText($('result-loot'),'스테이지 보상 '+state.run.stageItems+' · 몬스터 드롭 '+state.run.monsterItems+' · 자동 분해 '+state.run.autoSalvaged);
     hudText($('result-style'),'완벽 회피 '+state.run.perfectDodges+' · 갑각 파쇄 '+state.run.guardBreaks+' · 폭발 '+state.run.explosions+' · 빙결 파쇄 '+state.run.synergyProcs.shatter+' · 출혈 처형 '+state.run.synergyProcs.execute+' · 제작 각인 '+state.run.craftedProcs+' · 재료 '+state.run.materials+(state.run.trainingGold?' · 숙련 환전 +'+state.run.trainingGold+' 골드':''));
     refreshResultLoot();hudText($('result-items'),String(state.run.items));hudText($('result-kills'),String(state.run.kills));hudText($('result-gold'),String(state.run.gold));hudText($('result-cores'),String(state.run.cores));hudText($('result-time'),duration(state.run.time));hudText($('result-xp'),'경험치 +'+state.run.xp);$('result-xp').setAttribute('title','기본 경험치 '+(state.run.xp-state.run.xpBonus)+' · 성장 보너스 +'+state.run.xpBonus);
-    hudText($('result-note'),victory&&state.difficulty?(state.difficulty===1?'정예 10스테이지 완료 · 악몽 1스테이지부터 도전할 수 있어.':'악몽 공략 완료 · 남은 유물을 찾아 다시 도전해.'):victory&&state.stageId<3?'챕터 완료! 다음 챕터가 열렸어.':victory?'세 챕터 완료! 원하는 스테이지에 다시 도전할 수 있어.':unpaid?'구간 실패 · 보상 없음. 장비·스킬이나 프리셋을 바꾸고 '+countdown(state.run.timeLimit)+'으로 재도전할 수 있습니다.':timedOut?'획득 장비를 착용하고 성장·광역 스킬을 정비해봐. 재도전은 '+countdown(state.run.timeLimit)+'으로 시작해.':'완료한 전투와 수집한 성장은 저장돼. 같은 전투에 다시 도전해.');
+    hudText($('result-note'),victory&&state.difficulty?(state.difficulty===1?'정예 10스테이지 완료 · 악몽 1스테이지부터 도전할 수 있어.':'악몽 공략 완료 · 남은 유물을 찾아 다시 도전해.'):victory&&state.stageId<3?'챕터 완료! 다음 챕터가 열렸어.':victory?(state.stageId>=game.STAGES.length?'모든 장 완료! 정예 난이도에 도전할 수 있어.':state.stageId+'장 완료! 다음 장이 열렸어.'):unpaid?'구간 실패 · 보상 없음. 장비·스킬이나 프리셋을 바꾸고 '+countdown(state.run.timeLimit)+'으로 재도전할 수 있습니다.':timedOut?'획득 장비를 착용하고 성장·광역 스킬을 정비해봐. 재도전은 '+countdown(state.run.timeLimit)+'으로 시작해.':'완료한 전투와 수집한 성장은 저장돼. 같은 전투에 다시 도전해.');
     hudText($('result-stages'),String(state.run.rooms)+'개');
     // Alpha 0.142 (사용자 요청 '사냥 끝난 후에도 다음 챕터 이동'): after a chapter's boss, offer the next chapter that is really
     // open — 일반: unlocked, 정예·악몽: that mode's next chapter (bossModeAvailable). The old 3-chapter rule hid it from chapter 3 on.

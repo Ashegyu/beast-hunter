@@ -65,3 +65,10 @@ test('buff branches: 수월의 자세 reduction and length, 혈월의 칼날 len
  const mark=fight('mark',p=>own(p,'mark',1),{steps:0});assert.equal(mark.e.skillMark.need,3);
  const army=fight('phantoms',p=>own(p,'phantoms',0),{steps:0});assert.equal(army.s.skillRuntime.phantomHits,12);assert.ok(Math.abs(army.s.skillRuntime.phantomUntil-army.s.run.time-12)<.01);
 });
+
+// 0.149.11 (외부 감사 '가벼운 자세는 비용을 내도 효용이 없다'): 어떤 갈래도 그 스킬에서 아무것도 바꾸지 않으면 안 된다 —
+// 기력 감소는 기본 비용이 있는 스킬에만, 수월의 자세 1단계 셋째 칸은 재사용 단축.
+test('비용 감소 갈래는 기본 비용이 있는 스킬에만 있다', () => {
+  for(const [id,tiers] of Object.entries(g.SKILL_BRANCHES)){const d=g.SKILL_BY_ID[id];for(const row of tiers)for(const b of row)if(b.mods.cost<0)assert.ok((d.cost??0)>0,id+' '+b.name);}
+  const b=g.SKILL_BRANCHES.stance[0][2];assert.equal(b.name,'고요한 숨');assert.equal(b.mods.cooldown,.75);
+});

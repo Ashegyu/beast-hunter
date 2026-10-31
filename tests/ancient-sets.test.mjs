@@ -40,9 +40,22 @@ test('raid sets count 2·3·5 pieces; a duplicate earring counts once; a forged 
 // Alpha 0.149.8 (상태 효과 설계 5단계) 해제 계열 특수효과: 서리 장벽 저항, 거신의 불굴 정화 보호막, 최후 판결 봉인 면역.
 test('해제 계열 세트 특수효과가 저항·정화 보호막·봉인 면역으로 전투에 닿는다', () => {
   {const s=game(),p=s.profile;for(const slot of REGION_SLOTS)wear(s,{tier:2,slot});assert.equal(g.treeBonus(p).resist,.2);assert.ok(Math.abs(g.statusResist(p).tree-.2)<1e-9);assert.match(g.ancientSetText('ancient-2',6),/디버프 시간 단축 \+20%/);}
-  {const s=game(),p=s.profile;for(const slot of ['weapon','helmet','armor','charm','special'])wear(s,{tier:6,slot,raid:'colossus'});assert.equal(g.treeBonus(p).cleanseShield,.08);
+  {const s=game(),p=s.profile;for(const slot of ['weapon','helmet','armor','charm'])wear(s,{tier:6,slot,raid:'colossus'});assert.equal(g.treeBonus(p).cleanseShield,.08);
    g.launch(s,1,1);s.run.flow='combat';s.player.statuses=[{id:'curse',stacks:1,until:s.run.time+5}];s.difficulty=1;assert.equal(g.cleansePlayer(s),1);assert.ok(Math.abs(s.uniqueState.shield-s.player.maxHp*.08)<1e-6,'정화 시 보호막');}
-  {const s=game(),p=s.profile;for(const slot of ['weapon','helmet','armor','charm','special'])wear(s,{tier:6,slot,raid:'judge'});assert.equal(g.treeBonus(p).sealImmune,1);assert.match(g.ancientSetText('raid-judge',5),/봉인 면역/);
+  {const s=game(),p=s.profile;for(const slot of ['weapon','helmet','armor','charm'])wear(s,{tier:6,slot,raid:'judge'});assert.equal(g.treeBonus(p).sealImmune,1);assert.match(g.ancientSetText('raid-judge',4),/봉인 면역/);
    p.bossMastery=p.bossMastery.map(()=>2);p.clearedStage=60;p.unlockedStage=61;assert.ok(g.launchRaid(s,'colossus',Date.UTC(2026,9,28),null,1));s.auto=false;s.player.invulnerable=1e6;
    for(let i=0;i<400&&!s.enemies.some(e=>e.boss);i++)g.advanceGame(s,.025);const e=s.enemies.find(e=>e.boss);e.sealClock=g.SEAL_EVERY-.01;g.advanceGame(s,.025);assert.ok(!g.hasStatus(s.player,'sealed',s.run.time),'봉인 면역');}
+});
+
+// 0.149.11 (외부 감사 P0 '거신·여왕·심판자 5세트를 정상 플레이로 완성할 수 없음'): 카탈로그가 아니라 실제 보상 함수가 내놓는
+// 장비만 모아도 모든 세트의 마지막 단계가 켜져야 한다. 레이드는 레이드 정산과 같은 rollAncient(부위 지정 없음), 지역은 보스 고대 드롭과 같은 호출.
+test('모든 고대 세트는 실제 보상 함수로 얻는 장비만으로 마지막 단계까지 켜진다', () => {
+  for(const set of Object.values(g.ANCIENT_SETS)){
+    const s=game(),p=s.profile,bySlot=new Map();
+    for(let i=0;i<4000;i++){const it=rollAncient(set.raid?{id:1,tier:6,raid:set.raid,hunt:0}:{id:1,tier:set.tier,slot:null,hunt:0},(i+.5)/4000,null);if(!bySlot.has(it.slot))bySlot.set(it.slot,it);}
+    const last=set.stages.at(-1);assert.ok(bySlot.size>=last.pieces,set.id+': 얻을 수 있는 부위 '+[...bySlot.keys()].join(',')+' < '+last.pieces);
+    for(const it of bySlot.values()){const id=Math.max(1,...p.inventory.map(i=>i.id+1));p.inventory.push({...it,id});p.nextItemId=id+1;assert.equal(g.equipItem(s,id),true,set.id+' '+it.slot);}
+    const active=g.equippedAncientSets(p).find(x=>x.set.id===set.id);assert.ok(active?.active.includes(last),set.id+' 마지막 단계');
+    for(const [k,v] of Object.entries(last.special.bonus))assert.ok(g.treeBonus(p)[k]>=v-1e-9,set.id+' '+k);
+  }
 });
