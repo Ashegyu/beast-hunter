@@ -36,3 +36,5 @@ CLAUDE.md에서 옮겨 온 작업 메모. 내용이 바뀌면 이 파일을 고�
 - 사냥 지도 지역 배경(0.143): `art/maps0143/scenes.json`(r1~r6, `kind:scene`, 스타일 `hunt-map-forest-v036.webp`, 가운데 띠에 길·가장자리 어둡게) → `python3 tools/pack-maps0143.py`(1280×853 webp). 생성기 두 개를 동시에 돌려 약 10분.
 
 - 성장 트리 연결선(0.147.2): `art/tree0147/branches.json`(sprite, 4줄 가로 줄기, 스타일 `art/growth0139/node-1.png`) → `python3 tools/pack-tree0147.py`(줄기 4개를 잘라 512×44, 4줄 webp). 첫 시도 통과, 약 2분.
+
+- 상태 효과 아이콘(0.149.3): `art/status0149/icons.json`(sprite, minParts 6, 3×2 여섯 칸 모두, 스타일 `growth-tree-v0139.webp`) → `python3 tools/pack-status0149.py`(64px, 6×2 webp). 두 장 병렬, 첫 시도 통과, 약 3분.

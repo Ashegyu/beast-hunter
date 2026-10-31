@@ -1,0 +1,27 @@
+{
+  "ids": [
+    "burn",
+    "frost",
+    "curse",
+    "corrode",
+    "sealed",
+    "purified",
+    "dispelled",
+    "holyShield",
+    "fury",
+    "stance",
+    "regen",
+    "ward"
+  ],
+  "sources": [
+    {
+      "sheet": "status-1",
+      "sha256": "dda5c441c63fed1f61fc29e6f74ab6181562880fc305ca8f618863a7fbe4cafc"
+    },
+    {
+      "sheet": "status-2",
+      "sha256": "2196d6b3b4da09d21accbdbbcfcc2af86b17bbf2753a9f8539d0246e829bac51"
+    }
+  ],
+  "webpBytes": 36380
+}

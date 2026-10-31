@@ -1,13 +1,13 @@
-import {createSkillMotion} from './skill-motion.js?v=0.149.2';
-import {CHAPTERS,CHAPTER_BOSSES} from './chapters.js?v=0.149.2';
-import {beastTechniques,BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE,beastElementText} from './beast-techniques.js?v=0.149.2';
-export {BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE} from './beast-techniques.js?v=0.149.2';
-import {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary,SKILL_TAGS,TAG_NAMES,TAG_SYNERGY} from './skill-branches.js?v=0.149.2';
-export {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary,SKILL_TAGS,TAG_NAMES,TAG_SYNERGY} from './skill-branches.js?v=0.149.2';
-import {GEAR_SKILLS} from './raid-skills.js?v=0.149.2';
-import {treeBonus} from './growth.js?v=0.149.2';
-import {transcendBonus} from './transcendence.js?v=0.149.2';
-export {GEAR_SKILLS,GEAR_SKILL_BY_ANCIENT} from './raid-skills.js?v=0.149.2';
+import {createSkillMotion} from './skill-motion.js?v=0.149.3';
+import {CHAPTERS,CHAPTER_BOSSES} from './chapters.js?v=0.149.3';
+import {beastTechniques,BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE,beastElementText} from './beast-techniques.js?v=0.149.3';
+export {BEAST_GRADES,BEAST_ELEMENTS,BEAST_GRADE_CHANCE} from './beast-techniques.js?v=0.149.3';
+import {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary,SKILL_TAGS,TAG_NAMES,TAG_SYNERGY} from './skill-branches.js?v=0.149.3';
+export {SKILL_BRANCHES,SKILL_BRANCH_COST,SKILL_BRANCH_COSTS,SKILL_BRANCH_TIER_LEVEL,EXECUTE_HEALTH,branchSummary,SKILL_TAGS,TAG_NAMES,TAG_SYNERGY} from './skill-branches.js?v=0.149.3';
+import {GEAR_SKILLS} from './raid-skills.js?v=0.149.3';
+import {treeBonus} from './growth.js?v=0.149.3';
+import {transcendBonus} from './transcendence.js?v=0.149.3';
+export {GEAR_SKILLS,GEAR_SKILL_BY_ANCIENT} from './raid-skills.js?v=0.149.3';
 // Lirian skill rules: one catalog drives unlocks, rank values, UI and combat.
 const active=(id,name,unlock,damage,step,cost,cooldown,shape,description,extra={})=>({id,name,kind:'active',unlock,damage,step,cost,cooldown,shape,description,...extra});
 const passive=(id,name,unlock,value,step,unit,description)=>({id,name,kind:'passive',unlock,value,step,unit,description});
@@ -325,7 +325,8 @@ export function tickSkills(s,dt,h){const r=s.skillRuntime,p=s.player,now=s.run.t
  if(r.ultimatePresentation&&now-r.ultimatePresentation.startedAt>=1.35)r.ultimatePresentation=null;
  if(r.travel&&s.run.flow==='combat'){const v=r.travel,t=Math.max(0,Math.min(1,(now-v.startedAt)/v.duration));p.x=v.fromX+(v.toX-v.fromX)*t;p.y=v.fromY+(v.toY-v.fromY)*t;h.clamp(p,s.bounds);if(t>=1)r.travel=null;}
  if(r.motion&&now>=r.motion.startedAt+r.motion.duration&&!(r.motion.id==='parry'&&r.parryCast&&now<=r.parryUntil))r.motion=null;
- for(const id of r.cooldownKeys)r.cooldowns[id]=Math.max(0,r.cooldowns[id]-dt);
+ // 0.149.3 봉인: 재사용 대기가 느리게 흐른다.
+ {const cdt=dt*Math.max(0,1+(h.cooldownRate?.(s)??0));for(const id of r.cooldownKeys)r.cooldowns[id]=Math.max(0,r.cooldowns[id]-cdt);}
  if(r.casting&&now>=r.casting.until)r.casting=null;
  if(r.parryUntil&&now>r.parryUntil){r.parryUntil=0;r.parryCast=null;}
  if(s.run.flow!=='combat'){if(r.jobs.length)r.jobs=r.jobs.filter(j=>j.at>now);return;}
@@ -378,7 +379,7 @@ export const STANCE_BURST=Object.freeze(new Set(['draw','eclipse','plunge','bloo
 const holdForWeakPoint=(s,id,left)=>left>0&&skillCooldown(s.profile,id)>left;
 export function autoSkill(s,n,h){const p=s.player,r=s.skillRuntime,b=s.profile.skillBook,near=s.enemies.filter(e=>live(e)&&distance(e,p)<240),boss=near.some(e=>e.boss||e.elite),stance=h.stanceLeft?.(s)??0;
  // 0.149 (궁극기보다 먼저 — Codex 측정에서 준비된 궁극기가 정화를 늦췄다): 디버프가 2종 이상이거나 저주가 걸리면 수월의 자세로 정화, 보스가 격노·방어 태세 중이면 파갑참으로 해체.
- {const bad=h.debuffs?.(s)??[];if(b.loadout.active.includes('stance')&&(bad.length>=2||bad.some(x=>x.id==='curse'))&&castSkill(s,'stance',n,h))return true;
+ {const bad=h.debuffs?.(s)??[];if(b.loadout.active.includes('stance')&&(bad.length>=2||bad.some(x=>x.id==='curse'||x.id==='sealed'))&&castSkill(s,'stance',n,h))return true;
   if(b.loadout.active.includes('breach')&&p.stamina>=skillCost(s.profile,'breach')){const reach=skillReach(s.profile,'breach'),bossE=s.enemies.find(e=>live(e)&&e.boss&&distance(e,p)<=reach&&h.bossBuffed?.(s,e));if(bossE&&castSkill(s,'breach',unit(bossE.x-p.x,bossE.y-p.y),h))return true;}}
  const ultimate=b.loadout.ultimate[0];if(ultimate&&b.auto.ultimate!=='off'&&(b.auto.ultimate==='any'||boss)&&!holdForWeakPoint(s,ultimate,stance)&&castSkill(s,ultimate,n,h))return true;
  // An equipped 파갑참 goes first whenever a guarded or still-armored enemy is within its reach.

@@ -2017,3 +2017,19 @@
 #game-shell .battle #boss-hud{position:relative}
 #game-shell .battle #boss-hud .boss-status-chips{position:absolute;right:6px;top:calc(100% + 4px);display:flex;gap:3px;pointer-events:none}
 @media(max-height:360px){#game-shell .battle .top-hud .hunter-hud .status-chips{top:calc(100% + 28px)}#game-shell .battle .status-chip{font-size:9px;line-height:12px;padding:0 5px}}
+
+/* 0.149.3 상태 효과 아이콘(art/status0149, Codex): 칩 앞 14px 원형 아이콘, 아틀라스 6열×2행 순서 = burn frost curse corrode sealed purified dispelled holyShield fury stance regen ward */
+#game-shell .battle .status-chip[data-status]::before{content:'';display:inline-block;width:14px;height:14px;margin:0 3px 0 -4px;vertical-align:-3px;background:url('assets/status-icons-v0149.webp') no-repeat 0 0/600% 200%}
+#game-shell .battle .status-chip[data-status=burn]::before{background-position:0% 0%}
+#game-shell .battle .status-chip[data-status=frost]::before{background-position:20% 0%}
+#game-shell .battle .status-chip[data-status=curse]::before{background-position:40% 0%}
+#game-shell .battle .status-chip[data-status=corrode]::before{background-position:60% 0%}
+#game-shell .battle .status-chip[data-status=sealed]::before{background-position:80% 0%}
+#game-shell .battle .status-chip[data-status=purified]::before{background-position:100% 0%}
+#game-shell .battle .status-chip[data-status=dispelled]::before{background-position:0% 100%}
+#game-shell .battle .status-chip[data-status=holyShield]::before{background-position:20% 100%}
+#game-shell .battle .status-chip[data-status=fury]::before{background-position:40% 100%}
+#game-shell .battle .status-chip[data-status=stance]::before{background-position:60% 100%}
+#game-shell .battle .status-chip[data-status=regen]::before{background-position:80% 100%}
+#game-shell .battle .status-chip[data-status=ward]::before{background-position:100% 100%}
+@media(max-height:360px){#game-shell .battle .status-chip[data-status]::before{width:12px;height:12px;vertical-align:-2px}}

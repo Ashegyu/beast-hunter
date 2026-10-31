@@ -35,7 +35,7 @@ const SCREENS=[
  ['settings',['home-settings']],['formula',['home-settings','formula-open']],['stats',['home-profile']],['dummy',['home-profile','dummy-start','wait:4000']],['build',['lobby-equipment','loadout-build-open']],
  ['workshop-enhance',['lobby-bag','bag-0','item-workshop-open','workshop-tab-enhance']],['workshop-promote',['lobby-bag','bag-0','item-workshop-open','workshop-tab-promote']],
  ['workshop-reroll',['lobby-bag','bag-0','item-workshop-open','workshop-tab-reroll']],
-['battle',['nav-hunt','camp-map-start','start','wait:5000']],['pause',['nav-hunt','camp-map-start','start','wait:3000','pause']],
+['battle',['nav-hunt','camp-map-start','start','wait:5000']],['battle-status',['nav-hunt','camp-map-start','start','wait:3000','chips','wait:600']],['pause',['nav-hunt','camp-map-start','start','wait:3000','pause']],
 ];
 
 async function profile(){
@@ -88,6 +88,10 @@ function measure(){
  return [...new Set(out)].sort();
 }
 
+// 0.149.3 'chips': 전투 상태 칩(아이콘 포함)을 가장 긴 예시로 매 프레임 채운다(엔진 상태를 바꾸지 않고 화면만).
+const CHIPS=()=>{const P=[['burn','화상 ×3 4초','#ff7a3d'],['sealed','봉인 5초','#a98cff'],['curse','저주 ×2 6초','#b98cff'],['purified','정화의 기세 5초','#fff2a8']],B=[['holyShield','보호막 6% 10초','#fff0b0'],['ward','가호','#b48cff']];
+ const put=(id,[k,t,c])=>{const el=document.getElementById(id);if(!el)return;el.hidden=false;el.textContent=t;el.dataset.status=k;el.style.setProperty('--c',c);};
+ const loop=()=>{P.forEach((x,i)=>put('player-status-'+i,x));B.forEach((x,i)=>put('boss-status-'+i,x));requestAnimationFrame(loop);};loop();};
 async function main(){
  const require=createRequire(import.meta.url);let chromium;
  try{({chromium}=require('playwright'));}catch{({chromium}=require('/opt/node22/lib/node_modules/playwright'));}
@@ -102,7 +106,7 @@ async function main(){
    for(const [screen,clicks] of SCREENS){
     if(ONLY&&!ONLY.includes(screen))continue;
     await page.goto(`http://127.0.0.1:${PORT}/`);await page.waitForFunction(()=>document.getElementById('game-shell')?.dataset.phase==='camp',null,{timeout:20000});await page.waitForTimeout(400);
-    for(const id of clicks){if(id.startsWith('wait:')){await page.waitForTimeout(Number(id.slice(5)));continue;}await page.evaluate(id=>document.getElementById(id)?.click(),id);await page.waitForTimeout(350);}
+    for(const id of clicks){if(id==='chips'){await page.evaluate(CHIPS);continue;}if(id.startsWith('wait:')){await page.waitForTimeout(Number(id.slice(5)));continue;}await page.evaluate(id=>document.getElementById(id)?.click(),id);await page.waitForTimeout(350);}
     result[`${w}x${h} ${screen}`]=await page.evaluate(measure);
     if(SHOTS){fs.mkdirSync(SHOTS,{recursive:true});await page.screenshot({path:path.join(SHOTS,`${screen}-${w}.png`)});}
    }

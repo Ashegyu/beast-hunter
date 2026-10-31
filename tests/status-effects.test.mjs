@@ -23,7 +23,7 @@ test('applyStatus: 중첩 상한·갱신·만료 후 재적용·저항',()=>{
 test('tickStatuses: 만료와 화상 난이도별 피해',()=>{const t={};st.applyStatus(t,'burn',0,{stacks:2});{const h=st.STATUS_DEFS.burn.tick.hpPct;close(st.tickStatuses(t,1,.5,1),h[1]*2*.5);close(st.tickStatuses(t,1,.5,2),h[2]*2*.5);}close(st.tickStatuses(t,4,.5,2),0);assert.equal(t.statuses.length,0);});
 test('cleanse(n): 큰 중첩부터 n종; statusMods: 활성 효과 합산',()=>{
  const t={};for(const [id,stacks]of [['burn',1],['frost',3],['curse',2],['corrode',2]])st.applyStatus(t,id,0,{stacks});
- {const D=st.STATUS_DEFS;const m=st.statusMods(t,1);close(m.damage,D.curse.mods.damage*2);close(m.taken,D.corrode.mods.taken*2);close(m.attackSpeed,D.frost.mods.attackSpeed*3);close(m.speed,D.frost.mods.speed*3);}assert.equal(st.cleanse(t,1,2),2);assert.deepEqual(t.statuses.map(x=>x.id),['burn','corrode']);assert.equal(st.cleanse(t,1),2);assert.deepEqual(st.statusMods(t,10),{damage:0,taken:0,attackSpeed:0,speed:0});
+ {const D=st.STATUS_DEFS;const m=st.statusMods(t,1);close(m.damage,D.curse.mods.damage*2);close(m.taken,D.corrode.mods.taken*2);close(m.attackSpeed,D.frost.mods.attackSpeed*3);close(m.speed,D.frost.mods.speed*3);}assert.equal(st.cleanse(t,1,2),2);assert.deepEqual(t.statuses.map(x=>x.id),['burn','corrode']);assert.equal(st.cleanse(t,1),2);assert.deepEqual(st.statusMods(t,10),{damage:0,taken:0,attackSpeed:0,speed:0,cooldown:0});
 });
 for(const [chapter,id]of [[15,'burn'],[30,'curse'],[40,'frost'],[10,'corrode']])for(const difficulty of [1,2])for(const kind of ['melee','projectile'])test(`${chapter}장 난이도 ${difficulty} ${kind}: ${id}`,()=>{
  const {s,e}=fight(chapter,difficulty);if(kind==='projectile')shot(s);else {Object.assign(e,{attackKind:'slam',pattern:0,bossCycle:['slam'],action:'windup',actionTime:1,windup:0,targetX:s.player.x,targetY:s.player.y,radius:200,damage:100});run(s,.025);}
@@ -71,4 +71,36 @@ test('statusResist: 정화 태그 + 장신구 + 트리, 80% 상한, 실제 디�
  const {s}=fight(15,1,['stance','parry']);Object.assign(s.profile.equipment,{});s.profile.growthTree=p.growthTree;const r=g.statusResist(s.profile);close(r.purify,st.PURIFY_RESIST);close(r.total,Math.min(st.RESIST_CAP,st.PURIFY_RESIST+.14));
  shot(s);const x=s.player.statuses.find(x=>x.id===st.RULE_DEBUFF.fury);assert.ok(x,'격노 보스 적중 시 디버프');close(x.seconds,st.STATUS_DEFS[x.id].seconds*(1-r.total));
  const t={};st.applyStatus(t,'curse',0,{resist:5});close(t.statuses[0].seconds,st.STATUS_DEFS.curse.seconds*(1-st.RESIST_CAP));
+});
+// Alpha 0.149.3 레이드(정예·악몽) 전용 패턴: 봉인(주기 디버프)과 신성 보호막(보스 버프, 해체로 벗김).
+const RAID_NOW=Date.UTC(2026,9,25,15)+3*864e5;
+function raidFight(tier=1,active=[]){
+ const p=g.createProfile(1000);Object.assign(p,{level:200,clearedStage:60,unlockedStage:61,stageProgress:g.STAGES.map(()=>10),bossMastery:g.STAGES.map(()=>2)});
+ p.skillBook=g.restoreSkillBook(null,200);p.skillBook.ranks={};p.skillBook.loadout={active:[...active,...Array(4-active.length).fill(null)],passive:[null,null,null],ultimate:[null],beast:[null]};for(const id of active)p.skillBook.ranks[id]=14;
+ const s=g.createGame(p);assert.ok(g.launchRaid(s,'colossus',RAID_NOW,null,tier));assert.equal(s.run.raidTier,tier);s.auto=false;s.player.invulnerable=1e6;
+ for(let i=0;i<400&&!s.enemies.some(e=>e.boss);i++)run(s,.025);const e=s.enemies.find(e=>e.boss);assert.ok(e);
+ Object.assign(e,{x:s.player.x,y:s.player.y+100,cooldown:1e4,speed:0,action:'idle'});s.player.hp=s.player.maxHp=1e7;return {s,e};
+}
+test('봉인: 정예·악몽 레이드에서 SEAL_EVERY초마다, 재사용 대기 회복 −60%, 저항·정화 적용; 일반 레이드는 없음',()=>{
+ {const {s}=raidFight(0);run(s,st.SEAL_EVERY+.5);assert.ok(!g.hasStatus(s.player,'sealed',s.run.time),'일반 레이드는 봉인 없음');}
+ const {s,e}=raidFight(1,['stance']);e.sealClock=st.SEAL_EVERY-.1;run(s,.2);
+ const x=s.player.statuses.find(x=>x.id==='sealed');assert.ok(x,'봉인');close(x.seconds,st.STATUS_DEFS.sealed.seconds);
+ close(g.playerStatusMods(s).cooldown,st.STATUS_DEFS.sealed.mods.cooldown);
+ // 재사용 대기가 40% 속도로 흐른다.
+ s.skillRuntime.cooldowns.stance=10;if(!s.skillRuntime.cooldownKeys.includes('stance'))s.skillRuntime.cooldownKeys.push('stance');run(s,1);close(Math.round((10-s.skillRuntime.cooldowns.stance)*1e6)/1e6,Math.round(1*(1+st.STATUS_DEFS.sealed.mods.cooldown)*1e6)/1e6);
+ // 정화하면 풀린다.
+ assert.equal(g.cleansePlayer(s),1);assert.ok(!g.hasStatus(s.player,'sealed',s.run.time));
+ // 저항이 시간을 줄인다.
+ const {s:s2,e:e2}=raidFight(1,['stance','parry']);e2.sealClock=st.SEAL_EVERY-.1;run(s2,.2);close(s2.player.statuses.find(x=>x.id==='sealed').seconds,st.STATUS_DEFS.sealed.seconds*(1-g.statusResist(s2.profile).total));
+});
+test('신성 보호막: HOLY_EVERY초마다 최대 체력 × 단계 비율, 피해를 먼저 막고 파갑참 해체로 벗겨진다',()=>{
+ for(const tier of [1,2]){const {s,e}=raidFight(tier);e.holyClock=st.HOLY_EVERY-.1;run(s,.2);close(e.holyShield,e.maxHp*st.HOLY_SHIELD[tier]);assert.ok(g.hasStatus(e,'holyShield',s.run.time));
+  assert.ok(g.bossStatusList(s,e).some(x=>x.id==='holyShield'),'보스 칩');}
+ const {s,e}=raidFight(1,['breach']);e.holyClock=st.HOLY_EVERY-.1;run(s,.2);const shield=e.holyShield,hp=e.hp;
+ shot(s,{friendly:true,damage:Math.round(shield/4),boss:false,target:e});assert.equal(e.hp,hp,'보호막이 먼저 받는다');assert.ok(e.holyShield<shield,'보호막이 줄었다');
+ assert.ok(g.dispelBoss(s,e));assert.equal(e.holyShield,0);assert.ok(!g.hasStatus(e,'holyShield',s.run.time));
+ // 시간이 지나면 사라진다.
+ const {s:s3,e:e3}=raidFight(1);e3.holyClock=st.HOLY_EVERY-.1;run(s3,.2);run(s3,st.STATUS_DEFS.holyShield.seconds+.1);assert.equal(e3.holyShield,0);
+ // 일반 레이드는 없음.
+ const {s:s4,e:e4}=raidFight(0);e4.holyClock=st.HOLY_EVERY-.1;run(s4,.3);assert.ok(!(e4.holyShield>0));
 });
