@@ -78,9 +78,11 @@ function makeProfile(def){
 }
 const profiles=profileDefs.map(def=>({...def,profile:makeProfile(def)}));
 const scenarios=[];
-for(const r of g.RAIDS)for(const tier of r.fixedTier==null?[0,1,2]:[r.fixedTier])scenarios.push({id:`raid-${r.id}-${tier}`,name:`${r.name} ${g.RAID_TIERS[tier]}`,raid:r.id,tier});
-for(const difficulty of [1,2])for(const chapter of [30,60])scenarios.push({id:`mode-${difficulty}-${chapter}-10`,name:`${g.RAID_TIERS[difficulty]} ${chapter}장 보스`,difficulty,chapter,stage:10});
-scenarios.push({id:'mode-2-60-9',name:'악몽 60장 일반 9',difficulty:2,chapter:60,stage:9});
+// CHAPTERS=10,15,20 이면 그 장들의 정예·악몽 보스만 잰다(레이드·일반 9 생략, 보고서는 endgame-chapters-0148.*에 따로).
+const CHAPTER_LIST=process.env.CHAPTERS?.split(',').map(Number).filter(Boolean)??null;
+if(!CHAPTER_LIST)for(const r of g.RAIDS)for(const tier of r.fixedTier==null?[0,1,2]:[r.fixedTier])scenarios.push({id:`raid-${r.id}-${tier}`,name:`${r.name} ${g.RAID_TIERS[tier]}`,raid:r.id,tier});
+for(const difficulty of [1,2])for(const chapter of CHAPTER_LIST??[30,60])scenarios.push({id:`mode-${difficulty}-${chapter}-10`,name:`${g.RAID_TIERS[difficulty]} ${chapter}장 보스`,difficulty,chapter,stage:10});
+if(!CHAPTER_LIST)scenarios.push({id:'mode-2-60-9',name:'악몽 60장 일반 9',difficulty:2,chapter:60,stage:9});
 function fight(profile,scenario,seed){
  const p=structuredClone(profile);p.hunts=seed;const s=g.createGame(p,{durable:true});s.auto=true;
  assert.ok(scenario.raid?g.launchRaid(s,scenario.raid,now,null,scenario.tier):g.launch(s,scenario.chapter,scenario.stage,null,scenario.difficulty),'입장 실패 '+scenario.id);
@@ -137,6 +139,6 @@ md+='\n## 목표 30~45초·손실 40~70%의 배율 추정\n\nHP 범위는 30~45�
 for(const r of results){const e=r.estimate;md+=`|${r.profile}|${scenarios.find(s=>s.id===r.scenario).name}|${e?range(e.hpMultiplier)+' ('+f(e.hpMid)+')':'실패 포함·보류'}|${e?range(e.damageMultiplier)+' ('+f(e.damageMid)+')':'보류'}|\n`;}
 md+='\n## 방법·한계\n\n'+limitations.map(x=>'- '+x).join('\n')+'\n';
 const dir=path.join(root,'tools/reports');fs.mkdirSync(dir,{recursive:true});
-fs.writeFileSync(path.join(dir,'endgame-difficulty-0148.json'),JSON.stringify(report,null,2)+'\n');
-fs.writeFileSync(path.join(dir,'endgame-difficulty-0148.md'),md);
+fs.writeFileSync(path.join(dir,(CHAPTER_LIST?'endgame-chapters-0148.json':'endgame-difficulty-0148.json')),JSON.stringify(report,null,2)+'\n');
+fs.writeFileSync(path.join(dir,(CHAPTER_LIST?'endgame-chapters-0148.md':'endgame-difficulty-0148.md')),md);
 console.log(`완료: ${report.battleCount}전 / ${f(elapsed())}초 / 쉬움 ${results.filter(r=>r.easy).length}행`);
