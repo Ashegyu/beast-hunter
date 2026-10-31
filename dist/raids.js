@@ -17,7 +17,7 @@ export const RAIDS=Object.freeze([
  {id:'colossus',name:'강철 거신',species:'raid_colossus',mechanic:'armor',unlock:60,hp:10,color:'#ff9a4d',
   rule:'강철 장갑이 피해를 85% 막습니다. 파갑참으로 부수거나 마지막 검끝 연격으로 꿰뚫으세요.',
   build:'파갑참 · 마지막 검끝',cycle:['slam','charge','slam','slam','volley','charge'],armor:.85},
- {id:'queen',name:'군단의 여왕',species:'raid_queen',mechanic:'swarm',unlock:60,hp:5.5,nightmareHp:1.1,broodHp:3,color:'#a6e05a',
+ {id:'queen',name:'군단의 여왕',species:'raid_queen',mechanic:'swarm',unlock:60,hp:5.5,nightmareHp:1,nightmareBroodShield:.6,broodHp:3,color:'#a6e05a',
   rule:'10초마다 군단 8마리를 부르고, 군단이 살아 있으면 피해를 85% 덜 받습니다. 광역으로 먼저 쓸어내세요.',
   build:'광역 스킬 · 처치 효과',cycle:['volley','slam','volley','charge','volley','slam'],broodEvery:10,broodSize:8,broodShield:.85},
  {id:'judge',name:'황혼의 심판자',species:'raid_judge',mechanic:'judgement',unlock:60,hp:7.5,color:'#c9a2ff',

@@ -113,3 +113,9 @@ test('악몽 레이드 완화: 시간 제한·적 공격·소환 무리, 일반�
  const d1=boss(at('judge',1)).damage/g.modeScale(g.MODE_CHAPTERS,1).damage,d2=boss(at('judge',2)).damage/g.modeScale(g.MODE_CHAPTERS,2).damage;assert.ok(Math.abs(d2/d1-E.damage)<.01,'악몽 공격 완화');
  const q1=boss(at('queen',1)).maxHp/g.modeScale(g.MODE_CHAPTERS,1).hp,q2=boss(at('queen',2)).maxHp/g.modeScale(g.MODE_CHAPTERS,2).hp;assert.ok(Math.abs(q2/q1-g.raidDefinition('queen').nightmareHp)<.01,'악몽 여왕 체력 배율');
 });
+// Alpha 0.149.10 (사용자 요청 '여왕 악몽 체력 조금 더 낮춰줘'): 악몽 여왕 체력 ×1.1 → ×1, 군단의 가호 85% → 60%(악몽만).
+test('군단의 여왕 악몽: 군단의 가호 감소율과 체력 배율',()=>{
+ const q=g.raidDefinition('queen');assert.equal(q.nightmareHp,1);assert.equal(q.nightmareBroodShield,.6);
+ for(const [tier,want] of [[0,q.broodShield],[1,q.broodShield],[2,.6]])assert.equal(g.raidBroodShield({run:{raidTier:tier}},q),want);
+ const sov=g.raidDefinition('sovereign');assert.equal(g.raidBroodShield({run:{raidTier:2}},sov),sov.broodShield,'군주는 그대로');
+});

@@ -1,5 +1,5 @@
-import { equipmentArt, ALL_EQUIPMENT_ART } from './chapters.js?v=0.149.9';
-import { ANCIENT_CATALOG, ancientDefinition, CRAFTED_CATALOG, craftedDefinition } from './loot.js?v=0.149.9';
+import { equipmentArt, ALL_EQUIPMENT_ART } from './chapters.js?v=0.149.10';
+import { ANCIENT_CATALOG, ancientDefinition, CRAFTED_CATALOG, craftedDefinition } from './loot.js?v=0.149.10';
 
 export function validEquipmentSocket(p){
   return !!p && ['handX','handY','angle','bodyX','bodyY','tilt','side','bladeLength'].every(k=>Number.isFinite(p[k])) && Math.abs(p.handX)<=1.5 && Math.abs(p.handY)<=1.5 && Math.abs(p.bodyX)<=1.5 && Math.abs(p.bodyY)<=1.5 && p.side>0 && p.side<=1 && p.bladeLength>0 && p.bladeLength<=1.2 && typeof p.back==='boolean' && typeof p.weaponHidden==='boolean';

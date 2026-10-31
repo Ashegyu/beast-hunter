@@ -1,7 +1,7 @@
-import {INVENTORY_LIMIT} from './inventory-rules.js?v=0.149.9';
-import {ANCIENT_POWER,ANCIENT_STATS} from './ancient-stats.js?v=0.149.9';
-import {RAID_ANCIENT_STATS} from './raids.js?v=0.149.9';
-import {describePower} from './ancient-powers.js?v=0.149.9';
+import {INVENTORY_LIMIT} from './inventory-rules.js?v=0.149.10';
+import {ANCIENT_POWER,ANCIENT_STATS} from './ancient-stats.js?v=0.149.10';
+import {RAID_ANCIENT_STATS} from './raids.js?v=0.149.10';
+import {describePower} from './ancient-powers.js?v=0.149.10';
 // Alpha 0.122: 원질 핵 0.1%→2%, 무명의 기원 0.001%→0.3% so a recipe is reachable (still rare; crafting always succeeds).
 // Authored crafting identities. This catalogue is never part of equipment roll pools.
 export const MATERIAL_LIMIT=1_000_000;
